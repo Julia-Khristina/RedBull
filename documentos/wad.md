@@ -36,13 +36,27 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-*Preencha com até 300 palavras – sem necessidade de fonte*
+[NOTAS DE CONTEXTO - levantamento]
 
-*Contextualize aqui a problemática trazida pelo parceiro de projeto.*
+Problema:
+- Red Bull 24 Horas: 2 equipes de 16 corredores, 24h em esteira
+- Registro hoje feito em prancheta manual
+- Sujeito a erro de anotação, distração, inconsistência
+- Esteiras Technogym não permitem integração
+- Pulseiras inviáveis (dinâmica de troca)
 
-*Descreva brevemente a solução desenvolvida para o parceiro de negócios. Descreva os aspectos essenciais para a criação de valor do produto, com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
+Solução discutida com a Red Bull:
+- Plataforma web de gestão de performance
+- Captura por foto + OCR com validação híbrida
+- URLs efêmeras por equipe (UUID)
+- Inteligência estratégica: pace, descanso, ranking
+- Highlights pós-evento
 
-*Observe a seção 2 e verifique que ali é possível trazer mais detalhes, portanto seja objetivo aqui. Atualize esta descrição até a entrega final, conforme desenvolvimento.*
+Pontos de valor:
+- Redução de erros
+- Auditabilidade
+- Eficiência operacional
+- Inteligência competitiva
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
