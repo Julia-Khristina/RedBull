@@ -36,27 +36,9 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-[NOTAS DE CONTEXTO - levantamento]
-
-Problema:
-- Red Bull 24 Horas: 2 equipes de 16 corredores, 24h em esteira
-- Registro hoje feito em prancheta manual
-- Sujeito a erro de anotação, distração, inconsistência
-- Esteiras Technogym não permitem integração
-- Pulseiras inviáveis (dinâmica de troca)
-
-Solução discutida com a Red Bull:
-- Plataforma web de gestão de performance
-- Captura por foto + OCR com validação híbrida
-- URLs efêmeras por equipe (UUID)
-- Inteligência estratégica: pace, descanso, ranking
-- Highlights pós-evento
-
-Pontos de valor:
-- Redução de erros
-- Auditabilidade
-- Eficiência operacional
-- Inteligência competitiva
+A Red Bull, marca global atuante em eventos esportivos e experiências proprietárias, promove anualmente o Red Bull 24 Horas, competição em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros corridos é realizado de forma manual, com um operador anotando em uma prancheta os momentos de início e fim de cada turno e checkpoints periódicos. O processo é vulnerável a erros de digitação, distrações e inconsistências ao longo das horas de operação, comprometendo a confiabilidade do resultado final. Como as esteiras Technogym utilizadas no evento não permitem integração direta com dispositivos externos, e alternativas como pulseiras sincronizadas se mostraram inviáveis pela dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente do registro humano, sem rastreabilidade auditável.
+Diante desse cenário, o projeto propõe uma plataforma web de gestão de performance em tempo real para o evento. A solução substitui o registro manual por uma captura híbrida, na qual o operador fotografa o visor da esteira e o sistema extrai os dados automaticamente por reconhecimento óptico de caracteres, com validação humana e alertas de inconsistência. Em paralelo, a plataforma distribui informações estratégicas aos capitães das equipes por meio de URLs únicas e efêmeras, oferecendo ranking ao vivo, status individual de cada atleta e sugestões de tempo de descanso para apoiar decisões de revezamento.
+A criação de valor concentra-se em quatro frentes: redução de erros de apuração, auditabilidade dos registros, ganho de eficiência operacional para o time da Red Bull e transformação do dado bruto em inteligência competitiva acessível aos times durante a prova.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
