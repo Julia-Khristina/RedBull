@@ -156,7 +156,48 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+## 3.2.2. Diagrama de Casos de Uso
+
+### Atores identificados
+
+- Operador de Prova (Mariana): registra checkpoints e trocas
+- Administrador (Bruno): supervisão, auditoria e gestão
+- Corredor: acessa painel via URL única
+- Sistema OCR: processa foto da esteira (ator secundário)
+
+### Casos de uso levantados
+
+Operador:
+- Selecionar equipe e esteira
+- Registrar início de turno
+- Fotografar visor da esteira
+- Registrar checkpoint via OCR
+- Registrar checkpoint manualmente
+- Confirmar dados extraídos
+- Registrar fim de turno
+- Trocar atleta ativo
+
+Administrador:
+- Criar competição
+- Cadastrar equipe e atleta
+- Gerar URL única da equipe (UUID)
+- Visualizar painel consolidado
+- Editar registro incorreto
+- Exportar dados em CSV
+
+Corredor:
+- Acessar painel via UUID
+- Visualizar ranking global
+- Visualizar status dos atletas
+- Consultar calculadora de descanso
+- Compartilhar ranking
+
+### Relacionamentos
+
+- Registrar checkpoint OCR inclui Fotografar visor (include)
+- Registrar checkpoint OCR inclui Confirmar dados extraídos (include)
+- Alertar inconsistência estende Extrair dados via OCR (extend)
+- Registrar manualmente estende Registrar checkpoint OCR (extend)
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
