@@ -88,157 +88,88 @@
 ## 2.3. User Stories (sprints 1 a 5)
 
 
-###  US01 — Acessar Painel do Admin
 
-**Persona:**  
-Administrador  
+<h4 align="center">Quadro - US01</h4>
 
-**User Story:**  
-Como administrador, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada.
-
-### Critérios de Aceite e Testes
-
-- **CR1:** O sistema deve permitir o acesso ao painel do admin em ambiente controlado.  
-  - **TA1:** Dado que o administrador acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin.
-
-- **CR2:** O painel deve exibir as principais seções do sistema.  
-  - **TA2:** Dado que o admin acessa o painel, quando a página carrega, então deve visualizar opções como “criar competição”, “equipes”, “ranking” e “relatórios”.
-
-- **CR3:** O painel deve exibir o estado atual do sistema (com ou sem competição).  
-  - **TA3:** Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção “Criar competição”.  
-  - **TA4:** Dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes.
-
-### Critérios INVEST
-
-- Independente: Não depende de sistema de login definido  
-- Negociável: Forma de acesso pode ser definida depois  
-- Valorosa: Centraliza o controle do sistema  
-- Estimável: Escopo claro  
-- Pequena: Uma tela principal  
-- Testável: Comportamentos bem definidos  
+| Identificação        | US01 — Acessar Painel do Admin                                                                                                                                                                                                                                             |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Persona              | Administrador                                                                                                                                                                                                                                                              |
+| User Story           | Como administrador, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada.                                                                                                                      |
+| Critério de aceite 1 | CR1: O sistema deve permitir o acesso ao painel do admin em ambiente controlado.                                                                                                                                                                                           |
+| Teste de aceitação 1                  |  Dado que o administrador acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin.                                                                                                                                                 |
+| Critério de aceite 2 | CR2: O painel deve exibir as principais seções do sistema.                                                                                                                                                                                                                 |
+| Teste de aceitação 2                  |  Dado que o admin acessa o painel, quando a página carrega, então deve visualizar opções como “criar competição”, “equipes”, “ranking” e “relatórios”.                                                                                                                 |
+| Critério de aceite 3 | CR3: O painel deve exibir o estado atual do sistema (com ou sem competição).                                                                                                                                                                                               |
+| Teste de aceitação 3                  |  Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção “Criar competição”.                                                                                                                                                      |
+| Teste de aceitação 4                  | Dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes.                                                                                                                                                     |
+| Critérios INVEST     | Independente: Não depende de sistema de login definido <br> Negociável: Forma de acesso pode ser definida depois <br> Valorosa: Centraliza o controle do sistema <br> Estimável: Escopo claro <br> Pequena: Uma tela principal <br> Testável: Comportamentos bem definidos |
 
 ---
 
-### US02 — Cadastrar Evento
+<h4 align="center">Quadro - US02</h4>
 
-**Persona:**  
-Administrador  
-
-**User Story:**  
-Como administrador, posso cadastrar uma nova competição com data e localização, para estruturar e iniciar um evento de corrida.
-
-### Critérios de Aceite e Testes
-
-- **CR1:** O sistema deve permitir o preenchimento dos dados do evento.  
-  - **TA1:** Dado que o admin acessa o formulário, quando preenche nome, data e local, então os campos devem aceitar os valores corretamente.
-
-- **CR2:** O sistema deve validar campos obrigatórios.  
-  - **TA2:** Dado que há campos vazios, quando o admin tenta criar o evento, então o sistema deve impedir a criação e exibir erro.
-
-- **CR3:** O sistema deve criar o evento com status inicial.  
-  - **TA3:** Dado que os dados são válidos, quando o admin confirma, então o evento deve ser criado com status “não iniciado”.
-
-### Critérios INVEST
-
-- Independente: Sim  
-- Negociável: Campos podem mudar  
-- Valorosa: Base do sistema  
-- Estimável: Simples  
-- Pequena: Formulário  
-- Testável: Validação clara  
+| Identificação        | US02 — Cadastrar Evento                                                                                                                                              |
+| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Persona              | Administrador                                                                                                                                                        |
+| User Story           | Como administrador, posso cadastrar uma nova competição com data e localização, para estruturar e iniciar um evento de corrida.                                      |
+| Critério de aceite 1 | CR1: O sistema deve permitir o preenchimento dos dados do evento.                                                                                                    |
+| Teste de aceitação 1                  |  Dado que o admin acessa o formulário, quando preenche nome, data e local, então os campos devem aceitar os valores corretamente.                                |
+| Critério de aceite 2 | CR2: O sistema deve validar campos obrigatórios.                                                                                                                     |
+| Teste de aceitação 2                  |  Dado que há campos vazios, quando o admin tenta criar o evento, então o sistema deve impedir a criação e exibir erro.                                           |
+| Critério de aceite 3 | CR3: O sistema deve criar o evento com status inicial.                                                                                                               |
+| Teste de aceitação 3                  |  Dado que os dados são válidos, quando o admin confirma, então o evento deve ser criado com status “não iniciado”.                                               |
+| Critérios INVEST     | Independente: Sim <br> Negociável: Campos podem mudar <br> Valorosa: Base do sistema <br> Estimável: Simples <br> Pequena: Formulário <br> Testável: Validação clara |
 
 ---
 
-### US03 — Cadastrar Equipes
+<h4 align="center">Quadro - US03</h4>
 
-**Persona:**  
-Administrador  
-
-**User Story:**  
-Como administrador, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente.
-
-### Critérios de Aceite e Testes
-
-- **CR1:** O sistema deve permitir criar uma equipe.  
-  - **TA1:** Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista.
-
-- **CR2:** O sistema deve permitir adicionar atletas.  
-  - **TA2:** Dado que o admin adiciona atletas, quando salva, então os atletas devem estar vinculados à equipe.
-
-- **CR3:** O sistema deve permitir edição e remoção de atletas.  
-  - **TA3:** Dado que o admin altera dados, quando salva, então as mudanças devem ser refletidas corretamente.
-
-### Critérios INVEST
-
-- Independente: Sim  
-- Negociável: Estrutura pode mudar  
-- Valorosa: Essencial  
-- Estimável: CRUD simples  
-- Pequena: Escopo controlado  
-- Testável: Operações verificáveis  
+| Identificação        | US03 — Cadastrar Equipes                                                                                                                                                            |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Persona              | Administrador                                                                                                                                                                       |
+| User Story           | Como administrador, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente.                                   |
+| Critério de aceite 1 | CR1: O sistema deve permitir criar uma equipe.                                                                                                                                      |
+| Teste de aceitação 1                  |  Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista.                                                                                     |
+| Critério de aceite 2 | CR2: O sistema deve permitir adicionar atletas.                                                                                                                                     |
+| Teste de aceitação 2                  |  Dado que o admin adiciona atletas, quando salva, então os atletas devem estar vinculados à equipe.                                                                             |
+| Critério de aceite 3 | CR3: O sistema deve permitir edição e remoção de atletas.                                                                                                                           |
+| Teste de aceitação 3                  |  Dado que o admin altera dados, quando salva, então as mudanças devem ser refletidas corretamente.                                                                              |
+| Critérios INVEST     | Independente: Sim <br> Negociável: Estrutura pode mudar <br> Valorosa: Essencial <br> Estimável: CRUD simples <br> Pequena: Escopo controlado <br> Testável: Operações verificáveis |
 
 ---
 
-### US04 — Monitoramento em Tempo Real (OCR)
+<h4 align="center">Quadro - US04</h4>
 
-**Persona:**  
-Administrador / Juiz  
-
-**User Story:**  
-Como administrador, posso registrar dados da corrida via OCR a partir de fotos da esteira, para atualizar automaticamente o desempenho das equipes com precisão.
-
-### Critérios de Aceite e Testes
-
-- **CR1:** O sistema deve capturar imagem da esteira.  
-  - **TA1:** Dado que o admin tira uma foto, quando a captura é feita, então a imagem deve ser exibida para preview.
-
-- **CR2:** O sistema deve extrair dados via OCR.  
-  - **TA2:** Dado que a imagem é processada, quando o OCR é executado, então deve retornar km, pace e tempo.
-
-- **CR3:** O sistema deve permitir validação manual.  
-  - **TA3:** Dado que o OCR retorna dados, quando o admin revisa, então deve poder confirmar ou corrigir.
-
-- **CR4:** O sistema deve atualizar o ranking após validação.  
-  - **TA4:** Dado que os dados são confirmados, quando salvos, então o ranking deve ser atualizado em tempo real.
-
-### Critérios INVEST
-
-- Independente: Modular  
-- Negociável: OCR pode evoluir  
-- Valorosa: Funcionalidade central do sistema  
-- Estimável: Complexidade média  
-- Pequena: Divisível em partes  
-- Testável: Entradas e saídas bem definidas  
+| Identificação        | US04 — Monitoramento em Tempo Real (OCR)                                                                                                                                                                                     |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Persona              | Administrador / Juiz                                                                                                                                                                                                         |
+| User Story           | Como administrador, posso registrar dados da corrida via OCR a partir de fotos da esteira, para atualizar automaticamente o desempenho das equipes com precisão.                                                             |
+| Critério de aceite 1 | CR1: O sistema deve capturar imagem da esteira.                                                                                                                                                                              |
+| Teste de aceitação 1                  |  Dado que o admin tira uma foto, quando a captura é feita, então a imagem deve ser exibida para preview.                                                                                                                 |
+| Critério de aceite 2 | CR2: O sistema deve extrair dados via OCR.                                                                                                                                                                                   |
+| Teste de aceitação 2                  | Dado que a imagem é processada, quando o OCR é executado, então deve retornar km, pace e tempo.                                                                                                                         |
+| Critério de aceite 3 | CR3: O sistema deve permitir validação manual.                                                                                                                                                                               |
+| Teste de aceitação 3                  |  Dado que o OCR retorna dados, quando o admin revisa, então deve poder confirmar ou corrigir.                                                                                                                            |
+| Critério de aceite 4 | CR4: O sistema deve atualizar o ranking após validação.                                                                                                                                                                      |
+| Teste de aceitação 4                  |  Dado que os dados são confirmados, quando salvos, então o ranking deve ser atualizado em tempo real.                                                                                                                    |
+| Critérios INVEST     | Independente: Modular <br> Negociável: OCR pode evoluir <br> Valorosa: Funcionalidade central do sistema <br> Estimável: Complexidade média <br> Pequena: Divisível em partes <br> Testável: Entradas e saídas bem definidas |
 
 ---
 
-### US05 — Acessar Relatórios
+<h4 align="center">Quadro - US05</h4>
 
-**Persona:**  
-Administrador  
+| Identificação        | US05 — Acessar Relatórios                                                                                                                                                                 |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Persona              | Administrador                                                                                                                                                                             |
+| User Story           | Como administrador, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências.                                                                        |
+| Critério de aceite 1 | CR1: O sistema deve exibir relatórios da competição.                                                                                                                                      |
+| Teste de aceitação 1                  |  Dado que o admin acessa relatórios, quando seleciona um tipo (visão geral da competição, relatórios por equipe e relatório de inconsistências), então os dados devem ser exibidos corretamente.                                                                        |
+| Critério de aceite 2 | CR2: O sistema deve identificar inconsistências.                                                                                                                                          |
+| Teste de aceitação 2                  |  Dado divergências entre OCR e manual, quando o relatório é gerado, então deve listar inconsistências.                                                                                |
+| Critério de aceite 3 | CR3: O sistema deve permitir exportação de dados.                                                                                                                                         |
+|Teste de aceitação 3                  |  Dado que o admin solicita exportação, quando executa a ação, então deve gerar um arquivo CSV.                                                                                        |
+| Critérios INVEST     | Independente: Sim <br> Negociável: Pode evoluir <br> Valorosa: Gera insights estratégicos <br> Estimável: Complexidade média <br> Pequena: Modular <br> Testável: Resultados verificáveis |
 
-**User Story:**  
-Como administrador, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências.
-
-### Critérios de Aceite e Testes
-
-- **CR1:** O sistema deve exibir relatórios da competição.  
-  - **TA1:** Dado que o admin acessa relatórios, quando seleciona um tipo, então os dados devem ser exibidos corretamente.
-
-- **CR2:** O sistema deve identificar inconsistências.  
-  - **TA2:** Dado divergências entre OCR e manual, quando o relatório é gerado, então deve listar inconsistências.
-
-- **CR3:** O sistema deve permitir exportação de dados.  
-  - **TA3:** Dado que o admin solicita exportação, quando executa a ação, então deve gerar um arquivo CSV.
-
-### Critérios INVEST
-
-- Independente: Sim  
-- Negociável: Pode evoluir  
-- Valorosa: Gera insights estratégicos  
-- Estimável: Complexidade média  
-- Pequena: Modular  
-- Testável: Resultados verificáveis  
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
