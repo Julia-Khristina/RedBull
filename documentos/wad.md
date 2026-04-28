@@ -109,12 +109,23 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-*Liste os RF numerados de forma objetiva e verificável. Cada RF deve poder ser convertido em caso de teste.*
+Os requisitos funcionais abaixo descrevem as funcionalidades essenciais do sistema, organizadas por prioridade e alinhadas aos fluxos operacionais da competição.
+
 
 | ID    | Descrição | Prioridade | Status       |
 |-------|-----------|------------|--------------|
-| RF001 | ...       | Alta       | Implementado |
-| RF002 | ...       | Média      | Planejado    |
+| RF001 | O sistema deve permitir a criação de salas de competição protegidas por uma senha definida pelo administrador. | Alta | Planejado |
+| RF002 | O sistema deve permitir o registro de uma nova competição contendo nome, data e local. | Alta | Planejado |
+| RF003 | O sistema deve permitir o cadastro e edição de equipes, incluindo até 16 atletas por equipe. | Alta | Planejado |
+| RF004 | O sistema deve capturar automaticamente, via OCR, os dados do painel da esteira (distância, pace, velocidade e tempo total) a partir de imagens. | Alta | Planejado |
+| RF005 | O sistema deve permitir a edição manual dos dados capturados via OCR antes do salvamento do checkpoint. | Alta | Planejado |
+| RF006 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total associados a um atleta e a uma equipe. | Alta | Planejado |
+| RF007 | O sistema deve identificar inconsistências entre dados capturados via OCR e valores esperados, sinalizando visualmente ao operador antes do salvamento. | Média | Planejado |
+| RF008 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo a cada novo checkpoint registrado. | Média | Planejado |
+| RF009 | O sistema deve exibir, no painel administrativo, o atleta atualmente em corrida e o próximo atleta previsto para cada equipe. | Média | Planejado |
+| RF010 | O sistema deve permitir o encerramento da competição pelo administrador, bloqueando novos registros de checkpoints após essa ação. | Alta | Planejado |
+| RF011 | O sistema deve exportar os dados da competição em formato CSV contendo todos os checkpoints, timestamps, método de registro e logs de validação. | Baixa | Planejado |
+| RF012 | O sistema deve gerar automaticamente os highlights da competição ao seu encerramento, incluindo métricas individuais, por equipe e gerais. | Baixa | Planejado |
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
