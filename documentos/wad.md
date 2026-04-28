@@ -122,9 +122,9 @@ Os requisitos funcionais abaixo descrevem as funcionalidades essenciais do siste
 | RF006 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total associados a um atleta e a uma equipe. | Alta | Planejado |
 | RF007 | O sistema deve identificar inconsistências entre dados capturados via OCR e valores esperados, sinalizando visualmente ao operador antes do salvamento. | Média | Planejado |
 | RF008 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo a cada novo checkpoint registrado. | Média | Planejado |
-| RF009 | O sistema deve exibir, no painel administrativo, o atleta atualmente em corrida e o próximo atleta previsto para cada equipe. | Média | Planejado |
+| RF009 | O sistema deve exibir, no painel administrativo, o atleta atualmente em corrida e o próximo atleta previsto para cada equipe. | Baixo | Planejado |
 | RF010 | O sistema deve permitir o encerramento da competição pelo administrador, bloqueando novos registros de checkpoints após essa ação. | Alta | Planejado |
-| RF011 | O sistema deve exportar os dados da competição em formato CSV contendo todos os checkpoints, timestamps, método de registro e logs de validação. | Baixa | Planejado |
+| RF011 | O sistema deve exportar os dados da competição em formato CSV contendo todos os checkpoints, timestamps, método de registro e logs de validação. | Alta | Planejado |
 | RF012 | O sistema deve gerar automaticamente os highlights da competição ao seu encerramento, incluindo métricas individuais, por equipe e gerais. | Baixa | Planejado |
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
