@@ -56,7 +56,7 @@
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que possui quatro elementos: forças (pontos internos positivos), fraquezas (pontos internos negativos), ameaças (pontos externos negativos) e oportunidades (pontos externos positivos) (Casarotto, 2019). A partir disso, realizou-se a análise SWOT da Bayer Crop Science, conforme a figura 2.
+A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que possui quatro elementos: forças (pontos internos positivos), fraquezas (pontos internos negativos), ameaças (pontos externos negativos) e oportunidades (pontos externos positivos) (Casarotto, 2019). A partir disso, realizou-se a análise SWOT do RedBull 24 horas, conforme a figura 2.
 
 <p align = "center"> Figura 2 - Análise SWOT</p>
 
@@ -75,6 +75,7 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que pos
 <h3>Fraquezas</h3>
 <ul>
    A principal fraqueza está na impossibilidade de integração automática com as esteiras, limitando a automação e exigindo entrada manual de dados. Além disso, a dinâmica de trocas rápidas entre atletas dificulta registros consistentes e aumenta o risco de erros durante a operação.
+   
 
 </ul>
 
@@ -86,7 +87,7 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que pos
 
 <h3>Ameaças</h3>
 <ul>
-   A dinâmica intensa do evento pode gerar falhas de registro e comprometer resultados. Instabilidades técnicas ou de comunicação também representam risco ao funcionamento contínuo durante as 24 horas. Além disso, métodos alternativos ou a permanência do processo atual podem dificultar a adesão à nova solução.
+   A dinâmica intensa do evento pode gerar falhas de registro e comprometer resultados. Instabilidades técnicas ou de comunicação também representam risco ao funcionamento contínuo durante as 24 horas. Além disso, métodos alternativos ou a permanência do processo atual podem dificultar a adesão à nova solução. É importante destacar também o risco de sobrecarga dos operadores humanos, que pode ocorrer devido a duração do evento.
 
 </ul>
 
