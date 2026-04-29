@@ -81,15 +81,16 @@
 
 A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que podem afetar a implementação e a eficácia de um projeto, considerando a probabilidade, impacto, classificação do risco e o plano de resposta. O objetivo é criar estratégias preventivas que garantam a qualidade da experiência do usuário, além da viabilidade técnica.
 
+
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
 | Falha no Reconhecimento de Imagem  | O sistema não consegue ler/identificar corretamente os dados da esteira. | 70% (Alto)         | Alto        | Crítico      | Treinar o modelo com imagens reais e implementar validação manual.               |
 | Baixa Qualidade das Imagens       | Problemas de luz, movimento e velocidade afetam a captura dos dados.     | 80% (Muito Alto)   | Alto        | Crítico      | Padronizar pontos de captura e usar posição fixa ou aumentar frequência.         |
-| Falha de Conexão com a Internet   | Wi-Fi lento dificulta a coleta de dados.                                  | 50% (Média)        | Alto        | Crítico      | Utilizar Wi-Fi privado para melhorar a velocidade.                                |
-| Sobrecarga do Sistema             | Alto volume de dados pode causar falhas no processamento.                | 45% (Média)        | Alto        | Alto         | Realizar testes de carga antes do evento.                                         |
-| Erro Humano                       | Operadores podem errar devido ao costume com o sistema antigo.           | 40% (Média)        | Médio-Alto  | Alto         | Criar interface intuitiva e oferecer treinamento básico.                          |
-| Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 25% (Baixa)        | Médio       | Médio        | Implementar validação automática e testes prévios.                                |
-| Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 15% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes extensivos antes da entrega.                |
+| Falha de Conexão com a Internet   | Wi-Fi lento dificulta a coleta de dados.                                  | 60% (Média)        | Alto        | Crítico      | Utilizar Wi-Fi privado e incluir testes prévios.                                 |
+| Sobrecarga do Sistema             | Alto volume de dados pode causar falhas no processamento.                | 50% (Média)        | Alto        | Alto         | Realizar testes de carga com alta demanda antes do evento.                        |
+| Erro Humano                       | Operadores podem errar devido ao costume com o sistema antigo.           | 40% (Média)        | Médio-Alto  | Alto         | Criar interface intuitiva e oferecer treinamento prévio.                          |
+| Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30% (Baixa)        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
+| Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
 
 *Registre na matriz os riscos identificados no projeto.*
 
