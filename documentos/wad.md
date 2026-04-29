@@ -161,7 +161,12 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 
 ## 2.2. Personas (sprint 1)
 
-*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+<div align="center">
+  <sub>Imagem 6 - Persona 2 — Bruno Monteiro, Gerente de Field Marketing</sub><br>
+  <img src="../assets/personas/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+</div>
+
 
 ## 2.3. User Stories (sprints 1 a 5)
 
