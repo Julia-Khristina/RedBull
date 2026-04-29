@@ -87,6 +87,11 @@
 
 ## 2.3. User Stories (sprints 1 a 5)
 
+User stories são descrições curtas e objetivas de funcionalidades escritas sob a perspectiva do usuário final. Elas seguem geralmente o formato: “Como [tipo de usuário], quero [ação], para [benefício]”, com foco no valor entregue e não em detalhes técnicos (INTERACTION DESIGN FOUNDATION, 2024). Esse modelo é amplamente utilizado em metodologias ágeis como o Scrum, pois facilita a comunicação entre equipe de desenvolvimento e stakeholders, além de permitir a divisão dos requisitos em partes menores e testáveis. 
+
+A partir das user stories, torna-se necessário compreender quem são os usuários que estão sendo representados. Nesse contexto, entram as personas, que são representações fictícias baseadas em dados reais de usuários. Elas descrevem características como necessidades, objetivos, comportamentos e desafios, permitindo que a equipe tenha uma visão mais concreta do público-alvo (NIELSEN NORMAN GROUP, 2024). Dessa forma, as decisões de design e desenvolvimento passam a ser guiadas por perfis realistas, garantindo maior alinhamento com as expectativas dos usuários e contribuindo para soluções mais eficazes e centradas na experiência.
+
+Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (TYMOSHCHENKO, 2023). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário.
 
 
 <div style="text-align: center;">
@@ -459,13 +464,12 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+- _INTERACTION DESIGN FOUNDATION. User Stories: as a UX designer, I want to embrace agile so that I can make my projects user-centered. Disponível em: https://ixdf.org/literature/article/user-stories-as-a-ux-designer-i-want-to-embrace-agile-so-that-i-can-make-my-projects-user-centered. Acesso em: 28 abr. 2026.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+- NIELSEN NORMAN GROUP. Personas: a study guide. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 28 abr. 2026.
+TYMOSHCHENKO, Karine. User story and acceptance criteria: description and recommendation. Disponível em: https://sdh.global/blog/business/user-story-and-acceptance-criteria-description-and-recommendation/. Acesso em: 28 abr. 2026.
 
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+- WOLOYEM. User story examples for agile teams: a comprehensive 2026 guide. Disponível em: https://www.woloyem.com/blog/user-story-examples-for-agile-teams. Acesso em: 28 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
