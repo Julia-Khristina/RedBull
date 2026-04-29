@@ -143,17 +143,23 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | Muito Baixo | Consequências não impactantes                       |
 
 
+<div align="center">
+  <sub>Imagem 4 - Matriz de riscos </sub><br>
+  <img src="../assets/negocios/matriz de risco.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+</div>
+
 ### Quadro 1 - Matriz de Ameaças
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
-| Falha no Reconhecimento de Imagem  | O sistema não consegue ler/identificar corretamente os dados da esteira. | 70% (Alto)         | Alto        | Crítico      | Treinar o modelo com imagens reais e implementar validação manual.               |
-| Baixa Qualidade das Imagens       | Problemas de luz, movimento e velocidade afetam a captura dos dados.     | 80% (Muito Alto)   | Alto        | Crítico      | Padronizar pontos de captura e usar posição fixa ou aumentar frequência.         |
-| Falha de Conexão com a Internet   | Wi-Fi lento dificulta a coleta de dados.                                  | 60% (Média)        | Alto        | Crítico      | Utilizar Wi-Fi privado e incluir testes prévios.                                 |
-| Sobrecarga do Sistema             | Alto volume de dados pode causar falhas no processamento.                | 50% (Média)        | Alto        | Alto         | Realizar testes de carga com alta demanda antes do evento.                        |
-| Erro Humano                       | Operadores podem errar devido ao costume com o sistema antigo.           | 40% (Média)        | Médio-Alto  | Alto         | Criar interface intuitiva e oferecer treinamento prévio.                          |
-| Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30% (Baixa)        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
-| Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
+| Falha no Reconhecimento de Imagem  | O sistema não consegue ler/identificar corretamente os dados da esteira. | 70%          | Muito Alto        | Crítico      | Treinar o modelo com imagens reais e implementar validação manual.               |
+| Baixa Qualidade das Imagens       | Problemas de luz, movimento e velocidade afetam a captura dos dados.     | 80%   | Muito Alto        | Crítico      | Padronizar pontos de captura e usar posição fixa ou aumentar frequência.         |
+| Falha de Conexão com a Internet   | Wi-Fi lento dificulta a coleta de dados.                                  | 60%         | Alto        | Crítico      | Utilizar Wi-Fi privado e incluir testes prévios.                                 |
+| Sobrecarga do Sistema             | Alto volume de dados pode causar falhas no processamento.                | 50%         | Alto        | Alto         | Realizar testes de carga com alta demanda antes do evento.                        |
+| Erro Humano                       | Operadores podem errar devido ao costume com o sistema antigo.           | 40%         | Médio  | Alto         | Criar interface intuitiva e oferecer treinamento prévio.                          |
+| Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30%        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
+| Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20%         | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
 
 <p align = "center"> Fonte: Elaborado pelo próprio grupo (2026).</p>
 
