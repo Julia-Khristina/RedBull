@@ -74,18 +74,15 @@ A criação de valor do sistema se concentra em quatro eixos principais: reduç�
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
-
 <div align="center">
   <sub>Imagem 3 - Value Proposition Canvas da Solução </sub><br>
   <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
   <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
 </div>
 
-Conforme apresentado na Figura 3, observa-se a relação entre os elementos do perfil do cliente e o mapa de valor.
+#### A. Perfil do Cliente
 
-## A. Perfil do Cliente
-
-## B. Mapa de Valor
+#### B. Mapa de Valor
 
 Os elementos do mapa de valor foram estruturados para responder diretamente às dores identificadas e potencializar os ganhos esperados pelos usuários.
 
