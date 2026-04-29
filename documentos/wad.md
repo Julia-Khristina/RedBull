@@ -126,10 +126,10 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 
 | Porcentagem   | Probabilidade | Descrição                              |
 |--------------|--------------|----------------------------------------|
-| 100% - 80%   | Muito Alto   | Provavelmente vai aconteçer          |
-| 79% - 60%    | Alto         | Muita chance de aconteçer                |
+| 100% - 80%   | Muito Alto   | Provavelmente vai acontecer          |
+| 79% - 60%    | Alto         | Muita chance de acontecer                |
 | 59% - 40%    | Médio        | Pode ser que aconteça                    |
-| 39% - 20%    | Baixo        | Pouca chance de aconteçer                |
+| 39% - 20%    | Baixo        | Pouca chance de acontecer                |
 | 19% - 0%     | Muito Baixo  | Não é provável que aconteça            |
 
 **Impacto do Risco no Projeto**
@@ -143,7 +143,7 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | Muito Baixo | Consequências não impactantes                       |
 
 
-**Matriz de Risco** 
+### Quadro 1 - Matriz de Ameaças
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
@@ -155,9 +155,21 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30% (Baixa)        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
 | Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
 
+<p align = "center"> Fonte: Elaborado pelo próprio grupo (2026).</p>
 
 
-*Registre na matriz os riscos identificados no projeto.*
+### Quadro 2 - Matriz de Oportunidades
+| Oportunidade | Descrição | Probabilidade | Impacto | Classificação | Plano de Resposta |
+|--------------|----------|--------------|--------|--------------|-------------------|
+| Maior precisão nos dados coletados | Substituição do input manual por OCR diminui erros de digitação identificados no risco de erro humano. | 90% | Alto | Alta Prioridade | Garantir uma alternativa de entrada manual com validação para evitar erros caso o OCR falhe. |
+| Tomada de decisão estratégica | Dados em tempo real permitem decisões sobre pace e descanso, mudando a dinâmica competitiva. | 50% | Muito Alto | Alta Prioridade | Desenvolver interface clara e dashboards simples para leitura rápida. |
+| Aumento da eficiência operacional | Redução de carga manual e retrabalho da equipe operacional do evento. | 90% | Muito Alto | Alta Prioridade | Automatizar fluxos e minimizar inputs necessários. |
+| Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% | Medio | Baixa Prioridade | Estruturar sistema modular e escalável. |
+| Menor perda de dados durante o evento | O uso de checkpoints digitais a cada 5 minutos gera uma curva de performance de alta precisão e minimiza a perda de dados. | 50% | Alto | Alta Prioridade | Otimizar o motor de OCR para processar capturas frequentes sem comprometer a estabilidade do sistema. |
+| Geração de insights de dados | Armazenamento estruturado que permite análises de performance por atleta e ritmo para relatórios pós-evento. | 70% | Muito Alto | Média Prioridade | Garantir a facilidade de exportação de dados (ex: CSV) para auditoria e materiais de marketing. |
+
+
+<p align = "center"> Fonte: Elaborado pelo próprio grupo (2026).</p>
 
 ## 2.2. Personas (sprint 1)
 
