@@ -67,9 +67,54 @@ A criação de valor concentra-se em quatro frentes: redução de erros de apura
 6. Critério de sucesso e como será avaliado
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
-*Sem limite de palavras – usar template do curso*
 
-*Elaborar o Value Proposition Canvas com base na proposta de solução definida.*
+O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
+
+
+<div align="center">
+  <sub>Imagem 3 - Value Proposition Canvas da Solução </sub><br>
+  <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+</div>
+
+Conforme apresentado na Figura 3, observa-se a relação entre os elementos do perfil do cliente e o mapa de valor.
+
+## A. Perfil do Cliente
+
+## B. Mapa de Valor
+
+Os elementos do mapa de valor foram estruturados para responder diretamente às dores identificadas e potencializar os ganhos esperados pelos usuários.
+
+**Produtos e Serviços**
+
+A solução proposta oferece os seguintes elementos:
+
+* Plataforma digital de gestão de performance em tempo real
+* Sistema de captura automática via OCR
+* Dashboard para visualização de métricas por equipe
+* Sistema de validação híbrida (automática e manual) dos dados
+
+**Aliviadores de Dores**
+
+A solução atua diretamente na redução das dificuldades enfrentadas pelos usuários:
+
+* Eliminação do registro manual em papel e da digitação em planilhas
+* Redução de erros humanos na coleta e digitação de dados
+* Simplificação do processo de revisão e validação dos dados
+* Centralização das informações em uma única plataforma
+* Aumento da confiabilidade dos dados por meio de validação híbrida
+
+**Criadores de Ganho**
+
+Além de resolver problemas, a solução potencializa ganhos relevantes:
+
+* Geração de informações em tempo real para acompanhamento da competição
+* Disponibilização de uma visão consolidada e organizada dos dados
+* Aumento da produtividade da equipe organizadora
+* Apoio à tomada de decisão baseada em dados
+* Melhoria da experiência dos avaliadores durante o evento 
+
+A partir da análise do Value Proposition Canvas, observa-se que a solução proposta está diretamente alinhada às necessidades dos avaliadores e organizadores, ao automatizar o processo de coleta e registro de dados por meio de OCR, reduzindo erros humanos e esforço operacional. Além disso, a centralização e disponibilização das informações em tempo real caracterizam uma automação do fluxo de dados, proporcionando maior confiabilidade, eficiência e suporte à tomada de decisão, garantindo uma gestão mais precisa e organizada da competição.
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
@@ -455,13 +500,9 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-_Incluir as principais referências de seu projeto, para que seu parceiro possa consultar caso ele se interessar em aprofundar. Um exemplo de referência de livro e de site:_<br>
+OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation: a handbook for visionaries, game changers, and challengers. Hoboken: John Wiley & Sons, 2010.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
-
-INTELI. Adalove. Disponível em: https://adalove.inteli.edu.br/feed. Acesso em: 1 out. 2023 <br>
-SOBRENOME, Nome. Título do site. Disponível em: link do site. Acesso em: Dia Mês Ano
+VIAL, Gregory. Understanding digital transformation: a review and a research agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
 
 # <a name="c9"></a>Anexos
 
