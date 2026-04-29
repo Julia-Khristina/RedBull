@@ -83,6 +83,9 @@
 
 ## 2.2. Personas (sprint 1)
 
+<img src="../assets/personas/persona2.png">
+
+
 *Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
 
 ## 2.3. User Stories (sprints 1 a 5)
