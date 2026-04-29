@@ -263,27 +263,28 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
-*Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem.*
+Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos não funcionais do sistema. Eles definem o comportamento esperado da aplicação, suas restrições e critérios de qualidade, servindo como base para implementação e validação ao longo das sprints.
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-Os requisitos funcionais abaixo descrevem as funcionalidades essenciais do sistema, organizadas por prioridade e alinhadas aos fluxos operacionais da competição.
+| ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
+| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
+| RF001 | O sistema deve permitir a criação de salas de competição protegidas por senha definida pelo usuário                                                                   | Alta       | Planejado |
+| RF002 | O sistema deve permitir o registro de uma competição contendo nome, data e local                                                                                      | Alta       | Planejado |
+| RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 atletas por equipe                                                          | Alta       | Planejado |
+| RF004 | O sistema deve implementar autenticação de usuário único com acesso completo às funcionalidades administrativas do sistema                                            | Alta       | Planejado |
+| RF005 | O sistema deve capturar automaticamente dados do painel da esteira (distância, pace, velocidade e tempo total) utilizando OCR a partir de imagens ou frames contínuos | Alta       | Planejado |
+| RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes da persistência no banco de dados                                                      | Alta       | Planejado |
+| RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Planejado |
+| RF008 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total somente após validação do usuário                                             | Alta       | Planejado |
+| RF009 | O sistema deve identificar inconsistências nos dados capturados via OCR e sinalizar ao usuário antes da validação                                                     | Média      | Planejado |
+| RF010 | O sistema deve atualizar automaticamente o ranking das equipes em tempo quase real a cada checkpoint validado                                                         | Média      | Planejado |
+| RF011 | O sistema deve exibir o atleta em execução e o próximo atleta escalado por equipe no painel administrativo                                                            | Baixa      | Planejado |
+| RF012 | O sistema deve permitir o encerramento da competição pelo usuário, bloqueando novos registros de checkpoints                                                          | Alta       | Planejado |
+| RF013 | O sistema deve exportar os dados da competição em formato CSV, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Planejado |
+| RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
+| RF015 | O sistema deve manter consistência entre os dados registrados e os exibidos no painel em tempo quase real                                                             | Média      | Planejado |
 
-
-| ID    | Descrição | Prioridade | Status       |
-|-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir a criação de salas de competição protegidas por uma senha definida pelo administrador. | Alta | Planejado |
-| RF002 | O sistema deve permitir o registro de uma nova competição contendo nome, data e local. | Alta | Planejado |
-| RF003 | O sistema deve permitir o cadastro e edição de equipes, incluindo até 16 atletas por equipe. | Alta | Planejado |
-| RF004 | O sistema deve capturar automaticamente, via OCR, os dados do painel da esteira (distância, pace, velocidade e tempo total) a partir de imagens. | Alta | Planejado |
-| RF005 | O sistema deve permitir a edição manual dos dados capturados via OCR antes do salvamento do checkpoint. | Alta | Planejado |
-| RF006 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total associados a um atleta e a uma equipe. | Alta | Planejado |
-| RF007 | O sistema deve identificar inconsistências entre dados capturados via OCR e valores esperados, sinalizando visualmente ao operador antes do salvamento. | Média | Planejado |
-| RF008 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo a cada novo checkpoint registrado. | Média | Planejado |
-| RF009 | O sistema deve exibir, no painel administrativo, o atleta atualmente em corrida e o próximo atleta previsto para cada equipe. | Baixo | Planejado |
-| RF010 | O sistema deve permitir o encerramento da competição pelo administrador, bloqueando novos registros de checkpoints após essa ação. | Alta | Planejado |
-| RF011 | O sistema deve exportar os dados da competição em formato CSV contendo todos os checkpoints, timestamps, método de registro e logs de validação. | Alta | Planejado |
-| RF012 | O sistema deve gerar automaticamente os highlights da competição ao seu encerramento, incluindo métricas individuais, por equipe e gerais. | Baixa | Planejado |
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
@@ -296,18 +297,16 @@ Os requisitos funcionais abaixo descrevem as funcionalidades essenciais do siste
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-*Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
-
-| Eixo                     | Requisito | Métrica / Critério | Como atendido |
-|--------------------------|-----------|--------------------|---------------|
-| USAB — Usabilidade       | ...       | ...                | ...           |
-| CONF — Confiabilidade    | ...       | ...                | ...           |
-| DES — Desempenho         | ...       | p95 < X ms         | ...           |
-| SUP — Suportabilidade    | ...       | ...                | ...           |
-| SEG — Segurança          | ...       | ...                | ...           |
-| CAP — Capacidade         | ...       | ...                | ...           |
-| REST — Restrições Design | ...       | ...                | ...           |
-| ORG — Organizacionais    | ...       | ...                | ...           |
+| Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Como atendido                                      |
+| --------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
+| USAB — Usabilidade          | O sistema deve permitir execução das funções principais sem treinamento extensivo                        | ≥ 80% dos usuários concluem tarefas em até 5 minutos | Testes de usabilidade com usuários representativos |
+| CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação do usuário e persistência de checkpoints | Taxa de falha < 1% no processamento de checkpoints   | Logs e testes automatizados                        |
+| DES — Desempenho            | O sistema deve atualizar ranking em tempo quase real após validação                                      | ≤ 500 ms (p95)                                       | Testes de performance no fluxo completo            |
+| SUP — Suportabilidade       | O sistema deve permitir manutenção sem interromper competições                                           | Arquitetura modular (OCR, validação, ranking)        | Estrutura em camadas e versionamento               |
+| SEG — Segurança             | O sistema deve garantir autenticação segura de usuário único com controle de sessão                      | Sessão autenticada válida durante uso do sistema     | Login por senha e gerenciamento de sessão          |
+| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Testes de carga                                    |
+| REST — Restrições de Design | O sistema deve operar com captura via OCR, validação humana e processamento via API centralizada         | Fluxo obrigatório OCR → validação → API → backend    | Arquitetura centralizada                           |
+| ORG — Organizacionais       | O desenvolvimento deve seguir metodologia ágil com entregas por sprint                                   | Versionamento e rastreabilidade por sprint           | Uso de Git e organização de branches               |
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
