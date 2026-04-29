@@ -83,10 +83,12 @@
 
 ## 2.2. Personas (sprint 1)
 
-<img src="../assets/personas/persona2.png">
+<div align="center">
+  <sub>Imagem 7 - Persona 3 — Bruno Monteiro, Gerente de Field Marketing</sub><br>
+  <img src="../assets/personas/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+</div>
 
-
-*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
 
 ## 2.3. User Stories (sprints 1 a 5)
 
