@@ -273,15 +273,9 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 | RF001 | O sistema deve permitir a criação de salas de competição protegidas por senha definida pelo usuário                                                                   | Alta       | Planejado |
 | RF002 | O sistema deve permitir o registro de uma competição contendo nome, data e local                                                                                      | Alta       | Planejado |
 | RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 atletas por equipe                                                          | Alta       | Planejado |
-<<<<<<< HEAD
 | RF004 | O sistema deve permitir autenticação de operadores via UUID para acesso à área administrativa                                    | Alta       | Planejado |
 | RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Planejado |
 | RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes de serem persistidos.                                | Alta       | Planejado |
-=======
-| RF004 | O sistema deve implementar autenticação de usuário único com acesso completo às funcionalidades administrativas do sistema                                            | Alta       | Planejado |
-| RF005 | O sistema deve capturar automaticamente dados do painel da esteira (distância, pace, velocidade e tempo total) utilizando OCR a partir de imagens ou frames contínuos | Alta       | Planejado |
-| RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes da persistência no banco de dados                                                      | Alta       | Planejado |
->>>>>>> 818666e6c6764e98aef8bbc7f0a5e38c2fb74856
 | RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Planejado |
 | RF008 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total somente após validação do usuário                                             | Alta       | Planejado |
 | RF009 | O sistema deve identificar inconsistências nos dados capturados via OCR e sinalizar ao usuário antes da validação                                                     | Média      | Planejado |
@@ -292,10 +286,6 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
 | RF015 | O sistema deve manter consistência entre os dados registrados e os exibidos no painel em tempo quase real                                                             | Média      | Planejado |
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 818666e6c6764e98aef8bbc7f0a5e38c2fb74856
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
 *Numere e redija as RN de forma implementável e testável. Toda RN deve ter pelo menos um teste automatizado associado a partir da sprint 3.*
