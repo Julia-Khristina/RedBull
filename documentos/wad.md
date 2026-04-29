@@ -81,6 +81,28 @@
 
 A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que podem afetar a implementação e a eficácia de um projeto, considerando a probabilidade, impacto, classificação do risco e o plano de resposta. O objetivo é criar estratégias preventivas que garantam a qualidade da experiência do usuário, além da viabilidade técnica.
 
+**Probabilidade de Ocorrência do Risco**
+
+| Porcentagem   | Probabilidade | Descrição                              |
+|--------------|--------------|----------------------------------------|
+| 100% - 80%   | Muito Alto   | Provavelmente vai aconteçer          |
+| 79% - 60%    | Alto         | Muita chance de aconteçer                |
+| 59% - 40%    | Médio        | Pode ser que aconteça                    |
+| 39% - 20%    | Baixo        | Pouca chance de aconteçer                |
+| 19% - 0%     | Muito Baixo  | Não é provável que aconteça            |
+
+**Impacto do Risco no Projeto**
+
+| Impacto     | Descrição                                           |
+|-------------|-----------------------------------------------------|
+| Muito Alto  | Consequências altamente impactantes/irreversíveis   |
+| Alto        | Consequências impactantes e pouco reversíveis       |
+| Médio       | Consequências podem ser impactantes                 |
+| Baixo       | Consequências reversíveis e pouco impactantes       |
+| Muito Baixo | Consequências não impactantes                       |
+
+
+**Matriz de Risco** 
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
@@ -91,6 +113,8 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | Erro Humano                       | Operadores podem errar devido ao costume com o sistema antigo.           | 40% (Média)        | Médio-Alto  | Alto         | Criar interface intuitiva e oferecer treinamento prévio.                          |
 | Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30% (Baixa)        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
 | Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
+
+
 
 *Registre na matriz os riscos identificados no projeto.*
 
