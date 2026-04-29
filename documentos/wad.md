@@ -36,13 +36,9 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-*Preencha com até 300 palavras – sem necessidade de fonte*
-
-*Contextualize aqui a problemática trazida pelo parceiro de projeto.*
-
-*Descreva brevemente a solução desenvolvida para o parceiro de negócios. Descreva os aspectos essenciais para a criação de valor do produto, com o objetivo de ajudar a entender melhor a realidade do cliente e entregar uma solução que está alinhado com o que ele espera.*
-
-*Observe a seção 2 e verifique que ali é possível trazer mais detalhes, portanto seja objetivo aqui. Atualize esta descrição até a entrega final, conforme desenvolvimento.*
+A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é feito de forma manual por operadores que anotam em uma prancheta os momentos de início e término de cada turno, bem como checkpoints periódicos. Esse processo é vulnerável a erros de anotação, distrações e inconsistências, comprometendo a confiabilidade do resultado final. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como pulseiras sincronizadas se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente do registro humano, sem auditabilidade dos dados.
+Diante desse cenário, o projeto propõe uma plataforma web de gestão de performance em tempo real, projetada para uso em iPad ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma captura híbrida: o operador fotografa o visor da esteira e o sistema extrai os dados por meio de reconhecimento óptico de caracteres, com validação humana e alertas de inconsistência. Em paralelo, a plataforma distribui informações estratégicas aos capitães das equipes por meio de URLs únicas e efêmeras, oferecendo ranking ao vivo, status individual de cada atleta e sugestões de tempo de descanso para apoiar as decisões de revezamento durante a prova.
+A criação de valor concentra-se em quatro frentes: redução de erros de apuração, auditabilidade dos registros, eficiência operacional para o time da Red Bull e geração de inteligência estratégica acessível às equipes em tempo real.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
