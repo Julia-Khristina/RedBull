@@ -52,9 +52,41 @@ A criação de valor concentra-se em quatro frentes: redução de erros de apura
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-*Preencha com até 100 palavras – sem necessidade de fonte*
+A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que possui quatro elementos: forças (pontos internos positivos), fraquezas (pontos internos negativos), ameaças (pontos externos negativos) e oportunidades (pontos externos positivos) (Casarotto, 2019). A partir disso, realizou-se a análise SWOT do RedBull 24 horas, conforme a figura 2.
 
-*Apresente uma visão geral da situação do parceiro com base na matriz SWOT (forças, fraquezas, oportunidades e ameaças). Foque na relação com os concorrentes e o posicionamento da instituição.*
+<p align = "center"> Figura 2 - Análise SWOT</p>
+
+<div align = "center">
+  <img src="../assets/analiseSWOT.png"> 
+</div>
+<p align = "center"> Fonte: material produzido pelos autores (2025).</p>
+
+<h3>Forças</h3>
+<ul>
+   A Red Bull possui forte posicionamento em esportes e eventos, o que favorece a credibilidade do projeto e a adoção da solução proposta. Seu investimento em experiências e tecnologias, especialmente voltadas para marketing, cria um ambiente propício para inovação digital. Além disso, o evento já possui engajamento da comunidade e gera métricas valiosas para operação e divulgação. Soma-se a isso uma dinâmica operacional já estruturada, que pode ser otimizada com apoio tecnológico.
+
+
+</ul>
+
+<h3>Fraquezas</h3>
+<ul>
+   A principal fraqueza está na impossibilidade de integração automática com as esteiras, limitando a automação e exigindo entrada manual de dados. Além disso, a dinâmica de trocas rápidas entre atletas dificulta registros consistentes e aumenta o risco de erros durante a operação.
+   
+
+</ul>
+
+<h3>Oportunidades</h3>
+<ul>
+   A digitalização do processo pode reduzir erros e elevar a eficiência operacional do evento. O uso dos dados em dashboards e estatísticas também cria valor para marketing e pós-evento. Além disso, a solução possui potencial de escalabilidade para outros eventos da Red Bull e pode enriquecer a gestão com visualizações e métricas mais precisas.
+
+</ul>
+
+<h3>Ameaças</h3>
+<ul>
+   A dinâmica intensa do evento pode gerar falhas de registro e comprometer resultados. Instabilidades técnicas ou de comunicação também representam risco ao funcionamento contínuo durante as 24 horas. Além disso, métodos alternativos ou a permanência do processo atual podem dificultar a adesão à nova solução. É importante destacar também o risco de sobrecarga dos operadores humanos, que pode ocorrer devido a duração do evento.
+
+</ul>
+
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
