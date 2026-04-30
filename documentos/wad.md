@@ -214,6 +214,54 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
   <sup>Fonte: Material produzido pelos autores (2025).</sup>
 </div>
 
+<div align="center">
+  <sub>Imagem 7 - Persona 3 — Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
+  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
+  <sup>Fonte: Material produzido pelos autores (2025).</sup>
+</div>
+
+<h3>Informações</h3>
+<ul>
+    <li>Idade: 20 anos;</li>
+    <li>Localização: São Paulo - SP</li>
+    <li>Cargo: Atleta do RedBull 24 horas</li>
+    <li>Gênero: Feminino</li>
+</ul>
+
+<h3>Biografia</h3>
+&nbsp; &nbsp; &nbsp; &nbsp; Fernanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando uma das equipes da competição. Apaixonada por corrida e desafios de resistência, ela participa do evento buscando performance, superação e espírito coletivo. Durante a prova, realiza turnos curtos e intensos na esteira, com trocas rápidas que exigem foco total na corrida e pouca margem para interrupções. 
+
+<h3>Objetivos</h3>
+<ul>
+    <li>Ganhar o campeonato </li>
+    <li>Maximizar sua performance e contribuição para a equipe  </li>
+    <li>Garantir que seus quilômetros sejam registrados corretamente</li>
+</ul>
+
+<h3>Necessidades</h3>
+<ul>
+    <li>Confiar no registro manual </li>
+    <li>Visualizar métricas da prova</li>
+    <li>Focar no seu desempenho durante a prova</li>
+    <li>Fazer troca ágil e sem interferências na corrida</li>
+</ul>
+
+<h3>Frustrações</h3>
+<ul>
+    <li>Fadiga física e mental durante a competição</li>
+    <li>Possíveis erros manuais que comprometem o resultado  </li>
+    <li>Trocas em poucos segundos </li>
+    <li>Mudanças frequentes de velocidade dificultam estimativas manuais de desempenho</li>
+</ul>
+
+<h3>Interesses</h3>
+<ul>
+    <li>Que sua quilometragem seja registrada corretamente</li>
+    <li>Acompanhar o desempenho da equipe em tempo real </li>
+    <li>Ganhar a competição </li>
+</ul> <br>
+
+
 
 ## 2.3. User Stories (sprints 1 a 5)
 
