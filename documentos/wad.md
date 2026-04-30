@@ -162,9 +162,17 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 ## 2.2. Personas (sprint 1)
 
 <div align="center">
+  <sub>Imagem 5 - Persona 1 — Marina Costa, Coordenadora Operacional</sub><br>
+  <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento RedBull 24 horas"><br>
+  <sup>Fonte: Material produzido pelos autores (2025).</sup>
+</div>
+
+
+
+<div align="center">
   <sub>Imagem 6 - Persona 2 — Bruno Monteiro, Gerente de Field Marketing</sub><br>
-  <img src="../assets/personas/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
-  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+  <img src="../assets/design/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
+  <sup>Fonte: Material produzido pelos autores (2025).</sup>
 </div>
 
 
