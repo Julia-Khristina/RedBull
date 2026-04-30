@@ -167,7 +167,46 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
   <sup>Fonte: Material produzido pelos autores (2025).</sup>
 </div>
 
+<h3>Informações</h3>
+<ul>
+    <li>Idade: 29 anos;</li>
+    <li>Localização: Rio de Janeiro - RJ</li>
+    <li>Cargo: Coordenadora operacional do evento RedBull 24 horas</li>
+    <li>Gênero: Feminino</li>
+</ul>
 
+<h3>Biografia</h3>
+&nbsp; &nbsp; &nbsp; &nbsp; Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esportivos e ativações de marca, sendo responsável pela organização e execução de dinâmicas em campo. No contexto do Red Bull 24 Horas, acompanha a operação das equipes, monitorando as esteiras e registrando manualmente informações essenciais como entrada e saída dos atletas, quilometragem, pace e os checkpoints gerais da prova de 5 em 5 minutos. 
+
+<h3>Objetivos</h3>
+<ul>
+    <li>Ser reconhecida como uma coordenadora operacional altamente capacitada</li>
+    <li>Garantir registros rápidos </li>
+    <li>Ter visão consolidada do evento em tempo real</li>
+</ul>
+
+<h3>Necessidades</h3>
+<ul>
+    <li>Uma interface simples e rápida para registrar trocas e checkpoints</li>
+    <li>Visualização clara dos dados dos atletas</li>
+    <li>Possibilidade de editar registros em caso de inconsistências</li>
+</ul>
+
+<h3>Frustrações</h3>
+<ul>
+    <li>Pressão operacional nas trocas rápidas entre atletas </li>
+    <li>Dificuldade de consolidar dados em tempo real </li>
+    <li>Dependência de processos manuais </li>
+    <li>Risco de erros ou perda de registros manuais</li>
+</ul>
+
+<h3>Interesses</h3>
+<ul>
+    <li>Tecnologia aplicada à operação</li>
+    <li>Ferramentas práticas e intuitivas para gestão em campo</li>
+    <li>Soluções que aumentem eficiência e confiabilidade</li>
+    <li>Dados e métricas que apoiem tanto a operação quanto performance do evento</li>
+</ul> <br>
 
 <div align="center">
   <sub>Imagem 6 - Persona 2 — Bruno Monteiro, Gerente de Field Marketing</sub><br>
