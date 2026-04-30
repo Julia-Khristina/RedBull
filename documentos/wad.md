@@ -156,16 +156,17 @@ Critérios INVEST | *(Por que é Independente? Por que é Negociável? Por que �
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-## 3.2.2. Diagrama de Casos de Uso
-### 3.2.2 Diagrama de Casos de Uso
+A Figura 1 apresenta o diagrama de casos de uso do Sistema Red Bull 24 Horas, modelando as interações entre os três atores identificados, Administrador / Juiz, Corredor e Sistema OCR, e os principais fluxos do sistema.
 
-A Figura 1 apresenta o diagrama de casos de uso do sistema, evidenciando os atores e as relações <<include>> e <<extend>>.
+Figura 1 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
 
-<p align="center">
-  <img src="assets/diagrama_caso_uso.png" width="700">
-</p>
+![Diagrama de Casos de Uso](../assets/diagrama_caso_uso.png)
 
-<p align="center"><b>Figura 1 – Diagrama de Casos de Uso do Sistema</b></p>
+Fonte: Material produzido pelos autores (2026).
+
+O **Administrador / Juiz** unifica as personas Mariana (Coordenadora Operacional) e Bruno (Gerente de Field Marketing), responsáveis pela operação e supervisão do evento. É o ator com maior número de casos de uso, atuando desde o cadastro inicial da competição até o encerramento e geração de highlights. O **Corredor** representa atletas e capitães das equipes, acessando o sistema via URL única sem autenticação para acompanhar o ranking, o status dos atletas e a calculadora de descanso. O **Sistema OCR**, marcado com o estereótipo «system», é um serviço externo consumido via API que extrai dados das fotos do visor da esteira e alerta inconsistências.
+
+O diagrama emprega relações «include» e «extend» para representar dependências entre casos de uso. O fluxo manual de registro de checkpoint estende o fluxo via OCR como caminho alternativo em caso de falha técnica, e ambos incluem a confirmação humana dos dados antes do salvamento. O alerta de inconsistência estende a confirmação de dados quando há divergência relevante. Ao encerrar a competição, o sistema gera automaticamente os highlights do evento.
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
