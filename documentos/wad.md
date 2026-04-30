@@ -76,7 +76,7 @@ A solução é uma aplicação web que automatiza o registro de dados via OCR, v
 
 4. Forma de utilização da solução
 
-O administrador cadastra a competição e as equipes, e registra os checkpoints durante o evento via OCR ou entrada manual. Corredores e capitães acessam, por link exclusivo, um painel com ranking global, desempenho individual e calculadora de descanso. Ao fim da prova, o administrador consulta o relatório completo com dados exportáveis para análise, impactando em ações estratégicas futuras dos organizadores.
+O administrador cadastra a competição e equipes, e registra checkpoints durante o evento via OCR ou entrada manual. Corredores e capitães acessam, por link exclusivo, um painel com ranking das equipes da edição ao redor do mundo, desempenho individual e calculadora de descanso. Ao fim da prova, o administrador consulta relatório completo com dados exportáveis para análise estratégica futura.
 
 5. Benefícios esperados
 
@@ -84,7 +84,7 @@ A automatização via OCR elimina a principal dor operacional da Red Bull, o reg
 
 6. Critério de sucesso e como será avaliado
 
-O sucesso será avaliado pela redução de erros nos registros em relação ao método atual e pela consistência dos dados gerados. A validação final ocorre com a Red Bull após a aplicação prática, verificando o impacto operacional real da solução e a qualidade das análises produzidas ao longo e após o evento.
+O sucesso será avaliado pela redução de erros nos registros em relação ao método atual e pela consistência dos dados gerados. A proposta é gerar taxa de falha menor que 1% no processamento de checkpoints. A validação ocorre com a Red Bull após aplicação prática, verificando o impacto operacional da solução e qualidade das análises produzidas ao longo e após o evento.
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 *Sem limite de palavras – usar template do curso*
