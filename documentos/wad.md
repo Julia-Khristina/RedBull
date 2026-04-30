@@ -94,13 +94,29 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que pos
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
-*Explique detalhadamente os seguintes aspectos (até 60 palavras por item):*
 1. Problema a ser resolvido
+
+A ausência de automatização no registro de dados dos corredores sobrecarrega os operadores, que precisam preencher manualmente informações a cada cinco minutos ao longo de 24 horas. Esse processo está sujeito a erros de caligrafia e falhas por cansaço, resultando em informações incorretas que comprometem a apuração e as decisões da organização do evento. 
+
 2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
+
+O site oficial do evento ([https://www.redbull.com/se-en/events/24-hours](https://www.redbull.com/se-en/events/24-hours)), compartilhado pela Red Bull no onboarding, serviu como referência de contexto. Nas conversas com o parceiro, ficou evidente a necessidade de automatizar o registro dos checkpoints para reduzir a inserção de dados errôneos ao longo da competição.
+
 3. Solução proposta
+
+A solução é uma aplicação web que automatiza o registro de dados via OCR, visto que, o operador fotografa o display da esteira e o sistema extrai as informações automaticamente. A plataforma também contempla cadastro de equipes e atletas, acompanhamento em tempo real e geração de relatórios com métricas para análise ao final de cada edição.
+
 4. Forma de utilização da solução
+
+O administrador cadastra a competição e equipes, e registra checkpoints durante o evento via OCR ou entrada manual. Corredores e capitães acessam, por link exclusivo, um painel com ranking das equipes da edição ao redor do mundo, desempenho individual e calculadora de descanso. Ao fim da prova, o administrador consulta relatório completo com dados exportáveis para análise estratégica futura.
+
 5. Benefícios esperados
+
+A automatização via OCR elimina a principal dor operacional da Red Bull, o registro manual sujeito a erros. Além disso, a plataforma oferece métricas em tempo real para administradores e atletas, como pace, evolução por hora e consistência de desempenho, gerando elementos estratégicos para validar a edição e orientar decisões para os próximos eventos.
+
 6. Critério de sucesso e como será avaliado
+
+O sucesso será avaliado pela redução de erros nos registros em relação ao método atual e pela consistência dos dados gerados. A proposta é gerar taxa de falha menor que 1% no processamento de checkpoints. A validação ocorre com a Red Bull após aplicação prática, verificando o impacto operacional da solução e qualidade das análises produzidas ao longo e após o evento.
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 
