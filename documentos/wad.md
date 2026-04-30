@@ -36,9 +36,13 @@
 
 # <a name="c1"></a>1. Introdução (sprints 1 a 5)
 
-A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é feito de forma manual por operadores que anotam em uma prancheta os momentos de início e término de cada turno, bem como checkpoints periódicos. Esse processo é vulnerável a erros de anotação, distrações e inconsistências, comprometendo a confiabilidade do resultado final. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como pulseiras sincronizadas se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente do registro humano, sem auditabilidade dos dados.
-Diante desse cenário, o projeto propõe uma plataforma web de gestão de performance em tempo real, projetada para uso em iPad ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma captura híbrida: o operador fotografa o visor da esteira e o sistema extrai os dados por meio de reconhecimento óptico de caracteres, com validação humana e alertas de inconsistência. Em paralelo, a plataforma distribui informações estratégicas aos capitães das equipes por meio de URLs únicas e efêmeras, oferecendo ranking ao vivo, status individual de cada atleta e sugestões de tempo de descanso para apoiar as decisões de revezamento durante a prova.
-A criação de valor concentra-se em quatro frentes: redução de erros de apuração, auditabilidade dos registros, eficiência operacional para o time da Red Bull e geração de inteligência estratégica acessível às equipes em tempo real.
+A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é realizado de forma manual por operadores, que anotam em pranchetas os momentos de início e término de cada turno, além de checkpoints periódicos. Esse processo é suscetível a erros de anotação, distrações humanas e inconsistências, o que compromete a confiabilidade e a rastreabilidade dos resultados finais. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como dispositivos vestíveis sincronizados se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente de registros humanos, sem mecanismos estruturados de auditabilidade dos dados.
+
+Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance em tempo quase real, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Esses dados são submetidos à validação humana, com emissão de alertas em caso de inconsistências, garantindo maior confiabilidade e controle sobre o processo de apuração.
+
+A plataforma é dividida em duas interfaces principais: uma área pública, responsável pela exibição do ranking das equipes atualizado em tempo quase real durante a competição, e uma área privada de operação, acessada exclusivamente por meio de autenticação baseada em UUID. Nesta área restrita, os operadores registram os checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição.
+
+A criação de valor do sistema se concentra em quatro eixos principais: redução de erros no processo de apuração, aumento da confiabilidade e auditabilidade dos dados, ganho de eficiência operacional para a equipe organizadora da Red Bull e disponibilização de informações atualizadas em tempo quase real para acompanhamento público da competição.
 
 # <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
 
@@ -102,18 +106,15 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que pos
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
-
 <div align="center">
   <sub>Imagem 3 - Value Proposition Canvas da Solução </sub><br>
   <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
   <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
 </div>
 
-Conforme apresentado na Figura 3, observa-se a relação entre os elementos do perfil do cliente e o mapa de valor.
+#### A. Perfil do Cliente
 
-## A. Perfil do Cliente
-
-## B. Mapa de Valor
+#### B. Mapa de Valor
 
 Os elementos do mapa de valor foram estruturados para responder diretamente às dores identificadas e potencializar os ganhos esperados pelos usuários.
 
@@ -300,27 +301,27 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
 
-*Esta seção formaliza o que o sistema deve fazer, sob quais regras e com quais qualidades. Atualize a cada sprint conforme os requisitos evoluem.*
+Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos não funcionais do sistema. Eles definem o comportamento esperado da aplicação, suas restrições e critérios de qualidade, servindo como base para implementação e validação ao longo das sprints.
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-Os requisitos funcionais abaixo descrevem as funcionalidades essenciais do sistema, organizadas por prioridade e alinhadas aos fluxos operacionais da competição.
-
-
-| ID    | Descrição | Prioridade | Status       |
-|-------|-----------|------------|--------------|
-| RF001 | O sistema deve permitir a criação de salas de competição protegidas por uma senha definida pelo administrador. | Alta | Planejado |
-| RF002 | O sistema deve permitir o registro de uma nova competição contendo nome, data e local. | Alta | Planejado |
-| RF003 | O sistema deve permitir o cadastro e edição de equipes, incluindo até 16 atletas por equipe. | Alta | Planejado |
-| RF004 | O sistema deve capturar automaticamente, via OCR, os dados do painel da esteira (distância, pace, velocidade e tempo total) a partir de imagens. | Alta | Planejado |
-| RF005 | O sistema deve permitir a edição manual dos dados capturados via OCR antes do salvamento do checkpoint. | Alta | Planejado |
-| RF006 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total associados a um atleta e a uma equipe. | Alta | Planejado |
-| RF007 | O sistema deve identificar inconsistências entre dados capturados via OCR e valores esperados, sinalizando visualmente ao operador antes do salvamento. | Média | Planejado |
-| RF008 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo a cada novo checkpoint registrado. | Média | Planejado |
-| RF009 | O sistema deve exibir, no painel administrativo, o atleta atualmente em corrida e o próximo atleta previsto para cada equipe. | Baixo | Planejado |
-| RF010 | O sistema deve permitir o encerramento da competição pelo administrador, bloqueando novos registros de checkpoints após essa ação. | Alta | Planejado |
-| RF011 | O sistema deve exportar os dados da competição em formato CSV contendo todos os checkpoints, timestamps, método de registro e logs de validação. | Alta | Planejado |
-| RF012 | O sistema deve gerar automaticamente os highlights da competição ao seu encerramento, incluindo métricas individuais, por equipe e gerais. | Baixa | Planejado |
+| ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
+| ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
+| RF001 | O sistema deve permitir a criação de salas de competição protegidas por senha definida pelo usuário                                                                   | Alta       | Planejado |
+| RF002 | O sistema deve permitir o registro de uma competição contendo nome, data e local                                                                                      | Alta       | Planejado |
+| RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 atletas por equipe                                                          | Alta       | Planejado |
+| RF004 | O sistema deve permitir autenticação de operadores via UUID para acesso à área administrativa                                    | Alta       | Planejado |
+| RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Planejado |
+| RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes de serem persistidos.                                | Alta       | Planejado |
+| RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Planejado |
+| RF008 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total somente após validação do usuário                                             | Alta       | Planejado |
+| RF009 | O sistema deve identificar inconsistências nos dados capturados via OCR e sinalizar ao usuário antes da validação                                                     | Média      | Planejado |
+| RF010 | O sistema deve atualizar automaticamente o ranking das equipes em tempo quase real a cada checkpoint validado                                                         | Média      | Planejado |
+| RF011 | O sistema deve exibir o atleta em execução e o próximo atleta escalado por equipe no painel administrativo                                                            | Baixa      | Planejado |
+| RF012 | O sistema deve permitir o encerramento da competição pelo usuário, bloqueando novos registros de checkpoints                                                          | Alta       | Planejado |
+| RF013 | O sistema deve exportar os dados da competição em formato CSV, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Planejado |
+| RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
+| RF015 | O sistema deve manter consistência entre os dados registrados e os exibidos no painel em tempo quase real                                                             | Média      | Planejado |
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
@@ -333,18 +334,16 @@ Os requisitos funcionais abaixo descrevem as funcionalidades essenciais do siste
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-*Preencha os 8 eixos. Cada eixo deve ter ao menos um RNF verificável (com métrica, limite ou critério concreto) ou justificativa explícita de ausência. Evolua do conceitual (sprint 1) ao técnico mensurável (sprint 5).*
-
-| Eixo                     | Requisito | Métrica / Critério | Como atendido |
-|--------------------------|-----------|--------------------|---------------|
-| USAB — Usabilidade       | ...       | ...                | ...           |
-| CONF — Confiabilidade    | ...       | ...                | ...           |
-| DES — Desempenho         | ...       | p95 < X ms         | ...           |
-| SUP — Suportabilidade    | ...       | ...                | ...           |
-| SEG — Segurança          | ...       | ...                | ...           |
-| CAP — Capacidade         | ...       | ...                | ...           |
-| REST — Restrições Design | ...       | ...                | ...           |
-| ORG — Organizacionais    | ...       | ...                | ...           |
+| Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Como atendido                                      |
+| --------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
+| USAB — Usabilidade          | O sistema deve permitir execução das funções principais sem treinamento extensivo                        | ≥ 80% dos usuários concluem tarefas em até 5 minutos | Testes de usabilidade com usuários representativos |
+| CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação do usuário e persistência de checkpoints | Taxa de falha < 1% no processamento de checkpoints   | Logs e testes automatizados                        |
+| DES — Desempenho            | O sistema deve atualizar ranking em tempo quase real após validação                                      | ≤ 500 ms (p95)                                       | Testes de performance no fluxo completo            |
+| SUP — Suportabilidade       | O sistema deve permitir manutenção sem interromper competições                                           | Arquitetura modular (OCR, validação, ranking)        | Estrutura em camadas e versionamento               |
+| SEG — Segurança             | O sistema deve garantir autenticação segura de usuário único com controle de sessão                      | Sessão autenticada válida durante uso do sistema     | Login por senha e gerenciamento de sessão          |
+| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Testes de carga                                    |
+| REST — Restrições de Design | O sistema deve operar com captura via OCR, validação humana e processamento via API centralizada         | Fluxo obrigatório OCR → validação → API → backend    | Arquitetura centralizada                           |
+| ORG — Organizacionais       | O desenvolvimento deve seguir metodologia ágil com entregas por sprint                                   | Versionamento e rastreabilidade por sprint           | Uso de Git e organização de branches               |
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
