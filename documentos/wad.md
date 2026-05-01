@@ -598,11 +598,20 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+
+CASAROTTO, Camila. Como fazer análise SWOT ou FOFA: confira o passo a passo completo com as melhores dicas. [S. l.], 20 dez. 2019. Disponível em: https://rockcontent.com/br/blog/como-fazer-uma-analise-swot/. Acesso em: 23 abr. 2026.
+
+INTERACTION DESIGN FOUNDATION. User Stories: as a UX designer, I want to embrace agile so that I can make my projects user-centered. Disponível em: https://ixdf.org/literature/article/user-stories-as-a-ux-designer-i-want-to-embrace-agile-so-that-i-can-make-my-projects-user-centered. Acesso em: 28 abr. 2026.
+
+NIELSEN NORMAN GROUP. Personas: a study guide. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 28 abr. 2026.
+
 OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation: a handbook for visionaries, game changers, and challengers. Hoboken: John Wiley & Sons, 2010.
+
+TYMOSHCHENKO, Karine. User story and acceptance criteria: description and recommendation. Disponível em: https://sdh.global/blog/business/user-story-and-acceptance-criteria-description-and-recommendation/. Acesso em: 28 abr. 2026.
 
 VIAL, Gregory. Understanding digital transformation: a review and a research agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
 
-CASAROTTO, Camila. Como fazer análise SWOT ou FOFA: confira o passo a passo completo com as melhores dicas. [S. l.], 20 dez. 2019. Disponível em: https://rockcontent.com/br/blog/como-fazer-uma-analise-swot/. Acesso em: 23 abr. 2026.
+WOLOYEM. User story examples for agile teams: a comprehensive 2026 guide. Disponível em: https://www.woloyem.com/blog/user-story-examples-for-agile-teams. Acesso em: 28 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
