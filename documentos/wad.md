@@ -221,6 +221,11 @@ A partir das user stories, torna-se necessário compreender quem são os usuári
 
 Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (TYMOSHCHENKO, 2023). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário. Por exemplo, um critério de aceitação pode ser: “Dado que o usuário adiciona um produto ao carrinho de compras (ambiente digital), quando ele acessa o carrinho, então o item deve ser exibido com o nome, quantidade e preço corretos”.
 
+Além dos critérios de aceitação, há mais uma bússola que norteia a equipe no momento de definir as user stories, garantindo qualidade e relevância ao projeto, que são os critérios INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable). De modo geral, cada US precisa ser independente, ou seja, não deve depender de outras para gerar valor. Negociável, permitindo ajustes conforme o entendimento do projeto evolui, valiosa, entregando benefícios claros ao usuário, estimável, possibilitando que o time dimensione o esforço necessário e gerencie o cronograma de entregas, pequena, para facilitar a implementação e o acompanhamento, e testável, garantindo que seja possível verificar objetivamente se foi concluída com sucesso.
+
+Sendo assim, por meio das user stories, mantém-se o foco no valor gerado ao usuário, além de orientar a priorização das tarefas e facilitar a comunicação entre stakeholders e desenvolvedores. Elas também servem como referência para a definição e compreensão dos requisitos funcionais e não funcionais do projeto, evidenciando as necessidades do usuário por meio de entregas objetivas. Além disso, contribuem para o planejamento iterativo, auxiliam na estimativa de esforço das atividades e permitem a validação contínua das funcionalidades por meio de critérios de aceitação, favorecendo a adaptação do produto conforme o feedback obtido ao longo do desenvolvimento.
+
+A seguir, são apresentadas as histórias de usuário definidas até o momento para o projeto em análise.
 
 <div style="text-align: center;">
   <h4>Quadro 1 - US01</h4>
@@ -603,6 +608,7 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+BEN SALEM, Ahmed. Creating the perfect user story with INVEST criteria. Scrum Master, 2023. Disponível em: Acessar artigo. Acesso em: 30 abr. 2026.
 
 CASAROTTO, Camila. Como fazer análise SWOT ou FOFA: confira o passo a passo completo com as melhores dicas. [S. l.], 20 dez. 2019. Disponível em: https://rockcontent.com/br/blog/como-fazer-uma-analise-swot/. Acesso em: 23 abr. 2026.
 
@@ -617,6 +623,7 @@ TYMOSHCHENKO, Karine. User story and acceptance criteria: description and recomm
 VIAL, Gregory. Understanding digital transformation: a review and a research agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
 
 WOLOYEM. User story examples for agile teams: a comprehensive 2026 guide. Disponível em: https://www.woloyem.com/blog/user-story-examples-for-agile-teams. Acesso em: 28 abr. 2026.
+
 
 # <a name="c9"></a>Anexos
 
