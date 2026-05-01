@@ -83,10 +83,17 @@
 
 ## 2.2. Personas (sprint 1)
 
+Personas são personagens fictícios criados com base em dados plausíveis que representam um tipo de usuário compatível com o projeto. Elas incluem informações como objetivos, necessidades, frustrações e interesses, auxiliando na compreensão do problema e no desenvolvimento da solução.
+
+<h3>Persona 2: Bruno Monteiro</h3>
+<p align = "center"> Figura X - Persona 2</p>
+
 <img src="../assets/personas/persona2.png">
 
+<p align = "center"> Fonte: Material produzido pelos autores (2026)</p>
 
-*Posicione aqui suas Personas em forma de texto markdown com imagens, ou como imagem de template preenchido. Atualize esta seção ao longo do módulo se necessário.*
+
+
 
 ## 2.3. User Stories (sprints 1 a 5)
 
