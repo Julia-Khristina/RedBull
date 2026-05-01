@@ -126,6 +126,31 @@ O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidad
 
 #### A. Perfil do Cliente
 
+Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o perfil em que o cliente já se encontra. Aqui, é possível explorar quais são as dores do cliente, suas tarefas no contexto atual e o que eles buscam ganhar.
+
+**Tarefas do Cliente**
+- Tirar foto da esteira
+- Registrar os dados com papel e caneta
+- Digitar os dados para planilha do google
+- Administrar tempo total por equipe
+- Revisar todos os dados
+- Fazer a apuração
+
+**Dores do Cliente**
+- Processo repetitivo e cansativo
+- Risco de erros humanos
+- Dificuldade de revisão e apuração
+- Falta de confiabilidade
+- Falta de visão geral e consolidada do evento
+
+**Ganhos**
+- Menos demanda para os avaliadores
+- Automatização do registro de dados
+- Redução de erros
+- Maior confiablidade
+- Maior eficiência operacional
+- Visão consolidada e organizada do andamento da competição.
+
 #### B. Mapa de Valor
 
 Os elementos do mapa de valor foram estruturados para responder diretamente às dores identificadas e potencializar os ganhos esperados pelos usuários.
