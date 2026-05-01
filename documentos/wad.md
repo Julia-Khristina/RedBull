@@ -61,33 +61,29 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que pos
 <p align = "center"> Figura 2 - Análise SWOT</p>
 
 <div align = "center">
-  <img src="../assets/analiseSWOT.png"> 
+  <img src="../assets/negocios/analiseSWOT.png"> 
 </div>
 <p align = "center"> Fonte: material produzido pelos autores (2025).</p>
 
-<h3>Forças</h3>
+#### Forças
 <ul>
-   A Red Bull possui forte posicionamento em esportes e eventos, o que favorece a credibilidade do projeto e a adoção da solução proposta. Seu investimento em experiências e tecnologias, especialmente voltadas para marketing, cria um ambiente propício para inovação digital. Além disso, o evento já possui engajamento da comunidade e gera métricas valiosas para operação e divulgação. Soma-se a isso uma dinâmica operacional já estruturada, que pode ser otimizada com apoio tecnológico.
-
+  No contexto do evento Red Bull 24 Horas, destacam-se como forças o investimento contínuo em inovação e ativações de marketing, aliado a uma marca já consolidada no cenário esportivo. Além disso, o evento conta com uma estrutura operacional bem definida, o que facilita a implementação de soluções digitais como diferencial competitivo.
 
 </ul>
 
-<h3>Fraquezas</h3>
+#### Fraquezas
 <ul>
-   A principal fraqueza está na impossibilidade de integração automática com as esteiras, limitando a automação e exigindo entrada manual de dados. Além disso, a dinâmica de trocas rápidas entre atletas dificulta registros consistentes e aumenta o risco de erros durante a operação.
-   
+   Entre as fraquezas revelam-se que a ausência de integração com as esteiras limita a automação da coleta de dados, tornando o processo dependente de registros manuais. Além disso, a baixa consolidação em tempo real dificulta a visualização geral da competição, impactando a confiabilidade das informações durante a operação.
+   </ul>
 
+#### Oportunidades
+<ul>
+   Pensando nas oportunidades, o valor que cerca o marketing, mídia e engajamento do público em redes sociais alinha-se com a digitalização no evento Red Bull 24 Horas que abre espaço para o uso estratégico de dados como big numbers e dashboards. Ademais, a solução também pode ser escalada para outros eventos da Red Bull, acompanhando a tendência de experiências esportivas mais orientadas a dados. Por fim, o crescimento das running crews no Brasil, que são justamente os atletas escolhidos para competir.
 </ul>
 
-<h3>Oportunidades</h3>
+#### Ameaças
 <ul>
-   A digitalização do processo pode reduzir erros e elevar a eficiência operacional do evento. O uso dos dados em dashboards e estatísticas também cria valor para marketing e pós-evento. Além disso, a solução possui potencial de escalabilidade para outros eventos da Red Bull e pode enriquecer a gestão com visualizações e métricas mais precisas.
-
-</ul>
-
-<h3>Ameaças</h3>
-<ul>
-   A dinâmica intensa do evento pode gerar falhas de registro e comprometer resultados. Instabilidades técnicas ou de comunicação também representam risco ao funcionamento contínuo durante as 24 horas. Além disso, métodos alternativos ou a permanência do processo atual podem dificultar a adesão à nova solução. É importante destacar também o risco de sobrecarga dos operadores humanos, que pode ocorrer devido a duração do evento.
+  Entre as ameaças evidenciadas durante o Red Bull 24 Horas, falhas operacionais ao longo das 24 horas podem comprometer os registros da competição. Instabilidades técnicas ou de conexão também representam riscos relevantes. Além disso, a existência de processos alternativos internos pode reduzir a adoção da nova solução proposta.
 
 </ul>
 
@@ -592,6 +588,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation: a handbook for visionaries, game changers, and challengers. Hoboken: John Wiley & Sons, 2010.
 
 VIAL, Gregory. Understanding digital transformation: a review and a research agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
+
+CASAROTTO, Camila. Como fazer análise SWOT ou FOFA: confira o passo a passo completo com as melhores dicas. [S. l.], 20 dez. 2019. Disponível em: https://rockcontent.com/br/blog/como-fazer-uma-analise-swot/. Acesso em: 23 abr. 2026.
 
 # <a name="c9"></a>Anexos
 
