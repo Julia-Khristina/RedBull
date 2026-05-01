@@ -502,11 +502,30 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-*Matriz de cobertura mostrando quais RN e endpoints implementam cada RF.*
+Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTful descritas pela Microsoft Azure Architecture Center, que recomenda o uso de substantivos no plural para nomear recursos, hierarquia de URIs para expressar relações entre entidades, e verbos HTTP como única forma de expressar a ação sobre o recurso (MICROSOFT, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio que o governam e ao contrato HTTP que o implementa.
 
-| RF    | RN associadas | Endpoint    | Método |
-|-------|---------------|-------------|--------|
-| RF001 | RN01, RN02    | `/usuarios` | POST   |
+| RF    | RN associadas | Endpoint                                                      | Método |
+| ----- | ------------- | ------------------------------------------------------------- | ------ |
+| RF001 | RN03          | `/competitions`                                               | POST   |
+| RF002 | —             | `/competitions`                                               | POST   |
+| RF003 | RN01, RN07    | `/competitions/:id/teams`                                     | POST   |
+| RF003 | RN01, RN07    | `/competitions/:id/teams/:teamId`                             | PUT    |
+| RF003 | RN01, RN07    | `/competitions/:id/teams/:teamId`                             | DELETE |
+| RF003 | RN01          | `/competitions/:id/teams/:teamId/athletes`                    | POST   |
+| RF003 | RN01          | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | PUT    |
+| RF003 | RN01          | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | DELETE |
+| RF004 | RN02, RN03    | `/auth/sessions`                                              | POST   |
+| RF005 | RN06          | `/ocr/extractions`                                            | POST   |
+| RF006 | RN04, RN05    | `/ocr/extractions`                                            | POST   |
+| RF007 | RN06, RN12    | `/ocr/extractions/:extractionId`                              | PATCH  |
+| RF008 | RN04, RN05    | `/competitions/:id/checkpoints`                               | POST   |
+| RF009 | RN06          | `/competitions/:id/checkpoints/inconsistencies`               | GET    |
+| RF010 | RN09, RN11    | `/competitions/:id/ranking`                                   | GET    |
+| RF011 | RN07, RN10    | `/competitions/:id/teams/:teamId/runners`                     | GET    |
+| RF012 | RN14          | `/competitions/:id`                                           | PATCH  |
+| RF013 | RN15          | `/competitions/:id/exports`                                   | GET    |
+| RF014 | RN16, RN17    | `/competitions/:id/reports`                                   | GET    |
+| RF015 | RN09, RN11    | `/competitions/:id/ranking`                                   | GET    |
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
@@ -728,6 +747,11 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+
+MICROSOFT. Práticas recomendadas para design de API Web RESTful. In: Azure Architecture Center. [S. l.], 2023. Disponível em: https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design. Acesso em: 1 maio 2026.
+
+LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
+SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
 
 CASAROTTO, Camila. Como fazer análise SWOT ou FOFA: confira o passo a passo completo com as melhores dicas. [S. l.], 20 dez. 2019. Disponível em: https://rockcontent.com/br/blog/como-fazer-uma-analise-swot/. Acesso em: 23 abr. 2026.
 
