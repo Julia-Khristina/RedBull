@@ -129,26 +129,26 @@ O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidad
 Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o perfil em que o cliente já se encontra. Aqui, é possível explorar quais são as dores do cliente, suas tarefas no contexto atual e o que eles buscam ganhar.
 
 **Tarefas do Cliente**
-- Tirar foto da esteira
+- Tirar foto das esteiras durante a competição
 - Registrar os dados com papel e caneta
 - Digitar os dados para planilha do google
-- Administrar tempo total por equipe
-- Revisar todos os dados
-- Fazer a apuração
+- Administrar o tempo total de cada equipe
+- Revisar todos os registros coletados
+- Realizar a apuração final dos resultados
 
 **Dores do Cliente**
 - Processo repetitivo e cansativo
-- Risco de erros humanos
-- Dificuldade de revisão e apuração
-- Falta de confiabilidade
-- Falta de visão geral e consolidada do evento
+- Risco de erros humanos durante a coleta e digitação dos dados
+- Dificuldade na revisão, validação e apuração das informações
+- Incerteza quanto à precisão e consistência dos dados coletados
+- Falta de visão consolidada e organizada do evento
 
 **Ganhos**
 - Menos demanda para os avaliadores
-- Automatização do registro de dados
-- Redução de erros
-- Maior confiablidade
-- Maior eficiência operacional
+- Automatização do processo de registro e processamento de dados
+- Redução de erros operacionais
+- Maior confiablidade e precisão das informações
+- Maior eficiência operacional durante o evento
 - Visão consolidada e organizada do andamento da competição.
 
 #### B. Mapa de Valor
@@ -160,17 +160,17 @@ Os elementos do mapa de valor foram estruturados para responder diretamente às 
 A solução proposta oferece os seguintes elementos:
 
 * Plataforma digital de gestão de performance em tempo real
-* Sistema de captura automática via OCR
-* Dashboard para visualização de métricas por equipe
-* Sistema de validação híbrida (automática e manual) dos dados
+* Sistema de captura de imagens e extração automática de dados por OCR
+* Dashboard para visualização de métricas e desempenho por equipe
+* Sistema de validação híbrida dos dados (automática e manual)
 
 **Aliviadores de Dores**
 
 A solução atua diretamente na redução das dificuldades enfrentadas pelos usuários:
 
 * Eliminação do registro manual em papel e da digitação em planilhas
-* Redução de erros humanos na coleta e digitação de dados
-* Simplificação do processo de revisão e validação dos dados
+* Redução de erros humanos na coleta, registro e processamento dos dados
+* Simplificação do processo de revisão, validação e apuração das informações
 * Centralização das informações em uma única plataforma
 * Aumento da confiabilidade dos dados por meio de validação híbrida
 
@@ -179,10 +179,10 @@ A solução atua diretamente na redução das dificuldades enfrentadas pelos usu
 Além de resolver problemas, a solução potencializa ganhos relevantes:
 
 * Geração de informações em tempo real para acompanhamento da competição
-* Disponibilização de uma visão consolidada e organizada dos dados
+* Geração de uma visão consolidada e organizada dos dados do evento
 * Aumento da produtividade da equipe organizadora
-* Apoio à tomada de decisão baseada em dados
-* Melhoria da experiência dos avaliadores durante o evento 
+* Apoio à gestão operacional por meio de dados confiáveis e consolidados
+* Melhoria da experiência operacional dos avaliadores durante o evento
 
 A partir da análise do Value Proposition Canvas, observa-se que a solução proposta está diretamente alinhada às necessidades dos avaliadores e organizadores, ao automatizar o processo de coleta e registro de dados por meio de OCR, reduzindo erros humanos e esforço operacional. Além disso, a centralização e disponibilização das informações em tempo real caracterizam uma automação do fluxo de dados, proporcionando maior confiabilidade, eficiência e suporte à tomada de decisão, garantindo uma gestão mais precisa e organizada da competição.
 
