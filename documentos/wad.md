@@ -192,7 +192,8 @@ A partir da análise do Value Proposition Canvas, observa-se que a solução pro
 
 A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que podem afetar a implementação e a eficácia de um projeto, considerando a probabilidade, impacto, classificação do risco e o plano de resposta. O objetivo é criar estratégias preventivas que garantam a qualidade da experiência do usuário, além da viabilidade técnica.
 
-**Probabilidade de Ocorrência do Risco**
+
+<p align = "center"> Tabela 1 - Probabilidade de Ocorrência do Risco </p>
 
 | Porcentagem   | Probabilidade | Descrição                              |
 |--------------|--------------|----------------------------------------|
@@ -202,7 +203,10 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | 39% - 20%    | Baixo        | Pouca chance de aconteçer                |
 | 19% - 0%     | Muito Baixo  | Não é provável que aconteça            |
 
-**Impacto do Risco no Projeto**
+<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<br> <br>
+
+<p align = "center"> Tabela 2 - Impacto do Risco no Projeto </p>
 
 | Impacto     | Descrição                                           |
 |-------------|-----------------------------------------------------|
@@ -212,8 +216,11 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | Baixo       | Consequências reversíveis e pouco impactantes       |
 | Muito Baixo | Consequências não impactantes                       |
 
+<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<br> <br>
 
-**Matriz de Risco** 
+
+<p align = "center"> Tabela 3 - Matriz de Risco </p>
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
@@ -225,7 +232,8 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
 | Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30% (Baixa)        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
 | Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
 
-
+<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<br> <br>
 
 *Registre na matriz os riscos identificados no projeto.*
 
@@ -246,223 +254,183 @@ A partir das user stories, torna-se necessário compreender quem são os usuári
 
 Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (TYMOSHCHENKO, 2023). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário. Por exemplo, um critério de aceitação pode ser: “Dado que o usuário adiciona um produto ao carrinho de compras (ambiente digital), quando ele acessa o carrinho, então o item deve ser exibido com o nome, quantidade e preço corretos”.
 
+<p align="center"> Quadro 1 - User Story 1</p>
 
-<div style="text-align: center;">
-  <h4>Quadro 1 - US01</h4>
-</div>
+| Identificação | US01 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada." |
+| **Critério de aceite 1** | CR1: O sistema deve permitir o acesso ao painel do admin em ambiente controlado. **Teste**: Dado que o administrador acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin. |
+| **Critério de aceite 2** | CR2: O painel deve exibir as principais seções do sistema. **Teste**: Dado que o admin acessa o painel, quando a página carrega, então deve visualizar opções como "criar competição", "equipes", "ranking" e "relatórios". |
+| **Critério de aceite 3** | CR3: O painel deve exibir o estado atual do sistema (com ou sem competição). **Teste**: Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção "Criar competição". Além disso, dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes. |
+| Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois o painel do admin pode ser construído sem que o sistema de login ou o ranking estejam finalizados. <br> Negociável: A forma de acesso ao painel e as seções exibidas podem ser redefinidas conforme as necessidades identificadas durante o projeto. <br> Valorosa: Centraliza o controle do sistema, oferecendo ao administrador um ponto único de acesso a todas as funcionalidades da competição. <br> Estimável: Escopo claro e limitado a uma tela principal com exibição condicional de estado. <br> Pequena: Compreende apenas a tela principal do admin e sua lógica de exibição de estado. <br> Testável: Os comportamentos de redirecionamento e exibição condicional são verificáveis objetivamente para cada estado do sistema. |
 
-| Identificação        | US01 — Acessar Painel do Admin                                                                                                                                                                                                                                             |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Administrador                                                                                                                                                                                                                                                              |
-| User Story           | Como administrador, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada.                                                                                                                      |
-| Critério de aceite 1 | CR1: O sistema deve permitir o acesso ao painel do admin em ambiente controlado.                                                                                                                                                                                           |
-| Teste de aceitação 1                  |  Dado que o administrador acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin.                                                                                                                                                 |
-| Critério de aceite 2 | CR2: O painel deve exibir as principais seções do sistema.                                                                                                                                                                                                                 |
-| Teste de aceitação 2                  |  Dado que o admin acessa o painel, quando a página carrega, então deve visualizar opções como “criar competição”, “equipes”, “ranking” e “relatórios”.                                                                                                                 |
-| Critério de aceite 3 | CR3: O painel deve exibir o estado atual do sistema (com ou sem competição).                                                                                                                                                                                               |
-| Teste de aceitação 3                  |  Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção “Criar competição”.                                                                                                                                                      |
-| Teste de aceitação 4                  | Dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes.                                                                                                                                                     |
-| Critérios INVEST     | Independente: Não depende de sistema de login definido <br> Negociável: Forma de acesso pode ser definida depois <br> Valorosa: Centraliza o controle do sistema <br> Estimável: Escopo claro <br> Pequena: Uma tela principal <br> Testável: Comportamentos bem definidos |
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
+<br> <br>
 
----
+<p align = "center"> Quadro 2 - User Story 2</p>
 
-<div style="text-align: center;">
-  <h4>Quadro 2 - US02</h4>
-</div>
-
-| Identificação        | US02 — Cadastrar Evento                                                                                                                                              |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Administrador                                                                                                                                                        |
-| User Story           | Como administrador, posso cadastrar uma nova competição com data e localização, para estruturar e iniciar um evento de corrida.                                      |
-| Critério de aceite 1 | CR1: O sistema deve permitir o preenchimento dos dados do evento.                                                                                                    |
-| Teste de aceitação 1                  |  Dado que o admin acessa o formulário, quando preenche nome, data e local, então os campos devem aceitar os valores corretamente.                                |
-| Critério de aceite 2 | CR2: O sistema deve validar campos obrigatórios.                                                                                                                     |
-| Teste de aceitação 2                  |  Dado que há campos vazios, quando o admin tenta criar o evento, então o sistema deve impedir a criação e exibir erro.                                           |
-| Critério de aceite 3 | CR3: O sistema deve criar o evento com status inicial.                                                                                                               |
-| Teste de aceitação 3                  |  Dado que os dados são válidos, quando o admin confirma, então o evento deve ser criado com status “não iniciado”.                                               |
-| Critérios INVEST     | Independente: Sim <br> Negociável: Campos podem mudar <br> Valorosa: Base do sistema <br> Estimável: Simples <br> Pequena: Formulário <br> Testável: Validação clara |
-
----
-
-<div style="text-align: center;">
-  <h4>Quadro 3 - US03</h4>
-</div>
-
-| Identificação        | US03 — Cadastrar Equipes                                                                                                                                                            |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Administrador                                                                                                                                                                       |
-| User Story           | Como administrador, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente.                                   |
-| Critério de aceite 1 | CR1: O sistema deve permitir criar uma equipe.                                                                                                                                      |
-| Teste de aceitação 1                  |  Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista.                                                                                     |
-| Critério de aceite 2 | CR2: O sistema deve permitir adicionar atletas.                                                                                                                                     |
-| Teste de aceitação 2                  |  Dado que o admin adiciona atletas, quando salva, então os atletas devem estar vinculados à equipe.                                                                             |
-| Critério de aceite 3 | CR3: O sistema deve permitir edição e remoção de atletas.                                                                                                                           |
-| Teste de aceitação 3                  |  Dado que o admin altera dados, quando salva, então as mudanças devem ser refletidas corretamente.                                                                              |
-| Critérios INVEST     | Independente: Sim <br> Negociável: Estrutura pode mudar <br> Valorosa: Essencial <br> Estimável: CRUD simples <br> Pequena: Escopo controlado <br> Testável: Operações verificáveis |
-
----
-
-<div style="text-align: center;">
-  <h4>Quadro 4 - US04</h4>
-</div>
-
-| Identificação        | US04 — Monitoramento em Tempo Real (OCR)                                                                                                                                                                                     |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Administrador / Juiz                                                                                                                                                                                                         |
-| User Story           | Como administrador, posso registrar dados da corrida via OCR a partir de fotos da esteira, para atualizar automaticamente o desempenho das equipes com precisão.                                                             |
-| Critério de aceite 1 | CR1: O sistema deve capturar imagem da esteira.                                                                                                                                                                              |
-| Teste de aceitação 1                  |  Dado que o admin tira uma foto, quando a captura é feita, então a imagem deve ser exibida para preview.                                                                                                                 |
-| Critério de aceite 2 | CR2: O sistema deve extrair dados via OCR.                                                                                                                                                                                   |
-| Teste de aceitação 2                  | Dado que a imagem é processada, quando o OCR é executado, então deve retornar km, pace e tempo.                                                                                                                         |
-| Critério de aceite 3 | CR3: O sistema deve permitir validação manual.                                                                                                                                                                               |
-| Teste de aceitação 3                  |  Dado que o OCR retorna dados, quando o admin revisa, então deve poder confirmar ou corrigir.                                                                                                                            |
-| Critério de aceite 4 | CR4: O sistema deve atualizar o ranking após validação.                                                                                                                                                                      |
-| Teste de aceitação 4                  |  Dado que os dados são confirmados, quando salvos, então o ranking deve ser atualizado em tempo real.                                                                                                                    |
-| Critérios INVEST     | Independente: Modular <br> Negociável: OCR pode evoluir <br> Valorosa: Funcionalidade central do sistema <br> Estimável: Complexidade média <br> Pequena: Divisível em partes <br> Testável: Entradas e saídas bem definidas |
-
----
-
-<div style="text-align: center;">
-  <h4>Quadro 5 - US05</h4>
-</div>
-
-| Identificação        | US05 — Acessar Relatórios                                                                                                                                                                 |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Persona              | Administrador                                                                                                                                                                             |
-| User Story           | Como administrador, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências.                                                                        |
-| Critério de aceite 1 | CR1: O sistema deve exibir relatórios da competição.                                                                                                                                      |
-| Teste de aceitação 1                  |  Dado que o admin acessa relatórios, quando seleciona um tipo (visão geral da competição, relatórios por equipe e relatório de inconsistências), então os dados devem ser exibidos corretamente.                                                                        |
-| Critério de aceite 2 | CR2: O sistema deve identificar inconsistências.                                                                                                                                          |
-| Teste de aceitação 2                  |  Dado divergências entre OCR e manual, quando o relatório é gerado, então deve listar inconsistências.                                                                                |
-| Critério de aceite 3 | CR3: O sistema deve permitir exportação de dados.                                                                                                                                         |
-|Teste de aceitação 3                  |  Dado que o admin solicita exportação, quando executa a ação, então deve gerar um arquivo CSV.                                                                                        |
-| Critérios INVEST     | Independente: Sim <br> Negociável: Pode evoluir <br> Valorosa: Gera insights estratégicos <br> Estimável: Complexidade média <br> Pequena: Modular <br> Testável: Resultados verificáveis |
+| Identificação | US02 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso cadastrar uma nova competição com data e localização, para estruturar e iniciar um evento de corrida." |
+| **Critério de aceite 1** | CR1: O sistema deve permitir o preenchimento dos dados do evento. **Teste**: Dado que o admin acessa o formulário, quando preenche nome, data e local, então os campos devem aceitar os valores corretamente. |
+| **Critério de aceite 2** | CR2: O sistema deve validar campos obrigatórios. **Teste**: Dado que há campos vazios, quando o admin tenta criar o evento, então o sistema deve impedir a criação e exibir erro. |
+| **Critério de aceite 3** | CR3: O sistema deve criar o evento com status inicial. **Teste**: Dado que os dados são válidos, quando o admin confirma, então o evento deve ser criado com status "não iniciado". |
+| Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois o formulário de cadastro pode ser construído de forma isolada. <br> Negociável: Os campos do formulário podem ser revisados conforme necessidade do projeto. <br> Valorosa: É a base do sistema, pois sem um evento cadastrado nenhuma outra funcionalidade pode ser utilizada. <br> Estimável: Escopo claro e limitado a um formulário com validações simples. <br> Pequena: Compreende apenas um formulário de criação de evento. <br> Testável: Validações bem definidas permitem testes objetivos de cada critério. |
 
 <p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 6 - User Story 6</p>
+<p align="center"> Quadro 3 - User Story 3</p>
 
-| Identificação        | US06                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
-| **User Story**       | Como Administrador, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login.                                                                                                                                                                                                                                                                                             |
-| **CR1**              | **Geração automática do UUID:** Ao clicar em "Salvar equipe" no modal de criação, o sistema gera um UUID único e o exibe na tela com um botão "Copiar link". **Testes:** Salvar uma equipe e verificar que o UUID aparece imediatamente; Confirmar que dois cadastros distintos geram UUIDs diferentes; Verificar que o link é acessível publicamente sem autenticação.                                                                                                        |
-| **CR2**              | **Exibição no card da equipe:** O UUID e o botão "Copiar link" ficam visíveis no card da equipe na listagem. **Testes:** Navegar para a tela de Equipes e confirmar que cada card exibe seu UUID; Clicar em "Copiar link" e verificar que o link é copiado corretamente para a área de transferência.                                                                                                                                                                          |
-| **CR3**              | **Persistência durante o evento:** O UUID não expira enquanto o evento estiver ativo. **Testes:** Acessar o link durante o período de evento;                                                                                                                                                                                                                                                                                                                                  |
-| **Critérios INVEST** | **Independente:** não depende de outras US para geração do UUID. **Negociável:** pode ser simplificada e discutida com o parceiro e todos os envolvidos no projeto para refinamento.  **Valiosa:** elimina necessidade de login para a equipe. **Estimável:** fluxo claro de geração de UUID no momento do cadastro. **Pequena:** escopo limitado à geração, exibição e cópia do link. **Testável:** comportamento verificável via criação de equipes e acesso ao link gerado. |
-|                      |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| Identificação | US03 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente." |
+| **Critério de aceite 1** | CR1: O sistema deve permitir criar uma equipe. **Teste**: Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista. |
+| **Critério de aceite 2** | CR2: O sistema deve permitir adicionar atletas. **Teste**: Dado que o admin adiciona atletas à equipe, quando salva, então os atletas devem estar corretamente vinculados à equipe. |
+| **Critério de aceite 3** | CR3: O sistema deve permitir edição e remoção de atletas. **Teste**: Dado que o admin altera ou remove dados de um atleta, quando salva, então as mudanças devem ser refletidas corretamente na equipe. |
+| **Critério de aceite 4** | CR4: Quando não há equipes cadastradas, a tela deve exibir um botão de adição com instrução visual. **Teste**: Dado que o admin acessa /admin/equipes sem nenhuma equipe cadastrada, quando a página carrega, então deve exibir o botão "+ Adicionar equipe" acompanhado de instrução visual, sem exibir uma lista vazia. |
+| Critérios INVEST | Independente: Esta US pode ser desenvolvida sem depender de outras funcionalidades, pois o cadastro de equipes é uma operação isolada. <br> Negociável: A estrutura dos dados da equipe, como campos obrigatórios e opcionais, pode ser ajustada conforme as necessidades do projeto. <br> Valorosa: É essencial para o funcionamento da competição, pois sem equipes e atletas cadastrados nenhuma corrida pode ser realizada. <br> Estimável: Trata-se de um CRUD simples com escopo bem definido. <br> Pequena: Compreende apenas as operações de criação, edição e remoção dentro do cadastro de equipes. <br> Testável: Cada operação de CRUD possui comportamento verificável e resultado esperado claro. |
+
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
+<br> <br>
+
+<p align="center"> Quadro 4 - User Story 4</p>
+
+| Identificação | US04 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências." |
+| **Critério de aceite 1** | CR1: O sistema deve exibir relatórios da competição. **Teste**: Dado que o admin acessa a seção de relatórios, quando seleciona um tipo — visão geral da competição, relatório por equipe ou relatório de inconsistências —, então os dados correspondentes devem ser exibidos corretamente. |
+| **Critério de aceite 2** | CR2: O sistema deve identificar e listar inconsistências. **Teste**: Dado que existem divergências entre os dados capturados via OCR e os inseridos manualmente, quando o relatório de inconsistências é gerado, então o sistema deve listar todas as ocorrências identificadas. |
+| **Critério de aceite 3** | CR3: O sistema deve permitir a exportação dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo CSV com os dados correspondentes. |
+| Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o administrador, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes — exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
 
 <p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 7 - User Story 7</p>
+<p align="center"> Quadro 5 - User Story 5</p>
 
-| Identificação        | US07                                                                                                                                                                                                                                                                                                                                                     |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                            |
-| **User Story**       | Como Administrador, posso acessar a aba de Equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e atletas da competição.                                                                                                                                                                                  |
-| **CR1**              | **Navegação pelo menu fixo:** O menu fixo exibe o item "Equipes" em todas as telas admin. Ao clicar, o sistema navega para /admin/equipes. **Testes:** Estar em qualquer tela admin e clicar em "Equipes"; Confirmar redirecionamento para /admin/equipes; Verificar que o item fica destacado como ativo no menu.                                       |
-| **CR2**              | **Acesso pelo card da Home:** O card "Gerenciar equipes" na Home navega para a tela de Gestão de Equipes ao ser clicado. **Testes:** Clicar no card "Gerenciar equipes" na Home; Confirmar navegação para /admin/equipes;                                                                                                                                |
-| **CR3**              | **Estado sem equipes:** Quando não há equipes cadastradas, a tela exibe um botão "＋ Adicionar equipe" com instrução visual. **Testes:** Acessar /admin/equipes com zero equipes cadastradas; Confirmar exibição do botão e instrução visual; Confirmar ausência de lista vazia.                                                                          |
-| **Critérios INVEST** | **Independente:** navegação não depende de outros fluxos. **Negociável:** atalhos e ícones do menu podem ser ajustados. **Valiosa:** centraliza o gerenciamento de equipes com acesso rápido. **Estimável:** padrão de navegação bem definido. **Pequena:** limitada à navegação e exibição da tela. **Testável:** rotas e estados de tela verificáveis. |
+| Identificação | US05 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login." |
+| **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o administrador clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar link". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
+| **Critério de aceite 2** | CR2: O UUID e o botão "Copiar link" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar link". Além disso, dado que o admin clica em "Copiar link", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
+| **Critério de aceite 3** | CR3: O UUID não deve expirar enquanto o evento estiver ativo. **Teste**: Dado que o evento está em andamento, quando o link gerado é acessado, então a página deve carregar corretamente. |
+| Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois a geração do UUID ocorre de forma isolada no momento do cadastro da equipe. <br> Negociável: A implementação pode ser simplificada ou refinada em conjunto com o parceiro e os demais envolvidos no projeto. <br> Valorosa: Elimina a necessidade de login para a equipe, facilitando o acesso ao painel sem barreiras de autenticação. <br> Estimável: O fluxo de geração do UUID no momento do cadastro é claro e bem delimitado. <br> Pequena: Escopo limitado à geração, exibição e cópia do link. <br> Testável: O comportamento é verificável via criação de equipes e acesso ao link gerado. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 8 - User Story 8</p>
+<p align="center"> Quadro 6 - User Story 6</p>
 
-| Identificação        | US08                                                                                                                                                                                                                                                                                                                                                                              |
-| -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                                                     |
-| **User Story**       | Como Administrador, posso clicar no botão "Acessar competição" no card de uma equipe, para abrir o painel operacional completo da equipe (Tela de Checkpoint) e gerenciar os registros em tempo real.                                                                                                                                                                             |
-| **CR1**              | **Abertura do painel operacional:** Ao clicar em "Acessar competição" no card da equipe, o sistema navega para /admin/equipes/operacional com o painel completo da equipe selecionada. **Testes:** Clicar em "Acessar competição" nos dois cards e confirmar que o painel exibe os dados da equipe correta.                                                                       |
-| **CR2**              | **Conteúdo do painel:** O painel exibe a área de controle do juiz (seleção de atleta e status), o fluxo de registro de checkpoint (OCR e manual) e a tabela de dados da equipe. **Testes:** Abrir o painel e confirmar presença dos três blocos; Verificar que o dropdown de atletas lista todos os membros da equipe selecionada.                                                |
-| **Critérios INVEST** | **Independente:** depende apenas do cadastro prévio da equipe. **Negociável:** layout do painel pode ser reorganizado. **Valiosa:** é a tela operacional principal da competição. **Estimável:** tela com escopo bem delimitado pela especificação. **Pequena:** US limitada ao acesso e carregamento do painel. **Testável:** navegação e presença dos componentes verificáveis. |
+| Identificação | US06 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso acessar a aba de equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e atletas da competição." |
+| **Critério de aceite 1** | CR1: O menu fixo deve exibir o item "Equipes" em todas as telas do admin e redirecionar corretamente. **Teste**: Dado que o admin está em qualquer tela do sistema, quando clica em "Equipes" no menu fixo, então deve ser redirecionado para /admin/equipes e o item deve ficar destacado como ativo no menu. |
+| **Critério de aceite 2** | CR2: O card "Gerenciar equipes" na Home deve redirecionar para a tela de gestão de equipes. **Teste**: Dado que o admin está na Home, quando clica no card "Gerenciar equipes", então deve ser redirecionado para /admin/equipes. |
+| Critérios INVEST | Independente: Esta US não depende de outros fluxos, pois a navegação até a tela de equipes pode ser desenvolvida de forma isolada. <br> Negociável: Os atalhos, ícones e rótulos do menu podem ser ajustados conforme necessidade do projeto. <br> Valorosa: Centraliza o gerenciamento de equipes e oferece acesso rápido por dois pontos de entrada distintos. <br> Estimável: O padrão de navegação é bem definido e de complexidade baixa. <br> Pequena: Escopo limitado à navegação entre telas por dois pontos de entrada distintos, sem envolver lógica de exibição de conteúdo ou estado da listagem. <br> Testável: As rotas e os estados de tela são verificáveis objetivamente. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 9 - User Story 9</p>
+<p align="center"> Quadro 7 - User Story 7</p>
 
-| Identificação        | US09                                                                                                                                                                                                                                                                                                                                                         |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                                |
-| **User Story**       | Como Administrador/Juiz, posso selecionar o atleta ativo na tela de Checkpoint, para controlar com precisão quem está em corrida.                                                                                                                                                                                                                            |
-| **CR1**              | **Seleção de atleta via dropdown:** O dropdown exibe todos os atletas da equipe com seu status atual ao lado do nome. **Testes:** Abrir o dropdown e confirmar listagem de todos os atletas; Verificar que o status (Em corrida / Em descanso / Pronto para entrar) aparece ao lado de cada nome.                                                            |
-| **CR2**              | **Atualização de status:** Os botões de status são atualizados automaticamente após a seleção do juiz. O botão "Trocar atleta" abre o fluxo de troca: seleciona o próximo atleta, confirma entrada nos sistema automaticamente. **Testes:** Confirmar que o atleta anterior tem status alterado para "Em descanso" e o atual para "Em corrida".              |
-| **Critérios INVEST** | **Independente:** funciona independente do fluxo OCR. **Negociável:** número de status possíveis pode ser expandido. **Valiosa:** garante controle preciso da operação durante a prova. **Estimável:** fluxo de seleção e troca bem definido. **Pequena:** limitada ao controle de atleta, sem registro de performance. **Testável:** estados  verificáveis. |
+| Identificação | US07 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso clicar no botão 'Acessar competição' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros em tempo real." |
+| **Critério de aceite 1** | CR1: O sistema deve navegar para o painel operacional da equipe selecionada ao clicar em "Acessar competição". **Teste**: Dado que o admin clica em "Acessar competição" no card de uma equipe, quando a navegação ocorre, então o sistema deve exibir o painel em /admin/equipes/operacional com os dados da equipe correta. |
+| **Critério de aceite 2** | CR2: O painel operacional deve conter os três blocos definidos na especificação. **Teste**: Dado que o admin abre o painel operacional, quando a página carrega, então devem estar presentes a área de controle do juiz, o fluxo de registro de checkpoint e a tabela de dados da equipe. Além disso, o dropdown de atletas deve listar todos os membros da equipe selecionada. |
+| Critérios INVEST | Independente: Esta US depende apenas do cadastro prévio da equipe, sendo desenvolvível de forma isolada após essa etapa. <br> Negociável: O layout e a organização dos blocos do painel podem ser reorganizados conforme feedback do parceiro. <br> Valorosa: É a tela operacional principal da competição, centralizando o controle em tempo real. <br> Estimável: Escopo bem delimitado pela especificação, com dois critérios de aceite claros. <br> Pequena: Limitada ao acesso e ao carregamento correto do painel operacional. <br> Testável: A navegação e a presença dos componentes são verificáveis objetivamente. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 10 - User Story 10</p>
+<p align="center"> Quadro 8 - User Story 8</p>
 
-| Identificação        | US10                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| -------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| **User Story**       | Como Administrador, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do atleta.                                                                                                                                                                                                                                                  |
-| **CR1**              | **Captura e extração OCR:** O botão "Tirar foto da esteira" abre a câmera integrada do dispositivo. Após captura, o sistema extrai distância (km), pace (min/km) e tempo total. A imagem capturada é exibida em preview ao lado dos dados extraídos. **Testes:** Capturar foto de esteira com dados legíveis e confirmar extração correta dos três campos; Verificar exibição do preview da imagem ao lado dos dados.                        |
-| **CR2**              | **Alerta de discrepância:** Se o valor extraído divergir da média histórica do atleta ou da meta da prova, o campo é marcado em vermelho com mensagem de alerta. **Testes:** Simular leitura com valor discrepante e confirmar marcação em vermelho;  Simular valor dentro do esperado e confirmar ausência de alerta.                                                                                                                       |
-| **CR3**              | **Validação e confirmação:** O juiz confirma ou corrige manualmente após revisar a foto. O sistema registra se o dado foi "confirmado via OCR" ou "corrigido manualmente" (log de auditoria). **Testes:** Confirmar dado OCR e verificar log com método "OCR";  Corrigir dado e verificar log com método "manual".                                                                                                                           |
-| **Critérios INVEST** | **Independente:** fluxo OCR é autossuficiente; o modo manual é US separada. **Negociável:** engine de OCR (Google Vision, AWS Textract) e limiar de discrepância são ajustáveis. **Valiosa:** elimina erros de digitação e agiliza o registro. **Estimável:** fluxo de 5 etapas bem especificado. **Pequena:** limitada à captura, extração e confirmação de um checkpoint. **Testável:** dados extraídos e logs verificáveis objetivamente. |
+| Identificação | US08 |
+---| ---
+| **Persona** | Administrador / Juiz |
+| **User Story** | "Como administrador/juiz, posso selecionar o atleta ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
+| **Critério de aceite 1** | CR1: O dropdown deve exibir todos os atletas da equipe com seu status atual. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os atletas da equipe devem aparecer com seu respectivo status — Em corrida, Em descanso ou Pronto para entrar — visível ao lado do nome. |
+| **Critério de aceite 2** | CR2: Os botões de status devem ser atualizados automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ter seu status alterado para "Em descanso" e o atleta atual para "Em corrida". |
+| Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O número de status possíveis e o fluxo de troca podem ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 11 - User Story 11</p>
+<p align="center"> Quadro 9 - User Story 9</p>
 
-| Identificação        | US11                                                                                                                                                                                                                                                                                                                                                                                                               |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **User Story**       | Como Administrador, posso registrar um checkpoint manualmente digitando os dados quando a câmera falhar ou a foto estiver ilegível, para que nenhum registro seja perdido por falha técnica.                                                                                                                                                                                                                       |
-| **CR1**              | **Formulário de entrada manual:** O modo manual disponibiliza campos de distância (km), pace (min/km) e tempo total, com botão "Salvar registro manual". **Testes:** Preencher todos os campos e salvar; Confirmar que os dados são salvos corretamente no checkpoint da equipe/atleta.                                                                                                                            |
-| **CR2**              | **Identificação do método:** O sistema registra automaticamente que o checkpoint foi inserido em modo manual, distinguindo-o dos registros OCR no log de auditoria. **Testes:**  Salvar registro manual e verificar flag "manual" no log.                                                                                                                                                                          |
-| **Critérios INVEST** | **Independente:** é o caminho de contingência, independente do fluxo OCR. **Negociável:** campos disponíveis no modo manual podem ser expandidos. **Valiosa:** garante continuidade operacional em falhas técnicas. **Estimável:** formulário simples com campos definidos. **Pequena:** escopo limitado à entrada e salvamento manual de um checkpoint. **Testável:** dados salvos e flag de método verificáveis. |
+| Identificação | US09 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do atleta." |
+| **Critério de aceite 1** | CR1: O sistema deve capturar a imagem e extrair os dados via OCR. **Teste**: Dado que o admin clica em "Tirar foto da esteira", quando a câmera integrada é aberta e a foto é capturada, então o sistema deve exibir o preview da imagem ao lado dos dados extraídos — distância (km), pace (min/km) e tempo total. |
+| **Critério de aceite 2** | CR2: O sistema deve alertar visualmente quando o valor extraído apresentar discrepância. **Teste**: Dado que o OCR extrai um valor que diverge da média histórica do atleta ou da meta da prova, quando o dado é exibido, então o campo deve ser marcado em vermelho com mensagem de alerta. Além disso, dado que o valor está dentro do esperado, quando exibido, então nenhum alerta deve ser apresentado. |
+| **Critério de aceite 3** | CR3: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
+| Critérios INVEST | Independente: O fluxo OCR é autossuficiente; o modo de entrada manual é tratado como US separada. <br> Negociável: A engine de OCR utilizada e o limiar de discrepância podem ser ajustados conforme os resultados obtidos em testes. <br> Valorosa: Elimina erros de digitação e agiliza o registro de checkpoints durante a competição. <br> Estimável: O fluxo de cinco etapas — captura, extração, alerta, revisão e confirmação — está bem especificado. <br> Pequena: Limitada à captura, extração e confirmação de um único checkpoint. <br> Testável: Os dados extraídos, os alertas de discrepância e os logs de auditoria são verificáveis objetivamente. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 12 - User Story 12</p>
+<p align="center"> Quadro 10 - User Story 10</p>
 
-| Identificação        | US12                                                                                                                                                                                                                                                                                                                                                                                                       |
-| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**          | Administrador                                                                                                                                                                                                                                                                                                                                                                                              |
-| **User Story**       | Como Administrador, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza automaticamente a cada 5 minutos, para acompanhar a evolução da performance sem precisar recarregar a página.                                                                                                                                                                                          |
-| **CR1**              | **Dados exibidos:** A tabela apresenta: últimos checkpoints registrados (com timestamp e atleta), pace médio atualizado, distância total acumulada da equipe e tempo total ativo. **Testes:** Registrar um checkpoint e confirmar que aparece na tabela; Verificar que todos os quatro campos estão presentes e com valores coerentes.                                                                     |
-| **CR2**              | **Auto-refresh a cada 5 minutos:** A tabela é atualizada automaticamente sem ação do usuário, refletindo novos registros. **Testes:** Registrar um checkpoint e aguardar até 5 minutos; Confirmar que o novo registro aparece sem recarregar a página; Verificar indicador visual ou timestamp da última atualização.                                                                                      |
-| **CR3**              | **Consistência dos dados:** Os valores de pace médio e distância total são recalculados a cada atualização com base em todos os checkpoints da sessão. **Testes:** Registrar múltiplos checkpoints e verificar que o pace médio é a média ponderada correta; Confirmar que a distância total é a soma dos checkpoints registrados.                                                                         |
-| **Critérios INVEST** | **Independente:** depende apenas dos checkpoints já registrados. **Negociável:** intervalo de atualização pode ser configurável. **Valiosa:** oferece visão consolidada em tempo real para o juiz. **Estimável:** lógica de auto-refresh e cálculo de métricas bem definida. **Pequena:** limitada à exibição e atualização da tabela. **Testável:** dados e timing de refresh verificáveis objetivamente. |
+| Identificação | US10 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso registrar um checkpoint manualmente digitando os dados quando a câmera falhar ou a foto estiver ilegível, para que nenhum registro seja perdido por falha técnica." |
+| **Critério de aceite 1** | CR1: O modo manual deve disponibilizar um formulário com os campos de distância, pace e tempo total. **Teste**: Dado que o admin acessa o modo de entrada manual, quando preenche os campos de distância (km), pace (min/km) e tempo total e clica em "Salvar registro manual", então os dados devem ser salvos corretamente no checkpoint da equipe e do atleta. |
+| **Critério de aceite 2** | CR2: O sistema deve registrar automaticamente que o checkpoint foi inserido em modo manual. **Teste**: Dado que o admin salva um registro pelo modo manual, quando o dado é persistido, então o log de auditoria deve exibir a flag "manual" para distingui-lo dos registros inseridos via OCR. |
+| Critérios INVEST | Independente: É o caminho de contingência do sistema e pode ser desenvolvido de forma independente do fluxo OCR. <br> Negociável: Os campos disponíveis no modo manual podem ser expandidos conforme necessidade identificada durante o projeto. <br> Valorosa: Garante continuidade operacional em situações de falha técnica, evitando perda de registros durante a competição. <br> Estimável: Trata-se de um formulário simples com campos bem definidos e comportamento claro. <br> Pequena: Escopo limitado à entrada e ao salvamento manual de um único checkpoint. <br> Testável: Os dados salvos e a flag de método no log de auditoria são verificáveis objetivamente. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 13 - User Story 13</p>
+<p align="center"> Quadro 11 - User Story 11</p>
 
-| Identificação        | US13                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**          | Corredor                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| **User Story**       | Como Corredor, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe em tempo real diretamente pelo link recebido do administrador.                                                                                                                                                                                                                             |
-| **CR1**              | **Acesso público sem autenticação:** O painel é acessível a qualquer pessoa com o link, sem exigir cadastro ou login. **Testes:** Acessar o link em modo anônimo/aba privada e confirmar que a tela carrega; Tentar acessar um UUID inválido e confirmar mensagem de erro; Confirmar que não há campos de login ou solicitação de senha.                                                                                      |
-| **CR2**              | **Carregamento dos dados da equipe:** A tela exibe os dados correspondentes à equipe vinculada ao UUID acessado. **Testes:**  Acessar links de duas equipes diferentes e confirmar que cada um exibe dados da equipe correta; Confirmar que dados de outras equipes não são expostos.                                                                                                                                         |
-| **Critérios INVEST** | **Independente:** depende apenas do UUID gerado pelo admin. **Negociável:** tempo de expiração do link pode ser configurável por versão futura. **Valiosa:** elimina barreiras de acesso para corredores e torcida. **Estimável:** comportamento de rota pública bem definido. **Pequena:** limitada ao acesso e carregamento inicial da tela. **Testável:** acesso sem login e exibição de dados verificáveis objetivamente. |
-|                      |                                                                                                                                                                                                                                                                                                                                                                                                                               |
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
+| Identificação | US11 |
+---| ---
+| **Persona** | Administrador |
+| **User Story** | "Como administrador, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza automaticamente a cada 5 minutos, para acompanhar a evolução da performance sem precisar recarregar a página." |
+| **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados com timestamp e atleta, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
+| **Critério de aceite 2** | CR2: A tabela deve ser atualizada automaticamente a cada 5 minutos sem ação do usuário. **Teste**: Dado que um novo checkpoint é registrado, quando o intervalo de 5 minutos é atingido, então o novo registro deve aparecer na tabela sem que o admin recarregue a página. Além disso, deve ser exibido um indicador visual ou timestamp da última atualização. |
+| **Critério de aceite 3** | CR3: Os valores de pace médio e distância total devem ser recalculados corretamente a cada atualização. **Teste**: Dado que múltiplos checkpoints foram registrados, quando a tabela é atualizada, então o pace médio deve corresponder à média ponderada correta e a distância total deve ser a soma de todos os checkpoints da sessão. |
+| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: O intervalo de atualização de 5 minutos pode ser tornado configurável em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
+
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
-<p align = "center"> Quadro 14 - User Story 14</p>
+<p align="center"> Quadro 12 - User Story 12</p>
 
-| Identificação        | US14                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**          | Corredor                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
-| **User Story**       | Como Corredor, posso visualizar no painel da equipe o ranking global, o status individual de cada atleta, a calculadora de descanso inteligente e o botão de compartilhamento, para tomar decisões estratégicas durante a competição.                                                                                                                                                                                                                                                                                                                                                                              |
-| **CR1**              | **Ranking global:** O painel exibe a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior. O ranking é atualizado a cada 1 hora. **Testes:** Acessar o painel e confirmar exibição dos três campos de posicionamento; Aguardar 1 hora e confirmar atualização automática do ranking; Verificar que o ranking não atualiza antes de 1 hora.                                                                                                                                                                                                                            |
-| **CR2**              | **Status por atleta:** O painel exibe para cada atleta: pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual (Correndo / Descansando / Pronto para entrar). **Testes:** Confirmar que todos os seis campos estão presentes para cada atleta; Registrar um checkpoint via admin e verificar que os dados do atleta atualizam no painel.                                                                                                                                                                                       |
-| **CR3**              | **Calculadora de descanso inteligente:** A calculadora exibe o indicador visual (barra verde/amarela/vermelha), o tempo recomendado de descanso em minutos e uma contagem regressiva. O cálculo considera pace da última corrida, duração do último turno e parâmetros do evento. **Testes:** Verificar que o indicador muda de cor conforme o status do atleta; Confirmar exibição do tempo recomendado e da contagem regressiva; Simular atleta com corrida recente e intensa e confirmar barra vermelha com alerta.                                                                                             |
-| **CR4**              | **Compartilhamento:** O botão "Compartilhar ranking" gera um link simplificado com apenas o leaderboard (sem dados sensíveis dos atletas), otimizado para WhatsApp e redes sociais, com preview da posição atual. **Testes:**  Clicar em "Compartilhar ranking" e verificar geração do link simplificado; Acessar o link gerado e confirmar ausência de dados sensíveis; Verificar que o preview exibe a posição atual da equipe.                                                                                                                                                                                  |
-| **Critérios INVEST** | **Independente:** o painel público é autossuficiente e consome dados gerados pelo fluxo admin. **Negociável:** frequência de atualização do ranking e métricas exibidas por atleta podem evoluir. **Valiosa:** transforma dados brutos em inteligência estratégica para a equipe durante a prova. **Estimável:** quatro blocos de funcionalidade com comportamentos bem definidos. **Pequena:** pode ser decomposta por bloco (ranking, status, calculadora, compartilhamento) se necessário. **Testável:** todos os campos, comportamentos de atualização e lógica da calculadora são verificáveis objetivamente. |
+| Identificação | US12 |
+---| ---
+| **Persona** | Corredor |
+| **User Story** | "Como corredor, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe em tempo real diretamente pelo link recebido do administrador." |
+| **Critério de aceite 1** | CR1: O painel deve ser acessível publicamente sem exigir autenticação. **Teste**: Dado que qualquer pessoa acessa o link em modo anônimo ou aba privada, quando a URL é carregada, então a tela deve ser exibida corretamente sem campos de login ou solicitação de senha. Além disso, dado que um UUID inválido é acessado, quando a requisição é feita, então o sistema deve exibir uma mensagem de erro. |
+| **Critério de aceite 2** | CR2: A tela deve exibir apenas os dados correspondentes à equipe vinculada ao UUID acessado. **Teste**: Dado que dois links de equipes diferentes são acessados, quando cada um é carregado, então cada painel deve exibir exclusivamente os dados da equipe correta, sem expor informações de outras equipes. |
+| Critérios INVEST | Independente: Esta US depende apenas do UUID gerado pelo administrador, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores e torcida, permitindo acompanhamento em tempo real sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
 
-<p align = "center"> Fonte: material produzido pelos autores (2025).</p>
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
+<br> <br>
+
+<p align="center"> Quadro 13 - User Story 13</p>
+
+| Identificação | US13 |
+---| ---
+| **Persona** | Corredor |
+| **User Story** | "Como corredor, posso visualizar no painel da equipe o ranking global, o status individual de cada atleta, a calculadora de descanso inteligente e o botão de compartilhamento, para tomar decisões estratégicas durante a competição." |
+| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que o corredor acessa o painel, quando a página carrega, então devem ser exibidos a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior. Além disso, dado que 1 hora se passa, quando o ranking é atualizado, então os dados devem refletir a nova posição sem que o ranking atualize antes desse intervalo. |
+| **Critério de aceite 2** | CR2: O painel deve exibir os seis campos de status para cada atleta. **Teste**: Dado que o corredor acessa o painel, quando a página carrega, então devem estar presentes para cada atleta: pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual. Além disso, dado que um checkpoint é registrado pelo admin, quando o painel é atualizado, então os dados do atleta correspondente devem refletir as novas informações. |
+| **Critério de aceite 3** | CR3: A calculadora de descanso inteligente deve exibir o indicador visual, o tempo recomendado e a contagem regressiva. **Teste**: Dado que o status do atleta varia, quando o indicador é exibido, então a barra deve mudar de cor conforme o estado — verde, amarelo ou vermelho. Além disso, dado que um atleta realizou uma corrida recente e intensa, quando o indicador é calculado, então deve exibir barra vermelha com alerta e apresentar o tempo recomendado de descanso com contagem regressiva. |
+| **Critério de aceite 4** | CR4: O botão "Compartilhar ranking" deve gerar um link simplificado sem dados sensíveis dos atletas. **Teste**: Dado que o corredor clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link simplificado com apenas o leaderboard, sem expor dados individuais dos atletas, otimizado para compartilhamento via WhatsApp e redes sociais, com preview da posição atual da equipe. |
+| Critérios INVEST | Independente: O painel público é autossuficiente e consome os dados gerados pelo fluxo do administrador, sem dependência de outras US em desenvolvimento. <br> Negociável: A frequência de atualização do ranking e as métricas exibidas por atleta podem evoluir conforme feedback dos usuários. <br> Valorosa: Transforma dados brutos em inteligência estratégica para a equipe durante a prova, apoiando decisões em tempo real. <br> Estimável: Os quatro blocos de funcionalidade possuem comportamentos bem definidos e escopo delimitado. <br> Pequena: Pode ser decomposta por bloco — ranking, status por atleta, calculadora e compartilhamento — caso necessário. <br> Testável: Todos os campos, comportamentos de atualização e a lógica da calculadora são verificáveis objetivamente. |
+
+<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
 <br> <br>
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
