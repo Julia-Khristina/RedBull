@@ -167,7 +167,7 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
   <sup>Fonte: Material produzido pelos autores (2025).</sup>
 </div>
 
-<h3>Informações</h3>
+#### Informações
 <ul>
     <li>Idade: 29 anos;</li>
     <li>Localização: Rio de Janeiro - RJ</li>
@@ -175,24 +175,24 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
     <li>Gênero: Feminino</li>
 </ul>
 
-<h3>Biografia</h3>
+#### Biografia
 &nbsp; &nbsp; &nbsp; &nbsp; Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esportivos e ativações de marca, sendo responsável pela organização e execução de dinâmicas em campo. No contexto do Red Bull 24 Horas, acompanha a operação das equipes, monitorando as esteiras e registrando manualmente informações essenciais como entrada e saída dos atletas, quilometragem, pace e os checkpoints gerais da prova de 5 em 5 minutos. 
 
-<h3>Objetivos</h3>
+#### Objetivos
 <ul>
     <li>Ser reconhecida como uma coordenadora operacional altamente capacitada</li>
     <li>Garantir registros rápidos </li>
     <li>Ter visão consolidada do evento em tempo real</li>
 </ul>
 
-<h3>Necessidades</h3>
+#### Necessidades
 <ul>
     <li>Uma interface simples e rápida para registrar trocas e checkpoints</li>
     <li>Visualização clara dos dados dos atletas</li>
     <li>Possibilidade de editar registros em caso de inconsistências</li>
 </ul>
 
-<h3>Frustrações</h3>
+#### Frustrações
 <ul>
     <li>Pressão operacional nas trocas rápidas entre atletas </li>
     <li>Dificuldade de consolidar dados em tempo real </li>
@@ -200,7 +200,7 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
     <li>Risco de erros ou perda de registros manuais</li>
 </ul>
 
-<h3>Interesses</h3>
+#### Interesses
 <ul>
     <li>Tecnologia aplicada à operação</li>
     <li>Ferramentas práticas e intuitivas para gestão em campo</li>
@@ -214,13 +214,60 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
   <sup>Fonte: Material produzido pelos autores (2025).</sup>
 </div>
 
+#### Informações
+<ul>
+    <li>Idade: 32 anos;</li>
+    <li>Localização: São Paulo - SP </li>
+    <li>Cargo: Gerente de Field Marketing da RedBull</li>
+    <li>Gênero: Masculino</li>
+</ul>
+
+#### Biografia
+&nbsp; &nbsp; &nbsp; &nbsp; Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos atletas,  estejam consistentes e confiáveis para a análise de resultados no fim da prova. 
+
+
+
+#### Objetivos
+<ul>
+    <li>Monitorar a coleta de dados</li>
+    <li>Usar dados para melhorar a competição</li>
+    <li>Ver métricas dos participantes </li>
+    <li>Garantir confiabilidade dos resultados</li>
+</ul>
+
+#### Necessidades
+<ul>
+    <li>Visualização clara de métricas</li>
+    <li>Alertas para inconsistências </li>
+    <li>Automatização da coleta de dados</li>
+    <li>Relatórios exportáveis para análise pós-evento</li>
+</ul>
+
+#### Frustrações
+<ul>
+    <li>Dependência de registros manuais, sujeitos a erro humano</li>
+    <li>Dificuldade em identificar inconsistências </li>
+    <li>Falta de resultados em tempo real</li>
+    <li>Alto esforço operacional para acompanhar múltiplas equipes simultaneamente</li>
+</ul>
+
+#### Interesses
+<ul>
+    <li>Eficiência e redução de erros</li>
+    <li>Tecnologias de automação e monitoramento em tempo real</li>
+    <li>Melhoria do evento para globalizá-lo</li>
+    <li>Experiência fluida para equipe e para os participantes</li>
+</ul> <br>
+
+
+
 <div align="center">
   <sub>Imagem 7 - Persona 3 — Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
   <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
   <sup>Fonte: Material produzido pelos autores (2025).</sup>
 </div>
 
-<h3>Informações</h3>
+#### Informações
 <ul>
     <li>Idade: 20 anos;</li>
     <li>Localização: São Paulo - SP</li>
@@ -228,17 +275,17 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
     <li>Gênero: Feminino</li>
 </ul>
 
-<h3>Biografia</h3>
+#### Biografia
 &nbsp; &nbsp; &nbsp; &nbsp; Fernanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando uma das equipes da competição. Apaixonada por corrida e desafios de resistência, ela participa do evento buscando performance, superação e espírito coletivo. Durante a prova, realiza turnos curtos e intensos na esteira, com trocas rápidas que exigem foco total na corrida e pouca margem para interrupções. 
 
-<h3>Objetivos</h3>
+#### Objetivos
 <ul>
     <li>Ganhar o campeonato </li>
     <li>Maximizar sua performance e contribuição para a equipe  </li>
     <li>Garantir que seus quilômetros sejam registrados corretamente</li>
 </ul>
 
-<h3>Necessidades</h3>
+#### Necessidades
 <ul>
     <li>Confiar no registro manual </li>
     <li>Visualizar métricas da prova</li>
@@ -246,7 +293,7 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
     <li>Fazer troca ágil e sem interferências na corrida</li>
 </ul>
 
-<h3>Frustrações</h3>
+#### Frustrações
 <ul>
     <li>Fadiga física e mental durante a competição</li>
     <li>Possíveis erros manuais que comprometem o resultado  </li>
@@ -254,7 +301,7 @@ A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que pode
     <li>Mudanças frequentes de velocidade dificultam estimativas manuais de desempenho</li>
 </ul>
 
-<h3>Interesses</h3>
+#### Interesses
 <ul>
     <li>Que sua quilometragem seja registrada corretamente</li>
     <li>Acompanhar o desempenho da equipe em tempo real </li>
