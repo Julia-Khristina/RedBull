@@ -7,7 +7,14 @@
 
 ## Nome do Grupo
 
-#### Nomes dos integrantes do grupo
+#### Ana Clara Tenório Pelegrini
+#### Beatriz Okubo Vieira Lima
+#### Eduardo Hirohito Izawa Maciel
+#### Isabella Sandra Santos
+#### Julia Khristina de Oliveira Silva Souza
+#### Luiza Nicol Giusti Dias Cardoso
+#### Mariana Azevedo Silva
+#### Vinícius Tavares Castiglia
 
 
 
@@ -40,7 +47,7 @@ A Red Bull, marca global atuante em eventos esportivos e experiências de marca,
 
 Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance em tempo quase real, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Esses dados são submetidos à validação humana, com emissão de alertas em caso de inconsistências, garantindo maior confiabilidade e controle sobre o processo de apuração.
 
-A plataforma é dividida em duas interfaces principais: uma área pública, responsável pela exibição do ranking das equipes atualizado em tempo quase real durante a competição, e uma área privada de operação, acessada exclusivamente por meio de autenticação baseada em UUID. Nesta área restrita, os operadores registram os checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição.
+A plataforma é dividida em duas interfaces principais: uma área privada de operação, onde os administradores registram checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição. Além da área pública por equipe, acessada sem login por meio de uma URL com UUID único entregue ao capitão de cada equipe, responsável pela exibição do ranking, status individual dos atletas e calculadora de descanso durante a competição.
 
 A criação de valor do sistema se concentra em quatro eixos principais: redução de erros no processo de apuração, aumento da confiabilidade e auditabilidade dos dados, ganho de eficiência operacional para a equipe organizadora da Red Bull e disponibilização de informações atualizadas em tempo quase real para acompanhamento público da competição.
 
@@ -57,10 +64,10 @@ No contexto deste projeto, a análise foi aplicada à operação do Red Bull 24 
 <div align="center">
   <sub>Imagem 1 - Análise das cinco forças de Porter</sub><br>
   <img src="../assets/negocios/forcaporter.jpg" width="100%" alt="Representação da análise das cinco forças competitivas de Porter aplicada ao contexto operacional do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Autores</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-##### 1. Rivalidade entre concorrentes existentes (ALTA)
+#### 1. Rivalidade entre concorrentes existentes (ALTA)
 
 A rivalidade competitiva neste contexto é considerada alta, pois existem diversas soluções que podem atender parcialmente à necessidade de registro operacional do evento, incluindo ferramentas genéricas de coleta de dados, como Google Forms, Microsoft Excel, aplicativos móveis de coleta de informações e plataformas genéricas de gestão operacional. Embora essas alternativas sejam amplamente acessíveis e de fácil implementação, elas não foram desenvolvidas para atender às particularidades do Red Bull 24 Horas, como uso contínuo por 24 horas, trocas frequentes de operadores e necessidade de registro rápido sob pressão operacional.
 
@@ -92,65 +99,60 @@ A aplicação do modelo das Cinco Forças de Porter evidencia que a solução pr
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que possui quatro elementos: forças (pontos internos positivos), fraquezas (pontos internos negativos), ameaças (pontos externos negativos) e oportunidades (pontos externos positivos) (Casarotto, 2019). A partir disso, realizou-se a análise SWOT do RedBull 24 horas, conforme a figura 2.
+A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Imagem 2, considerando seu posicionamento no mercado e relação com concorrentes.
 
 <div align="center">
   <sub>Imagem 2 - Análise SWOT </sub><br>
   <img src="../assets/negocios/analiseSWOT.png" width="100%" alt="Representação da matriz SWOT com forças, fraquezas, oportunidades e ameaças identificadas no contexto operacional do projeto Red Bull 24 Horas"><br>
-  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
-#### Forças
-<ul>
-  No contexto do evento Red Bull 24 Horas, destacam-se como forças o investimento contínuo em inovação e ativações de marketing, aliado a uma marca já consolidada no cenário esportivo. Além disso, o evento conta com uma estrutura operacional bem definida, o que facilita a implementação de soluções digitais como diferencial competitivo.
 
-</ul>
+#### Forças
+
+  No contexto do evento Red Bull 24 Horas, destacam-se como principais forças o investimento contínuo em inovação tecnológica e ativações de marketing, reforçando o posicionamento da marca como referência em eventos esportivos. A consolidação da Red Bull nesse segmento, aliada à sua forte presença digital, representa um diferencial competitivo relevante frente a concorrentes. Além disso, a existência de uma estrutura operacional bem definida favorece a implementação de soluções digitais, aumentando a eficiência e a escalabilidade do evento.
 
 #### Fraquezas
-<ul>
-   Entre as fraquezas revelam-se que a ausência de integração com as esteiras limita a automação da coleta de dados, tornando o processo dependente de registros manuais. Além disso, a baixa consolidação em tempo real dificulta a visualização geral da competição, impactando a confiabilidade das informações durante a operação.
-   </ul>
+
+   Entre as fraquezas, observa-se a ausência de integração com as esteiras, o que limita a automação da coleta de dados e mantém a dependência de processos manuais. Adicionalmente, a baixa consolidação de dados em tempo real compromete a visibilidade geral da competição e pode impactar a confiabilidade das informações durante o evento, reduzindo a qualidade da experiência em comparação a soluções mais automatizadas adotadas por concorrentes.
 
 #### Oportunidades
-<ul>
-   Pensando nas oportunidades, o valor que cerca o marketing, mídia e engajamento do público em redes sociais alinha-se com a digitalização no evento Red Bull 24 Horas que abre espaço para o uso estratégico de dados como big numbers e dashboards. Ademais, a solução também pode ser escalada para outros eventos da Red Bull, acompanhando a tendência de experiências esportivas mais orientadas a dados. Por fim, o crescimento das running crews no Brasil, que são justamente os atletas escolhidos para competir.
-</ul>
+No ambiente externo, identificam-se oportunidades relacionadas ao uso estratégico de dados para geração de valor em marketing, mídia e engajamento do público, por meio de dashboards e indicadores relevantes. Há potencial de escalabilidade da solução para outros eventos da Red Bull, fortalecendo sua vantagem competitiva. Além disso, a crescente tendência de eventos esportivos orientados a dados e o crescimento das running crews no Brasil ampliam o público-alvo e favorecem a adoção da solução proposta.
 
 #### Ameaças
-<ul>
-  Entre as ameaças evidenciadas durante o Red Bull 24 Horas, falhas operacionais ao longo das 24 horas podem comprometer os registros da competição. Instabilidades técnicas ou de conexão também representam riscos relevantes. Além disso, a existência de processos alternativos internos pode reduzir a adoção da nova solução proposta.
 
-</ul>
-
+Entre as ameaças, destacam-se possíveis falhas operacionais ao longo das 24 horas do evento, que podem comprometer os registros da competição. Instabilidades técnicas ou de conexão também representam riscos significativos para a continuidade do sistema. Por fim, a existência de processos alternativos internos pode reduzir a adesão à solução proposta, especialmente se não houver percepção clara de valor em relação às práticas já utilizadas.
 
 ### 2.1.3. Solução (sprints 1 a 5)
 
-1. Problema a ser resolvido
+#### a) Problema a ser resolvido
 
-A ausência de automatização no registro de dados dos corredores sobrecarrega os operadores, que precisam preencher manualmente informações a cada cinco minutos ao longo de 24 horas. Esse processo está sujeito a erros de caligrafia e falhas por cansaço, resultando em informações incorretas que comprometem a apuração e as decisões da organização do evento. 
+Atualmente, o processo de registro de dados dos corredores durante a competição é predominantemente manual, exigindo que operadores realizem anotações periódicas ao longo de 24 horas ininterruptas. Esse modelo gera sobrecarga operacional significativa, além de alta suscetibilidade a erros humanos decorrentes de fadiga, falhas de interpretação e inconsistências de caligrafia. Como consequência, a confiabilidade dos dados é comprometida, impactando diretamente a precisão da apuração, a transparência do evento e a qualidade das análises estratégicas realizadas pela organização.
 
-2. Dados disponíveis (mencionar fonte e conteúdo; se não houver, indicar “não se aplica”)
+#### b) Dados disponíveis 
 
-O site oficial do evento ([https://www.redbull.com/se-en/events/24-hours](https://www.redbull.com/se-en/events/24-hours)), compartilhado pela Red Bull no onboarding, serviu como referência de contexto. Nas conversas com o parceiro, ficou evidente a necessidade de automatizar o registro dos checkpoints para reduzir a inserção de dados errôneos ao longo da competição.
+Como base inicial, foi utilizado o site oficial do evento Red Bull 24 Hours, fornecido durante o onboarding, contendo informações institucionais, dinâmica da competição e contexto geral. Complementarmente, foram realizadas interações com o parceiro, nas quais foram identificados os principais fluxos operacionais, limitações do processo atual e requisitos implícitos, especialmente relacionados à necessidade de automatização do registro de checkpoints e à melhoria da confiabilidade dos dados coletados (Red Bull, 2025).
 
-3. Solução proposta
+#### c) Solução proposta
 
-A solução é uma aplicação web que automatiza o registro de dados via OCR, visto que, o operador fotografa o display da esteira e o sistema extrai as informações automaticamente. A plataforma também contempla cadastro de equipes e atletas, acompanhamento em tempo real e geração de relatórios com métricas para análise ao final de cada edição.
+Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de equipes e atletas, monitoramento em tempo quase real, visualização de rankings globais e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
 
-4. Forma de utilização da solução
+#### d) Forma de utilização da solução
 
-O administrador cadastra a competição e equipes, e registra checkpoints durante o evento via OCR ou entrada manual. Corredores e capitães acessam, por link exclusivo, um painel com ranking das equipes da edição ao redor do mundo, desempenho individual e calculadora de descanso. Ao fim da prova, o administrador consulta relatório completo com dados exportáveis para análise estratégica futura.
+A solução será estruturada em dois ambientes principais: um administrativo e outro público. No ambiente administrativo, acessado por operadores via autenticação (UUID), será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente público, usuários terão acesso a um painel com ranking atualizado periodicamente, desempenho das equipes e métricas relevantes. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
 
-5. Benefícios esperados
+#### e) Benefícios esperados
 
-A automatização via OCR elimina a principal dor operacional da Red Bull, o registro manual sujeito a erros. Além disso, a plataforma oferece métricas em tempo real para administradores e atletas, como pace, evolução por hora e consistência de desempenho, gerando elementos estratégicos para validar a edição e orientar decisões para os próximos eventos.
+A implementação da solução proporcionará significativa redução de erros operacionais, aumento da eficiência no processo de coleta de dados e maior confiabilidade das informações registradas. A disponibilização de métricas em tempo quase real permitirá melhor acompanhamento do desempenho das equipes durante o evento. Além disso, os relatórios analíticos contribuirão para decisões mais assertivas, melhoria contínua das edições futuras e fortalecimento da experiência dos participantes e da gestão do evento.
 
-6. Critério de sucesso e como será avaliado
+#### f) Critério de sucesso e como será avaliado
 
-O sucesso será avaliado pela redução de erros nos registros em relação ao método atual e pela consistência dos dados gerados. A proposta é gerar taxa de falha menor que 1% no processamento de checkpoints. A validação ocorre com a Red Bull após aplicação prática, verificando o impacto operacional da solução e qualidade das análises produzidas ao longo e após o evento.
+O sucesso da solução será mensurado por meio de indicadores objetivos, como a redução da taxa de erro nos registros (meta inferior a 1%), aumento da consistência e integridade dos dados e diminuição do tempo de processamento das informações. A avaliação será realizada em conjunto com o parceiro, considerando o impacto operacional durante a execução do evento, a aderência aos requisitos levantados e a qualidade das análises geradas para suporte à tomada de decisão.
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
+
+A seguir, a Imagem 3 ilustra o Canva de Proposta de Valor desenvolvido para o projeto em análise.
 
 <div align="center">
   <sub>Imagem 3 - Value Proposition Canvas da Solução </sub><br>
@@ -222,15 +224,16 @@ A partir da análise do Value Proposition Canvas, observa-se que a solução pro
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto. (PMI, 2021)
+A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto (PMI, 2021).
 
 No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento de dados em tempo quase real durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
 
 #### 2.1.5.1 - Matriz de Ameaças
 
-<p align = "center"> Tabela 3 - Matriz de Risco </p>
->>>>>>> documentos/wad.md
+Para identificar e priorizar os principais riscos do projeto, foi elaborada a matriz de risco apresentada no Quadro 1 a seguir.
+
+<p align = "center"> Quadro 1 - Matriz de Risco </p>
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
@@ -242,12 +245,13 @@ No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possív
 | Falta de Padronização operacional            | Diferenças nos procedimentos de coleta podem gerar inconsistências nos dados.   | 30% (Baixa)       | Médio       | Médio        | Definir protocolos de operação, validações automáticas e checklist de execução.             |
 | Bugs ou falhas de software                            | Erros de implementação podem comprometer funcionalidades específicas do sistema.        | 20% (Baixa)          | Baixo       | Baixo        | Executar testes funcionais, testes de integração e monitoramento contínuo com correções rápidas.                   |
 
-<<<<<<< documentos/wad.md
 <div align="center">
-  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### 2.1.5.2 - Matriz de Oportunidades
+
+ De forma complementar, o Quadro 2 a seguir apresenta a matriz de oportunidades identificadas para o projeto.
 
 <div align="center">
   <sub>Quadro 2 - Matriz de oportunidades do projeto</sub>
@@ -262,7 +266,7 @@ No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possív
 | Menor perda de dados durante o evento | O uso de checkpoints digitais periódicamente permite maior precisão histórica e reduz perdas de dados. | 50% (Média) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
 | Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: CSV) para auditoria e materiais de marketing. |
 <div align="center">
-  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
 ## 2.2. Personas (sprint 1)
@@ -272,9 +276,9 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 
 
 <div align="center">
-  <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
+  <sub>Imagem 4 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
   <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento RedBull 24 horas"><br>
-  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Informações
@@ -286,7 +290,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 </ul>
 
 #### Biografia
-&nbsp; &nbsp; &nbsp; &nbsp; Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esportivos e ativações de marca, sendo responsável pela organização e execução de dinâmicas em campo. No contexto do Red Bull 24 Horas, acompanha a operação das equipes, monitorando as esteiras e registrando manualmente informações essenciais como entrada e saída dos atletas, quilometragem, pace e os checkpoints gerais da prova de 5 em 5 minutos. 
+Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esportivos e ativações de marca, sendo responsável pela organização e execução de dinâmicas em campo. No contexto do Red Bull 24 Horas, acompanha a operação das equipes, monitorando as esteiras e registrando manualmente informações essenciais como entrada e saída dos atletas, quilometragem, pace e os checkpoints gerais da prova de 5 em 5 minutos. 
 
 #### Objetivos
 <ul>
@@ -319,9 +323,9 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 </ul> <br>
 
 <div align="center">
-  <sub>Figura 6 - Persona 2: Bruno Monteiro, Gerente de Field Marketing</sub><br>
+  <sub>Imagem 5 - Persona 2: Bruno Monteiro, Gerente de Field Marketing</sub><br>
   <img src="../assets/design/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
-  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Informações
@@ -333,7 +337,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 </ul>
 
 #### Biografia
-&nbsp; &nbsp; &nbsp; &nbsp; Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos atletas,  estejam consistentes e confiáveis para a análise de resultados no fim da prova. 
+Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos atletas,  estejam consistentes e confiáveis para a análise de resultados no fim da prova. 
 
 
 
@@ -372,9 +376,9 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 
 
 <div align="center">
-  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
+  <sub>Figura 6 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
   <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
-  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Informações
@@ -386,7 +390,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 </ul>
 
 #### Biografia
-&nbsp; &nbsp; &nbsp; &nbsp; Fernanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando uma das equipes da competição. Apaixonada por corrida e desafios de resistência, ela participa do evento buscando performance, superação e espírito coletivo. Durante a prova, realiza turnos curtos e intensos na esteira, com trocas rápidas que exigem foco total na corrida e pouca margem para interrupções. 
+Fernanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando uma das equipes da competição. Apaixonada por corrida e desafios de resistência, ela participa do evento buscando performance, superação e espírito coletivo. Durante a prova, realiza turnos curtos e intensos na esteira, com trocas rápidas que exigem foco total na corrida e pouca margem para interrupções. 
 
 #### Objetivos
 <ul>
@@ -418,25 +422,23 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
     <li>Ganhar a competição </li>
 </ul> <br>
 
-
-
-
-
 ## 2.3. User Stories (sprints 1 a 5)
 
-User stories são descrições curtas e objetivas de funcionalidades escritas sob a perspectiva do usuário final. Elas seguem geralmente o formato: “Como (papel/perfil), posso (ação/meta), para (benefício/razão)”, com foco no valor entregue e não em detalhes técnicos (INTERACTION DESIGN FOUNDATION, 2024). Esse modelo é amplamente utilizado em metodologias ágeis como o Scrum, pois facilita a comunicação entre equipe de desenvolvimento e stakeholders, além de permitir a divisão dos requisitos em partes menores e testáveis. 
+User stories são descrições curtas e objetivas de funcionalidades escritas sob a perspectiva do usuário final. Elas seguem geralmente o formato: “Como (papel/perfil), posso (ação/meta), para (benefício/razão)”, com foco no valor entregue e não em detalhes técnicos (Interaction Design Foundation, 2024). Esse modelo é amplamente utilizado em metodologias ágeis, como o Scrum, pois facilita a comunicação entre equipe de desenvolvimento e stakeholders, além de permitir a divisão dos requisitos em partes menores e testáveis.
 
-A partir das user stories, torna-se necessário compreender quem são os usuários que estão sendo representados. Nesse contexto, entram as personas, que são representações fictícias baseadas em dados reais de usuários. Elas descrevem características como necessidades, objetivos, comportamentos e desafios, permitindo que a equipe tenha uma visão mais concreta do público-alvo (NIELSEN NORMAN GROUP, 2024). Dessa forma, as decisões de design e desenvolvimento passam a ser guiadas por perfis realistas, garantindo maior alinhamento com as expectativas dos usuários e contribuindo para soluções mais eficazes e centradas na experiência.
+A partir das user stories, torna-se necessário compreender quem são os usuários que estão sendo representados. Nesse contexto, entram as personas, que são representações fictícias baseadas em dados reais de usuários. Elas descrevem características como necessidades, objetivos, comportamentos e desafios, permitindo que a equipe tenha uma visão mais concreta do público-alvo (Nielsen Norman Group, 2024). Dessa forma, as decisões de design e desenvolvimento passam a ser guiadas por perfis realistas, garantindo maior alinhamento com as expectativas dos usuários e contribuindo para soluções mais eficazes e centradas na experiência.
 
-Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (TYMOSHCHENKO, 2023). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário. Por exemplo, um critério de aceitação pode ser: “Dado que o usuário adiciona um produto ao carrinho de compras (ambiente digital), quando ele acessa o carrinho, então o item deve ser exibido com o nome, quantidade e preço corretos”.
+Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (Tymoshchenko, 2023). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário. Por exemplo, um critério de aceitação pode ser: “Dado que o usuário adiciona um produto ao carrinho de compras (ambiente digital), quando ele acessa o carrinho, então o item deve ser exibido com o nome, quantidade e preço corretos”.
 
-Além dos critérios de aceitação, há mais uma bússola que norteia a equipe no momento de definir as user stories, garantindo qualidade e relevância ao projeto, que são os critérios INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable) (BEN SALEM, 2023). De modo geral, cada US precisa ser independente, ou seja, não deve depender de outras para gerar valor. Negociável, permitindo ajustes conforme o entendimento do projeto evolui, valorosa, entregando benefícios claros ao usuário, estimável, possibilitando que o time dimensione o esforço necessário e gerencie o cronograma de entregas, pequena, de modo que possa ser implementada em uma única iteração, facilitando a implementação e o acompanhamento, e testável, garantindo que seja possível verificar objetivamente se foi concluída com sucesso.
+Além dos critérios de aceitação, há mais uma bússola que norteia a equipe no momento de definir as user stories, garantindo qualidade e relevância ao projeto: os critérios INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable) (Ben Salem, 2023). De modo geral, cada US precisa ser independente, ou seja, não deve depender de outras para gerar valor; negociável, permitindo ajustes conforme o entendimento do projeto evolui; valiosa, entregando benefícios claros ao usuário; estimável, possibilitando que o time dimensione o esforço necessário e gerencie o cronograma de entregas; pequena, de modo que possa ser implementada em uma única iteração, facilitando a implementação e o acompanhamento; e testável, garantindo que seja possível verificar objetivamente se foi concluída com sucesso.
 
 Sendo assim, por meio das user stories, mantém-se o foco no valor gerado ao usuário, além de orientar a priorização das tarefas e facilitar a comunicação entre stakeholders e desenvolvedores. Elas também servem como referência para a definição e compreensão dos requisitos funcionais e não funcionais do projeto, evidenciando as necessidades do usuário por meio de entregas objetivas. Além disso, contribuem para o planejamento iterativo, auxiliam na estimativa de esforço das atividades e permitem a validação contínua das funcionalidades por meio de critérios de aceitação, favorecendo a adaptação do produto conforme o feedback obtido ao longo do desenvolvimento.
 
 A seguir, são apresentadas as histórias de usuário definidas até o momento para o projeto em análise.
 
-<p align="center"> Quadro 1 - User Story 1</p>
+<div align="center">
+  <sub>Quadro 3 - User Story </sub>
+</div>
 
 | Identificação | US01 |
 ---| ---
@@ -447,10 +449,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 3** | CR3: O painel deve exibir o estado atual do sistema (com ou sem competição). **Teste**: Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção "Criar competição". Além disso, dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes. |
 | Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois o painel do admin pode ser construído sem que o sistema de login ou o ranking estejam finalizados. <br> Negociável: A forma de acesso ao painel e as seções exibidas podem ser redefinidas conforme as necessidades identificadas durante o projeto. <br> Valorosa: Centraliza o controle do sistema, oferecendo ao administrador um ponto único de acesso a todas as funcionalidades da competição. <br> Estimável: Escopo claro e limitado a uma tela principal com exibição condicional de estado. <br> Pequena: Compreende apenas a tela principal do admin e sua lógica de exibição de estado. <br> Testável: Os comportamentos de redirecionamento e exibição condicional são verificáveis objetivamente para cada estado do sistema. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align = "center"> Quadro 2 - User Story 2</p>
+<div align="center">
+  <sub>Quadro 4 - User Story </sub>
+</div>
 
 | Identificação | US02 |
 ---| ---
@@ -461,10 +466,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 3** | CR3: O sistema deve criar o evento com status inicial. **Teste**: Dado que os dados são válidos, quando o admin confirma, então o evento deve ser criado com status "não iniciado". |
 | Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois o formulário de cadastro pode ser construído de forma isolada. <br> Negociável: Os campos do formulário podem ser revisados conforme necessidade do projeto. <br> Valorosa: É a base do sistema, pois sem um evento cadastrado nenhuma outra funcionalidade pode ser utilizada. <br> Estimável: Escopo claro e limitado a um formulário com validações simples. <br> Pequena: Compreende apenas um formulário de criação de evento. <br> Testável: Validações bem definidas permitem testes objetivos de cada critério. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 3 - User Story 3</p>
+<div align="center">
+  <sub>Quadro 5 - User Story </sub>
+</div>
 
 | Identificação | US03 |
 ---| ---
@@ -476,10 +484,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 4** | CR4: Quando não há equipes cadastradas, a tela deve exibir um botão de adição com instrução visual. **Teste**: Dado que o admin acessa /admin/equipes sem nenhuma equipe cadastrada, quando a página carrega, então deve exibir o botão "+ Adicionar equipe" acompanhado de instrução visual, sem exibir uma lista vazia. |
 | Critérios INVEST | Independente: Esta US pode ser desenvolvida sem depender de outras funcionalidades, pois o cadastro de equipes é uma operação isolada. <br> Negociável: A estrutura dos dados da equipe, como campos obrigatórios e opcionais, pode ser ajustada conforme as necessidades do projeto. <br> Valorosa: É essencial para o funcionamento da competição, pois sem equipes e atletas cadastrados nenhuma corrida pode ser realizada. <br> Estimável: Trata-se de um CRUD simples com escopo bem definido. <br> Pequena: Compreende apenas as operações de criação, edição e remoção dentro do cadastro de equipes. <br> Testável: Cada operação de CRUD possui comportamento verificável e resultado esperado claro. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 4 - User Story 4</p>
+<div align="center">
+  <sub>Quadro 6 - User Story </sub>
+</div>
 
 | Identificação | US04 |
 ---| ---
@@ -490,10 +501,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 3** | CR3: O sistema deve permitir a exportação dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo CSV com os dados correspondentes. |
 | Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o administrador, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes — exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 5 - User Story 5</p>
+<div align="center">
+  <sub>Quadro 7 - User Story </sub>
+</div>
 
 | Identificação | US05 |
 ---| ---
@@ -504,10 +518,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 3** | CR3: O UUID não deve expirar enquanto o evento estiver ativo. **Teste**: Dado que o evento está em andamento, quando o link gerado é acessado, então a página deve carregar corretamente. |
 | Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois a geração do UUID ocorre de forma isolada no momento do cadastro da equipe. <br> Negociável: A implementação pode ser simplificada ou refinada em conjunto com o parceiro e os demais envolvidos no projeto. <br> Valorosa: Elimina a necessidade de login para a equipe, facilitando o acesso ao painel sem barreiras de autenticação. <br> Estimável: O fluxo de geração do UUID no momento do cadastro é claro e bem delimitado. <br> Pequena: Escopo limitado à geração, exibição e cópia do link. <br> Testável: O comportamento é verificável via criação de equipes e acesso ao link gerado. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 6 - User Story 6</p>
+<div align="center">
+  <sub>Quadro 8 - User Story </sub>
+</div>
 
 | Identificação | US06 |
 ---| ---
@@ -517,10 +534,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 2** | CR2: O card "Gerenciar equipes" na Home deve redirecionar para a tela de gestão de equipes. **Teste**: Dado que o admin está na Home, quando clica no card "Gerenciar equipes", então deve ser redirecionado para /admin/equipes. |
 | Critérios INVEST | Independente: Esta US não depende de outros fluxos, pois a navegação até a tela de equipes pode ser desenvolvida de forma isolada. <br> Negociável: Os atalhos, ícones e rótulos do menu podem ser ajustados conforme necessidade do projeto. <br> Valorosa: Centraliza o gerenciamento de equipes e oferece acesso rápido por dois pontos de entrada distintos. <br> Estimável: O padrão de navegação é bem definido e de complexidade baixa. <br> Pequena: Escopo limitado à navegação entre telas por dois pontos de entrada distintos, sem envolver lógica de exibição de conteúdo ou estado da listagem. <br> Testável: As rotas e os estados de tela são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 7 - User Story 7</p>
+<div align="center">
+  <sub>Quadro 9 - User Story </sub>
+</div>
 
 | Identificação | US07 |
 ---| ---
@@ -530,10 +550,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 2** | CR2: O painel operacional deve conter os três blocos definidos na especificação. **Teste**: Dado que o admin abre o painel operacional, quando a página carrega, então devem estar presentes a área de controle do juiz, o fluxo de registro de checkpoint e a tabela de dados da equipe. Além disso, o dropdown de atletas deve listar todos os membros da equipe selecionada. |
 | Critérios INVEST | Independente: Esta US depende apenas do cadastro prévio da equipe, sendo desenvolvível de forma isolada após essa etapa. <br> Negociável: O layout e a organização dos blocos do painel podem ser reorganizados conforme feedback do parceiro. <br> Valorosa: É a tela operacional principal da competição, centralizando o controle em tempo real. <br> Estimável: Escopo bem delimitado pela especificação, com dois critérios de aceite claros. <br> Pequena: Limitada ao acesso e ao carregamento correto do painel operacional. <br> Testável: A navegação e a presença dos componentes são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 8 - User Story 8</p>
+<div align="center">
+  <sub>Quadro 10 - User Story </sub>
+</div>
 
 | Identificação | US08 |
 ---| ---
@@ -543,10 +566,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 2** | CR2: Os botões de status devem ser atualizados automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ter seu status alterado para "Em descanso" e o atleta atual para "Em corrida". |
 | Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O número de status possíveis e o fluxo de troca podem ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 9 - User Story 9</p>
+<div align="center">
+  <sub>Quadro 11 - User Story </sub>
+</div>
 
 | Identificação | US09 |
 ---| ---
@@ -557,10 +583,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 3** | CR3: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
 | Critérios INVEST | Independente: O fluxo OCR é autossuficiente; o modo de entrada manual é tratado como US separada. <br> Negociável: A engine de OCR utilizada e o limiar de discrepância podem ser ajustados conforme os resultados obtidos em testes. <br> Valorosa: Elimina erros de digitação e agiliza o registro de checkpoints durante a competição. <br> Estimável: O fluxo de cinco etapas — captura, extração, alerta, revisão e confirmação — está bem especificado. <br> Pequena: Limitada à captura, extração e confirmação de um único checkpoint. <br> Testável: Os dados extraídos, os alertas de discrepância e os logs de auditoria são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 10 - User Story 10</p>
+<div align="center">
+  <sub>Quadro 12 - User Story </sub>
+</div>
 
 | Identificação | US10 |
 ---| ---
@@ -570,10 +599,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 2** | CR2: O sistema deve registrar automaticamente que o checkpoint foi inserido em modo manual. **Teste**: Dado que o admin salva um registro pelo modo manual, quando o dado é persistido, então o log de auditoria deve exibir a flag "manual" para distingui-lo dos registros inseridos via OCR. |
 | Critérios INVEST | Independente: É o caminho de contingência do sistema e pode ser desenvolvido de forma independente do fluxo OCR. <br> Negociável: Os campos disponíveis no modo manual podem ser expandidos conforme necessidade identificada durante o projeto. <br> Valorosa: Garante continuidade operacional em situações de falha técnica, evitando perda de registros durante a competição. <br> Estimável: Trata-se de um formulário simples com campos bem definidos e comportamento claro. <br> Pequena: Escopo limitado à entrada e ao salvamento manual de um único checkpoint. <br> Testável: Os dados salvos e a flag de método no log de auditoria são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 11 - User Story 11</p>
+<div align="center">
+  <sub>Quadro 13 - User Story </sub>
+</div>
 
 | Identificação | US11 |
 ---| ---
@@ -584,10 +616,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 3** | CR3: Os valores de pace médio e distância total devem ser recalculados corretamente a cada atualização. **Teste**: Dado que múltiplos checkpoints foram registrados, quando a tabela é atualizada, então o pace médio deve corresponder à média ponderada correta e a distância total deve ser a soma de todos os checkpoints da sessão. |
 | Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: O intervalo de atualização de 5 minutos pode ser tornado configurável em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 12 - User Story 12</p>
+<div align="center">
+  <sub>Quadro 14 - User Story </sub>
+</div>
 
 | Identificação | US12 |
 ---| ---
@@ -597,10 +632,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 2** | CR2: A tela deve exibir apenas os dados correspondentes à equipe vinculada ao UUID acessado. **Teste**: Dado que dois links de equipes diferentes são acessados, quando cada um é carregado, então cada painel deve exibir exclusivamente os dados da equipe correta, sem expor informações de outras equipes. |
 | Critérios INVEST | Independente: Esta US depende apenas do UUID gerado pelo administrador, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores e torcida, permitindo acompanhamento em tempo real sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
-<p align="center"> Quadro 13 - User Story 13</p>
+<div align="center">
+  <sub>Quadro 15 - User Story </sub>
+</div>
 
 | Identificação | US13 |
 ---| ---
@@ -612,8 +650,9 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 4** | CR4: O botão "Compartilhar ranking" deve gerar um link simplificado sem dados sensíveis dos atletas. **Teste**: Dado que o corredor clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link simplificado com apenas o leaderboard, sem expor dados individuais dos atletas, otimizado para compartilhamento via WhatsApp e redes sociais, com preview da posição atual da equipe. |
 | Critérios INVEST | Independente: O painel público é autossuficiente e consome os dados gerados pelo fluxo do administrador, sem dependência de outras US em desenvolvimento. <br> Negociável: A frequência de atualização do ranking e as métricas exibidas por atleta podem evoluir conforme feedback dos usuários. <br> Valorosa: Transforma dados brutos em inteligência estratégica para a equipe durante a prova, apoiando decisões em tempo real. <br> Estimável: Os quatro blocos de funcionalidade possuem comportamentos bem definidos e escopo delimitado. <br> Pequena: Pode ser decomposta por bloco — ranking, status por atleta, calculadora e compartilhamento — caso necessário. <br> Testável: Todos os campos, comportamentos de atualização e a lógica da calculadora são verificáveis objetivamente. |
 
-<p align="center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
@@ -622,6 +661,12 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos não funcionais do sistema. Eles definem o comportamento esperado da aplicação, suas restrições e critérios de qualidade, servindo como base para implementação e validação ao longo das sprints.
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+
+O Quadro 16 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+
+<div align="center">
+  <sub>Quadro 16 - Requisitos Funcionais </sub>
+</div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
@@ -641,7 +686,17 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
 | RF015 | O sistema deve manter consistência entre os dados registrados e os exibidos no painel em tempo quase real                                                             | Média      | Planejado |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
+
+No Quadro 17, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+
+<div align="center">
+  <sub>Quadro 17 - Regras de Negócio </sub>
+</div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
 | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
@@ -662,7 +717,18 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 | RN15 | A exportação em CSV deve incluir todos os checkpoints com timestamps, referências às fotos vinculadas e logs de validação para auditoria.                                                                                         | RF013              |
 | RN16 | Os highlights pós-evento devem ser gerados automaticamente ao encerrar a competição, sem necessidade de configuração manual.                                                                                                      | RF012, RF014       |
 | RN17 | Os highlights devem incluir recordes nas categorias: individual (pace, velocidade, distância, tempo total), por equipe (consistência, volume, sincronismo de troca) e geral da edição.                                            | RF014              |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+
+A seguir, são apresentados, no Quadro 18, os requisitos não funcionais do sistema, responsáveis por definir restrições, atributos e métricas de qualidade, como desempenho, segurança e usabilidade, que devem ser considerados ao longo do desenvolvimento.
+
+<div align="center">
+  <sub>Quadro 18 - Requisitos Não Funcionais </sub>
+</div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Como atendido                                      |
 | --------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
@@ -675,9 +741,17 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 | REST — Restrições de Design | O sistema deve operar com captura via OCR, validação humana e processamento via API centralizada         | Fluxo obrigatório OCR → validação → API → backend    | Arquitetura centralizada                           |
 | ORG — Organizacionais       | O desenvolvimento deve seguir metodologia ágil com entregas por sprint                                   | Versionamento e rastreabilidade por sprint           | Uso de Git e organização de branches               |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
-Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTful descritas pela Microsoft Azure Architecture Center, que recomenda o uso de substantivos no plural para nomear recursos, hierarquia de URIs para expressar relações entre entidades, e verbos HTTP como única forma de expressar a ação sobre o recurso (MICROSOFT, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio que o governam e ao contrato HTTP que o implementa.
+Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTful descritas pela Microsoft Azure Architecture Center, que recomenda o uso de substantivos no plural para nomear recursos, hierarquia de URIs para expressar relações entre entidades e verbos HTTP como única forma de expressar a ação sobre o recurso (Microsoft, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio que o governam e ao contrato HTTP que o implementa.
+
+<div align="center">
+  <sub>Quadro 19 - Matriz RF → RN → Endpoint  </sub>
+</div>
 
 | RF    | RN associadas | Endpoint                                                      | Método |
 | ----- | ------------- | ------------------------------------------------------------- | ------ |
@@ -701,6 +775,10 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 | RF013 | RN15          | `/competitions/:id/exports`                                   | GET    |
 | RF014 | RN16, RN17    | `/competitions/:id/reports`                                   | GET    |
 | RF015 | RN09, RN11    | `/competitions/:id/ranking`                                   | GET    |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
@@ -968,30 +1046,25 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-BEN SALEM, Ahmed. Creating the perfect user story with INVEST criteria. Scrum Master, 2023. Disponível em: Acessar artigo. Acesso em: 30 abr. 2026.
+BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
-MICROSOFT. Práticas recomendadas para design de API Web RESTful. In: Azure Architecture Center. [S. l.], 2023. Disponível em: https://learn.microsoft.com/pt-br/azure/architecture/best-practices/api-design. Acesso em: 1 maio 2026.
+CASAROTTO, Camila. Análise SWOT: o que é e como fazer. 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
 
-LUCK, Heloisa. Liderança em gestão escolar. 4. ed. Petrópolis: Vozes, 2010. <br>
-SOBRENOME, Nome. Título do livro: subtítulo do livro. Edição. Cidade de publicação: Nome da editora, Ano de publicação. <br>
+Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
 
-CASAROTTO, Camila. Como fazer análise SWOT ou FOFA: confira o passo a passo completo com as melhores dicas. [S. l.], 20 dez. 2019. Disponível em: https://rockcontent.com/br/blog/como-fazer-uma-analise-swot/. Acesso em: 23 abr. 2026.
+Microsoft. Best practices for RESTful web API design. 2023. Microsoft Azure Architecture Center. Disponível em: https://learn.microsoft.com. Acesso em: 1 maio 2026.
 
-INTERACTION DESIGN FOUNDATION. User Stories: as a UX designer, I want to embrace agile so that I can make my projects user-centered. Disponível em: https://ixdf.org/literature/article/user-stories-as-a-ux-designer-i-want-to-embrace-agile-so-that-i-can-make-my-projects-user-centered. Acesso em: 28 abr. 2026.
+Nielsen Norman Group. Personas and user-centered design. 2024. Disponível em: https://www.nngroup.com. Acesso em: 1 maio 2026.
 
-NIELSEN NORMAN GROUP. Personas: a study guide. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 28 abr. 2026.
+OSTERWALDER, Alexander; PIGNEUR, Yves. Value proposition design: how to create products and services customers want. Hoboken: John Wiley & Sons, 2011.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation: a handbook for visionaries, game changers, and challengers. Hoboken: John Wiley & Sons, 2010.
+PMI (PROJECT MANAGEMENT INSTITUTE). A guide to the project management body of knowledge (PMBOK® Guide). 7. ed. Newtown Square: Project Management Institute, 2021.
 
-TYMOSHCHENKO, Karine. User story and acceptance criteria: description and recommendation. Disponível em: https://sdh.global/blog/business/user-story-and-acceptance-criteria-description-and-recommendation/. Acesso em: 28 abr. 2026.
+PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, Boston, v. 86, n. 1, p. 78–93, 2008.
 
-VIAL, Gregory. Understanding digital transformation: a review and a research agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
+RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
-WOLOYEM. User story examples for agile teams: a comprehensive 2026 guide. Disponível em: https://www.woloyem.com/blog/user-story-examples-for-agile-teams. Acesso em: 28 abr. 2026.
-
-
-BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. **UML: guia do usuário**. 2. ed.
-Rio de Janeiro: Elsevier, 2006.
+TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
 
 # <a name="c9"></a>Anexos
 
