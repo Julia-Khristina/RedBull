@@ -568,7 +568,53 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
-*Apresente o diagrama de casos de uso com atores (boneco), casos (elipse) e as relações `<<include>>` / `<<extend>>` com semântica correta. Consulte a notação de referência em `in02/suporte/use-case_3.0_v1.0.pdf`.*
+O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
+Modelagem Unificada (UML) que descreve as funcionalidades de um sistema
+do ponto de vista de seus usuários, evidenciando as interações entre
+atores externos e os casos de uso disponíveis (BOOCH; RUMBAUGH;
+JACOBSON, 2006). No contexto deste projeto, o diagrama cumpre três
+funções centrais: delimita o escopo do sistema ao explicitar quais
+funcionalidades estão dentro e fora de sua fronteira, comunica de forma
+visual as interações entre os atores e o sistema para todos os
+envolvidos no projeto, e serve de base para a derivação dos requisitos
+funcionais, garantindo rastreabilidade entre o que os usuários precisam
+fazer e o que o sistema deve oferecer.
+
+A Figura 1 apresenta o diagrama de casos de uso do Sistema Red Bull 24
+Horas, modelando as interações entre os três atores identificados,
+Administrador / Juiz, Corredor e Sistema OCR, e os principais fluxos
+do sistema.
+
+Figura 1 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
+
+![Diagrama de Casos de Uso](../assets/diagrama_caso_uso.png)
+
+Fonte: Material produzido pelos autores (2026).
+
+O **Administrador / Juiz** unifica as personas Mariana (Coordenadora
+Operacional) e Bruno (Gerente de Field Marketing), responsáveis pela
+operação e supervisão do evento. É o ator com maior número de casos de
+uso, atuando desde a criação da competição e cadastro de equipes até o
+registro de checkpoints, acompanhamento do ranking, acesso ao relatório
+e encerramento da competição. O **Corredor** representa atletas e
+capitães das equipes, acessando o sistema via URL única sem autenticação
+para acompanhar o ranking, o status dos atletas e a calculadora de
+descanso. O **Sistema OCR**, marcado com o estereótipo «system», é um
+serviço externo consumido via API que extrai dados das fotos do visor
+da esteira e alerta inconsistências.
+
+O diagrama emprega relações «include» e «extend» para representar
+dependências entre casos de uso. A geração do UUID é «include» de
+"Cadastrar equipes/atletas", refletindo que o identificador único é
+gerado automaticamente ao salvar uma equipe. A seleção do atleta ativo
+é «include» dos dois fluxos de registro de checkpoint, sendo etapa
+obrigatória antes do registro. O fluxo manual de registro estende o
+fluxo via OCR como caminho alternativo em caso de falha técnica, e
+ambos incluem a confirmação humana dos dados antes do salvamento. O
+alerta de inconsistência estende a confirmação de dados quando há
+divergência relevante. A exportação em CSV é «include» de "Acessar
+relatório", visto que a exportação é parte integrante da tela de
+relatório.
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 
@@ -801,6 +847,9 @@ VIAL, Gregory. Understanding digital transformation: a review and a research age
 
 WOLOYEM. User story examples for agile teams: a comprehensive 2026 guide. Disponível em: https://www.woloyem.com/blog/user-story-examples-for-agile-teams. Acesso em: 28 abr. 2026.
 
+
+BOOCH, G.; RUMBAUGH, J.; JACOBSON, I. **UML: guia do usuário**. 2. ed.
+Rio de Janeiro: Elsevier, 2006.
 
 # <a name="c9"></a>Anexos
 
