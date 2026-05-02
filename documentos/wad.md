@@ -50,21 +50,55 @@ A criação de valor do sistema se concentra em quatro eixos principais: reduç�
 
 ### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
 
-*Preencha com até 400 palavras*
+O modelo das Cinco Forças de Porter constitui um framework de análise estratégica utilizado para avaliar a atratividade e a intensidade competitiva de uma indústria. O posicionamento estratégico de uma organização não depende exclusivamente da concorrência direta, mas da interação entre cinco forças estruturais: a rivalidade entre concorrentes existentes, a ameaça de novos entrantes, a ameaça de produtos ou serviços substitutos, o poder de barganha dos fornecedores e o poder de barganha dos clientes. A aplicação desse modelo permite identificar oportunidades, vulnerabilidades competitivas e fatores críticos para a sustentabilidade de uma solução (Porter, 2008).
 
-*Posicione aqui o modelo de 5 Forças de Porter para sustentar o contexto da indústria.*
+No contexto deste projeto, a análise foi aplicada à operação do Red Bull 24 Horas, considerando o desenvolvimento de uma aplicação web para digitalização do processo de registro de quilometragem durante o evento. A solução proposta busca substituir um processo manual suscetível a erros, transformando a coleta operacional em um fluxo digital mais confiável, ágil e escalável.
+
+<div align="center">
+  <sub>Imagem 1 - Análise das cinco forças de Porter</sub><br>
+  <img src="../assets/negocios/forcaporter.jpg" width="100%" alt="Representação da análise das cinco forças competitivas de Porter aplicada ao contexto operacional do projeto Red Bull 24 Horas"><br>
+  <sup>Fonte: Autores</sup>
+</div>
+
+##### 1. Rivalidade entre concorrentes existentes (ALTA)
+
+A rivalidade competitiva neste contexto é considerada alta, pois existem diversas soluções que podem atender parcialmente à necessidade de registro operacional do evento, incluindo ferramentas genéricas de coleta de dados, como Google Forms, Microsoft Excel, aplicativos móveis de coleta de informações e plataformas genéricas de gestão operacional. Embora essas alternativas sejam amplamente acessíveis e de fácil implementação, elas não foram desenvolvidas para atender às particularidades do Red Bull 24 Horas, como uso contínuo por 24 horas, trocas frequentes de operadores e necessidade de registro rápido sob pressão operacional.
+
+O diferencial competitivo da solução proposta reside na sua especialização funcional, sendo projetada especificamente para o fluxo real do evento, priorizando velocidade de uso, padronização dos registros e redução de retrabalho. Para a Red Bull, essa especialização representa um ganho estratégico ao transformar um processo operacional crítico em uma atividade mais confiável e eficiente.
+
+#### 2. Ameaça de novos entrantes (MÉDIA)
+
+A entrada de novos desenvolvedores de soluções digitais neste mercado é relativamente acessível do ponto de vista técnico, uma vez que as ferramentas de desenvolvimento web são amplamente disponíveis. No entanto, a principal barreira competitiva não está na tecnologia em si, mas na capacidade de adaptação ao contexto operacional específico do evento.
+
+O Red Bull 24 Horas apresenta características próprias, tal qual operações contínuas por 24 horas, rotatividade de usuários, pressão por rapidez e necessidade de confiabilidade no registro dos dados, nesse cenário, é possível verificar que esses fatores dificultam a criação de soluções verdadeiramente aderentes sem conhecimento aprofundado da dinâmica operacional. Dessa forma, embora novos entrantes possam desenvolver sistemas similares, a replicação de uma solução efetivamente integrada à realidade do evento representa uma barreira prática relevante.
+
+#### 3. Ameaça de produtos ou serviços substitutos (MUITO ALTA)
+
+A ameaça de substitutos é considerada muito alta, pois o principal substituto da solução proposta é o próprio método atualmente utilizado pela operação, que hoje se configura no registro manual por meio de pranchetas. Apesar de suscetível a erros de preenchimento, perda de informações e retrabalho, esse modelo apresenta vantagens importantes, como baixo custo operacional, alta familiaridade entre os operadores e integração natural à dinâmica do evento. Além disso, ferramentas simples, como planilhas digitais, formulários online e aplicativos móveis de coleta, também representam alternativas viáveis, reforçando a resistência à adoção de novas tecnologias. Por isso, a principal ameaça não é necessariamente tecnológica, mas comportamental, uma vez que a substituição de um processo já consolidado exige que a nova solução demonstra benefícios claros em rapidez, simplicidade e confiabilidade.
+
+#### 4. Poder de barganha dos fornecedores (BAIXO)
+
+O poder de barganha dos fornecedores é considerado baixo, uma vez que os recursos necessários para o desenvolvimento da solução são predominantemente tecnológicos, incluindo serviços de hospedagem, infraestrutura web, frameworks de desenvolvimento e bibliotecas de software amplamente disponíveis no mercado.
+Esses recursos apresentam alta disponibilidade, baixa diferenciação e facilidade de substituição, reduzindo significativamente a dependência de fornecedores específicos. Além disso, a solução não depende de integrações complexas com hardware proprietário ou tecnologias exclusivas, o que amplia a flexibilidade técnica e financeira do projeto.
+
+
+#### 5. Poder de barganha dos clientes (MUITO ALTO)
+
+A principal área demandante da solução corresponde ao time operacional de Field Marketing da Red Bull, responsável pelo registro dos dados durante o evento. Esse grupo exerce elevado poder de barganha, pois a adoção da ferramenta depende diretamente da sua aceitação em um ambiente caracterizado por alta pressão operacional, rapidez na tomada de decisão e necessidade de execução contínua. O custo de substituição é praticamente inexistente, uma vez que o método manual atualmente utilizado pode ser retomado a qualquer momento sem impactos financeiros ou contratuais. Além disso, qualquer aumento de complexidade, lentidão ou dificuldade de uso pode comprometer diretamente a aceitação da solução. Dessa forma, a área demandante exerce não apenas poder de escolha, mas também poder de veto, exigindo que a ferramenta seja comprovadamente mais simples, rápida e confiável do que o processo atual para garantir sua adoção efetiva.
+
+#### Conclusão da análise
+
+A aplicação do modelo das Cinco Forças de Porter evidencia que a solução proposta para o Red Bull 24 Horas está inserida em um contexto de elevada pressão competitiva, especialmente em relação à rivalidade entre soluções alternativas, à resistência comportamental associada aos métodos já consolidados e ao elevado poder de decisão da área demandante. Em contrapartida, a baixa dependência de fornecedores e a especialização operacional da ferramenta criam condições favoráveis para a construção de vantagem competitiva sustentável. Dessa forma, o sucesso da solução não depende exclusivamente de sua viabilidade técnica, mas principalmente de sua capacidade de entregar ganhos reais de usabilidade, confiabilidade e eficiência operacional no contexto específico da Red Bull.
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
 A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que possui quatro elementos: forças (pontos internos positivos), fraquezas (pontos internos negativos), ameaças (pontos externos negativos) e oportunidades (pontos externos positivos) (Casarotto, 2019). A partir disso, realizou-se a análise SWOT do RedBull 24 horas, conforme a figura 2.
 
-<p align = "center"> Figura 2 - Análise SWOT</p>
-
-<div align = "center">
-  <img src="../assets/negocios/analiseSWOT.png"> 
+<div align="center">
+  <sub>Imagem 2 - Análise SWOT </sub><br>
+  <img src="../assets/negocios/analiseSWOT.png" width="100%" alt="Representação da matriz SWOT com forças, fraquezas, oportunidades e ameaças identificadas no contexto operacional do projeto Red Bull 24 Horas"><br>
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
 </div>
-<p align = "center"> Fonte: material produzido pelos autores (2025).</p>
-
 #### Forças
 <ul>
   No contexto do evento Red Bull 24 Horas, destacam-se como forças o investimento contínuo em inovação e ativações de marketing, aliado a uma marca já consolidada no cenário esportivo. Além disso, o evento conta com uma estrutura operacional bem definida, o que facilita a implementação de soluções digitais como diferencial competitivo.
