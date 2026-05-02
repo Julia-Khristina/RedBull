@@ -222,54 +222,48 @@ A partir da análise do Value Proposition Canvas, observa-se que a solução pro
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
-## Matriz de Risco
+A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto. (PMI, 2021)
 
-A Matriz de Riscos é uma ferramenta que identifica e analisa os riscos que podem afetar a implementação e a eficácia de um projeto, considerando a probabilidade, impacto, classificação do risco e o plano de resposta. O objetivo é criar estratégias preventivas que garantam a qualidade da experiência do usuário, além da viabilidade técnica.
+No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento de dados em tempo quase real durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
 
-<p align = "center"> Tabela 1 - Probabilidade de Ocorrência do Risco </p>
-
-| Porcentagem   | Probabilidade | Descrição                              |
-|--------------|--------------|----------------------------------------|
-| 100% - 80%   | Muito Alto   | Provavelmente vai aconteçer          |
-| 79% - 60%    | Alto         | Muita chance de aconteçer                |
-| 59% - 40%    | Médio        | Pode ser que aconteça                    |
-| 39% - 20%    | Baixo        | Pouca chance de aconteçer                |
-| 19% - 0%     | Muito Baixo  | Não é provável que aconteça            |
-
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
-
-<p align = "center"> Tabela 2 - Impacto do Risco no Projeto </p>
-
-| Impacto     | Descrição                                           |
-|-------------|-----------------------------------------------------|
-| Muito Alto  | Consequências altamente impactantes/irreversíveis   |
-| Alto        | Consequências impactantes e pouco reversíveis       |
-| Médio       | Consequências podem ser impactantes                 |
-| Baixo       | Consequências reversíveis e pouco impactantes       |
-| Muito Baixo | Consequências não impactantes                       |
-
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
-
+#### 2.1.5.1 - Matriz de Ameaças
 
 <p align = "center"> Tabela 3 - Matriz de Risco </p>
+>>>>>>> documentos/wad.md
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
-| Falha no Reconhecimento de Imagem  | O sistema não consegue ler/identificar corretamente os dados da esteira. | 70% (Alto)         | Alto        | Crítico      | Treinar o modelo com imagens reais e implementar validação manual.               |
-| Baixa Qualidade das Imagens       | Problemas de luz, movimento e velocidade afetam a captura dos dados.     | 80% (Muito Alto)   | Alto        | Crítico      | Padronizar pontos de captura e usar posição fixa ou aumentar frequência.         |
-| Falha de Conexão com a Internet   | Wi-Fi lento dificulta a coleta de dados.                                  | 60% (Média)        | Alto        | Crítico      | Utilizar Wi-Fi privado e incluir testes prévios.                                 |
-| Sobrecarga do Sistema             | Alto volume de dados pode causar falhas no processamento.                | 50% (Média)        | Alto        | Alto         | Realizar testes de carga com alta demanda antes do evento.                        |
-| Erro Humano                       | Operadores podem errar devido ao costume com o sistema antigo.           | 40% (Média)        | Médio-Alto  | Alto         | Criar interface intuitiva e oferecer treinamento prévio.                          |
-| Falta de Padronização             | Diferenças na coleta geram inconsistências no banco de dados.            | 30% (Baixa)        | Médio       | Médio        | Implementar validação automática e treinar o time antes do evento.               |
-| Bugs                              | Falhas menores afetam a experiência, mas não impedem o uso.              | 20% (Baixa)        | Baixo       | Baixo        | Monitoramento em tempo real e testes com diferentes cenários.                    |
+| Falha no Reconhecimento de Imagem  | O sistema pode não identificar corretamente os dados capturados nas imagens da esteira. | 70% (Alta)         | Muito Alto        | Crítico      | Treinar o modelo com imagens reais do ambiente de operação, realizar testes iterativos e disponibilizar validação manual para casos de inconsistência.          |
+| Baixa Qualidade das Imagens       | Iluminação inadequada, movimento ou posicionamento incorreto podem comprometer a captura dos dados.  | 80% (Muito Alta)  | Muito Alto        | Crítico      | Padronizar os pontos de captura, definir posicionamento fixo dos dispositivos e realizar testes em diferentes condições de iluminação.      |
+| Falha de Conexão com a Internet   | Instabilidade de rede pode interromper o envio ou sincronização dos dados.     | 60% (Média)        | Alto        | Crítico      | Utilizar rede dedicada para operação, implementar armazenamento temporário local e sincronização automática quando a conexão for restabelecida.                   |
+| Sobrecarga do Sistema             | Alto volume de acessos ou processamento simultâneo pode reduzir o desempenho da aplicação.  | 50% (Média)        | Alto        | Alto         | Realizar testes de carga, otimizar consultas e monitorar métricas de desempenho antes e durante o evento.                       |
+| Erro Humano                       | Operadores podem registrar dados incorretamente ou utilizar funcionalidades inadequadamente.           | 40% (Média)         | Médio  | Alto         | Desenvolver interface intuitiva, criar instruções operacionais e realizar treinamento prévio da equipe.                       |
+| Falta de Padronização operacional            | Diferenças nos procedimentos de coleta podem gerar inconsistências nos dados.   | 30% (Baixa)       | Médio       | Médio        | Definir protocolos de operação, validações automáticas e checklist de execução.             |
+| Bugs ou falhas de software                            | Erros de implementação podem comprometer funcionalidades específicas do sistema.        | 20% (Baixa)          | Baixo       | Baixo        | Executar testes funcionais, testes de integração e monitoramento contínuo com correções rápidas.                   |
 
-<p align = "center"> Fonte: Material produzido pelos autores (2026).</p>
-<br> <br>
+<<<<<<< documentos/wad.md
+<div align="center">
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+</div>
 
-*Registre na matriz os riscos identificados no projeto.*
+#### 2.1.5.2 - Matriz de Oportunidades
+
+<div align="center">
+  <sub>Quadro 2 - Matriz de oportunidades do projeto</sub>
+</div>
+
+| Oportunidade | Descrição | Probabilidade | Impacto | Classificação | Plano de Resposta |
+|--------------|----------|--------------|--------|--------------|-------------------|
+| Maior precisão nos dados coletados | A substituição do input manual por OCR reduz erros de digitação identificados no risco de erro humano. | 90% (Alta) | Alto | Alta Prioridade | Garantir uma alternativa de entrada manual com validação para evitar inconsistências em casos de falhas do OCR. |
+| Tomada de decisão estratégica | Dados em tempo quase real permitem decisões estratégicas relacionadas ao pace e aos períodos de descanso, influenciando a dinâmica competitiva. | 50% (Média) | Muito Alto | Alta Prioridade | Desenvolver interfaces claras e dashboards de rápida interpretação. |
+| Aumento da eficiência operacional | A automação reduz atividades manuais e retrabalho da equipe operacional durante o evento. | 90% (Alta) | Muito Alto | Alta Prioridade | Automatizar fluxos operacionais e minimizar entradas manuais. |
+| Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% (Baixa) | Médio | Baixa Prioridade | Estruturar sistema modular e escalável. |
+| Menor perda de dados durante o evento | O uso de checkpoints digitais periódicamente permite maior precisão histórica e reduz perdas de dados. | 50% (Média) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
+| Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: CSV) para auditoria e materiais de marketing. |
+<div align="center">
+  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+</div> 
 
 ## 2.2. Personas (sprint 1)
 
