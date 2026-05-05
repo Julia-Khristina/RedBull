@@ -62,7 +62,7 @@ O modelo das Cinco Forças de Porter constitui um framework de análise estraté
 No contexto deste projeto, a análise foi aplicada à operação do Red Bull 24 Horas, considerando o desenvolvimento de uma aplicação web para digitalização do processo de registro de quilometragem durante o evento. A solução proposta busca substituir um processo manual suscetível a erros, transformando a coleta operacional em um fluxo digital mais confiável, ágil e escalável.
 
 <div align="center">
-  <sub>Imagem 1 - Análise das cinco forças de Porter</sub><br>
+  <sub>Figura 1 - Análise das cinco forças de Porter</sub><br>
   <img src="../assets/negocios/forcaporter.jpg" width="100%" alt="Representação da análise das cinco forças competitivas de Porter aplicada ao contexto operacional do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -99,10 +99,10 @@ A aplicação do modelo das Cinco Forças de Porter evidencia que a solução pr
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Imagem 2, considerando seu posicionamento no mercado e relação com concorrentes.
+A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Figura 2, considerando seu posicionamento no mercado e relação com concorrentes.
 
 <div align="center">
-  <sub>Imagem 2 - Análise SWOT </sub><br>
+  <sub>Figura 2 - Análise SWOT </sub><br>
   <img src="../assets/negocios/analiseSWOT.png" width="100%" alt="Representação da matriz SWOT com forças, fraquezas, oportunidades e ameaças identificadas no contexto operacional do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -152,10 +152,10 @@ O sucesso da solução será mensurado por meio de indicadores objetivos, como a
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
-A seguir, a Imagem 3 ilustra o Canva de Proposta de Valor desenvolvido para o projeto em análise.
+A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o projeto em análise.
 
 <div align="center">
-  <sub>Imagem 3 - Value Proposition Canvas da Solução </sub><br>
+  <sub>Figura 3 - Value Proposition Canvas da Solução </sub><br>
   <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
   <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
 </div>
@@ -228,6 +228,11 @@ A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, anal
 
 No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento de dados em tempo quase real durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
+<div align="center">
+  <sub>Figura 4 - Matriz de Risco </sub><br>
+  <img src="../assets/negocios/matriz de risco.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### 2.1.5.1 - Matriz de Ameaças
 
@@ -276,7 +281,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 
 
 <div align="center">
-  <sub>Imagem 4 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
+  <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
   <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento RedBull 24 horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -323,7 +328,7 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 </ul> <br>
 
 <div align="center">
-  <sub>Imagem 5 - Persona 2: Bruno Monteiro, Gerente de Field Marketing</sub><br>
+  <sub>Figura 6 - Persona 2: Bruno Monteiro, Gerente de Field Marketing</sub><br>
   <img src="../assets/design/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -376,7 +381,7 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 
 
 <div align="center">
-  <sub>Figura 6 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
+  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
   <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -800,16 +805,16 @@ envolvidos no projeto, e serve de base para a derivação dos requisitos
 funcionais, garantindo rastreabilidade entre o que os usuários precisam
 fazer e o que o sistema deve oferecer.
 
-A Figura 1 apresenta o diagrama de casos de uso do Sistema Red Bull 24
+A Figura 8 apresenta o diagrama de casos de uso do Sistema Red Bull 24
 Horas, modelando as interações entre os três atores identificados,
 Administrador / Juiz, Corredor e Sistema OCR, e os principais fluxos
 do sistema.
 
-Figura 1 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
-
-![Diagrama de Casos de Uso](../assets/diagrama_caso_uso.png)
-
-Fonte: Material produzido pelos autores (2026).
+<div align="center">
+  <sub>Figura 8 - Diagrama de Casos de Uso</sub><br>
+  <img src="../assets/diagrama_caso_uso.png" width="100%" alt="Representação visual do diagrama de casos de uso do sistema Red Bull 24 Horas "><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 O **Administrador / Juiz** unifica as personas Mariana (Coordenadora
 Operacional) e Bruno (Gerente de Field Marketing), responsáveis pela
