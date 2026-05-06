@@ -55,3 +55,47 @@ o gatilho que carrega T01 ou T02 conforme a validade do UUID.
 - **T03 é modal**, não uma tela separada — é acionado por botão
   dentro de T02 sem navegação de rota nova.
 - **Sem telas de login** — acesso é público via UUID (US12 / CR1).
+
+## 3. Transições entre Telas
+
+Para cada tela do inventário, são definidas as entradas, saídas
+e condições de transição. O happy path completo é:
+acesso via UUID válido → T02 → ações no painel → T03 (opcional).
+
+| ID   | De          | Para        | Gatilho                              | Condição                              | RFs/RNs     |
+|------|-------------|-------------|--------------------------------------|---------------------------------------|-------------|
+| TR01 | (externo)   | T01         | Usuário acessa URL com UUID inválido | UUID não existe ou evento encerrado   | RN02        |
+| TR02 | (externo)   | T02         | Usuário acessa URL com UUID válido   | UUID existe e evento está ativo       | RN01, RN02  |
+| TR03 | T02         | T02         | Atualização automática do ranking    | A cada 1 hora sem ação do usuário     | RF010, RN09 |
+| TR04 | T02         | T03         | Clique em "Compartilhar ranking"     | Sempre disponível em T02              | RF010, RN13 |
+| TR05 | T03         | T02         | Fechar modal de compartilhamento     | Usuário fecha ou clica fora do modal  | —           |
+| TR06 | T01         | —           | —                                    | Tela final, sem saída para o sistema  | RN02        |
+
+### Happy path identificado
+
+```
+URL recebida (A01)
+      │
+      ▼
+UUID válido? ──NÃO──► T01 (erro) — fim
+      │
+     SIM
+      │
+      ▼
+     T02 (painel da equipe)
+      │
+      ├── atualização automática a cada 1h (TR03, loop)
+      │
+      └── clique em "Compartilhar" ──► T03 (modal)
+                                            │
+                                            └── fechar ──► T02
+```
+
+### Notas sobre as transições
+
+- **TR03 é um loop interno** em T02 — não há navegação de rota,
+  apenas atualização dos dados de ranking em background (RN09).
+- **T01 não tem saída** para o sistema — o corredor só consegue
+  acessar o painel se receber um UUID válido do administrador.
+- **T03 é transição dentro de T02** (modal sobreposto), não uma
+  rota nova. Fechar o modal retorna ao estado anterior de T02.
