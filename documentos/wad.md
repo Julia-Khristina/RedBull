@@ -858,7 +858,13 @@ relatório.
 
 ## 3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+#### User Flow
+Antes da construção dos wireframes, foi elaborado um diagrama de fluxo de telas com o objetivo de representar, de forma visual e simplificada, a navegação do sistema. Esse diagrama permite compreender como as principais funcionalidades se conectam, evidenciando os caminhos percorridos pelos usuários ao longo da utilização da plataforma.
+
+No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as principais ações operacionais, como gestão de equipes, acompanhamento de ranking e acesso a relatórios e ações dos atletas, como acompanhamento de desempenho. Assim, o diagrama serve como base para o desenvolvimento dos wireframes, garantindo consistência na organização e criação das telas.
+#### Wireframe de baixa fidelidade
+#### Wireframe de alta fidelidade
+
 
 ## 3.4. Guia de estilos (sprint 3)
 
