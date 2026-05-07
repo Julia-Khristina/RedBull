@@ -858,7 +858,51 @@ relatório.
 
 ## 3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+
+Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
+
+O principal objetivo deste wireframe é 
+representar de forma rápida e simplificada o fluxo de navegação da Marina ao preparar uma nova edição do Red Bull 24h antes da prova começar, explorando desde o primeiro acesso ao painel até as equipes cadastradas e prontas para receber o link público (UUID).
+ 
+
+ <div align="center">
+  <sub>Quadro 20 - User Stories cobertas: </sub>
+</div>
+
+
+
+| ID   | User Story | Descrição |
+|------|-------------|------------|
+| US01 | Acessar painel admin | Estados sem e com competição |
+| US02 | Cadastrar nova competição | Cadastro com data e localização |
+| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
+| US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
+| US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+
+ <div align="center">
+  <sub>Quadro 21 - Critérios de baixa fidelidade adotados:</sub>
+</div>
+
+
+
+
+| Critério | Descrição |
+|-----------|------------|
+| Paleta monocromática | Uso apenas de preto, cinza e fundo papel |
+| Placeholders de imagem | Representados com X cortado |
+| Blocos de texto | Indicados com linhas zigzag |
+| Elementos visuais | Sem ícones decorativos |
+| Foco estrutural | Ênfase em hierarquia, fluxo e organização espacial |
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 
 ## 3.4. Guia de estilos (sprint 3)
 
