@@ -373,8 +373,6 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
     <li>Experiência fluida para equipe e para os participantes</li>
 </ul> <br>
 
-
-
 <div align="center">
   <sub>Figura 6 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
   <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
@@ -899,6 +897,53 @@ O modelo relacional consiste em uma abordagem de organização e gerenciamento d
 No contexto deste projeto, o modelo relacional foi desenvolvido a partir dos requisitos funcionais e das regras de negócio levantadas nas etapas anteriores, com o objetivo de estruturar o armazenamento das informações referentes às competições, equipes, corredores, esteiras, registros de desempenho e processos de auditoria. A modelagem proposta busca garantir integridade referencial, rastreabilidade das operações e escalabilidade para futuras evoluções do sistema.
 
 #### 3.6.3.1 Modelo Relacional
+
+Com base nos requisitos funcionais, nas regras de negócio e na modelagem conceitual definida nas etapas anteriores, foi elaborado o modelo relacional do sistema, contemplando as principais entidades, seus atributos e os relacionamentos necessários para garantir integridade e consistência dos dados. A Figura 6 apresenta a estrutura relacional proposta para o projeto.
+
+<div align="center">
+  <sub>Figura 6 - Modelo Relacional</sub><br>
+  <img src="../assets/programacao/modelorelacional.png" width="100%" alt="Modelo relacional do sistema representando as tabelas do banco de dados, seus atributos, chaves primárias, chaves estrangeiras e os relacionamentos entre competições, equipes, corredores, checkpoints, administradores e esteiras"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+##### Descrição das entidades
+
+**Tabela `competicao`**  
+A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados como endereço e data de realização. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+
+**Tabela `equipe`**  
+A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação, como nome e UUID, bem como o identificador visual em QR Code gerado pela aplicação para facilitar o acesso público às informações da equipe.
+
+**Tabela `corredor`**  
+A tabela `corredor` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF. Por meio da chave estrangeira `equipe_id`, cada corredor é associado à sua respectiva equipe.
+
+**Tabela `esteira`**  
+A tabela `esteira` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações de identificação e especificação de cada dispositivo utilizado na competição.
+
+**Tabela `checkpoint`**  
+A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando métricas como quilometragem percorrida, pace, tempo de execução e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `corredor`, `competicao` e `esteira`, permitindo rastrear a origem e o contexto de cada registro.
+
+**Tabela `administrador`**  
+A tabela `administrador` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de autenticação e área de atuação. Por meio da chave estrangeira `checkpoint_id`, essa entidade mantém relacionamento com a tabela `checkpoint`, permitindo registrar quais checkpoints foram auditados, validados ou acompanhados por usuários administrativos durante a operação do sistema.
+
+Adicionalmente, todas as entidades contemplam atributos temporais, como `criado_em`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
+
+##### Relacionamentos e integridade referencial
+
+Os relacionamentos entre as entidades foram definidos por meio de chaves primárias (*Primary Keys*) e chaves estrangeiras (*Foreign Keys*), respeitando as dependências identificadas durante a modelagem conceitual e garantindo integridade referencial entre as tabelas. Nesse contexto:
+
+- uma `competicao` pode possuir múltiplas `equipes` *(1:N)*;
+- uma `equipe` pode possuir múltiplos `corredores` *(1:N)*;
+- um `corredor` pode gerar múltiplos `checkpoints` *(1:N)*;
+- uma `competicao` pode possuir múltiplos `checkpoints` *(1:N)*;
+- uma `esteira` pode estar associada a múltiplos `checkpoints` *(1:N)*;
+- um `checkpoint` pode estar associado a múltiplos registros de auditoria administrativa *(1:N)*.
+
+Além da definição dos relacionamentos, a modelagem contempla restrições de integridade como `not null`, garantindo obrigatoriedade de preenchimento dos campos essenciais; `unique`, assegurando unicidade em atributos de identificação; `foreign key`, preservando a consistência entre entidades relacionadas; e `check`, validando regras específicas de negócio. Adicionalmente, a implementação física considera a criação de índices por meio de `create index`, visando otimizar consultas e garantir desempenho durante a operação da aplicação.
+
+A implementação física completa dessa estrutura, incluindo as instruções DDL executáveis e a ordem de dependência entre as tabelas no arquivo `migration.sql`, é apresentada na subseção seguinte.
+
+#### 3.6.3.2 Modelo Físico
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
