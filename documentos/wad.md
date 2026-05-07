@@ -858,7 +858,9 @@ relatório.
 
 ## 3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+
+**Wireframe Alta Fidelidade**
+O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett (2011), o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento.
 
 ## 3.4. Guia de estilos (sprint 3)
 
@@ -1065,6 +1067,8 @@ PORTER, Michael E. The five competitive forces that shape strategy. Harvard Busi
 RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
 TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
+
+GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
 
 # <a name="c9"></a>Anexos
 
