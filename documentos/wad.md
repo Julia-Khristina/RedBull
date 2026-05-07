@@ -890,7 +890,12 @@ relatório.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
-*Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
+<div align="center">
+  <sub>Figura 7 - Diagrama Entidade Relacionamento</sub><br>
+    <img src="../assets/Diagrama de entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
