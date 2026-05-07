@@ -99,3 +99,18 @@ UUID válido? ──NÃO──► T01 (erro) — fim
   acessar o painel se receber um UUID válido do administrador.
 - **T03 é transição dentro de T02** (modal sobreposto), não uma
   rota nova. Fechar o modal retorna ao estado anterior de T02.
+
+  ## 4. Diagrama de Fluxo de Telas
+
+A figura abaixo consolida visualmente o fluxo de navegação do
+corredor, integrando o inventário de telas (seção 2) com as
+transições mapeadas (seção 3). O diagrama destaca o caminho de
+entrada via UUID, o tratamento de erro para UUID inválido, o
+painel principal (T02) com atualização automática do ranking
+e o modal de compartilhamento opcional (T03).
+
+<div align="center">
+  <sub>Figura 1 - Diagrama de Fluxo de Telas do Corredor</sub><br>
+  <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Diagrama de fluxo das telas do corredor mostrando o acesso via UUID, tela de erro, painel da equipe com atualização automática e modal de compartilhamento"><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
