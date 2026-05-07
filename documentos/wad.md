@@ -894,7 +894,11 @@ relatório.
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+<div align="center">
+  <sub>Figura 6 - Modelo Entidade Relacionamento</sub><br>
+    <img src="../assets/modelo-er_v1.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
