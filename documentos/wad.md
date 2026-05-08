@@ -890,12 +890,41 @@ relatório.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
+### Glossário de cardinalidades - Notação Crow's Foot
+
+
+
+| Símbolo | Representa |
+|---|---|
+| `\|` | 1 |
+| `<` | muitos |
+
+Aplicando no exemplo:
+
+| Par | Símbolos | Resultado | Leitura |
+|---|---|---|---|
+| Externos | `\|` + `<` | 1:N | 1 competição tem muitas equipes |
+| Internos | `\|` + `\|` | 1:1 | 1 equipe pertence a 1 competição |
+
+> A mesma linha carrega as duas direções. Não é preciso desenhar duas setas,
+
+
 <div align="center">
   <sub>Figura 7 - Diagrama Entidade Relacionamento</sub><br>
     <img src="../assets/Diagrama de entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+
+### Relacionamentos do DER
+
+| # | Entidade A | Entidade B | A → B (externos) | B → A (internos) |
+|---|---|---|---|---|
+| 1 | competicao | equipe | 1 competição tem muitas equipes (1:N) | 1 equipe pertence a 1 competição (1:1) |
+| 2 | equipe | corredor | 1 equipe tem muitos corredores (1:N) | 1 corredor pertence a 1 equipe (1:1) |
+| 3 | corredor | checkpoint | 1 corredor passa por muitos checkpoints (1:N) | 1 checkpoint pertence a 1 corredor (1:1) |
+| 4 | administrador | checkpoint | 1 administrador supervisiona muitos checkpoints (1:N) | 1 checkpoint é supervisionado por 1 administrador (1:1) |
+| 5 | esteira | checkpoint | 1 esteira é usada em muitos checkpoints (1:N) | 1 checkpoint usa exatamente 1 esteira (1:1) |
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
