@@ -60,5 +60,50 @@ A partir das ações A01–A13 mapeadas anteriormente, foram identificadas as te
 - O **Painel operacional (T05)** cuida do fluxo crítico da competição, relacionado aos checkpoints realizados a cada 5 minutos.
 - O módulo de **Relatórios (T09)** agrupa exportações, relatórios analíticos e auditoria.
 
+## 3. Transições entre Telas
+
+Para cada tela do inventário, são definidas entradas, saídas e condições de transição.
+
+| ID | De | Para | Gatilho | Condição | RFs/RNs |
+|---|---|---|---|---|---|
+| TR01 | T01 | T02 | Clique em “Equipes” | Usuário autenticado | RF003 |
+| TR02 | T02 | T03 | Clique em “Cadastrar equipe” | Sempre disponível | RF003 |
+| TR03 | T02 | T04 | Clique em equipe específica | Equipe existente | RF015 |
+| TR04 | T02 | T05 | Clique em “Painel operacional” | Competição ativa | RF008 |
+| TR05 | T01 | T06 | Clique em “Ranking” | Sempre disponível | RF010 |
+| TR06 | T06 | T07 | Seleção “Ranking da competição” | Competição ativa | RF010 |
+| TR07 | T06 | T08 | Seleção “Ranking global” | Sempre disponível | RF015 |
+| TR08 | T01 | T09 | Clique em “Relatórios” | Sempre disponível | RF014 |
+| TR09 | T09 | T10 | Clique em “Exportar dados” | Dados disponíveis | RF013 |
+| TR10 | T09 | T11 | Clique em “Relatório por equipe” | Equipe selecionada | RF014 |
+| TR11 | T09 | T12 | Clique em “Log de auditoria” | Sempre disponível | RN05, RN12 |
+
+### Happy path identificado
+
+```text
+Dashboard principal (T01)
+        │
+        ├──► Gestão de equipes (T02)
+        │       ├──► Cadastro de equipe (T03)
+        │       ├──► Dados da equipe (T04)
+        │       └──► Painel operacional (T05)
+        │
+        ├──► Ranking (T06)
+        │       ├──► Ranking da competição (T07)
+        │       └──► Ranking global (T08)
+        │
+        └──► Relatórios (T09)
+                ├──► Exportar dados (T10)
+                ├──► Relatório por equipe (T11)
+                └──► Log de auditoria (T12)
+```
+#### Notas sobre as transições
+- O Dashboard principal atua como hub central do sistema.
+- O fluxo de ranking possui subdivisão entre visão específica da competição e visão global.
+- A área de Relatórios concentra funcionalidades administrativas e de auditoria.
+- O Painel operacional é acessado a partir da gestão de equipes por representar uma continuidade operacional do evento.
+ 
+
+
 
 
