@@ -67,15 +67,15 @@ Para cada tela do inventário, são definidas entradas, saídas e condições de
 | ID | De | Para | Gatilho | Condição | RFs/RNs |
 |---|---|---|---|---|---|
 | TR01 | T01 | T02 | Clique em “Equipes” | Usuário autenticado | RF003 |
-| TR02 | T02 | T03 | Clique em “Cadastrar equipe” | Sempre disponível | RF003 |
+| TR02 | T02 | T03 | Clique em “Cadastrar equipe” | Sempre disponível | RF003, RN01 |
 | TR03 | T02 | T04 | Clique em equipe específica | Equipe existente | RF015 |
-| TR04 | T02 | T05 | Clique em “Painel operacional” | Competição ativa | RF008 |
+| TR04 | T02 | T05 | Clique em “Painel operacional” | Competição ativa | RF008, RN04 |
 | TR05 | T01 | T06 | Clique em “Ranking” | Sempre disponível | RF010 |
-| TR06 | T06 | T07 | Seleção “Ranking da competição” | Competição ativa | RF010 |
-| TR07 | T06 | T08 | Seleção “Ranking global” | Sempre disponível | RF015 |
+| TR06 | T06 | T07 | Seleção “Ranking da competição” | Competição ativa | RF010, RN09 |
+| TR07 | T06 | T08 | Seleção “Ranking global” | Sempre disponível | RF015, RN11 |
 | TR08 | T01 | T09 | Clique em “Relatórios” | Sempre disponível | RF014 |
-| TR09 | T09 | T10 | Clique em “Exportar dados” | Dados disponíveis | RF013 |
-| TR10 | T09 | T11 | Clique em “Relatório por equipe” | Equipe selecionada | RF014 |
+| TR09 | T09 | T10 | Clique em “Exportar dados” | Dados disponíveis | RF013, RN15 |
+| TR10 | T09 | T11 | Clique em “Relatório por equipe” | Equipe selecionada | RF014, RN17 |
 | TR11 | T09 | T12 | Clique em “Log de auditoria” | Sempre disponível | RN05, RN12 |
 
 ### Happy path identificado
@@ -102,7 +102,25 @@ Dashboard principal (T01)
 - O fluxo de ranking possui subdivisão entre visão específica da competição e visão global.
 - A área de Relatórios concentra funcionalidades administrativas e de auditoria.
 - O Painel operacional é acessado a partir da gestão de equipes por representar uma continuidade operacional do evento.
- 
+
+## 4. Diagrama do fluxo de telas
+A figura abaixo consolida visualmente o fluxo de navegação do
+coordenador operacional no sistema Red Bull 24 Horas, integrando
+o inventário de telas com as transições identificadas durante o
+mapeamento das jornadas. O diagrama evidencia o dashboard como
+ponto central de navegação, permitindo acesso às áreas de gestão
+de equipes, rankings e relatórios. Além disso, destaca os fluxos
+relacionados ao cadastro de equipes, registro de checkpoints,
+visualização de dados operacionais e acesso aos relatórios e logs
+de auditoria utilizados no acompanhamento estratégico da competição.
+
+<div align="center">
+  <sub>Figura 1 - Diagrama de Fluxo de Telas do Operador da prova</sub><br>
+  <img src="../../assets/design/fluxo-operador.svg" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+
 
 
 
