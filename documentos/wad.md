@@ -858,7 +858,7 @@ relatório.
 
 ## 3.3. Wireframes (sprint 2)
 
-#### User Flow
+### User Flow
 Antes da construção dos wireframes, foi elaborado um diagrama de fluxo de telas com o objetivo de representar, de forma visual e simplificada, a navegação do sistema. Esse diagrama permite compreender como as principais funcionalidades se conectam, evidenciando os caminhos percorridos pelos usuários ao longo da utilização da plataforma.
 
 No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as principais ações operacionais, como gestão de equipes, acompanhamento de ranking e acesso a relatórios e ações dos atletas, como acompanhamento de desempenho. Assim, o diagrama serve como base para o desenvolvimento dos wireframes, garantindo consistência na organização e criação das telas.
@@ -879,8 +879,54 @@ No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as
 
 - Acesse o Userflow do corredor aqui: [Fluxo do Corredor](outros/fluxo-corredor.md).
 
-#### Wireframe de baixa fidelidade
-#### Wireframe de alta fidelidade
+### Wireframe de baixa fidelidade
+
+
+O principal objetivo deste wireframe é 
+representar de forma rápida e simplificada o fluxo de navegação da persona 1 (Marina) ao preparar uma nova edição do Red Bull 24h antes da prova começar, explorando desde o primeiro acesso ao painel até as equipes cadastradas e prontas para receber o link público (UUID).
+
+ Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
+
+ <div align="center">
+  <sub>Quadro 20 - User Stories cobertas: </sub>
+</div>
+
+
+
+
+| ID   | User Story | Descrição |
+|------|-------------|------------|
+| US01 | Acessar painel admin | Estados sem e com competição |
+| US02 | Cadastrar nova competição | Cadastro com data e localização |
+| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
+| US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
+| US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+
+ <div align="center">
+  <sub>Quadro 21 - Critérios de baixa fidelidade adotados:</sub>
+</div>
+
+
+
+
+| Critério | Descrição |
+|-----------|------------|
+| Paleta em P&B | Uso apenas de preto e branco |
+| Placeholders de imagem | Representados com X cortado |
+| Blocos de texto | Indicados com linhas zigzag |
+| Elementos visuais | Sem ícones decorativos |
+| Foco estrutural | Ênfase em hierarquia, fluxo e organização espacial |
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Wireframe de alta fidelidade #####
 
 
 ## 3.4. Guia de estilos (sprint 3)
