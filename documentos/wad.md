@@ -860,7 +860,7 @@ relatório.
 
 
 **Wireframe Alta Fidelidade**
-O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett (2011), o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento.
+O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
 
 ## 3.4. Guia de estilos (sprint 3)
 
