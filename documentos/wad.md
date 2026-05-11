@@ -890,7 +890,14 @@ relatório.
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
-### Glossário de cardinalidades - Notação Crow's Foot
+### Notação Crow's Foot
+
+Para a construção do Diagrama Entidade-Relacionamento (ER) deste projeto, foi utilizada a notação Crow’s Foot. O nome Crow’s Foot (“pé de corvo”) vem do símbolo utilizado para representar relações do tipo “muitos”, que possui um formato semelhante às patas de um corvo. 
+
+Por meio dessa representação, é possível identificar de forma clara relações como um-para-um (1:1), um-para-muitos (1:N) e muitos-para-muitos (N:N). Além das cardinalidades, a notação também permite representar a opcionalidade e a obrigatoriedade dos relacionamentos por meio de símbolos específicos, como círculos e barras, indicando se a participação de uma entidade em um relacionamento é opcional ou obrigatória. Dessa forma, a modelagem do banco de dados se torna mais organizada e compreensível. (PERERA, 2026)
+
+
+### Glossário de cardinalidades  
 
 | Símbolo | Nome | Significado |
 |---|---|---|
