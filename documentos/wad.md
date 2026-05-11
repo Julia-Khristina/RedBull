@@ -863,7 +863,20 @@ Antes da construção dos wireframes, foi elaborado um diagrama de fluxo de tela
 
 No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as principais ações operacionais, como gestão de equipes, acompanhamento de ranking e acesso a relatórios e ações dos atletas, como acompanhamento de desempenho. Assim, o diagrama serve como base para o desenvolvimento dos wireframes, garantindo consistência na organização e criação das telas.
 
+<div align="center">
+  <sub>Figura 7 - Diagrama de Fluxo de Telas do Operador da prova</sub><br>
+  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
 - Acesse o Userflow do operador aqui: [Fluxo do Operador](outros/fluxo_operador.md).
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Fluxo de Telas do Corredor</sub><br>
+  <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Diagrama de fluxo das telas do corredor mostrando o acesso via UUID, tela de erro, painel da equipe com atualização automática e modal de compartilhamento"><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
 - Acesse o Userflow do corredor aqui: [Fluxo do Corredor](outros/fluxo-corredor.md).
 
 #### Wireframe de baixa fidelidade
