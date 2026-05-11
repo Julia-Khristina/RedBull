@@ -909,22 +909,22 @@ Com base nos requisitos funcionais, nas regras de negócio e na modelagem concei
 ##### Descrição das entidades
 
 **Tabela `competicao`**  
-A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados como endereço e data de realização. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
 
 **Tabela `equipe`**  
-A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação, como nome e UUID, bem como o identificador visual em QR Code gerado pela aplicação para facilitar o acesso público às informações da equipe.
+A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
 
 **Tabela `corredor`**  
 A tabela `corredor` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF. Por meio da chave estrangeira `equipe_id`, cada corredor é associado à sua respectiva equipe.
 
 **Tabela `esteira`**  
-A tabela `esteira` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações de identificação e especificação de cada dispositivo utilizado na competição.
-
-**Tabela `checkpoint`**  
-A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando métricas como quilometragem percorrida, pace, tempo de execução e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `corredor`, `competicao` e `esteira`, permitindo rastrear a origem e o contexto de cada registro.
+A tabela `esteira` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
 
 **Tabela `administrador`**  
-A tabela `administrador` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de autenticação e área de atuação. Por meio da chave estrangeira `checkpoint_id`, essa entidade mantém relacionamento com a tabela `checkpoint`, permitindo registrar quais checkpoints foram auditados, validados ou acompanhados por usuários administrativos durante a operação do sistema.
+A tabela `administrador` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de identificação, autenticação e rastreabilidade temporal.
+
+**Tabela `checkpoint`**  
+A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `corredor`, `competicao`, `esteira` e `administrador`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
 
 Adicionalmente, todas as entidades contemplam atributos temporais, como `criado_em`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
 
@@ -937,11 +937,8 @@ Os relacionamentos entre as entidades foram definidos por meio de chaves primár
 - um `corredor` pode gerar múltiplos `checkpoints` *(1:N)*;
 - uma `competicao` pode possuir múltiplos `checkpoints` *(1:N)*;
 - uma `esteira` pode estar associada a múltiplos `checkpoints` *(1:N)*;
-- um `checkpoint` pode estar associado a múltiplos registros de auditoria administrativa *(1:N)*.
+- Um `administrador` pode validar múltiplos checkpoints (1:N).
 
-Além da definição dos relacionamentos, a modelagem contempla restrições de integridade como `not null`, garantindo obrigatoriedade de preenchimento dos campos essenciais; `unique`, assegurando unicidade em atributos de identificação; `foreign key`, preservando a consistência entre entidades relacionadas; e `check`, validando regras específicas de negócio. Adicionalmente, a implementação física considera a criação de índices por meio de `create index`, visando otimizar consultas e garantir desempenho durante a operação da aplicação.
-
-A implementação física completa dessa estrutura, incluindo as instruções DDL executáveis e a ordem de dependência entre as tabelas no arquivo `migration.sql`, é apresentada na subseção seguinte.
 
 #### 3.6.3.2 Modelo Físico
 
