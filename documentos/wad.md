@@ -892,39 +892,34 @@ relatório.
 
 ### Glossário de cardinalidades - Notação Crow's Foot
 
-
-
-| Símbolo | Representa |
-|---|---|
-| `\|` | 1 |
-| `<` | muitos |
-
-Aplicando no exemplo:
-
-| Par | Símbolos | Resultado | Leitura |
-|---|---|---|---|
-| Externos | `\|` + `<` | 1:N | 1 competição tem muitas equipes |
-| Internos | `\|` + `\|` | 1:1 | 1 equipe pertence a 1 competição |
+| Símbolo | Nome | Significado |
+|---|---|---|
+| `\|` | Um obrigatório | Representa exatamente 1 ocorrência obrigatória |
+| `<` | Muitos | Representa várias ocorrências relacionadas |
+| `\|———\|` | 1:1 (Um para Um) | Uma entidade se relaciona obrigatoriamente com exatamente uma ocorrência da outra |
+| `\|———\|<` | 1:N obrigatório | Uma entidade se relaciona com uma ou mais ocorrências obrigatórias da outra entidade |
+| `>\|———\|` | N:1 obrigatório | Várias entidades se relacionam obrigatoriamente com uma única ocorrência da outra entidade |
 
 > A mesma linha carrega as duas direções. Não é preciso desenhar duas setas,
 
 
 <div align="center">
   <sub>Figura 7 - Diagrama Entidade Relacionamento</sub><br>
-    <img src="../assets/Diagrama de entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/Diagrama entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
-### Relacionamentos do DER
+# Relacionamentos do DER
 
-| # | Entidade A | Entidade B | A → B (externos) | B → A (internos) |
+| # | Entidade A | Entidade B | A → B | B → A |
 |---|---|---|---|---|
-| 1 | competicao | equipe | 1 competição tem muitas equipes (1:N) | 1 equipe pertence a 1 competição (1:1) |
-| 2 | equipe | corredor | 1 equipe tem muitos corredores (1:N) | 1 corredor pertence a 1 equipe (1:1) |
-| 3 | corredor | checkpoint | 1 corredor passa por muitos checkpoints (1:N) | 1 checkpoint pertence a 1 corredor (1:1) |
-| 4 | administrador | checkpoint | 1 administrador supervisiona muitos checkpoints (1:N) | 1 checkpoint é supervisionado por 1 administrador (1:1) |
-| 5 | esteira | checkpoint | 1 esteira é usada em muitos checkpoints (1:N) | 1 checkpoint usa exatamente 1 esteira (1:1) |
+| 1 | competicao | equipe | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
+| 2 | equipe | corredor | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
+| 3 | corredor | checkpoint | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
+| 4 | administrador | checkpoint | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
+| 5 | esteira | checkpoint | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
+| 6 | competicao | checkpoint | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
