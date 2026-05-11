@@ -909,14 +909,14 @@ Além disso, o relacionamento entre entidades é feito através de uma linha, qu
 Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
 
 <div align="center">
-  <sub>Quadro 19 - Exemplificação dos elementos da notação de Chen </sub>
+  <sub>Quadro 20 - Exemplificação dos elementos da notação de Chen </sub>
 </div>
 
 | Elemento |  Símbolo  | Aplicação ao MER |
 | -------- | --------- | ---------------- |
 | Entidade | Retângulo | Competição, Equipe, Corredor, Checkpoint, Administrador e Esteira |
 | Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
-| Relacionamento | Losângulo | Equipe possui Corredor |
+| Relacionamento | Losango | Equipe possui Corredor |
 | Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
 
 <div align="center">
