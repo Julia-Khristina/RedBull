@@ -896,7 +896,7 @@ relatório.
 
 <div align="center">
   <sub>Figura 6 - Modelo Entidade Relacionamento</sub><br>
-    <img src="../assets/modelo-er_v1.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
