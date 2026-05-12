@@ -964,20 +964,14 @@ O wireframe de alta fidelidade é uma representação visual detalhada de uma in
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-<div align="center">
-  <sub>Figura 6 - Modelo Entidade Relacionamento</sub><br>
-    <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
 O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (DEVMEDIA, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
 
 De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como nome, endereço e CPF na entidade Aluno. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Além disso, existem os relacionamentos, representados por losangos contendo o verbo que descreve a interação entre as entidades, responsáveis por demonstrar as associações existentes entre elas.
 
-Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 19 apresenta as principais cardinalidades e a sua utilização:
+Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 19 apresenta as principais cardinalidades e a sua utilização.
 
 <div align="center">
-  <sub>Quadro 19 - Cardinalidades </sub>
+  <sub>Quadro 21 - Cardinalidades </sub>
 </div>
 
 | Cardinalidade |  Leitura | Exemplo de Aplicação |
@@ -990,10 +984,41 @@ Além disso, o relacionamento entre entidades é feito através de uma linha, qu
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
+A seguir, a Figura 6 ilustra o Modelo Entidade Relacionamento desenvolvido para o projeto.
 
 <div align="center">
-  <sub>Quadro 20 - Exemplificação dos elementos da notação de Chen </sub>
+  <sub>Figura 6 - Modelo Entidade Relacionamento</sub><br>
+    <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Descrição das entidades e relacionamentos
+
+A seguir, o Quadro 22 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema.
+
+<div align="center">
+  <sub>Quadro 22 - Descrição das entidades e relacionamentos</sub>
+</div>
+
+| Entidade | Papel no sistema | Relacionamentos |
+| --------- | ---------------- | --------------- |
+| Competição | Representa o evento Red Bull 24h | Possui N Equipes, Possui N Esteiras |
+| Equipe | Agrupa corredores sob um identificador único | Pertence a 1 Competição, Possui N Corredores |
+| Corredor | Atleta participante vinculado a uma equipe | Pertence a 1 Equipe, Possui N Checkpoints |
+| Checkpoint | Registro de performance do corredor na esteira | Pertence a 1 Corredor, Pertence a 1 Esteira, Possui N:1 Administrador | 
+| Administrador | Operador responsável por registrar checkpoints | Possui N Checkpoints |
+| Esteira | Equipamento onde a corrida é realizada | Pertence a N Competições, possui N Checkpoints |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
+
+A seguir, o Quadro 22 exemplifica os elementos da notação de Chen utilizados no MER.
+
+<div align="center">
+  <sub>Quadro 22 - Exemplificação dos elementos da notação de Chen </sub>
 </div>
 
 | Elemento |  Símbolo  | Aplicação ao MER |
@@ -1002,6 +1027,141 @@ Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (S
 | Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
 | Relacionamento | Losango | Equipe possui Corredor |
 | Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Dicionário de dados
+
+Por meio de quadros, será detalhado cada entidade, listando seus atributos baseados no tipo semântico e descrição afim de contextualizar a implementação ao sistema.
+
+O Quadro 23 apresenta a entidade e os atributos de "Competição".
+
+<div align="center">
+  <sub>Quadro 23 - Dicionário de Dados da Entidade Competição</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Competição | Código | Identificador | Identifica unicamente cada competição | 
+| Competição | Endereço | Texto | Local onde a competição ocorre | 
+| Competição | Data | Data | Data de realização da competição |
+| Competição | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+A seguir, o Quadro 24 ilustra a entidade Equipe e os seus atributos.
+
+<div align="center">
+  <sub>Quadro 24 - Dicionário de Dados da Entidade Equipe</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Equipe | Código | Identificador | Identifica unicamente cada equipe |
+| Equipe | Nome | Texto | Nome da equipe |
+| Equipe | UUID | Identificador único público | Código distribuído ao capitão para acesso sem login |
+| Equipe | Qr_Code | Imagem | Representação visual gerada a partir do UUID |
+| Equipe | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+O Quadro 25 representa o dicionário de dados da entidade Corredor.
+
+<div align="center">
+  <sub>Quadro 25 - Dicionário de Dados da Entidade Corredor</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Corredor | Código | Identificador | Identifica unicamente cada corredor | 
+| Corredor | Nome | Texto | Nome completo do corredor |
+| Corredor | CPF | Texto | Documento de identificação civil único |
+| Corredor | Email | Texto | Endereço de e-mail do corredor | 
+| Corredor | Telefone | Texto | Contato telefônico do corredor | 
+| Corredor | Status | Categórico | Papel do corredor na equipe: corredor ou capitão |
+| Corredor | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+O Quadro 26 apresenta a entidade e os atributos de "Checkpoint".
+
+<div align="center">
+  <sub>Quadro 26 - Dicionário de Dados da Entidade Checkpoint</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Checkpoint | Código | Identificador | Identifica unicamente cada checkpoint |
+| Checkpoint | Identificador | Número | Identifica cada checkpoint e possibilita rastreabilidade e auditoria dos registros |
+| Checkpoint | Km | Numérico decimal | Distância percorrida registrada |
+| Checkpoint | Pace | Numérico decimal | Ritmo médio em minutos por km |
+| Checkpoint | Tempo | Duração | Tempo total na esteira |
+| Checkpoint | Imagem | Arquivo | Foto do painel da esteira capturada via OCR |
+| Checkpoint | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+A seguir, o Quadro 27 ilustra a entidade Administrador e os seus atributos.
+
+<div align="center">
+  <sub>Quadro 27 - Dicionário de Dados da Entidade Administrador</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Administrador | Código | Identificador | Identifica unicamente cada administrador |
+| Administrador | Nome | Texto | Nome do administrador |
+| Administrador | Área | Texto | Área de atuação do administrador | 
+| Administrador | Senha | Texto protegido | Credencial de acesso ao painel administrativo |
+| Administrador | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+O Quadro 28 representa o dicionário de dados da entidade Esteira.
+
+<div align="center">
+  <sub>Quadro 28 - Dicionário de Dados da Entidade Esteira </sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Esteira | Código | Identificador | Identifica unicamente cada esteira |
+| Esteira | Nome | Texto | Nome ou apelido da esteira |
+| Esteira | Especificação | Texto | Descrição técnica do equipamento |
+| Esteira | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+#### Rastreabilidade entidade → RF → RN
+
+A seguir, o Quadro 29 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
+
+<div align="center">
+  <sub>Quadro 29 - Rastreabilidade entidade → RF → RN </sub>
+</div>
+
+| Entidade | RF que origina | RN que governa |
+| --------- | -------------- | -------------|
+| Competição | RF001, RF002 | RN14 |
+| Equipe | RF003 | RN01, RN02, RN07 | 
+| Corredor | RF003 | RN07 | 
+| Checkpoint | RF005, RF008 | RN04, RN05, RN12 |
+| Administrador | RF004 | RN03 |
+| Esteira | RF005 | — |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
