@@ -955,7 +955,42 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (DEVMEDIA, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
+
+De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como nome, endereço e CPF na entidade Aluno. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Além disso, existem os relacionamentos, representados por losangos contendo o verbo que descreve a interação entre as entidades, responsáveis por demonstrar as associações existentes entre elas.
+
+Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 19 apresenta as principais cardinalidades e a sua utilização:
+
+<div align="center">
+  <sub>Quadro 19 - Cardinalidades </sub>
+</div>
+
+| Cardinalidade |  Leitura | Exemplo de Aplicação |
+| -------- | --------- | --------- |  
+| 1:1 | Um para Um | Cada pessoa tem exatamente um CPF |
+| 1:N | Um para Muitos | Um cliente pode ter vários pedidos, mas cada pedido pertence a um único cliente |
+| N:M | Muitos para Muitos | Um pedido pode conter vários produtos, e um produto pode aparecer em vários pedidos. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
+
+<div align="center">
+  <sub>Quadro 20 - Exemplificação dos elementos da notação de Chen </sub>
+</div>
+
+| Elemento |  Símbolo  | Aplicação ao MER |
+| -------- | --------- | ---------------- |
+| Entidade | Retângulo | Competição, Equipe, Corredor, Checkpoint, Administrador e Esteira |
+| Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
+| Relacionamento | Losango | Equipe possui Corredor |
+| Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
@@ -1134,6 +1169,12 @@ PORTER, Michael E. The five competitive forces that shape strategy. Harvard Busi
 RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
 TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
+
+ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
+
+DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
+
+DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
 
 # <a name="c9"></a>Anexos
 
