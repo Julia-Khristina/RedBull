@@ -898,17 +898,205 @@ relatório.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
-*posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
+A presente subseção apresenta as consultas SQL compostas executadas pelo back-end da aplicação, identificadas a partir do mapeamento entre os requisitos funcionais, as regras de negócio e os endpoints da matriz da seção 3.1.4 e descritas em maior profundidade no documento preparatório `documentos/outros/mapeamento-consultas-sql.md`. Cada consulta é apresentada com sua finalidade de negócio, o endpoint a que serve, os requisitos atendidos e a expressão SQL correspondente.
 
-*Template de SQL + lógica proposicional*
-#1 | ---
---- | ---
-**Expressão SQL** | SELECT * FROM suppliers WHERE (state = 'California' AND supplier_id <> 900) OR (supplier_id = 100); 
-**Proposições lógicas** | $A$: O estado é 'California' (state = 'California') <br> $B$: O ID do fornecedor não é 900 (supplier_id ≠ 900) <br> $C$: O ID do fornecedor é 100 (supplier_id = 100)
-**Expressão lógica proposicional** | $(A \land B) \lor C$
-**Tabela Verdade** | <table> <thead> <tr> <th>$A$</th> <th>$B$</th> <th>$C$</th> <th>$(A \land B)$</th> <th>$(A \land B) \lor C$</th> </tr> </thead> <tbody> <tr> <td>F</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>F</td> <td>V</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>F</td> <td>V</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>F</td> <td>F</td> <td>F</td> <td>F</td> </tr> <tr> <td>V</td> <td>F</td> <td>V</td> <td>F</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>F</td> <td>V</td> <td>V</td> </tr> <tr> <td>V</td> <td>V</td> <td>V</td> <td>V</td> <td>V</td> </tr> </tbody> </table>
+> **Escopo desta entrega:** conforme delimitado na issue #129, esta subseção contempla exclusivamente as expressões SQL e suas finalidades. As proposições lógicas, expressões em lógica proposicional e respectivas tabelas-verdade serão documentadas em entrega subsequente, mantendo a estrutura do template original definido para a seção.
 
-*Dica: edite a tabela verdade fora do markdown, para ter melhor controle*
+#### Q01 — Ranking de equipes em tempo quase real
+
+| Atributo | Conteúdo |
+|----------|----------|
+| **Endpoint** | `GET /competitions/:id/ranking` |
+| **Função de negócio** | Ranking |
+| **RF atendido** | RF010, RF015 |
+| **RNs justificadas** | RN09, RN11 |
+| **Tabelas percorridas** | `equipe` ⨝ `corredor` ⨝ `checkpoint` |
+
+```sql
+SELECT
+    e.id   AS equipe_id,
+    e.nome AS equipe_nome,
+    COALESCE(SUM(c.km), 0) AS distancia_total_km,
+    COUNT(c.id)            AS total_checkpoints,
+    MAX(c.criado_em)       AS ultimo_checkpoint
+FROM equipe e
+LEFT JOIN corredor   co ON co.equipe_id   = e.id
+LEFT JOIN checkpoint c  ON c.corredor_id  = co.id
+WHERE e.competicao_id = $1
+GROUP BY e.id, e.nome
+ORDER BY distancia_total_km DESC, ultimo_checkpoint ASC;
+```
+
+**Finalidade:** consolidar, para uma competição específica, a distância acumulada de cada equipe a partir da soma dos checkpoints de todos os seus corredores. O uso de `LEFT JOIN` garante que equipes sem checkpoints ainda apareçam no ranking com distância zero. O critério de desempate por `ultimo_checkpoint` favorece equipes que registraram dados mais recentemente em caso de empate, atendendo à RN09 (atualização a cada novo checkpoint validado).
+
+---
+
+#### Q02 — Detecção de inconsistências em checkpoints capturados via OCR
+
+| Atributo | Conteúdo |
+|----------|----------|
+| **Endpoint** | `GET /competitions/:id/checkpoints/inconsistencies` |
+| **Função de negócio** | Inconsistências |
+| **RF atendido** | RF009 |
+| **RNs justificadas** | RN06 |
+| **Tabelas percorridas** | `checkpoint` ⨝ `corredor` ⨝ `equipe` |
+
+```sql
+WITH historico_corredor AS (
+    SELECT
+        corredor_id,
+        AVG(km)    AS km_medio,
+        STDDEV(km) AS km_desvio
+    FROM checkpoint
+    GROUP BY corredor_id
+    HAVING COUNT(*) >= 3
+)
+SELECT
+    c.id            AS checkpoint_id,
+    c.identificador,
+    co.nome         AS corredor_nome,
+    e.nome          AS equipe_nome,
+    c.km            AS km_capturado,
+    hc.km_medio,
+    hc.km_desvio,
+    c.criado_em
+FROM checkpoint c
+INNER JOIN corredor          co ON co.id          = c.corredor_id
+INNER JOIN equipe            e  ON e.id           = co.equipe_id
+INNER JOIN historico_corredor hc ON hc.corredor_id = c.corredor_id
+WHERE c.competicao_id = $1
+  AND ABS(c.km - hc.km_medio) > (2 * hc.km_desvio)
+ORDER BY c.criado_em DESC;
+```
+
+**Finalidade:** identificar checkpoints cujo valor de quilometragem se afasta em mais de dois desvios-padrão da média histórica do próprio corredor, sinalizando potenciais erros de leitura via OCR. A CTE `historico_corredor` calcula a média e o desvio-padrão por corredor (exigindo histórico mínimo de três checkpoints para que o desvio seja estatisticamente significativo), e a consulta principal cruza esse histórico com os checkpoints da competição em análise, atendendo diretamente à RN06.
+
+---
+
+#### Q03 — Exportação completa da competição em formato CSV
+
+| Atributo | Conteúdo |
+|----------|----------|
+| **Endpoint** | `GET /competitions/:id/exports` |
+| **Função de negócio** | Exportação |
+| **RF atendido** | RF013 |
+| **RNs justificadas** | RN15 |
+| **Tabelas percorridas** | `checkpoint` ⨝ `corredor` ⨝ `equipe` ⨝ `competicao` ⨝ `esteira` ⨝ `administrador` |
+
+```sql
+SELECT
+    cp.id           AS checkpoint_id,
+    cp.identificador,
+    cp.km,
+    cp.pace,
+    cp.tempo,
+    cp.imagem,
+    cp.criado_em    AS checkpoint_criado_em,
+    co.nome         AS corredor_nome,
+    co.cpf          AS corredor_cpf,
+    e.nome          AS equipe_nome,
+    e.uuid          AS equipe_uuid,
+    comp.endereco   AS competicao_endereco,
+    comp.data       AS competicao_data,
+    est.nome        AS esteira_nome,
+    est.especificacao AS esteira_especificacao,
+    adm.nome        AS administrador_nome,
+    adm.area        AS administrador_area
+FROM checkpoint cp
+INNER JOIN corredor   co   ON co.id   = cp.corredor_id
+INNER JOIN equipe     e    ON e.id    = co.equipe_id
+INNER JOIN competicao comp ON comp.id = cp.competicao_id
+INNER JOIN esteira    est  ON est.id  = cp.esteira_id
+LEFT  JOIN administrador adm ON adm.checkpoint_id = cp.id
+WHERE cp.competicao_id = $1
+ORDER BY cp.criado_em ASC;
+```
+
+**Finalidade:** produzir um conjunto plano de dados, uma linha por checkpoint, contendo todos os campos exigidos pela RN15: timestamps, referência à imagem capturada (`cp.imagem`, em JSON), identificação do corredor e da equipe, esteira utilizada e administrador responsável pela validação. O `LEFT JOIN` com `administrador` preserva checkpoints que ainda não foram auditados, evitando que a exportação omita registros pendentes de validação. A consulta serve de base para o back-end gerar o arquivo CSV propriamente dito.
+
+---
+
+#### Q04 — Geração de highlights pós-evento
+
+| Atributo | Conteúdo |
+|----------|----------|
+| **Endpoint** | `GET /competitions/:id/reports` |
+| **Função de negócio** | Relatórios |
+| **RF atendido** | RF014 |
+| **RNs justificadas** | RN16, RN17 |
+| **Tabelas percorridas** | `corredor` ⨝ `equipe` ⨝ `checkpoint` |
+
+```sql
+WITH stats_corredor AS (
+    SELECT
+        co.id        AS corredor_id,
+        co.nome      AS corredor_nome,
+        e.id         AS equipe_id,
+        e.nome       AS equipe_nome,
+        SUM(c.km)    AS km_total,
+        MAX(c.km)    AS maior_checkpoint_km,
+        COUNT(c.id)  AS total_checkpoints
+    FROM corredor co
+    INNER JOIN equipe     e ON e.id            = co.equipe_id
+    INNER JOIN checkpoint c ON c.corredor_id   = co.id
+    WHERE e.competicao_id = $1
+    GROUP BY co.id, co.nome, e.id, e.nome
+)
+SELECT
+    corredor_nome,
+    equipe_nome,
+    km_total,
+    maior_checkpoint_km,
+    total_checkpoints,
+    RANK() OVER (ORDER BY km_total DESC)                                AS rank_volume_individual,
+    RANK() OVER (PARTITION BY equipe_id ORDER BY km_total DESC)         AS rank_na_equipe,
+    RANK() OVER (ORDER BY maior_checkpoint_km DESC)                     AS rank_maior_checkpoint
+FROM stats_corredor
+ORDER BY rank_volume_individual;
+```
+
+**Finalidade:** produzir, em uma única consulta, os rankings exigidos pela RN17 nas três dimensões previstas: posição absoluta do corredor por volume total (`rank_volume_individual`), posição dentro da própria equipe (`rank_na_equipe`, via `PARTITION BY`) e melhor checkpoint isolado da competição (`rank_maior_checkpoint`). O uso de funções de janela (`RANK() OVER (...)`) evita múltiplas idas ao banco para cada categoria de highlight, atendendo ao requisito de geração automatizada estabelecido pela RN16.
+
+---
+
+#### Q05 — Painel administrativo: atleta em corrida e próximo da escala
+
+| Atributo | Conteúdo |
+|----------|----------|
+| **Endpoint** | `GET /competitions/:id/teams/:teamId/runners` |
+| **Função de negócio** | Painel administrativo |
+| **RF atendido** | RF011 |
+| **RNs justificadas** | RN07, RN08, RN10 |
+| **Tabelas percorridas** | `corredor` ⨝ `checkpoint` (via `LATERAL JOIN`) |
+
+```sql
+SELECT
+    co.id      AS corredor_id,
+    co.nome    AS corredor_nome,
+    co.status,
+    ultimo.km          AS ultimo_km,
+    ultimo.pace        AS ultimo_pace,
+    ultimo.tempo       AS ultimo_tempo,
+    ultimo.criado_em   AS ultimo_checkpoint_em,
+    EXTRACT(EPOCH FROM (NOW() - ultimo.criado_em)) / 60 AS minutos_desde_ultimo
+FROM corredor co
+LEFT JOIN LATERAL (
+    SELECT km, pace, tempo, criado_em
+    FROM checkpoint
+    WHERE corredor_id = co.id
+    ORDER BY criado_em DESC
+    LIMIT 1
+) ultimo ON TRUE
+WHERE co.equipe_id = $1
+  AND co.status IN ('Em corrida', 'Próximo')
+ORDER BY
+    CASE co.status
+        WHEN 'Em corrida' THEN 1
+        WHEN 'Próximo'    THEN 2
+    END;
+```
+
+**Finalidade:** devolver, na mesma resposta, o atleta atualmente em corrida e o próximo da escala da equipe (RN07 e RN10), acompanhados do último checkpoint registrado por cada um. O `LATERAL JOIN` é necessário para que, para cada corredor da equipe, o banco selecione apenas o checkpoint mais recente — algo que um `JOIN` convencional não permite expressar de forma direta. O cálculo de `minutos_desde_ultimo` alimenta a calculadora de descanso exigida pela RN08, classificada posteriormente pelo back-end nas categorias verde, amarelo e vermelho.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
