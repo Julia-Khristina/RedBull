@@ -859,8 +859,78 @@ relatório.
 ## 3.3. Wireframes (sprint 2)
 
 
-**Wireframe Alta Fidelidade**
+### User Flow
+Antes da construção dos wireframes, foi elaborado um diagrama de fluxo de telas com o objetivo de representar, de forma visual e simplificada, a navegação do sistema. Esse diagrama permite compreender como as principais funcionalidades se conectam, evidenciando os caminhos percorridos pelos usuários ao longo da utilização da plataforma.
+
+No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as principais ações operacionais, como gestão de equipes, acompanhamento de ranking e acesso a relatórios e ações dos atletas, como acompanhamento de desempenho. Assim, o diagrama serve como base para o desenvolvimento dos wireframes, garantindo consistência na organização e criação das telas.
+
+<div align="center">
+  <sub>Figura 7 - Diagrama de Fluxo de Telas do Operador da prova</sub><br>
+  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+- Acesse o Userflow do operador aqui: [Fluxo do Operador](outros/fluxo_operador.md).
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Fluxo de Telas do Corredor</sub><br>
+  <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Diagrama de fluxo das telas do corredor mostrando o acesso via UUID, tela de erro, painel da equipe com atualização automática e modal de compartilhamento"><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+- Acesse o Userflow do corredor aqui: [Fluxo do Corredor](outros/fluxo-corredor.md).
+
+### Wireframe de baixa fidelidade
+
+
+O principal objetivo deste wireframe é 
+representar de forma rápida e simplificada o fluxo de navegação da persona 1 (Marina) ao preparar uma nova edição do Red Bull 24h antes da prova começar, explorando desde o primeiro acesso ao painel até as equipes cadastradas e prontas para receber o link público (UUID).
+
+ Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
+
+ <div align="center">
+  <sub>Quadro 20 - User Stories cobertas: </sub>
+</div>
+
+
+
+
+| ID   | User Story | Descrição |
+|------|-------------|------------|
+| US01 | Acessar painel admin | Estados sem e com competição |
+| US02 | Cadastrar nova competição | Cadastro com data e localização |
+| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
+| US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
+| US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+
+ <div align="center">
+  <sub>Quadro 21 - Critérios de baixa fidelidade adotados:</sub>
+</div>
+
+
+
+
+| Critério | Descrição |
+|-----------|------------|
+| Paleta em P&B | Uso apenas de preto e branco |
+| Placeholders de imagem | Representados com X cortado |
+| Blocos de texto | Indicados com linhas zigzag |
+| Elementos visuais | Sem ícones decorativos |
+| Foco estrutural | Ênfase em hierarquia, fluxo e organização espacial |
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Wireframe de alta fidelidade #####
+
 O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
+
 
 ## 3.4. Guia de estilos (sprint 3)
 
@@ -888,7 +958,42 @@ O wireframe de alta fidelidade é uma representação visual detalhada de uma in
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (DEVMEDIA, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
+
+De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como nome, endereço e CPF na entidade Aluno. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Além disso, existem os relacionamentos, representados por losangos contendo o verbo que descreve a interação entre as entidades, responsáveis por demonstrar as associações existentes entre elas.
+
+Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 19 apresenta as principais cardinalidades e a sua utilização:
+
+<div align="center">
+  <sub>Quadro 19 - Cardinalidades </sub>
+</div>
+
+| Cardinalidade |  Leitura | Exemplo de Aplicação |
+| -------- | --------- | --------- |  
+| 1:1 | Um para Um | Cada pessoa tem exatamente um CPF |
+| 1:N | Um para Muitos | Um cliente pode ter vários pedidos, mas cada pedido pertence a um único cliente |
+| N:M | Muitos para Muitos | Um pedido pode conter vários produtos, e um produto pode aparecer em vários pedidos. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
+
+<div align="center">
+  <sub>Quadro 20 - Exemplificação dos elementos da notação de Chen </sub>
+</div>
+
+| Elemento |  Símbolo  | Aplicação ao MER |
+| -------- | --------- | ---------------- |
+| Entidade | Retângulo | Competição, Equipe, Corredor, Checkpoint, Administrador e Esteira |
+| Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
+| Relacionamento | Losango | Equipe possui Corredor |
+| Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
@@ -1069,6 +1174,12 @@ RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en
 TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
 
 GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
+
+ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
+
+DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
+
+DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
 
 # <a name="c9"></a>Anexos
 
