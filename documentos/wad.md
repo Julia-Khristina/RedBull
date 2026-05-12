@@ -1015,6 +1015,62 @@ A principal finalidade do DER é facilitar o planejamento do banco de dados, red
 
 No contexto do projeto, o DER é importante para representar os elementos fundamentais da plataforma, como competições, equipes, corredores e registros de desempenho. A partir dele, é possível visualizar como essas entidades se relacionam, garantindo que o banco de dados suporte corretamente as funcionalidades do sistema, como cadastro de atletas, monitoramento em tempo real e atualização de rankings. Dessa forma, o DER contribui diretamente para a organização, integridade e funcionamento adequado do banco de dados do projeto.
 
+### Notação Crow's Foot
+
+Para a construção do Diagrama Entidade-Relacionamento (ER) deste projeto, foi utilizada a notação Crow’s Foot. O nome Crow’s Foot (“pé de corvo”) vem do símbolo utilizado para representar relações do tipo “muitos”, que possui um formato semelhante às patas de um corvo. 
+
+Por meio dessa representação, é possível identificar de forma clara relações como um-para-um (1:1), um-para-muitos (1:N) e muitos-para-muitos (N:N). Além das cardinalidades, a notação também permite representar a opcionalidade e a obrigatoriedade dos relacionamentos por meio de símbolos específicos, como círculos e barras, indicando se a participação de uma entidade em um relacionamento é opcional ou obrigatória. Dessa forma, a modelagem do banco de dados se torna mais organizada e compreensível. (PERERA, 2026)
+
+
+### Glossário de cardinalidades  
+
+| Símbolo | Nome | Significado |
+|---|---|---|
+| `\|` | Um obrigatório | Representa exatamente 1 ocorrência obrigatória |
+| `<` | Muitos | Representa várias ocorrências relacionadas |
+| `\|———\|` | 1:1 (Um para Um) | Uma entidade se relaciona obrigatoriamente com exatamente uma ocorrência da outra |
+| `\|———\|<` | 1:N obrigatório | Uma entidade se relaciona com uma ou mais ocorrências obrigatórias da outra entidade |
+| `>\|———\|` | N:1 obrigatório | Várias entidades se relacionam obrigatoriamente com uma única ocorrência da outra entidade |
+
+> A mesma linha carrega as duas direções. Não é preciso desenhar duas setas,
+
+
+<div align="center">
+  <sub>Figura 7 - Diagrama Entidade Relacionamento</sub><br>
+    <img src="../assets/Diagrama entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+### Relacionamentos do DER
+
+| # | Entidade A | Entidade B | A → B | B → A |
+|---|---|---|---|---|
+| 1 | COMPETICAO | EQUIPE | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
+| 2 | EQUIPE | CORREDOR | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
+| 3 | CORREDOR | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
+| 4 | ADMINISTRADOR | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
+| 5 | ESTEIRA | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
+| 6 | COMPETICAO | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
+
+### Coerência com o Diagrama de Classes
+
+| Diagrama de Classes                                         | DER                                   |
+| ----------------------------------------------------------- | ------------------------------------- |
+| Classe `Competição`                                         | Tabela `COMPETICAO`                   |
+| Classe `Equipe`                                             | Tabela `EQUIPE`                       |
+| Classe `Corredor / Atleta`                                  | Tabela `CORREDOR`                     |
+| Classe `Administrador / Juiz`                               | Tabela `ADMINISTRADOR`                |
+| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
+| Classe `Esteira`                                            | Tabela `ESTEIRA`                      |
+| Associação `Competição` possui `Equipe`                     | FK `competicao_id` em `EQUIPE`        |
+| Associação `Equipe` possui `Corredor`                       | FK `equipe_id` em `CORREDOR`          |
+| Associação `Corredor` registra `Checkpoint`                 | FK `corredor_id` em `CHECKPOINT`      |
+| Associação `Competição` possui `Checkpoint`                 | FK `competicao_id` em `CHECKPOINT`    |
+| Associação `Esteira` é usada em `Checkpoint`                | FK `esteira_id` em `CHECKPOINT`       |
+| Associação `Administrador` valida/supervisiona `Checkpoint` | FK `administrador_id` em `CHECKPOINT` |
+
+
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
@@ -1216,6 +1272,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
+
+PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
 
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
