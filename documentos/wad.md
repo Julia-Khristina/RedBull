@@ -917,7 +917,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 </div>
 
 
-# Relacionamentos do DER
+### Relacionamentos do DER
 
 | # | Entidade A | Entidade B | A → B | B → A |
 |---|---|---|---|---|
@@ -927,6 +927,8 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | 4 | administrador | checkpoint | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
 | 5 | esteira | checkpoint | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
 | 6 | competicao | checkpoint | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
+
+
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
@@ -1081,6 +1083,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
+
+PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
 
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
