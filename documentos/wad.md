@@ -1062,7 +1062,9 @@ Os relacionamentos entre as entidades foram definidos por meio de chaves primár
 
 
 #### 3.6.3.2 Modelo Físico
+Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
+O modelo físico pode ser visto aqui.
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
@@ -1212,6 +1214,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
+
+AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
