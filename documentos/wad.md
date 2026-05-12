@@ -928,6 +928,22 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | 5 | esteira | checkpoint | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
 | 6 | competicao | checkpoint | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
 
+### Coerência com o Diagrama de Classes
+
+| Diagrama de Classes                                         | DER                                   |
+| ----------------------------------------------------------- | ------------------------------------- |
+| Classe `Competição`                                         | Tabela `COMPETICAO`                   |
+| Classe `Equipe`                                             | Tabela `EQUIPE`                       |
+| Classe `Corredor / Atleta`                                  | Tabela `CORREDOR`                     |
+| Classe `Administrador / Juiz`                               | Tabela `ADMINISTRADOR`                |
+| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
+| Classe `Esteira`                                            | Tabela `ESTEIRA`                      |
+| Associação `Competição` possui `Equipe`                     | FK `competicao_id` em `EQUIPE`        |
+| Associação `Equipe` possui `Corredor`                       | FK `equipe_id` em `CORREDOR`          |
+| Associação `Corredor` registra `Checkpoint`                 | FK `corredor_id` em `CHECKPOINT`      |
+| Associação `Competição` possui `Checkpoint`                 | FK `competicao_id` em `CHECKPOINT`    |
+| Associação `Esteira` é usada em `Checkpoint`                | FK `esteira_id` em `CHECKPOINT`       |
+| Associação `Administrador` valida/supervisiona `Checkpoint` | FK `administrador_id` em `CHECKPOINT` |
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
