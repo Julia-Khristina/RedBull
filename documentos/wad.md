@@ -676,25 +676,46 @@ O Quadro 16 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
-| RF001 | O sistema deve permitir a criação de salas de competição protegidas por senha definida pelo usuário                                                                   | Alta       | Planejado |
-| RF002 | O sistema deve permitir o registro de uma competição contendo nome, data e local                                                                                      | Alta       | Planejado |
+RF001 | O sistema deve permitir a criação de uma sala administrativa vinculada a uma competição                                                  | Alta       | Planejado |
+RF002 | O sistema deve permitir o cadastro de uma competição contendo nome, data e local                                                                           | Alta       | Planejado |
 | RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 atletas por equipe                                                          | Alta       | Planejado |
-| RF004 | O sistema deve permitir autenticação de operadores via UUID para acesso à área administrativa                                    | Alta       | Planejado |
+RF004 | O sistema deve permitir acesso à área administrativa por meio de URLs identificadas por UUID único e senha da sala                                | Alta       | Planejado |
 | RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Planejado |
 | RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes de serem persistidos.                                | Alta       | Planejado |
 | RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Planejado |
 | RF008 | O sistema deve registrar checkpoints contendo distância, pace, velocidade e tempo total somente após validação do usuário                                             | Alta       | Planejado |
 | RF009 | O sistema deve identificar inconsistências nos dados capturados via OCR e sinalizar ao usuário antes da validação                                                     | Média      | Planejado |
-| RF010 | O sistema deve atualizar automaticamente o ranking das equipes em tempo quase real a cada checkpoint validado                                                         | Média      | Planejado |
+RF010 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo em intervalos máximos de 5 minutos durante a competição                                                        | Média      | Planejado |
 | RF011 | O sistema deve exibir o atleta em execução e o próximo atleta escalado por equipe no painel administrativo                                                            | Baixa      | Planejado |
 | RF012 | O sistema deve permitir o encerramento da competição pelo usuário, bloqueando novos registros de checkpoints                                                          | Alta       | Planejado |
 | RF013 | O sistema deve exportar os dados da competição em formato CSV, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Planejado |
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
-| RF015 | O sistema deve manter consistência entre os dados registrados e os exibidos no painel em tempo quase real                                                             | Média      | Planejado |
+RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora                                                   | Média      | Planejado |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
+
+### 3.1.1.1 Critérios de Aceite dos Requisitos Funcionais
+
+| RF    | Critério de Aceite                                                                                                                                                                    |
+| ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| RF001 | Dado que o usuário informe nome da sala e senha válida, quando a operação for confirmada, então a sala deve ser criada e persistida no banco de dados.                                |
+| RF002 | Dado que o usuário informe nome, data e local válidos, quando a operação for confirmada, então a competição deve ser registrada no sistema. |
+| RF003 | Dado que o usuário realize o cadastro de uma equipe, quando os dados forem confirmados, então o sistema deve permitir registrar até 16 atletas vinculados à equipe. |
+| RF004 | Dado que o operador possua URL válida e senha da sala, quando acessar a área administrativa, então o sistema deve permitir acesso às funcionalidades administrativas. |
+| RF005 | Dado que o operador envie uma imagem válida da esteira, quando o OCR for executado, então o sistema deve retornar distância, pace, velocidade e tempo em até 3 segundos.              |
+| RF006 | Dado que os dados sejam extraídos via OCR, quando o processamento for concluído, então o sistema deve disponibilizar os dados para validação antes da persistência. |
+| RF007 | Dado que os dados extraídos via OCR sejam exibidos, quando o operador editar os campos e confirmar, então o sistema deve registrar os dados corrigidos no checkpoint.                 |
+| RF008 | Dado que os dados do checkpoint estejam validados, quando o usuário confirmar o registro, então o sistema deve persistir distância, pace, velocidade e tempo total no banco de dados. |
+| RF009 | Dado que o sistema identifique inconsistências nos dados extraídos, quando o OCR finalizar o processamento, então o sistema deve sinalizar os campos divergentes ao usuário. |
+| RF010 | Dado que existam novos checkpoints validados, quando o intervalo máximo de atualização do painel administrativo for atingido, então o sistema deve atualizar automaticamente o ranking das equipes.                                          |
+| RF011 | Dado que exista escalação cadastrada para a equipe, quando o painel administrativo for atualizado, então o sistema deve exibir o atleta em corrida e o próximo atleta previsto. |
+| RF012 | Dado que a competição seja encerrada, quando o usuário confirmar a operação, então o sistema deve bloquear novos registros de checkpoints.                                            |
+| RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar arquivo CSV contendo checkpoints, timestamps e logs de validação.                 |
+| RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
+| RF015	| Dado que existam novos checkpoints consolidados, quando o intervalo máximo de atualização do painel público for atingido, então o sistema deve atualizar o ranking exibido às equipes.  |
+
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
@@ -716,13 +737,14 @@ No Quadro 17, são apresentadas as regras de negócio do sistema, as quais defin
 | RN08 | A calculadora de descanso deve utilizar o pace da última corrida, a duração do último turno e os parâmetros do evento, classificando o resultado em categorias (verde, amarelo ou vermelho).                                      | RF011              |
 | RN09 | O ranking exibido no painel da equipe deve ser atualizado a cada 1 hora, enquanto o painel administrativo deve atualizar o leaderboard a cada novo checkpoint registrado.                                                         | RF010, RF015       |
 | RN10 | O painel administrativo deve exibir automaticamente o atleta atualmente em corrida e o próximo atleta previsto, sem necessidade de atualização manual.                                                                            | RF011              |
-| RN11 | A tabela de dados da equipe no painel administrativo deve ser atualizada automaticamente a cada 5 minutos, recalculando o pace médio e a distância total acumulada.                                                               | RF010, RF015       |
+RN11 | O painel administrativo deve recalcular automaticamente métricas operacionais, incluindo pace médio e distância acumulada, a cada 5 minutos. | RF010 |
 | RN12 | Edições retroativas em checkpoints devem registrar obrigatoriamente no log de auditoria o usuário responsável pela alteração e o motivo informado.                                                                                | RF007, RF008       |
 | RN13 | O link de compartilhamento gerado pela equipe deve conter apenas o leaderboard simplificado do geral das equipes. E também mostrando quem são os atletas mas sem expor dados individuais que ofereçam vantagens aos concorrentes. | RF001, RF010       |
 | RN14 | O encerramento do evento deve ser permitido apenas ao administrador da sala e deve bloquear novos registros de checkpoint após sua execução.                                                                                      | RF012              |
 | RN15 | A exportação em CSV deve incluir todos os checkpoints com timestamps, referências às fotos vinculadas e logs de validação para auditoria.                                                                                         | RF013              |
 | RN16 | Os highlights pós-evento devem ser gerados automaticamente ao encerrar a competição, sem necessidade de configuração manual.                                                                                                      | RF012, RF014       |
 | RN17 | Os highlights devem incluir recordes nas categorias: individual (pace, velocidade, distância, tempo total), por equipe (consistência, volume, sincronismo de troca) e geral da edição.                                            | RF014              |
+| RN18 | O cadastro da competição deve exigir obrigatoriamente nome, data e local válidos antes da criação da sala. | RF002 |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -740,16 +762,36 @@ A seguir, são apresentados, no Quadro 18, os requisitos não funcionais do sist
 | --------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
 | USAB — Usabilidade          | O sistema deve permitir execução das funções principais sem treinamento extensivo                        | ≥ 80% dos usuários concluem tarefas em até 5 minutos | Testes de usabilidade com usuários representativos |
 | CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação do usuário e persistência de checkpoints | Taxa de falha < 1% no processamento de checkpoints   | Logs e testes automatizados                        |
-| DES — Desempenho            | O sistema deve atualizar ranking em tempo quase real após validação                                      | ≤ 500 ms (p95)                                       | Testes de performance no fluxo completo            |
-| SUP — Suportabilidade       | O sistema deve permitir manutenção sem interromper competições                                           | Arquitetura modular (OCR, validação, ranking)        | Estrutura em camadas e versionamento               |
+| DES — Desempenho | O sistema deve atualizar o painel administrativo periodicamente durante a competição | Atualização concluída em até 5 minutos após novos checkpoints | Testes de performance no fluxo completo |
+| SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Estrutura modular e separação em camadas |
 | SEG — Segurança             | O sistema deve garantir autenticação segura de usuário único com controle de sessão                      | Sessão autenticada válida durante uso do sistema     | Login por senha e gerenciamento de sessão          |
 | CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Testes de carga                                    |
 | REST — Restrições de Design | O sistema deve operar com captura via OCR, validação humana e processamento via API centralizada         | Fluxo obrigatório OCR → validação → API → backend    | Arquitetura centralizada                           |
-| ORG — Organizacionais       | O desenvolvimento deve seguir metodologia ágil com entregas por sprint                                   | Versionamento e rastreabilidade por sprint           | Uso de Git e organização de branches               |
+| ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com entregas por sprint | 100% das entregas versionadas e rastreáveis por sprint | Uso de Git, commits e organização de branches |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
+
+#### 3.1.3.1 Derivação dos RNFs a partir do contexto do parceiro
+
+Os requisitos não funcionais definidos para o sistema foram derivados diretamente das restrições operacionais identificadas no contexto do evento Red Bull 24 Horas e dos requisitos funcionais levantados durante as reuniões com o parceiro.
+
+O eixo de Usabilidade (USAB) foi definido considerando que os operadores atuam sob alta pressão operacional durante 24 horas contínuas, exigindo que as principais funcionalidades do sistema sejam executadas rapidamente e sem necessidade de treinamento extensivo. Esse requisito se relaciona principalmente aos RFs de registro e validação de checkpoints.
+
+O eixo de Confiabilidade (CONF) foi derivado da necessidade de reduzir inconsistências presentes no processo manual atual. Como a apuração da competição depende diretamente da precisão dos checkpoints registrados, foi estabelecida uma taxa máxima de falha inferior a 1% no processamento dos dados via OCR e validação.
+
+O eixo de Desempenho (DES) está relacionado à necessidade de atualização frequente dos rankings administrativos durante a competição, permitindo acompanhamento contínuo da operação sem atrasos perceptíveis aos operadores.
+
+O eixo de Suportabilidade (SUP) foi definido considerando a necessidade de continuidade operacional durante o evento. Como a competição ocorre ininterruptamente por 24 horas, eventuais correções críticas não podem comprometer o registro dos checkpoints já realizados.
+
+O eixo de Segurança (SEG) deriva da necessidade de restringir o acesso às áreas administrativas do sistema apenas aos operadores autorizados pelo evento, protegendo os dados operacionais e evitando alterações indevidas nos registros da competição.
+
+O eixo de Capacidade (CAP) foi estabelecido considerando o acesso simultâneo de operadores, organizadores e usuários acompanhando os rankings públicos durante períodos de pico da competição, exigindo estabilidade da aplicação mesmo sob múltiplas requisições concorrentes.
+
+O eixo de Restrições de Design (REST) foi derivado diretamente da arquitetura definida para o projeto, baseada em captura via OCR, validação humana e processamento centralizado via API, garantindo padronização do fluxo de dados.
+
+Por fim, o eixo Organizacional (ORG) está relacionado ao modelo de desenvolvimento adotado pelo grupo e às exigências acadêmicas do projeto, garantindo rastreabilidade, versionamento e controle das entregas realizadas ao longo das sprints.
 
 ### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
 
@@ -762,7 +804,7 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 | RF    | RN associadas | Endpoint                                                      | Método |
 | ----- | ------------- | ------------------------------------------------------------- | ------ |
 | RF001 | RN03          | `/competitions`                                               | POST   |
-| RF002 | —             | `/competitions`                                               | POST   |
+| RF002 | RN18 | `/competitions` | POST |
 | RF003 | RN01, RN07    | `/competitions/:id/teams`                                     | POST   |
 | RF003 | RN01, RN07    | `/competitions/:id/teams/:teamId`                             | PUT    |
 | RF003 | RN01, RN07    | `/competitions/:id/teams/:teamId`                             | DELETE |
