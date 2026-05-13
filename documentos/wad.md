@@ -898,205 +898,149 @@ relatório.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
-A presente subseção apresenta as consultas SQL compostas executadas pelo back-end da aplicação, identificadas a partir do mapeamento entre os requisitos funcionais, as regras de negócio e os endpoints da matriz da seção 3.1.4 e descritas em maior profundidade no documento preparatório `documentos/outros/mapeamento-consultas-sql.md`. Cada consulta é apresentada com sua finalidade de negócio, o endpoint a que serve, os requisitos atendidos e a expressão SQL correspondente.
+A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
 
-> **Escopo desta entrega:** conforme delimitado na issue #129, esta subseção contempla exclusivamente as expressões SQL e suas finalidades. As proposições lógicas, expressões em lógica proposicional e respectivas tabelas-verdade serão documentadas em entrega subsequente, mantendo a estrutura do template original definido para a seção.
+> **Escopo desta entrega:** esta subseção contempla as expressões SQL e suas descrições em palavras. As proposições lógicas, expressões em lógica proposicional e tabelas-verdade serão preenchidas em entrega subsequente pelo membro do grupo responsável pela componente matemática da disciplina.
 
-#### Q01 — Ranking de equipes em tempo quase real
+#### Q01 — `SELECT` com `AND` e `OR`
 
 | Atributo | Conteúdo |
 |----------|----------|
-| **Endpoint** | `GET /competitions/:id/ranking` |
-| **Função de negócio** | Ranking |
-| **RF atendido** | RF010, RF015 |
-| **RNs justificadas** | RN09, RN11 |
-| **Tabelas percorridas** | `equipe` ⨝ `corredor` ⨝ `checkpoint` |
+| **Tipo de operação** | `SELECT` |
+| **Operadores lógicos** | `AND`, `OR` |
+| **Operadores relacionais** | `=`, `>`, `<` |
+| **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+
+**Expressão SQL:**
 
 ```sql
-SELECT
-    e.id   AS equipe_id,
-    e.nome AS equipe_nome,
-    COALESCE(SUM(c.km), 0) AS distancia_total_km,
-    COUNT(c.id)            AS total_checkpoints,
-    MAX(c.criado_em)       AS ultimo_checkpoint
-FROM equipe e
-LEFT JOIN corredor   co ON co.equipe_id   = e.id
-LEFT JOIN checkpoint c  ON c.corredor_id  = co.id
-WHERE e.competicao_id = $1
-GROUP BY e.id, e.nome
-ORDER BY distancia_total_km DESC, ultimo_checkpoint ASC;
+SELECT id, identificador, km, criado_em
+FROM checkpoint
+WHERE competicao_id = 1
+  AND (km > 10 OR km < 2);
 ```
 
-**Finalidade:** consolidar, para uma competição específica, a distância acumulada de cada equipe a partir da soma dos checkpoints de todos os seus corredores. O uso de `LEFT JOIN` garante que equipes sem checkpoints ainda apareçam no ranking com distância zero. O critério de desempate por `ultimo_checkpoint` favorece equipes que registraram dados mais recentemente em caso de empate, atendendo à RN09 (atualização a cada novo checkpoint validado).
+**Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
+
+**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+
+**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+
+**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
 
 ---
 
-#### Q02 — Detecção de inconsistências em checkpoints capturados via OCR
+#### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
 | Atributo | Conteúdo |
 |----------|----------|
-| **Endpoint** | `GET /competitions/:id/checkpoints/inconsistencies` |
-| **Função de negócio** | Inconsistências |
-| **RF atendido** | RF009 |
-| **RNs justificadas** | RN06 |
-| **Tabelas percorridas** | `checkpoint` ⨝ `corredor` ⨝ `equipe` |
+| **Tipo de operação** | `SELECT` |
+| **Operadores lógicos** | `AND`, `NOT` |
+| **Operadores especiais** | `LIKE` |
+| **Operadores relacionais** | `=` |
+| **Contexto de negócio** | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
+
+**Expressão SQL:**
 
 ```sql
-WITH historico_corredor AS (
-    SELECT
-        corredor_id,
-        AVG(km)    AS km_medio,
-        STDDEV(km) AS km_desvio
-    FROM checkpoint
-    GROUP BY corredor_id
-    HAVING COUNT(*) >= 3
-)
-SELECT
-    c.id            AS checkpoint_id,
-    c.identificador,
-    co.nome         AS corredor_nome,
-    e.nome          AS equipe_nome,
-    c.km            AS km_capturado,
-    hc.km_medio,
-    hc.km_desvio,
-    c.criado_em
-FROM checkpoint c
-INNER JOIN corredor          co ON co.id          = c.corredor_id
-INNER JOIN equipe            e  ON e.id           = co.equipe_id
-INNER JOIN historico_corredor hc ON hc.corredor_id = c.corredor_id
-WHERE c.competicao_id = $1
-  AND ABS(c.km - hc.km_medio) > (2 * hc.km_desvio)
-ORDER BY c.criado_em DESC;
+SELECT id, nome, status, equipe_id
+FROM corredor
+WHERE nome LIKE 'A%'
+  AND NOT status = 'Em descanso';
 ```
 
-**Finalidade:** identificar checkpoints cujo valor de quilometragem se afasta em mais de dois desvios-padrão da média histórica do próprio corredor, sinalizando potenciais erros de leitura via OCR. A CTE `historico_corredor` calcula a média e o desvio-padrão por corredor (exigindo histórico mínimo de três checkpoints para que o desvio seja estatisticamente significativo), e a consulta principal cruza esse histórico com os checkpoints da competição em análise, atendendo diretamente à RN06.
+**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` para negar a condição de status, retornando apenas atletas ativos no momento da consulta.
+
+**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+
+**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+
+**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
 
 ---
 
-#### Q03 — Exportação completa da competição em formato CSV
+#### Q03 — `UPDATE` com `AND` e `IN`
 
 | Atributo | Conteúdo |
 |----------|----------|
-| **Endpoint** | `GET /competitions/:id/exports` |
-| **Função de negócio** | Exportação |
-| **RF atendido** | RF013 |
-| **RNs justificadas** | RN15 |
-| **Tabelas percorridas** | `checkpoint` ⨝ `corredor` ⨝ `equipe` ⨝ `competicao` ⨝ `esteira` ⨝ `administrador` |
+| **Tipo de operação** | `UPDATE` |
+| **Operadores lógicos** | `AND` |
+| **Operadores especiais** | `IN` |
+| **Operadores relacionais** | `=` |
+| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
+
+**Expressão SQL:**
 
 ```sql
-SELECT
-    cp.id           AS checkpoint_id,
-    cp.identificador,
-    cp.km,
-    cp.pace,
-    cp.tempo,
-    cp.imagem,
-    cp.criado_em    AS checkpoint_criado_em,
-    co.nome         AS corredor_nome,
-    co.cpf          AS corredor_cpf,
-    e.nome          AS equipe_nome,
-    e.uuid          AS equipe_uuid,
-    comp.endereco   AS competicao_endereco,
-    comp.data       AS competicao_data,
-    est.nome        AS esteira_nome,
-    est.especificacao AS esteira_especificacao,
-    adm.nome        AS administrador_nome,
-    adm.area        AS administrador_area
-FROM checkpoint cp
-INNER JOIN corredor   co   ON co.id   = cp.corredor_id
-INNER JOIN equipe     e    ON e.id    = co.equipe_id
-INNER JOIN competicao comp ON comp.id = cp.competicao_id
-INNER JOIN esteira    est  ON est.id  = cp.esteira_id
-LEFT  JOIN administrador adm ON adm.checkpoint_id = cp.id
-WHERE cp.competicao_id = $1
-ORDER BY cp.criado_em ASC;
+UPDATE corredor
+SET status = 'Em descanso'
+WHERE equipe_id = 1
+  AND status IN ('Em corrida', 'Próximo');
 ```
 
-**Finalidade:** produzir um conjunto plano de dados, uma linha por checkpoint, contendo todos os campos exigidos pela RN15: timestamps, referência à imagem capturada (`cp.imagem`, em JSON), identificação do corredor e da equipe, esteira utilizada e administrador responsável pela validação. O `LEFT JOIN` com `administrador` preserva checkpoints que ainda não foram auditados, evitando que a exportação omita registros pendentes de validação. A consulta serve de base para o back-end gerar o arquivo CSV propriamente dito.
+**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores que pertencem à equipe de identificador `1` e que atualmente possuem status pertencente ao conjunto `{'Em corrida', 'Próximo'}`. A cláusula `WHERE` combina o operador `AND` com o operador `IN`, este último equivalente a uma disjunção entre comparações de igualdade — sintaxe mais concisa e legível para verificar pertinência em um conjunto de valores.
+
+**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `IN` em uma disjunção de igualdades).*
+
+**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+
+**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
 
 ---
 
-#### Q04 — Geração de highlights pós-evento
+#### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
 | Atributo | Conteúdo |
 |----------|----------|
-| **Endpoint** | `GET /competitions/:id/reports` |
-| **Função de negócio** | Relatórios |
-| **RF atendido** | RF014 |
-| **RNs justificadas** | RN16, RN17 |
-| **Tabelas percorridas** | `corredor` ⨝ `equipe` ⨝ `checkpoint` |
+| **Tipo de operação** | `DELETE` |
+| **Operadores lógicos** | `AND` |
+| **Operadores especiais** | `NOT LIKE` |
+| **Operadores relacionais** | `=` |
+| **Contexto de negócio** | Remover registros de checkpoint criados fora do padrão esperado de identificador (por exemplo, registros provenientes de testes ou inserções manuais inválidas), para uma competição específica. |
+
+**Expressão SQL:**
 
 ```sql
-WITH stats_corredor AS (
-    SELECT
-        co.id        AS corredor_id,
-        co.nome      AS corredor_nome,
-        e.id         AS equipe_id,
-        e.nome       AS equipe_nome,
-        SUM(c.km)    AS km_total,
-        MAX(c.km)    AS maior_checkpoint_km,
-        COUNT(c.id)  AS total_checkpoints
-    FROM corredor co
-    INNER JOIN equipe     e ON e.id            = co.equipe_id
-    INNER JOIN checkpoint c ON c.corredor_id   = co.id
-    WHERE e.competicao_id = $1
-    GROUP BY co.id, co.nome, e.id, e.nome
-)
-SELECT
-    corredor_nome,
-    equipe_nome,
-    km_total,
-    maior_checkpoint_km,
-    total_checkpoints,
-    RANK() OVER (ORDER BY km_total DESC)                                AS rank_volume_individual,
-    RANK() OVER (PARTITION BY equipe_id ORDER BY km_total DESC)         AS rank_na_equipe,
-    RANK() OVER (ORDER BY maior_checkpoint_km DESC)                     AS rank_maior_checkpoint
-FROM stats_corredor
-ORDER BY rank_volume_individual;
+DELETE FROM checkpoint
+WHERE competicao_id = 1
+  AND identificador NOT LIKE 'CP-%';
 ```
 
-**Finalidade:** produzir, em uma única consulta, os rankings exigidos pela RN17 nas três dimensões previstas: posição absoluta do corredor por volume total (`rank_volume_individual`), posição dentro da própria equipe (`rank_na_equipe`, via `PARTITION BY`) e melhor checkpoint isolado da competição (`rank_maior_checkpoint`). O uso de funções de janela (`RANK() OVER (...)`) evita múltiplas idas ao banco para cada categoria de highlight, atendendo ao requisito de geração automatizada estabelecido pela RN16.
+**Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
+
+**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+
+**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+
+**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
 
 ---
 
-#### Q05 — Painel administrativo: atleta em corrida e próximo da escala
+#### Q05 — `SELECT` com `BETWEEN`, `AND` e `NOT IN`
 
 | Atributo | Conteúdo |
 |----------|----------|
-| **Endpoint** | `GET /competitions/:id/teams/:teamId/runners` |
-| **Função de negócio** | Painel administrativo |
-| **RF atendido** | RF011 |
-| **RNs justificadas** | RN07, RN08, RN10 |
-| **Tabelas percorridas** | `corredor` ⨝ `checkpoint` (via `LATERAL JOIN`) |
+| **Tipo de operação** | `SELECT` |
+| **Operadores lógicos** | `AND` |
+| **Operadores especiais** | `BETWEEN`, `NOT IN` |
+| **Contexto de negócio** | Listar checkpoints com quilometragem dentro de uma faixa típica de desempenho, excluindo corredores específicos (por exemplo, atletas que solicitaram exclusão de relatórios públicos). |
+
+**Expressão SQL:**
 
 ```sql
-SELECT
-    co.id      AS corredor_id,
-    co.nome    AS corredor_nome,
-    co.status,
-    ultimo.km          AS ultimo_km,
-    ultimo.pace        AS ultimo_pace,
-    ultimo.tempo       AS ultimo_tempo,
-    ultimo.criado_em   AS ultimo_checkpoint_em,
-    EXTRACT(EPOCH FROM (NOW() - ultimo.criado_em)) / 60 AS minutos_desde_ultimo
-FROM corredor co
-LEFT JOIN LATERAL (
-    SELECT km, pace, tempo, criado_em
-    FROM checkpoint
-    WHERE corredor_id = co.id
-    ORDER BY criado_em DESC
-    LIMIT 1
-) ultimo ON TRUE
-WHERE co.equipe_id = $1
-  AND co.status IN ('Em corrida', 'Próximo')
-ORDER BY
-    CASE co.status
-        WHEN 'Em corrida' THEN 1
-        WHEN 'Próximo'    THEN 2
-    END;
+SELECT id, identificador, km, pace, corredor_id
+FROM checkpoint
+WHERE km BETWEEN 4 AND 6
+  AND corredor_id NOT IN (1, 7);
 ```
 
-**Finalidade:** devolver, na mesma resposta, o atleta atualmente em corrida e o próximo da escala da equipe (RN07 e RN10), acompanhados do último checkpoint registrado por cada um. O `LATERAL JOIN` é necessário para que, para cada corredor da equipe, o banco selecione apenas o checkpoint mais recente — algo que um `JOIN` convencional não permite expressar de forma direta. O cálculo de `minutos_desde_ultimo` alimenta a calculadora de descanso exigida pela RN08, classificada posteriormente pelo back-end nas categorias verde, amarelo e vermelho.
+**Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
+
+**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `BETWEEN` em uma conjunção de comparações e do `NOT IN` em uma conjunção de desigualdades).*
+
+**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+
+**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
