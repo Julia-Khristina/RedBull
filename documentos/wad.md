@@ -927,15 +927,27 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 </div>
 
 
-Sequência de telas que a Marina percorre ao configurar uma nova competição.
 
-→ fluxo principal     - - → entrega entre Pt1 e Pt2
+<div align="center">
+  <sub>Figura 8 - Sequência de telas que a Marina percorre ao configurar uma nova competição. </sub><b>
+  <img src="../assets/design/wireframeorg1.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
 
-Tela 1 — Home Admin (estado inicial)
+<div align="center">
+  <sub>Figura 9 - Sequência de telas que a Marina percorre ao configurar as equipes. </sub><b>
+  <img src="../assets/design/wireframeorg2.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
 
-Fluxo: Estado inicial do sistema. Marina abre o painel pela primeira vez (ou após uma competição encerrada). O CTA principal é único e direto    "criar competição".  Atende CR3 da US01.
-Elementos: Header global (logo + nome do operador), sidebar de navegação com "Home" ativo, área central com card de empty state. Grid de 12 colunas visível em cinza claro pra demonstração da organização.
+O wireframe de baixa fidelidade foi desenvolvido para representar de forma rápida e simplificada, o fluxo de navegação da Persona 1 — Marina Costa, 29 anos, Coordenadora Operacional (Administradora), durante a preparação de uma nova edição do Red Bull 24 Horas antes do início da prova.
 
+O fluxo contempla desde o primeiro acesso ao painel administrativo até o cadastro completo das equipes e a geração automática dos links públicos (UUIDs). Além de representar a estrutura visual das telas, os wireframes evidenciam funcionalidades essenciais do sistema, como: criação de competições;
+gerenciamento de equipes e atletas;
+navegação entre módulos administrativos;
+geração automática de UUIDs;
+acesso rápido às áreas operacionais da plataforma.
+ 
 ### Wireframe de alta fidelidade #####
 
 
