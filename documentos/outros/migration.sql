@@ -57,3 +57,24 @@ ALTER TABLE corredor
 
 CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
 CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
+
+-- TABELA: esteira
+CREATE TABLE esteira (
+    id              SMALLINT    NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome            TEXT        NOT NULL,
+    especificacao   TEXT        NULL,
+    criado_em       TIMESTAMP   NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (id)
+);
+
+-- TABELA: administrador
+CREATE TABLE administrador (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
+    area        VARCHAR(100)    NULL,
+    senha       VARCHAR(255)    NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (id)
+);
