@@ -224,6 +224,14 @@ A partir da análise do Value Proposition Canvas, observa-se que a solução pro
 
 ### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
 
+<div align="center">
+  <sub>Imagem 3 - Matriz de Risco </sub><br>
+  <img src="../assets/negocios/matriz de risco.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+
 A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto (PMI, 2021).
 
 No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento de dados em tempo quase real durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
@@ -377,8 +385,6 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
     <li>Melhoria do evento para globalizá-lo</li>
     <li>Experiência fluida para equipe e para os participantes</li>
 </ul> <br>
-
-
 
 <div align="center">
   <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
@@ -863,7 +869,79 @@ relatório.
 
 ## 3.3. Wireframes (sprint 2)
 
-*Posicione aqui as imagens do wireframe construído para sua solução e, opcionalmente, o link para acesso (mantenha o link sempre público para visualização)*
+
+### User Flow
+Antes da construção dos wireframes, foi elaborado um diagrama de fluxo de telas com o objetivo de representar, de forma visual e simplificada, a navegação do sistema. Esse diagrama permite compreender como as principais funcionalidades se conectam, evidenciando os caminhos percorridos pelos usuários ao longo da utilização da plataforma.
+
+No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as principais ações operacionais, como gestão de equipes, acompanhamento de ranking e acesso a relatórios e ações dos atletas, como acompanhamento de desempenho. Assim, o diagrama serve como base para o desenvolvimento dos wireframes, garantindo consistência na organização e criação das telas.
+
+<div align="center">
+  <sub>Figura 7 - Diagrama de Fluxo de Telas do Operador da prova</sub><br>
+  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+- Acesse o Userflow do operador aqui: [Fluxo do Operador](outros/fluxo_operador.md).
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Fluxo de Telas do Corredor</sub><br>
+  <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Diagrama de fluxo das telas do corredor mostrando o acesso via UUID, tela de erro, painel da equipe com atualização automática e modal de compartilhamento"><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+- Acesse o Userflow do corredor aqui: [Fluxo do Corredor](outros/fluxo-corredor.md).
+
+### Wireframe de baixa fidelidade
+
+
+O principal objetivo deste wireframe é 
+representar de forma rápida e simplificada o fluxo de navegação da persona 1 (Marina) ao preparar uma nova edição do Red Bull 24h antes da prova começar, explorando desde o primeiro acesso ao painel até as equipes cadastradas e prontas para receber o link público (UUID).
+
+ Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
+
+ <div align="center">
+  <sub>Quadro 20 - User Stories cobertas: </sub>
+</div>
+
+
+
+
+| ID   | User Story | Descrição |
+|------|-------------|------------|
+| US01 | Acessar painel admin | Estados sem e com competição |
+| US02 | Cadastrar nova competição | Cadastro com data e localização |
+| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
+| US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
+| US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+
+ <div align="center">
+  <sub>Quadro 21 - Critérios de baixa fidelidade adotados:</sub>
+</div>
+
+
+
+
+| Critério | Descrição |
+|-----------|------------|
+| Paleta em P&B | Uso apenas de preto e branco |
+| Placeholders de imagem | Representados com X cortado |
+| Blocos de texto | Indicados com linhas zigzag |
+| Elementos visuais | Sem ícones decorativos |
+| Foco estrutural | Ênfase em hierarquia, fluxo e organização espacial |
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Wireframe de alta fidelidade #####
+
+O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
+
 
 ## 3.4. Guia de estilos (sprint 3)
 
@@ -891,15 +969,324 @@ relatório.
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
 
-*Apresente o modelo ER conceitual com entidades, atributos e relacionamentos. Use notação consistente (Chen ou Crow's Foot — não misture).*
+O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (DEVMEDIA, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
+
+De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como nome, endereço e CPF na entidade Aluno. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Além disso, existem os relacionamentos, representados por losangos contendo o verbo que descreve a interação entre as entidades, responsáveis por demonstrar as associações existentes entre elas.
+
+Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 19 apresenta as principais cardinalidades e a sua utilização.
+
+<div align="center">
+  <sub>Quadro 21 - Cardinalidades </sub>
+</div>
+
+| Cardinalidade |  Leitura | Exemplo de Aplicação |
+| -------- | --------- | --------- |  
+| 1:1 | Um para Um | Cada pessoa tem exatamente um CPF |
+| 1:N | Um para Muitos | Um cliente pode ter vários pedidos, mas cada pedido pertence a um único cliente |
+| N:M | Muitos para Muitos | Um pedido pode conter vários produtos, e um produto pode aparecer em vários pedidos. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+A seguir, a Figura 6 ilustra o Modelo Entidade Relacionamento desenvolvido para o projeto.
+
+<div align="center">
+  <sub>Figura 6 - Modelo Entidade Relacionamento</sub><br>
+    <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Descrição das entidades e relacionamentos
+
+A seguir, o Quadro 22 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema.
+
+<div align="center">
+  <sub>Quadro 22 - Descrição das entidades e relacionamentos</sub>
+</div>
+
+| Entidade | Papel no sistema | Relacionamentos |
+| --------- | ---------------- | --------------- |
+| Competição | Representa o evento Red Bull 24h | Possui N Equipes, Possui N Esteiras |
+| Equipe | Agrupa corredores sob um identificador único | Pertence a 1 Competição, Possui N Corredores |
+| Corredor | Atleta participante vinculado a uma equipe | Pertence a 1 Equipe, Possui N Checkpoints |
+| Checkpoint | Registro de performance do corredor na esteira | Pertence a 1 Corredor, Pertence a 1 Esteira, Possui N:1 Administrador | 
+| Administrador | Operador responsável por registrar checkpoints | Possui N Checkpoints |
+| Esteira | Equipamento onde a corrida é realizada | Pertence a N Competições, possui N Checkpoints |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
+
+A seguir, o Quadro 22 exemplifica os elementos da notação de Chen utilizados no MER.
+
+<div align="center">
+  <sub>Quadro 22 - Exemplificação dos elementos da notação de Chen </sub>
+</div>
+
+| Elemento |  Símbolo  | Aplicação ao MER |
+| -------- | --------- | ---------------- |
+| Entidade | Retângulo | Competição, Equipe, Corredor, Checkpoint, Administrador e Esteira |
+| Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
+| Relacionamento | Losango | Equipe possui Corredor |
+| Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Dicionário de dados
+
+Por meio de quadros, será detalhado cada entidade, listando seus atributos baseados no tipo semântico e descrição afim de contextualizar a implementação ao sistema.
+
+O Quadro 23 apresenta a entidade e os atributos de "Competição".
+
+<div align="center">
+  <sub>Quadro 23 - Dicionário de Dados da Entidade Competição</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Competição | Código | Identificador | Identifica unicamente cada competição | 
+| Competição | Endereço | Texto | Local onde a competição ocorre | 
+| Competição | Data | Data | Data de realização da competição |
+| Competição | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+A seguir, o Quadro 24 ilustra a entidade Equipe e os seus atributos.
+
+<div align="center">
+  <sub>Quadro 24 - Dicionário de Dados da Entidade Equipe</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Equipe | Código | Identificador | Identifica unicamente cada equipe |
+| Equipe | Nome | Texto | Nome da equipe |
+| Equipe | UUID | Identificador único público | Código distribuído ao capitão para acesso sem login |
+| Equipe | Qr_Code | Imagem | Representação visual gerada a partir do UUID |
+| Equipe | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+O Quadro 25 representa o dicionário de dados da entidade Corredor.
+
+<div align="center">
+  <sub>Quadro 25 - Dicionário de Dados da Entidade Corredor</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Corredor | Código | Identificador | Identifica unicamente cada corredor | 
+| Corredor | Nome | Texto | Nome completo do corredor |
+| Corredor | CPF | Texto | Documento de identificação civil único |
+| Corredor | Email | Texto | Endereço de e-mail do corredor | 
+| Corredor | Telefone | Texto | Contato telefônico do corredor | 
+| Corredor | Status | Categórico | Papel do corredor na equipe: corredor ou capitão |
+| Corredor | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+O Quadro 26 apresenta a entidade e os atributos de "Checkpoint".
+
+<div align="center">
+  <sub>Quadro 26 - Dicionário de Dados da Entidade Checkpoint</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Checkpoint | Código | Identificador | Identifica unicamente cada checkpoint |
+| Checkpoint | Identificador | Número | Identifica cada checkpoint e possibilita rastreabilidade e auditoria dos registros |
+| Checkpoint | Km | Numérico decimal | Distância percorrida registrada |
+| Checkpoint | Pace | Numérico decimal | Ritmo médio em minutos por km |
+| Checkpoint | Tempo | Duração | Tempo total na esteira |
+| Checkpoint | Imagem | Arquivo | Foto do painel da esteira capturada via OCR |
+| Checkpoint | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+A seguir, o Quadro 27 ilustra a entidade Administrador e os seus atributos.
+
+<div align="center">
+  <sub>Quadro 27 - Dicionário de Dados da Entidade Administrador</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Administrador | Código | Identificador | Identifica unicamente cada administrador |
+| Administrador | Nome | Texto | Nome do administrador |
+| Administrador | Área | Texto | Área de atuação do administrador | 
+| Administrador | Senha | Texto protegido | Credencial de acesso ao painel administrativo |
+| Administrador | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+O Quadro 28 representa o dicionário de dados da entidade Esteira.
+
+<div align="center">
+  <sub>Quadro 28 - Dicionário de Dados da Entidade Esteira </sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Descrição |
+| -------- | --------- | -------------- | --------- | 
+| Esteira | Código | Identificador | Identifica unicamente cada esteira |
+| Esteira | Nome | Texto | Nome ou apelido da esteira |
+| Esteira | Especificação | Texto | Descrição técnica do equipamento |
+| Esteira | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+#### Rastreabilidade entidade → RF → RN
+
+A seguir, o Quadro 29 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
+
+<div align="center">
+  <sub>Quadro 29 - Rastreabilidade entidade → RF → RN </sub>
+</div>
+
+| Entidade | RF que origina | RN que governa |
+| --------- | -------------- | -------------|
+| Competição | RF001, RF002 | RN14 |
+| Equipe | RF003 | RN01, RN02, RN07 | 
+| Corredor | RF003 | RN07 | 
+| Checkpoint | RF005, RF008 | RN04, RN05, RN12 |
+| Administrador | RF004 | RN03 |
+| Esteira | RF005 | — |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
-*Posicione aqui o DER com cardinalidades explícitas em ambos os lados de cada relação e identificação de PK/FK. O DER deve ser coerente com o diagrama de classes (3.2.3).*
+O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelagem de bancos de dados para representar, de forma visual, as entidades de um sistema, seus atributos e os relacionamentos existentes entre elas. Esse diagrama auxilia na organização e estruturação das informações que serão armazenadas no banco de dados, permitindo uma melhor compreensão da lógica do sistema antes de seu desenvolvimento (LUCID SOFTWARE INC., s.d.).
+
+A principal finalidade do DER é facilitar o planejamento do banco de dados, reduzindo erros de estrutura e garantindo que os dados sejam armazenados de maneira organizada e eficiente. Além disso, o diagrama contribui para a comunicação entre os membros da equipe, pois apresenta, de forma clara, como as informações se conectam dentro do sistema (DEVMEDIA, 2014).
+
+No contexto do projeto, o DER é importante para representar os elementos fundamentais da plataforma, como competições, equipes, corredores e registros de desempenho. A partir dele, é possível visualizar como essas entidades se relacionam, garantindo que o banco de dados suporte corretamente as funcionalidades do sistema, como cadastro de atletas, monitoramento em tempo real e atualização de rankings. Dessa forma, o DER contribui diretamente para a organização, integridade e funcionamento adequado do banco de dados do projeto.
+
+### Notação Crow's Foot
+
+Para a construção do Diagrama Entidade-Relacionamento (ER) deste projeto, foi utilizada a notação Crow’s Foot. O nome Crow’s Foot (“pé de corvo”) vem do símbolo utilizado para representar relações do tipo “muitos”, que possui um formato semelhante às patas de um corvo. 
+
+Por meio dessa representação, é possível identificar de forma clara relações como um-para-um (1:1), um-para-muitos (1:N) e muitos-para-muitos (N:N). Além das cardinalidades, a notação também permite representar a opcionalidade e a obrigatoriedade dos relacionamentos por meio de símbolos específicos, como círculos e barras, indicando se a participação de uma entidade em um relacionamento é opcional ou obrigatória. Dessa forma, a modelagem do banco de dados se torna mais organizada e compreensível. (PERERA, 2026)
+
+
+### Glossário de cardinalidades  
+
+| Símbolo | Nome | Significado |
+|---|---|---|
+| `\|` | Um obrigatório | Representa exatamente 1 ocorrência obrigatória |
+| `<` | Muitos | Representa várias ocorrências relacionadas |
+| `\|———\|` | 1:1 (Um para Um) | Uma entidade se relaciona obrigatoriamente com exatamente uma ocorrência da outra |
+| `\|———\|<` | 1:N obrigatório | Uma entidade se relaciona com uma ou mais ocorrências obrigatórias da outra entidade |
+| `>\|———\|` | N:1 obrigatório | Várias entidades se relacionam obrigatoriamente com uma única ocorrência da outra entidade |
+
+> A mesma linha carrega as duas direções. Não é preciso desenhar duas setas,
+
+
+<div align="center">
+  <sub>Figura 7 - Diagrama Entidade Relacionamento</sub><br>
+    <img src="../assets/Diagrama entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+### Relacionamentos do DER
+
+| # | Entidade A | Entidade B | A → B | B → A |
+|---|---|---|---|---|
+| 1 | COMPETICAO | EQUIPE | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
+| 2 | EQUIPE | CORREDOR | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
+| 3 | CORREDOR | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
+| 4 | ADMINISTRADOR | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
+| 5 | ESTEIRA | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
+| 6 | COMPETICAO | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
+
+### Coerência com o Diagrama de Classes
+
+| Diagrama de Classes                                         | DER                                   |
+| ----------------------------------------------------------- | ------------------------------------- |
+| Classe `Competição`                                         | Tabela `COMPETICAO`                   |
+| Classe `Equipe`                                             | Tabela `EQUIPE`                       |
+| Classe `Corredor / Atleta`                                  | Tabela `CORREDOR`                     |
+| Classe `Administrador / Juiz`                               | Tabela `ADMINISTRADOR`                |
+| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
+| Classe `Esteira`                                            | Tabela `ESTEIRA`                      |
+| Associação `Competição` possui `Equipe`                     | FK `competicao_id` em `EQUIPE`        |
+| Associação `Equipe` possui `Corredor`                       | FK `equipe_id` em `CORREDOR`          |
+| Associação `Corredor` registra `Checkpoint`                 | FK `corredor_id` em `CHECKPOINT`      |
+| Associação `Competição` possui `Checkpoint`                 | FK `competicao_id` em `CHECKPOINT`    |
+| Associação `Esteira` é usada em `Checkpoint`                | FK `esteira_id` em `CHECKPOINT`       |
+| Associação `Administrador` valida/supervisiona `Checkpoint` | FK `administrador_id` em `CHECKPOINT` |
+
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
-*Posicione aqui os diagramas de modelos relacionais do banco de dados, apresentando todos os esquemas de tabelas e suas relações. Inclua as migrations DDL numeradas e reproduzíveis (`CREATE TABLE`, `CREATE INDEX`, constraints `NOT NULL`, `UNIQUE`, `FOREIGN KEY`, `CHECK`). Utilize texto para complementar suas explicações quando necessário.*
+O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
+
+No contexto deste projeto, o modelo relacional foi desenvolvido a partir dos requisitos funcionais e das regras de negócio levantadas nas etapas anteriores, com o objetivo de estruturar o armazenamento das informações referentes às competições, equipes, corredores, esteiras, registros de desempenho e processos de auditoria. A modelagem proposta busca garantir integridade referencial, rastreabilidade das operações e escalabilidade para futuras evoluções do sistema.
+
+#### 3.6.3.1 Modelo Relacional
+
+Com base nos requisitos funcionais, nas regras de negócio e na modelagem conceitual definida nas etapas anteriores, foi elaborado o modelo relacional do sistema, contemplando as principais entidades, seus atributos e os relacionamentos necessários para garantir integridade e consistência dos dados. A Figura 6 apresenta a estrutura relacional proposta para o projeto.
+
+<div align="center">
+  <sub>Figura 6 - Modelo Relacional</sub><br>
+  <img src="../assets/programacao/modelorelacional.png" width="100%" alt="Modelo relacional do sistema representando as tabelas do banco de dados, seus atributos, chaves primárias, chaves estrangeiras e os relacionamentos entre competições, equipes, corredores, checkpoints, administradores e esteiras"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+##### Descrição das entidades
+
+**Tabela `competicao`**  
+A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+
+**Tabela `equipe`**  
+A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
+
+**Tabela `corredor`**  
+A tabela `corredor` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF, além de um indicador de status operacional, utilizado para representar a situação atual do participante no sistema. Por meio da chave estrangeira `equipe_id`, cada corredor é associado à sua respectiva equipe.
+
+**Tabela `esteira`**  
+A tabela `esteira` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
+
+**Tabela `administrador`**  
+A tabela `administrador` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de identificação, autenticação e rastreabilidade temporal.
+
+**Tabela `checkpoint`**  
+A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `corredor`, `competicao`, `esteira` e `administrador`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
+
+Adicionalmente, todas as entidades contemplam atributos temporais, como `criado_em`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
+
+##### Relacionamentos e integridade referencial
+
+Os relacionamentos entre as entidades foram definidos por meio de chaves primárias (*Primary Keys*) e chaves estrangeiras (*Foreign Keys*), respeitando as dependências identificadas durante a modelagem conceitual e garantindo integridade referencial entre as tabelas. Nesse contexto:
+
+- uma `competicao` pode possuir múltiplas `equipes` *(1:N)*;
+- uma `equipe` pode possuir múltiplos `corredores` *(1:N)*;
+- um `corredor` pode gerar múltiplos `checkpoints` *(1:N)*;
+- uma `competicao` pode possuir múltiplos `checkpoints` *(1:N)*;
+- uma `esteira` pode estar associada a múltiplos `checkpoints` *(1:N)*;
+- Um `administrador` pode validar múltiplos checkpoints (1:N).
+
+
+#### 3.6.3.2 Modelo Físico
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
@@ -1051,11 +1438,17 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
+PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
+
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
 CASAROTTO, Camila. Análise SWOT: o que é e como fazer. 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
 
+DEVMEDIA. MER e DER: modelagem de bancos de dados. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 6 maio 2026.
+
 Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
+
+LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento?. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.  
 
 Microsoft. Best practices for RESTful web API design. 2023. Microsoft Azure Architecture Center. Disponível em: https://learn.microsoft.com. Acesso em: 1 maio 2026.
 
@@ -1070,6 +1463,14 @@ PORTER, Michael E. The five competitive forces that shape strategy. Harvard Busi
 RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
 TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
+
+GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
+
+ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
+
+DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
+
+DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
 
 # <a name="c9"></a>Anexos
 
