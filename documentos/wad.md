@@ -851,6 +851,9 @@ relatório.
 O diagrama de sequência da Unified Modeling Language (UML) é um artefato comportamental que descreve as interações entre objetos de um sistema ao longo de uma linha de tempo, enfatizando a ordem cronológica na qual as mensagens são trocadas para realizar uma funcionalidade específica. Em termos técnicos, essa representação gráfica utiliza "linhas de vida" (lifelines) para identificar os participantes envolvidos e setas direcionais para ilustrar as chamadas, respostas ou fluxos de controle, sendo essencial para detalhar casos de uso e mapear lógicas complexas entre componentes de software (FIGUEIREDO, 2026).
 
 
+O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PLANTUML, 2025).
+
+
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
 *Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções).*
@@ -1470,6 +1473,7 @@ DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. 
 
 FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
 
+PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. Disponível em: https://plantuml.com. Acesso em: 12 maio 2026.
 
 # <a name="c9"></a>Anexos
 
