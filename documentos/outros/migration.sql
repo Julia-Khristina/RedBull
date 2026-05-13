@@ -78,3 +78,23 @@ CREATE TABLE administrador (
 
     PRIMARY KEY (id)
 );
+
+-- TABELA: checkpoint
+CREATE TABLE checkpoint (
+    id                  SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    identificador       VARCHAR(100)    NOT NULL,
+    km                  NUMERIC(6, 3)   NOT NULL,
+    pace                VARCHAR(20)     NULL,
+    tempo               VARCHAR(20)     NULL,
+    imagem              JSON            NULL,
+    corredor_id         SMALLINT        NOT NULL,
+    competicao_id       SMALLINT        NOT NULL,
+    esteira_id          SMALLINT        NOT NULL,
+    administrador_id    SMALLINT        NOT NULL,
+    criado_em           TIMESTAMP       NOT NULL DEFAULT NOW(),
+
+    PRIMARY KEY (id),
+    UNIQUE (identificador),
+    CHECK (km >= 0)
+);
+
