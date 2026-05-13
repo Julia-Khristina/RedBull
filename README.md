@@ -9,13 +9,13 @@
 ## Nome do grupo
 
 ## :student: Integrantes: 
-- <a href="https://www.linkedin.com/">Nome do integrante 1</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 2</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 3</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 4</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 5</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 6</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 7</a>
+- <a href="https://www.linkedin.com/in/ana-clara-pelegrini-5855303b3/">Ana Clara Tenório Pelegrini 1</a>
+- <a href="https://www.linkedin.com/in/beatriz-okubo-v-lima-71984536a/">Beatriz Okubo Vieira Lima</a>
+- <a href="https://www.linkedin.com/in/eduardohirohito/">Eduardo Hirohito Izawa Maciel</a> 
+- <a href="https://www.linkedin.com/in/isabella-bessa-b72b393aa/">Isabella Sandra Santos</a> 
+- <a href="https://www.linkedin.com/in/julia-khristina//">Julia Khristina de Oliveira Silva Souza</a>
+- <a href="https://www.linkedin.com/in/luiza-nicol-giusti-dias-cardoso-b379473a9/">Luiza Nicol Giusti Dias Cardoso</a> 
+- <a href="https://www.linkedin.com/in/marianaazvd/">Mariana Azevedo Silva</a>
 
 ## :teacher: Professores:
 ### Orientador(a) 
