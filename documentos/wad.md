@@ -848,7 +848,8 @@ relatório.
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-*Ao menos um fluxo prioritário, mostrando a interação entre as camadas Controller → Service → Repository → Banco. Linhas de vida verticais, ativação correta, mensagens síncronas e assíncronas diferenciadas, retornos tracejados.*
+O diagrama de sequência da Unified Modeling Language (UML) é um artefato comportamental que descreve as interações entre objetos de um sistema ao longo de uma linha de tempo, enfatizando a ordem cronológica na qual as mensagens são trocadas para realizar uma funcionalidade específica. Em termos técnicos, essa representação gráfica utiliza "linhas de vida" (lifelines) para identificar os participantes envolvidos e setas direcionais para ilustrar as chamadas, respostas ou fluxos de controle, sendo essencial para detalhar casos de uso e mapear lógicas complexas entre componentes de software (FIGUEIREDO, 2026).
+
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -1466,6 +1467,9 @@ ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https:
 DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
 
 DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
+
+FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
+
 
 # <a name="c9"></a>Anexos
 
