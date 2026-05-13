@@ -1,160 +1,144 @@
-# Mapeamento de Consultas SQL Compostas
+# Mapeamento das Consultas SQL da Seção 3.6.4
 
-Documento preparatório que identifica os endpoints da seção 3.1.4
-do WAD (Matriz RF → RN → Endpoint) que dependem de consultas SQL
-compostas, justifica cada consulta pelos RFs/RNs que atende e
-descreve as entidades e relacionamentos do DER (seções 3.6.2 e
-3.6.3) que ela percorre. Serve como base para a redação das
-expressões SQL e da lógica proposicional na seção 3.6.4 do WAD.
+Documento que identifica e detalha as cinco consultas SQL presentes na
+seção 3.6.4 do WAD, justificando cada uma pelos RFs e RNs que atende e
+descrevendo as entidades e relacionamentos do DER (seções 3.6.2 e 3.6.3)
+que ela percorre. As consultas foram selecionadas para atender ao critério
+de diversidade de operações e operadores lógicos exigido pelo barema da
+disciplina de Matemática.
 
-## 1. Critério de classificação
+## 1. Critério de seleção
 
-Uma consulta foi considerada **composta** quando atende a pelo
-menos uma das condições abaixo:
+Uma consulta foi incluída neste mapeamento quando atende simultaneamente a:
 
-- percorre duas ou mais tabelas via `JOIN` ou subconsulta correlacionada;
-- agrega registros com `GROUP BY`, funções de janela (`OVER (...)`)
-  ou CTEs (`WITH ...`);
-- aplica filtros condicionais sobre derivações estatísticas
-  (ex.: comparação de um valor com a média histórica do mesmo atleta).
+- pertencer a um dos tipos de operação exigidos pelo barema: `SELECT`,
+  `UPDATE` ou `DELETE`;
+- utilizar ao menos dois operadores lógicos ou especiais distintos entre
+  `AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`;
+- operar sobre tabelas do modelo relacional definido nas seções 3.6.2 e
+  3.6.3, podendo ser justificada por pelo menos um RF do sistema.
 
-Endpoints simples de escrita (`POST`/`PUT`/`DELETE` em uma única
-tabela) e leituras diretas por chave primária foram desconsiderados,
-exceto quando o retorno demanda agregação ou junção.
+## 2. Consultas Mapeadas
 
-## 2. Endpoints analisados na seção 3.1.4
-
-Foram analisados os 20 endpoints do Quadro 19. Cinco deles
-exigem consultas SQL compostas e estão detalhados na seção 3.
-Os demais executam operações pontuais (criação, atualização ou
-exclusão em uma única tabela, ou autenticação) e não compõem
-o escopo deste mapeamento.
-
-## 3. Consultas Compostas Mapeadas
-
-### 3.1. Q01 — Ranking de equipes em tempo quase real
+### 2.1. Q01 — `SELECT` com `AND` e `OR`
 
 | Campo                  | Conteúdo                                                                 |
 |------------------------|--------------------------------------------------------------------------|
-| Função de negócio      | Ranking                                                                  |
-| Endpoint               | `GET /competitions/:id/ranking`                                          |
-| RF atendido            | RF010, RF015                                                             |
-| RNs justificadas       | RN09 (atualização a cada checkpoint no painel administrativo), RN11 (recálculo de pace médio e distância total acumulada a cada 5 minutos) |
-| Tabelas percorridas    | `competicao` ⨝ `equipe` ⨝ `corredor` ⨝ `checkpoint`                      |
-| Relacionamentos do DER | `equipe.competicao_id → competicao.id` (1:N), `corredor.equipe_id → equipe.id` (1:N), `checkpoint.corredor_id → corredor.id` (1:N) |
-| Operações compostas    | Agregação por equipe — `SUM(checkpoint.km)`, `AVG(checkpoint.pace)`, `MAX(checkpoint.criado_em)`; ordenação decrescente pela distância acumulada; filtro pela competição da URL |
+| Tipo de operação       | `SELECT`                                                                 |
+| Operadores lógicos     | `AND`, `OR`                                                              |
+| Operadores relacionais | `=`, `>`, `<`                                                            |
+| RF atendido            | RF008, RF009                                                             |
+| RNs justificadas       | RN06 (valores que divergirem da média histórica devem ser destacados)    |
+| Tabela percorrida      | `checkpoint`                                                             |
+| Relacionamentos do DER | `checkpoint.competicao_id → competicao.id` (N:1)                        |
+| Contexto de negócio    | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
 
-**Justificativa:** o ranking exige somar a distância de todos os
-checkpoints de todos os corredores de cada equipe e ordenar o
-resultado. Não há como atender RF010/RF015 sem percorrer os quatro
-níveis hierárquicos do DER em uma única consulta agregada.
+**Justificativa:** RF009 exige identificar inconsistências nos dados de
+checkpoint antes da validação. A disjunção `OR` entre dois extremos de
+quilometragem, combinada com o filtro por competição via `AND`, expressa
+exatamente a condição de outlier que a regra RN06 determina destacar.
 
 ---
 
-### 3.2. Q02 — Detecção de inconsistências em checkpoints capturados via OCR
+### 2.2. Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
 | Campo                  | Conteúdo                                                                 |
 |------------------------|--------------------------------------------------------------------------|
-| Função de negócio      | Inconsistências                                                          |
-| Endpoint               | `GET /competitions/:id/checkpoints/inconsistencies`                      |
-| RF atendido            | RF009                                                                    |
-| RNs justificadas       | RN06 (valores que divergirem da média histórica do atleta ou da meta da prova devem ser destacados) |
-| Tabelas percorridas    | `checkpoint` ⨝ `corredor` ⨝ `equipe` ⨝ `competicao`                       |
-| Relacionamentos do DER | `checkpoint.corredor_id → corredor.id`, `checkpoint.competicao_id → competicao.id`, `corredor.equipe_id → equipe.id` |
-| Operações compostas    | Subconsulta correlacionada ou CTE para calcular `AVG(pace)` e `AVG(km)` históricos por `corredor_id`; comparação do checkpoint atual com o desvio configurado em relação à média; filtro pelos checkpoints da competição da URL |
+| Tipo de operação       | `SELECT`                                                                 |
+| Operadores lógicos     | `AND`, `NOT`                                                             |
+| Operadores especiais   | `LIKE`                                                                   |
+| Operadores relacionais | `=`                                                                      |
+| RF atendido            | RF003, RF011                                                             |
+| RNs justificadas       | RN07 (apenas um atleta por equipe com status "Em corrida" simultaneamente) |
+| Tabela percorrida      | `corredor`                                                               |
+| Relacionamentos do DER | `corredor.equipe_id → equipe.id` (N:1)                                   |
+| Contexto de negócio    | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
 
-**Justificativa:** identificar inconsistências exige confrontar
-cada checkpoint com a média histórica do mesmo atleta. Isso só
-é possível com uma consulta composta que combine a leitura do
-checkpoint corrente com uma agregação derivada da própria tabela
-`checkpoint`, restrita ao mesmo `corredor_id`.
+**Justificativa:** RF003 cobre o cadastro e a consulta de atletas; RF011
+exige a exibição do atleta em corrida no painel administrativo. A
+combinação de `LIKE` para busca textual com `NOT` para exclusão de status
+reflete a necessidade de filtrar corredores disponíveis para atribuição
+de turno.
 
 ---
 
-### 3.3. Q03 — Exportação completa da competição em CSV
+### 2.3. Q03 — `UPDATE` com `AND` e `IN`
 
 | Campo                  | Conteúdo                                                                 |
 |------------------------|--------------------------------------------------------------------------|
-| Função de negócio      | Exportação                                                               |
-| Endpoint               | `GET /competitions/:id/exports`                                          |
-| RF atendido            | RF013                                                                    |
-| RNs justificadas       | RN15 (exportação deve incluir todos os checkpoints com timestamps, referências às fotos vinculadas e logs de validação para auditoria) |
-| Tabelas percorridas    | `competicao` ⨝ `equipe` ⨝ `corredor` ⨝ `checkpoint` ⨝ `esteira` ⨝ `administrador` |
-| Relacionamentos do DER | Toda a cadeia hierárquica (`competicao` → `equipe` → `corredor` → `checkpoint`) acrescida de `checkpoint.esteira_id → esteira.id` e `administrador.checkpoint_id → checkpoint.id` para o log de auditoria |
-| Operações compostas    | `LEFT JOIN` com `administrador` (nem todo checkpoint passa por auditoria); leitura do campo `checkpoint.imagem` (JSON) para extração das referências de foto; ordenação por `checkpoint.criado_em` |
-
-**Justificativa:** o CSV de auditoria precisa de uma linha por
-checkpoint contendo dados de seis entidades distintas. É a
-consulta de maior amplitude do sistema e a única que percorre o
-DER inteiro em uma única leitura.
-
----
-
-### 3.4. Q04 — Relatórios de highlights pós-evento
-
-| Campo                  | Conteúdo                                                                 |
-|------------------------|--------------------------------------------------------------------------|
-| Função de negócio      | Relatórios                                                               |
-| Endpoint               | `GET /competitions/:id/reports`                                          |
-| RF atendido            | RF014                                                                    |
-| RNs justificadas       | RN16 (geração automática ao encerrar a competição), RN17 (recordes nas categorias individual, por equipe e geral da edição) |
-| Tabelas percorridas    | `competicao` ⨝ `equipe` ⨝ `corredor` ⨝ `checkpoint`                       |
-| Relacionamentos do DER | `equipe.competicao_id → competicao.id`, `corredor.equipe_id → equipe.id`, `checkpoint.corredor_id → corredor.id` |
-| Operações compostas    | Múltiplas agregações em uma mesma consulta — recordes individuais (`MIN(pace)`, `MAX(km)`, `MIN(tempo)` por `corredor_id`), por equipe (`SUM(km)`, `STDDEV(pace)` como métrica de consistência), geral (recordes absolutos da competição); funções de janela (`ROW_NUMBER() OVER (PARTITION BY equipe.id ORDER BY ...)`) para isolar o melhor desempenho por categoria |
-
-**Justificativa:** RN17 obriga a apuração simultânea de recordes
-em três níveis (individual, equipe, geral). Atender isso em uma
-única consulta exige agrupamentos múltiplos e funções de janela,
-caracterizando a consulta como composta.
-
----
-
-### 3.5. Q05 — Painel administrativo: atleta em corrida e próximo
-
-| Campo                  | Conteúdo                                                                 |
-|------------------------|--------------------------------------------------------------------------|
-| Função de negócio      | Painel administrativo (ranking interno da equipe)                        |
-| Endpoint               | `GET /competitions/:id/teams/:teamId/runners`                            |
+| Tipo de operação       | `UPDATE`                                                                 |
+| Operadores lógicos     | `AND`                                                                    |
+| Operadores especiais   | `IN`                                                                     |
+| Operadores relacionais | `=`                                                                      |
 | RF atendido            | RF011                                                                    |
-| RNs justificadas       | RN07 (apenas um atleta por equipe com status "Em corrida"), RN08 (calculadora de descanso baseada em pace e turno), RN10 (exibição automática do atleta em corrida e do próximo previsto) |
-| Tabelas percorridas    | `equipe` ⨝ `corredor` ⨝ `checkpoint`                                      |
-| Relacionamentos do DER | `corredor.equipe_id → equipe.id`, `checkpoint.corredor_id → corredor.id` |
-| Operações compostas    | Filtro `corredor.status = 'Em corrida'`; `LATERAL JOIN` (ou subconsulta) com `checkpoint` para recuperar o último checkpoint de cada corredor da equipe via `ORDER BY criado_em DESC LIMIT 1`; cálculo de tempo desde o último checkpoint para alimentar a calculadora de descanso |
+| RNs justificadas       | RN07 (ao confirmar troca, atleta anterior deve ser definido como "Em descanso" automaticamente) |
+| Tabela percorrida      | `corredor`                                                               |
+| Relacionamentos do DER | `corredor.equipe_id → equipe.id` (N:1)                                   |
+| Contexto de negócio    | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar. |
 
-**Justificativa:** atender RN07 + RN10 exige identificar, na
-mesma consulta, o corredor com status "Em corrida" e o próximo
-da escala, junto do último checkpoint de cada um (para a
-calculadora de descanso da RN08). Sem `JOIN` lateral entre
-`corredor` e `checkpoint` não é possível devolver todos esses
-campos em uma única resposta.
+**Justificativa:** RN07 obriga que a troca de atleta seja feita de forma
+atômica — todos os corredores com status `Em corrida` ou `Próximo` de uma
+mesma equipe devem ser atualizados simultaneamente. O operador `IN`
+expressa essa condição de pertinência a um conjunto de estados de forma
+concisa, enquanto `AND` garante o escopo da equipe correta.
 
-## 4. Endpoints descartados (consultas simples)
+---
 
-Para rastreabilidade do critério de classificação, os endpoints
-listados abaixo foram analisados e descartados deste mapeamento:
+### 2.4. Q04 — `DELETE` com `AND` e `NOT LIKE`
 
-| Endpoint                                                  | Motivo                                                                       |
-|-----------------------------------------------------------|------------------------------------------------------------------------------|
-| `POST /competitions` (RF001, RF002)                       | Inserção em uma única tabela (`competicao`)                                  |
-| `POST /competitions/:id/teams` (RF003)                    | Inserção em `equipe` com geração de UUID; sem agregação                      |
-| `PUT`/`DELETE` em `equipe` e `corredor` (RF003)           | Operações de escrita pontuais em uma tabela                                  |
-| `POST /auth/sessions` (RF004)                             | Autenticação por leitura direta de `administrador`                           |
-| `POST /ocr/extractions` (RF005, RF006)                    | Persistência do resultado do OCR antes da validação; sem leitura cruzada     |
-| `PATCH /ocr/extractions/:extractionId` (RF007)            | Atualização pontual do registro extraído                                     |
-| `POST /competitions/:id/checkpoints` (RF008)              | Inserção em `checkpoint` após validação; sem leitura agregada                |
-| `PATCH /competitions/:id` (RF012)                         | Atualização de status da competição                                          |
+| Campo                  | Conteúdo                                                                 |
+|------------------------|--------------------------------------------------------------------------|
+| Tipo de operação       | `DELETE`                                                                 |
+| Operadores lógicos     | `AND`                                                                    |
+| Operadores especiais   | `NOT LIKE`                                                               |
+| Operadores relacionais | `=`                                                                      |
+| RF atendido            | RF008                                                                    |
+| RNs justificadas       | RN04 (checkpoint deve conter campos obrigatórios no padrão definido), RN05 (log de auditoria deve registrar o método de entrada) |
+| Tabela percorrida      | `checkpoint`                                                             |
+| Relacionamentos do DER | `checkpoint.competicao_id → competicao.id` (N:1)                        |
+| Contexto de negócio    | Remover registros de checkpoint criados fora do padrão esperado de identificador (registros de teste ou inserções manuais inválidas) para uma competição específica. |
 
-## 5. Resumo
+**Justificativa:** RF008 restringe o registro de checkpoints a dados
+validados. A exclusão de registros cujo identificador não segue o padrão
+`CP-` via `NOT LIKE`, combinada com o filtro por competição via `AND`,
+implementa a limpeza de dados inválidos antes da consolidação do evento,
+preservando a integridade exigida por RN04.
 
-| Q   | Endpoint                                                  | Função          | RF        | Tabelas envolvidas                                          |
-|-----|-----------------------------------------------------------|-----------------|-----------|-------------------------------------------------------------|
-| Q01 | `GET /competitions/:id/ranking`                           | Ranking         | RF010, RF015 | competicao, equipe, corredor, checkpoint                  |
-| Q02 | `GET /competitions/:id/checkpoints/inconsistencies`       | Inconsistências | RF009     | checkpoint, corredor, equipe, competicao                    |
-| Q03 | `GET /competitions/:id/exports`                           | Exportação      | RF013     | competicao, equipe, corredor, checkpoint, esteira, administrador |
-| Q04 | `GET /competitions/:id/reports`                           | Relatórios      | RF014     | competicao, equipe, corredor, checkpoint                    |
-| Q05 | `GET /competitions/:id/teams/:teamId/runners`             | Painel administrativo | RF011 | equipe, corredor, checkpoint                              |
+---
 
-As cinco consultas mapeadas cobrem as quatro funções de negócio
-indicadas na descrição da issue (ranking, relatórios,
-inconsistências, exportação) e superam o mínimo de três
-consultas exigido pelos critérios de aceite.
+### 2.5. Q05 — `SELECT` com `BETWEEN`, `AND` e `NOT IN`
+
+| Campo                  | Conteúdo                                                                 |
+|------------------------|--------------------------------------------------------------------------|
+| Tipo de operação       | `SELECT`                                                                 |
+| Operadores lógicos     | `AND`                                                                    |
+| Operadores especiais   | `BETWEEN`, `NOT IN`                                                      |
+| RF atendido            | RF010, RF013                                                             |
+| RNs justificadas       | RN09 (ranking atualizado a cada checkpoint), RN15 (exportação CSV inclui todos os checkpoints) |
+| Tabela percorrida      | `checkpoint`                                                             |
+| Relacionamentos do DER | `checkpoint.corredor_id → corredor.id` (N:1)                            |
+| Contexto de negócio    | Listar checkpoints com quilometragem dentro de uma faixa típica de desempenho, excluindo corredores específicos (por exemplo, atletas que solicitaram exclusão de relatórios públicos). |
+
+**Justificativa:** RF010 e RF013 demandam consultas sobre subconjuntos
+de checkpoints — respectivamente para o ranking e para a exportação CSV.
+O operador `BETWEEN` expressa restrição de intervalo numérico de forma
+declarativa, enquanto `NOT IN` exclui corredores por conjunto de IDs,
+combinação diretamente aplicável à filtragem de dados para ambas as
+funcionalidades.
+
+---
+
+## 3. Resumo
+
+| Q   | Tipo     | Tabela principal | Operadores                        | RF            |
+|-----|----------|------------------|-----------------------------------|---------------|
+| Q01 | `SELECT` | `checkpoint`     | `AND`, `OR`, `=`, `>`, `<`        | RF008, RF009  |
+| Q02 | `SELECT` | `corredor`       | `AND`, `NOT`, `LIKE`, `=`         | RF003, RF011  |
+| Q03 | `UPDATE` | `corredor`       | `AND`, `IN`, `=`                  | RF011         |
+| Q04 | `DELETE` | `checkpoint`     | `AND`, `NOT LIKE`, `=`            | RF008         |
+| Q05 | `SELECT` | `checkpoint`     | `AND`, `BETWEEN`, `NOT IN`        | RF010, RF013  |
+
+As cinco consultas cobrem os três tipos de operação exigidos pelo barema
+(SELECT, UPDATE, DELETE), sete operadores lógicos e especiais distintos
+e quatro das seis tabelas do modelo relacional (`checkpoint`, `corredor`,
+`equipe` via FK, `competicao` via FK).
