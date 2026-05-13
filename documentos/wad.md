@@ -926,6 +926,16 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+
+Sequência de telas que a Marina percorre ao configurar uma nova competição.
+
+→ fluxo principal     - - → entrega entre Pt1 e Pt2
+
+Tela 1 — Home Admin (estado inicial)
+
+Fluxo: Estado inicial do sistema. Marina abre o painel pela primeira vez (ou após uma competição encerrada). O CTA principal é único e direto    "criar competição".  Atende CR3 da US01.
+Elementos: Header global (logo + nome do operador), sidebar de navegação com "Home" ativo, área central com card de empty state. Grid de 12 colunas visível em cinza claro pra demonstração da organização.
+
 ### Wireframe de alta fidelidade #####
 
 
