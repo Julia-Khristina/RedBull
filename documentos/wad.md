@@ -854,6 +854,26 @@ O diagrama de sequência da Unified Modeling Language (UML) é um artefato compo
 O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PLANTUML, 2025).
 
 
+
+
+O código-fonte dos diagramas em PlantUML pode ser consultado no documento [diagramas-sequencia-puml.md](./outros/diagramas-sequencia-puml.md), localizado na pasta `documentos`. Esse arquivo reúne os blocos textuais utilizados para gerar as imagens apresentadas a seguir, permitindo que os diagramas sejam versionados, revisados e atualizados com maior facilidade.
+
+O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, o juiz captura a imagem da esteira, o sistema extrai automaticamente os dados de quilometragem, pace e tempo, permite a validação humana das informações e, após a confirmação, salva o checkpoint no banco de dados com registro de auditoria.
+
+<div align="center">
+  <sub>Imagem 4 - Diagrama de sequência do registro de checkpoint via OCR</sub><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-1.svg" width="100%" alt="Diagrama de sequência UML do fluxo de registro de checkpoint via OCR, incluindo captura da imagem, validação humana e salvamento no banco de dados"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O administrador cadastra a equipe em uma competição, o sistema valida os dados, gera um identificador único, registra os atletas vinculados e disponibiliza um link público para acesso às informações da equipe.
+
+<div align="center">
+  <sub>Imagem 5 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de atletas e geração de link público com UUID"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
 *Ao menos um fluxo relevante em UML ou BPMN. Use a notação da ferramenta escolhida de forma consistente (sem misturar convenções).*
