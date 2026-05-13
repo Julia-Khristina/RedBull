@@ -1090,7 +1090,29 @@ ALTER TABLE equipe
 CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
 ```
 
-A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo "SMALLINT" — equivalente ao int2 definido no modelo relacional — e utiliza "GENERATED ALWAYS AS IDENTITY" para geração automática e sequencial de identificadores. O campo **endereço** é definido como "NOT NULL", pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo "criado_em" recebe "DEFAULT NOW()", garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre data para otimizar consultas por período de realização.
+A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
+
+#### Tabela equipe
+```sql
+CREATE TABLE equipe (
+    id              SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome            VARCHAR(100)    NOT NULL,
+    uuid            UUID            NOT NULL DEFAULT gen_random_uuid(),
+    qr_code         JSON            NULL,
+    competicao_id   SMALLINT        NOT NULL,
+    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id),
+    UNIQUE (uuid)
+);
+ 
+ALTER TABLE equipe
+    ADD CONSTRAINT equipe_competicao_id_foreign
+    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
+ 
+CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
+```
+A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo `uuid` utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo `qr_code` é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
