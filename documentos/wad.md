@@ -1044,13 +1044,15 @@ As telas abaixo representam o painel operacional do administrador da competiçã
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-A tela abaixo, do atleta/corredor, foi desenvolvida para apresentar de forma clara e organizada as principais informações da competição em tempo real. A interface reúne dados de desempenho da equipe e dos atletas, permitindo acompanhamento rápido e apoio na tomada de decisões durante a corrida. 
+### Atleta/corredor
+
+A tela abaixo representa o painel de acessso da equipe que foi desenvolvida para apresentar de forma clara e organizada as principais informações da competição em tempo real. A interface reúne dados de desempenho da equipe e dos atletas, permitindo acompanhamento rápido e apoio na tomada de decisões durante a corrida. 
 
 O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a interpretação das métricas, como ranking, pace, velocidade, distância e descanso dos atletas, além de oferecer recursos estratégicos, como gerenciamento de descanso e compartilhamento do ranking da equipe, em um ambiente intuitivo, moderno e de fácil navegação.
 
 <div align="center">
-  <sub>Figura 5 - Seleção de Atleta Ativo </sub><br>
-  <img src="../assets/design/wireframe-alta - dev.png" width="70%" alt=""><br>
+  <sub>Figura 6 - Tela da equipe </sub><br>
+  <img src="../assets/design/wireframe de alta-fi.png" width="70%" alt=""><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
