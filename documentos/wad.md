@@ -1044,6 +1044,14 @@ As telas abaixo representam o painel operacional do administrador da competiçã
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Melhorias identificadas para o wireframe de baixa fidelidade persona 2
+
+- Sidebar pouco destacada
+- Falta de hierarquia visual
+- Cards sem destaque
+- Calculadora de descanso pouco intuitiva
+- Área de compartilhamento sem destaque visual para a ação principal
+
 ## 3.4. Guia de estilos (sprint 3)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
