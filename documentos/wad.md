@@ -396,7 +396,7 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 </ul>
 
 #### Biografia
-Fernanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando uma das equipes da competição. Apaixonada por corrida e desafios de resistência, ela participa do evento buscando performance, superação e espírito coletivo. Durante a prova, realiza turnos curtos e intensos na esteira, com trocas rápidas que exigem foco total na corrida e pouca margem para interrupções. 
+Amanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando uma das equipes da competição. Apaixonada por corrida e desafios de resistência, ela participa do evento buscando performance, superação e espírito coletivo. Durante a prova, realiza turnos curtos e intensos na esteira, com trocas rápidas que exigem foco total na corrida e pouca margem para interrupções. 
 
 #### Objetivos
 <ul>
@@ -443,13 +443,13 @@ Sendo assim, por meio das user stories, mantém-se o foco no valor gerado ao usu
 A seguir, são apresentadas as histórias de usuário definidas até o momento para o projeto em análise.
 
 <div align="center">
-  <sub>Quadro 3 - User Story </sub>
+  <sub>Quadro 3 - User Story 1 </sub>
 </div>
 
 | Identificação | US01 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada." |
+| **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada." |
 | **Critério de aceite 1** | CR1: O sistema deve permitir o acesso ao painel do admin em ambiente controlado. **Teste**: Dado que o administrador acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin. |
 | **Critério de aceite 2** | CR2: O painel deve exibir as principais seções do sistema. **Teste**: Dado que o admin acessa o painel, quando a página carrega, então deve visualizar opções como "criar competição", "equipes", "ranking" e "relatórios". |
 | **Critério de aceite 3** | CR3: O painel deve exibir o estado atual do sistema (com ou sem competição). **Teste**: Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção "Criar competição". Além disso, dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes. |
@@ -460,13 +460,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 4 - User Story </sub>
+  <sub>Quadro 4 - User Story 2 </sub>
 </div>
 
 | Identificação | US02 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso cadastrar uma nova competição com data e localização, para estruturar e iniciar um evento de corrida." |
+| **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso cadastrar uma nova competição com data e localização, para estruturar e iniciar um evento de corrida." |
 | **Critério de aceite 1** | CR1: O sistema deve permitir o preenchimento dos dados do evento. **Teste**: Dado que o admin acessa o formulário, quando preenche nome, data e local, então os campos devem aceitar os valores corretamente. |
 | **Critério de aceite 2** | CR2: O sistema deve validar campos obrigatórios. **Teste**: Dado que há campos vazios, quando o admin tenta criar o evento, então o sistema deve impedir a criação e exibir erro. |
 | **Critério de aceite 3** | CR3: O sistema deve criar o evento com status inicial. **Teste**: Dado que os dados são válidos, quando o admin confirma, então o evento deve ser criado com status "não iniciado". |
@@ -477,13 +477,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 5 - User Story </sub>
+  <sub>Quadro 5 - User Story 3 </sub>
 </div>
 
 | Identificação | US03 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente." |
+| **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente." |
 | **Critério de aceite 1** | CR1: O sistema deve permitir criar uma equipe. **Teste**: Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista. |
 | **Critério de aceite 2** | CR2: O sistema deve permitir adicionar atletas. **Teste**: Dado que o admin adiciona atletas à equipe, quando salva, então os atletas devem estar corretamente vinculados à equipe. |
 | **Critério de aceite 3** | CR3: O sistema deve permitir edição e remoção de atletas. **Teste**: Dado que o admin altera ou remove dados de um atleta, quando salva, então as mudanças devem ser refletidas corretamente na equipe. |
@@ -495,13 +495,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 6 - User Story </sub>
+  <sub>Quadro 6 - User Story 4 </sub>
 </div>
 
 | Identificação | US04 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências." |
+| **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências." |
 | **Critério de aceite 1** | CR1: O sistema deve exibir relatórios da competição. **Teste**: Dado que o admin acessa a seção de relatórios, quando seleciona um tipo — visão geral da competição, relatório por equipe ou relatório de inconsistências —, então os dados correspondentes devem ser exibidos corretamente. |
 | **Critério de aceite 2** | CR2: O sistema deve identificar e listar inconsistências. **Teste**: Dado que existem divergências entre os dados capturados via OCR e os inseridos manualmente, quando o relatório de inconsistências é gerado, então o sistema deve listar todas as ocorrências identificadas. |
 | **Critério de aceite 3** | CR3: O sistema deve permitir a exportação dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo CSV com os dados correspondentes. |
@@ -512,13 +512,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 7 - User Story </sub>
+  <sub>Quadro 7 - User Story 5 </sub>
 </div>
 
 | Identificação | US05 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login." |
+| **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login." |
 | **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o administrador clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar link". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
 | **Critério de aceite 2** | CR2: O UUID e o botão "Copiar link" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar link". Além disso, dado que o admin clica em "Copiar link", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
 | **Critério de aceite 3** | CR3: O UUID não deve expirar enquanto o evento estiver ativo. **Teste**: Dado que o evento está em andamento, quando o link gerado é acessado, então a página deve carregar corretamente. |
@@ -529,13 +529,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 8 - User Story </sub>
+  <sub>Quadro 8 - User Story 6 </sub>
 </div>
 
 | Identificação | US06 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso acessar a aba de equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e atletas da competição." |
+| **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a aba de equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e atletas da competição." |
 | **Critério de aceite 1** | CR1: O menu fixo deve exibir o item "Equipes" em todas as telas do admin e redirecionar corretamente. **Teste**: Dado que o admin está em qualquer tela do sistema, quando clica em "Equipes" no menu fixo, então deve ser redirecionado para /admin/equipes e o item deve ficar destacado como ativo no menu. |
 | **Critério de aceite 2** | CR2: O card "Gerenciar equipes" na Home deve redirecionar para a tela de gestão de equipes. **Teste**: Dado que o admin está na Home, quando clica no card "Gerenciar equipes", então deve ser redirecionado para /admin/equipes. |
 | Critérios INVEST | Independente: Esta US não depende de outros fluxos, pois a navegação até a tela de equipes pode ser desenvolvida de forma isolada. <br> Negociável: Os atalhos, ícones e rótulos do menu podem ser ajustados conforme necessidade do projeto. <br> Valorosa: Centraliza o gerenciamento de equipes e oferece acesso rápido por dois pontos de entrada distintos. <br> Estimável: O padrão de navegação é bem definido e de complexidade baixa. <br> Pequena: Escopo limitado à navegação entre telas por dois pontos de entrada distintos, sem envolver lógica de exibição de conteúdo ou estado da listagem. <br> Testável: As rotas e os estados de tela são verificáveis objetivamente. |
@@ -545,13 +545,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 9 - User Story </sub>
+  <sub>Quadro 9 - User Story 7 </sub>
 </div>
 
 | Identificação | US07 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso clicar no botão 'Acessar competição' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros em tempo real." |
+| **Persona** | Marina Costa (Coordenadora Operacional) |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso clicar no botão 'Acessar competição' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros em tempo real." |
 | **Critério de aceite 1** | CR1: O sistema deve navegar para o painel operacional da equipe selecionada ao clicar em "Acessar competição". **Teste**: Dado que o admin clica em "Acessar competição" no card de uma equipe, quando a navegação ocorre, então o sistema deve exibir o painel em /admin/equipes/operacional com os dados da equipe correta. |
 | **Critério de aceite 2** | CR2: O painel operacional deve conter os três blocos definidos na especificação. **Teste**: Dado que o admin abre o painel operacional, quando a página carrega, então devem estar presentes a área de controle do juiz, o fluxo de registro de checkpoint e a tabela de dados da equipe. Além disso, o dropdown de atletas deve listar todos os membros da equipe selecionada. |
 | Critérios INVEST | Independente: Esta US depende apenas do cadastro prévio da equipe, sendo desenvolvível de forma isolada após essa etapa. <br> Negociável: O layout e a organização dos blocos do painel podem ser reorganizados conforme feedback do parceiro. <br> Valorosa: É a tela operacional principal da competição, centralizando o controle em tempo real. <br> Estimável: Escopo bem delimitado pela especificação, com dois critérios de aceite claros. <br> Pequena: Limitada ao acesso e ao carregamento correto do painel operacional. <br> Testável: A navegação e a presença dos componentes são verificáveis objetivamente. |
@@ -561,13 +561,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 10 - User Story </sub>
+  <sub>Quadro 10 - User Story 8 </sub>
 </div>
 
 | Identificação | US08 |
 ---| ---
-| **Persona** | Administrador / Juiz |
-| **User Story** | "Como administrador/juiz, posso selecionar o atleta ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
+| **Persona** | Marina Costa (Coordenadora Operacional) |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso selecionar o atleta ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
 | **Critério de aceite 1** | CR1: O dropdown deve exibir todos os atletas da equipe com seu status atual. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os atletas da equipe devem aparecer com seu respectivo status — Em corrida, Em descanso ou Pronto para entrar — visível ao lado do nome. |
 | **Critério de aceite 2** | CR2: Os botões de status devem ser atualizados automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ter seu status alterado para "Em descanso" e o atleta atual para "Em corrida". |
 | Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O número de status possíveis e o fluxo de troca podem ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
@@ -577,13 +577,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 11 - User Story </sub>
+  <sub>Quadro 11 - User Story 9 </sub>
 </div>
 
 | Identificação | US09 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do atleta." |
+| **Persona** | Marina Costa (Coordenadora Operacional) |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do atleta." |
 | **Critério de aceite 1** | CR1: O sistema deve capturar a imagem e extrair os dados via OCR. **Teste**: Dado que o admin clica em "Tirar foto da esteira", quando a câmera integrada é aberta e a foto é capturada, então o sistema deve exibir o preview da imagem ao lado dos dados extraídos — distância (km), pace (min/km) e tempo total. |
 | **Critério de aceite 2** | CR2: O sistema deve alertar visualmente quando o valor extraído apresentar discrepância. **Teste**: Dado que o OCR extrai um valor que diverge da média histórica do atleta ou da meta da prova, quando o dado é exibido, então o campo deve ser marcado em vermelho com mensagem de alerta. Além disso, dado que o valor está dentro do esperado, quando exibido, então nenhum alerta deve ser apresentado. |
 | **Critério de aceite 3** | CR3: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
@@ -594,13 +594,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 12 - User Story </sub>
+  <sub>Quadro 12 - User Story 10 </sub>
 </div>
 
 | Identificação | US10 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso registrar um checkpoint manualmente digitando os dados quando a câmera falhar ou a foto estiver ilegível, para que nenhum registro seja perdido por falha técnica." |
+| **Persona** | Marina Costa (Coordenadora Operacional) |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso registrar um checkpoint manualmente digitando os dados quando a câmera falhar ou a foto estiver ilegível, para que nenhum registro seja perdido por falha técnica." |
 | **Critério de aceite 1** | CR1: O modo manual deve disponibilizar um formulário com os campos de distância, pace e tempo total. **Teste**: Dado que o admin acessa o modo de entrada manual, quando preenche os campos de distância (km), pace (min/km) e tempo total e clica em "Salvar registro manual", então os dados devem ser salvos corretamente no checkpoint da equipe e do atleta. |
 | **Critério de aceite 2** | CR2: O sistema deve registrar automaticamente que o checkpoint foi inserido em modo manual. **Teste**: Dado que o admin salva um registro pelo modo manual, quando o dado é persistido, então o log de auditoria deve exibir a flag "manual" para distingui-lo dos registros inseridos via OCR. |
 | Critérios INVEST | Independente: É o caminho de contingência do sistema e pode ser desenvolvido de forma independente do fluxo OCR. <br> Negociável: Os campos disponíveis no modo manual podem ser expandidos conforme necessidade identificada durante o projeto. <br> Valorosa: Garante continuidade operacional em situações de falha técnica, evitando perda de registros durante a competição. <br> Estimável: Trata-se de um formulário simples com campos bem definidos e comportamento claro. <br> Pequena: Escopo limitado à entrada e ao salvamento manual de um único checkpoint. <br> Testável: Os dados salvos e a flag de método no log de auditoria são verificáveis objetivamente. |
@@ -610,13 +610,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 13 - User Story </sub>
+  <sub>Quadro 13 - User Story 11 </sub>
 </div>
 
 | Identificação | US11 |
 ---| ---
-| **Persona** | Administrador |
-| **User Story** | "Como administrador, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza automaticamente a cada 5 minutos, para acompanhar a evolução da performance sem precisar recarregar a página." |
+| **Persona** | Marina Costa (Coordenadora Operacional) |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza automaticamente a cada 5 minutos, para acompanhar a evolução da performance sem precisar recarregar a página." |
 | **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados com timestamp e atleta, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
 | **Critério de aceite 2** | CR2: A tabela deve ser atualizada automaticamente a cada 5 minutos sem ação do usuário. **Teste**: Dado que um novo checkpoint é registrado, quando o intervalo de 5 minutos é atingido, então o novo registro deve aparecer na tabela sem que o admin recarregue a página. Além disso, deve ser exibido um indicador visual ou timestamp da última atualização. |
 | **Critério de aceite 3** | CR3: Os valores de pace médio e distância total devem ser recalculados corretamente a cada atualização. **Teste**: Dado que múltiplos checkpoints foram registrados, quando a tabela é atualizada, então o pace médio deve corresponder à média ponderada correta e a distância total deve ser a soma de todos os checkpoints da sessão. |
@@ -627,13 +627,13 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 14 - User Story </sub>
+  <sub>Quadro 14 - User Story 12 </sub>
 </div>
 
 | Identificação | US12 |
 ---| ---
-| **Persona** | Corredor |
-| **User Story** | "Como corredor, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe em tempo real diretamente pelo link recebido do administrador." |
+| **Persona** | Amanda Azevedo (Atleta) |
+| **User Story** | "Como Amanda Azevedo, atleta da competição, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe em tempo real diretamente pelo link recebido do administrador." |
 | **Critério de aceite 1** | CR1: O painel deve ser acessível publicamente sem exigir autenticação. **Teste**: Dado que qualquer pessoa acessa o link em modo anônimo ou aba privada, quando a URL é carregada, então a tela deve ser exibida corretamente sem campos de login ou solicitação de senha. Além disso, dado que um UUID inválido é acessado, quando a requisição é feita, então o sistema deve exibir uma mensagem de erro. |
 | **Critério de aceite 2** | CR2: A tela deve exibir apenas os dados correspondentes à equipe vinculada ao UUID acessado. **Teste**: Dado que dois links de equipes diferentes são acessados, quando cada um é carregado, então cada painel deve exibir exclusivamente os dados da equipe correta, sem expor informações de outras equipes. |
 | Critérios INVEST | Independente: Esta US depende apenas do UUID gerado pelo administrador, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores e torcida, permitindo acompanhamento em tempo real sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
@@ -643,18 +643,69 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 </div> 
 
 <div align="center">
-  <sub>Quadro 15 - User Story </sub>
+  <sub>Quadro 15 - User Story 13 </sub>
 </div>
 
-| Identificação | US13 |
----| ---
-| **Persona** | Corredor |
-| **User Story** | "Como corredor, posso visualizar no painel da equipe o ranking global, o status individual de cada atleta, a calculadora de descanso inteligente e o botão de compartilhamento, para tomar decisões estratégicas durante a competição." |
-| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que o corredor acessa o painel, quando a página carrega, então devem ser exibidos a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior. Além disso, dado que 1 hora se passa, quando o ranking é atualizado, então os dados devem refletir a nova posição sem que o ranking atualize antes desse intervalo. |
-| **Critério de aceite 2** | CR2: O painel deve exibir os seis campos de status para cada atleta. **Teste**: Dado que o corredor acessa o painel, quando a página carrega, então devem estar presentes para cada atleta: pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual. Além disso, dado que um checkpoint é registrado pelo admin, quando o painel é atualizado, então os dados do atleta correspondente devem refletir as novas informações. |
-| **Critério de aceite 3** | CR3: A calculadora de descanso inteligente deve exibir o indicador visual, o tempo recomendado e a contagem regressiva. **Teste**: Dado que o status do atleta varia, quando o indicador é exibido, então a barra deve mudar de cor conforme o estado — verde, amarelo ou vermelho. Além disso, dado que um atleta realizou uma corrida recente e intensa, quando o indicador é calculado, então deve exibir barra vermelha com alerta e apresentar o tempo recomendado de descanso com contagem regressiva. |
-| **Critério de aceite 4** | CR4: O botão "Compartilhar ranking" deve gerar um link simplificado sem dados sensíveis dos atletas. **Teste**: Dado que o corredor clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link simplificado com apenas o leaderboard, sem expor dados individuais dos atletas, otimizado para compartilhamento via WhatsApp e redes sociais, com preview da posição atual da equipe. |
-| Critérios INVEST | Independente: O painel público é autossuficiente e consome os dados gerados pelo fluxo do administrador, sem dependência de outras US em desenvolvimento. <br> Negociável: A frequência de atualização do ranking e as métricas exibidas por atleta podem evoluir conforme feedback dos usuários. <br> Valorosa: Transforma dados brutos em inteligência estratégica para a equipe durante a prova, apoiando decisões em tempo real. <br> Estimável: Os quatro blocos de funcionalidade possuem comportamentos bem definidos e escopo delimitado. <br> Pequena: Pode ser decomposta por bloco — ranking, status por atleta, calculadora e compartilhamento — caso necessário. <br> Testável: Todos os campos, comportamentos de atualização e a lógica da calculadora são verificáveis objetivamente. |
+| Identificação            | US13  |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Persona**              | Amanda Azevedo (Atleta)   |
+| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar o ranking global da competição no painel da equipe, para acompanhar a posição da minha equipe durante o evento."  |
+| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem ser exibidos a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior.  |
+| **Critério de aceite 2** | CR2: O ranking não deve ser atualizado antes do intervalo definido. **Teste**: Dado que menos de 1 hora se passou desde a última atualização, quando o painel é acessado novamente, então o ranking exibido deve permanecer inalterado. |
+| Critérios INVEST         | Independente: O ranking pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: As métricas exibidas no ranking podem ser alteradas conforme feedback dos usuários. <br> Valorosa: Permite que a atleta acompanhe o desempenho geral da equipe durante a competição. <br> Estimável: O comportamento de atualização e exibição do ranking é claro e bem delimitado. <br> Pequena: Escopo limitado à exibição do ranking global. <br> Testável: Os dados exibidos e o intervalo de atualização são verificáveis objetivamente. |
+
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+<div align="center">
+  <sub>Quadro 16 - User Story 14 </sub>
+</div>
+
+| Identificação            | US14 |
+| ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Persona**              | Amanda Azevedo (Atleta) |
+| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar o status individual e as métricas dos atletas da minha equipe, para acompanhar o desempenho coletivo durante a prova." |
+| **Critério de aceite 1** | CR1: O painel deve exibir os dados individuais dos atletas da equipe. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem estar presentes pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual de cada atleta. |
+| **Critério de aceite 2** | CR2: Os dados devem refletir novos checkpoints registrados. **Teste**: Dado que um checkpoint é registrado pelo administrador, quando o painel é atualizado, então os dados do atleta correspondente devem refletir as novas informações.|
+| Critérios INVEST         | Independente: A exibição das métricas dos atletas pode ser desenvolvida independentemente do ranking e da calculadora de descanso. <br> Negociável: As métricas exibidas podem ser ajustadas conforme necessidade do parceiro. <br> Valorosa: Permite acompanhamento detalhado do desempenho da equipe durante a competição. <br> Estimável: Os campos e comportamentos esperados estão claramente definidos. <br> Pequena: Escopo limitado à visualização de métricas dos atletas. <br> Testável: Todos os campos exibidos podem ser verificados objetivamente. |
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+<div align="center">
+  <sub>Quadro 17 - User Story 15 </sub>
+</div>
+
+| Identificação            | US15|
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Persona**              | Amanda Azevedo (Atleta) |
+| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar uma calculadora de descanso inteligente, para entender meu tempo recomendado de recuperação entre turnos." |
+| **Critério de aceite 1** | CR1: A calculadora deve exibir indicador visual baseado no estado físico do atleta. **Teste**: Dado que o status do atleta varia, quando o indicador é exibido, então a barra deve mudar de cor conforme o estado — verde, amarelo ou vermelho. |
+| **Critério de aceite 2** | CR2: A calculadora deve exibir o tempo recomendado de descanso e a contagem regressiva. **Teste**: Dado que um atleta realizou uma corrida recente e intensa, quando o cálculo é executado, então o sistema deve exibir o tempo recomendado de descanso acompanhado de contagem regressiva. |
+| Critérios INVEST         | Independente: A calculadora pode ser implementada sem dependência das demais funcionalidades do painel público. <br> Negociável: As regras de cálculo e os indicadores podem ser ajustados conforme testes futuros. <br> Valorosa: Auxilia atletas no gerenciamento de descanso durante a competição. <br> Estimável: A lógica de cálculo e exibição possui escopo claro. <br> Pequena: Escopo limitado à recomendação de descanso. <br> Testável: Os indicadores e tempos exibidos podem ser verificados objetivamente. |
+
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+<div align="center">
+  <sub>Quadro 18 - User Story 16 </sub>
+</div>
+
+| Identificação            | US16 |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Persona**              | Amanda Azevedo (Atleta) |
+| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso compartilhar o ranking simplificado da equipe, para divulgar o desempenho da competição sem expor dados sensíveis dos atletas."|
+| **Critério de aceite 1** | CR1: O sistema deve gerar um link simplificado de compartilhamento. **Teste**: Dado que a atleta clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link contendo apenas o leaderboard simplificado da competição. |
+| **Critério de aceite 2** | CR2: O link compartilhado não deve expor dados individuais sensíveis. **Teste**: Dado que o link é acessado por terceiros, quando a página carrega, então apenas informações gerais do ranking devem ser exibidas, sem métricas individuais dos atletas. |
+| Critérios INVEST         | Independente: O compartilhamento pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: Os formatos de compartilhamento podem evoluir conforme necessidade do projeto. <br> Valorosa: Facilita divulgação da competição e engajamento das equipes. <br> Estimável: O comportamento do link e dos dados exibidos é bem definido. <br> Pequena: Escopo limitado à geração e exibição do link compartilhável. <br> Testável: O conteúdo exibido no link pode ser validado objetivamente. |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -668,10 +719,10 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 
 ### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
 
-O Quadro 16 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
 
 <div align="center">
-  <sub>Quadro 16 - Requisitos Funcionais </sub>
+  <sub>Quadro 19 - Requisitos Funcionais </sub>
 </div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
@@ -719,10 +770,10 @@ RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel púb
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-No Quadro 17, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 20, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 17 - Regras de Negócio </sub>
+  <sub>Quadro 20 - Regras de Negócio </sub>
 </div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
@@ -752,10 +803,10 @@ RN11 | O painel administrativo deve recalcular automaticamente métricas operaci
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-A seguir, são apresentados, no Quadro 18, os requisitos não funcionais do sistema, responsáveis por definir restrições, atributos e métricas de qualidade, como desempenho, segurança e usabilidade, que devem ser considerados ao longo do desenvolvimento.
+A seguir, são apresentados, no Quadro 21, os requisitos não funcionais do sistema, responsáveis por definir restrições, atributos e métricas de qualidade, como desempenho, segurança e usabilidade, que devem ser considerados ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 18 - Requisitos Não Funcionais </sub>
+  <sub>Quadro 21 - Requisitos Não Funcionais </sub>
 </div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Como atendido                                      |
@@ -798,7 +849,7 @@ Por fim, o eixo Organizacional (ORG) está relacionado ao modelo de desenvolvime
 Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTful descritas pela Microsoft Azure Architecture Center, que recomenda o uso de substantivos no plural para nomear recursos, hierarquia de URIs para expressar relações entre entidades e verbos HTTP como única forma de expressar a ação sobre o recurso (Microsoft, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio que o governam e ao contrato HTTP que o implementa.
 
 <div align="center">
-  <sub>Quadro 19 - Matriz RF → RN → Endpoint  </sub>
+  <sub>Quadro 22 - Matriz RF → RN → Endpoint  </sub>
 </div>
 
 | RF    | RN associadas | Endpoint                                                      | Método |
@@ -937,7 +988,7 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
  Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
 
  <div align="center">
-  <sub>Quadro 20 - User Stories cobertas: </sub>
+  <sub>Quadro 23 - User Stories cobertas: </sub>
 </div>
 
 
@@ -956,7 +1007,7 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 
 
  <div align="center">
-  <sub>Quadro 21 - Critérios de baixa fidelidade adotados:</sub>
+  <sub>Quadro 24 - Critérios de baixa fidelidade adotados:</sub>
 </div>
 
 
@@ -1010,10 +1061,10 @@ O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma
 
 De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como nome, endereço e CPF na entidade Aluno. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Além disso, existem os relacionamentos, representados por losangos contendo o verbo que descreve a interação entre as entidades, responsáveis por demonstrar as associações existentes entre elas.
 
-Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 19 apresenta as principais cardinalidades e a sua utilização.
+Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 25 apresenta as principais cardinalidades e a sua utilização.
 
 <div align="center">
-  <sub>Quadro 21 - Cardinalidades </sub>
+  <sub>Quadro 25 - Cardinalidades </sub>
 </div>
 
 | Cardinalidade |  Leitura | Exemplo de Aplicação |
@@ -1036,10 +1087,10 @@ A seguir, a Figura 6 ilustra o Modelo Entidade Relacionamento desenvolvido para 
 
 #### Descrição das entidades e relacionamentos
 
-A seguir, o Quadro 22 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema.
+A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema.
 
 <div align="center">
-  <sub>Quadro 22 - Descrição das entidades e relacionamentos</sub>
+  <sub>Quadro 26 - Descrição das entidades e relacionamentos</sub>
 </div>
 
 | Entidade | Papel no sistema | Relacionamentos |
@@ -1057,10 +1108,10 @@ A seguir, o Quadro 22 apresenta cada entidade, seu papel e os relacionamentos qu
 
 Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
 
-A seguir, o Quadro 22 exemplifica os elementos da notação de Chen utilizados no MER.
+A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados no MER.
 
 <div align="center">
-  <sub>Quadro 22 - Exemplificação dos elementos da notação de Chen </sub>
+  <sub>Quadro 27 - Exemplificação dos elementos da notação de Chen </sub>
 </div>
 
 | Elemento |  Símbolo  | Aplicação ao MER |
@@ -1078,10 +1129,10 @@ A seguir, o Quadro 22 exemplifica os elementos da notação de Chen utilizados n
 
 Por meio de quadros, será detalhado cada entidade, listando seus atributos baseados no tipo semântico e descrição afim de contextualizar a implementação ao sistema.
 
-O Quadro 23 apresenta a entidade e os atributos de "Competição".
+O Quadro 28 apresenta a entidade e os atributos de "Competição".
 
 <div align="center">
-  <sub>Quadro 23 - Dicionário de Dados da Entidade Competição</sub>
+  <sub>Quadro 28 - Dicionário de Dados da Entidade Competição</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
@@ -1095,10 +1146,10 @@ O Quadro 23 apresenta a entidade e os atributos de "Competição".
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, o Quadro 24 ilustra a entidade Equipe e os seus atributos.
+A seguir, o Quadro 29 ilustra a entidade Equipe e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 24 - Dicionário de Dados da Entidade Equipe</sub>
+  <sub>Quadro 29 - Dicionário de Dados da Entidade Equipe</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
@@ -1113,10 +1164,10 @@ A seguir, o Quadro 24 ilustra a entidade Equipe e os seus atributos.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 25 representa o dicionário de dados da entidade Corredor.
+O Quadro 30 representa o dicionário de dados da entidade Corredor.
 
 <div align="center">
-  <sub>Quadro 25 - Dicionário de Dados da Entidade Corredor</sub>
+  <sub>Quadro 30 - Dicionário de Dados da Entidade Corredor</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
@@ -1133,10 +1184,10 @@ O Quadro 25 representa o dicionário de dados da entidade Corredor.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 26 apresenta a entidade e os atributos de "Checkpoint".
+O Quadro 31 apresenta a entidade e os atributos de "Checkpoint".
 
 <div align="center">
-  <sub>Quadro 26 - Dicionário de Dados da Entidade Checkpoint</sub>
+  <sub>Quadro 31 - Dicionário de Dados da Entidade Checkpoint</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
@@ -1153,10 +1204,10 @@ O Quadro 26 apresenta a entidade e os atributos de "Checkpoint".
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, o Quadro 27 ilustra a entidade Administrador e os seus atributos.
+A seguir, o Quadro 32 ilustra a entidade Administrador e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 27 - Dicionário de Dados da Entidade Administrador</sub>
+  <sub>Quadro 32 - Dicionário de Dados da Entidade Administrador</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
@@ -1171,10 +1222,10 @@ A seguir, o Quadro 27 ilustra a entidade Administrador e os seus atributos.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 28 representa o dicionário de dados da entidade Esteira.
+O Quadro 33 representa o dicionário de dados da entidade Esteira.
 
 <div align="center">
-  <sub>Quadro 28 - Dicionário de Dados da Entidade Esteira </sub>
+  <sub>Quadro 33 - Dicionário de Dados da Entidade Esteira </sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
@@ -1190,10 +1241,10 @@ O Quadro 28 representa o dicionário de dados da entidade Esteira.
 
 #### Rastreabilidade entidade → RF → RN
 
-A seguir, o Quadro 29 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
+A seguir, o Quadro 34 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
 
 <div align="center">
-  <sub>Quadro 29 - Rastreabilidade entidade → RF → RN </sub>
+  <sub>Quadro 34 - Rastreabilidade entidade → RF → RN </sub>
 </div>
 
 | Entidade | RF que origina | RN que governa |
