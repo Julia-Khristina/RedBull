@@ -1112,7 +1112,7 @@ ALTER TABLE equipe
  
 CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
 ```
-A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo `uuid` utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo `qr_code` é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
+A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo **uuid** utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **qr_code** é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
 
 #### Tabela corredor
  
@@ -1141,7 +1141,7 @@ CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
 CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
 ```
  
-A tabela "corredor" depende de "equipe" por meio da chave estrangeira `equipe_id`. Os campos `cpf` e `email` possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo `status` recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo `telefone` é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação
+A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação
 
 #### Tabela esteira
  
@@ -1156,7 +1156,7 @@ CREATE TABLE esteira (
 );
 ```
  
-A tabela "esteira" não possui chaves estrangeiras e pode ser criada de forma independente. Os campos `nome` e `especificacao` utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo `especificacao` é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **nome** e **especificacao** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo **especificacao** é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
 
 #### Tabela administrador
  
@@ -1171,8 +1171,53 @@ CREATE TABLE administrador (
     PRIMARY KEY (id)
 );
 ```
-A tabela "administrador" também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela `checkpoint`, da qual é referenciada. O campo `senha` utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo `area` é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
+A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
  
+ #### Tabela checkpoint
+ 
+```sql
+CREATE TABLE checkpoint (
+    id                  SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    identificador       VARCHAR(100)    NOT NULL,
+    km                  NUMERIC(6, 3)   NOT NULL,
+    pace                VARCHAR(20)     NULL,
+    tempo               VARCHAR(20)     NULL,
+    imagem              JSON            NULL,
+    corredor_id         SMALLINT        NOT NULL,
+    competicao_id       SMALLINT        NOT NULL,
+    esteira_id          SMALLINT        NOT NULL,
+    administrador_id    SMALLINT        NOT NULL,
+    criado_em           TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id),
+    UNIQUE (identificador),
+    CHECK (km >= 0)
+);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_corredor_id_foreign
+    FOREIGN KEY (corredor_id) REFERENCES corredor (id);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_competicao_id_foreign
+    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_esteira_id_foreign
+    FOREIGN KEY (esteira_id) REFERENCES esteira (id);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_administrador_id_foreign
+    FOREIGN KEY (administrador_id) REFERENCES administrador (id);
+ 
+CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
+CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
+CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
+CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
+CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
+```
+ 
+A tabela **checkpoint** é a entidade central do sistema operacional e a última a ser criada, pois concentra quatro chaves estrangeiras: `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id`. O campo **km** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão, adequado para registros de distância como `42,195 km`. A restrição `CHECK (km >= 0)` assegura que nenhum valor negativo seja inserido. Os campos **pace** e **tempo** são armazenados como `VARCHAR`, pois seguem formatos textuais como `"5:30/km"` e `"01:23:45"`, sendo opcionais pois podem não estar disponíveis em todos os registros. O campo **imagem** é definido como `JSON` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **identificador** possui restrição `UNIQUE` para garantir unicidade entre os registros operacionais. O campo **administrador_id** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints — um administrador pode estar associado a múltiplos registros ao longo de uma competição. Cinco índices são criados: quatro sobre as chaves estrangeiras para otimizar junções e um sobre `criado_em` para acelerar relatórios cronológicos de desempenho.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
