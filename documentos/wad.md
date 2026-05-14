@@ -937,6 +937,19 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 
 O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
 
+As telas abaixo representam o painel operacional do administrador da competição Red Bull 24h, desenvolvido para monitoramento em tempo real dos atletas, controle de checkpoints e gerenciamento operacional das equipes participantes.
+
+<div align="center">
+  <sub>Figura 5 - Painel Operacional do Administrador</sub><br>
+  <img src="../assets/design/Equipes - Painel operacional.png" width="70%" alt=""><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 5 - Seleção de Atleta Ativo </sub><br>
+  <img src="../assets/design/Equipes - Painel operacional-1.png" width="70%" alt=""><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ## 3.4. Guia de estilos (sprint 3)
 
