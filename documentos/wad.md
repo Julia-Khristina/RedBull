@@ -1157,6 +1157,21 @@ CREATE TABLE esteira (
 ```
  
 A tabela "esteira" não possui chaves estrangeiras e pode ser criada de forma independente. Os campos `nome` e `especificacao` utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo `especificacao` é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+
+#### Tabela administrador
+ 
+```sql
+CREATE TABLE administrador (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
+    area        VARCHAR(100)    NULL,
+    senha       VARCHAR(255)    NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id)
+);
+```
+A tabela "administrador" também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela `checkpoint`, da qual é referenciada. O campo `senha` utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo `area` é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
  
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
