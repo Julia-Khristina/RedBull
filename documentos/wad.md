@@ -1143,6 +1143,22 @@ CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
  
 A tabela "corredor" depende de "equipe" por meio da chave estrangeira `equipe_id`. Os campos `cpf` e `email` possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo `status` recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo `telefone` é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação
 
+#### Tabela esteira
+ 
+```sql
+CREATE TABLE esteira (
+    id              SMALLINT    NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome            TEXT        NOT NULL,
+    especificacao   TEXT        NULL,
+    criado_em       TIMESTAMP   NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id)
+);
+```
+ 
+A tabela "esteira" não possui chaves estrangeiras e pode ser criada de forma independente. Os campos `nome` e `especificacao` utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo `especificacao` é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+ 
+
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
