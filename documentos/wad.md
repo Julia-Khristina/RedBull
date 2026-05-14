@@ -929,14 +929,26 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 
 
 <div align="center">
-  <sub>Figura 8 - Sequência de telas que a Marina percorre ao configurar uma nova competição. </sub><b>
-  <img src="../assets/design/wireframeorg1.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 8 - Sequência de telas que o operador percorre ao configurar a competição. </sub>
+  <img src="../assets/design/WF-persona1-1.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 9 - Sequência de telas que a Marina percorre ao configurar as equipes. </sub><b>
-  <img src="../assets/design/wireframeorg2.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 9 - Sequência de telas que o operador percorre ao configurar as equipes. </sub>
+  <img src="../assets/design/WF-persona1-2.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 10 - Sequência de telas que o operador percorre ao adicionar mais checkpoints. </sub>
+  <img src="../assets/design/WF-persona1-3.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 11 - Sequência de telas que o operador percorre ao revisar os checkpoints e analisar a competição. </sub>
+  <img src="../assets/design/WF-persona1-4.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
