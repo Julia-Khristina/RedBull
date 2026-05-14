@@ -1026,6 +1026,40 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+
+
+<div align="center">
+  <sub>Figura 8 - Sequência de telas que o operador percorre ao configurar a competição. </sub>
+  <img src="../assets/design/wireframe-persona1-1.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 9 - Sequência de telas que o operador percorre ao configurar as equipes. </sub>
+  <img src="../assets/design/wireframe-persona1-2.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 10 - Sequência de telas que o operador percorre ao adicionar mais checkpoints. </sub>
+  <img src="../assets/design/wireframe-persona1-3.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 11 - Sequência de telas que o operador percorre ao revisar os checkpoints e analisar a competição. </sub>
+  <img src="../assets/design/wireframe-persona1-4.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+O wireframe de baixa fidelidade foi desenvolvido para representar de forma rápida e simplificada, o fluxo de navegação da Persona 1 — Marina Costa, 29 anos, Coordenadora Operacional (Administradora), durante a preparação de uma nova edição do Red Bull 24 Horas antes do início da prova.
+
+O fluxo contempla desde o primeiro acesso ao painel administrativo até o cadastro completo das equipes e a geração automática dos links públicos (UUIDs). Além de representar a estrutura visual das telas, os wireframes evidenciam funcionalidades essenciais do sistema, como: criação de competições;
+gerenciamento de equipes e atletas;
+navegação entre módulos administrativos;
+geração automática de UUIDs;
+acesso rápido às áreas operacionais da plataforma.
+ 
 ### Wireframe de alta fidelidade #####
 
 O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
