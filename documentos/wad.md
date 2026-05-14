@@ -1044,13 +1044,16 @@ As telas abaixo representam o painel operacional do administrador da competiçã
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Melhorias identificadas para o wireframe de baixa fidelidade persona 2
+A tela abaixo, do atleta/corredor, foi desenvolvida para apresentar de forma clara e organizada as principais informações da competição em tempo real. A interface reúne dados de desempenho da equipe e dos atletas, permitindo acompanhamento rápido e apoio na tomada de decisões durante a corrida. 
 
-- Sidebar pouco destacada
-- Falta de hierarquia visual
-- Cards sem destaque
-- Calculadora de descanso pouco intuitiva
-- Área de compartilhamento sem destaque visual para a ação principal
+O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a interpretação das métricas, como ranking, pace, velocidade, distância e descanso dos atletas, além de oferecer recursos estratégicos, como gerenciamento de descanso e compartilhamento do ranking da equipe, em um ambiente intuitivo, moderno e de fácil navegação.
+
+<div align="center">
+  <sub>Figura 5 - Seleção de Atleta Ativo </sub><br>
+  <img src="../assets/design/wireframe-alta - dev.png" width="70%" alt=""><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 
 ## 3.4. Guia de estilos (sprint 3)
 
