@@ -947,7 +947,13 @@ Para garantir essa padronização, o guia de estilos desenvolvido pelo grupo foi
 
 ### 3.4.1 Cores
 
-*Apresente aqui a paleta de cores, com seus códigos de aplicação e suas respectivas funções*
+A paleta de cores da solução foi definida com base na identidade visual da Red Bull, sendo composta por três cores primárias e cinco cores secundárias. As cores primárias são utilizadas nos principais elementos da interface e na comunicação visual do sistema, enquanto as cores secundárias auxiliam na composição de fundos, textos, componentes de apoio e detalhes visuais, contribuindo para a padronização e harmonia da interface.
+
+<div align="center">
+  <sub>Figura 7 - Paleta de cores</sub><br>
+    <img src="../assets/design/paleta de cores.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.4.2 Tipografia
 
