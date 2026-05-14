@@ -1,4 +1,4 @@
--- TABELA: competicao
+-- TABELA COMPETIÇÃO
 CREATE TABLE competicao (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     endereco    VARCHAR(255)    NOT NULL,
@@ -10,7 +10,8 @@ CREATE TABLE competicao (
 
 CREATE INDEX idx_competicao_data ON competicao (data);
 
--- TABELA: equipe
+
+-- TABELA EQUIPE
 CREATE TABLE equipe (
     id              SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     nome            VARCHAR(100)    NOT NULL,
@@ -30,8 +31,7 @@ ALTER TABLE equipe
 CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
 
 
-
--- TABELA: corredor
+-- TABELA CORREDOR
 CREATE TABLE corredor (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     nome        VARCHAR(100)    NOT NULL,
@@ -42,23 +42,21 @@ CREATE TABLE corredor (
     equipe_id   SMALLINT        NOT NULL,
     criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
 
-
     PRIMARY KEY (id),
     UNIQUE (cpf),
     UNIQUE (email),
-    CHECK (status IN ('corredor', 'capitão'))
+    CHECK (status IN ('corredor', 'capitao'))
 );
-
 
 ALTER TABLE corredor
     ADD CONSTRAINT corredor_equipe_id_foreign
     FOREIGN KEY (equipe_id) REFERENCES equipe (id);
 
-
 CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
 CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
 
--- TABELA: esteira
+
+-- TABELA ESTEIRA
 CREATE TABLE esteira (
     id              SMALLINT    NOT NULL GENERATED ALWAYS AS IDENTITY,
     nome            TEXT        NOT NULL,
@@ -68,7 +66,8 @@ CREATE TABLE esteira (
     PRIMARY KEY (id)
 );
 
--- TABELA: administrador
+
+-- TABELA ADMINISTRADOR
 CREATE TABLE administrador (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     nome        VARCHAR(100)    NOT NULL,
@@ -79,7 +78,8 @@ CREATE TABLE administrador (
     PRIMARY KEY (id)
 );
 
--- TABELA: checkpoint
+
+-- TABELA CHECKPOINT
 CREATE TABLE checkpoint (
     id                  SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     identificador       VARCHAR(100)    NOT NULL,
@@ -97,7 +97,6 @@ CREATE TABLE checkpoint (
     UNIQUE (identificador),
     CHECK (km >= 0)
 );
-
 
 ALTER TABLE checkpoint
     ADD CONSTRAINT checkpoint_corredor_id_foreign

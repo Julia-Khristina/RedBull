@@ -1114,6 +1114,35 @@ CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
 ```
 A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo `uuid` utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo `qr_code` é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
 
+#### Tabela corredor
+ 
+```sql
+CREATE TABLE corredor (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
+    status      VARCHAR(50)     NOT NULL DEFAULT 'ativo',
+    email       VARCHAR(150)    NOT NULL,
+    telefone    VARCHAR(20)     NULL,
+    cpf         VARCHAR(14)     NOT NULL,
+    equipe_id   SMALLINT        NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id),
+    UNIQUE (cpf),
+    UNIQUE (email),
+    CHECK (status IN ('ativo', 'inativo', 'desclassificado'))
+);
+ 
+ALTER TABLE corredor
+    ADD CONSTRAINT corredor_equipe_id_foreign
+    FOREIGN KEY (equipe_id) REFERENCES equipe (id);
+ 
+CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
+CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
+```
+ 
+A tabela "corredor" depende de "equipe" por meio da chave estrangeira `equipe_id`. Os campos `cpf` e `email` possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo `status` recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo `telefone` é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação
+
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 *posicione aqui uma lista de consultas SQL compostas, realizadas pelo back-end da aplicação web, com sua respectiva lógica proposicional, descrita conforme template abaixo. Lembre-se que para usar LaTeX em markdown, basta você colocar as expressões entre $ ou $$*
