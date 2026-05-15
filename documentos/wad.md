@@ -1084,18 +1084,69 @@ acesso rápido às áreas operacionais da plataforma.
 
 O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
 
+#### Telas do Administrador
+
 As telas abaixo representam o painel operacional do administrador da competição Red Bull 24h, desenvolvido para monitoramento em tempo real dos atletas, controle de checkpoints e gerenciamento operacional das equipes participantes.
 
-<div align="center">
-  <sub>Figura 5 - Painel Operacional do Administrador</sub><br>
-  <img src="../assets/design/Equipes - Painel operacional.png" width="70%" alt=""><br>
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+As Figuras 5 e 6 apresentam a visão geral do painel operacional do administrador e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos participantes em tempo real.
+
+<div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+
+  <div>
+    <sub>Figura 5 - Painel Operacional do Administrador</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 6 - Seleção de Atleta Ativo</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
 </div>
 
-<div align="center">
-  <sub>Figura 5 - Seleção de Atleta Ativo </sub><br>
-  <img src="../assets/design/Equipes - Painel operacional-1.png" width="70%" alt=""><br>
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+As Figuras 7 e 8 demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade responsável pela automatização do registro de desempenho dos atletas.
+
+<div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+
+  <div>
+    <sub>Figura 7 - Captura de foto da esteira/sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-2.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 8 - Validação dos dados extraídos via OCR</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+</div>
+
+As Figuras 9, 10 e 11 apresentam funcionalidades complementares do sistema, incluindo o registro manual de checkpoints, a visualização consolidada dos dados da competição e a geração de relatórios operacionais.
+
+<div align="center" 
+     style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap;">
+
+  <div>
+    <sub>Figura 9 - Registro manual de checkpoint </sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 10 - Tabela de dados consolidados</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 11 - Relatório</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt=""><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
 </div>
 
 ### Atleta/corredor
