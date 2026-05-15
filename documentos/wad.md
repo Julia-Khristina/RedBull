@@ -901,6 +901,11 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 | US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
 | US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
 | US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
+| US07 | Acessar painel operacional completo da equipe | Visualização de informações da equipe, atletas e checkpoints em tempo real |
+| US08 | Selecionar o atleta ativo | Controle realizado pelo juiz para definir o atleta atualmente monitorado |
+| US09 | Fotografar a esteira para extração via OCR | Captura da imagem da esteira para leitura automática de dados utilizando OCR |
+| US10 | Registrar checkpoint manualmente | Inserção manual de checkpoint como alternativa em caso de falha do OCR |
+| US11 | Visualizar tabela com auto-refresh a cada 5 min | Atualização automática periódica das informações operacionais da competição |
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
