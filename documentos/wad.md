@@ -848,17 +848,13 @@ relatório.
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-O diagrama de sequência da Unified Modeling Language (UML) é um artefato comportamental que descreve as interações entre objetos de um sistema ao longo de uma linha de tempo, enfatizando a ordem cronológica na qual as mensagens são trocadas para realizar uma funcionalidade específica. Em termos técnicos, essa representação gráfica utiliza "linhas de vida" (lifelines) para identificar os participantes envolvidos e setas direcionais para ilustrar as chamadas, respostas ou fluxos de controle, sendo essencial para detalhar casos de uso e mapear lógicas complexas entre componentes de software (FIGUEIREDO, 2026).
-
+Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no backend. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
 O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PLANTUML, 2025).
 
+O código-fonte dos diagramas em PlantUML pode ser consultado no documento [diagramas-sequencia-puml.md](./outros/diagramas-sequencia-puml.md), localizado na pasta `documentos/outros`. Esse arquivo reúne os blocos textuais utilizados para gerar as imagens apresentadas a seguir, permitindo que os diagramas sejam versionados, revisados e atualizados com maior facilidade.
 
-
-
-O código-fonte dos diagramas em PlantUML pode ser consultado no documento [diagramas-sequencia-puml.md](./outros/diagramas-sequencia-puml.md), localizado na pasta `documentos`. Esse arquivo reúne os blocos textuais utilizados para gerar as imagens apresentadas a seguir, permitindo que os diagramas sejam versionados, revisados e atualizados com maior facilidade.
-
-O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, o juiz captura a imagem da esteira, o sistema extrai automaticamente os dados de quilometragem, pace e tempo, permite a validação humana das informações e, após a confirmação, salva o checkpoint no banco de dados com registro de auditoria.
+O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, o operador envia a imagem para o Controller, que encaminha a solicitação ao Service; o Service registra a extração por meio do Repository, persiste os dados iniciais no Banco de Dados, executa o processamento OCR de forma assíncrona e, após a validação humana, salva o checkpoint com retorno tracejado entre as camadas.
 
 <div align="center">
   <sub>Imagem 4 - Diagrama de sequência do registro de checkpoint via OCR</sub><br>
@@ -866,7 +862,7 @@ O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O administrador cadastra a equipe em uma competição, o sistema valida os dados, gera um identificador único, registra os atletas vinculados e disponibiliza um link público para acesso às informações da equipe.
+O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O administrador cadastra a equipe em uma competição, o Controller aciona o Service, o Service utiliza o Repository para persistir equipes e atletas no Banco de Dados, e a aplicação retorna o link público após registrar os dados. O fluxo também evidencia a atualização assíncrona de ranking em segundo plano e a consulta posterior da equipe por meio da mesma arquitetura em camadas.
 
 <div align="center">
   <sub>Imagem 5 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
