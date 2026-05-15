@@ -1078,6 +1078,19 @@ As telas abaixo representam o painel operacional do administrador da competiçã
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+### Atleta/corredor
+
+A tela abaixo representa o painel de acesso da equipe, que foi desenvolvido para apresentar de forma clara e organizada as principais informações da competição em tempo real. A interface reúne dados de desempenho da equipe e dos atletas, permitindo acompanhamento rápido e apoio na tomada de decisões pelo capitão da equipe durante a corrida.
+
+O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a interpretação de métricas como ranking, pace, velocidade, distância e descanso dos atletas, além de oferecer recursos estratégicos, como a Calculadora de Descanso e o compartilhamento do ranking da equipe, priorizando legibilidade e leitura rápida das informações durante a operação da prova.
+
+<div align="center">
+  <sub>Figura 6 - Tela da equipe </sub><br>
+  <img src="../assets/design/wireframe de alta-fi.png" width="70%" alt=""><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
 ## 3.4. Guia de estilos (sprint 3)
 
 *Descreva aqui orientações gerais para o leitor sobre como utilizar os componentes do guia de estilos de sua solução*
