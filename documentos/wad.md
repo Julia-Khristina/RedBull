@@ -1074,13 +1074,13 @@ As Figuras 5 e 6 apresentam a visão geral do painel operacional do administrado
 
   <div>
     <sub>Figura 5 - Painel Operacional do Administrador</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
     <sub>Figura 6 - Seleção de Atleta Ativo</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
@@ -1092,13 +1092,13 @@ As Figuras 7 e 8 demonstram o processo de captura da imagem da esteira e a valid
 
   <div>
     <sub>Figura 7 - Captura de foto da esteira/sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional-2.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
     <sub>Figura 8 - Validação dos dados extraídos via OCR</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
@@ -1111,19 +1111,19 @@ As Figuras 9, 10 e 11 apresentam funcionalidades complementares do sistema, incl
 
   <div>
     <sub>Figura 9 - Registro manual de checkpoint </sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
     <sub>Figura 10 - Tabela de dados consolidados</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
     <sub>Figura 11 - Relatório</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional - 7.png" width="400px" alt=""><br>
+    <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt=""><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
