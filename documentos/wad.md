@@ -1506,6 +1506,165 @@ Os relacionamentos entre as entidades foram definidos por meio de chaves primár
 
 
 #### 3.6.3.2 Modelo Físico
+Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
+
+O arquivo pode ser visto aqui: [Modelo Físico](outros/migration.sql).
+
+A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. O arquivo migration.sql reúne todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
+
+#### Tabela Competição
+
+ 
+##### Tabela `competicao`
+ 
+```sql
+CREATE TABLE competicao (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    endereco    VARCHAR(255)    NOT NULL,
+    data        DATE            NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id)
+);
+ 
+CREATE INDEX idx_competicao_data ON competicao (data);
+```
+
+A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
+
+#### Tabela equipe
+```sql
+CREATE TABLE equipe (
+    id              SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome            VARCHAR(100)    NOT NULL,
+    uuid            UUID            NOT NULL DEFAULT gen_random_uuid(),
+    qr_code         JSON            NULL,
+    competicao_id   SMALLINT        NOT NULL,
+    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id),
+    UNIQUE (uuid)
+);
+ 
+ALTER TABLE equipe
+    ADD CONSTRAINT equipe_competicao_id_foreign
+    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
+ 
+CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
+```
+A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo **uuid** utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **qr_code** é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
+
+#### Tabela corredor
+ 
+```sql
+CREATE TABLE corredor (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
+    status      VARCHAR(50)     NOT NULL DEFAULT 'corredor',
+    email       VARCHAR(150)    NOT NULL,
+    telefone    VARCHAR(20)     NULL,
+    cpf         VARCHAR(14)     NOT NULL,
+    equipe_id   SMALLINT        NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id),
+    UNIQUE (cpf),
+    UNIQUE (email),
+    CHECK (status IN ('corredor', 'capitao'))
+);
+ 
+ALTER TABLE corredor
+    ADD CONSTRAINT corredor_equipe_id_foreign
+    FOREIGN KEY (equipe_id) REFERENCES equipe (id);
+ 
+CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
+CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
+```
+ 
+A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação.
+ 
+
+#### Tabela esteira
+ 
+```sql
+CREATE TABLE esteira (
+    id              SMALLINT    NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome            TEXT        NOT NULL,
+    especificacao   TEXT        NULL,
+    criado_em       TIMESTAMP   NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id)
+);
+```
+ 
+A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **nome** e **especificacao** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo **especificacao** é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+
+#### Tabela administrador
+ 
+```sql
+CREATE TABLE administrador (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
+    area        VARCHAR(100)    NULL,
+    senha       VARCHAR(255)    NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id)
+);
+```
+A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
+ 
+ #### Tabela checkpoint
+ 
+```sql
+CREATE TABLE checkpoint (
+    id                  SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    identificador       VARCHAR(100)    NOT NULL,
+    km                  NUMERIC(6, 3)   NOT NULL,
+    pace                VARCHAR(20)     NULL,
+    tempo               VARCHAR(20)     NULL,
+    imagem              JSON            NULL,
+    corredor_id         SMALLINT        NOT NULL,
+    competicao_id       SMALLINT        NOT NULL,
+    esteira_id          SMALLINT        NOT NULL,
+    administrador_id    SMALLINT        NOT NULL,
+    criado_em           TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id),
+    UNIQUE (identificador),
+    CHECK (km >= 0)
+);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_corredor_id_foreign
+    FOREIGN KEY (corredor_id) REFERENCES corredor (id);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_competicao_id_foreign
+    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_esteira_id_foreign
+    FOREIGN KEY (esteira_id) REFERENCES esteira (id);
+ 
+ALTER TABLE checkpoint
+    ADD CONSTRAINT checkpoint_administrador_id_foreign
+    FOREIGN KEY (administrador_id) REFERENCES administrador (id);
+ 
+CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
+CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
+CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
+CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
+CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
+```
+ 
+A tabela **checkpoint** é a entidade central do sistema operacional e a última a ser criada, pois concentra quatro chaves estrangeiras: `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id`. O campo **km** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão, adequado para registros de distância como `42,195 km`. A restrição `CHECK (km >= 0)` assegura que nenhum valor negativo seja inserido. Os campos **pace** e **tempo** são armazenados como `VARCHAR`, pois seguem formatos textuais como `"5:30/km"` e `"01:23:45"`, sendo opcionais pois podem não estar disponíveis em todos os registros. O campo **imagem** é definido como `JSON` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **identificador** possui restrição `UNIQUE` para garantir unicidade entre os registros operacionais. O campo **administrador_id** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints — um administrador pode estar associado a múltiplos registros ao longo de uma competição. Cinco índices são criados: quatro sobre as chaves estrangeiras para otimizar junções e um sobre `criado_em` para acelerar relatórios cronológicos de desempenho.
+
+##### Considerações gerais sobre a implementação
+ 
+A implementação física adota o padrão de separar a definição das colunas e restrições estruturais (`PRIMARY KEY`, `UNIQUE`, `CHECK`) dentro do bloco `CREATE TABLE`, enquanto os relacionamentos externos são adicionados via `ALTER TABLE ... ADD CONSTRAINT` logo após cada tabela. Essa abordagem favorece a legibilidade, facilita a manutenção incremental do esquema e permite que as instruções DDL sejam executadas de forma modular.
+ 
+Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
@@ -1788,6 +1947,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
+
+AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
 PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
 
