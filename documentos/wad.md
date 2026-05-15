@@ -1070,24 +1070,20 @@ A implementação física do banco de dados foi elaborada com base na estrutura 
 
 #### Tabela Competição
 
-```sql
-CREATE TABLE equipe (
-    id              SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome            VARCHAR(100)    NOT NULL,
-    uuid            UUID            NOT NULL DEFAULT gen_random_uuid(),
-    qr_code         JSON            NULL,
-    competicao_id   SMALLINT        NOT NULL,
-    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
  
-    PRIMARY KEY (id),
-    UNIQUE (uuid)
+##### Tabela `competicao`
+ 
+```sql
+CREATE TABLE competicao (
+    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    endereco    VARCHAR(255)    NOT NULL,
+    data        DATE            NOT NULL,
+    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
+ 
+    PRIMARY KEY (id)
 );
  
-ALTER TABLE equipe
-    ADD CONSTRAINT equipe_competicao_id_foreign
-    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
- 
-CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
+CREATE INDEX idx_competicao_data ON competicao (data);
 ```
 
 A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
@@ -1120,7 +1116,7 @@ A tabela **equipe** depende de **competição** por meio da chave estrangeira `c
 CREATE TABLE corredor (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     nome        VARCHAR(100)    NOT NULL,
-    status      VARCHAR(50)     NOT NULL DEFAULT 'ativo',
+    status      VARCHAR(50)     NOT NULL DEFAULT 'corredor',
     email       VARCHAR(150)    NOT NULL,
     telefone    VARCHAR(20)     NULL,
     cpf         VARCHAR(14)     NOT NULL,
@@ -1130,7 +1126,7 @@ CREATE TABLE corredor (
     PRIMARY KEY (id),
     UNIQUE (cpf),
     UNIQUE (email),
-    CHECK (status IN ('ativo', 'inativo', 'desclassificado'))
+    CHECK (status IN ('corredor', 'capitao'))
 );
  
 ALTER TABLE corredor
@@ -1141,7 +1137,8 @@ CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
 CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
 ```
  
-A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação
+A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação.
+ 
 
 #### Tabela esteira
  
