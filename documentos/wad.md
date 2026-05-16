@@ -62,7 +62,7 @@ O modelo das Cinco Forças de Porter constitui um framework de análise estraté
 No contexto deste projeto, a análise foi aplicada à operação do Red Bull 24 Horas, considerando o desenvolvimento de uma aplicação web para digitalização do processo de registro de quilometragem durante o evento. A solução proposta busca substituir um processo manual suscetível a erros, transformando a coleta operacional em um fluxo digital mais confiável, ágil e escalável.
 
 <div align="center">
-  <sub>Imagem 1 - Análise das cinco forças de Porter</sub><br>
+  <sub>Figura 1 - Análise das cinco forças de Porter</sub><br>
   <img src="../assets/negocios/forcaporter.jpg" width="100%" alt="Representação da análise das cinco forças competitivas de Porter aplicada ao contexto operacional do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -101,10 +101,10 @@ A aplicação do modelo das Cinco Forças de Porter evidencia que a solução pr
 
 ### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
 
-A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Imagem 2, considerando seu posicionamento no mercado e relação com concorrentes.
+A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Figura 2, considerando seu posicionamento no mercado e relação com concorrentes.
 
 <div align="center">
-  <sub>Imagem 2 - Análise SWOT </sub><br>
+  <sub>Figura 2 - Análise SWOT </sub><br>
   <img src="../assets/negocios/analiseSWOT.png" width="100%" alt="Representação da matriz SWOT com forças, fraquezas, oportunidades e ameaças identificadas no contexto operacional do projeto Red Bull 24 Horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -154,10 +154,10 @@ O sucesso da solução será mensurado por meio de indicadores objetivos, como a
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
-A seguir, a Imagem 3 ilustra o Canva de Proposta de Valor desenvolvido para o projeto em análise.
+A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o projeto em análise.
 
 <div align="center">
-  <sub>Imagem 3 - Value Proposition Canvas da Solução </sub><br>
+  <sub>Figura 3 - Value Proposition Canvas da Solução </sub><br>
   <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
   <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
 </div>
@@ -232,7 +232,7 @@ A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, anal
 No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento periódico de dados durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
 <div align="center">
-  <sub>Imagem 3 - Matriz de Risco </sub><br>
+  <sub>Figura 4 - Matriz de Risco </sub><br>
   <img src="../assets/negocios/matriz de risco.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -284,7 +284,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 
 
 <div align="center">
-  <sub>Imagem 4 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
+  <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
   <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento RedBull 24 horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -331,7 +331,7 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 </ul> <br>
 
 <div align="center">
-  <sub>Imagem 5 - Persona 2: Bruno Monteiro, Gerente de Field Marketing</sub><br>
+  <sub>Figura 6 - Persona 2: Bruno Monteiro, Gerente de Field Marketing</sub><br>
   <img src="../assets/design/persona2.png" width="100%" alt="Persona representando o gerente de Field Marketing responsável pela supervisão da coleta de dados e análise de desempenho na competição"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -382,7 +382,7 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 </ul> <br>
 
 <div align="center">
-  <sub>Figura 6 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
+  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
   <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -899,12 +899,12 @@ envolvidos no projeto, e serve de base para a derivação dos requisitos
 funcionais, garantindo rastreabilidade entre o que os usuários precisam
 fazer e o que o sistema deve oferecer.
 
-A Figura 1 apresenta o diagrama de casos de uso do Sistema Red Bull 24
+A Figura 8 apresenta o diagrama de casos de uso do Sistema Red Bull 24
 Horas, modelando as interações entre os três atores identificados,
 Administrador / Juiz, Corredor e Sistema OCR, e os principais fluxos
 do sistema.
 
-Figura 1 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
+Figura 8 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
 
 ![Diagrama de Casos de Uso](../assets/diagrama_caso_uso.png)
 
@@ -957,7 +957,7 @@ O código-fonte dos diagramas em PlantUML pode ser consultado no documento [diag
 O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, o operador envia a imagem para o Controller, que encaminha a solicitação ao Service; o Service registra a extração por meio do Repository, persiste os dados iniciais no Banco de Dados, executa o processamento OCR de forma assíncrona e, após a validação humana, salva o checkpoint com retorno tracejado entre as camadas.
 
 <div align="center">
-  <sub>Imagem 4 - Diagrama de sequência do registro de checkpoint via OCR</sub><br>
+  <sub>Figura 9 - Diagrama de sequência do registro de checkpoint via OCR</sub><br>
   <img src="../assets/programacao/diagrama-sequencia-uml-1.svg" width="100%" alt="Diagrama de sequência UML do fluxo de registro de checkpoint via OCR, incluindo captura da imagem, validação humana e salvamento no banco de dados"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -965,7 +965,7 @@ O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, 
 O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O administrador cadastra a equipe em uma competição, o Controller aciona o Service, o Service utiliza o Repository para persistir equipes e atletas no Banco de Dados, e a aplicação retorna o link público após registrar os dados. O fluxo também evidencia a atualização assíncrona de ranking em segundo plano e a consulta posterior da equipe por meio da mesma arquitetura em camadas.
 
 <div align="center">
-  <sub>Imagem 5 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
+  <sub>Figura 10 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
   <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de atletas e geração de link público com UUID"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -984,190 +984,267 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
 
 ## 3.3. Wireframes (sprint 2)
 
+Os wireframes apresentados nesta seção têm como objetivo representar visualmente os principais fluxos de navegação da solução proposta para o evento Red Bull 24 Horas, evidenciando a organização das funcionalidades priorizadas. Os artefatos foram desenvolvidos com foco na compreensão da experiência do usuário, permitindo validar rapidamente a estrutura da aplicação, os componentes principais das telas e a sequência de interação entre os módulos do sistema.
 
-### User Flow
-Antes da construção dos wireframes, foi elaborado um diagrama de fluxo de telas com o objetivo de representar, de forma visual e simplificada, a navegação do sistema. Esse diagrama permite compreender como as principais funcionalidades se conectam, evidenciando os caminhos percorridos pelos usuários ao longo da utilização da plataforma.
+A organização desta seção foi estruturada por persona, separando os fluxos administrativos e operacionais do fluxo público da equipe. Essa divisão facilita a compreensão da navegação do sistema e evidencia como cada perfil interage com a plataforma ao longo da competição.
 
-No contexto do evento Red Bull 24 Horas, o fluxo foi estruturado considerando as principais ações operacionais, como gestão de equipes, acompanhamento de ranking e acesso a relatórios e ações dos atletas, como acompanhamento de desempenho. Assim, o diagrama serve como base para o desenvolvimento dos wireframes, garantindo consistência na organização e criação das telas.
+Os wireframes de baixa fidelidade foram utilizados para validar arquitetura da informação, hierarquia visual e fluxo de navegação inicial da aplicação, enquanto os wireframes de alta fidelidade representam uma visão mais próxima da interface final, incluindo layout, organização visual e distribuição dos componentes.
+
+### 3.3.1 Personas Administrativas — Marina Costa e Bruno Monteiro
+
+As personas Marina Costa e Bruno Monteiro compartilham o mesmo fluxo principal de navegação dentro da plataforma administrativa da solução. Enquanto Marina atua diretamente na preparação operacional da competição, realizando cadastro de equipes, organização dos atletas e acompanhamento dos checkpoints, Bruno é responsável pela supervisão geral do evento, monitoramento da prova e análise estratégica das informações geradas pelo sistema.
+
+Por utilizarem o mesmo ambiente administrativo e acessarem funcionalidades complementares dentro da mesma arquitetura operacional, os wireframes apresentados nesta subseção foram organizados de forma conjunta. O fluxo contempla desde o acesso inicial ao painel administrativo até o gerenciamento operacional da competição, incluindo cadastro de equipes, geração de UUIDs, captura OCR, validação de checkpoints, visualização consolidada dos dados e geração de relatórios operacionais.
+
+<div align="center"> 
+  <sub>Quadro 23 - User Stories cobertas pelas Personas Administrativas</sub> 
+</div>
+
+| ID | User Story | Persona |
+|----|-------------|----------|
+| US01 | Acessar painel admin | Marina Costa |
+| US02 | Cadastrar nova competição | Marina Costa |
+| US03 | Cadastrar e editar equipes | Marina Costa |
+| US05 | Gerar URL UUID automaticamente | Marina Costa |
+| US06 | Acessar aba de equipes | Marina Costa |
+| US07 | Acessar painel operacional | Bruno Monteiro |
+| US08 | Selecionar atleta ativo | Bruno Monteiro |
+| US09 | Registrar checkpoint via OCR | Bruno Monteiro |
+| US10 | Registrar checkpoint manualmente | Bruno Monteiro |
+| US11 | Visualizar dados consolidados | Bruno Monteiro |
+| US12 | Gerar relatório operacional | Bruno Monteiro |
+
+<div align="center"> 
+  <sup>Fonte: Elaborado pelos autores (2026).</sup> 
+</div>
+
+#### Fluxo de Cenas — Operadores
+
+O fluxo abaixo representa a navegação realizada pelas personas administrativas durante a preparação e operação da competição, evidenciando o caminho percorrido desde o acesso inicial ao painel até a configuração das equipes participantes.
 
 <div align="center">
-  <sub>Figura 7 - Diagrama de Fluxo de Telas do Operador da prova</sub><br>
-  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 11 - Fluxo de Navegação das Personas Administrativas</sub><br>
+  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Fluxo de navegação do painel administrativo da competição Red Bull 24 Horas, incluindo dashboard, equipes, checkpoints, ranking e relatórios operacionais."".><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
-- Acesse o Userflow do operador aqui: [Fluxo do Operador](outros/fluxo_operador.md).
+- O fluxo completo de navegação das personas administrativas pode ser consultado em: [Fluxo do Operador](outros/fluxo_operador.md).
 
-<div align="center">
-  <sub>Figura 8 - Diagrama de Fluxo de Telas do Corredor</sub><br>
-  <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Diagrama de fluxo das telas do corredor mostrando o acesso via UUID, tela de erro, painel da equipe com atualização automática e modal de compartilhamento"><br>
-  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+O fluxo apresentado evidencia a sequência de navegação utilizada pelos administradores durante a competição. A partir do dashboard principal, os operadores conseguem acessar rapidamente módulos de equipes, checkpoints, ranking e relatórios operacionais, reduzindo a quantidade de interações necessárias durante a execução operacional da prova e centralizando todas as funcionalidades críticas em um único ambiente.
+
+#### Wireframe de Baixa Fidelidade — Operadores
+
+Os wireframes de baixa fidelidade das personas administrativas foram desenvolvidos para validar rapidamente a arquitetura da informação, a organização estrutural das telas e os principais fluxos de navegação da solução antes da definição visual definitiva da interface.
+
+A utilização desse tipo de prototipação permitiu testar hierarquia visual, distribuição dos componentes e sequência de interação entre os módulos administrativos da plataforma, reduzindo retrabalho durante as etapas posteriores de desenvolvimento e refinamento visual.
+
+<div align="center"> 
+  <sub>Quadro 24 - Critérios de baixa fidelidade adotados</sub> 
 </div>
-
-- Acesse o Userflow do corredor aqui: [Fluxo do Corredor](outros/fluxo-corredor.md).
-
-### Wireframe de baixa fidelidade
-
-
-O principal objetivo deste wireframe é 
-representar de forma rápida e simplificada o fluxo de navegação da persona 1 (Marina) ao preparar uma nova edição do Red Bull 24h antes da prova começar, explorando desde o primeiro acesso ao painel até as equipes cadastradas e prontas para receber o link público (UUID).
-
- Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
-
- <div align="center">
-  <sub>Quadro 23 - User Stories cobertas: </sub>
-</div>
-
-
-
-
-| ID   | User Story | Descrição |
-|------|-------------|------------|
-| US01 | Acessar painel admin | Estados sem e com competição |
-| US02 | Cadastrar nova competição | Cadastro com data e localização |
-| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
-| US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
-| US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
-
-
- <div align="center">
-  <sub>Quadro 24 - Critérios de baixa fidelidade adotados:</sub>
-</div>
-
-
-
 
 | Critério | Descrição |
 |-----------|------------|
 | Paleta em P&B | Uso apenas de preto e branco |
 | Placeholders de imagem | Representados com X cortado |
 | Blocos de texto | Indicados com linhas zigzag |
-| Elementos visuais | Sem ícones decorativos |
-| Foco estrutural | Ênfase em hierarquia, fluxo e organização espacial |
+| Elementos visuais | Ausência de elementos decorativos |
+| Foco estrutural | Ênfase em hierarquia, navegação e organização espacial |
 
-
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+<div align="center"> 
+  <sup>Fonte: Elaborado pelos autores (2026).</sup> 
 </div>
 
+---
 
+**Configuração inicial da competição**
+
+O primeiro conjunto de telas representa o fluxo inicial de configuração da competição, incluindo criação da sala administrativa e definição das informações básicas do evento.
 
 <div align="center">
-  <sub>Figura 8 - Sequência de telas que o operador percorre ao configurar a competição. </sub>
-  <img src="../assets/design/wireframe-persona1-1.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 12 - Wireframe de baixa fidelidade do fluxo inicial de configuração da competição</sub><br>
+  <img src="../assets/design/wireframe-persona1-1.png" width="100%" alt="Wireframe de baixa fidelidade representando o fluxo inicial de configuração da competição e criação da sala administrativa."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
+---
+
+**Cadastro e gerenciamento das equipes**
+
+O segundo conjunto de telas representa o processo de cadastro, edição e gerenciamento das equipes e atletas participantes da competição.
+
 <div align="center">
-  <sub>Figura 9 - Sequência de telas que o operador percorre ao configurar as equipes. </sub>
-  <img src="../assets/design/wireframe-persona1-2.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 13 - Wireframe de baixa fidelidade do gerenciamento das equipes</sub><br>
+  <img src="../assets/design/wireframe-persona1-2.png" width="100%" alt="Wireframe de baixa fidelidade do fluxo de cadastro e gerenciamento das equipes e atletas da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
+---
+
+**Gerenciamento operacional da competição**
+
+O terceiro fluxo demonstra as telas relacionadas ao gerenciamento operacional da prova, incluindo registro de checkpoints e acompanhamento das informações da competição.
+
 <div align="center">
-  <sub>Figura 10 - Sequência de telas que o operador percorre ao adicionar mais checkpoints. </sub>
-  <img src="../assets/design/wireframe-persona1-3.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 14 - Wireframe de baixa fidelidade do gerenciamento operacional da competição</sub><br>
+  <img src="../assets/design/wireframe-persona1-3.png" width="100%" alt="Wireframe de baixa fidelidade das funcionalidades operacionais utilizadas durante a competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
+---
+
+**Revisão e análise da competição**
+
+O último conjunto de telas representa as funcionalidades de revisão, validação e análise consolidada dos dados registrados durante a competição.
+
 <div align="center">
-  <sub>Figura 11 - Sequência de telas que o operador percorre ao revisar os checkpoints e analisar a competição. </sub>
-  <img src="../assets/design/wireframe-persona1-4.png" width="100%" alt="Diagrama de fluxo das telas do operador da prova, mostrando o caminho a partir da tela dashboard, com opções como equipes, ranking e relatório".><br>
+  <sub>Figura 15 - Wireframe de baixa fidelidade da revisão operacional da competição</sub><br>
+  <img src="../assets/design/wireframe-persona1-4.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
-O wireframe de baixa fidelidade foi desenvolvido para representar de forma rápida e simplificada, o fluxo de navegação da Persona 1 — Marina Costa, 29 anos, Coordenadora Operacional (Administradora), durante a preparação de uma nova edição do Red Bull 24 Horas antes do início da prova.
+#### Wireframe de Alta Fidelidade — Operadores
 
-O fluxo contempla desde o primeiro acesso ao painel administrativo até o cadastro completo das equipes e a geração automática dos links públicos (UUIDs). Além de representar a estrutura visual das telas, os wireframes evidenciam funcionalidades essenciais do sistema, como: criação de competições;
-gerenciamento de equipes e atletas;
-navegação entre módulos administrativos;
-geração automática de UUIDs;
-acesso rápido às áreas operacionais da plataforma.
- 
-### Wireframe de alta fidelidade #####
+Os wireframes de alta fidelidade representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, tipografia, hierarquia visual e estrutura de navegação da plataforma. O nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato fundamental para validação visual e operacional antes da implementação definitiva do sistema (Garrett, 2011).
 
-O wireframe de alta fidelidade é uma representação visual detalhada de uma interface digital, aproximando-se ao máximo do produto final em termos de layout, tipografia e interações. Conforme Garrett, o grau de fidelidade de um protótipo está diretamente relacionado à sua semelhança com a experiência real do usuário, tornando esse tipo de artefato essencial para validações precisas antes do desenvolvimento (Garrett, 2011).
+As interfaces apresentadas a seguir representam o painel operacional administrativo da competição Red Bull 24 Horas, desenvolvido para centralizar o monitoramento dos atletas, o controle dos checkpoints e o gerenciamento operacional das equipes participantes durante a execução da prova.
 
-#### Telas do Administrador
+A construção das telas priorizou rápida interpretação das informações, organização visual dos dados e redução da sobrecarga operacional dos administradores durante a competição.
 
-As telas abaixo representam o painel operacional do administrador da competição Red Bull 24h, desenvolvido para monitoramento em tempo real dos atletas, controle de checkpoints e gerenciamento operacional das equipes participantes.
+---
 
-As Figuras 5 e 6 apresentam a visão geral do painel operacional do administrador e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos participantes em tempo real.
+As Figuras 16 e 17 apresentam a visão geral do painel operacional administrativo e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores em tempo real.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 5 - Painel Operacional do Administrador</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt=""><br>
+    <sub>Figura 16 - Painel operacional administrativo da competição</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt="Painel operacional administrativo da competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 6 - Seleção de Atleta Ativo</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt=""><br>
+    <sub>Figura 17 - Seleção do atleta ativo</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt="Interface de seleção do atleta ativo durante a competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
 </div>
 
-As Figuras 7 e 8 demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade responsável pela automatização do registro de desempenho dos atletas.
+---
+
+As Figuras 18 e 19 demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade central da proposta de automação da solução.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 7 - Captura de foto da esteira/sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-2.png" width="400px" alt=""><br>
+    <sub>Figura 18 - Captura da imagem da esteira</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-2.png" width="400px" alt="Captura da imagem da esteira para processamento OCR."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 8 - Validação dos dados extraídos via OCR</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt=""><br>
+    <sub>Figura 19 - Validação dos dados extraídos via OCR</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt="Tela de validação dos dados extraídos automaticamente via OCR."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
 </div>
 
-As Figuras 9, 10 e 11 apresentam funcionalidades complementares do sistema, incluindo o registro manual de checkpoints, a visualização consolidada dos dados da competição e a geração de relatórios operacionais.
+---
+
+As Figuras 20, 21 e 22 apresentam funcionalidades complementares da plataforma, incluindo o registro manual de checkpoints, a visualização consolidada das informações da competição e a geração de relatórios operacionais.
 
 <div align="center" 
      style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap;">
 
   <div>
-    <sub>Figura 9 - Registro manual de checkpoint </sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt=""><br>
+    <sub>Figura 20 - Registro manual de checkpoint</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt="Tela de registro manual de checkpoints da competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 10 - Tabela de dados consolidados</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt=""><br>
+    <sub>Figura 21 - Visualização consolidada dos dados da competição</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt="Tabela consolidada com os dados operacionais da competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 11 - Relatório</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt=""><br>
+    <sub>Figura 22 - Relatório operacional da competição</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt="Tela de relatório operacional da competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
 </div>
 
-### Atleta/corredor
+Os wireframes apresentados permitiram validar visualmente os principais fluxos administrativos da solução, evidenciando como as funcionalidades operacionais se integram dentro da plataforma e como os administradores interagem com o sistema durante a execução da competição.
 
-A tela abaixo representa o painel de acesso da equipe, que foi desenvolvido para apresentar de forma clara e organizada as principais informações da competição em tempo real. A interface reúne dados de desempenho da equipe e dos atletas, permitindo acompanhamento rápido e apoio na tomada de decisões pelo capitão da equipe durante a corrida.
+### 3.3.2 Persona Corredor — Amanda Azevedo
 
-O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a interpretação de métricas como ranking, pace, velocidade, distância e descanso dos atletas, além de oferecer recursos estratégicos, como a Calculadora de Descanso e o compartilhamento do ranking da equipe, priorizando legibilidade e leitura rápida das informações durante a operação da prova.
+Amanda Azevedo representa os atletas participantes da competição, utilizando o painel público da equipe para acompanhar métricas da prova, ranking geral, desempenho dos corredores e informações estratégicas relacionadas ao descanso e posicionamento da equipe durante o evento.
+
+Diferentemente das personas administrativas, Amanda interage exclusivamente com a área pública da plataforma, acessada por meio do link gerado automaticamente pelo sistema. Seu fluxo prioriza rapidez na visualização das informações, simplicidade de navegação e acompanhamento contínuo da competição em tempo real.
+
+<div align="center"> 
+  <sub>Quadro 25 - User Stories cobertas pela Persona Corredor</sub> 
+</div>
+
+| ID | User Story | Descrição |
+|----|-------------|------------|
+| US13 | Visualizar ranking global | Acompanhamento da posição da equipe |
+| US14 | Visualizar métricas dos atletas | Desempenho individual e coletivo |
+| US15 | Utilizar calculadora de descanso | Apoio operacional ao atleta |
+| US16 | Compartilhar ranking | Compartilhamento simplificado da equipe |
+
+<div align="center"> 
+  <sup>Fonte: Elaborado pelos autores (2026).</sup> 
+</div>
+
+---
+
+#### Fluxo de Cenas — Corredores
+
+O fluxo abaixo representa a navegação realizada pelos corredores ao acessarem o painel público da equipe por meio do link compartilhado da competição. O fluxo contempla o acesso via UUID, validação do link, visualização das métricas da equipe e compartilhamento simplificado do ranking.
 
 <div align="center">
-  <sub>Figura 6 - Tela da equipe </sub><br>
-  <img src="../assets/design/wireframe de alta-fi.png" width="70%" alt=""><br>
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  <sub>Figura 23 - Fluxo de navegação da Persona Corredor</sub><br>
+  <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Fluxo de navegação do painel público da equipe, incluindo acesso via UUID, tela de erro, painel da equipe e compartilhamento do ranking."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
+O fluxo completo de navegação da persona corredor pode ser consultado em:
+
+- [Fluxo do Corredor](outros/fluxo-corredor.md).
+
+O fluxo apresentado demonstra a navegação simplificada utilizada pelos corredores ao acessarem o painel público da equipe por meio do link gerado automaticamente pelo sistema. A estrutura prioriza acesso rápido às informações estratégicas da competição, permitindo acompanhamento contínuo do desempenho da equipe durante a prova e reduzindo a quantidade de interações necessárias para visualização dos dados mais relevantes da competição.
+
+#### Wireframe de Baixa Fidelidade — Corredores
+
+O wireframe de baixa fidelidade da persona corredor foi desenvolvido para validar rapidamente a organização estrutural do painel público da equipe, priorizando hierarquia visual, distribuição das informações e fluxo simplificado de navegação.
+
+A prototipação buscou representar os principais elementos utilizados pelos atletas durante a competição, incluindo ranking geral, métricas da equipe, informações dos corredores e funcionalidades estratégicas relacionadas ao acompanhamento da prova.
+
+<div align="center">
+  <sub>Figura 24 - Wireframe de baixa fidelidade do painel público da equipe</sub><br>
+  <img src="../assets/design/WF-persona2.png" width="100%" alt="Wireframe de baixa fidelidade do painel público da equipe, incluindo ranking, métricas dos atletas e acompanhamento da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+O wireframe apresentado permitiu validar rapidamente a disposição das informações estratégicas da competição, garantindo uma navegação simplificada e rápida interpretação dos dados pelos corredores durante o evento.
+
+#### Wireframe de Alta Fidelidade — Corredores
+
+Os wireframes de alta fidelidade da persona corredor representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, hierarquia visual, tipografia e estrutura de navegação do painel público da equipe. Conforme Garrett (2011), o nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato essencial para validações visuais e operacionais antes da implementação definitiva da interface.
+
+As telas abaixo representam o painel público da equipe, desenvolvido para acompanhamento da competição pelos atletas participantes durante a prova. A interface foi projetada para apresentar de forma clara e organizada as principais informações estratégicas da competição, permitindo rápida interpretação dos dados durante o evento.
+
+O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a leitura de métricas como ranking, pace, velocidade, distância percorrida e descanso dos atletas. Além disso, a interface contempla funcionalidades estratégicas, como a Calculadora de Descanso e o compartilhamento simplificado do ranking da equipe, priorizando legibilidade, organização visual e rápida navegação durante a competição.
+
+<div align="center">
+  <sub>Figura 25 - Painel público da equipe</sub><br>
+  <img src="../assets/design/wireframe de alta-fi.png" width="100%" alt="Painel público da equipe com ranking geral, métricas dos atletas, calculadora de descanso e compartilhamento do ranking."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
 
 ## 3.4. Guia de estilos (sprint 3)
 
@@ -1224,10 +1301,10 @@ Além disso, o relacionamento entre entidades é feito através de uma linha, qu
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, a Figura 6 ilustra o Modelo Entidade Relacionamento desenvolvido para o projeto.
+A seguir, a Figura 26 ilustra o Modelo Entidade Relacionamento desenvolvido para o projeto.
 
 <div align="center">
-  <sub>Figura 6 - Modelo Entidade Relacionamento</sub><br>
+  <sub>Figura 26 - Modelo Entidade Relacionamento</sub><br>
     <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -1436,7 +1513,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 
 <div align="center">
-  <sub>Figura 7 - Diagrama Entidade Relacionamento</sub><br>
+  <sub>Figura 27 - Diagrama Entidade Relacionamento</sub><br>
     <img src="../assets/Diagrama entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -1479,10 +1556,10 @@ No contexto deste projeto, o modelo relacional foi desenvolvido a partir dos req
 
 #### 3.6.3.1 Modelo Relacional
 
-Com base nos requisitos funcionais, nas regras de negócio e na modelagem conceitual definida nas etapas anteriores, foi elaborado o modelo relacional do sistema, contemplando as principais entidades, seus atributos e os relacionamentos necessários para garantir integridade e consistência dos dados. A Figura 6 apresenta a estrutura relacional proposta para o projeto.
+Com base nos requisitos funcionais, nas regras de negócio e na modelagem conceitual definida nas etapas anteriores, foi elaborado o modelo relacional do sistema, contemplando as principais entidades, seus atributos e os relacionamentos necessários para garantir integridade e consistência dos dados. A Figura 28 apresenta a estrutura relacional proposta para o projeto.
 
 <div align="center">
-  <sub>Figura 6 - Modelo Relacional</sub><br>
+  <sub>Figura 28 - Modelo Relacional</sub><br>
   <img src="../assets/programacao/modelorelacional.png" width="100%" alt="Modelo relacional do sistema representando as tabelas do banco de dados, seus atributos, chaves primárias, chaves estrangeiras e os relacionamentos entre competições, equipes, corredores, checkpoints, administradores e esteiras"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
