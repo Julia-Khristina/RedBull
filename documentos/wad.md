@@ -996,28 +996,6 @@ As personas Marina Costa e Bruno Monteiro compartilham o mesmo fluxo principal d
 
 Por utilizarem o mesmo ambiente administrativo e acessarem funcionalidades complementares dentro da mesma arquitetura operacional, os wireframes apresentados nesta subseção foram organizados de forma conjunta. O fluxo contempla desde o acesso inicial ao painel administrativo até o gerenciamento operacional da competição, incluindo cadastro de equipes, geração de UUIDs, captura OCR, validação de checkpoints, visualização consolidada dos dados e geração de relatórios operacionais.
 
-<div align="center"> 
-  <sub>Quadro 23 - User Stories cobertas pelas Personas Administrativas</sub> 
-</div>
-
-| ID | User Story | Persona |
-|----|-------------|----------|
-| US01 | Acessar painel admin | Marina Costa |
-| US02 | Cadastrar nova competição | Marina Costa |
-| US03 | Cadastrar e editar equipes | Marina Costa |
-| US05 | Gerar URL UUID automaticamente | Marina Costa |
-| US06 | Acessar aba de equipes | Marina Costa |
-| US07 | Acessar painel operacional | Bruno Monteiro |
-| US08 | Selecionar atleta ativo | Bruno Monteiro |
-| US09 | Registrar checkpoint via OCR | Bruno Monteiro |
-| US10 | Registrar checkpoint manualmente | Bruno Monteiro |
-| US11 | Visualizar dados consolidados | Bruno Monteiro |
-| US12 | Gerar relatório operacional | Bruno Monteiro |
-
-<div align="center"> 
-  <sup>Fonte: Elaborado pelos autores (2026).</sup> 
-</div>
-
 #### Fluxo de Cenas — Operadores
 
 O fluxo abaixo representa a navegação realizada pelas personas administrativas durante a preparação e operação da competição, evidenciando o caminho percorrido desde o acesso inicial ao painel até a configuração das equipes participantes.
@@ -1037,6 +1015,36 @@ O fluxo apresentado evidencia a sequência de navegação utilizada pelos admini
 Os wireframes de baixa fidelidade das personas administrativas foram desenvolvidos para validar rapidamente a arquitetura da informação, a organização estrutural das telas e os principais fluxos de navegação da solução antes da definição visual definitiva da interface.
 
 A utilização desse tipo de prototipação permitiu testar hierarquia visual, distribuição dos componentes e sequência de interação entre os módulos administrativos da plataforma, reduzindo retrabalho durante as etapas posteriores de desenvolvimento e refinamento visual.
+
+
+O principal objetivo deste wireframe é 
+representar de forma rápida e simplificada o fluxo de navegação da persona 1 (Marina) ao preparar uma nova edição do Red Bull 24h antes da prova começar, explorando desde o primeiro acesso ao painel até as equipes cadastradas e prontas para receber o link público (UUID).
+
+ Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
+
+ <div align="center">
+  <sub>Quadro 23 - User Stories cobertas: </sub>
+</div>
+
+
+
+
+| ID   | User Story | Descrição |
+|------|-------------|------------|
+| US01 | Acessar painel admin | Estados sem e com competição |
+| US02 | Cadastrar nova competição | Cadastro com data e localização |
+| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
+| US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
+| US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
+| US07 | Acessar painel operacional completo da equipe | Visualização de informações da equipe, atletas e checkpoints em tempo real |
+| US08 | Selecionar o atleta ativo | Controle realizado pelo juiz para definir o atleta atualmente monitorado |
+| US09 | Fotografar a esteira para extração via OCR | Captura da imagem da esteira para leitura automática de dados utilizando OCR |
+| US10 | Registrar checkpoint manualmente | Inserção manual de checkpoint como alternativa em caso de falha do OCR |
+| US11 | Visualizar tabela com auto-refresh a cada 5 min | Atualização automática periódica das informações operacionais da competição |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 
 <div align="center"> 
   <sub>Quadro 24 - Critérios de baixa fidelidade adotados</sub> 
