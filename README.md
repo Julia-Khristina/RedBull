@@ -9,13 +9,11 @@
 ## Nome do grupo
 
 ## :student: Integrantes: 
-- <a href="https://www.linkedin.com/">Nome do integrante 1</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 2</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 3</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 4</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 5</a>
-- <a href="https://www.linkedin.com/">Nome do integrante 6</a> 
-- <a href="https://www.linkedin.com/">Nome do integrante 7</a>
+
+| | | | |
+|---|---|---|---|
+| [<img src="assets/fotos-alunos/ana-clara-tenorio-pelegrini.png" width="120" alt="Ana Clara Tenório Pelegrini">](https://www.linkedin.com/in/ana-clara-pelegrini-5855303b3/)<br>Ana Clara Tenório Pelegrini | [<img src="assets/fotos-alunos/beatriz-okubo-vieira-lima.png" width="120" alt="Beatriz Okubo Vieira Lima">](https://www.linkedin.com/in/beatriz-okubo-v-lima-71984536a/)<br>Beatriz Okubo Vieira Lima | [<img src="assets/fotos-alunos/eduardo-hirohito-izawa-maciel.png" width="120" alt="Eduardo Hirohito Izawa Maciel">](https://www.linkedin.com/in/eduardohirohito/)<br>Eduardo Hirohito Izawa Maciel | [<img src="assets/fotos-alunos/isabella-sandra-santos.png" width="120" alt="Isabella Sandra Santos">](https://www.linkedin.com/in/isabella-bessa-b72b393aa/)<br>Isabella Sandra Santos |
+| [<img src="assets/fotos-alunos/julia-khristina-de-oliveira-silva-souza.png" width="120" alt="Julia Khristina de Oliveira Silva Souza">](https://www.linkedin.com/in/julia-khristina/)<br>Julia Khristina de Oliveira Silva Souza | [<img src="assets/fotos-alunos/luiza-nicol-giusti-dias-cardoso.png" width="120" alt="Luiza Nicol Giusti Dias Cardoso">](https://www.linkedin.com/in/luiza-nicol-giusti-dias-cardoso-b379473a9/)<br>Luiza Nicol Giusti Dias Cardoso | [<img src="assets/fotos-alunos/mariana-azevedo-silva.png" width="120" alt="Mariana Azevedo Silva">](https://www.linkedin.com/in/marianaazvd/)<br>Mariana Azevedo Silva | [<img src="assets/fotos-alunos/vinicius-tavares-castiglia.png" width="120" alt="Vinícius Tavares Castiglia">](https://www.linkedin.com/in/vinicius-castiglia/)<br>Vinícius Tavares Castiglia |
 
 ## :teacher: Professores:
 ### Orientador(a) 
@@ -92,4 +90,3 @@ Alunos inteli (remover essa observação do readme.md após leitura e execução
 ```
 
 <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"><p xmlns:cc="http://creativecommons.org/ns#" xmlns:dct="http://purl.org/dc/terms/"><a property="dct:title" rel="cc:attributionURL" href="https://github.com/Intelihub/Template_M2/">MODELO GIT INTELI</a> by <a rel="cc:attributionURL dct:creator" property="cc:attributionName" href="https://www.yggbrasil.com.br/vr">Inteli, Nome do integrante 1, Nome do integrante 2, Nome do integrante 3, Nome do integrante 4, Nome do integrante 5, Nome do integrante 6, Nome do integrante 7</a> is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">Attribution 4.0 International</a>.</p>
-
