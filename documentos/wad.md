@@ -1112,18 +1112,78 @@ A construção das telas priorizou rápida interpretação das informações, or
 
 ---
 
-As Figuras 16 e 17 apresentam a visão geral do painel operacional administrativo e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores em tempo real.
+As Figuras 16 e 17 apresentam o início do fluxo administrativo, desde a tela principal do painel até o formulário de criação de uma nova competição.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 16 - Painel operacional administrativo da competição</sub><br>
+    <sub>Figura 16 - Dashboard principal do painel administrativo</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Dashboard Principal.png" width="400px" alt="Dashboard principal do painel administrativo Red Bull 24 Horas."><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 17 - Criação de nova competição</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Dashboard - Nova competição.png" width="400px" alt="Formulário de criação de uma nova competição Red Bull 24 Horas."><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+</div>
+
+---
+
+As Figuras 18 e 19 mostram a etapa de preparação das equipes, contemplando o estado inicial sem equipes cadastradas e o formulário de cadastro com capitão e atletas.
+
+<div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+
+  <div>
+    <sub>Figura 18 - Estado inicial da tela de equipes</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Painel Admin Nenhuma Equipe Cadastrada.png" width="400px" alt="Tela de equipes sem equipes cadastradas no painel administrativo."><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 19 - Cadastro de equipe e atletas</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Cadastrar Equipe.png" width="400px" alt="Formulário de cadastro de equipe com capitão e atletas."><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+</div>
+
+---
+
+As Figuras 20 e 21 apresentam a continuidade do gerenciamento das equipes, incluindo o retorno ao estado de cadastro e a visualização das equipes com URLs públicas geradas por UUID.
+
+<div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+
+  <div>
+    <sub>Figura 20 - Competição cadastrada sem equipes</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Competição Cadastrada Sucesso.png" width="400px" alt="Tela de equipes após o cadastro da competição, ainda sem equipes cadastradas."><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+  <div>
+    <sub>Figura 21 - Equipes cadastradas com URLs públicas</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Painel Admin Equipes.png" width="400px" alt="Painel administrativo com equipes cadastradas e URLs públicas por UUID."><br>
+    <sup>Fonte: Elaborado pelos autores (2026).</sup>
+  </div>
+
+</div>
+
+---
+
+As Figuras 22 e 23 apresentam a visão geral do painel operacional administrativo e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores em tempo real.
+
+<div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
+
+  <div>
+    <sub>Figura 22 - Painel operacional administrativo da competição</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt="Painel operacional administrativo da competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 17 - Seleção do atleta ativo</sub><br>
+    <sub>Figura 23 - Seleção do atleta ativo</sub><br>
     <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt="Interface de seleção do atleta ativo durante a competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -1132,18 +1192,18 @@ As Figuras 16 e 17 apresentam a visão geral do painel operacional administrativ
 
 ---
 
-As Figuras 18 e 19 demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade central da proposta de automação da solução.
+As Figuras 24 e 25 demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade central da proposta de automação da solução.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 18 - Captura da imagem da esteira</sub><br>
+    <sub>Figura 24 - Captura da imagem da esteira</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-2.png" width="400px" alt="Captura da imagem da esteira para processamento OCR."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 19 - Validação dos dados extraídos via OCR</sub><br>
+    <sub>Figura 25 - Validação dos dados extraídos via OCR</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt="Tela de validação dos dados extraídos automaticamente via OCR."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -1152,25 +1212,25 @@ As Figuras 18 e 19 demonstram o processo de captura da imagem da esteira e a val
 
 ---
 
-As Figuras 20, 21 e 22 apresentam funcionalidades complementares da plataforma, incluindo o registro manual de checkpoints, a visualização consolidada das informações da competição e a geração de relatórios operacionais.
+As Figuras 26, 27 e 28 apresentam funcionalidades complementares da plataforma, incluindo o registro manual de checkpoints, a visualização consolidada das informações da competição e a geração de relatórios operacionais.
 
 <div align="center" 
      style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap;">
 
   <div>
-    <sub>Figura 20 - Registro manual de checkpoint</sub><br>
+    <sub>Figura 26 - Registro manual de checkpoint</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt="Tela de registro manual de checkpoints da competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 21 - Visualização consolidada dos dados da competição</sub><br>
+    <sub>Figura 27 - Visualização consolidada dos dados da competição</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt="Tabela consolidada com os dados operacionais da competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 22 - Relatório operacional da competição</sub><br>
+    <sub>Figura 28 - Relatório operacional da competição</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt="Tela de relatório operacional da competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
