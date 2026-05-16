@@ -996,28 +996,6 @@ As personas Marina Costa e Bruno Monteiro compartilham o mesmo fluxo principal d
 
 Por utilizarem o mesmo ambiente administrativo e acessarem funcionalidades complementares dentro da mesma arquitetura operacional, os wireframes apresentados nesta subseção foram organizados de forma conjunta. O fluxo contempla desde o acesso inicial ao painel administrativo até o gerenciamento operacional da competição, incluindo cadastro de equipes, geração de UUIDs, captura OCR, validação de checkpoints, visualização consolidada dos dados e geração de relatórios operacionais.
 
-<div align="center"> 
-  <sub>Quadro 23 - User Stories cobertas pelas Personas Administrativas</sub> 
-</div>
-
-| ID | User Story | Persona |
-|----|-------------|----------|
-| US01 | Acessar painel admin | Marina Costa |
-| US02 | Cadastrar nova competição | Marina Costa |
-| US03 | Cadastrar e editar equipes | Marina Costa |
-| US05 | Gerar URL UUID automaticamente | Marina Costa |
-| US06 | Acessar aba de equipes | Marina Costa |
-| US07 | Acessar painel operacional | Bruno Monteiro |
-| US08 | Selecionar atleta ativo | Bruno Monteiro |
-| US09 | Registrar checkpoint via OCR | Bruno Monteiro |
-| US10 | Registrar checkpoint manualmente | Bruno Monteiro |
-| US11 | Visualizar dados consolidados | Bruno Monteiro |
-| US12 | Gerar relatório operacional | Bruno Monteiro |
-
-<div align="center"> 
-  <sup>Fonte: Elaborado pelos autores (2026).</sup> 
-</div>
-
 #### Fluxo de Cenas — Operadores
 
 O fluxo abaixo representa a navegação realizada pelas personas administrativas durante a preparação e operação da competição, evidenciando o caminho percorrido desde o acesso inicial ao painel até a configuração das equipes participantes.
@@ -1045,7 +1023,7 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
  Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
 
  <div align="center">
-  <sub>Quadro 20 - User Stories cobertas: </sub>
+  <sub>Quadro 23 - User Stories cobertas: </sub>
 </div>
 
 
