@@ -1850,7 +1850,12 @@ A presente subseção apresenta um conjunto de consultas SQL utilizadas pela apl
 
 > **Escopo desta entrega:** esta subseção contempla as expressões SQL e suas descrições em palavras. As proposições lógicas, expressões em lógica proposicional e tabelas-verdade serão preenchidas em entrega subsequente pelo membro do grupo responsável pela componente matemática da disciplina.
 
+
 #### Q01 — `SELECT` com `AND` e `OR`
+
+<div align="center">
+  <sub>Quadro X - Consulta Q01</sub>
+</div>
 
 | Atributo | Conteúdo |
 |----------|----------|
@@ -1858,6 +1863,10 @@ A presente subseção apresenta um conjunto de consultas SQL utilizadas pela apl
 | **Operadores lógicos** | `AND`, `OR` |
 | **Operadores relacionais** | `=`, `>`, `<` |
 | **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 **Expressão SQL:**
 
@@ -1869,6 +1878,52 @@ WHERE competicao_id = 1
 ```
 
 **Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
+
+#### Proposições lógicas
+
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
+
+- **P:** o checkpoint pertence à competição de identificador 1.  
+  `competicao_id = 1`
+
+- **Q:** o checkpoint possui quilometragem maior que 10 km.  
+  `km > 10`
+
+- **R:** o checkpoint possui quilometragem menor que 2 km.  
+  `km < 2`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o checkpoint será selecionado se pertencer à competição 1 e possuir quilometragem maior que 10 km ou menor que 2 km.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras simultaneamente;
+- **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Seleciona |
+| V | V | F | V | V | Seleciona |
+| V | F | V | V | V | Seleciona |
+| V | F | F | F | F | Não seleciona |
+| F | V | V | V | F | Não seleciona |
+| F | V | F | V | F | Não seleciona |
+| F | F | V | V | F | Não seleciona |
+| F | F | F | F | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, simultaneamente, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
 
 **Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
 
