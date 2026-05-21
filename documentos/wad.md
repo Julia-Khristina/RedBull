@@ -1002,7 +1002,7 @@ O fluxo abaixo representa a navegação realizada pelas personas administrativas
 
 <div align="center">
   <sub>Figura 11 - Fluxo de Navegação das Personas Administrativas</sub><br>
-  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Fluxo de navegação do painel administrativo da competição Red Bull 24 Horas, incluindo dashboard, equipes, checkpoints, ranking e relatórios operacionais."".><br>
+  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Fluxo de navegação do painel administrativo da competição Red Bull 24 Horas, incluindo dashboard, equipes, checkpoints, ranking e relatórios operacionais."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
