@@ -1954,6 +1954,45 @@ WHERE nome LIKE 'A%'
 
 **Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
 
+#### Proposições lógicas
+
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
+
+- **P:** o nome do corredor inicia com a letra “A”.  
+  `nome LIKE 'A%'`
+
+- **Q:** o corredor está com status “Em descanso”.  
+  `status = 'Em descanso'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:  
+o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não seleciona |
+| V | F | V | V | Seleciona |
+| F | V | F | F | Não seleciona |
+| F | F | V | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, simultaneamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
+
 **Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
 
 **Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
