@@ -881,9 +881,17 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### 3.2.1. Arquitetura em Camadas
 
-*Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
+A arquitetura em camadas é um padrão de desenvolvimento que organiza o código de um software em blocos ou "camadas" horizontais, separando as responsabilidades do sistema.
+
+Em uma estrutura comum de três camadas, por exemplo, o fluxo funciona assim:
+
+1. Apresentação (Interface): O que o usuário vê e interage.
+2. Negócio (Lógica): Onde ficam as regras e o processamento dos dados.
+3. Dados (Banco de Dados): Onde as informações são armazenadas e buscadas.
+
+A grande vantagem é o isolamento: uma camada não precisa saber como a outra trabalha por dentro, apenas como se comunicar com ela. Isso torna o sistema muito mais organizado, fácil de manter e simples de atualizar ao longo do tempo.
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
