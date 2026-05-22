@@ -881,9 +881,286 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### 3.2.1 Arquitetura em Camadas
 
-*Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+```txt id="l5q0ib"
+CompeticaoController
+
+Atributos
+- competicaoService: CompeticaoService
+
+Métodos
++ listar(req, res) : : void
++ buscarPorId(req, res) : : void
++ criar(req, res) : : void
++ atualizar(req, res) : : void
++ excluir(req, res) : : void
+
+
+CompeticaoService
+
+Atributos
+- competicaoRepository: CompeticaoRepository
+
+Métodos
++ listar() : : Competicao[]
++ buscarPorId(id) : : Competicao
++ criar(dados) : : Competicao
++ atualizar(id, dados) : : Competicao
++ excluir(id) : : void
+
+
+CompeticaoRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : : Competicao[]
++ findById(id) : : Competicao
++ create(dados) : : Competicao
++ update(id, dados) : : Competicao
++ delete(id) : : void
+
+
+CompeticaoModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : : ValidationResult
+
+
+EquipeController
+
+Atributos
+- equipeService: EquipeService
+
+Métodos
++ listar(req, res) : : void
++ buscarPorId(req, res) : : void
++ criar(req, res) : : void
++ atualizar(req, res) : : void
++ excluir(req, res) : : void
+
+
+EquipeService
+
+Atributos
+- equipeRepository: EquipeRepository
+
+Métodos
++ listar() : : Equipe[]
++ buscarPorId(id) : : Equipe
++ criar(dados) : : Equipe
++ atualizar(id, dados) : : Equipe
++ excluir(id) : : void
+
+
+EquipeRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : : Equipe[]
++ findById(id) : : Equipe
++ create(dados) : : Equipe
++ update(id, dados) : : Equipe
++ delete(id) : : void
+
+
+EquipeModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : : ValidationResult
+
+
+CorredorController
+
+Atributos
+- corredorService: CorredorService
+
+Métodos
++ listar(req, res) : : void
++ buscarPorId(req, res) : : void
++ criar(req, res) : : void
++ atualizar(req, res) : : void
++ excluir(req, res) : : void
+
+
+CorredorService
+
+Atributos
+- corredorRepository: CorredorRepository
+
+Métodos
++ listar() : : Corredor[]
++ buscarPorId(id) : : Corredor
++ criar(dados) : : Corredor
++ atualizar(id, dados) : : Corredor
++ excluir(id) : : void
+
+
+CorredorRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : : Corredor[]
++ findById(id) : : Corredor
++ create(dados) : : Corredor
++ update(id, dados) : : Corredor
++ delete(id) : : void
+
+
+CorredorModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : : ValidationResult
+
+
+CheckpointController
+
+Atributos
+- checkpointService: CheckpointService
+
+Métodos
++ listar(req, res) : : void
++ buscarPorId(req, res) : : void
++ criar(req, res) : : void
++ atualizar(req, res) : : void
++ excluir(req, res) : : void
+
+
+CheckpointService
+
+Atributos
+- checkpointRepository: CheckpointRepository
+
+Métodos
++ listar() : : Checkpoint[]
++ buscarPorId(id) : : Checkpoint
++ criar(dados) : : Checkpoint
++ atualizar(id, dados) : : Checkpoint
++ excluir(id) : : void
+
+
+CheckpointRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : : Checkpoint[]
++ findById(id) : : Checkpoint
++ create(dados) : : Checkpoint
++ update(id, dados) : : Checkpoint
++ delete(id) : : void
+
+
+CheckpointModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : : ValidationResult
+
+
+AdministradorController
+
+Atributos
+- administradorService: AdministradorService
+
+Métodos
++ listar(req, res) : : void
++ buscarPorId(req, res) : : void
++ criar(req, res) : : void
++ atualizar(req, res) : : void
++ excluir(req, res) : : void
+
+
+AdministradorService
+
+Atributos
+- administradorRepository: AdministradorRepository
+
+Métodos
++ listar() : : Administrador[]
++ buscarPorId(id) : : Administrador
++ criar(dados) : : Administrador
++ atualizar(id, dados) : : Administrador
++ excluir(id) : : void
+
+
+AdministradorRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : : Administrador[]
++ findById(id) : : Administrador
++ create(dados) : : Administrador
++ update(id, dados) : : Administrador
++ delete(id) : : void
+
+
+AdministradorModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : : ValidationResult
+
+
+EsteiraController
+
+Atributos
+- esteiraService: EsteiraService
+
+Métodos
++ listar(req, res) : : void
++ buscarPorId(req, res) : : void
++ criar(req, res) : : void
++ atualizar(req, res) : : void
++ excluir(req, res) : : void
+
+
+EsteiraService
+
+Atributos
+- esteiraRepository: EsteiraRepository
+
+Métodos
++ listar() : : Esteira[]
++ buscarPorId(id) : : Esteira
++ criar(dados) : : Esteira
++ atualizar(id, dados) : : Esteira
++ excluir(id) : : void
+
+
+EsteiraRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : : Esteira[]
++ findById(id) : : Esteira
++ create(dados) : : Esteira
++ update(id, dados) : : Esteira
++ delete(id) : : void
+
+
+EsteiraModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : : ValidationResult
+```
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
