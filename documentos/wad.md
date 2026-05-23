@@ -2020,6 +2020,73 @@ WHERE equipe_id = 1
   AND status IN ('Em corrida', 'Próximo');
 ```
 
+#### Q03 — `UPDATE` com `AND` e `IN`
+
+| Atributo | Conteúdo |
+|----------|----------|
+| **Tipo de operação** | `UPDATE` |
+| **Operadores lógicos** | `AND`, `OR` |
+| **Operadores especiais** | `IN` |
+| **Operadores relacionais** | `=` |
+| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
+
+**Expressão SQL:**
+
+```sql
+UPDATE corredor
+SET status = 'Em descanso'
+WHERE equipe_id = 1
+  AND status IN ('Em corrida', 'Próximo');
+```
+
+**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
+
+#### Proposições lógicas
+
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
+
+- **P:** o corredor pertence à equipe de identificador 1.  
+  `equipe_id = 1`
+
+- **Q:** o corredor está com status “Em corrida”.  
+  `status = 'Em corrida'`
+
+- **R:** o corredor está com status “Próximo”.  
+  `status = 'Próximo'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
+- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Atualiza |
+| V | V | F | V | V | Atualiza |
+| V | F | V | V | V | Atualiza |
+| V | F | F | F | F | Não atualiza |
+| F | V | V | V | F | Não atualiza |
+| F | V | F | V | F | Não atualiza |
+| F | F | V | V | F | Não atualiza |
+| F | F | F | F | F | Não atualiza |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
+
 **Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores que pertencem à equipe de identificador `1` e que atualmente possuem status pertencente ao conjunto `{'Em corrida', 'Próximo'}`. A cláusula `WHERE` combina o operador `AND` com o operador `IN`, este último equivalente a uma disjunção entre comparações de igualdade — sintaxe mais concisa e legível para verificar pertinência em um conjunto de valores.
 
 **Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `IN` em uma disjunção de igualdades).*
