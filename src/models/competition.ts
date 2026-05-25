@@ -15,6 +15,17 @@ export interface CreateCompetitionInput {
   data: string;
 }
 
+export interface UpdateCompetitionInput {
+  nome: string;
+  endereco: string;
+  data: string;
+}
+
 export interface CompetitionRepository {
   create(input: CreateCompetitionInput): Promise<Competition>;
+  findAll(): Promise<Competition[]>;
+  findById(id: number): Promise<Competition | null>;
+  update(id: number, input: UpdateCompetitionInput): Promise<Competition | null>;
+  delete(id: number): Promise<boolean>;
+  close(id: number): Promise<Competition | null>;
 }

@@ -1,4 +1,4 @@
-import { CreateCompetitionInput } from "../models/competition";
+import { CreateCompetitionInput, UpdateCompetitionInput } from "../models/competition";
 import { ValidationError } from "../errors/AppError";
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -43,4 +43,20 @@ export function validateCreateCompetition(
     data,
     endereco,
   };
+}
+
+export function validateUpdateCompetition(
+  payload: unknown
+): UpdateCompetitionInput {
+  return validateCreateCompetition(payload);
+}
+
+export function validateCompetitionId(id: unknown): number {
+  const numericId = Number(id);
+
+  if (!Number.isInteger(numericId) || numericId <= 0 || numericId > 32767) {
+    throw new ValidationError("id da competição inválido");
+  }
+
+  return numericId;
 }
