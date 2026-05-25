@@ -1848,9 +1848,6 @@ Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `
 
 A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
 
-> **Escopo desta entrega:** esta subseção contempla as expressões SQL e suas descrições em palavras. As proposições lógicas, expressões em lógica proposicional e tabelas-verdade serão preenchidas em entrega subsequente pelo membro do grupo responsável pela componente matemática da disciplina.
-
-
 #### Q01 — `SELECT` com `AND` e `OR`
 
 <div align="center">
@@ -1883,7 +1880,7 @@ WHERE competicao_id = 1
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint pertence à competição de identificador 1.  
+- **P:** o checkpoint pertence à competição de ID 1.  
   `competicao_id = 1`
 
 - **Q:** o checkpoint possui quilometragem maior que 10 km.  
@@ -1905,7 +1902,7 @@ o checkpoint será selecionado se pertencer à competição 1 e possuir quilomet
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras simultaneamente;
+- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras em conjunto;
 - **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
 
 #### Tabela-verdade
@@ -1923,15 +1920,7 @@ o checkpoint será selecionado se pertencer à competição 1 e possuir quilomet
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, simultaneamente, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
-
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
-
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
-
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
-
----
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, ao mesmo tempo, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
 
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
@@ -1991,34 +1980,7 @@ o corredor será selecionado se o nome iniciar com a letra “A” e o corredor 
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, simultaneamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
-
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
-
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
-
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
-
----
-
-#### Q03 — `UPDATE` com `AND` e `IN`
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND` |
-| **Operadores especiais** | `IN` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
-
-**Expressão SQL:**
-
-```sql
-UPDATE corredor
-SET status = 'Em descanso'
-WHERE equipe_id = 1
-  AND status IN ('Em corrida', 'Próximo');
-```
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjutamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
 
 #### Q03 — `UPDATE` com `AND` e `IN`
 
@@ -2086,16 +2048,6 @@ o status do corredor será atualizado para “Em descanso” se ele pertencer à
 ### Interpretação da tabela-verdade
 
 A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
-
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores que pertencem à equipe de identificador `1` e que atualmente possuem status pertencente ao conjunto `{'Em corrida', 'Próximo'}`. A cláusula `WHERE` combina o operador `AND` com o operador `IN`, este último equivalente a uma disjunção entre comparações de igualdade — sintaxe mais concisa e legível para verificar pertinência em um conjunto de valores.
-
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `IN` em uma disjunção de igualdades).*
-
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
-
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
-
----
 
 #### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
