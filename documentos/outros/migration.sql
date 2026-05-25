@@ -4,11 +4,14 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 -- TABELA COMPETIÇÃO
 CREATE TABLE competicao (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
     endereco    VARCHAR(255)    NOT NULL,
     data        DATE            NOT NULL,
+    status      VARCHAR(30)     NOT NULL DEFAULT 'não iniciado',
     criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
 
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CHECK (status IN ('não iniciado', 'em andamento', 'encerrada'))
 );
 
 CREATE INDEX idx_competicao_data ON competicao (data);
