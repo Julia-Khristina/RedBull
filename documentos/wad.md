@@ -879,9 +879,371 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
+## 3.2. Arquitetura (sprints 1 a 5)
+
 ### 3.2.1 Arquitetura em Camadas
 
-*Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+```txt
+CompeticaoController
+
+Atributos
+- competicaoService: CompeticaoService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ iniciarCompeticao(req, res) : void
++ encerrarCompeticao(req, res) : void
+
+
+CompeticaoService
+
+Atributos
+- competicaoRepository: CompeticaoRepository
+
+Métodos
++ listar() : Competicao[]
++ buscarPorId(id) : Competicao
++ criar(dados) : Competicao
++ atualizar(id, dados) : Competicao
++ iniciar(id) : Competicao
++ encerrar(id) : Competicao
+
+
+CompeticaoRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Competicao[]
++ findById(id) : Competicao
++ create(dados) : Competicao
++ update(id, dados) : Competicao
+
+
+CompeticaoModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+EquipeController
+
+Atributos
+- equipeService: EquipeService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
++ buscarPorCompeticao(req, res) : void
+
+
+EquipeService
+
+Atributos
+- equipeRepository: EquipeRepository
+
+Métodos
++ listar() : Equipe[]
++ buscarPorId(id) : Equipe
++ buscarPorCompeticao(idCompeticao) : Equipe[]
++ criar(dados) : Equipe
++ atualizar(id, dados) : Equipe
++ excluir(id) : void
+
+
+EquipeRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Equipe[]
++ findById(id) : Equipe
++ findByCompeticao(idCompeticao) : Equipe[]
++ create(dados) : Equipe
++ update(id, dados) : Equipe
++ delete(id) : void
+
+
+EquipeModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+CorredorController
+
+Atributos
+- corredorService: CorredorService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
++ buscarPorEquipe(req,res): void
+
+
+CorredorService
+
+Atributos
+- corredorRepository: CorredorRepository
+
+Métodos
++ listar() : Corredor[]
++ buscarPorId(id) : Corredor
++ buscarPorEquipe(idEquipe) : Corredor[]
++ criar(dados) : Corredor
++ atualizar(id, dados) : Corredor
++ atualizarStatus(id,status): Corredor
++ excluir(id) : void
+
+
+CorredorRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Corredor[]
++ findById(id) : Corredor
++ findByEquipe(idEquipe) : Corredor[]
++ create(dados) : Corredor
++ update(id, dados) : Corredor
++ delete(id) : void
+
+
+CorredorModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+CheckpointController
+
+Atributos
+- checkpointService: CheckpointService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ registrarOCR(req,res): void
++ confirmarManual(req,res): void
+
+
+CheckpointService
+
+Atributos
+- checkpointRepository: CheckpointRepository
+- corredorService: CorredorService
+- esteiraService: EsteiraService
+- validacaoService: ValidacaoService
+
+Métodos
++ listar() : Checkpoint[]
++ buscarPorId(id) : Checkpoint
++ criar(dados) : Checkpoint
++ registrarViaOCR(dados): Checkpoint
++ confirmarManual(id): Checkpoint
++ atualizar(id, dados) : Checkpoint
+
+
+CheckpointRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Checkpoint[]
++ findById(id) : Checkpoint
++ findByCorredor(idCorredor): Checkpoint[]
++ create(dados) : Checkpoint
++ update(id, dados) : Checkpoint
+
+
+CheckpointModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+ValidacaoService
+
+Métodos
++ validar(dados): ValidationResult
++ validarEsteira(esteira): boolean
++ validarKm(km: number): boolean
++ validarTempo(tempoSegundos: number): boolean
++ validarPace(paceSegundos: number): boolean
+
+
+
+AdministradorController
+
+Atributos
+- administradorService: AdministradorService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
+
+
+AdministradorService
+
+Atributos
+- administradorRepository: AdministradorRepository
+
+Métodos
++ listar() : Administrador[]
++ buscarPorId(id) : Administrador
++ criar(dados) : Administrador
++ atualizar(id, dados) : Administrador
++ excluir(id) : void
+
+
+AdministradorRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Administrador[]
++ findById(id) : Administrador
++ create(dados) : Administrador
++ update(id, dados) : Administrador
++ delete(id) : void
+
+
+AdministradorModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+AuthController
+
+Atributos
+- authService: AuthService
+
+Métodos
++ login(req,res): void
++ logout(req,res): void
++ verificarToken(req,res): void
+
+
+AuthService
+
+Atributos
+- administradorService: AdministradorService
+
+Métodos
++ autenticar(email, senha): Token
++ gerarToken(usuario): string
++ validarToken(token): boolean
+
+
+
+EsteiraController
+
+Atributos
+- esteiraService: EsteiraService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
+
+
+EsteiraService
+
+Atributos
+- esteiraRepository: EsteiraRepository
+
+Métodos
++ listar() : Esteira[]
++ buscarPorId(id) : Esteira
++ criar(dados) : Esteira
++ atualizar(id, dados) : Esteira
++ atualizarStatus(id,status): Esteira
++ excluir(id) : void
+
+
+EsteiraRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Esteira[]
++ findById(id) : Esteira
++ create(dados) : Esteira
++ update(id, dados) : Esteira
++ delete(id) : void
+
+
+EsteiraModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+RankingController
+
+Atributos
+- rankingService: RankingService
+
+Métodos
++ rankingEquipes(req,res): void
++ rankingCorredores(req,res): void
+
+
+RankingService
+
+Atributos
+- checkpointService: CheckpointService
+- equipeService: EquipeService
+
+Métodos
++ gerarRankingEquipes() : : Ranking[]
++ calcularPosicoes() : : Ranking[]
++ calcularPaceMedio() : : number
+
+
+
+OCRService
+
+Métodos
++ processarImagem(imagem) : : OCRResult
++ extrairDados(texto) : : DadosOCR
+```
 
 #### 3.2.3.1 Diagrama de Classes Arquitetural
 
