@@ -941,7 +941,7 @@ O diagrama de classes de domínio é uma representação visual que modela todos
 
 <div align="center">
   <sub>Figura 15 - Diagrama de Classes de Domínio </sub><br>
-  <img src="../assets/diagrama_classedominios.drawio.svg" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
+  <img src="../assets/diagrama_classedominios.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
