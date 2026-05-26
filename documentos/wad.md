@@ -879,11 +879,17 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-## 3.2. Arquitetura (sprints 1 a 5)
-
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### 3.2.1 Arquitetura em Camadas
 
 *Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
+
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Classes Arquitetural</sub><br>
+  <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
