@@ -911,6 +911,26 @@ O processamento de imagens capturadas pelos funcionários da Red Bull 24h consti
 
 Esse desenho evita que a latência do motor OCR impacte a resposta percebida pelos operadores no iPad, mantendo a experiência administrativa fluida durante picos de carga gerados por múltiplos checkpoints simultâneos.
 
+<div align="center">
+  <sub>Quadro 23 - Responsabilidades das Camadas  </sub>
+</div>
+ 
+| Camada | Responsabilidade | O que não faz | Pasta do projeto |
+|---|---|---|---|
+| **Routes** | Define endpoints REST, associa verbos HTTP a controllers, executa middlewares de autenticação JWT e validação de esquema de entrada. | Não contém lógica de negócio; não acessa banco de dados; não formata respostas de domínio. | `src/routes/` |
+| **Controller** | Extrai parâmetros de `req` (body, params, query, headers), delega ao Service correspondente e retorna resposta HTTP com status code adequado. | Não implementa regras de negócio; não acessa banco de dados; não executa queries SQL. | `src/controllers/` |
+| **Service** | Implementa todas as regras de negócio do domínio da competição Red Bull 24h, orquestra chamadas a múltiplos repositórios, valida integridade de dados, gera registros de auditoria e encaminha processamento assíncrono de OCR. | Não conhece o protocolo HTTP; não executa queries SQL diretamente; não manipula `req` ou `res`. | `src/services/` |
+| **Repository** | Executa queries SQL parametrizadas contra o PostgreSQL, mapeia resultados de banco para instâncias de Model e persiste alterações de estado das entidades de domínio. | Não implementa regras de negócio; não conhece o protocolo HTTP; não é chamado diretamente pelo Controller. | `src/repositories/` |
+| **Model** | Define a estrutura de dados das entidades de domínio (`Competicao`, `Equipe`, `Corredor`, `Checkpoint`, `Esteira`, `Administrador`) como contratos de dados entre camadas. | Não contém lógica de persistência; não contém lógica de negócio; não realiza validações de entrada. | `src/models/` |
+| **PostgreSQL** | Armazena e recupera dados de forma persistente, garante integridade referencial por meio de constraints de chave estrangeira e executa transações ACID. | Não recebe conexões de nenhuma camada além do Repository; não aplica regras de negócio. | `database/` |
+ 
+---
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+
+
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
