@@ -1245,6 +1245,14 @@ Métodos
 + extrairDados(texto) : : DadosOCR
 ```
 
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Classes Arquitetural</sub><br>
+  <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
