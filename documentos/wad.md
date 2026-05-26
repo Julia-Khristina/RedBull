@@ -1687,7 +1687,7 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 <div align="center">
   <sub>Figura 7 - Paleta de cores</sub><br>
-    <img src="../assets/design/paleta de cores.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/design/paleta-de-cores.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
