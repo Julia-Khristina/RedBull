@@ -1349,6 +1349,17 @@ Através das telas prototipadas, é possível validar a arquitetura de navegaç�
 
 O protótipo também está servindo como referência para o desenvolvimento front-end e será utilizado durante as etapas de implementação, testes de usabilidade e iteração do produto.
 
+### Persona 1 - Marina Costa
+#### Dashboard Principal
+&nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao administrador e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
+
+
+<div align="center">
+  <sub>Figura 1 - Dashboard Principal</sub><br>
+    <img src="../assets/design/protótipo/(1).Dashboard-principal.png"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dash oard principal"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
