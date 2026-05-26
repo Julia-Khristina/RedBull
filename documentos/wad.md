@@ -883,15 +883,33 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ### 3.2.1. Arquitetura em Camadas
 
-A arquitetura em camadas é um padrão de desenvolvimento que organiza o código de um software em blocos ou "camadas" horizontais, separando as responsabilidades do sistema.
+O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Bass, Clements e Kazman (2012) descrevem esse padrão como uma das táticas arquiteturais mais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece completamente a implementação da camada inferior. Fowler (2002) formaliza essa separação no contexto de aplicações empresariais sob o princípio de separation of concerns, que determina que cada unidade de software deve ter uma única razão para mudar.
 
-Em uma estrutura comum de três camadas, por exemplo, o fluxo funciona assim:
+A nossa equipe optou por essa abordagem no sistema de gerenciamento da competição Red Bull 24 horas em decorrência de dois requisitos estruturais identificados durante a fase de análise: a necessidade de suportar fluxos de interação radicalmente distinta, um fluxo administrativo operado por juízes e supervisores via dispositivos iPad e um fluxo público acessado por corredores mediante URL personalizada com identificador UUID, e a presença de um processo assíncrono de reconhecimento óptico de caracteres (OCR) que não deveria bloquear o fluxo transacional principal. A Arquitetura em Camadas permitiu isolar esses contextos sem duplicar a lógica de domínio e sem criar dependências cruzadas entre os fluxos.
 
-1. Apresentação (Interface): O que o usuário vê e interage.
-2. Negócio (Lógica): Onde ficam as regras e o processamento dos dados.
-3. Dados (Banco de Dados): Onde as informações são armazenadas e buscadas.
+A pilha adotada segue o padrão **Routes → Controller → Service → Repository → Model → PostgreSQL**, detalhado a seguir.
 
-A grande vantagem é o isolamento: uma camada não precisa saber como a outra trabalha por dentro, apenas como se comunicar com ela. Isso torna o sistema muito mais organizado, fácil de manter e simples de atualizar ao longo do tempo.
+**Fluxo Principal de Dados**
+
+Toda requisição originada no cliente, seja proveniente do painel administrativo no iPad ou do portal público acessado pelo corredor via navegador, percorre as seguintes camadas em sequência:
+
+**Routes** é a camada de entrada do servidor Express. Define os endpoints da API REST, associa verbos HTTP (```GET, POST, PUT, DELETE```) aos controladores correspondentes e executa middlewares de autenticação JWT e validação de esquema de entrada antes de encaminhar a requisição ao Controller. Nenhuma lógica de domínio reside nessa camada.
+
+**Controller** recebe o objeto de requisição (```req```) e resposta (```res```) do framework Express, extrai os parâmetros necessários, corpo da requisição, parâmetros de rota, query strings e cabeçalhos, e delega ao método correspondente na camada de Service, retornando a resposta HTTP ao cliente com o código de status adequado. O Controller não toma decisões de negócio; sua responsabilidade se limita a orquestrar o ciclo de vida da requisição HTTP.
+
+**Service** concentra todas as regras de negócio da aplicação. É nessa camada que são realizadas validações de domínio, composições de dados provenientes de múltiplos repositórios, checkins, cálculos de ranking, verificações de regras temporais da competição e geração de registros de auditoria. O Service não conhece o protocolo HTTP e não executa queries SQL; toda persistência é delegada à camada de Repository.
+
+**Repository** abstrai o acesso ao banco de dados PostgreSQL por meio de queries SQL parametrizadas. Recebe e retorna instâncias de Model, isolando as camadas superiores de quaisquer detalhes de implementação do mecanismo de persistência. Essa abstração viabiliza a substituição do banco de dados ou a utilização de dublês de teste (mocks) sem alteração nas camadas de Service ou Controller.
+
+**Model** define a estrutura de dados das entidades de domínio da aplicação, Competicao, Equipe, Corredor, Checkpoint, Esteira e Administrador. Os Models não contêm lógica de persistência nem de negócio; representam o esquema de dados esperado e funcionam como contrato entre as camadas de Repository e Service.
+
+**PostgreSQL** é a camada de persistência definitiva. Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados (```migration.sql```), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
+
+**Fluxo OCR Assíncrono**
+
+O processamento de imagens capturadas pelos funcionários da Red Bull 24h constitui um fluxo assíncrono paralelo ao fluxo transacional principal. Ao receber uma imagem de esteira via requisição POST /ocr/extractions, o CheckpointController delega imediatamente ao OCRService a responsabilidade de enfileirar o processamento, retornando ao cliente uma resposta 202 Accepted com identificador de rastreamento. O OCRService encaminha a imagem ao motor de reconhecimento óptico de caracteres externo de forma não bloqueante. Após a extração dos dados, o OCRService valida o score de confiança conforme RN06, extrações com score abaixo de 85% são rejeitadas, e aciona o CheckpointService, que valida os dados extraídos segundo as demais regras de negócio vigentes (RN04, RN05, RN12) e persiste o resultado via CheckpointRepository. Registros de auditoria são gerados pelo AuditService ao longo de todo o fluxo, em conformidade com a RN05.
+
+Esse desenho evita que a latência do motor OCR impacte a resposta percebida pelos operadores no iPad, mantendo a experiência administrativa fluida durante picos de carga gerados por múltiplos checkpoints simultâneos.
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
