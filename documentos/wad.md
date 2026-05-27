@@ -1346,11 +1346,17 @@ Além disso, a definição de estruturas padronizadas para acesso a dados, valid
 
 A seguir, são apresentados os principais padrões identificados no sistema, bem como suas categorias, definições, os problemas que resolvem, justificativas de adoção e exemplos de aplicação no backend.
 
+---
 
 ### Repository Pattern
 
 #### Categoria
 Estrutural / Arquitetural
+
+#### Definição
+O Repository Pattern é um padrão responsável por centralizar e abstrair o acesso aos dados da aplicação em uma camada específica de repositório. Esse padrão atua como intermediário entre a aplicação e o banco de dados, encapsulando operações de persistência, como consultas, inserções, atualizações e remoções de registros.
+
+Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
 
 ---
 
@@ -1359,12 +1365,24 @@ Estrutural / Arquitetural
 #### Categoria
 Arquitetural
 
+#### Definição
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories.
+
+Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência.
+
+A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+
 ---
 
 ### Dependency Injection Pattern
 
 #### Categoria
 Criacional / Arquitetural
+
+#### Definição
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação.
+
+Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
 
 ---
 
@@ -1373,12 +1391,22 @@ Criacional / Arquitetural
 #### Categoria
 Comportamental / Arquitetural
 
+#### Definição
+O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP.
+
+Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros, autenticação e manipulação de requisições.
+
 ---
 
 ### Validation Layer Pattern
 
 #### Categoria
 Estrutural / Arquitetural
+
+#### Definição
+O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio.
+
+Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelas regras de negócio e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
 
 ## 3.3. Wireframes (sprint 2)
 
