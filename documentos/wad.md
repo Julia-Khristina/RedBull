@@ -1370,6 +1370,19 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+
+#### Dashboard pós-cadastro de Competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
+
+
+<div align="center">
+  <sub>Figura 2 - Cadastro de competição </sub><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
