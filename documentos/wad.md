@@ -1755,12 +1755,12 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 
 | Entidade | Papel no sistema | Relacionamentos |
 | --------- | ---------------- | --------------- |
-| Competição | Representa o evento Red Bull 24h | Possui N Equipes, Possui N Esteiras |
+| Competição | Representa o evento Red Bull 24h | Possui N Equipes, Possui N Checkpoints |
 | Equipe | Agrupa corredores sob um identificador único | Pertence a 1 Competição, Possui N Corredores |
 | Corredor | Atleta participante vinculado a uma equipe | Pertence a 1 Equipe, Possui N Checkpoints |
 | Checkpoint | Registro de performance do corredor na esteira | Pertence a 1 Corredor, Pertence a 1 Esteira, Possui N:1 Administrador | 
 | Administrador | Operador responsável por registrar checkpoints | Possui N Checkpoints |
-| Esteira | Equipamento onde a corrida é realizada | Pertence a N Competições, possui N Checkpoints |
+| Esteira | Equipamento onde a corrida é realizada | Usada em N Checkpoints |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
