@@ -1356,7 +1356,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 <div align="center">
   <sub>Figura 1 - Dashboard Principal</sub><br>
-    <img src="../assets/design/prototipo/(1).Dashboard-principal.png"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dash oard principal"><br>
+    <img src="../assets/design/protótipo/(1).Dashboard-principal.png"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dash oard principal"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1366,7 +1366,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 <div align="center">
   <sub>Figura 2 - Cadastro de competição </sub><br>
-    <img src="../assets/design/protótipo/(2).Dashboard-nova-competiçao.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1377,7 +1377,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 <div align="center">
   <sub>Figura 3 - Competição Cadastrada </sub><br>
-    <img src="../assets/design/protótipo/(3).Dashboard-competiçao-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1387,7 +1387,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 <div align="center">
   <sub>Figura 4 - Painel Equipes vazio</sub><br>
-    <img src="../assets/design/protótipo/(4).Paineladmin-sem-eqipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
