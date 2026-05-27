@@ -2216,9 +2216,11 @@ Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `
 
 A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
 
-> **Escopo desta entrega:** esta subseção contempla as expressões SQL e suas descrições em palavras. As proposições lógicas, expressões em lógica proposicional e tabelas-verdade serão preenchidas em entrega subsequente pelo membro do grupo responsável pela componente matemática da disciplina.
-
 #### Q01 — `SELECT` com `AND` e `OR`
+
+<div align="center">
+  <sub>Quadro X - Consulta Q01</sub>
+</div>
 
 | Atributo | Conteúdo |
 |----------|----------|
@@ -2226,6 +2228,10 @@ A presente subseção apresenta um conjunto de consultas SQL utilizadas pela apl
 | **Operadores lógicos** | `AND`, `OR` |
 | **Operadores relacionais** | `=`, `>`, `<` |
 | **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 **Expressão SQL:**
 
@@ -2238,13 +2244,51 @@ WHERE competicao_id = 1
 
 **Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint pertence à competição de ID 1.  
+  `competicao_id = 1`
 
----
+- **Q:** o checkpoint possui quilometragem maior que 10 km.  
+  `km > 10`
+
+- **R:** o checkpoint possui quilometragem menor que 2 km.  
+  `km < 2`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o checkpoint será selecionado se pertencer à competição 1 e possuir quilometragem maior que 10 km ou menor que 2 km.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras em conjunto;
+- **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Seleciona |
+| V | V | F | V | V | Seleciona |
+| V | F | V | V | V | Seleciona |
+| V | F | F | F | F | Não seleciona |
+| F | V | V | V | F | Não seleciona |
+| F | V | F | V | F | Não seleciona |
+| F | F | V | V | F | Não seleciona |
+| F | F | F | F | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, ao mesmo tempo, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
 
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
@@ -2267,20 +2311,51 @@ WHERE nome LIKE 'A%'
 
 **Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o nome do corredor inicia com a letra “A”.  
+  `nome LIKE 'A%'`
 
----
+- **Q:** o corredor está com status “Em descanso”.  
+  `status = 'Em descanso'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:  
+o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não seleciona |
+| V | F | V | V | Seleciona |
+| F | V | F | F | Não seleciona |
+| F | F | V | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjutamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
 
 #### Q03 — `UPDATE` com `AND` e `IN`
 
 | Atributo | Conteúdo |
 |----------|----------|
 | **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND` |
+| **Operadores lógicos** | `AND`, `OR` |
 | **Operadores especiais** | `IN` |
 | **Operadores relacionais** | `=` |
 | **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
@@ -2294,15 +2369,53 @@ WHERE equipe_id = 1
   AND status IN ('Em corrida', 'Próximo');
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores que pertencem à equipe de identificador `1` e que atualmente possuem status pertencente ao conjunto `{'Em corrida', 'Próximo'}`. A cláusula `WHERE` combina o operador `AND` com o operador `IN`, este último equivalente a uma disjunção entre comparações de igualdade — sintaxe mais concisa e legível para verificar pertinência em um conjunto de valores.
+**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `IN` em uma disjunção de igualdades).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o corredor pertence à equipe de identificador 1.  
+  `equipe_id = 1`
 
----
+- **Q:** o corredor está com status “Em corrida”.  
+  `status = 'Em corrida'`
+
+- **R:** o corredor está com status “Próximo”.  
+  `status = 'Próximo'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
+- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Atualiza |
+| V | V | F | V | V | Atualiza |
+| V | F | V | V | V | Atualiza |
+| V | F | F | F | F | Não atualiza |
+| F | V | V | V | F | Não atualiza |
+| F | V | F | V | F | Não atualiza |
+| F | F | V | V | F | Não atualiza |
+| F | F | F | F | F | Não atualiza |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
 
 #### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
