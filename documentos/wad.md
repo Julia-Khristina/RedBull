@@ -1340,7 +1340,12 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-*Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto.*
+Os padrões de projeto foram adotados no backend com o objetivo de promover separação de responsabilidades, organização estrutural, reutilização de código, testabilidade e facilidade de manutenção da aplicação.
+
+A utilização desses padrões contribui para uma arquitetura mais organizada, permitindo separar responsabilidades entre as camadas do sistema e reduzir acoplamento entre os componentes do backend.
+
+A seguir, são apresentados os principais padrões identificados durante o desenvolvimento do sistema, bem como suas aplicações no projeto.
+
 
 ## 3.3. Wireframes (sprint 2)
 
