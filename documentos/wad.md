@@ -1376,11 +1376,20 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 2 - Cadastro de competição </sub><br>
+  <sub>Figura 3 - Competição Cadastrada </sub><br>
     <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Painel de equipes (sem equipes cadastradas).
+&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
+
+
+<div align="center">
+  <sub>Figura 4 - Painel Equipes vazio</sub><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
