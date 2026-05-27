@@ -2160,7 +2160,7 @@ o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, incl
 #### Identificação dos conectivos lógicos
 
 - **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`.
+- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
 
 #### Tabela-verdade
 
@@ -2183,9 +2183,15 @@ o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, incl
 | F | F | F | V | V | F | F | Não seleciona |
 | F | F | F | F | V | V | F | Não seleciona |
 
+#### Observação sobre dependências semânticas
+
+A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+
+O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. Se a quilometragem estiver fora da faixa ou se o corredor for o de ID `1` ou `7`, o checkpoint não será selecionado.
+A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
