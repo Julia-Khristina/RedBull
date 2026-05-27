@@ -1346,12 +1346,39 @@ Além disso, a definição de estruturas padronizadas para acesso a dados, valid
 
 A seguir, são apresentados os principais padrões identificados no sistema, bem como suas categorias, definições, os problemas que resolvem, justificativas de adoção e exemplos de aplicação no backend.
 
-### Padrões identificados
-- Repository Pattern
-- Service Layer Pattern
-- Dependency Injection Pattern
-- Middleware Pattern
-- Validation Layer Pattern
+
+### Repository Pattern
+
+#### Categoria
+Estrutural / Arquitetural
+
+---
+
+### Service Layer Pattern
+
+#### Categoria
+Arquitetural
+
+---
+
+### Dependency Injection Pattern
+
+#### Categoria
+Criacional / Arquitetural
+
+---
+
+### Middleware Pattern
+
+#### Categoria
+Comportamental / Arquitetural
+
+---
+
+### Validation Layer Pattern
+
+#### Categoria
+Estrutural / Arquitetural
 
 ## 3.3. Wireframes (sprint 2)
 
