@@ -1340,12 +1340,18 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-Os padrões de projeto foram adotados no backend com o objetivo de promover separação de responsabilidades, organização estrutural, reutilização de código, testabilidade e facilidade de manutenção da aplicação.
+Os padrões de projeto foram adotados no backend com o objetivo de promover uma arquitetura mais organizada, modular e de fácil manutenção ao longo do desenvolvimento do sistema. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
 
-A utilização desses padrões contribui para uma arquitetura mais organizada, permitindo separar responsabilidades entre as camadas do sistema e reduzir acoplamento entre os componentes do backend.
+Além disso, a definição de estruturas padronizadas para acesso a dados, validações, regras de negócio e tratamento de requisições permite maior consistência no desenvolvimento do backend, tornando o código mais legível e simplificando futuras manutenções e evoluções da aplicação.
 
-A seguir, são apresentados os principais padrões identificados durante o desenvolvimento do sistema, bem como suas aplicações no projeto.
+A seguir, são apresentados os principais padrões identificados no sistema, bem como suas categorias, definições, os problemas que resolvem, justificativas de adoção e exemplos de aplicação no backend.
 
+### Padrões identificados
+- Repository Pattern
+- Service Layer Pattern
+- Dependency Injection Pattern
+- Middleware Pattern
+- Validation Layer Pattern
 
 ## 3.3. Wireframes (sprint 2)
 
