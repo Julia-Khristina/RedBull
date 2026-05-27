@@ -1798,8 +1798,10 @@ O Quadro 28 apresenta a entidade e os atributos de "Competição".
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
 | Competição | Código | Identificador | Identifica unicamente cada competição | 
+| Competição | Nome | Texto | Nome da competição |
 | Competição | Endereço | Texto | Local onde a competição ocorre | 
 | Competição | Data | Data | Data de realização da competição |
+| Competição | Status | Categórico | Estado atual da competição (não iniciado, em andamento, encerrada) |
 | Competição | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
@@ -2003,7 +2005,7 @@ Com base nos requisitos funcionais, nas regras de negócio e na modelagem concei
 ##### Descrição das entidades
 
 **Tabela `competicao`**  
-A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo `nome`, `endereco`, `data` de realização e `status` operacional do evento (`não iniciado`, `em andamento` ou `encerrada`). Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
 
 **Tabela `equipe`**  
 A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
@@ -2046,6 +2048,7 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | `equipe` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
 | `corredor` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
 | `checkpoint` | `UNIQUE` | `identificador` | Define que cada registro operacional possui um identificador próprio. |
+| `competicao` | `CHECK` | `status` | Limita o status da competição aos estados previstos (não iniciado, em andamento, encerrada). |
 | `corredor` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
 | `checkpoint` | `CHECK` | `km` | Impede valores incompatíveis com a regra de distância percorrida. |
 | Principais campos obrigatórios | `NOT NULL` | Campos de identificação, relacionamento e rastreabilidade | Define quais informações mínimas precisam existir para manter a consistência dos cadastros e registros operacionais. |
@@ -2066,17 +2069,20 @@ A implementação física do banco de dados foi elaborada com base na estrutura 
 ```sql
 CREATE TABLE competicao (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
+    nome        VARCHAR(100)    NOT NULL,
     endereco    VARCHAR(255)    NOT NULL,
     data        DATE            NOT NULL,
+    status      VARCHAR(30)     NOT NULL DEFAULT 'não iniciado',
     criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
  
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CHECK (status IN ('não iniciado', 'em andamento', 'encerrada'))
 );
  
 CREATE INDEX idx_competicao_data ON competicao (data);
 ```
 
-A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
+A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **nome** armazena o título do evento e é definido como `NOT NULL`. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O campo **status** registra o estado operacional do evento, com valor padrão `'não iniciado'` e restrição `CHECK` que limita os valores aceitos a `'não iniciado'`, `'em andamento'` e `'encerrada'`. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
 
 #### Tabela equipe
 ```sql
