@@ -34,6 +34,12 @@ export class UnprocessableError extends AppError {
   constructor(message: string) {
     super(message, 422);
     this.name = "UnprocessableError";
+  }
+}
 
+export class UnauthorizedError extends AppError {
+  constructor(message: string) {
+    super(message, 401);
+    this.name = "UnauthorizedError";
   }
 }
