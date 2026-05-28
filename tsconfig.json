@@ -5,8 +5,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "strict": true,
+    "rootDir": "src",
     "outDir": "dist",
     "types": ["node", "jest"]
   },
-  "include": ["src", "tests", "**/*.test.ts", "**/*.spec.ts"]
+  "include": ["src"]
 }
