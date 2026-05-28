@@ -1787,6 +1787,15 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Painel operacional das equipes com dropdown.
+&nbsp; &nbsp; &nbsp; &nbsp;  Encontra-se abaixo a funcionalidade de troca de atleta ativo, permitindo que o juiz selecione o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar, garantindo maior controle operacional e organização durante os revezamentos, e tudo é feito com a aba de dropdown. 
+
+<div align="center">
+  <sub>Figura 1 - Painel de operacional das equipes com dropdown</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
