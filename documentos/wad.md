@@ -929,7 +929,25 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
+<div align="center">
+  <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas  </sub>
+</div>
 
+| Camada | Classe | Responsabilidade no projeto | RFs / RNs |
+|---|---|---|---|
+| **Controller** | `CheckpointController` | Recebe `POST /checkpoints` e delega ao `CheckpointService` para registro manual de passagem; recebe `POST /ocr/extractions` e delega ao `OCRService` para enfileiramento assíncrono; recebe `GET /checkpoints/:equipe_id` e delega ao `CheckpointService` para histórico da equipe. | RF05, RF07, RF08, RF09 |
+| **Controller** | `EquipeController` | Recebe `POST /equipes` e delega ao `EquipeService` para criação com UUID de acesso público; recebe `PUT /equipes/:id/status` e delega ao `EquipeService`, que aplica validação de permissão (RN01). | RF03, RF01 + RN01 |
+| **Controller** | `CompetitionController` | Recebe `POST /competicoes` e delega ao `CompetitionService` para criação; recebe `PUT /competicoes/:id/encerrar` e delega ao `CompetitionService` para transição de estado para `encerrada`. | RF02, RF12 |
+| **Controller** | `AuthController` | Recebe `POST /auth/login` e delega ao `AuthService` para validação de credenciais e emissão de JWT; recebe `POST /auth/logout` e delega ao `AuthService` para invalidação de sessão (RN03). | RF04 + RN03 |
+| **Service** | `OCRService` | Enfileira imagem de esteira para o motor OCR externo de forma assíncrona; valida score de confiança mínimo de 85% (RN06); aciona `CheckpointService` para persistência e `AuditService` para log (RN05). | RF05, RF06, RF09 + RN05, RN06 |
+| **Service** | `CheckpointService` | Valida pertencimento do corredor à equipe (RN04) e intervalo temporal do checkpoint (RN12); persiste via `CheckpointRepository`; aciona `AuditService` para log de cada operação (RN05). | RF08 + RN04, RN05, RN12 |
+| **Service** | `RankingService` | Agrega distância acumulada por equipe via `CheckpointRepository`; aplica desempate por número de voltas (RN09) e tempo médio por volta (RN11); retorna classificação completa em tempo real. | RF10, RF15 + RN09, RN11 |
+| **Repository** | `CheckpointRepository` | Executa `INSERT INTO checkpoints` com dados validados pelo `CheckpointService`; executa `SELECT` agregado de distância acumulada por equipe para o `RankingService`. | RF05, RF08 |
+| **Repository** | `EquipeRepository` | Executa `INSERT INTO equipes` com UUID gerado pelo `EquipeService`; executa `SELECT` por `uuid_acesso_publico` para o fluxo público. | RF01, RF03 |
+| **Repository** | `AdminRepository` | Executa `SELECT` de administrador por `email` para validação de credenciais no `AuthService`. | RF04 |
+| **Model** | `Checkpoint` | Representa o registro de passagem com campos `id`, `corredor_id`, `equipe_id`, `esteira_id`, `timestamp`, `origem` (`manual`, `ocr`), `ocr_score`. | RF05, RF08 |
+| **Model** | `Equipe` | Representa a equipe com campos `id`, `nome`, `uuid_acesso_publico`, `competicao_id`, `status`. | RF01, RF03 |
+| **Model** | `Administrador` | Representa o administrador com campos `id`, `nome`, `email`, `senha_hash`, `perfil` (`operador`, `juiz`). | RF04 | 
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
