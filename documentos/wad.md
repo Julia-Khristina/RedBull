@@ -1769,6 +1769,14 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Painel de administração das Equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Segue o painel administrativo de equipes, que permite que o administrador possa visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes ou acessar diretamente o painel operacional de cada grupo. A tela também apresenta o status geral da competição em tempo real.
+
+<div align="center">
+  <sub>Figura 1 - Painel de admin das Equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
