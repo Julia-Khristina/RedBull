@@ -949,6 +949,10 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 | **Model** | `Equipe` | Representa a equipe com campos `id`, `nome`, `uuid_acesso_publico`, `competicao_id`, `status`. | RF01, RF03 |
 | **Model** | `Administrador` | Representa o administrador com campos `id`, `nome`, `email`, `senha_hash`, `perfil` (`operador`, `juiz`). | RF04 | 
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
