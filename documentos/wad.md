@@ -1383,6 +1383,25 @@ O padrão foi aplicado nos seguintes arquivos:
 
 Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
 
+#### Exemplo de código
+```typescript
+async findById(id: number): Promise<Competition | null> {
+  const supabase = getSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("competicao")
+    .select(competitionSelect)
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as Competition | null;
+}
+```
+No exemplo apresentado, o método findById encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
 
 ---
 
@@ -1419,6 +1438,21 @@ O padrão foi aplicado nos seguintes arquivos:
 
 Esses arquivos centralizam as regras de negócio relacionadas às entidades da aplicação antes da comunicação com os repositórios.
 
+#### Exemplo de código
+```typescript
+async findById(idParam: unknown): Promise<Competition> {
+  const id = validateCompetitionId(idParam);
+
+  const competition = await repository.findById(id);
+
+  if (!competition) {
+    throw new NotFoundError("Competição não encontrada");
+  }
+
+  return competition;
+}
+````
+Nesse exemplo, o Service realiza validação do identificador recebido, consulta o repositório e verifica se o registro existe antes de retornar a informação. Dessa forma, a lógica de negócio permanece isolada da camada responsável pelas requisições HTTP.
 
 ---
 
@@ -1447,6 +1481,28 @@ Além disso, esse padrão contribui para:
 #### Aplicação no projeto
 O padrão foi aplicado na criação dos Services, permitindo que os repositórios sejam recebidos como parâmetro durante sua inicialização. Dessa forma, durante a execução normal da aplicação utiliza-se o repositório real, enquanto nos testes podem ser utilizados mocks responsáveis por simular o comportamento esperado da camada de persistência.
 
+#### Exemplo de código
+```typescript
+export function createCompetitionService(
+  repository: CompetitionRepository = competitionRepository
+) {
+  return {
+    async create(payload: Partial<CreateCompetitionInput>) {
+      const input = validateCreateCompetition(payload);
+
+      return repository.create(input);
+    }
+  };
+}
+```
+
+#### Exemplo de aplicação nos testes
+```typescript
+const repository = createRepositoryMock();
+
+const competitionService = createCompetitionService(repository);
+```
+No exemplo apresentado, o Service recebe o repositório como dependência externa. Isso permite substituir facilmente a implementação real por um mock durante os testes automatizados.
 
 ---
 
@@ -1481,6 +1537,35 @@ O padrão foi aplicado nos seguintes arquivos:
 
 Esses arquivos são responsáveis por encapsular erros assíncronos e encaminhar exceções para o tratamento centralizado da aplicação.
 
+#### Exemplo de código
+```typescript
+export function asyncHandler(
+  handler: (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => Promise<void>
+) {
+  return (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void => {
+    Promise.resolve(handler(req, res, next))
+      .catch(next);
+  };
+}
+```
+
+#### Exemplo de uso
+```typescript
+router.post(
+  "/competitions",
+  asyncHandler(competitionController.create)
+);
+```
+Nesse exemplo, o middleware asyncHandler encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o middleware de tratamento de exceções.
+
 ---
 
 ### Validation Layer Pattern
@@ -1513,6 +1598,34 @@ Além disso, esse padrão contribui para manter os Services mais focados nas reg
 #### Aplicação no projeto
 O padrão foi aplicado nos arquivos responsáveis pela validação dos payloads utilizados nas operações de criação e atualização das entidades do sistema. Esses arquivos verificam obrigatoriedade de campos, tipos de dados e formatos esperados antes da continuidade do fluxo da aplicação.
 
+#### Exemplo de código
+```typescript
+export function validateCreateCompetition(
+  payload: unknown
+): CreateCompetitionInput {
+
+  if (!isObject(payload)) {
+    throw new ValidationError("Payload inválido");
+  }
+
+  const nome = readRequiredText(payload, "nome");
+  const data = readRequiredText(payload, "data");
+  const endereco = readRequiredText(payload, "endereco");
+
+  if (!isValidDate(data)) {
+    throw new ValidationError(
+      "data deve ser uma data válida"
+    );
+  }
+
+  return {
+    nome,
+    data,
+    endereco,
+  };
+}
+```
+Nesse exemplo, a função realiza validações relacionadas à estrutura e aos formatos esperados do payload antes que os dados sejam enviados para as regras de negócio da aplicação.
 
 
 ## 3.3. Wireframes (sprint 2)
