@@ -1363,6 +1363,18 @@ Sem a utilização desse padrão, operações relacionadas ao banco de dados fic
 
 Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura. Além disso, qualquer alteração relacionada às operações de persistência precisaria ser realizada em diferentes pontos da aplicação.
 
+#### Justificativa da adoção
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades de competição, equipes e atletas. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio da aplicação, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema.
+
+A centralização das operações de persistência em arquivos de repositório também contribui para:
+<ul>
+    <li>melhorar organização do backend;</li>
+    <li>reduzir repetição de consultas;</li>
+    <li>facilitar manutenção das operações de banco;</li>
+    <li>reutilizar métodos de acesso aos dados;</li>
+    <li>reduzir acoplamento entre as camadas da aplicação.
+</ul>
+
 
 ---
 
@@ -1372,15 +1384,24 @@ Esse cenário aumentaria significativamente o acoplamento entre os componentes d
 Arquitetural
 
 #### Definição
-O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories.
-
-Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência.
-
-A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
 
 #### Problema resolvido
-Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários.
-Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
+Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários. Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend.
+
+No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo:
+<ul>
+    <li>validação de parâmetros;</li>
+    <li>verificação de existência de registros;</li>
+    <li>coordenação de operações;</li>
+    <li>lançamento de exceções;</li>
+    <li>controle de fluxos de execução.
+</ul>
+
+Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados. A utilização da camada de Service também contribui para maior organização do backend e reutilização das regras de negócio entre diferentes partes da aplicação.
 
 
 ---
@@ -1391,12 +1412,21 @@ Além disso, diferentes regras de negócio poderiam acabar repetidas em múltipl
 Criacional / Arquitetural
 
 #### Definição
-A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação.
-
-Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
 
 #### Problema resolvido
 Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes, possibilitando validar apenas o comportamento das regras de negócio implementadas nos Services.
+
+Além disso, esse padrão contribui para:
+<ul>
+    <li>reduzir acoplamento entre camadas;</li>
+    <li>facilitar manutenção;</li>
+    <li>melhorar testabilidade;</li>
+    <li>permitir maior flexibilidade na criação dos Services.
+</ul>
 
 
 ---
@@ -1414,10 +1444,35 @@ Essas funções atuam entre o recebimento da requisição e a execução final d
 #### Problema resolvido
 Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
 
+#### Justificativa da adoção
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis.
+
+Além disso, o padrão contribui para:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>melhorar organização estrutural;</li>
+    <li>centralizar tratamento de exceções;</li>
+    <li>simplificar implementação das rotas.
+</ul>
+
+
 
 ---
 
 ### Validation Layer Pattern
+Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação.
+
+
+A centralização das validações em arquivos específicos permite:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>organizar validações da aplicação;</li>
+    <li>padronizar verificações realizadas;</li>
+    <li>impedir envio de dados inválidos para os Services.
+</ul>
+
+Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
+
 
 #### Categoria
 Estrutural / Arquitetural
@@ -1429,6 +1484,8 @@ Essa camada garante que os dados recebidos pelos endpoints estejam estruturados 
 
 #### Problema resolvido
 Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
+
+#### Justificativa da adoção
 
 
 ## 3.3. Wireframes (sprint 2)
