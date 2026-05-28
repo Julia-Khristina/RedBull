@@ -96,4 +96,3 @@ import {
                                                                                                                                                                                                                                                                                                                                                                                                 }
 
                                                                                                                                                                                                                                                                                                                                                                                                 export const checkpointService = createCheckpointService();
-}
