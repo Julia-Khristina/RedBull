@@ -1759,21 +1759,30 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Cadastro de Equipes.
+#### Cadastro de equipes.
 &nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipe que permite o administrador a inserir o nome da equipe, definir o capitão e registrar os atletas participantes daquela equipe. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar nova Competição” ou cancelar a ação e retornar à tela anterior.
 
 
 <div align="center">
-  <sub>Figura 1 - Tela de Cadastro das Equipes</sub><br>
+  <sub>Figura 1 - Tela de Cadastro das equipes</sub><br>
     <img src="../assets/design/protótipo/cadastro-das-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Painel de administração das Equipes.
+#### Painel de administração das equipes.
 &nbsp; &nbsp; &nbsp; &nbsp; Segue o painel administrativo de equipes, que permite que o administrador possa visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes ou acessar diretamente o painel operacional de cada grupo. A tela também apresenta o status geral da competição em tempo real.
 
 <div align="center">
-  <sub>Figura 1 - Painel de admin das Equipes</sub><br>
+  <sub>Figura 1 - Painel de admin das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Painel operacional das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Em seguida o painel operacional da equipe é utilizada pelo juiz para acompanhar o atleta em tempo real durante corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também apresenta métricas como distância percorrida, pace médio, tempo ativo e histórico dos últimos checkpoints registrados.
+
+<div align="center">
+  <sub>Figura 1 - Painel de operacional das equipes</sub><br>
     <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
