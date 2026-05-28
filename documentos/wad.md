@@ -2218,6 +2218,24 @@ A implementação física adota o padrão de separar a definição das colunas e
  
 Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
 
+##### Índices criados
+
+Para otimizar as consultas mais frequentes durante o evento, foram criados índices sobre colunas utilizadas como filtro ou em operações de junção. O quadro a seguir apresenta a lista completa.
+
+| Índice | Tabela | Coluna(s) | Propósito |
+| ------ | ------ | --------- | --------- |
+| `idx_competicao_data` | `competicao` | `data` | Otimiza consultas filtrando competições por data de realização. |
+| `idx_equipe_competicao_id` | `equipe` | `competicao_id` | Otimiza a listagem das equipes de uma competição. |
+| `idx_corredor_equipe_id` | `corredor` | `equipe_id` | Otimiza a listagem dos atletas de uma equipe. |
+| `idx_corredor_cpf` | `corredor` | `cpf` | Acelera buscas por CPF, usadas em fluxos de identificação e validação de duplicidade. |
+| `idx_checkpoint_corredor_id` | `checkpoint` | `corredor_id` | Otimiza a recuperação do histórico de checkpoints de um atleta. |
+| `idx_checkpoint_competicao_id` | `checkpoint` | `competicao_id` | Otimiza relatórios e o cálculo de ranking de uma competição. |
+| `idx_checkpoint_esteira_id` | `checkpoint` | `esteira_id` | Otimiza estatísticas de uso por equipamento. |
+| `idx_checkpoint_administrador_id` | `checkpoint` | `administrador_id` | Otimiza consultas de auditoria por usuário responsável. |
+| `idx_checkpoint_criado_em` | `checkpoint` | `criado_em` | Otimiza relatórios cronológicos e a visualização do progresso da competição. |
+
+A criação destes índices acompanha as principais consultas previstas pela aplicação, evitando *full table scans* em operações frequentes durante o evento e mantendo o desempenho adequado mesmo com o volume crescente de checkpoints ao longo das 24 horas de competição.
+
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
 A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
