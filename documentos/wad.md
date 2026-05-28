@@ -2606,6 +2606,25 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 **- Ambiente de testes E2E com banco real evitando colisão de dados únicos entre execuções** — mitigado parcialmente com geração de dados aleatórios por run; solução definitiva (uso de prefixos ou IDs descartáveis padronizados) prevista para a sprint 4.
 
+### (d) Próximos passos
+
+Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o frontend ao backend já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
+
+**1. Frontend funcional integrado ao backend**
+Migração do protótipo de alta fidelidade para uma aplicação funcional consumindo a API já implementada, com foco nas telas críticas para a operação do evento: painel operacional administrativo, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe com auto-refresh, relatórios e painel público acessado via UUID sem autenticação (US12). A UX deve seguir os wireframes já validados na sprint 2, priorizando uso em iPad conforme escopo do TAP.
+
+**2. Refinamento do módulo de OCR**
+Aprimoramento da precisão de extração dos dados da imagem, tratamento de variações de iluminação e posicionamento do display da esteira, ajuste do limiar de discrepância para acionamento dos alertas visuais (RN06) e validação prática com imagens reais do ambiente operacional. O objetivo é elevar o OCR ao nível de MVP funcional, aderente aos critérios de aceite da US09.
+
+**3. Registro das rotas do módulo de Usuários**
+Conclusão do módulo já iniciado na sprint 3 (model, repository e service), registrando as rotas no Express e completando a cadeia da arquitetura em camadas.
+
+**4. Testes automatizados e Matriz de Rastreabilidade**
+Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o frontend conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
+
+**5. Dívida técnica identificada na sprint 3**
+Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
+
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
 *Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
