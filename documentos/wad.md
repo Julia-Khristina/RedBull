@@ -2484,11 +2484,44 @@ WHERE competicao_id = 1
 
 **Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint pertence à competição de identificador 1.
+  `competicao_id = 1`
+
+- **Q:** o identificador do checkpoint segue o padrão esperado iniciado por `CP-`.
+  `identificador LIKE 'CP-%'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:
+o checkpoint será removido se pertencer à competição 1 e seu identificador não seguir o padrão esperado iniciado por `CP-`.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o checkpoint pertença à competição especificada e, ao mesmo tempo, não siga o padrão de identificador esperado;
+- **¬ (NOT):** representa a negação do padrão textual `LIKE 'CP-%'`, expressa na consulta pelo operador `NOT LIKE`.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não remove |
+| V | F | V | V | Remove |
+| F | V | F | F | Não remove |
+| F | F | V | F | Não remove |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à competição de identificador `1` e, simultaneamente, seu identificador não segue o padrão `CP-`. Caso o checkpoint pertença a outra competição ou possua identificador válido, o registro não será removido.
 
 ---
 
@@ -2512,11 +2545,68 @@ WHERE km BETWEEN 4 AND 6
 
 **Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `BETWEEN` em uma conjunção de comparações e do `NOT IN` em uma conjunção de desigualdades).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint possui quilometragem maior ou igual a 4 km.
+  `km >= 4`
+
+- **Q:** o checkpoint possui quilometragem menor ou igual a 6 km.
+  `km <= 6`
+
+- **R:** o checkpoint pertence ao corredor de identificador 1.
+  `corredor_id = 1`
+
+- **S:** o checkpoint pertence ao corredor de identificador 7.
+  `corredor_id = 7`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ Q ∧ ¬R ∧ ¬S
+```
+
+Em palavras:
+o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, inclusive, e se o corredor associado não for o de identificador 1 nem o de identificador 7.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
+
+#### Tabela-verdade
+
+| P | Q | R | S | ¬R | ¬S | P ∧ Q ∧ ¬R ∧ ¬S | Resultado |
+|---|---|---|---|---|---|---|---|
+| V | V | V | V | F | F | F | Não seleciona |
+| V | V | V | F | F | V | F | Não seleciona |
+| V | V | F | V | V | F | F | Não seleciona |
+| V | V | F | F | V | V | V | Seleciona |
+| V | F | V | V | F | F | F | Não seleciona |
+| V | F | V | F | F | V | F | Não seleciona |
+| V | F | F | V | V | F | F | Não seleciona |
+| V | F | F | F | V | V | F | Não seleciona |
+| F | V | V | V | F | F | F | Não seleciona |
+| F | V | V | F | F | V | F | Não seleciona |
+| F | V | F | V | V | F | F | Não seleciona |
+| F | V | F | F | V | V | F | Não seleciona |
+| F | F | V | V | F | F | F | Não seleciona |
+| F | F | V | F | F | V | F | Não seleciona |
+| F | F | F | V | V | F | F | Não seleciona |
+| F | F | F | F | V | V | F | Não seleciona |
+
+#### Observação sobre dependências semânticas
+
+A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+
+O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
