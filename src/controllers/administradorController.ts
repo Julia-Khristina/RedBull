@@ -20,7 +20,7 @@ export const administradorController = {
 
   buscarPorId: asyncHandler(async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    const administrador = await administradorService.buscarPorId(id);
+    const administrador = await administradorService.buscarPorId(String(id));
     res.status(200).json(omitirSenha(administrador));
   }),
 
@@ -38,7 +38,7 @@ export const administradorController = {
   atualizar: asyncHandler(async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
     const { nome, email, area, senha } = req.body;
-    const administrador = await administradorService.atualizar(id, {
+    const administrador = await administradorService.atualizar(String(id), {
       nome,
       email,
       area,
@@ -49,7 +49,7 @@ export const administradorController = {
 
   excluir: asyncHandler(async (req: Request, res: Response): Promise<void> => {
     const { id } = req.params;
-    await administradorService.excluir(id);
+    await administradorService.excluir(String(id));
     res.status(204).send();
   }),
 };
