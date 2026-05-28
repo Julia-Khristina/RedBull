@@ -1375,6 +1375,14 @@ A centralização das operações de persistência em arquivos de repositório t
     <li>reduzir acoplamento entre as camadas da aplicação.
 </ul>
 
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+-  `competitionRepository.ts`
+-  `teamRepository.ts`
+-  `athleteRepository.ts`
+
+Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
+
 
 ---
 
@@ -1403,6 +1411,14 @@ No projeto, a camada de Service concentra regras relacionadas às entidades do s
 
 Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados. A utilização da camada de Service também contribui para maior organização do backend e reutilização das regras de negócio entre diferentes partes da aplicação.
 
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+- `competitionService.ts`
+-  `teamService.ts`
+-  `athleteService.ts`
+
+Esses arquivos centralizam as regras de negócio relacionadas às entidades da aplicação antes da comunicação com os repositórios.
+
 
 ---
 
@@ -1427,6 +1443,9 @@ Além disso, esse padrão contribui para:
     <li>melhorar testabilidade;</li>
     <li>permitir maior flexibilidade na criação dos Services.
 </ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado na criação dos Services, permitindo que os repositórios sejam recebidos como parâmetro durante sua inicialização. Dessa forma, durante a execução normal da aplicação utiliza-se o repositório real, enquanto nos testes podem ser utilizados mocks responsáveis por simular o comportamento esperado da camada de persistência.
 
 
 ---
@@ -1455,24 +1474,16 @@ Além disso, o padrão contribui para:
     <li>simplificar implementação das rotas.
 </ul>
 
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+-  `asyncHandler.ts`
+-  `errorHandler.ts`
 
+Esses arquivos são responsáveis por encapsular erros assíncronos e encaminhar exceções para o tratamento centralizado da aplicação.
 
 ---
 
 ### Validation Layer Pattern
-Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação.
-
-
-A centralização das validações em arquivos específicos permite:
-<ul>
-    <li>reduzir repetição de código;</li>
-    <li>organizar validações da aplicação;</li>
-    <li>padronizar verificações realizadas;</li>
-    <li>impedir envio de dados inválidos para os Services.
-</ul>
-
-Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
-
 
 #### Categoria
 Estrutural / Arquitetural
@@ -1486,6 +1497,22 @@ Essa camada garante que os dados recebidos pelos endpoints estejam estruturados 
 Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
 
 #### Justificativa da adoção
+Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação.
+
+
+A centralização das validações em arquivos específicos permite:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>organizar validações da aplicação;</li>
+    <li>padronizar verificações realizadas;</li>
+    <li>impedir envio de dados inválidos para os Services.
+</ul>
+
+Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
+
+#### Aplicação no projeto
+O padrão foi aplicado nos arquivos responsáveis pela validação dos payloads utilizados nas operações de criação e atualização das entidades do sistema. Esses arquivos verificam obrigatoriedade de campos, tipos de dados e formatos esperados antes da continuidade do fluxo da aplicação.
+
 
 
 ## 3.3. Wireframes (sprint 2)
