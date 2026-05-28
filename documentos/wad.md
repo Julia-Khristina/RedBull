@@ -2507,7 +2507,10 @@ WHERE km BETWEEN 4 AND 6
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-*Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
+### (a) O que foi implementado
+
+Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002)
+
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
@@ -2606,6 +2609,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
+
+MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
 
 PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. PM3, [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/?utm_source=chatgpt.com. Acesso em: 13 maio 2026.
 
