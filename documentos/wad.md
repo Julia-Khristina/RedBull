@@ -1358,6 +1358,12 @@ O Repository Pattern é um padrão responsável por centralizar e abstrair o ace
 
 Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
 
+#### Problema resolvido
+Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados.
+
+Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura. Além disso, qualquer alteração relacionada às operações de persistência precisaria ser realizada em diferentes pontos da aplicação.
+
+
 ---
 
 ### Service Layer Pattern
@@ -1372,6 +1378,11 @@ Essa camada é responsável por coordenar operações da aplicação, validar fl
 
 A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
 
+#### Problema resolvido
+Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários.
+Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
+
+
 ---
 
 ### Dependency Injection Pattern
@@ -1383,6 +1394,10 @@ Criacional / Arquitetural
 A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação.
 
 Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
+
+#### Problema resolvido
+Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
+
 
 ---
 
@@ -1396,6 +1411,10 @@ O Middleware Pattern consiste na utilização de funções intermediárias execu
 
 Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros, autenticação e manipulação de requisições.
 
+#### Problema resolvido
+Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
+
+
 ---
 
 ### Validation Layer Pattern
@@ -1407,6 +1426,10 @@ Estrutural / Arquitetural
 O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio.
 
 Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelas regras de negócio e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
+
+#### Problema resolvido
+Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
+
 
 ## 3.3. Wireframes (sprint 2)
 
