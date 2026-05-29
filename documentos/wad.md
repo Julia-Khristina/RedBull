@@ -1750,7 +1750,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 #### Dados extraídos via OCR.
-&nbsp; &nbsp; &nbsp; &nbsp; Altere
+&nbsp; &nbsp; &nbsp; &nbsp; A figura abaixo apresenta a tela de validação dos dados extraídos automaticamente via OCR a partir da foto capturada da esteira. Nela, o operador pode visualizar a imagem utilizada no processamento, conferir as informações identificadas pelo sistema, como distância, pace e tempo, além de receber alertas em casos de discrepâncias nos dados. A interface também permite corrigir manualmente as informações antes da confirmação e salvamento do checkpoint.
 
 
 <div align="center">
