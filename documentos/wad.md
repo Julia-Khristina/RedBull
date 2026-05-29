@@ -2010,6 +2010,7 @@ Através das telas prototipadas, é possível validar a arquitetura de navegaç�
 O protótipo também está servindo como referência para o desenvolvimento front-end e será utilizado durante as etapas de implementação, testes de usabilidade e iteração do produto.
 
 ### Persona 1 - Marina Costa
+
 #### Dashboard Principal
 &nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao administrador e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
 
@@ -2068,6 +2069,19 @@ Tela de relatório final da competição, apresentando um resumo geral com total
 <div align="center">
   <sub>Figura 6 - Relatório da competição</sub><br>
     <img src="../assets/design/protótipo/Relatórios.png"  width="100%" alt="Representação da tela de relatório da competição com gráfico e tabela de inconsistências"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Persona 3 - Amanda Azevedo
+
+#### Painel operacional da equipe.
+Painel operacional da Equipe, acessado apenas pelos integrantes da mesma, exibindo métricas em tempo real como tempo de competição, distância para o líder e pace médio da equipe. A seção "Status por atleta da equipe" apresenta uma tabela com dados individuais de cada atleta, incluindo pace médio geral, velocidade máxima, distância percorrida e último checkpoint registrado. Na parte inferior, a "Calculadora de descanso" indica que o atleta atual atingiu 100% do tempo de descanso recomendado (50 min) e está pronto para voltar, apontando o próximo atleta como Rafael Lima. Um gráfico de posição ao longo do tempo complementa o painel, permitindo ao capitão acompanhar a evolução da equipe na disputa.
+
+Durante o processo de validação com o parceiro de projeto, foi identificado que as competições Red Bull 24h não ocorrem simultaneamente em diferentes localidades do Brasil, o que inviabilizou a existência de um ranking global entre eventos distintos. Essa informação levou à reestruturação da tela de equipe, com a remoção do componente de "Ranking global" e a adição de modais quantitativos exibindo o tempo total de competição e o pace médio da equipe, além de um gráfico de evolução da posição da equipe ao longo do evento em função do tempo, tornando o painel mais aderente à realidade operacional da competição.
+
+<div align="center">
+  <sub>Figura 7 - Painel operacional da equipe</sub><br>
+    <img src="../assets/design/protótipo/Equipes.png"  width="100%" alt="Representação do painel da equipe acessada vis UUID"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
