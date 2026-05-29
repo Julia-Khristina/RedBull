@@ -2049,17 +2049,23 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | `corredor` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
 | `checkpoint` | `UNIQUE` | `identificador` | Define que cada registro operacional possui um identificador próprio. |
 | `competicao` | `CHECK` | `status` | Limita o status da competição aos estados previstos (não iniciado, em andamento, encerrada). |
+| `competicao` | `CHECK` | `data` | Garante que a data da competição esteja dentro de um intervalo histórico plausível. |
+| `competicao`, `equipe`, `corredor`, `esteira`, `administrador` | `CHECK` | `nome` | Garante que o nome não seja preenchido apenas com espaços em branco. |
 | `corredor` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
-| `checkpoint` | `CHECK` | `km` | Impede valores incompatíveis com a regra de distância percorrida. |
+| `corredor` | `CHECK` | `cpf` | Garante o formato `000.000.000-00` para o CPF. |
+| `corredor` | `CHECK` | `email` | Garante que o e-mail siga um formato válido (`usuario@dominio.tld`). |
+| `checkpoint` | `CHECK` | `km` | Limita a distância registrada a um intervalo plausível (0 a 1000 km). |
+| `checkpoint` | `CHECK` | `pace` | Garante o formato `M:SS/km` ou `MM:SS/km` quando o pace é registrado. |
+| `checkpoint` | `CHECK` | `tempo` | Garante o formato `HH:MM:SS` quando o tempo total é registrado. |
 | Principais campos obrigatórios | `NOT NULL` | Campos de identificação, relacionamento e rastreabilidade | Define quais informações mínimas precisam existir para manter a consistência dos cadastros e registros operacionais. |
 
 
 #### 3.6.3.2 Modelo Físico
 Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
-O arquivo pode ser visto aqui: [Modelo Físico](outros/migration.sql).
+O arquivo pode ser visto aqui: [Modelo Físico](outros/migrations/).
 
-A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. O arquivo migration.sql reúne todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
+A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. Os arquivos numerados na pasta `migrations/` reúnem todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional. A numeração (`0000_`, `0001_`, `0002_`, ...) explicita a ordem de aplicação e facilita a evolução incremental do esquema.
 
 #### Tabela Competição
 
@@ -2076,13 +2082,15 @@ CREATE TABLE competicao (
     criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
  
     PRIMARY KEY (id),
-    CHECK (status IN ('não iniciado', 'em andamento', 'encerrada'))
+    CHECK (status IN ('não iniciado', 'em andamento', 'encerrada')),
+    CHECK (length(trim(nome)) > 0),
+    CHECK (data >= DATE '2020-01-01')
 );
  
 CREATE INDEX idx_competicao_data ON competicao (data);
 ```
 
-A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **nome** armazena o título do evento e é definido como `NOT NULL`. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O campo **status** registra o estado operacional do evento, com valor padrão `'não iniciado'` e restrição `CHECK` que limita os valores aceitos a `'não iniciado'`, `'em andamento'` e `'encerrada'`. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
+A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **nome** armazena o título do evento e é definido como `NOT NULL`. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O campo **status** registra o estado operacional do evento, com valor padrão `'não iniciado'` e restrição `CHECK` que limita os valores aceitos a `'não iniciado'`, `'em andamento'` e `'encerrada'`. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização. Restrições `CHECK` complementares garantem que `nome` não seja preenchido apenas com espaços em branco e que `data` esteja dentro de um intervalo histórico plausível, evitando registros corrompidos por erro de digitação.
 
 #### Tabela equipe
 ```sql
@@ -2095,7 +2103,8 @@ CREATE TABLE equipe (
     criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
  
     PRIMARY KEY (id),
-    UNIQUE (uuid)
+    UNIQUE (uuid),
+    CHECK (length(trim(nome)) > 0)
 );
  
 ALTER TABLE equipe
@@ -2104,7 +2113,7 @@ ALTER TABLE equipe
  
 CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
 ```
-A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo **uuid** utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **qr_code** é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
+A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo **uuid** utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **qr_code** é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas. Uma restrição `CHECK` sobre `nome` impede o cadastro de equipes com nome composto apenas por espaços em branco.
 
 #### Tabela corredor
  
@@ -2122,7 +2131,10 @@ CREATE TABLE corredor (
     PRIMARY KEY (id),
     UNIQUE (cpf),
     UNIQUE (email),
-    CHECK (status IN ('corredor', 'capitao'))
+    CHECK (status IN ('corredor', 'capitao')),
+    CHECK (length(trim(nome)) > 0),
+    CHECK (cpf ~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$'),
+    CHECK (email ~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$')
 );
  
 ALTER TABLE corredor
@@ -2133,7 +2145,7 @@ CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
 CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
 ```
  
-A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação.
+A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação. Restrições `CHECK` adicionais garantem o formato esperado de `cpf` (`000.000.000-00`) e de `email`, além de impedir nomes compostos apenas por espaços em branco — bloqueando registros malformados antes mesmo de chegarem à camada de aplicação.
  
 
 #### Tabela esteira
@@ -2145,11 +2157,12 @@ CREATE TABLE esteira (
     especificacao   TEXT        NULL,
     criado_em       TIMESTAMP   NOT NULL DEFAULT NOW(),
  
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CHECK (length(trim(nome)) > 0)
 );
 ```
  
-A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **nome** e **especificacao** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo **especificacao** é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **nome** e **especificacao** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo **especificacao** é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro. Uma restrição `CHECK` sobre `nome` impede cadastros com nome composto apenas por espaços em branco.
 
 #### Tabela administrador
  
@@ -2161,10 +2174,11 @@ CREATE TABLE administrador (
     senha       VARCHAR(255)    NOT NULL,
     criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
  
-    PRIMARY KEY (id)
+    PRIMARY KEY (id),
+    CHECK (length(trim(nome)) > 0)
 );
 ```
-A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
+A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro. Uma restrição `CHECK` sobre `nome` impede cadastros com nome composto apenas por espaços em branco.
  
  #### Tabela checkpoint
  
@@ -2184,7 +2198,9 @@ CREATE TABLE checkpoint (
  
     PRIMARY KEY (id),
     UNIQUE (identificador),
-    CHECK (km >= 0)
+    CHECK (km >= 0 AND km <= 1000),
+    CHECK (pace IS NULL OR pace ~ '^[0-9]{1,2}:[0-9]{2}/km$'),
+    CHECK (tempo IS NULL OR tempo ~ '^[0-9]{2}:[0-9]{2}:[0-9]{2}$')
 );
  
 ALTER TABLE checkpoint
@@ -2210,13 +2226,13 @@ CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
 CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
 ```
  
-A tabela **checkpoint** é a entidade central do sistema operacional e a última a ser criada, pois concentra quatro chaves estrangeiras: `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id`. O campo **km** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão, adequado para registros de distância como `42,195 km`. A restrição `CHECK (km >= 0)` assegura que nenhum valor negativo seja inserido. Os campos **pace** e **tempo** são armazenados como `VARCHAR`, pois seguem formatos textuais como `"5:30/km"` e `"01:23:45"`, sendo opcionais pois podem não estar disponíveis em todos os registros. O campo **imagem** é definido como `JSON` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **identificador** possui restrição `UNIQUE` para garantir unicidade entre os registros operacionais. O campo **administrador_id** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints — um administrador pode estar associado a múltiplos registros ao longo de uma competição. Cinco índices são criados: quatro sobre as chaves estrangeiras para otimizar junções e um sobre `criado_em` para acelerar relatórios cronológicos de desempenho.
+A tabela **checkpoint** é a entidade central do sistema operacional e a última a ser criada, pois concentra quatro chaves estrangeiras: `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id`. O campo **km** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão, adequado para registros de distância como `42,195 km`. A restrição `CHECK (km >= 0)` assegura que nenhum valor negativo seja inserido. Os campos **pace** e **tempo** são armazenados como `VARCHAR`, pois seguem formatos textuais como `"5:30/km"` e `"01:23:45"`, sendo opcionais pois podem não estar disponíveis em todos os registros. O campo **imagem** é definido como `JSON` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **identificador** possui restrição `UNIQUE` para garantir unicidade entre os registros operacionais. O campo **administrador_id** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints — um administrador pode estar associado a múltiplos registros ao longo de uma competição. Cinco índices são criados: quatro sobre as chaves estrangeiras para otimizar junções e um sobre `criado_em` para acelerar relatórios cronológicos de desempenho. Restrições `CHECK` adicionais limitam `km` a um intervalo plausível (`0` a `1000`) e garantem que `pace` e `tempo`, quando preenchidos, sigam respectivamente os formatos `M:SS/km` (ou `MM:SS/km`) e `HH:MM:SS` — bloqueando valores corrompidos antes da persistência.
 
 ##### Considerações gerais sobre a implementação
  
 A implementação física adota o padrão de separar a definição das colunas e restrições estruturais (`PRIMARY KEY`, `UNIQUE`, `CHECK`) dentro do bloco `CREATE TABLE`, enquanto os relacionamentos externos são adicionados via `ALTER TABLE ... ADD CONSTRAINT` logo após cada tabela. Essa abordagem favorece a legibilidade, facilita a manutenção incremental do esquema e permite que as instruções DDL sejam executadas de forma modular.
  
-Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
+Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se na pasta `migrations/`, disponível no repositório do projeto, organizada em arquivos numerados que devem ser aplicados em ordem crescente.
 
 ##### Índices criados
 
