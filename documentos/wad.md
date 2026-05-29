@@ -1695,19 +1695,25 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 <div align="center">
   <sub>Figura 7 - Paleta de cores</sub><br>
-    <img src="../assets/design/paleta de cores.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/design/paleta-de-cores.png" width="100%" alt="Paleta de cores do guia de estilos"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 ### 3.4.2 Tipografia
 
-*Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
+<div align="center">
+  <sub>Figura 7 - Tipografia</sub><br>
+    <img src="../assets/design/tipografia.png" width="100%" alt="Tipografia do guia de estilos"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.4.3 Iconografia e imagens 
 
-*(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
-
-*posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
+<div align="center">
+  <sub>Figura 7 - Ícones e imagens</sub><br>
+    <img src="../assets/design/icones-e-imagens.png" width="100%" alt="Ícones e imagens do guia de estilos"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ## 3.5 Protótipo de alta fidelidade (sprint 3)
 
