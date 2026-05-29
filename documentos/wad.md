@@ -2051,6 +2051,25 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Ranking em tempo real
+
+Tela de ranking em tempo real da competição, exibindo métricas globais como total de quilômetros percorridos, pace médio global e número de checkpoints. Na seção "Disputa ao vivo", são apresentadas as duas equipes em competição, com a diferença de quilômetros entre elas. Ao final, exibe os atletas atualmente em corrida, com informações individuais de distância, pace atual e último checkpoint registrado. Um botão "Congelar ranking" está disponível no canto superior direito para pausar a atualização em tempo real.
+
+<div align="center">
+  <sub>Figura 5 - Ranking em tempo real</sub><br>
+    <img src="../assets/design/protótipo/Ranking.png"  width="100%" alt="Representação da tela de ranking em tempo real da competição"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Relatório da competição
+
+Tela de relatório final da competição, apresentando um resumo geral com total de quilômetros percorridos, média geral de pace e número de checkpoints. Exibe um gráfico de linha com a evolução das posições das equipes ao longo do tempo (de 0h a 24h), permitindo visualizar as variações de liderança durante a prova. Abaixo, há uma seção de "Relatório de inconsistências" com uma tabela de registros corrigidos manualmente, contendo informações de data, atleta, equipe, checkpoint, valor OCR original, valor corrigido, diferença e usuário responsável pela correção. Um botão "Log de Auditoria" e outro de "Exportar dados" estão disponíveis para rastreabilidade e extração das informações.
+
+<div align="center">
+  <sub>Figura 6 - Relatório da competição</sub><br>
+    <img src="../assets/design/protótipo/Relatórios.png"  width="100%" alt="Representação da tela de relatório da competição com gráfico e tabela de inconsistências"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
