@@ -2030,6 +2030,46 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Captura da foto da esteira.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de captura da foto da esteira, utilizada para registrar os dados do participante durante a competição. Nela, o operador pode visualizar a imagem capturada do painel da esteira referente ao checkpoint atual, além de optar entre realizar um registro manual ou prosseguir com a captura automática para extração dos dados via OCR, garantindo maior agilidade e precisão no processo de validação dos checkpoints.
+
+
+
+<div align="center">
+  <sub>Figura 9 - Captura da foto da esteira </sub><br>
+    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Dados extraídos via OCR.
+&nbsp; &nbsp; &nbsp; &nbsp; A figura abaixo apresenta a tela de validação dos dados extraídos automaticamente via OCR a partir da foto capturada da esteira. Nela, o operador pode visualizar a imagem utilizada no processamento, conferir as informações identificadas pelo sistema, como distância, pace e tempo, além de receber alertas em casos de discrepâncias nos dados. A interface também permite corrigir manualmente as informações antes da confirmação e salvamento do checkpoint.
+
+
+<div align="center">
+  <sub>Figura 10 - Dados extraídos via OCR </sub><br>
+    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Registro Manual.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de registro manual de checkpoints, utilizada em situações nas quais a captura automática ou a leitura via OCR não funcionem corretamente. Nela, o operador pode inserir manualmente os dados do atleta, como distância percorrida, pace e tempo total, garantindo a continuidade do registro da competição. A interface também exibe um alerta indicando que a ação será registrada no log de auditoria do sistema para fins de rastreabilidade e validação posterior.
+
+
+<div align="center">
+  <sub>Figura 11 -  Registro Manual </sub><br>
+    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Checkpoints salvos.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo apresenta a tela de visualização dos checkpoints salvos da equipe durante a competição. Nela, o operador pode acompanhar métricas gerais da equipe, como distância acumulada, pace médio e tempo total registrado, além de visualizar o histórico completo dos checkpoints realizados por cada atleta. A interface também informa o método utilizado em cada registro, permitindo identificar se os dados foram capturados automaticamente ou inseridos manualmente, garantindo maior controle e rastreabilidade das informações registradas no sistema.
+
+
+<div align="center">
+  <sub>Figura 12 -  Checkpoints salvos </sub><br>
+    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Dashboard pós-cadastro de Competição.
 &nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
