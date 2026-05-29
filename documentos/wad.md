@@ -1760,7 +1760,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 #### Registro Manual.
-&nbsp; &nbsp; &nbsp; &nbsp;alterar
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de registro manual de checkpoints, utilizada em situações nas quais a captura automática ou a leitura via OCR não funcionem corretamente. Nela, o operador pode inserir manualmente os dados do atleta, como distância percorrida, pace e tempo total, garantindo a continuidade do registro da competição. A interface também exibe um alerta indicando que a ação será registrada no log de auditoria do sistema para fins de rastreabilidade e validação posterior.
 
 
 <div align="center">
