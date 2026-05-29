@@ -6,8 +6,24 @@ import {
             } from "../models/checkpoint";
             import { getSupabaseClient } from "../database/supabaseClient";
 
-            const SELECT_COLUMNS =
-              "id, identificador, km, pace, tempo, imagem, corredor_id, competicao_id, esteira_id, administrador_id, criado_em";
+const SELECT_COLUMNS =
+              "id, identificador, km, pace, tempo, imagem, corredor_id, competicao_id, esteira_id, administrador_id, criado_em, corredor:corredor_id(id, nome, equipe_id)";
+
+type SupabaseCheckpoint = Omit<Checkpoint, "corredor"> & {
+  corredor?: Checkpoint["corredor"] | Checkpoint["corredor"][];
+};
+
+function normalizeCheckpoint(data: SupabaseCheckpoint): Checkpoint {
+  const corredor = Array.isArray(data.corredor)
+    ? data.corredor[0] ?? null
+    : data.corredor ?? null;
+
+  return { ...data, corredor };
+}
+
+function normalizeCheckpoints(data: SupabaseCheckpoint[] | null): Checkpoint[] {
+  return (data ?? []).map(normalizeCheckpoint);
+}
 
               export const checkpointRepository: CheckpointRepository = {
                 async create(input: CreateCheckpointInput): Promise<Checkpoint> {
@@ -33,7 +49,7 @@ import {
 
                                                                                                             if (error) throw error;
 
-                                                                                                                return data as Checkpoint;
+                                                                                                                return normalizeCheckpoint(data as unknown as SupabaseCheckpoint);
                                                                                                                   },
 
                                                                                                                     async findAll(): Promise<Checkpoint[]> {
@@ -46,7 +62,7 @@ import {
 
                                                                                                                                                   if (error) throw error;
 
-                                                                                                                                                      return (data ?? []) as Checkpoint[];
+                                                                                                                                                      return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
                                                                                                                                                         },
 
                                                                                                                                                           async findById(id: number): Promise<Checkpoint | null> {
@@ -60,7 +76,7 @@ import {
 
                                                                                                                                                                                               if (error) throw error;
 
-                                                                                                                                                                                                  return data as Checkpoint | null;
+                                                                                                                                                                                                  return data ? normalizeCheckpoint(data as unknown as SupabaseCheckpoint) : null;
                                                                                                                                                                                                     },
 
                                                                                                                                                                                                       async findByCorredor(corredor_id: number): Promise<Checkpoint[]> {
@@ -74,7 +90,7 @@ import {
 
                                                                                                                                                                                                                                           if (error) throw error;
 
-                                                                                                                                                                                                                                              return (data ?? []) as Checkpoint[];
+                                                                                                                                                                                                                                              return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
                                                                                                                                                                                                                                                 },
 
                                                                                                                                                                                                                                                   async findByCompeticao(competicao_id: number): Promise<Checkpoint[]> {
@@ -88,7 +104,7 @@ import {
 
                                                                                                                                                                                                                                                                                       if (error) throw error;
 
-                                                                                                                                                                                                                                                                                          return (data ?? []) as Checkpoint[];
+                                                                                                                                                                                                                                                                                          return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
                                                                                                                                                                                                                                                                                             },
 
                                                                                                                                                                                                                                                                                               async update(
@@ -112,7 +128,7 @@ import {
 
                                                                                                                                                                                                                                                                                                                                                                       if (error) throw error;
 
-                                                                                                                                                                                                                                                                                                                                                                          return data as Checkpoint | null;
+                                                                                                                                                                                                                                                                                                                                                                          return data ? normalizeCheckpoint(data as unknown as SupabaseCheckpoint) : null;
                                                                                                                                                                                                                                                                                                                                                                             },
 
                                                                                                                                                                                                                                                                                                                                                                               async delete(id: number): Promise<boolean> {
