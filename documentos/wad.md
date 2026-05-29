@@ -803,7 +803,7 @@ RN11 | O painel administrativo deve recalcular automaticamente métricas operaci
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
 
-A seguir, são apresentados, no Quadro 21, os requisitos não funcionais do sistema, responsáveis por definir restrições, atributos e métricas de qualidade, como desempenho, segurança e usabilidade, que devem ser considerados ao longo do desenvolvimento.
+Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, segurança, capacidade, suportabilidade e organização do sistema, garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
 
 <div align="center">
   <sub>Quadro 21 - Requisitos Não Funcionais </sub>
@@ -812,21 +812,19 @@ A seguir, são apresentados, no Quadro 21, os requisitos não funcionais do sist
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Como atendido                                      |
 | --------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | -------------------------------------------------- |
 | USAB — Usabilidade          | O sistema deve permitir execução das funções principais sem treinamento extensivo                        | ≥ 80% dos usuários concluem tarefas em até 5 minutos | Testes de usabilidade com usuários representativos |
-| CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação do usuário e persistência de checkpoints | Taxa de falha < 1% no processamento de checkpoints   | Logs e testes automatizados                        |
+| CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação humana e persistência dos checkpoints | Taxa de inconsistência inferior a 1% entre dados capturados e dados persistidos durante a competição | Logs de validação, testes automatizados e conferência entre OCR e registro persistido  |
 | DES — Desempenho | O sistema deve atualizar o painel administrativo periodicamente durante a competição | Atualização concluída em até 5 minutos após novos checkpoints | Testes de performance no fluxo completo |
 | SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Estrutura modular e separação em camadas |
-| SEG — Segurança             | O sistema deve garantir autenticação segura de usuário único com controle de sessão                      | Sessão autenticada válida durante uso do sistema     | Login por senha e gerenciamento de sessão          |
+| SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de senha operacional única definida pela organização do evento  | 100% das tentativas sem senha válida devem ser bloqueadas com resposta HTTP 401 | Validação da senha operacional no backend antes do acesso às rotas administrativas |
 | CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Testes de carga                                    |
-| REST — Restrições de Design | O sistema deve operar com captura via OCR, validação humana e processamento via API centralizada         | Fluxo obrigatório OCR → validação → API → backend    | Arquitetura centralizada                           |
-| ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com entregas por sprint | 100% das entregas versionadas e rastreáveis por sprint | Uso de Git, commits e organização de branches |
+| REST — Restrições de Design | O sistema deve operar com captura via OCR, validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter método de entrada, responsável pela validação e vínculo com corredor, competição e esteira | Modelagem relacional com campos obrigatórios, FKs e validação via API |
+| ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com rastreabilidade entre tarefas, commits e entregas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas|
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-#### 3.1.3.1 Derivação dos RNFs a partir do contexto do parceiro
-
-Os requisitos não funcionais definidos para o sistema foram derivados diretamente das restrições operacionais identificadas no contexto do evento Red Bull 24 Horas e dos requisitos funcionais levantados durante as reuniões com o parceiro.
+**3.1.3.1 Derivação dos RNFs a partir do contexto do parceiro**
 
 O eixo de Usabilidade (USAB) foi definido considerando que os operadores atuam sob alta pressão operacional durante 24 horas contínuas, exigindo que as principais funcionalidades do sistema sejam executadas rapidamente e sem necessidade de treinamento extensivo. Esse requisito se relaciona principalmente aos RFs de registro e validação de checkpoints.
 
@@ -881,6 +879,23 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
+### 3.2.1 Arquitetura em Camadas
+
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+O Diagrama de Classes Arquitetural é uma das representações da UML (Unified Modeling Language) que apresenta, em nível de projeto, as principais classes do sistema, seus atributos, métodos e os relacionamentos entre elas. Diferentemente do diagrama de classes de domínio, voltado à modelagem conceitual do negócio, o diagrama arquitetural reflete diretamente a estrutura do código-fonte, evidenciando como as responsabilidades são distribuídas entre as camadas da aplicação e como os componentes se comunicam entre si.
+
+No projeto em questão, a arquitetura adotada segue o padrão em três camadas: Controller, Service e Repository, amplamente utilizado em aplicações back-end por promover separação de responsabilidades, facilitar a manutenção e viabilizar a testabilidade independente de cada camada. A camada Controller é responsável por receber as requisições HTTP e delegar o processamento para a camada de serviço. Já a camada Service concentra as regras de negócio da aplicação. Além disso, a camada Repository abstrai o acesso ao banco de dados, expondo métodos padronizados de consulta e persistência.
+
+O diagrama é composto pelos seguintes módulos principais: Administrador, Autenticação (Auth), Competição, Corredor, Checkpoint, Esteira, Equipe, Ranking e OCR. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, fogem a essa regra por terem uma função de suporte geral à aplicação, sendo o caso do AuthService, do ValidacaoService e do OCRService, que são utilizados por diferentes partes do sistema. Além disso, o diagrama também apresenta interfaces de modelo (como CompeticaoModel, EquipeModel, CorredorModel, CheckpointModel e EsteiraModel), cuja função é validar os dados recebidos pela aplicação antes de serem processados, evitando inconsistências.
+
+As dependências entre as classes são representadas por setas tracejadas, indicando uso ou associação. Destaca-se a dependência do CheckpointService com os serviços CorredorService, EsteiraService, ValidacaoService e OCRService, refletindo a centralidade da lógica de registro de checkpoints no fluxo operacional da competição. O RankingService, por sua vez, depende do CheckpointService e do EquipeService para calcular posições, pace médio e gerar o ranking das equipes em tempo real.
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Classes Arquitetural</sub><br>
+  <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 ### 3.2.1. Arquitetura em Camadas
 
 O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Bass, Clements e Kazman (2012) descrevem esse padrão como uma das táticas arquiteturais mais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece completamente a implementação da camada inferior. Fowler (2002) formaliza essa separação no contexto de aplicações empresariais sob o princípio de separation of concerns, que determina que cada unidade de software deve ter uma única razão para mudar.
@@ -1043,7 +1058,7 @@ O diagrama de classes de domínio é uma representação visual que modela todos
 
 <div align="center">
   <sub>Figura 15 - Diagrama de Classes de Domínio </sub><br>
-  <img src="../assets/diagrama_classedominios.drawio.svg" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
+  <img src="../assets/diagrama_classedominios.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1104,7 +1119,7 @@ O fluxo abaixo representa a navegação realizada pelas personas administrativas
 
 <div align="center">
   <sub>Figura 11 - Fluxo de Navegação das Personas Administrativas</sub><br>
-  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Fluxo de navegação do painel administrativo da competição Red Bull 24 Horas, incluindo dashboard, equipes, checkpoints, ranking e relatórios operacionais."".><br>
+  <img src="../assets/design/fluxo-operador.svg" width="100%" alt="Fluxo de navegação do painel administrativo da competição Red Bull 24 Horas, incluindo dashboard, equipes, checkpoints, ranking e relatórios operacionais."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
@@ -1443,9 +1458,139 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 *posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
 
-## 3.5 Protótipo de alta fidelidade (sprint 3)
+## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade (sprint 3)
 
-*posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
+Esta seção apresenta a documentação do protótipo de alta fidelidade desenvolvido para a aplicação web. O objetivo do protótipo é representar, de forma visual e funcional, a experiência que o usuário final terá ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informações e alinhamento com os fluxos definidos nas User Stories.
+
+Através das telas prototipadas, é possível validar a arquitetura de navegação, os componentes-chave da interface e os elementos visuais que compõem o sistema. Cada tela foi construída com base nos requisitos levantados, considerando as funcionalidades essenciais da plataforma, como o painel de administrador e do atleta.
+
+O protótipo também está servindo como referência para o desenvolvimento front-end e será utilizado durante as etapas de implementação, testes de usabilidade e iteração do produto.
+
+### Persona 1 - Marina Costa
+#### Dashboard Principal
+&nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao administrador e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
+
+
+<div align="center">
+  <sub>Figura 1 - Dashboard Principal</sub><br>
+    <img src="../assets/design/protótipo/(1).Dashboard-principal.png"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dashboard principal"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Cadastro de nova competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo um formulário de cadastro de competição, permitindo ao administrador inserir nome do evento, data, localização e uma descrição opcional. Ao finalizar o preenchimento, o administrador pode confirmar a criação por meio do botão "Criar nova Competição" ou cancelar a ação e retornar ao Dashboard.
+
+
+<div align="center">
+  <sub>Figura 2 - Cadastro de competição </sub><br>
+    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Captura da foto da esteira.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de captura da foto da esteira, utilizada para registrar os dados do participante durante a competição. Nela, o operador pode visualizar a imagem capturada do painel da esteira referente ao checkpoint atual, além de optar entre realizar um registro manual ou prosseguir com a captura automática para extração dos dados via OCR, garantindo maior agilidade e precisão no processo de validação dos checkpoints.
+
+
+
+<div align="center">
+  <sub>Figura 9 - Captura da foto da esteira </sub><br>
+    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Dados extraídos via OCR.
+&nbsp; &nbsp; &nbsp; &nbsp; A figura abaixo apresenta a tela de validação dos dados extraídos automaticamente via OCR a partir da foto capturada da esteira. Nela, o operador pode visualizar a imagem utilizada no processamento, conferir as informações identificadas pelo sistema, como distância, pace e tempo, além de receber alertas em casos de discrepâncias nos dados. A interface também permite corrigir manualmente as informações antes da confirmação e salvamento do checkpoint.
+
+
+<div align="center">
+  <sub>Figura 10 - Dados extraídos via OCR </sub><br>
+    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Registro Manual.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de registro manual de checkpoints, utilizada em situações nas quais a captura automática ou a leitura via OCR não funcionem corretamente. Nela, o operador pode inserir manualmente os dados do atleta, como distância percorrida, pace e tempo total, garantindo a continuidade do registro da competição. A interface também exibe um alerta indicando que a ação será registrada no log de auditoria do sistema para fins de rastreabilidade e validação posterior.
+
+
+<div align="center">
+  <sub>Figura 11 -  Registro Manual </sub><br>
+    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Checkpoints salvos.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo apresenta a tela de visualização dos checkpoints salvos da equipe durante a competição. Nela, o operador pode acompanhar métricas gerais da equipe, como distância acumulada, pace médio e tempo total registrado, além de visualizar o histórico completo dos checkpoints realizados por cada atleta. A interface também informa o método utilizado em cada registro, permitindo identificar se os dados foram capturados automaticamente ou inseridos manualmente, garantindo maior controle e rastreabilidade das informações registradas no sistema.
+
+
+<div align="center">
+  <sub>Figura 12 -  Checkpoints salvos </sub><br>
+    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Dashboard pós-cadastro de Competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
+
+
+<div align="center">
+  <sub>Figura 3 - Competição Cadastrada </sub><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Painel de equipes (sem equipes cadastradas).
+&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
+
+
+<div align="center">
+  <sub>Figura 4 - Painel Equipes vazio</sub><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Cadastro de equipes.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
+
+
+<div align="center">
+  <sub>Figura 1 - Tela de Cadastro das equipes</sub><br>
+    <img src="../assets/design/protótipo/cadastrar-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel de administração das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
+
+
+<div align="center">
+  <sub>Figura 1 - Painel de admin das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel operacional das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
+
+
+<div align="center">
+  <sub>Figura 1 - Painel de operacional das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel operacional das equipes com dropdown.
+&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
+
+
+<div align="center">
+  <sub>Figura 1 - Painel de operacional das equipes com dropdown</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -1950,9 +2095,11 @@ Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `
 
 A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
 
-> **Escopo desta entrega:** esta subseção contempla as expressões SQL e suas descrições em palavras. As proposições lógicas, expressões em lógica proposicional e tabelas-verdade serão preenchidas em entrega subsequente pelo membro do grupo responsável pela componente matemática da disciplina.
-
 #### Q01 — `SELECT` com `AND` e `OR`
+
+<div align="center">
+  <sub>Quadro X - Consulta Q01</sub>
+</div>
 
 | Atributo | Conteúdo |
 |----------|----------|
@@ -1960,6 +2107,10 @@ A presente subseção apresenta um conjunto de consultas SQL utilizadas pela apl
 | **Operadores lógicos** | `AND`, `OR` |
 | **Operadores relacionais** | `=`, `>`, `<` |
 | **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 **Expressão SQL:**
 
@@ -1972,13 +2123,51 @@ WHERE competicao_id = 1
 
 **Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint pertence à competição de ID 1.  
+  `competicao_id = 1`
 
----
+- **Q:** o checkpoint possui quilometragem maior que 10 km.  
+  `km > 10`
+
+- **R:** o checkpoint possui quilometragem menor que 2 km.  
+  `km < 2`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o checkpoint será selecionado se pertencer à competição 1 e possuir quilometragem maior que 10 km ou menor que 2 km.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras em conjunto;
+- **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Seleciona |
+| V | V | F | V | V | Seleciona |
+| V | F | V | V | V | Seleciona |
+| V | F | F | F | F | Não seleciona |
+| F | V | V | V | F | Não seleciona |
+| F | V | F | V | F | Não seleciona |
+| F | F | V | V | F | Não seleciona |
+| F | F | F | F | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, ao mesmo tempo, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
 
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
@@ -2001,20 +2190,51 @@ WHERE nome LIKE 'A%'
 
 **Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o nome do corredor inicia com a letra “A”.  
+  `nome LIKE 'A%'`
 
----
+- **Q:** o corredor está com status “Em descanso”.  
+  `status = 'Em descanso'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:  
+o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não seleciona |
+| V | F | V | V | Seleciona |
+| F | V | F | F | Não seleciona |
+| F | F | V | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjutamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
 
 #### Q03 — `UPDATE` com `AND` e `IN`
 
 | Atributo | Conteúdo |
 |----------|----------|
 | **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND` |
+| **Operadores lógicos** | `AND`, `OR` |
 | **Operadores especiais** | `IN` |
 | **Operadores relacionais** | `=` |
 | **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
@@ -2028,15 +2248,53 @@ WHERE equipe_id = 1
   AND status IN ('Em corrida', 'Próximo');
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores que pertencem à equipe de identificador `1` e que atualmente possuem status pertencente ao conjunto `{'Em corrida', 'Próximo'}`. A cláusula `WHERE` combina o operador `AND` com o operador `IN`, este último equivalente a uma disjunção entre comparações de igualdade — sintaxe mais concisa e legível para verificar pertinência em um conjunto de valores.
+**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `IN` em uma disjunção de igualdades).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o corredor pertence à equipe de identificador 1.  
+  `equipe_id = 1`
 
----
+- **Q:** o corredor está com status “Em corrida”.  
+  `status = 'Em corrida'`
+
+- **R:** o corredor está com status “Próximo”.  
+  `status = 'Próximo'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
+- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Atualiza |
+| V | V | F | V | V | Atualiza |
+| V | F | V | V | V | Atualiza |
+| V | F | F | F | F | Não atualiza |
+| F | V | V | V | F | Não atualiza |
+| F | V | F | V | F | Não atualiza |
+| F | F | V | V | F | Não atualiza |
+| F | F | F | F | F | Não atualiza |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
 
 #### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
@@ -2058,11 +2316,44 @@ WHERE competicao_id = 1
 
 **Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint pertence à competição de identificador 1.
+  `competicao_id = 1`
+
+- **Q:** o identificador do checkpoint segue o padrão esperado iniciado por `CP-`.
+  `identificador LIKE 'CP-%'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:
+o checkpoint será removido se pertencer à competição 1 e seu identificador não seguir o padrão esperado iniciado por `CP-`.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o checkpoint pertença à competição especificada e, ao mesmo tempo, não siga o padrão de identificador esperado;
+- **¬ (NOT):** representa a negação do padrão textual `LIKE 'CP-%'`, expressa na consulta pelo operador `NOT LIKE`.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não remove |
+| V | F | V | V | Remove |
+| F | V | F | F | Não remove |
+| F | F | V | F | Não remove |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à competição de identificador `1` e, simultaneamente, seu identificador não segue o padrão `CP-`. Caso o checkpoint pertença a outra competição ou possua identificador válido, o registro não será removido.
 
 ---
 
@@ -2086,11 +2377,68 @@ WHERE km BETWEEN 4 AND 6
 
 **Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `BETWEEN` em uma conjunção de comparações e do `NOT IN` em uma conjunção de desigualdades).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint possui quilometragem maior ou igual a 4 km.
+  `km >= 4`
+
+- **Q:** o checkpoint possui quilometragem menor ou igual a 6 km.
+  `km <= 6`
+
+- **R:** o checkpoint pertence ao corredor de identificador 1.
+  `corredor_id = 1`
+
+- **S:** o checkpoint pertence ao corredor de identificador 7.
+  `corredor_id = 7`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ Q ∧ ¬R ∧ ¬S
+```
+
+Em palavras:
+o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, inclusive, e se o corredor associado não for o de identificador 1 nem o de identificador 7.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
+
+#### Tabela-verdade
+
+| P | Q | R | S | ¬R | ¬S | P ∧ Q ∧ ¬R ∧ ¬S | Resultado |
+|---|---|---|---|---|---|---|---|
+| V | V | V | V | F | F | F | Não seleciona |
+| V | V | V | F | F | V | F | Não seleciona |
+| V | V | F | V | V | F | F | Não seleciona |
+| V | V | F | F | V | V | V | Seleciona |
+| V | F | V | V | F | F | F | Não seleciona |
+| V | F | V | F | F | V | F | Não seleciona |
+| V | F | F | V | V | F | F | Não seleciona |
+| V | F | F | F | V | V | F | Não seleciona |
+| F | V | V | V | F | F | F | Não seleciona |
+| F | V | V | F | F | V | F | Não seleciona |
+| F | V | F | V | V | F | F | Não seleciona |
+| F | V | F | F | V | V | F | Não seleciona |
+| F | F | V | V | F | F | F | Não seleciona |
+| F | F | V | F | F | V | F | Não seleciona |
+| F | F | F | V | V | F | F | Não seleciona |
+| F | F | F | F | V | V | F | Não seleciona |
+
+#### Observação sobre dependências semânticas
+
+A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+
+O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
@@ -2128,7 +2476,124 @@ WHERE km BETWEEN 4 AND 6
 
 ## 4.1. Primeira versão da aplicação web (sprint 3)
 
-*Descreva e ilustre aqui o desenvolvimento da primeira versão do sistema web. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
+### (a) O que foi implementado
+
+Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002).
+
+<div align="center">
+  <sub>Figura 1 - Estrutura de pastas</sub><br>
+    <img src="../assets/programacao/estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas do projeto"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 1 - Pasta supabaseClient.ts</sub><br>
+    <img src="../assets/programacao/pasta-supabaseClient.ts.png" width="100%" alt="Representação da pasta supabaseClient.ts do projeto"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+**- Configuração do ambiente e gestão de dependências:** o arquivo `package.json` foi estruturado contendo as dependências de produção e de desenvolvimento, além de scripts padronizados de execução (`dev`, `build`, `start`, `test`, `test:e2e`, `test:unit`, `test:integration`), garantindo que qualquer membro da equipe consiga rodar o projeto e os testes de forma consistente. Foi configurado também o arquivo `.env` para gerenciamento seguro de variáveis sensíveis (URL e chave do Supabase, porta da aplicação, ambiente de execução), com um `.env.example` versionado no repositório para servir de referência, mantendo o arquivo real fora do controle de versão via `.gitignore`. Essa estrutura padroniza o setup local, evita o vazamento de credenciais e prepara o projeto para deploy em diferentes ambientes (desenvolvimento, teste e produção).
+
+<div align="center">
+  <sub>Figura 1 - Pasta Package.json</sub><br>
+    <img src="../assets/programacao/pasta-package.json.png" width="100%" alt="Representação do package.json do projeto"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 2 - Representação do .env</sub><br>
+    <img src="../assets/programacao/pasta-.env.png" width="100%" alt="Representação do .env do projeto"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+**- Infraestrutura base:** servidor Express configurado, integração com Supabase, sistema de erros customizados (`ValidationError`, `NotFoundError`, `ConflictError`, `UnprocessableError`), middleware centralizado de tratamento de erros e helper `asyncHandler` para padronização do fluxo assíncrono.
+
+<div align="center">
+  <sub>Figura 1 - Pasta appError.ts</sub><br>
+    <img src="../assets/programacao/pasta-apperror.ts.png" width="100%" alt="Representação da pasta appError.ts do projeto"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+**- Módulo de Competições (RF002, RF012):** CRUD completo com endpoint adicional de encerramento (`PATCH`), validação dos campos obrigatórios (nome, data e local — RN18) e controle de status da competição (não iniciada / em andamento / encerrada), garantindo o bloqueio de novos registros após o encerramento.
+
+**- Módulo de Equipes (RF003):** CRUD completo com rotas aninhadas sob competição, refletindo a hierarquia do domínio.
+
+**- Módulo de Atletas (RF003):** CRUD completo com rotas aninhadas sob equipe, limite de 16 atletas por equipe (RN17), validação de CPF, unicidade de CPF e e-mail, controle de status (corredor/capitão) e proteção contra remoção de atletas com checkpoints vinculados.
+
+**- Módulo de Checkpoints (RF005 a RF009):** CRUD completo sob rota aninhada de atleta, contemplando tanto o fluxo manual quanto o fluxo via OCR, com persistência dos campos obrigatórios definidos pela RN04 (distância, pace e tempo total) e log de auditoria registrando o método de entrada (OCR ou manual) conforme RN05.
+
+**- Módulo de Rankings (RF010, RF011, RF015):** endpoints de leitura agregada para o painel administrativo e para o painel público, calculando distância total por equipe, pace médio, atleta em corrida e próximo atleta da escalação, com atualização periódica via polling.
+
+**- Módulo de Reports (RF013, RF014):** endpoints de relatório consolidado da competição, relatório por equipe e exportação CSV contendo checkpoints, timestamps e logs de validação, incluindo o relatório de inconsistências derivado do log de auditoria.
+
+**- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso por sala administrativa via senha definida na criação da sala, com escopo limitado à área administrativa e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
+
+**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do frontend funcional na sprint 4.
+
+Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
+
+
+**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento → retorno dos campos extraídos → validação humana antes da persistência). A solução foi implementada com **OpenCV** em conjunto com **Tesseract.js**, rodando inteiramente no próprio navegador (client-side), o que elimina a dependência de serviços externos de OCR e mantém o processamento sob controle da aplicação. Nesta versão, o OCR opera de forma isolada e ainda não realiza detecção automática de campos — a segmentação das regiões do display correspondentes a distância, pace e tempo total será refinada na sprint 4. O comportamento atual está alinhado com os critérios de aceite da US09, restando apenas a aprovação final do parceiro e a integração refinada com o módulo de Checkpoints.
+
+<div align="center">
+  <sub>Figura 1 - Adicionar imagem</sub><br>
+    <img src="../assets/programacao/OCR-add-img.jpg" width="100%" alt="OCR: Representação da tela de adicionar imagem."><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 1 - Leitura da imagem</sub><br>
+    <img src="../assets/programacao/OCR-leitura-img.jpg" width="100%" alt="OCR: Representação da tela de leitura da imagem."><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 1 - Registro das informações</sub><br>
+    <img src="../assets/programacao/OCR-registro.jpg" width="100%" alt="Representação do registro das informações da foto"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+**- Desenvolvimento orientado a testes (TDD) em todos os módulos:** a equipe adotou a prática de **Test-Driven Development** durante toda a sprint, escrevendo primeiro os testes com **Jest** e **Supertest** para cada funcionalidade planejada, executando-os para confirmar que falhavam como esperado (fase *red* do ciclo) e somente então implementando os endpoints, services e repositories necessários para fazê-los passar (fase *green*), seguida da refatoração quando aplicável (fase *refactor*). Essa abordagem foi aplicada nos três níveis de teste — E2E, unitário e integração — garantindo que toda regra de negócio e contrato de API entregue na sprint nasceu a partir de um teste falho e, portanto, possui cobertura automatizada associada desde o primeiro commit.
+
+<div align="center">
+  <sub>Figura 1 - Testes jest e supertest</sub><br>
+    <img src="../assets/programacao/testes.jpg" width="100%" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+### (b) O que não foi concluído
+
+**- Refinamento do OCR:** apesar do protótipo estar finalizado e do fluxo estar definido, ainda é necessário aprimorar a precisão da captura das informações da imagem (distância, pace e tempo total), tratar variações de iluminação e posicionamento do display da esteira, ajustar o limiar de discrepância para acionamento dos alertas visuais (RN06) e refinar detalhes de integração para entregar o módulo em nível de MVP funcional.
+
+**- Frontend funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o backend será iniciada na sprint 4.
+
+### (c) Dificuldades técnicas
+
+**- Tratamento manual de erros de constraint do PostgreSQL** via Supabase, especificamente os códigos `23505` (violação de UNIQUE) e `23503` (violação de FK), que exigiram interceptação e conversão para os erros customizados da aplicação em cada repository.
+
+**- Estruturação de rotas aninhadas respeitando o escopo do recurso pai**, garantindo que operações sobre atletas estejam sempre vinculadas a uma equipe válida, operações sobre equipes vinculadas a uma competição válida e operações sobre checkpoints vinculadas a um atleta válido.
+
+**- Ambiente de testes E2E com banco real evitando colisão de dados únicos entre execuções** — mitigado parcialmente com geração de dados aleatórios por run; solução definitiva (uso de prefixos ou IDs descartáveis padronizados) prevista para a sprint 4.
+
+### (d) Próximos passos
+
+Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o frontend ao backend já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
+
+**1. Frontend funcional integrado ao backend**
+Migração do protótipo de alta fidelidade para uma aplicação funcional consumindo a API já implementada, com foco nas telas críticas para a operação do evento: painel operacional administrativo, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe com auto-refresh, relatórios e painel público acessado via UUID sem autenticação (US12). A UX deve seguir os wireframes já validados na sprint 2, priorizando uso em iPad conforme escopo do TAP.
+
+**2. Refinamento do módulo de OCR**
+Aprimoramento da precisão de extração dos dados da imagem, tratamento de variações de iluminação e posicionamento do display da esteira, ajuste do limiar de discrepância para acionamento dos alertas visuais (RN06) e validação prática com imagens reais do ambiente operacional. O objetivo é elevar o OCR ao nível de MVP funcional, aderente aos critérios de aceite da US09.
+
+**3. Registro das rotas do módulo de Usuários**
+Conclusão do módulo já iniciado na sprint 3 (model, repository e service), registrando as rotas no Express e completando a cadeia da arquitetura em camadas.
+
+**4. Testes automatizados e Matriz de Rastreabilidade**
+Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o frontend conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
+
+**5. Dívida técnica identificada na sprint 3**
+Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
@@ -2227,6 +2692,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
+
+MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
 
 PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. PM3, [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/?utm_source=chatgpt.com. Acesso em: 13 maio 2026.
 
