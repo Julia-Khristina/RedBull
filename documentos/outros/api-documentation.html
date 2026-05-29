@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Documentacao da API - Red Bull 24 Horas</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --panel: #ffffff;
+      --text: #17202a;
+      --muted: #5f6b7a;
+      --line: #d7dde5;
+      --blue: #0f5fa8;
+      --green: #16784f;
+      --amber: #9a6700;
+      --red: #b42318;
+      --code: #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.5;
+    }
+
+    header {
+      background: #111827;
+      color: #ffffff;
+      padding: 32px 40px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 30px;
+      letter-spacing: 0;
+    }
+
+    header p {
+      margin: 0;
+      max-width: 960px;
+      color: #d1d5db;
+    }
+
+    main {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 28px 24px 56px;
+    }
+
+    section {
+      margin: 0 0 28px;
+      padding: 24px;
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      color: var(--blue);
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 22px 0 8px;
+      font-size: 17px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px;
+      background: #ffffff;
+    }
+
+    th,
+    td {
+      border: 1px solid var(--line);
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef3f8;
+      font-weight: 700;
+    }
+
+    code,
+    pre {
+      font-family: "Courier New", Courier, monospace;
+    }
+
+    code {
+      padding: 2px 5px;
+      background: #eef1f5;
+      border-radius: 4px;
+      color: var(--code);
+    }
+
+    pre {
+      overflow-x: auto;
+      margin: 10px 0 18px;
+      padding: 14px;
+      background: #eaf4ff;
+      color: #0f172a;
+      border: 1px solid #b7d7f5;
+      border-left: 5px solid var(--blue);
+      border-radius: 6px;
+      font-size: 13px;
+    }
+
+    pre code {
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      border-radius: 0;
+    }
+
+    pre.console {
+      background: #111827;
+      color: #e5e7eb;
+      border-color: #111827;
+      border-left-color: #4b5563;
+    }
+
+    .meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 16px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 4px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--line);
+      background: #f9fafb;
+    }
+
+    .implemented {
+      color: var(--green);
+      border-color: #a7d8c2;
+      background: #eefbf5;
+    }
+
+    .planned {
+      color: var(--amber);
+      border-color: #f2d48a;
+      background: #fff8e6;
+    }
+
+    .method {
+      width: 84px;
+      font-weight: 700;
+      color: var(--blue);
+      white-space: nowrap;
+    }
+
+    .note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    @media (max-width: 720px) {
+      header {
+        padding: 24px 20px;
+      }
+
+      main {
+        padding: 20px 12px 40px;
+      }
+
+      section {
+        padding: 18px;
+      }
+
+      table {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Documentacao da API - Red Bull 24 Horas</h1>
+    <p>
+      Documento organizado no formato de referencia tecnica inspirado em OAS, com recursos,
+      formatos de midia, corpos de requisicao, respostas, autenticacao e exemplos.
+    </p>
+  </header>
+
+  <main>
+    <section id="overview">
+      <h2>3.6 WebAPI and Endpoints</h2>
+      <p>
+        A API do projeto Red Bull 24 Horas foi organizada por dominios de uso da aplicacao:
+        competicoes, equipes, atletas, administradores, checkpoints, ranking, exportacoes e
+        relatorios. Os endpoints listados como implementados correspondem ao conjunto de rotas
+        validado para a documentacao atual. Ranking, exportacoes e relatorios permanecem
+        documentados como funcionalidades planejadas pelo WAD.
+      </p>
+
+      <div class="meta">
+        <span class="tag">Media type: application/json</span>
+        <span class="tag">Formato de erro: JSON</span>
+        <span class="tag implemented">Implemented</span>
+        <span class="tag planned">Planned</span>
+      </div>
+
+      <h3>Authentication</h3>
+      <p>
+        As rotas administrativas devem considerar autenticacao por token quando a camada de
+        seguranca estiver integrada. O formato esperado e:
+      </p>
+      <pre class="console"><code>Authorization: Bearer &lt;token&gt;
+Content-Type: application/json</code></pre>
+
+      <h3>Resposta padrao de erro</h3>
+      <pre><code>{
+  "message": "Descricao do erro"
+}</code></pre>
+
+      <h3>Codigos de saida HTTP</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Codigo</th>
+            <th>Uso esperado</th>
+            <th>Formato de resposta</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">200 OK</td>
+            <td>Consulta, listagem, atualizacao ou operacao concluida com retorno no corpo da resposta.</td>
+            <td>JSON com objeto ou lista de objetos.</td>
+          </tr>
+          <tr>
+            <td class="method">201 Created</td>
+            <td>Recurso criado com sucesso por uma requisicao <code>POST</code>.</td>
+            <td>JSON com o recurso criado e seu identificador.</td>
+          </tr>
+          <tr>
+            <td class="method">204 No Content</td>
+            <td>Exclusao ou operacao concluida sem corpo de resposta.</td>
+            <td>Sem body.</td>
+          </tr>
+          <tr>
+            <td class="method">400 Bad Request</td>
+            <td>Payload invalido, parametro ausente ou parametro numerico em formato incorreto.</td>
+            <td><code>{ "message": "Descricao do erro" }</code></td>
+          </tr>
+          <tr>
+            <td class="method">401 Unauthorized</td>
+            <td>Token ausente, invalido ou expirado quando a autenticacao estiver habilitada.</td>
+            <td><code>{ "message": "Token invalido ou expirado" }</code></td>
+          </tr>
+          <tr>
+            <td class="method">404 Not Found</td>
+            <td>Recurso solicitado nao encontrado.</td>
+            <td><code>{ "message": "Recurso nao encontrado" }</code></td>
+          </tr>
+          <tr>
+            <td class="method">409 Conflict</td>
+            <td>Conflito de regra de negocio, como duplicidade de dado unico.</td>
+            <td><code>{ "message": "Conflito ao processar recurso" }</code></td>
+          </tr>
+          <tr>
+            <td class="method">422 Unprocessable Entity</td>
+            <td>Dados sintaticamente validos, mas inconsistentes com a regra de negocio.</td>
+            <td><code>{ "message": "Dados inconsistentes" }</code></td>
+          </tr>
+          <tr>
+            <td class="method">500 Internal Server Error</td>
+            <td>Falha inesperada na API ou na integracao com o banco.</td>
+            <td><code>{ "message": "Erro interno do servidor" }</code></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="competition-routes">
+      <h2>3.6.1 Competition Routes</h2>
+      <p>
+        As rotas de competicao permitem criar, listar, consultar, atualizar, encerrar e remover
+        competicoes. Elas atendem principalmente aos requisitos RF001, RF002 e RF012.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/competitions</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Cria uma competicao com nome, data e endereco.</td>
+            <td>RF001, RF002, RN03, RN18</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista as competicoes cadastradas.</td>
+            <td>Suporte operacional</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Consulta uma competicao especifica pelo identificador.</td>
+            <td>Suporte operacional</td>
+          </tr>
+          <tr>
+            <td class="method">PUT</td>
+            <td><code>/competitions/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Atualiza os dados cadastrais de uma competicao.</td>
+            <td>RF002, RN18</td>
+          </tr>
+          <tr>
+            <td class="method">PATCH</td>
+            <td><code>/competitions/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Encerra a competicao e bloqueia novos registros operacionais.</td>
+            <td>RF012, RN14</td>
+          </tr>
+          <tr>
+            <td class="method">DELETE</td>
+            <td><code>/competitions/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Remove uma competicao existente.</td>
+            <td>Suporte operacional</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Request body - POST/PUT</h3>
+      <pre><code>{
+  "nome": "Red Bull 24h Sao Paulo",
+  "data": "2026-06-15",
+  "endereco": "Sao Paulo - SP"
+}</code></pre>
+
+      <h3>Response - 201 Created</h3>
+      <pre><code>{
+  "id": 1,
+  "nome": "Red Bull 24h Sao Paulo",
+  "data": "2026-06-15",
+  "endereco": "Sao Paulo - SP",
+  "status": "nao iniciado",
+  "criado_em": "2026-05-28T10:00:00.000Z"
+}</code></pre>
+
+      <h3>Saidas da requisicao</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>POST /competitions</code></td>
+            <td><code>201 Created</code></td>
+            <td><code>400</code>, <code>409</code>, <code>500</code></td>
+            <td>Retorna a competicao criada. Campos obrigatorios: <code>nome</code>, <code>data</code>, <code>endereco</code>.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>500</code></td>
+            <td>Retorna uma lista; se nao houver registros, retorna array vazio.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna uma competicao ou erro se o ID for invalido/inexistente.</td>
+          </tr>
+          <tr>
+            <td><code>PUT /competitions/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>409</code>, <code>500</code></td>
+            <td>Retorna a competicao atualizada.</td>
+          </tr>
+          <tr>
+            <td><code>PATCH /competitions/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna a competicao com status de encerramento.</td>
+          </tr>
+          <tr>
+            <td><code>DELETE /competitions/:id</code></td>
+            <td><code>204 No Content</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Nao retorna corpo em caso de sucesso.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="team-routes">
+      <h2>3.6.2 Team Routes</h2>
+      <p>
+        As rotas de equipe permitem cadastrar, listar, consultar, atualizar e excluir equipes
+        vinculadas a uma competicao. Ao criar uma equipe, o sistema deve gerar um UUID publico.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/competitions/:competicaoId/teams</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Cria uma equipe dentro da competicao informada.</td>
+            <td>RF003, RN01, RN07</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/teams</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista as equipes de uma competicao.</td>
+            <td>RF003</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Consulta uma equipe especifica.</td>
+            <td>RF003</td>
+          </tr>
+          <tr>
+            <td class="method">PUT</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Atualiza os dados da equipe.</td>
+            <td>RF003, RN01, RN07</td>
+          </tr>
+          <tr>
+            <td class="method">DELETE</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Remove uma equipe.</td>
+            <td>RF003, RN01, RN07</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Request body - POST/PUT</h3>
+      <pre><code>{
+  "nome": "Equipe Alpha"
+}</code></pre>
+
+      <h3>Response - 201 Created</h3>
+      <pre><code>{
+  "id": 1,
+  "nome": "Equipe Alpha",
+  "uuid": "550e8400-e29b-41d4-a716-446655440000",
+  "qr_code": null,
+  "competicao_id": 1,
+  "criado_em": "2026-05-28T10:00:00.000Z"
+}</code></pre>
+
+      <h3>Saidas da requisicao</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>POST /competitions/:competicaoId/teams</code></td>
+            <td><code>201 Created</code></td>
+            <td><code>400</code>, <code>404</code>, <code>409</code>, <code>500</code></td>
+            <td>Retorna equipe criada com <code>uuid</code> publico.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/teams</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna lista de equipes da competicao.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna uma equipe especifica.</td>
+          </tr>
+          <tr>
+            <td><code>PUT /competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>409</code>, <code>500</code></td>
+            <td>Retorna equipe atualizada.</td>
+          </tr>
+          <tr>
+            <td><code>DELETE /competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>204 No Content</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Nao retorna corpo em caso de sucesso.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="athlete-routes">
+      <h2>3.6.3 Athlete/Runner Routes</h2>
+      <p>
+        As rotas de atletas, equivalentes aos corredores no dominio do WAD, permitem cadastrar,
+        listar, consultar, atualizar e remover participantes vinculados a uma equipe.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Cadastra atleta em uma equipe.</td>
+            <td>RF003, RN01</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista atletas de uma equipe.</td>
+            <td>RF003, RF011</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Consulta atleta especifico.</td>
+            <td>RF003</td>
+          </tr>
+          <tr>
+            <td class="method">PUT</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Atualiza os dados do atleta.</td>
+            <td>RF003, RN07</td>
+          </tr>
+          <tr>
+            <td class="method">DELETE</td>
+            <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Remove atleta da equipe.</td>
+            <td>RF003</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Request body - POST</h3>
+      <pre><code>{
+  "nome": "Ana Silva",
+  "cpf": "12345678901",
+  "email": "ana@example.com",
+  "telefone": "11999999999",
+  "status": "corredor"
+}</code></pre>
+
+      <h3>Response - 201 Created</h3>
+      <pre><code>{
+  "id": 1,
+  "nome": "Ana Silva",
+  "cpf": "12345678901",
+  "email": "ana@example.com",
+  "telefone": "11999999999",
+  "status": "corredor",
+  "equipe_id": 1,
+  "criado_em": "2026-05-28T10:00:00.000Z"
+}</code></pre>
+
+      <h3>Saidas da requisicao</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>POST /competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><code>201 Created</code></td>
+            <td><code>400</code>, <code>404</code>, <code>409</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna atleta criado. Pode rejeitar limite de atletas por equipe.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna lista de atletas da equipe.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna atleta especifico.</td>
+          </tr>
+          <tr>
+            <td><code>PUT /competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>409</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna atleta atualizado.</td>
+          </tr>
+          <tr>
+            <td><code>DELETE /competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>204 No Content</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Nao retorna corpo em caso de sucesso.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="administrator-routes">
+      <h2>3.6.4 Administrator Routes</h2>
+      <p>
+        As rotas de administradores representam o gerenciamento dos usuarios administrativos
+        responsaveis pela operacao da competicao.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/administradores</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista administradores.</td>
+            <td>RF001, RF004</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/administradores/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Consulta administrador por ID.</td>
+            <td>RF001, RF004</td>
+          </tr>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/administradores</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Cria administrador.</td>
+            <td>RF001, RF004, RN03</td>
+          </tr>
+          <tr>
+            <td class="method">PUT</td>
+            <td><code>/administradores/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Atualiza administrador.</td>
+            <td>RF001, RF004</td>
+          </tr>
+          <tr>
+            <td class="method">DELETE</td>
+            <td><code>/administradores/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Remove administrador.</td>
+            <td>RF001, RF004</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Request body - POST/PUT</h3>
+      <pre><code>{
+  "nome": "Operador Red Bull",
+  "email": "operador@example.com",
+  "area": "Operacao",
+  "senha": "senha-segura"
+}</code></pre>
+
+      <h3>Saidas da requisicao</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /administradores</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>401</code>, <code>500</code></td>
+            <td>Retorna lista de administradores sem expor senha.</td>
+          </tr>
+          <tr>
+            <td><code>GET /administradores/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>401</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna um administrador especifico sem expor senha.</td>
+          </tr>
+          <tr>
+            <td><code>POST /administradores</code></td>
+            <td><code>201 Created</code></td>
+            <td><code>400</code>, <code>401</code>, <code>409</code>, <code>500</code></td>
+            <td>Retorna administrador criado sem o campo de senha.</td>
+          </tr>
+          <tr>
+            <td><code>PUT /administradores/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>401</code>, <code>404</code>, <code>409</code>, <code>500</code></td>
+            <td>Retorna administrador atualizado.</td>
+          </tr>
+          <tr>
+            <td><code>DELETE /administradores/:id</code></td>
+            <td><code>204 No Content</code></td>
+            <td><code>400</code>, <code>401</code>, <code>404</code>, <code>500</code></td>
+            <td>Nao retorna corpo em caso de sucesso.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="checkpoint-routes">
+      <h2>3.6.5 Checkpoint Routes</h2>
+      <p>
+        As rotas de checkpoint representam o registro operacional de distancia, pace, tempo,
+        imagem e vinculos com corredor, competicao, esteira e administrador.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/checkpoints</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Registra checkpoint.</td>
+            <td>RF008, RN04, RN05</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/checkpoints</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista checkpoints.</td>
+            <td>RF008</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/checkpoints/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Consulta checkpoint por ID.</td>
+            <td>RF008</td>
+          </tr>
+          <tr>
+            <td class="method">PUT</td>
+            <td><code>/checkpoints/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Atualiza checkpoint.</td>
+            <td>RF007, RF008, RN12</td>
+          </tr>
+          <tr>
+            <td class="method">DELETE</td>
+            <td><code>/checkpoints/:id</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Remove checkpoint.</td>
+            <td>RF008</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/corredores/:corredorId/checkpoints</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista checkpoints de um corredor.</td>
+            <td>RF008, RF011</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/checkpoints</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Lista checkpoints de uma competicao.</td>
+            <td>RF008, RF010, RF013</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Request body - POST</h3>
+      <pre><code>{
+  "identificador": "CP-001",
+  "km": 4.85,
+  "pace": "5:30/km",
+  "tempo": "00:26:40",
+  "imagem": {
+    "url": "https://example.com/checkpoint-001.jpg"
+  },
+  "corredor_id": 1,
+  "competicao_id": 1,
+  "esteira_id": 1,
+  "administrador_id": 1
+}</code></pre>
+
+      <h3>Saidas da requisicao</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>POST /checkpoints</code></td>
+            <td><code>201 Created</code></td>
+            <td><code>400</code>, <code>404</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna checkpoint criado apos validacao dos vinculos.</td>
+          </tr>
+          <tr>
+            <td><code>GET /checkpoints</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>500</code></td>
+            <td>Retorna lista geral de checkpoints.</td>
+          </tr>
+          <tr>
+            <td><code>GET /checkpoints/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna um checkpoint especifico.</td>
+          </tr>
+          <tr>
+            <td><code>PUT /checkpoints/:id</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna checkpoint atualizado e deve preservar rastreabilidade.</td>
+          </tr>
+          <tr>
+            <td><code>DELETE /checkpoints/:id</code></td>
+            <td><code>204 No Content</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Nao retorna corpo em caso de sucesso.</td>
+          </tr>
+          <tr>
+            <td><code>GET /corredores/:corredorId/checkpoints</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna lista filtrada por corredor.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/checkpoints</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna lista filtrada por competicao.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ranking-routes">
+      <h2>3.6.6 Ranking Routes</h2>
+      <p>
+        O ranking ainda deve ser implementado como endpoint de leitura consolidada da competicao.
+        Ele deve atender ao painel administrativo e ao painel publico, com diferenca de frequencia
+        de atualizacao definida pelas regras de negocio.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:id/ranking</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Retorna ranking de equipes e metricas consolidadas da competicao.</td>
+            <td>RF010, RF015, RN09, RN11</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Response planejado - 200 OK</h3>
+      <pre><code>{
+  "competicao_id": 1,
+  "atualizado_em": "2026-05-28T10:00:00.000Z",
+  "ranking": [
+    {
+      "posicao": 1,
+      "equipe_id": 1,
+      "equipe_nome": "Equipe Alpha",
+      "distancia_total_km": 128.4,
+      "pace_medio": "5:12/km",
+      "diferenca_para_lider_km": 0
+    }
+  ]
+}</code></pre>
+
+      <h3>Saidas da requisicao planejadas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /competitions/:id/ranking</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna ranking consolidado; pode retornar lista vazia se nao houver checkpoints validados.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="export-routes">
+      <h2>3.6.7 Export Routes</h2>
+      <p>
+        A exportacao ainda deve ser implementada para disponibilizar dados da competicao em CSV,
+        incluindo checkpoints, timestamps, fotos vinculadas e logs de validacao para auditoria.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:id/exports</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Gera e disponibiliza exportacao CSV dos dados da competicao.</td>
+            <td>RF013, RN15</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Response planejado - 200 OK</h3>
+      <pre class="console"><code>Content-Type: text/csv
+Content-Disposition: attachment; filename="competition-1-export.csv"
+
+checkpoint_id,competicao_id,corredor_id,km,pace,tempo,metodo,criado_em,imagem_url</code></pre>
+
+      <h3>Saidas da requisicao planejadas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /competitions/:id/exports</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna arquivo CSV; <code>422</code> pode indicar ausencia de dados exportaveis.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="report-routes">
+      <h2>3.6.8 Report Routes</h2>
+      <p>
+        Os relatorios ainda devem ser implementados para consolidar desempenho por atleta, equipe
+        e competicao, alem de gerar highlights automaticos ao final do evento.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descricao</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:id/reports</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Retorna relatorio e highlights de desempenho da competicao.</td>
+            <td>RF014, RN16, RN17</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Response planejado - 200 OK</h3>
+      <pre><code>{
+  "competicao_id": 1,
+  "resumo": {
+    "distancia_total_km": 512.7,
+    "equipes": 16,
+    "atletas": 256
+  },
+  "highlights": {
+    "melhor_pace_individual": {
+      "athlete_id": 12,
+      "pace": "4:10/km"
+    },
+    "maior_distancia_equipe": {
+      "team_id": 1,
+      "distancia_total_km": 128.4
+    }
+  }
+}</code></pre>
+
+      <h3>Saidas da requisicao planejadas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /competitions/:id/reports</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna relatorio consolidado; <code>422</code> pode indicar competicao ainda sem dados suficientes.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="status-summary">
+      <h2>Resumo de Implementacao</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Grupo</th>
+            <th>Status</th>
+            <th>Observacao</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Competitions</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>CRUD e encerramento documentados.</td>
+          </tr>
+          <tr>
+            <td>Teams</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>CRUD aninhado por competicao.</td>
+          </tr>
+          <tr>
+            <td>Athletes/Runners</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>CRUD aninhado por competicao e equipe.</td>
+          </tr>
+          <tr>
+            <td>Administrators</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>CRUD administrativo conforme conjunto de endpoints definido.</td>
+          </tr>
+          <tr>
+            <td>Checkpoints</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>CRUD e consultas por corredor/competicao.</td>
+          </tr>
+          <tr>
+            <td>Ranking</td>
+            <td><span class="tag planned">Planned</span></td>
+            <td><code>GET /competitions/:id/ranking</code></td>
+          </tr>
+          <tr>
+            <td>Exports</td>
+            <td><span class="tag planned">Planned</span></td>
+            <td><code>GET /competitions/:id/exports</code></td>
+          </tr>
+          <tr>
+            <td>Reports</td>
+            <td><span class="tag planned">Planned</span></td>
+            <td><code>GET /competitions/:id/reports</code></td>
+          </tr>
+        </tbody>
+      </table>
+      <p class="note">
+        Fonte funcional: matriz RF/RN/endpoints do WAD e conjunto de endpoints validado para a
+        documentacao atual. Fonte estrutural: organizacao por grupo de rotas, com descricao,
+        headers, body, responses e exemplos no estilo de documentacao OAS.
+      </p>
+    </section>
+  </main>
+</body>
+</html>
