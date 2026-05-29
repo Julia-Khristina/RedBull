@@ -1781,16 +1781,16 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 
-
-
 #### Painel operacional das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Em seguida o painel operacional da equipe é utilizada pelo juiz para acompanhar o atleta em tempo real durante corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também apresenta métricas como distância percorrida, pace médio, tempo ativo e histórico dos últimos checkpoints registrados.
+&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
+
 
 <div align="center">
   <sub>Figura 1 - Painel de operacional das equipes</sub><br>
-    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
+
 
 #### Painel operacional das equipes com dropdown.
 &nbsp; &nbsp; &nbsp; &nbsp;  Encontra-se abaixo a funcionalidade de troca de atleta ativo, permitindo que o juiz selecione o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar, garantindo maior controle operacional e organização durante os revezamentos, e tudo é feito com a aba de dropdown. 
