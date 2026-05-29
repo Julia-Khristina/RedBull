@@ -966,6 +966,27 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 </div>
 
 
+#### Revisão Cruzada da Análise de Consistência Arquitetural
+ 
+A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os diagramas de sequência UML (seção 3.2.4), o diagrama de entidade-relacionamento (seção 3.6.1) e os scripts de migração (`migration.sql`), identificando pontos de atenção e ações necessárias.
+ 
+Nomenclatura de camadas. Os nomes `Controller`, `Service`, `Repository`, `Model` e `PostgreSQL` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A inconsistência de nomenclatura entre entidades em inglês (ex.: `CompetitionController`, `CompetitionService`, `CompetitionRepository`) e o Model em português (`Competicao`) deve ser resolvida antes da entrega final: a equipe deve padronizar para um único idioma em todos os artefatos de código.
+ 
+Coerência entre Models e tabelas de banco. Os campos do Model `Checkpoint` , `corredor_id`, `equipe_id`, `esteira_id`, `timestamp`, `origem`, `distancia_parcial` e `ocr_score` devem ser confrontados com as colunas definidas na `migration.sql` para confirmar correspondência. O mesmo vale para `Equipe` (campo `uuid_acesso_publico`) e `AuditLog` (campos `tipo_operacao`, `entidade_id`, `operador_id`, `payload_json`).
+ 
+Tabela `audit_logs` no `migration.sql`. A RN05 exige log imutável de todas as operações críticas. A tabela `audit_logs` deve estar presente na migration com as colunas `id`, `tipo_operacao`, `entidade`, `entidade_id`, `operador_id`, `timestamp` e `payload_json`. Caso ausente, deve ser adicionada antes da entrega.
+ 
+Constraint `UNIQUE` sobre `uuid_acesso_publico`. Para garantir integridade e performance nas consultas do `PublicController`, a coluna `equipes.uuid_acesso_publico` deve possuir constraint `UNIQUE` e índice B-tree no `migration.sql`.
+ 
+Fluxo OCR nos diagramas de sequência (3.2.4). O retorno `202 Accepted` pelo `CheckpointController` e o callback assíncrono do motor externo para o `OCRService` devem estar representados nos diagramas de sequência com marcação explícita de assincronicidade (fragmento `async` ou notação equivalente em UML 2.x).
+ 
+`EsteiraRepository` e Model `Esteira`. A entidade `Esteira` e seu Repository foram incluídos nesta seção em resposta à identificação de lacuna na versão anterior do documento. O RF06 referencia operações sobre esteiras; o `EsteiraRepository` deve estar presente na implementação e no `migration.sql`.
+ 
+Consistência do `RankingRepository`. O Model de destino do `RankingRepository` é `RankingFinal`, não `Competicao`. O diagrama e a tabela de rastreabilidade foram atualizados para refletir essa distinção.
+ 
+Middleware de validação de UUID. O middleware de validação de formato UUID-v4 está aplicado na camada de Routes (`R_PUBLIC`), antes de atingir o `PublicController`, evitando que identificadores malformados alcancem a camada de Service.
+
+
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
