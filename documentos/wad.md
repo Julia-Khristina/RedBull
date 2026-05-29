@@ -911,6 +911,8 @@ O processamento de imagens capturadas pelos funcionários da Red Bull 24h consti
 
 Esse desenho evita que a latência do motor OCR impacte a resposta percebida pelos operadores no iPad, mantendo a experiência administrativa fluida durante picos de carga gerados por múltiplos checkpoints simultâneos.
 
+#### Tabela de Responsabilidades
+
 <div align="center">
   <sub>Quadro 23 - Responsabilidades das Camadas  </sub>
 </div>
@@ -928,6 +930,8 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
+
+#### Tabela de Rastreabilidade
 
 <div align="center">
   <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas  </sub>
@@ -952,6 +956,15 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
+
+#### Diagrama da Arquitetura em Camadas
+
+<div align="center">
+  <sub>Figura 15 - Diagrama de Classes de Domínio </sub><br>
+  <img src="../assets/programacao/diagrama-arquitetura-camadas.svg" width="100%" alt="Diagrama Arquitetura em Camadas"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
