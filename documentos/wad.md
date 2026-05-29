@@ -1738,6 +1738,46 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Captura da foto da esteira.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de captura da foto da esteira, utilizada para registrar os dados do participante durante a competição. Nela, o operador pode visualizar a imagem capturada do painel da esteira referente ao checkpoint atual, além de optar entre realizar um registro manual ou prosseguir com a captura automática para extração dos dados via OCR, garantindo maior agilidade e precisão no processo de validação dos checkpoints.
+
+
+
+<div align="center">
+  <sub>Figura 9 - Captura da foto da esteira </sub><br>
+    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Dados extraídos via OCR.
+&nbsp; &nbsp; &nbsp; &nbsp; Altere
+
+
+<div align="center">
+  <sub>Figura 10 - Dados extraídos via OCR </sub><br>
+    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Registro Manual.
+&nbsp; &nbsp; &nbsp; &nbsp;alterar
+
+
+<div align="center">
+  <sub>Figura 11 -  Registro Manual </sub><br>
+    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Checkpoints salvos.
+&nbsp; &nbsp; &nbsp; &nbsp;alterar
+
+
+<div align="center">
+  <sub>Figura 12 -  Checkpoints salvos </sub><br>
+    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Dashboard pós-cadastro de Competição.
 &nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
