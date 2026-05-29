@@ -992,7 +992,292 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-*Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto.*
+Os padrões de projeto foram adotados no backend com o objetivo de promover uma arquitetura mais organizada, modular e de fácil manutenção ao longo do desenvolvimento do sistema. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
+
+Além disso, a definição de estruturas padronizadas para acesso a dados, validações, regras de negócio e tratamento de requisições permite maior consistência no desenvolvimento do backend, tornando o código mais legível e simplificando futuras manutenções e evoluções da aplicação.
+
+A seguir, são apresentados os principais padrões identificados no sistema, bem como suas categorias, definições, os problemas que resolvem, justificativas de adoção e exemplos de aplicação no backend.
+
+---
+
+### Repository Pattern
+
+#### Categoria
+Estrutural / Arquitetural
+
+#### Definição
+O Repository Pattern é um padrão responsável por centralizar e abstrair o acesso aos dados da aplicação em uma camada específica de repositório. Esse padrão atua como intermediário entre a aplicação e o banco de dados, encapsulando operações de persistência, como consultas, inserções, atualizações e remoções de registros.
+
+Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
+
+#### Problema resolvido
+Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados.
+
+Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura. Além disso, qualquer alteração relacionada às operações de persistência precisaria ser realizada em diferentes pontos da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades de competição, equipes e atletas. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio da aplicação, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema.
+
+A centralização das operações de persistência em arquivos de repositório também contribui para:
+<ul>
+    <li>melhorar organização do backend;</li>
+    <li>reduzir repetição de consultas;</li>
+    <li>facilitar manutenção das operações de banco;</li>
+    <li>reutilizar métodos de acesso aos dados;</li>
+    <li>reduzir acoplamento entre as camadas da aplicação.
+</ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+-  `competitionRepository.ts`
+-  `teamRepository.ts`
+-  `athleteRepository.ts`
+
+Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
+
+#### Exemplo de código
+```typescript
+async findById(id: number): Promise<Competition | null> {
+  const supabase = getSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("competicao")
+    .select(competitionSelect)
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as Competition | null;
+}
+```
+No exemplo apresentado, o método findById encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
+
+---
+
+### Service Layer Pattern
+
+#### Categoria
+Arquitetural
+
+#### Definição
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+
+#### Problema resolvido
+Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários. Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend.
+
+No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo:
+<ul>
+    <li>validação de parâmetros;</li>
+    <li>verificação de existência de registros;</li>
+    <li>coordenação de operações;</li>
+    <li>lançamento de exceções;</li>
+    <li>controle de fluxos de execução.
+</ul>
+
+Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados. A utilização da camada de Service também contribui para maior organização do backend e reutilização das regras de negócio entre diferentes partes da aplicação.
+
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+- `competitionService.ts`
+-  `teamService.ts`
+-  `athleteService.ts`
+
+Esses arquivos centralizam as regras de negócio relacionadas às entidades da aplicação antes da comunicação com os repositórios.
+
+#### Exemplo de código
+```typescript
+async findById(idParam: unknown): Promise<Competition> {
+  const id = validateCompetitionId(idParam);
+
+  const competition = await repository.findById(id);
+
+  if (!competition) {
+    throw new NotFoundError("Competição não encontrada");
+  }
+
+  return competition;
+}
+````
+Nesse exemplo, o Service realiza validação do identificador recebido, consulta o repositório e verifica se o registro existe antes de retornar a informação. Dessa forma, a lógica de negócio permanece isolada da camada responsável pelas requisições HTTP.
+
+---
+
+### Dependency Injection Pattern
+
+#### Categoria
+Criacional / Arquitetural
+
+#### Definição
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
+
+#### Problema resolvido
+Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes, possibilitando validar apenas o comportamento das regras de negócio implementadas nos Services.
+
+Além disso, esse padrão contribui para:
+<ul>
+    <li>reduzir acoplamento entre camadas;</li>
+    <li>facilitar manutenção;</li>
+    <li>melhorar testabilidade;</li>
+    <li>permitir maior flexibilidade na criação dos Services.
+</ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado na criação dos Services, permitindo que os repositórios sejam recebidos como parâmetro durante sua inicialização. Dessa forma, durante a execução normal da aplicação utiliza-se o repositório real, enquanto nos testes podem ser utilizados mocks responsáveis por simular o comportamento esperado da camada de persistência.
+
+#### Exemplo de código
+```typescript
+export function createCompetitionService(
+  repository: CompetitionRepository = competitionRepository
+) {
+  return {
+    async create(payload: Partial<CreateCompetitionInput>) {
+      const input = validateCreateCompetition(payload);
+
+      return repository.create(input);
+    }
+  };
+}
+```
+
+#### Exemplo de aplicação nos testes
+```typescript
+const repository = createRepositoryMock();
+
+const competitionService = createCompetitionService(repository);
+```
+No exemplo apresentado, o Service recebe o repositório como dependência externa. Isso permite substituir facilmente a implementação real por um mock durante os testes automatizados.
+
+---
+
+### Middleware Pattern
+
+#### Categoria
+Comportamental / Arquitetural
+
+#### Definição
+O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP.
+
+Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros, autenticação e manipulação de requisições.
+
+#### Problema resolvido
+Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
+
+#### Justificativa da adoção
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis.
+
+Além disso, o padrão contribui para:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>melhorar organização estrutural;</li>
+    <li>centralizar tratamento de exceções;</li>
+    <li>simplificar implementação das rotas.
+</ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+-  `asyncHandler.ts`
+-  `errorHandler.ts`
+
+Esses arquivos são responsáveis por encapsular erros assíncronos e encaminhar exceções para o tratamento centralizado da aplicação.
+
+#### Exemplo de código
+```typescript
+export function asyncHandler(
+  handler: (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => Promise<void>
+) {
+  return (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void => {
+    Promise.resolve(handler(req, res, next))
+      .catch(next);
+  };
+}
+```
+
+#### Exemplo de uso
+```typescript
+router.post(
+  "/competitions",
+  asyncHandler(competitionController.create)
+);
+```
+Nesse exemplo, o middleware asyncHandler encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o middleware de tratamento de exceções.
+
+---
+
+### Validation Layer Pattern
+
+#### Categoria
+Estrutural / Arquitetural
+
+#### Definição
+O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio.
+
+Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelas regras de negócio e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
+
+#### Problema resolvido
+Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
+
+#### Justificativa da adoção
+Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação.
+
+
+A centralização das validações em arquivos específicos permite:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>organizar validações da aplicação;</li>
+    <li>padronizar verificações realizadas;</li>
+    <li>impedir envio de dados inválidos para os Services.
+</ul>
+
+Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
+
+#### Aplicação no projeto
+O padrão foi aplicado nos arquivos responsáveis pela validação dos payloads utilizados nas operações de criação e atualização das entidades do sistema. Esses arquivos verificam obrigatoriedade de campos, tipos de dados e formatos esperados antes da continuidade do fluxo da aplicação.
+
+#### Exemplo de código
+```typescript
+export function validateCreateCompetition(
+  payload: unknown
+): CreateCompetitionInput {
+
+  if (!isObject(payload)) {
+    throw new ValidationError("Payload inválido");
+  }
+
+  const nome = readRequiredText(payload, "nome");
+  const data = readRequiredText(payload, "data");
+  const endereco = readRequiredText(payload, "endereco");
+
+  if (!isValidDate(data)) {
+    throw new ValidationError(
+      "data deve ser uma data válida"
+    );
+  }
+
+  return {
+    nome,
+    data,
+    endereco,
+  };
+}
+```
+Nesse exemplo, a função realiza validações relacionadas à estrutura e aos formatos esperados do payload antes que os dados sejam enviados para as regras de negócio da aplicação.
 
 ## 3.3. Wireframes (sprint 2)
 
