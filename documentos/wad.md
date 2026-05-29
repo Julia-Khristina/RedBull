@@ -1876,6 +1876,7 @@ A seguir, o Quadro 32 ilustra a entidade Administrador e os seus atributos.
 | -------- | --------- | -------------- | --------- | 
 | Administrador | Código | Identificador | Identifica unicamente cada administrador |
 | Administrador | Nome | Texto | Nome do administrador |
+| Administrador | Email | Texto | Credencial de identificação utilizada na autenticação |
 | Administrador | Área | Texto | Área de atuação do administrador | 
 | Administrador | Senha | Texto protegido | Credencial de acesso ao painel administrativo |
 | Administrador | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
@@ -2047,6 +2048,7 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | `checkpoint` | `FOREIGN KEY` | `corredor_id`, `competicao_id`, `esteira_id`, `administrador_id` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um administrador. |
 | `equipe` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
 | `corredor` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
+| `administrador` | `UNIQUE` | `email` | Garante que cada administrador tenha um e-mail exclusivo, usado como credencial de autenticação. |
 | `checkpoint` | `UNIQUE` | `identificador` | Define que cada registro operacional possui um identificador próprio. |
 | `competicao` | `CHECK` | `status` | Limita o status da competição aos estados previstos (não iniciado, em andamento, encerrada). |
 | `competicao` | `CHECK` | `data` | Garante que a data da competição esteja dentro de um intervalo histórico plausível. |
@@ -2054,6 +2056,7 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | `corredor` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
 | `corredor` | `CHECK` | `cpf` | Garante o formato `000.000.000-00` para o CPF. |
 | `corredor` | `CHECK` | `email` | Garante que o e-mail siga um formato válido (`usuario@dominio.tld`). |
+| `administrador` | `CHECK` | `email` | Garante que o e-mail do administrador siga um formato válido. |
 | `checkpoint` | `CHECK` | `km` | Limita a distância registrada a um intervalo plausível (0 a 1000 km). |
 | `checkpoint` | `CHECK` | `pace` | Garante o formato `M:SS/km` ou `MM:SS/km` quando o pace é registrado. |
 | `checkpoint` | `CHECK` | `tempo` | Garante o formato `HH:MM:SS` quando o tempo total é registrado. |
@@ -2170,15 +2173,18 @@ A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma 
 CREATE TABLE administrador (
     id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
     nome        VARCHAR(100)    NOT NULL,
+    email       VARCHAR(150)    NOT NULL,
     area        VARCHAR(100)    NULL,
     senha       VARCHAR(255)    NOT NULL,
     criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
  
     PRIMARY KEY (id),
-    CHECK (length(trim(nome)) > 0)
+    UNIQUE (email),
+    CHECK (length(trim(nome)) > 0),
+    CHECK (email ~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$')
 );
 ```
-A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro. Uma restrição `CHECK` sobre `nome` impede cadastros com nome composto apenas por espaços em branco.
+A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **email** é a credencial de identificação utilizada na autenticação e possui restrição `UNIQUE` para impedir duplicidade, além de `CHECK` que valida o formato (`usuario@dominio.tld`). O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro. Uma restrição `CHECK` sobre `nome` impede cadastros com nome composto apenas por espaços em branco.
  
  #### Tabela checkpoint
  
