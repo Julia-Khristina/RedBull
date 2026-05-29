@@ -847,35 +847,57 @@ Por fim, o eixo Organizacional (ORG) está relacionado ao modelo de desenvolvime
 Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTful descritas pela Microsoft Azure Architecture Center, que recomenda o uso de substantivos no plural para nomear recursos, hierarquia de URIs para expressar relações entre entidades e verbos HTTP como única forma de expressar a ação sobre o recurso (Microsoft, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio que o governam e ao contrato HTTP que o implementa.
 
 <div align="center">
-  <sub>Quadro 22 - Matriz RF → RN → Endpoint  </sub>
+
+  <sub>Quadro 22 - Matriz RF → RN → Endpoint</sub>
+
 </div>
 
-| RF    | RN associadas | Endpoint                                                      | Método |
-| ----- | ------------- | ------------------------------------------------------------- | ------ |
-| RF001 | RN03          | `/competitions`                                               | POST   |
-| RF002 | RN18 | `/competitions` | POST |
-| RF003 | RN01, RN07    | `/competitions/:id/teams`                                     | POST   |
-| RF003 | RN01, RN07    | `/competitions/:id/teams/:teamId`                             | PUT    |
-| RF003 | RN01, RN07    | `/competitions/:id/teams/:teamId`                             | DELETE |
-| RF003 | RN01          | `/competitions/:id/teams/:teamId/athletes`                    | POST   |
-| RF003 | RN01          | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | PUT    |
-| RF003 | RN01          | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | DELETE |
-| RF004 | RN02, RN03    | `/auth/sessions`                                              | POST   |
-| RF005 | RN06          | `/ocr/extractions`                                            | POST   |
-| RF006 | RN04, RN05    | `/ocr/extractions`                                            | POST   |
-| RF007 | RN06, RN12    | `/ocr/extractions/:extractionId`                              | PATCH  |
-| RF008 | RN04, RN05    | `/competitions/:id/checkpoints`                               | POST   |
-| RF009 | RN06          | `/competitions/:id/checkpoints/inconsistencies`               | GET    |
-| RF010 | RN09, RN11    | `/competitions/:id/ranking`                                   | GET    |
-| RF011 | RN07, RN10    | `/competitions/:id/teams/:teamId/runners`                     | GET    |
-| RF012 | RN14          | `/competitions/:id`                                           | PATCH  |
-| RF013 | RN15          | `/competitions/:id/exports`                                   | GET    |
-| RF014 | RN16, RN17    | `/competitions/:id/reports`                                   | GET    |
-| RF015 | RN09, RN11    | `/competitions/:id/ranking`                                   | GET    |
+| RF    | RN associadas       | Endpoint                                                      | Método |
+| ----- | ------------------- | ------------------------------------------------------------- | ------ |
+| RF001 | RN03                | `/competitions`                                               | POST   |
+| RF002 | RN18                | `/competitions`                                               | POST   |
+| RF002 | RN18                | `/competitions`                                               | GET    |
+| RF002 | RN18                | `/competitions/:id`                                           | GET    |
+| RF002 | RN18                | `/competitions/:id`                                           | PUT    |
+| RF012 | RN14                | `/competitions/:id`                                           | PATCH  |
+| RF002 | RN18                | `/competitions/:id`                                           | DELETE |
+| RF003 | RN01, RN07          | `/competitions/:id/teams`                                     | POST   |
+| RF003 | RN01, RN07          | `/competitions/:id/teams`                                     | GET    |
+| RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | GET    |
+| RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | PUT    |
+| RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | DELETE |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes`                    | POST   |
+| RF011 | RN07, RN10          | `/competitions/:id/teams/:teamId/athletes`                    | GET    |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | GET    |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | PUT    |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | DELETE |
+| RF004 | RN02, RN03          | `/auth/sessions`                                              | POST   |
+| RF005 | RN06                | `/ocr/extractions`                                            | POST   |
+| RF006 | RN04, RN05          | `/ocr/extractions`                                            | POST   |
+| RF007 | RN06, RN12          | `/ocr/extractions/:extractionId`                              | PATCH  |
+| RF008 | RN04, RN05          | `/checkpoints`                                                | POST   |
+| RF008 | RN04, RN05          | `/checkpoints`                                                | GET    |
+| RF008 | RN04, RN05          | `/checkpoints/:id`                                            | GET    |
+| RF007 | RN06, RN12          | `/checkpoints/:id`                                            | PUT    |
+| RF008 | RN04, RN05          | `/checkpoints/:id`                                            | DELETE |
+| RF008 | RN04, RN05          | `/corredores/:corredorId/checkpoints`                         | GET    |
+| RF008 | RN04, RN05          | `/competitions/:id/checkpoints`                               | GET    |
+| RF009 | RN06                | `/competitions/:id/checkpoints/inconsistencies`               | GET    |
+| RF010 | RN09, RN11          | `/competitions/:id/ranking/teams`                             | GET    |
+| RF015 | RN09, RN11          | `/competitions/:id/ranking/athletes`                          | GET    |
+| RF013 | RN15                | `/competitions/:id/export`                                    | GET    |
+| RF014 | RN16, RN17          | `/competitions/:id/reports`                                   | GET    |
+| RF004 | RN02, RN03          | `/administradores`                                            | GET    |
+| RF004 | RN02, RN03          | `/administradores/:id`                                        | GET    |
+| RF004 | RN02, RN03          | `/administradores`                                            | POST   |
+| RF004 | RN02, RN03          | `/administradores/:id`                                        | PUT    |
+| RF004 | RN02, RN03          | `/administradores/:id`                                        | DELETE |
 
 <div align="center">
+
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
+
+</div>
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
