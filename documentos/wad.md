@@ -2610,9 +2610,9 @@ A tabela demonstra que a consulta seleciona registros apenas quando a quilometra
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
+A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Esse material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre frontend, backend e banco de dados.
 
-*Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500).*
+A versão versionada no repositório pode ser consultada em [documentos/outros/api-documentation.html](outros/api-documentation.html). Para facilitar a leitura externa e a validação do artefato sem necessidade de clonar o projeto, a mesma documentação também foi publicada em ambiente web no link: [https://web-api-deploy-d81981.pages.git.inteli.edu.br/](https://web-api-deploy-d81981.pages.git.inteli.edu.br/).
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
