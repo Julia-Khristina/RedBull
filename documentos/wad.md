@@ -881,9 +881,377 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ## 3.2. Arquitetura (sprints 1 a 5)
 
-### 3.2.1. Diagrama de Arquitetura (sprints 3 e 4)
+### 3.2.1 Arquitetura em Camadas
 
-*Posicione aqui o diagrama de arquitetura da solução, indicando as camadas principais (Controller, Service, Repository, Model) e suas responsabilidades. Atualize sempre que necessário.*
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+```txt
+CompeticaoController
+
+Atributos
+- competicaoService: CompeticaoService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ iniciarCompeticao(req, res) : void
++ encerrarCompeticao(req, res) : void
+
+
+CompeticaoService
+
+Atributos
+- competicaoRepository: CompeticaoRepository
+
+Métodos
++ listar() : Competicao[]
++ buscarPorId(id) : Competicao
++ criar(dados) : Competicao
++ atualizar(id, dados) : Competicao
++ iniciar(id) : Competicao
++ encerrar(id) : Competicao
+
+
+CompeticaoRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Competicao[]
++ findById(id) : Competicao
++ create(dados) : Competicao
++ update(id, dados) : Competicao
+
+
+CompeticaoModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+EquipeController
+
+Atributos
+- equipeService: EquipeService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
++ buscarPorCompeticao(req, res) : void
+
+
+EquipeService
+
+Atributos
+- equipeRepository: EquipeRepository
+
+Métodos
++ listar() : Equipe[]
++ buscarPorId(id) : Equipe
++ buscarPorCompeticao(idCompeticao) : Equipe[]
++ criar(dados) : Equipe
++ atualizar(id, dados) : Equipe
++ excluir(id) : void
+
+
+EquipeRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Equipe[]
++ findById(id) : Equipe
++ findByCompeticao(idCompeticao) : Equipe[]
++ create(dados) : Equipe
++ update(id, dados) : Equipe
++ delete(id) : void
+
+
+EquipeModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+CorredorController
+
+Atributos
+- corredorService: CorredorService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
++ buscarPorEquipe(req,res): void
+
+
+CorredorService
+
+Atributos
+- corredorRepository: CorredorRepository
+
+Métodos
++ listar() : Corredor[]
++ buscarPorId(id) : Corredor
++ buscarPorEquipe(idEquipe) : Corredor[]
++ criar(dados) : Corredor
++ atualizar(id, dados) : Corredor
++ atualizarStatus(id,status): Corredor
++ excluir(id) : void
+
+
+CorredorRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Corredor[]
++ findById(id) : Corredor
++ findByEquipe(idEquipe) : Corredor[]
++ create(dados) : Corredor
++ update(id, dados) : Corredor
++ delete(id) : void
+
+
+CorredorModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+CheckpointController
+
+Atributos
+- checkpointService: CheckpointService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ registrarOCR(req,res): void
++ confirmarManual(req,res): void
+
+
+CheckpointService
+
+Atributos
+- checkpointRepository: CheckpointRepository
+- corredorService: CorredorService
+- esteiraService: EsteiraService
+- validacaoService: ValidacaoService
+
+Métodos
++ listar() : Checkpoint[]
++ buscarPorId(id) : Checkpoint
++ criar(dados) : Checkpoint
++ registrarViaOCR(dados): Checkpoint
++ confirmarManual(id): Checkpoint
++ atualizar(id, dados) : Checkpoint
+
+
+CheckpointRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Checkpoint[]
++ findById(id) : Checkpoint
++ findByCorredor(idCorredor): Checkpoint[]
++ create(dados) : Checkpoint
++ update(id, dados) : Checkpoint
+
+
+CheckpointModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+ValidacaoService
+
+Métodos
++ validar(dados): ValidationResult
++ validarEsteira(esteira): boolean
++ validarKm(km: number): boolean
++ validarTempo(tempoSegundos: number): boolean
++ validarPace(paceSegundos: number): boolean
+
+
+
+AdministradorController
+
+Atributos
+- administradorService: AdministradorService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
+
+
+AdministradorService
+
+Atributos
+- administradorRepository: AdministradorRepository
+
+Métodos
++ listar() : Administrador[]
++ buscarPorId(id) : Administrador
++ criar(dados) : Administrador
++ atualizar(id, dados) : Administrador
++ excluir(id) : void
+
+
+AdministradorRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Administrador[]
++ findById(id) : Administrador
++ create(dados) : Administrador
++ update(id, dados) : Administrador
++ delete(id) : void
+
+
+AdministradorModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+AuthController
+
+Atributos
+- authService: AuthService
+
+Métodos
++ login(req,res): void
++ logout(req,res): void
++ verificarToken(req,res): void
+
+
+AuthService
+
+Atributos
+- administradorService: AdministradorService
+
+Métodos
++ autenticar(email, senha): Token
++ gerarToken(usuario): string
++ validarToken(token): boolean
+
+
+
+EsteiraController
+
+Atributos
+- esteiraService: EsteiraService
+
+Métodos
++ listar(req, res) : void
++ buscarPorId(req, res) : void
++ criar(req, res) : void
++ atualizar(req, res) : void
++ excluir(req, res) : void
+
+
+EsteiraService
+
+Atributos
+- esteiraRepository: EsteiraRepository
+
+Métodos
++ listar() : Esteira[]
++ buscarPorId(id) : Esteira
++ criar(dados) : Esteira
++ atualizar(id, dados) : Esteira
++ atualizarStatus(id,status): Esteira
++ excluir(id) : void
+
+
+EsteiraRepository
+
+Atributos
+- db: Database
+
+Métodos
++ findAll() : Esteira[]
++ findById(id) : Esteira
++ create(dados) : Esteira
++ update(id, dados) : Esteira
++ delete(id) : void
+
+
+EsteiraModel
+
+Métodos
++ schema: JoiSchema
++ validate(dados) : ValidationResult
+
+
+
+RankingController
+
+Atributos
+- rankingService: RankingService
+
+Métodos
++ rankingEquipes(req,res): void
++ rankingCorredores(req,res): void
+
+
+RankingService
+
+Atributos
+- checkpointService: CheckpointService
+- equipeService: EquipeService
+
+Métodos
++ gerarRankingEquipes() : : Ranking[]
++ calcularPosicoes() : : Ranking[]
++ calcularPaceMedio() : : number
+
+
+
+OCRService
+
+Métodos
++ processarImagem(imagem) : : OCRResult
++ extrairDados(texto) : : DadosOCR
+```
+
+#### 3.2.3.1 Diagrama de Classes Arquitetural
+
+<div align="center">
+  <sub>Figura 8 - Diagrama de Classes Arquitetural</sub><br>
+  <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
@@ -980,7 +1348,293 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-*Documente os design patterns utilizados (Repository, Strategy, Factory, DTO etc.) e quais princípios SOLID se aplicam. Justifique a adoção de cada padrão com base em uma necessidade real do projeto.*
+Os padrões de projeto foram adotados no backend com o objetivo de promover uma arquitetura mais organizada, modular e de fácil manutenção ao longo do desenvolvimento do sistema. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
+
+Além disso, a definição de estruturas padronizadas para acesso a dados, validações, regras de negócio e tratamento de requisições permite maior consistência no desenvolvimento do backend, tornando o código mais legível e simplificando futuras manutenções e evoluções da aplicação.
+
+A seguir, são apresentados os principais padrões identificados no sistema, bem como suas categorias, definições, os problemas que resolvem, justificativas de adoção e exemplos de aplicação no backend.
+
+---
+
+### Repository Pattern
+
+#### Categoria
+Estrutural / Arquitetural
+
+#### Definição
+O Repository Pattern é um padrão responsável por centralizar e abstrair o acesso aos dados da aplicação em uma camada específica de repositório. Esse padrão atua como intermediário entre a aplicação e o banco de dados, encapsulando operações de persistência, como consultas, inserções, atualizações e remoções de registros.
+
+Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
+
+#### Problema resolvido
+Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados.
+
+Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura. Além disso, qualquer alteração relacionada às operações de persistência precisaria ser realizada em diferentes pontos da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades de competição, equipes e atletas. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio da aplicação, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema.
+
+A centralização das operações de persistência em arquivos de repositório também contribui para:
+<ul>
+    <li>melhorar organização do backend;</li>
+    <li>reduzir repetição de consultas;</li>
+    <li>facilitar manutenção das operações de banco;</li>
+    <li>reutilizar métodos de acesso aos dados;</li>
+    <li>reduzir acoplamento entre as camadas da aplicação.
+</ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+-  `competitionRepository.ts`
+-  `teamRepository.ts`
+-  `athleteRepository.ts`
+
+Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
+
+#### Exemplo de código
+```typescript
+async findById(id: number): Promise<Competition | null> {
+  const supabase = getSupabaseClient();
+
+  const { data, error } = await supabase
+    .from("competicao")
+    .select(competitionSelect)
+    .eq("id", id)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data as Competition | null;
+}
+```
+No exemplo apresentado, o método findById encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
+
+---
+
+### Service Layer Pattern
+
+#### Categoria
+Arquitetural
+
+#### Definição
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+
+#### Problema resolvido
+Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários. Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend.
+
+No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo:
+<ul>
+    <li>validação de parâmetros;</li>
+    <li>verificação de existência de registros;</li>
+    <li>coordenação de operações;</li>
+    <li>lançamento de exceções;</li>
+    <li>controle de fluxos de execução.
+</ul>
+
+Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados. A utilização da camada de Service também contribui para maior organização do backend e reutilização das regras de negócio entre diferentes partes da aplicação.
+
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+- `competitionService.ts`
+-  `teamService.ts`
+-  `athleteService.ts`
+
+Esses arquivos centralizam as regras de negócio relacionadas às entidades da aplicação antes da comunicação com os repositórios.
+
+#### Exemplo de código
+```typescript
+async findById(idParam: unknown): Promise<Competition> {
+  const id = validateCompetitionId(idParam);
+
+  const competition = await repository.findById(id);
+
+  if (!competition) {
+    throw new NotFoundError("Competição não encontrada");
+  }
+
+  return competition;
+}
+````
+Nesse exemplo, o Service realiza validação do identificador recebido, consulta o repositório e verifica se o registro existe antes de retornar a informação. Dessa forma, a lógica de negócio permanece isolada da camada responsável pelas requisições HTTP.
+
+---
+
+### Dependency Injection Pattern
+
+#### Categoria
+Criacional / Arquitetural
+
+#### Definição
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
+
+#### Problema resolvido
+Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
+
+#### Justificativa da adoção
+Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes, possibilitando validar apenas o comportamento das regras de negócio implementadas nos Services.
+
+Além disso, esse padrão contribui para:
+<ul>
+    <li>reduzir acoplamento entre camadas;</li>
+    <li>facilitar manutenção;</li>
+    <li>melhorar testabilidade;</li>
+    <li>permitir maior flexibilidade na criação dos Services.
+</ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado na criação dos Services, permitindo que os repositórios sejam recebidos como parâmetro durante sua inicialização. Dessa forma, durante a execução normal da aplicação utiliza-se o repositório real, enquanto nos testes podem ser utilizados mocks responsáveis por simular o comportamento esperado da camada de persistência.
+
+#### Exemplo de código
+```typescript
+export function createCompetitionService(
+  repository: CompetitionRepository = competitionRepository
+) {
+  return {
+    async create(payload: Partial<CreateCompetitionInput>) {
+      const input = validateCreateCompetition(payload);
+
+      return repository.create(input);
+    }
+  };
+}
+```
+
+#### Exemplo de aplicação nos testes
+```typescript
+const repository = createRepositoryMock();
+
+const competitionService = createCompetitionService(repository);
+```
+No exemplo apresentado, o Service recebe o repositório como dependência externa. Isso permite substituir facilmente a implementação real por um mock durante os testes automatizados.
+
+---
+
+### Middleware Pattern
+
+#### Categoria
+Comportamental / Arquitetural
+
+#### Definição
+O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP.
+
+Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros, autenticação e manipulação de requisições.
+
+#### Problema resolvido
+Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
+
+#### Justificativa da adoção
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis.
+
+Além disso, o padrão contribui para:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>melhorar organização estrutural;</li>
+    <li>centralizar tratamento de exceções;</li>
+    <li>simplificar implementação das rotas.
+</ul>
+
+#### Aplicação no projeto
+O padrão foi aplicado nos seguintes arquivos:
+-  `asyncHandler.ts`
+-  `errorHandler.ts`
+
+Esses arquivos são responsáveis por encapsular erros assíncronos e encaminhar exceções para o tratamento centralizado da aplicação.
+
+#### Exemplo de código
+```typescript
+export function asyncHandler(
+  handler: (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) => Promise<void>
+) {
+  return (
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): void => {
+    Promise.resolve(handler(req, res, next))
+      .catch(next);
+  };
+}
+```
+
+#### Exemplo de uso
+```typescript
+router.post(
+  "/competitions",
+  asyncHandler(competitionController.create)
+);
+```
+Nesse exemplo, o middleware asyncHandler encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o middleware de tratamento de exceções.
+
+---
+
+### Validation Layer Pattern
+
+#### Categoria
+Estrutural / Arquitetural
+
+#### Definição
+O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio.
+
+Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelas regras de negócio e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
+
+#### Problema resolvido
+Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
+
+#### Justificativa da adoção
+Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação.
+
+
+A centralização das validações em arquivos específicos permite:
+<ul>
+    <li>reduzir repetição de código;</li>
+    <li>organizar validações da aplicação;</li>
+    <li>padronizar verificações realizadas;</li>
+    <li>impedir envio de dados inválidos para os Services.
+</ul>
+
+Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
+
+#### Aplicação no projeto
+O padrão foi aplicado nos arquivos responsáveis pela validação dos payloads utilizados nas operações de criação e atualização das entidades do sistema. Esses arquivos verificam obrigatoriedade de campos, tipos de dados e formatos esperados antes da continuidade do fluxo da aplicação.
+
+#### Exemplo de código
+```typescript
+export function validateCreateCompetition(
+  payload: unknown
+): CreateCompetitionInput {
+
+  if (!isObject(payload)) {
+    throw new ValidationError("Payload inválido");
+  }
+
+  const nome = readRequiredText(payload, "nome");
+  const data = readRequiredText(payload, "data");
+  const endereco = readRequiredText(payload, "endereco");
+
+  if (!isValidDate(data)) {
+    throw new ValidationError(
+      "data deve ser uma data válida"
+    );
+  }
+
+  return {
+    nome,
+    data,
+    endereco,
+  };
+}
+```
+Nesse exemplo, a função realiza validações relacionadas à estrutura e aos formatos esperados do payload antes que os dados sejam enviados para as regras de negócio da aplicação.
+
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -1327,23 +1981,76 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 <div align="center">
   <sub>Figura 7 - Paleta de cores</sub><br>
-    <img src="../assets/design/paleta de cores.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/design/paleta-de-cores.png" width="100%" alt="Paleta de cores do guia de estilos"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 ### 3.4.2 Tipografia
 
-*Apresente aqui a tipografia da solução, com famílias de fontes e suas respectivas funções*
+<div align="center">
+  <sub>Figura 7 - Tipografia</sub><br>
+    <img src="../assets/design/tipografia.png" width="100%" alt="Tipografia do guia de estilos"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.4.3 Iconografia e imagens 
 
-*(esta subseção é opcional, caso não existam ícones e imagens, apague esta subseção)*
-
-*posicione aqui imagens e textos contendo exemplos padronizados de ícones e imagens, com seus respectivos atributos de aplicação, utilizadas na solução*
+<div align="center">
+  <sub>Figura 7 - Ícones e imagens</sub><br>
+    <img src="../assets/design/icones-e-imagens.png" width="100%" alt="Ícones e imagens do guia de estilos"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ## 3.5 Protótipo de alta fidelidade (sprint 3)
 
-*posicione aqui algumas imagens demonstrativas de seu protótipo de alta fidelidade e o link para acesso ao protótipo completo (mantenha o link sempre público para visualização)*
+Esta seção apresenta a documentação do protótipo de alta fidelidade desenvolvido para a aplicação web. O objetivo do protótipo é representar, de forma visual e funcional, a experiência que o usuário final terá ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informações e alinhamento com os fluxos definidos nas User Stories.
+
+Através das telas prototipadas, é possível validar a arquitetura de navegação, os componentes-chave da interface e os elementos visuais que compõem o sistema. Cada tela foi construída com base nos requisitos levantados, considerando as funcionalidades essenciais da plataforma, como o painel de administrador e do atleta.
+
+O protótipo também está servindo como referência para o desenvolvimento front-end e será utilizado durante as etapas de implementação, testes de usabilidade e iteração do produto.
+
+### Persona 1 - Marina Costa
+#### Dashboard Principal
+&nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao administrador e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
+
+
+<div align="center">
+  <sub>Figura 1 - Dashboard Principal</sub><br>
+    <img src="../assets/design/protótipo/(1).Dashboard-principal.png"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dash oard principal"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Cadastro de nova competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo um formulário de cadastro de competição, permitindo ao administrador inserir nome do evento, data, localização e uma descrição opcional. Ao finalizar o preenchimento, o administrador pode confirmar a criação por meio do botão "Criar nova Competição" ou cancelar a ação e retornar ao Dashboard.
+
+
+<div align="center">
+  <sub>Figura 2 - Cadastro de competição </sub><br>
+    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Dashboard pós-cadastro de Competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
+
+
+<div align="center">
+  <sub>Figura 3 - Competição Cadastrada </sub><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Painel de equipes (sem equipes cadastradas).
+&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
+
+
+<div align="center">
+  <sub>Figura 4 - Painel Equipes vazio</sub><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 
 ## 3.6. Modelagem do banco de dados (sprints 2 e 4)
 
@@ -1848,9 +2555,11 @@ Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `
 
 A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
 
-> **Escopo desta entrega:** esta subseção contempla as expressões SQL e suas descrições em palavras. As proposições lógicas, expressões em lógica proposicional e tabelas-verdade serão preenchidas em entrega subsequente pelo membro do grupo responsável pela componente matemática da disciplina.
-
 #### Q01 — `SELECT` com `AND` e `OR`
+
+<div align="center">
+  <sub>Quadro X - Consulta Q01</sub>
+</div>
 
 | Atributo | Conteúdo |
 |----------|----------|
@@ -1858,6 +2567,10 @@ A presente subseção apresenta um conjunto de consultas SQL utilizadas pela apl
 | **Operadores lógicos** | `AND`, `OR` |
 | **Operadores relacionais** | `=`, `>`, `<` |
 | **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 **Expressão SQL:**
 
@@ -1870,13 +2583,51 @@ WHERE competicao_id = 1
 
 **Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint pertence à competição de ID 1.  
+  `competicao_id = 1`
 
----
+- **Q:** o checkpoint possui quilometragem maior que 10 km.  
+  `km > 10`
+
+- **R:** o checkpoint possui quilometragem menor que 2 km.  
+  `km < 2`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o checkpoint será selecionado se pertencer à competição 1 e possuir quilometragem maior que 10 km ou menor que 2 km.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras em conjunto;
+- **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Seleciona |
+| V | V | F | V | V | Seleciona |
+| V | F | V | V | V | Seleciona |
+| V | F | F | F | F | Não seleciona |
+| F | V | V | V | F | Não seleciona |
+| F | V | F | V | F | Não seleciona |
+| F | F | V | V | F | Não seleciona |
+| F | F | F | F | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, ao mesmo tempo, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
 
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
@@ -1899,20 +2650,51 @@ WHERE nome LIKE 'A%'
 
 **Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o nome do corredor inicia com a letra “A”.  
+  `nome LIKE 'A%'`
 
----
+- **Q:** o corredor está com status “Em descanso”.  
+  `status = 'Em descanso'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:  
+o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não seleciona |
+| V | F | V | V | Seleciona |
+| F | V | F | F | Não seleciona |
+| F | F | V | F | Não seleciona |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjutamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
 
 #### Q03 — `UPDATE` com `AND` e `IN`
 
 | Atributo | Conteúdo |
 |----------|----------|
 | **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND` |
+| **Operadores lógicos** | `AND`, `OR` |
 | **Operadores especiais** | `IN` |
 | **Operadores relacionais** | `=` |
 | **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
@@ -1926,15 +2708,53 @@ WHERE equipe_id = 1
   AND status IN ('Em corrida', 'Próximo');
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores que pertencem à equipe de identificador `1` e que atualmente possuem status pertencente ao conjunto `{'Em corrida', 'Próximo'}`. A cláusula `WHERE` combina o operador `AND` com o operador `IN`, este último equivalente a uma disjunção entre comparações de igualdade — sintaxe mais concisa e legível para verificar pertinência em um conjunto de valores.
+**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `IN` em uma disjunção de igualdades).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o corredor pertence à equipe de identificador 1.  
+  `equipe_id = 1`
 
----
+- **Q:** o corredor está com status “Em corrida”.  
+  `status = 'Em corrida'`
+
+- **R:** o corredor está com status “Próximo”.  
+  `status = 'Próximo'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ (Q ∨ R)
+```
+
+Em palavras:  
+o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
+- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+
+#### Tabela-verdade
+
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
+|---|---|---|---|---|---|
+| V | V | V | V | V | Atualiza |
+| V | V | F | V | V | Atualiza |
+| V | F | V | V | V | Atualiza |
+| V | F | F | F | F | Não atualiza |
+| F | V | V | V | F | Não atualiza |
+| F | V | F | V | F | Não atualiza |
+| F | F | V | V | F | Não atualiza |
+| F | F | F | F | F | Não atualiza |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
 
 #### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
@@ -1956,11 +2776,44 @@ WHERE competicao_id = 1
 
 **Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint pertence à competição de identificador 1.
+  `competicao_id = 1`
+
+- **Q:** o identificador do checkpoint segue o padrão esperado iniciado por `CP-`.
+  `identificador LIKE 'CP-%'`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ ¬Q
+```
+
+Em palavras:
+o checkpoint será removido se pertencer à competição 1 e seu identificador não seguir o padrão esperado iniciado por `CP-`.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que o checkpoint pertença à competição especificada e, ao mesmo tempo, não siga o padrão de identificador esperado;
+- **¬ (NOT):** representa a negação do padrão textual `LIKE 'CP-%'`, expressa na consulta pelo operador `NOT LIKE`.
+
+#### Tabela-verdade
+
+| P | Q | ¬Q | P ∧ ¬Q | Resultado |
+|---|---|---|---|---|
+| V | V | F | F | Não remove |
+| V | F | V | V | Remove |
+| F | V | F | F | Não remove |
+| F | F | V | F | Não remove |
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à competição de identificador `1` e, simultaneamente, seu identificador não segue o padrão `CP-`. Caso o checkpoint pertença a outra competição ou possua identificador válido, o registro não será removido.
 
 ---
 
@@ -1984,17 +2837,74 @@ WHERE km BETWEEN 4 AND 6
 
 **Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
 
-**Proposições lógicas:** *a ser preenchido pelo grupo (identificar as proposições atômicas de cada condição da cláusula `WHERE`, considerando a expansão do `BETWEEN` em uma conjunção de comparações e do `NOT IN` em uma conjunção de desigualdades).*
+#### Proposições lógicas
 
-**Expressão lógica proposicional:** *a ser preenchido pelo grupo (montar a expressão combinando as proposições com os conectivos lógicos correspondentes).*
+Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-**Tabela Verdade:** *a ser preenchido pelo grupo (construir a tabela-verdade contemplando todas as combinações possíveis das proposições identificadas).*
+- **P:** o checkpoint possui quilometragem maior ou igual a 4 km.
+  `km >= 4`
+
+- **Q:** o checkpoint possui quilometragem menor ou igual a 6 km.
+  `km <= 6`
+
+- **R:** o checkpoint pertence ao corredor de identificador 1.
+  `corredor_id = 1`
+
+- **S:** o checkpoint pertence ao corredor de identificador 7.
+  `corredor_id = 7`
+
+#### Expressão lógica proposicional
+
+A expressão lógica correspondente à consulta é:
+
+```text
+P ∧ Q ∧ ¬R ∧ ¬S
+```
+
+Em palavras:
+o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, inclusive, e se o corredor associado não for o de identificador 1 nem o de identificador 7.
+
+#### Identificação dos conectivos lógicos
+
+- **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
+- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
+
+#### Tabela-verdade
+
+| P | Q | R | S | ¬R | ¬S | P ∧ Q ∧ ¬R ∧ ¬S | Resultado |
+|---|---|---|---|---|---|---|---|
+| V | V | V | V | F | F | F | Não seleciona |
+| V | V | V | F | F | V | F | Não seleciona |
+| V | V | F | V | V | F | F | Não seleciona |
+| V | V | F | F | V | V | V | Seleciona |
+| V | F | V | V | F | F | F | Não seleciona |
+| V | F | V | F | F | V | F | Não seleciona |
+| V | F | F | V | V | F | F | Não seleciona |
+| V | F | F | F | V | V | F | Não seleciona |
+| F | V | V | V | F | F | F | Não seleciona |
+| F | V | V | F | F | V | F | Não seleciona |
+| F | V | F | V | V | F | F | Não seleciona |
+| F | V | F | F | V | V | F | Não seleciona |
+| F | F | V | V | F | F | F | Não seleciona |
+| F | F | V | F | F | V | F | Não seleciona |
+| F | F | F | V | V | F | F | Não seleciona |
+| F | F | F | F | V | V | F | Não seleciona |
+
+#### Observação sobre dependências semânticas
+
+A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+
+O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-*Utilize um link para outra página de documentação contendo a descrição completa de cada endpoint. Ou descreva aqui cada endpoint criado para seu sistema.* 
+A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Esse material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre frontend, backend e banco de dados.
 
-*Cada endpoint deve conter endereço, método (GET, POST, PUT, PATCH, DELETE), header, body, formatos de response e os status codes possíveis (200, 201, 204, 400, 401, 403, 404, 409, 422, 500).*
+A versão versionada no repositório pode ser consultada em [documentos/outros/api-documentation.html](outros/api-documentation.html). Para facilitar a leitura externa e a validação do artefato sem necessidade de clonar o projeto, a mesma documentação também foi publicada em ambiente web no link: [https://web-api-deploy-d81981.pages.git.inteli.edu.br/](https://web-api-deploy-d81981.pages.git.inteli.edu.br/).
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
