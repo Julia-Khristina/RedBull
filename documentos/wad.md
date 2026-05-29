@@ -1770,7 +1770,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 #### Checkpoints salvos.
-&nbsp; &nbsp; &nbsp; &nbsp;alterar
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo apresenta a tela de visualização dos checkpoints salvos da equipe durante a competição. Nela, o operador pode acompanhar métricas gerais da equipe, como distância acumulada, pace médio e tempo total registrado, além de visualizar o histórico completo dos checkpoints realizados por cada atleta. A interface também informa o método utilizado em cada registro, permitindo identificar se os dados foram capturados automaticamente ou inseridos manualmente, garantindo maior controle e rastreabilidade das informações registradas no sistema.
 
 
 <div align="center">
