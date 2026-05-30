@@ -212,9 +212,9 @@
       <h2>3.6 WebAPI and Endpoints</h2>
       <p>
         A API do projeto Red Bull 24 Horas foi organizada por domínios de uso da aplicação:
-        competições, equipes, atletas, administradores, checkpoints, ranking, exportações e
+        competições, equipes, atletas, administradores, checkpoints, ranking, exportação e
         relatórios. Os endpoints listados como implementados correspondem ao conjunto de rotas
-        validado para a documentacao atual. Ranking, exportações e relatórios permanecem
+        registrado no backend atual. Autenticação, OCR, inconsistências e relatórios permanecem
         documentados como funcionalidades planejadas pelo WAD.
       </p>
 
@@ -327,14 +327,14 @@ Content-Type: application/json</code></pre>
             <td><code>/competitions</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista as competições cadastradas.</td>
-            <td>Suporte operacional</td>
+            <td>RF002, RN18</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/competitions/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta uma competição específica pelo identificador.</td>
-            <td>Suporte operacional</td>
+            <td>RF002, RN18</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
@@ -355,7 +355,7 @@ Content-Type: application/json</code></pre>
             <td><code>/competitions/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Remove uma competição existente.</td>
-            <td>Suporte operacional</td>
+            <td>RF002, RN18</td>
           </tr>
         </tbody>
       </table>
@@ -458,14 +458,14 @@ Content-Type: application/json</code></pre>
             <td><code>/competitions/:competicaoId/teams</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista as equipes de uma competição.</td>
-            <td>RF003</td>
+            <td>RF003, RN01, RN07</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta uma equipe específica.</td>
-            <td>RF003</td>
+            <td>RF003, RN01, RN07</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
@@ -574,14 +574,14 @@ Content-Type: application/json</code></pre>
             <td><code>/competitions/:competicaoId/teams/:teamId/athletes</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista atletas de uma equipe.</td>
-            <td>RF003, RF011</td>
+            <td>RF011, RN07, RN10</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta atleta específico.</td>
-            <td>RF003</td>
+            <td>RF003, RN01</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
@@ -595,7 +595,7 @@ Content-Type: application/json</code></pre>
             <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Remove atleta da equipe.</td>
-            <td>RF003</td>
+            <td>RF003, RN01</td>
           </tr>
         </tbody>
       </table>
@@ -689,35 +689,35 @@ Content-Type: application/json</code></pre>
             <td><code>/administradores</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista administradores.</td>
-            <td>RF001, RF004</td>
+            <td>RF004, RN02, RN03</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/administradores/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta administrador por ID.</td>
-            <td>RF001, RF004</td>
+            <td>RF004, RN02, RN03</td>
           </tr>
           <tr>
             <td class="method">POST</td>
             <td><code>/administradores</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Cria administrador.</td>
-            <td>RF001, RF004, RN03</td>
+            <td>RF004, RN02, RN03</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
             <td><code>/administradores/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Atualiza administrador.</td>
-            <td>RF001, RF004</td>
+            <td>RF004, RN02, RN03</td>
           </tr>
           <tr>
             <td class="method">DELETE</td>
             <td><code>/administradores/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Remove administrador.</td>
-            <td>RF001, RF004</td>
+            <td>RF004, RN02, RN03</td>
           </tr>
         </tbody>
       </table>
@@ -805,42 +805,49 @@ Content-Type: application/json</code></pre>
             <td><code>/checkpoints</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista checkpoints.</td>
-            <td>RF008</td>
+            <td>RF008, RN04, RN05</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/checkpoints/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta checkpoint por ID.</td>
-            <td>RF008</td>
+            <td>RF008, RN04, RN05</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
             <td><code>/checkpoints/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Atualiza checkpoint.</td>
-            <td>RF007, RF008, RN12</td>
+            <td>RF007, RN06, RN12</td>
           </tr>
           <tr>
             <td class="method">DELETE</td>
             <td><code>/checkpoints/:id</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Remove checkpoint.</td>
-            <td>RF008</td>
+            <td>RF008, RN04, RN05</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/corredores/:corredorId/checkpoints</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista checkpoints de um corredor.</td>
-            <td>RF008, RF011</td>
+            <td>RF008, RN04, RN05</td>
           </tr>
           <tr>
             <td class="method">GET</td>
             <td><code>/competitions/:competicaoId/checkpoints</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista checkpoints de uma competição.</td>
-            <td>RF008, RF010, RF013</td>
+            <td>RF008, RN04, RN05</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/checkpoints/inconsistencies</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Lista inconsistências de checkpoints.</td>
+            <td>RF009, RN06</td>
           </tr>
         </tbody>
       </table>
@@ -913,6 +920,12 @@ Content-Type: application/json</code></pre>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna lista filtrada por competição.</td>
           </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/checkpoints/inconsistencies</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna inconsistências identificadas nos checkpoints.</td>
+          </tr>
         </tbody>
       </table>
     </section>
@@ -920,9 +933,8 @@ Content-Type: application/json</code></pre>
     <section id="ranking-routes">
       <h2>3.6.6 Ranking Routes</h2>
       <p>
-        O ranking ainda deve ser implementado como endpoint de leitura consolidada da competição.
-        Ele deve atender ao painel administrativo e ao painel público, com diferença de frequência
-        de atualização definida pelas regras de negócio.
+        As rotas de ranking retornam leituras agregadas por equipes e atletas, permitindo
+        acompanhar posições, distância acumulada e métricas consolidadas da competição.
       </p>
 
       <table>
@@ -938,15 +950,22 @@ Content-Type: application/json</code></pre>
         <tbody>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:id/ranking</code></td>
-            <td><span class="tag planned">Planned</span></td>
-            <td>Retorna ranking de equipes e métricas consolidadas da competição.</td>
-            <td>RF010, RF015, RN09, RN11</td>
+            <td><code>/competitions/:competicaoId/ranking/teams</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Retorna ranking de equipes.</td>
+            <td>RF010, RN09, RN11</td>
+          </tr>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/competitions/:competicaoId/ranking/athletes</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Retorna ranking de atletas.</td>
+            <td>RF015, RN09, RN11</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Response planejado - 200 OK</h3>
+      <h3>Response - 200 OK</h3>
       <pre><code>{
   "competicao_id": 1,
   "atualizado_em": "2026-05-28T10:00:00.000Z",
@@ -962,7 +981,7 @@ Content-Type: application/json</code></pre>
   ]
 }</code></pre>
 
-      <h3>Saídas da requisição planejadas</h3>
+      <h3>Saídas da requisição</h3>
       <table>
         <thead>
           <tr>
@@ -974,10 +993,16 @@ Content-Type: application/json</code></pre>
         </thead>
         <tbody>
           <tr>
-            <td><code>GET /competitions/:id/ranking</code></td>
+            <td><code>GET /competitions/:competicaoId/ranking/teams</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
-            <td>Retorna ranking consolidado; pode retornar lista vazia se não houver checkpoints validados.</td>
+            <td>Retorna ranking consolidado de equipes.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/ranking/athletes</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna ranking consolidado de atletas.</td>
           </tr>
         </tbody>
       </table>
@@ -986,8 +1011,8 @@ Content-Type: application/json</code></pre>
     <section id="export-routes">
       <h2>3.6.7 Export Routes</h2>
       <p>
-        A exportação ainda deve ser implementada para disponibilizar dados da competição em CSV,
-        incluindo checkpoints, timestamps, fotos vinculadas e logs de validação para auditoria.
+        A rota de exportação consolida dados da competição, equipes, atletas, checkpoints e
+        rankings em uma resposta JSON própria para auditoria e análise operacional.
       </p>
 
       <table>
@@ -1003,19 +1028,81 @@ Content-Type: application/json</code></pre>
         <tbody>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:id/exports</code></td>
-            <td><span class="tag planned">Planned</span></td>
-            <td>Gera e disponibiliza exportação CSV dos dados da competição.</td>
+            <td><code>/competitions/:competicaoId/export</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Exporta dados consolidados da competição.</td>
             <td>RF013, RN15</td>
           </tr>
         </tbody>
       </table>
 
-      <h3>Response planejado - 200 OK</h3>
-      <pre class="console"><code>Content-Type: text/csv
-Content-Disposition: attachment; filename="competition-1-export.csv"
+      <h3>Response - 200 OK</h3>
+      <pre><code>{
+  "exportedAt": "2026-05-28T10:00:00.000Z",
+  "competition": {},
+  "teams": [],
+  "athletes": [],
+  "checkpoints": [],
+  "rankings": {
+    "teams": [],
+    "athletes": []
+  }
+}</code></pre>
 
-checkpoint_id,competicao_id,corredor_id,km,pace,tempo,metodo,criado_em,imagem_url</code></pre>
+      <h3>Saídas da requisição</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /competitions/:competicaoId/export</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td>Retorna dados consolidados da competição.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="report-routes">
+      <h2>3.6.8 Authentication Routes</h2>
+      <p>
+        A rota de autenticação está planejada para criar sessões administrativas a partir das
+        credenciais validadas pelo backend.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descrição</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/auth/sessions</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Cria sessão administrativa.</td>
+            <td>RF004, RN02, RN03</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Request body planejado</h3>
+      <pre><code>{
+  "email": "operador@example.com",
+  "senha": "senha-segura"
+}</code></pre>
 
       <h3>Saídas da requisição planejadas</h3>
       <table>
@@ -1029,17 +1116,79 @@ checkpoint_id,competicao_id,corredor_id,km,pace,tempo,metodo,criado_em,imagem_ur
         </thead>
         <tbody>
           <tr>
-            <td><code>GET /competitions/:id/exports</code></td>
+            <td><code>POST /auth/sessions</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>401</code>, <code>500</code></td>
+            <td>Retorna tokens e dados do usuário autenticado.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="ocr-routes">
+      <h2>3.6.9 OCR Routes</h2>
+      <p>
+        As rotas de OCR estão planejadas para registrar extrações automáticas e permitir a validação
+        ou correção humana antes da persistência definitiva do checkpoint.
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Metodo</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descrição</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">POST</td>
+            <td><code>/ocr/extractions</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Cria extração OCR.</td>
+            <td>RF005, RF006, RN04, RN05, RN06</td>
+          </tr>
+          <tr>
+            <td class="method">PATCH</td>
+            <td><code>/ocr/extractions/:extractionId</code></td>
+            <td><span class="tag planned">Planned</span></td>
+            <td>Atualiza extração OCR.</td>
+            <td>RF007, RN06, RN12</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Saídas da requisição planejadas</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operacao</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>POST /ocr/extractions</code></td>
+            <td><code>201 Created</code></td>
+            <td><code>400</code>, <code>422</code>, <code>500</code></td>
+            <td>Retorna extração criada para validação.</td>
+          </tr>
+          <tr>
+            <td><code>PATCH /ocr/extractions/:extractionId</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>422</code>, <code>500</code></td>
-            <td>Retorna arquivo CSV; <code>422</code> pode indicar ausência de dados exportaveis.</td>
+            <td>Retorna extração validada ou corrigida.</td>
           </tr>
         </tbody>
       </table>
     </section>
 
     <section id="report-routes">
-      <h2>3.6.8 Report Routes</h2>
+      <h2>3.6.10 Report Routes</h2>
       <p>
         Os relatórios ainda devem ser implementados para consolidar desempenho por atleta, equipe
         e competição, além de gerar highlights automáticos ao final do evento.
@@ -1145,13 +1294,23 @@ checkpoint_id,competicao_id,corredor_id,km,pace,tempo,metodo,criado_em,imagem_ur
           </tr>
           <tr>
             <td>Ranking</td>
-            <td><span class="tag planned">Planned</span></td>
-            <td><code>GET /competitions/:id/ranking</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td><code>GET /competitions/:id/ranking/teams</code> e <code>/athletes</code></td>
           </tr>
           <tr>
-            <td>Exports</td>
+            <td>Export</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td><code>GET /competitions/:id/export</code></td>
+          </tr>
+          <tr>
+            <td>Authentication</td>
             <td><span class="tag planned">Planned</span></td>
-            <td><code>GET /competitions/:id/exports</code></td>
+            <td><code>POST /auth/sessions</code></td>
+          </tr>
+          <tr>
+            <td>OCR</td>
+            <td><span class="tag planned">Planned</span></td>
+            <td><code>POST /ocr/extractions</code> e <code>PATCH /ocr/extractions/:id</code></td>
           </tr>
           <tr>
             <td>Reports</td>
