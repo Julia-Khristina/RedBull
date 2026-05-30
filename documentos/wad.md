@@ -1810,6 +1810,69 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Dashboard pós-cadastro de Competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
+
+
+<div align="center">
+  <sub>Figura 3 - Competição Cadastrada </sub><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Painel de equipes (sem equipes cadastradas).
+&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
+
+
+<div align="center">
+  <sub>Figura 4 - Painel Equipes vazio</sub><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Cadastro de equipes.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
+
+
+<div align="center">
+  <sub>Figura 5 - Tela de Cadastro das equipes</sub><br>
+    <img src="../assets/design/protótipo/cadastrar-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel de administração das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
+
+
+<div align="center">
+  <sub>Figura 6 - Painel de admin das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel operacional das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
+
+
+<div align="center">
+  <sub>Figura 7 - Painel de operacional das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel operacional das equipes com dropdown.
+&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
+
+
+<div align="center">
+  <sub>Figura 8 - Painel de operacional das equipes com dropdown</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 #### Captura da foto da esteira.
 &nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de captura da foto da esteira, utilizada para registrar os dados do participante durante a competição. Nela, o operador pode visualizar a imagem capturada do painel da esteira referente ao checkpoint atual, além de optar entre realizar um registro manual ou prosseguir com a captura automática para extração dos dados via OCR, garantindo maior agilidade e precisão no processo de validação dos checkpoints.
 
@@ -1848,69 +1911,6 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 <div align="center">
   <sub>Figura 12 -  Checkpoints salvos </sub><br>
     <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-#### Dashboard pós-cadastro de Competição.
-&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
-
-
-<div align="center">
-  <sub>Figura 3 - Competição Cadastrada </sub><br>
-    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-#### Painel de equipes (sem equipes cadastradas).
-&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
-
-
-<div align="center">
-  <sub>Figura 4 - Painel Equipes vazio</sub><br>
-    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-#### Cadastro de equipes.
-&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
-
-
-<div align="center">
-  <sub>Figura 1 - Tela de Cadastro das equipes</sub><br>
-    <img src="../assets/design/protótipo/cadastrar-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
-#### Painel de administração das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
-
-
-<div align="center">
-  <sub>Figura 1 - Painel de admin das equipes</sub><br>
-    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
-#### Painel operacional das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
-
-
-<div align="center">
-  <sub>Figura 1 - Painel de operacional das equipes</sub><br>
-    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
-#### Painel operacional das equipes com dropdown.
-&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
-
-
-<div align="center">
-  <sub>Figura 1 - Painel de operacional das equipes com dropdown</sub><br>
-    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
