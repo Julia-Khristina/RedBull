@@ -918,6 +918,111 @@ As dependências entre as classes são representadas por setas tracejadas, indic
   <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
+### 3.2.1. Arquitetura em Camadas
+
+O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Bass, Clements e Kazman (2012) descrevem esse padrão como uma das táticas arquiteturais mais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece completamente a implementação da camada inferior. Fowler (2002) formaliza essa separação no contexto de aplicações empresariais sob o princípio de separation of concerns, que determina que cada unidade de software deve ter uma única razão para mudar.
+
+A nossa equipe optou por essa abordagem no sistema de gerenciamento da competição Red Bull 24 horas em decorrência de dois requisitos estruturais identificados durante a fase de análise: a necessidade de suportar fluxos de interação radicalmente distinta, um fluxo administrativo operado por juízes e supervisores via dispositivos iPad e um fluxo público acessado por corredores mediante URL personalizada com identificador UUID, e a presença de um processo assíncrono de reconhecimento óptico de caracteres (OCR) que não deveria bloquear o fluxo transacional principal. A Arquitetura em Camadas permitiu isolar esses contextos sem duplicar a lógica de domínio e sem criar dependências cruzadas entre os fluxos.
+
+A pilha adotada segue o padrão **Routes → Controller → Service → Repository → Model → PostgreSQL**, detalhado a seguir.
+
+**Fluxo Principal de Dados**
+
+Toda requisição originada no cliente, seja proveniente do painel administrativo no iPad ou do portal público acessado pelo corredor via navegador, percorre as seguintes camadas em sequência:
+
+**Routes** é a camada de entrada do servidor Express. Define os endpoints da API REST, associa verbos HTTP (```GET, POST, PUT, DELETE```) aos controladores correspondentes e executa middlewares de autenticação JWT e validação de esquema de entrada antes de encaminhar a requisição ao Controller. Nenhuma lógica de domínio reside nessa camada.
+
+**Controller** recebe o objeto de requisição (```req```) e resposta (```res```) do framework Express, extrai os parâmetros necessários, corpo da requisição, parâmetros de rota, query strings e cabeçalhos, e delega ao método correspondente na camada de Service, retornando a resposta HTTP ao cliente com o código de status adequado. O Controller não toma decisões de negócio; sua responsabilidade se limita a orquestrar o ciclo de vida da requisição HTTP.
+
+**Service** concentra todas as regras de negócio da aplicação. É nessa camada que são realizadas validações de domínio, composições de dados provenientes de múltiplos repositórios, checkins, cálculos de ranking, verificações de regras temporais da competição e geração de registros de auditoria. O Service não conhece o protocolo HTTP e não executa queries SQL; toda persistência é delegada à camada de Repository.
+
+**Repository** abstrai o acesso ao banco de dados PostgreSQL por meio de queries SQL parametrizadas. Recebe e retorna instâncias de Model, isolando as camadas superiores de quaisquer detalhes de implementação do mecanismo de persistência. Essa abstração viabiliza a substituição do banco de dados ou a utilização de dublês de teste (mocks) sem alteração nas camadas de Service ou Controller.
+
+**Model** define a estrutura de dados das entidades de domínio da aplicação, Competicao, Equipe, Corredor, Checkpoint, Esteira e Administrador. Os Models não contêm lógica de persistência nem de negócio; representam o esquema de dados esperado e funcionam como contrato entre as camadas de Repository e Service.
+
+**PostgreSQL** é a camada de persistência definitiva. Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados (```migration.sql```), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
+
+**Fluxo OCR Assíncrono**
+
+O processamento de imagens capturadas pelos funcionários da Red Bull 24h constitui um fluxo assíncrono paralelo ao fluxo transacional principal. Ao receber uma imagem de esteira via requisição POST /ocr/extractions, o CheckpointController delega imediatamente ao OCRService a responsabilidade de enfileirar o processamento, retornando ao cliente uma resposta 202 Accepted com identificador de rastreamento. O OCRService encaminha a imagem ao motor de reconhecimento óptico de caracteres externo de forma não bloqueante. Após a extração dos dados, o OCRService valida o score de confiança conforme RN06, extrações com score abaixo de 85% são rejeitadas, e aciona o CheckpointService, que valida os dados extraídos segundo as demais regras de negócio vigentes (RN04, RN05, RN12) e persiste o resultado via CheckpointRepository. Registros de auditoria são gerados pelo AuditService ao longo de todo o fluxo, em conformidade com a RN05.
+
+Esse desenho evita que a latência do motor OCR impacte a resposta percebida pelos operadores no iPad, mantendo a experiência administrativa fluida durante picos de carga gerados por múltiplos checkpoints simultâneos.
+
+#### Tabela de Responsabilidades
+
+<div align="center">
+  <sub>Quadro 23 - Responsabilidades das Camadas  </sub>
+</div>
+ 
+| Camada | Responsabilidade | O que não faz | Pasta do projeto |
+|---|---|---|---|
+| **Routes** | Define endpoints REST, associa verbos HTTP a controllers, executa middlewares de autenticação JWT e validação de esquema de entrada. | Não contém lógica de negócio; não acessa banco de dados; não formata respostas de domínio. | `src/routes/` |
+| **Controller** | Extrai parâmetros de `req` (body, params, query, headers), delega ao Service correspondente e retorna resposta HTTP com status code adequado. | Não implementa regras de negócio; não acessa banco de dados; não executa queries SQL. | `src/controllers/` |
+| **Service** | Implementa todas as regras de negócio do domínio da competição Red Bull 24h, orquestra chamadas a múltiplos repositórios, valida integridade de dados, gera registros de auditoria e encaminha processamento assíncrono de OCR. | Não conhece o protocolo HTTP; não executa queries SQL diretamente; não manipula `req` ou `res`. | `src/services/` |
+| **Repository** | Executa queries SQL parametrizadas contra o PostgreSQL, mapeia resultados de banco para instâncias de Model e persiste alterações de estado das entidades de domínio. | Não implementa regras de negócio; não conhece o protocolo HTTP; não é chamado diretamente pelo Controller. | `src/repositories/` |
+| **Model** | Define a estrutura de dados das entidades de domínio (`Competicao`, `Equipe`, `Corredor`, `Checkpoint`, `Esteira`, `Administrador`) como contratos de dados entre camadas. | Não contém lógica de persistência; não contém lógica de negócio; não realiza validações de entrada. | `src/models/` |
+| **PostgreSQL** | Armazena e recupera dados de forma persistente, garante integridade referencial por meio de constraints de chave estrangeira e executa transações ACID. | Não recebe conexões de nenhuma camada além do Repository; não aplica regras de negócio. | `database/` |
+ 
+---
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+#### Tabela de Rastreabilidade
+
+<div align="center">
+  <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas  </sub>
+</div>
+
+| Camada | Classe | Responsabilidade no projeto | RFs / RNs |
+|---|---|---|---|
+| **Controller** | `CheckpointController` | Recebe `POST /checkpoints` e delega ao `CheckpointService` para registro manual de passagem; recebe `POST /ocr/extractions` e delega ao `OCRService` para enfileiramento assíncrono; recebe `GET /checkpoints/:equipe_id` e delega ao `CheckpointService` para histórico da equipe. | RF05, RF07, RF08, RF09 |
+| **Controller** | `EquipeController` | Recebe `POST /equipes` e delega ao `EquipeService` para criação com UUID de acesso público; recebe `PUT /equipes/:id/status` e delega ao `EquipeService`, que aplica validação de permissão (RN01). | RF03, RF01 + RN01 |
+| **Controller** | `CompetitionController` | Recebe `POST /competicoes` e delega ao `CompetitionService` para criação; recebe `PUT /competicoes/:id/encerrar` e delega ao `CompetitionService` para transição de estado para `encerrada`. | RF02, RF12 |
+| **Controller** | `AuthController` | Recebe `POST /auth/login` e delega ao `AuthService` para validação de credenciais e emissão de JWT; recebe `POST /auth/logout` e delega ao `AuthService` para invalidação de sessão (RN03). | RF04 + RN03 |
+| **Service** | `OCRService` | Enfileira imagem de esteira para o motor OCR externo de forma assíncrona; valida score de confiança mínimo de 85% (RN06); aciona `CheckpointService` para persistência e `AuditService` para log (RN05). | RF05, RF06, RF09 + RN05, RN06 |
+| **Service** | `CheckpointService` | Valida pertencimento do corredor à equipe (RN04) e intervalo temporal do checkpoint (RN12); persiste via `CheckpointRepository`; aciona `AuditService` para log de cada operação (RN05). | RF08 + RN04, RN05, RN12 |
+| **Service** | `RankingService` | Agrega distância acumulada por equipe via `CheckpointRepository`; aplica desempate por número de voltas (RN09) e tempo médio por volta (RN11); retorna classificação completa em tempo real. | RF10, RF15 + RN09, RN11 |
+| **Repository** | `CheckpointRepository` | Executa `INSERT INTO checkpoints` com dados validados pelo `CheckpointService`; executa `SELECT` agregado de distância acumulada por equipe para o `RankingService`. | RF05, RF08 |
+| **Repository** | `EquipeRepository` | Executa `INSERT INTO equipes` com UUID gerado pelo `EquipeService`; executa `SELECT` por `uuid_acesso_publico` para o fluxo público. | RF01, RF03 |
+| **Repository** | `AdminRepository` | Executa `SELECT` de administrador por `email` para validação de credenciais no `AuthService`. | RF04 |
+| **Model** | `Checkpoint` | Representa o registro de passagem com campos `id`, `corredor_id`, `equipe_id`, `esteira_id`, `timestamp`, `origem` (`manual`, `ocr`), `ocr_score`. | RF05, RF08 |
+| **Model** | `Equipe` | Representa a equipe com campos `id`, `nome`, `uuid_acesso_publico`, `competicao_id`, `status`. | RF01, RF03 |
+| **Model** | `Administrador` | Representa o administrador com campos `id`, `nome`, `email`, `senha_hash`, `perfil` (`operador`, `juiz`). | RF04 | 
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
+#### Diagrama da Arquitetura em Camadas
+
+<div align="center">
+  <sub>Figura 15 - Diagrama de Classes de Domínio </sub><br>
+  <img src="../assets/programacao/diagrama-arquitetura-camadas.svg" width="100%" alt="Diagrama Arquitetura em Camadas"><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Revisão Cruzada da Análise de Consistência Arquitetural
+ 
+A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os diagramas de sequência UML (seção 3.2.4), o diagrama de entidade-relacionamento (seção 3.6.1) e os scripts de migração (`migration.sql`), identificando pontos de atenção e ações necessárias.
+ 
+Nomenclatura de camadas. Os nomes `Controller`, `Service`, `Repository`, `Model` e `PostgreSQL` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A inconsistência de nomenclatura entre entidades em inglês (ex.: `CompetitionController`, `CompetitionService`, `CompetitionRepository`) e o Model em português (`Competicao`) deve ser resolvida antes da entrega final: a equipe deve padronizar para um único idioma em todos os artefatos de código.
+ 
+Coerência entre Models e tabelas de banco. Os campos do Model `Checkpoint` , `corredor_id`, `equipe_id`, `esteira_id`, `timestamp`, `origem`, `distancia_parcial` e `ocr_score` devem ser confrontados com as colunas definidas na `migration.sql` para confirmar correspondência. O mesmo vale para `Equipe` (campo `uuid_acesso_publico`) e `AuditLog` (campos `tipo_operacao`, `entidade_id`, `operador_id`, `payload_json`).
+ 
+Tabela `audit_logs` no `migration.sql`. A RN05 exige log imutável de todas as operações críticas. A tabela `audit_logs` deve estar presente na migration com as colunas `id`, `tipo_operacao`, `entidade`, `entidade_id`, `operador_id`, `timestamp` e `payload_json`. Caso ausente, deve ser adicionada antes da entrega.
+ 
+Constraint `UNIQUE` sobre `uuid_acesso_publico`. Para garantir integridade e performance nas consultas do `PublicController`, a coluna `equipes.uuid_acesso_publico` deve possuir constraint `UNIQUE` e índice B-tree no `migration.sql`.
+ 
+Fluxo OCR nos diagramas de sequência (3.2.4). O retorno `202 Accepted` pelo `CheckpointController` e o callback assíncrono do motor externo para o `OCRService` devem estar representados nos diagramas de sequência com marcação explícita de assincronicidade (fragmento `async` ou notação equivalente em UML 2.x).
+ 
+`EsteiraRepository` e Model `Esteira`. A entidade `Esteira` e seu Repository foram incluídos nesta seção em resposta à identificação de lacuna na versão anterior do documento. O RF06 referencia operações sobre esteiras; o `EsteiraRepository` deve estar presente na implementação e no `migration.sql`.
+ 
+Consistência do `RankingRepository`. O Model de destino do `RankingRepository` é `RankingFinal`, não `Competicao`. O diagrama e a tabela de rastreabilidade foram atualizados para refletir essa distinção.
+ 
+Middleware de validação de UUID. O middleware de validação de formato UUID-v4 está aplicado na camada de Routes (`R_PUBLIC`), antes de atingir o `PublicController`, evitando que identificadores malformados alcancem a camada de Service.
+
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
 
