@@ -1,4 +1,8 @@
-<img src="../assets/logointeli.png">
+<> **Link do prototipo (Sprint 3 - Semana 1 + Semana 2):** Acesse o prototipo de alta fidelidade completo na plataforma Figma: https://bit.ly/redbull24h-prototipo
+
+img src="../assets/l> **🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
+
+ogointeli.png">
 
 
 # WAD - Web Application Document - Módulo 2 - Inteli
@@ -711,6 +715,22 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
+<div align="center">
+  <sub>Quadro 19 - User Story 17 </sub>
+</div>
+
+| Identificação            | US17 |
+| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Persona**              | Bruno Monteiro (Gerente de Field Marketing) |
+| **User Story**           | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a Matriz de Rastreabilidade do sistema, para verificar a cobertura entre requisitos funcionais, regras de negócio, endpoints e telas implementadas."|
+| **Critério de aceite 1** | CR1: A RTM deve estar acessível e atualizada no documento WAD, cobrindo todos os RFs implementados. **Teste:** Dado que o administrador acessa a seção 3.9 do WAD, quando a página é exibida, então a matriz deve conter todas as linhas de rastreabilidade com persona, RF, RN, endpoint, tela, teste e evidência preenchidos. |
+| **Critério de aceite 2** | CR2: A RTM deve permitir identificar lacunas de cobertura entre requisitos e implementação. **Teste:** Dado que um RF foi implementado, quando a RTM é consultada, então deve existir ao menos uma linha correspondente conectando persona → RF → RN → endpoint → tela → teste → evidência. |
+| **Critérios INVEST**     | Independente: Esta US pode ser validada de forma isolada, pois depende apenas da documentação existente. <br> Negociável: As colunas da RTM podem ser expandidas conforme necessidades identificadas ao longo das sprints. <br> Valorosa: Garante rastreabilidade completa entre necessidades, implementação e validação, essencial para auditoria e controle de qualidade. <br> Estimável: O escopo é bem definido — preencher e manter a RTM atualizada. <br> Pequena: Limitada à criação e manutenção da matriz de rastreabilidade. <br> Testável: A presença e completude das linhas da RTM são verificáveis objetivamente. |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div> 
+
 # <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
 
 ## 3.1. Requisitos do Sistema (sprints 1 a 5)
@@ -903,108 +923,122 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 
 ### 3.2.1. Arquitetura em Camadas
 
-O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Bass, Clements e Kazman (2012) descrevem esse padrão como uma das táticas arquiteturais mais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece completamente a implementação da camada inferior. Fowler (2002) formaliza essa separação no contexto de aplicações empresariais sob o princípio de separation of concerns, que determina que cada unidade de software deve ter uma única razão para mudar.
+O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Bass, Clements e Kazman (2012) descrevem esse padrão como uma das táticas arquiteturais mais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece completamente a implementação da camada inferior. Fowler (2002) formaliza essa separação no contexto de aplicações empresariais sob o princípio de *separation of concerns*, que determina que cada unidade de software deve ter uma única razão para mudar.
 
-A nossa equipe optou por essa abordagem no sistema de gerenciamento da competição Red Bull 24 horas em decorrência de dois requisitos estruturais identificados durante a fase de análise: a necessidade de suportar fluxos de interação radicalmente distinta, um fluxo administrativo operado por juízes e supervisores via dispositivos iPad e um fluxo público acessado por corredores mediante URL personalizada com identificador UUID, e a presença de um processo assíncrono de reconhecimento óptico de caracteres (OCR) que não deveria bloquear o fluxo transacional principal. A Arquitetura em Camadas permitiu isolar esses contextos sem duplicar a lógica de domínio e sem criar dependências cruzadas entre os fluxos.
+A nossa equipe optou por essa abordagem no sistema de gerenciamento da competição Red Bull 24 horas em decorrência de dois requisitos estruturais identificados durante a fase de análise: a necessidade de suportar fluxos de interação radicalmente distintos, um fluxo administrativo operado por juízes e supervisores via dispositivos iPad e um fluxo público acessado por corredores mediante URL personalizada com identificador UUID, e a presença de um processo assíncrono de reconhecimento óptico de caracteres (OCR) que não deveria bloquear o fluxo transacional principal. A Arquitetura em Camadas permitiu isolar esses contextos sem duplicar a lógica de domínio e sem criar dependências cruzadas entre os fluxos.
 
-A pilha adotada segue o padrão **Routes → Controller → Service → Repository → Model → PostgreSQL**, detalhado a seguir.
+A arquitetura adotada é composta pelas camadas **Routes**, **Controller**, **Service**, **Repository**, **Model** e **PostgreSQL**. O fluxo de persistência ocorre por meio da sequência **Routes → Controller → Service → Repository → PostgreSQL**, enquanto os Models atuam como contratos de dados compartilhados entre as camadas de Service e Repository.
 
 **Fluxo Principal de Dados**
 
 Toda requisição originada no cliente, seja proveniente do painel administrativo no iPad ou do portal público acessado pelo corredor via navegador, percorre as seguintes camadas em sequência:
 
-**Routes** é a camada de entrada do servidor Express. Define os endpoints da API REST, associa verbos HTTP (```GET, POST, PUT, DELETE```) aos controladores correspondentes e executa middlewares de autenticação JWT e validação de esquema de entrada antes de encaminhar a requisição ao Controller. Nenhuma lógica de domínio reside nessa camada.
+**Routes** é a camada de entrada do servidor Express. Define os endpoints da API REST, associa verbos HTTP (`GET`, `POST`, `PUT`, `DELETE`) aos controladores correspondentes e executa middlewares de validação de esquema de entrada antes de encaminhar a requisição ao Controller. Nenhuma lógica de domínio reside nessa camada.
 
-**Controller** recebe o objeto de requisição (```req```) e resposta (```res```) do framework Express, extrai os parâmetros necessários, corpo da requisição, parâmetros de rota, query strings e cabeçalhos, e delega ao método correspondente na camada de Service, retornando a resposta HTTP ao cliente com o código de status adequado. O Controller não toma decisões de negócio; sua responsabilidade se limita a orquestrar o ciclo de vida da requisição HTTP.
+**Controller** recebe o objeto de requisição (`req`) e resposta (`res`) do framework Express, extrai os parâmetros necessários, corpo da requisição, parâmetros de rota, query strings e cabeçalhos, e delega ao método correspondente na camada de Service, retornando a resposta HTTP ao cliente com o código de status adequado. O Controller não toma decisões de negócio; sua responsabilidade se limita a orquestrar o ciclo de vida da requisição HTTP.
 
-**Service** concentra todas as regras de negócio da aplicação. É nessa camada que são realizadas validações de domínio, composições de dados provenientes de múltiplos repositórios, checkins, cálculos de ranking, verificações de regras temporais da competição e geração de registros de auditoria. O Service não conhece o protocolo HTTP e não executa queries SQL; toda persistência é delegada à camada de Repository.
+**Service** concentra todas as regras de negócio da aplicação. É nessa camada que são realizadas validações de domínio, composições de dados provenientes de múltiplos repositórios, cálculos de ranking, verificações de regras temporais da competição e geração de registros de auditoria. O Service não conhece o protocolo HTTP e não executa queries SQL; toda persistência é delegada à camada de Repository.
 
-**Repository** abstrai o acesso ao banco de dados PostgreSQL por meio de queries SQL parametrizadas. Recebe e retorna instâncias de Model, isolando as camadas superiores de quaisquer detalhes de implementação do mecanismo de persistência. Essa abstração viabiliza a substituição do banco de dados ou a utilização de dublês de teste (mocks) sem alteração nas camadas de Service ou Controller.
+**Repository** abstrai o acesso ao banco de dados PostgreSQL por meio de queries SQL parametrizadas. Recebe e retorna instâncias de Model, isolando as camadas superiores de quaisquer detalhes de implementação do mecanismo de persistência. Essa abstração viabiliza a substituição do banco de dados ou a utilização de dublês de teste (*mocks*) sem alteração nas camadas de Service ou Controller.
 
-**Model** define a estrutura de dados das entidades de domínio da aplicação, Competicao, Equipe, Corredor, Checkpoint, Esteira e Administrador. Os Models não contêm lógica de persistência nem de negócio; representam o esquema de dados esperado e funcionam como contrato entre as camadas de Repository e Service.
+**Model** define a estrutura de dados das entidades de domínio da aplicação: `Competicao`, `Equipe`, `Corredor`, `Checkpoint` e `Administrador`. Os Models não contêm lógica de persistência nem de negócio; representam o esquema de dados esperado e funcionam como contrato entre as camadas de Repository e Service.
 
-**PostgreSQL** é a camada de persistência definitiva. Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados (```migration.sql```), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
+**PostgreSQL** é a camada de persistência definitiva, acessada pela aplicação via cliente Supabase (`src/database/supabaseClient.ts`). Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados localizados em `documentos/outros/migrations/` (arquivos `0000__extensions.sql` a `0006_create_checkpoint.sql`), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
 
-**Fluxo OCR Assíncrono**
+**Fluxo OCR Assíncrono** *(funcionalidade planejada)*
 
-O processamento de imagens capturadas pelos funcionários da Red Bull 24h constitui um fluxo assíncrono paralelo ao fluxo transacional principal. Ao receber uma imagem de esteira via requisição POST /ocr/extractions, o CheckpointController delega imediatamente ao OCRService a responsabilidade de enfileirar o processamento, retornando ao cliente uma resposta 202 Accepted com identificador de rastreamento. O OCRService encaminha a imagem ao motor de reconhecimento óptico de caracteres externo de forma não bloqueante. Após a extração dos dados, o OCRService valida o score de confiança conforme RN06, extrações com score abaixo de 85% são rejeitadas, e aciona o CheckpointService, que valida os dados extraídos segundo as demais regras de negócio vigentes (RN04, RN05, RN12) e persiste o resultado via CheckpointRepository. Registros de auditoria são gerados pelo AuditService ao longo de todo o fluxo, em conformidade com a RN05.
+O processamento de imagens capturadas pelos funcionários da Red Bull 24h constitui um fluxo assíncrono paralelo ao fluxo transacional principal, planejado para implementação futura. Ao receber uma imagem via requisição `POST /ocr/extractions`, o `CheckpointController` delegará imediatamente ao `OCRService` a responsabilidade de enfileirar o processamento, retornando ao cliente uma resposta `202 Accepted` com identificador de rastreamento. O `OCRService` encaminhará a imagem ao motor de reconhecimento óptico de caracteres externo de forma não bloqueante. Após a extração dos dados, o `OCRService` validará o score de confiança conforme RN06, extrações com score abaixo de 85% serão rejeitadas, e acionará o `CheckpointService`, que validará os dados extraídos segundo as demais regras de negócio vigentes (RN04, RN05, RN12) e persistirá o resultado via `CheckpointRepository`. Registros de auditoria serão gerados pelo `AuditService` ao longo de todo o fluxo, em conformidade com a RN05.
 
 Esse desenho evita que a latência do motor OCR impacte a resposta percebida pelos operadores no iPad, mantendo a experiência administrativa fluida durante picos de carga gerados por múltiplos checkpoints simultâneos.
 
 #### Tabela de Responsabilidades
 
 <div align="center">
-  <sub>Quadro 23 - Responsabilidades das Camadas  </sub>
+  <sub>Quadro 23 - Responsabilidades das Camadas</sub>
 </div>
- 
+
 | Camada | Responsabilidade | O que não faz | Pasta do projeto |
 |---|---|---|---|
-| **Routes** | Define endpoints REST, associa verbos HTTP a controllers, executa middlewares de autenticação JWT e validação de esquema de entrada. | Não contém lógica de negócio; não acessa banco de dados; não formata respostas de domínio. | `src/routes/` |
+| **Routes** | Define endpoints REST, associa verbos HTTP a controllers, executa middlewares de validação de esquema de entrada. | Não contém lógica de negócio; não acessa banco de dados; não formata respostas de domínio. | `src/routes/` |
 | **Controller** | Extrai parâmetros de `req` (body, params, query, headers), delega ao Service correspondente e retorna resposta HTTP com status code adequado. | Não implementa regras de negócio; não acessa banco de dados; não executa queries SQL. | `src/controllers/` |
-| **Service** | Implementa todas as regras de negócio do domínio da competição Red Bull 24h, orquestra chamadas a múltiplos repositórios, valida integridade de dados, gera registros de auditoria e encaminha processamento assíncrono de OCR. | Não conhece o protocolo HTTP; não executa queries SQL diretamente; não manipula `req` ou `res`. | `src/services/` |
-| **Repository** | Executa queries SQL parametrizadas contra o PostgreSQL, mapeia resultados de banco para instâncias de Model e persiste alterações de estado das entidades de domínio. | Não implementa regras de negócio; não conhece o protocolo HTTP; não é chamado diretamente pelo Controller. | `src/repositories/` |
-| **Model** | Define a estrutura de dados das entidades de domínio (`Competicao`, `Equipe`, `Corredor`, `Checkpoint`, `Esteira`, `Administrador`) como contratos de dados entre camadas. | Não contém lógica de persistência; não contém lógica de negócio; não realiza validações de entrada. | `src/models/` |
-| **PostgreSQL** | Armazena e recupera dados de forma persistente, garante integridade referencial por meio de constraints de chave estrangeira e executa transações ACID. | Não recebe conexões de nenhuma camada além do Repository; não aplica regras de negócio. | `database/` |
- 
----
+| **Service** | Implementa todas as regras de negócio do domínio da competição Red Bull 24h, orquestra chamadas a múltiplos repositórios, valida integridade de dados e encaminha processamento assíncrono de OCR. | Não conhece o protocolo HTTP; não executa queries SQL diretamente; não manipula `req` ou `res`. | `src/services/` |
+| **Repository** | Executa queries SQL parametrizadas contra o PostgreSQL via cliente Supabase, mapeia resultados de banco para instâncias de Model e persiste alterações de estado das entidades de domínio. | Não implementa regras de negócio; não conhece o protocolo HTTP; não é chamado diretamente pelo Controller. | `src/repositories/` |
+| **Model** | Define a estrutura de dados das entidades de domínio (`Competicao`, `Equipe`, `Corredor`, `Checkpoint`, `Administrador`) como contratos de dados entre camadas. | Não contém lógica de persistência; não contém lógica de negócio; não realiza validações de entrada. | `src/models/` |
+| **PostgreSQL** | Armazena e recupera dados de forma persistente, garante integridade referencial por meio de constraints de chave estrangeira e executa transações ACID. | Não recebe conexões de nenhuma camada além do Repository; não aplica regras de negócio. | `src/database/` · `documentos/outros/migrations/` |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
+</div>
+
+---
 
 #### Tabela de Rastreabilidade
 
 <div align="center">
-  <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas  </sub>
+  <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
 </div>
 
-| Camada | Classe | Responsabilidade no projeto | RFs / RNs |
-|---|---|---|---|
-| **Controller** | `CheckpointController` | Recebe `POST /checkpoints` e delega ao `CheckpointService` para registro manual de passagem; recebe `POST /ocr/extractions` e delega ao `OCRService` para enfileiramento assíncrono; recebe `GET /checkpoints/:equipe_id` e delega ao `CheckpointService` para histórico da equipe. | RF05, RF07, RF08, RF09 |
-| **Controller** | `EquipeController` | Recebe `POST /equipes` e delega ao `EquipeService` para criação com UUID de acesso público; recebe `PUT /equipes/:id/status` e delega ao `EquipeService`, que aplica validação de permissão (RN01). | RF03, RF01 + RN01 |
-| **Controller** | `CompetitionController` | Recebe `POST /competicoes` e delega ao `CompetitionService` para criação; recebe `PUT /competicoes/:id/encerrar` e delega ao `CompetitionService` para transição de estado para `encerrada`. | RF02, RF12 |
-| **Controller** | `AuthController` | Recebe `POST /auth/login` e delega ao `AuthService` para validação de credenciais e emissão de JWT; recebe `POST /auth/logout` e delega ao `AuthService` para invalidação de sessão (RN03). | RF04 + RN03 |
-| **Service** | `OCRService` | Enfileira imagem de esteira para o motor OCR externo de forma assíncrona; valida score de confiança mínimo de 85% (RN06); aciona `CheckpointService` para persistência e `AuditService` para log (RN05). | RF05, RF06, RF09 + RN05, RN06 |
-| **Service** | `CheckpointService` | Valida pertencimento do corredor à equipe (RN04) e intervalo temporal do checkpoint (RN12); persiste via `CheckpointRepository`; aciona `AuditService` para log de cada operação (RN05). | RF08 + RN04, RN05, RN12 |
-| **Service** | `RankingService` | Agrega distância acumulada por equipe via `CheckpointRepository`; aplica desempate por número de voltas (RN09) e tempo médio por volta (RN11); retorna classificação completa em tempo real. | RF10, RF15 + RN09, RN11 |
-| **Repository** | `CheckpointRepository` | Executa `INSERT INTO checkpoints` com dados validados pelo `CheckpointService`; executa `SELECT` agregado de distância acumulada por equipe para o `RankingService`. | RF05, RF08 |
-| **Repository** | `EquipeRepository` | Executa `INSERT INTO equipes` com UUID gerado pelo `EquipeService`; executa `SELECT` por `uuid_acesso_publico` para o fluxo público. | RF01, RF03 |
-| **Repository** | `AdminRepository` | Executa `SELECT` de administrador por `email` para validação de credenciais no `AuthService`. | RF04 |
-| **Model** | `Checkpoint` | Representa o registro de passagem com campos `id`, `corredor_id`, `equipe_id`, `esteira_id`, `timestamp`, `origem` (`manual`, `ocr`), `ocr_score`. | RF05, RF08 |
-| **Model** | `Equipe` | Representa a equipe com campos `id`, `nome`, `uuid_acesso_publico`, `competicao_id`, `status`. | RF01, RF03 |
-| **Model** | `Administrador` | Representa o administrador com campos `id`, `nome`, `email`, `senha_hash`, `perfil` (`operador`, `juiz`). | RF04 | 
+| Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
+| -------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| **Controller** | `CompetitionController` | Recebe `POST /competitions` e delega ao `CompetitionService` para criação de competição; recebe `GET /competitions/:id` e delega ao `CompetitionService` para consulta de estado.                                       | RF02, RF12                   |
+| **Controller** | `TeamController`        | Recebe `POST /competitions/:competicaoId/teams` e delega ao `TeamService` para criação de equipe com geração de UUID e QR Code; recebe `GET /competitions/:competicaoId/teams` e delega ao `TeamService` para listagem. | RF03, RF01, RN01             |
+| **Controller** | `AthleteController`     | Recebe `POST /athletes` e delega ao `AthleteService` para cadastro de corredor; recebe `GET /athletes/:id` e delega ao `AthleteService` para recuperação de dados individuais.                                          | RF01                         |
+| **Controller** | `UserController`        | Recebe `POST /users` e delega ao `UserService` para criação de usuário administrativo; recebe `POST /users/login` e delega ao `UserService` para validação de acesso.                                                   | RF04                         |
+| **Controller** | `CheckpointController`  | Recebe `POST /checkpoints` e delega ao `CheckpointService` para registro manual de passagem; recebe `POST /ocr/extractions` e delega ao `OCRService` para processamento assíncrono de OCR.                              | RF05, RF07, RF08, RF09       |
+| **Controller** | `AuthController`        | Recebe `POST /auth/login` e delega ao `AuthService` para validação de credenciais e emissão de JWT; recebe `POST /auth/logout` e delega ao `AuthService` para encerramento de sessão.                                   | RF04, RN03                   |
+| **Service**    | `CompetitionService`    | Cria competições, valida regras de período e estado da competição e coordena operações por meio do `CompetitionRepository`.                                                                                             | RF02, RF12, RN02             |
+| **Service**    | `TeamService`           | Cria equipes, gera UUID e QR Code de identificação e valida unicidade do nome da equipe dentro da competição.                                                                                                           | RF01, RF03, RN01             |
+| **Service**    | `AthleteService`        | Cadastra corredores, valida dados obrigatórios e garante integridade das informações dos participantes.                                                                                                                 | RF01                         |
+| **Service**    | `UserService`           | Valida credenciais de acesso administrativo e gerencia criação de usuários autorizados.                                                                                                                                 | RF04                         |
+| **Service**    | `OCRService`            | Encaminha imagens para processamento OCR assíncrono, valida score mínimo de confiança e aciona o `CheckpointService` para persistência dos resultados válidos.                                                          | RF05, RF06, RF09, RN05, RN06 |
+| **Service**    | `CheckpointService`     | Valida pertencimento do corredor à equipe, aplica regras temporais da competição, registra checkpoints e aciona mecanismos de auditoria.                                                                                | RF08, RN04, RN05, RN12       |
+| **Service**    | `RankingService`        | Calcula ranking em tempo real a partir dos checkpoints registrados, aplicando critérios de desempate definidos pelas regras de negócio.                                                                                 | RF10, RF15, RN09, RN11       |
+| **Service**    | `AuditService`          | Registra logs imutáveis das operações críticas executadas no sistema para garantir rastreabilidade e conformidade com auditoria.                                                                                        | RN05                         |
+| **Repository** | `CompetitionRepository` | Executa operações de persistência relacionadas às competições, incluindo criação, consulta e atualização de estado.                                                                                                     | RF02, RF12                   |
+| **Repository** | `TeamRepository`        | Executa operações de persistência das equipes, incluindo armazenamento de UUID e QR Code e consultas por competição.                                                                                                    | RF01, RF03                   |
+| **Repository** | `AthleteRepository`     | Executa operações de persistência dos corredores, incluindo consultas por identificador e número de dorsal.                                                                                                             | RF01                         |
+| **Repository** | `UserRepository`        | Executa operações de persistência relacionadas aos usuários administrativos e consultas para autenticação.                                                                                                              | RF04                         |
+| **Repository** | `CheckpointRepository`  | Executa persistência e recuperação de checkpoints e fornece dados agregados para cálculo de rankings.                                                                                                                   | RF05, RF08, RF10             |
+| **Repository** | `AuditRepository`       | Executa persistência dos registros de auditoria produzidos pelo `AuditService`.                                                                                                                                         | RN05                         |
+| **Model**      | `Competicao`            | Representa a entidade de competição contendo informações de identificação, período de realização e estado operacional.                                                                                                  | RF02                         |
+| **Model**      | `Equipe`                | Representa a entidade de equipe contendo identificadores públicos, QR Code e vínculo com a competição.                                                                                                                  | RF01, RF03                   |
+| **Model**      | `Corredor`              | Representa os participantes vinculados às equipes da competição.                                                                                                                                                        | RF01                         |
+| **Model**      | `Administrador`         | Representa os usuários autorizados a operar o sistema administrativo da competição.                                                                                                                                     | RF04                         |
+| **Model**      | `Checkpoint`            | Representa os registros de passagem utilizados para cálculo de desempenho e ranking.                                                                                                                                    | RF05, RF08                   |
+| **Model**      | `AuditLog`              | Representa os registros persistidos de auditoria contendo informações sobre operações críticas executadas no sistema.                                                                                                   | RN05                         |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
+</div>
+
+---
 
 #### Diagrama da Arquitetura em Camadas
 
 <div align="center">
-  <sub>Figura 15 - Diagrama de Classes de Domínio </sub><br>
+  <sub>Figura 15 - Diagrama de Arquitetura em Camadas</sub><br>
   <img src="../assets/programacao/diagrama-arquitetura-camadas.svg" width="100%" alt="Diagrama Arquitetura em Camadas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+---
 
 #### Revisão Cruzada da Análise de Consistência Arquitetural
- 
-A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os diagramas de sequência UML (seção 3.2.4), o diagrama de entidade-relacionamento (seção 3.6.1) e os scripts de migração (`migration.sql`), identificando pontos de atenção e ações necessárias.
- 
-Nomenclatura de camadas. Os nomes `Controller`, `Service`, `Repository`, `Model` e `PostgreSQL` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A inconsistência de nomenclatura entre entidades em inglês (ex.: `CompetitionController`, `CompetitionService`, `CompetitionRepository`) e o Model em português (`Competicao`) deve ser resolvida antes da entrega final: a equipe deve padronizar para um único idioma em todos os artefatos de código.
- 
-Coerência entre Models e tabelas de banco. Os campos do Model `Checkpoint` , `corredor_id`, `equipe_id`, `esteira_id`, `timestamp`, `origem`, `distancia_parcial` e `ocr_score` devem ser confrontados com as colunas definidas na `migration.sql` para confirmar correspondência. O mesmo vale para `Equipe` (campo `uuid_acesso_publico`) e `AuditLog` (campos `tipo_operacao`, `entidade_id`, `operador_id`, `payload_json`).
- 
-Tabela `audit_logs` no `migration.sql`. A RN05 exige log imutável de todas as operações críticas. A tabela `audit_logs` deve estar presente na migration com as colunas `id`, `tipo_operacao`, `entidade`, `entidade_id`, `operador_id`, `timestamp` e `payload_json`. Caso ausente, deve ser adicionada antes da entrega.
- 
-Constraint `UNIQUE` sobre `uuid_acesso_publico`. Para garantir integridade e performance nas consultas do `PublicController`, a coluna `equipes.uuid_acesso_publico` deve possuir constraint `UNIQUE` e índice B-tree no `migration.sql`.
- 
-Fluxo OCR nos diagramas de sequência (3.2.4). O retorno `202 Accepted` pelo `CheckpointController` e o callback assíncrono do motor externo para o `OCRService` devem estar representados nos diagramas de sequência com marcação explícita de assincronicidade (fragmento `async` ou notação equivalente em UML 2.x).
- 
-`EsteiraRepository` e Model `Esteira`. A entidade `Esteira` e seu Repository foram incluídos nesta seção em resposta à identificação de lacuna na versão anterior do documento. O RF06 referencia operações sobre esteiras; o `EsteiraRepository` deve estar presente na implementação e no `migration.sql`.
- 
-Consistência do `RankingRepository`. O Model de destino do `RankingRepository` é `RankingFinal`, não `Competicao`. O diagrama e a tabela de rastreabilidade foram atualizados para refletir essa distinção.
- 
-Middleware de validação de UUID. O middleware de validação de formato UUID-v4 está aplicado na camada de Routes (`R_PUBLIC`), antes de atingir o `PublicController`, evitando que identificadores malformados alcancem a camada de Service.
+
+A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os diagramas de sequência UML (seção 3.2.4), o diagrama de entidade-relacionamento (seção 3.6.1) e os arquivos de migração localizados em `documentos/outros/migrations/`, identificando pontos de atenção e ações necessárias.
+
+**Nomenclatura de camadas.** Os nomes `Controller`, `Service`, `Repository` e `Model` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A inconsistência de nomenclatura entre entidades em inglês (`CompetitionController`, `TeamController`) e os Models em português (`Competicao`, `Equipe`) foi mantida intencionalmente para preservar compatibilidade com o código existente, e deve ser padronizada para um único idioma no próximo ciclo de refatoração.
+
+**Coerência entre Models e tabelas de banco.** Os campos dos Models implementados; `Equipe` (`uuid`, `qr_code`, `competicao_id`, `criado_em`) e `Administrador` (`senha`, `area`); foram alinhados com o schema real das migrations. O Model `Checkpoint`, ainda planejado, utilizará os campos `identificador`, `km`, `pace`, `tempo`, `imagem`, `competicao_id`, `administrador_id` e `criado_em`, conforme definido em `0006_create_checkpoint.sql`.
+
+**Tabela `audit_logs`.** A RN05 exige log imutável de todas as operações críticas. O `AuditService` está previsto na arquitetura para atender essa regra de negócio, porém a tabela `audit_logs` ainda não está presente nas migrations atuais (`0000` a `0006`). Recomenda-se a criação de uma migration `0007_create_audit_logs.sql` contendo as colunas `id`, `tipo_operacao`, `entidade`, `entidade_id`, `operador_id`, `timestamp` e `payload_json`, garantindo suporte completo à rastreabilidade operacional exigida pelo sistema.
+
+**Autenticação JWT.** O middleware de autenticação JWT não está implementado; `src/middlewares/` contém apenas `errorHandler.ts`. A dependência `jsonwebtoken` não consta no `package.json`. A implementação do `AuthController` e do middleware JWT está planejada para sprint futura, conforme indicado na coluna "Status" do Quadro 24.
+
+**Fluxo OCR nos diagramas de sequência (3.2.4).** O retorno `202 Accepted` pelo `CheckpointController` e o callback assíncrono do motor externo para o `OCRService` deverão estar representados nos diagramas de sequência com marcação explícita de assincronicidade (fragmento `async` ou notação equivalente em UML 2.x) quando o fluxo for implementado.
+
+**Constraint `UNIQUE` sobre `uuid`.** Para garantir integridade nas consultas do fluxo público, a coluna `equipes.uuid` deve possuir constraint `UNIQUE` no schema do banco, verificando sua presença em `documentos/outros/migrations/`.
 
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
@@ -1804,6 +1838,69 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### Dashboard pós-cadastro de Competição.
+&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
+
+
+<div align="center">
+  <sub>Figura 3 - Competição Cadastrada </sub><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Painel de equipes (sem equipes cadastradas).
+&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
+
+
+<div align="center">
+  <sub>Figura 4 - Painel Equipes vazio</sub><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Cadastro de equipes.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
+
+
+<div align="center">
+  <sub>Figura 5 - Tela de Cadastro das equipes</sub><br>
+    <img src="../assets/design/protótipo/cadastrar-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel de administração das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
+
+
+<div align="center">
+  <sub>Figura 6 - Painel de admin das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel operacional das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
+
+
+<div align="center">
+  <sub>Figura 7 - Painel de operacional das equipes</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+#### Painel operacional das equipes com dropdown.
+&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
+
+
+<div align="center">
+  <sub>Figura 8 - Painel de operacional das equipes com dropdown</sub><br>
+    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 #### Captura da foto da esteira.
 &nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de captura da foto da esteira, utilizada para registrar os dados do participante durante a competição. Nela, o operador pode visualizar a imagem capturada do painel da esteira referente ao checkpoint atual, além de optar entre realizar um registro manual ou prosseguir com a captura automática para extração dos dados via OCR, garantindo maior agilidade e precisão no processo de validação dos checkpoints.
 
@@ -1842,69 +1939,6 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 <div align="center">
   <sub>Figura 12 -  Checkpoints salvos </sub><br>
     <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-#### Dashboard pós-cadastro de Competição.
-&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
-
-
-<div align="center">
-  <sub>Figura 3 - Competição Cadastrada </sub><br>
-    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-#### Painel de equipes (sem equipes cadastradas).
-&nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
-
-
-<div align="center">
-  <sub>Figura 4 - Painel Equipes vazio</sub><br>
-    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-#### Cadastro de equipes.
-&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
-
-
-<div align="center">
-  <sub>Figura 1 - Tela de Cadastro das equipes</sub><br>
-    <img src="../assets/design/protótipo/cadastrar-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
-#### Painel de administração das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
-
-
-<div align="center">
-  <sub>Figura 1 - Painel de admin das equipes</sub><br>
-    <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
-#### Painel operacional das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
-
-
-<div align="center">
-  <sub>Figura 1 - Painel de operacional das equipes</sub><br>
-    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
-      <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
-#### Painel operacional das equipes com dropdown.
-&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
-
-
-<div align="center">
-  <sub>Figura 1 - Painel de operacional das equipes com dropdown</sub><br>
-    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -2793,7 +2827,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 
 </div>
 
-### Quadro XX – Matriz de Rastreabilidade (RTM)
+### Quadro 35 – Matriz de Rastreabilidade (RTM)
 
 | Persona        | RF    | RN         | Endpoint                                            | Tela                           | Teste                        | Evidência                                                     |
 | -------------- | ----- | ---------- | --------------------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------- |
@@ -3048,23 +3082,33 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
-D
-PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. PM3, [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/?utm_source=chatgpt.com. Acesso em: 13 maio 2026.
+ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
 
 AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
-PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
+BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
 
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
 CASAROTTO, Camila. Análise SWOT: o que é e como fazer. 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
 
+DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
+
+DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
+
 DEVMEDIA. MER e DER: modelagem de bancos de dados. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 6 maio 2026.
+
+FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
+
+FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison-Wesley, 2002.
+
+GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
 
 Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
 
 LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento?. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.  
+
+MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
 
 Microsoft. Best practices for RESTful web API design. 2023. Microsoft Azure Architecture Center. Disponível em: https://learn.microsoft.com. Acesso em: 1 maio 2026.
 
@@ -3072,25 +3116,21 @@ Nielsen Norman Group. Personas and user-centered design. 2024. Disponível em: h
 
 OSTERWALDER, Alexander; PIGNEUR, Yves. Value proposition design: how to create products and services customers want. Hoboken: John Wiley & Sons, 2011.
 
+PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
+
+PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. Disponível em: https://plantuml.com. Acesso em: 12 maio 2026.
+
 PMI (PROJECT MANAGEMENT INSTITUTE). A guide to the project management body of knowledge (PMBOK® Guide). 7. ed. Newtown Square: Project Management Institute, 2021.
+
+PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. PM3, [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/?utm_source=chatgpt.com. Acesso em: 13 maio 2026.
 
 PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, Boston, v. 86, n. 1, p. 78–93, 2008.
 
 RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
+RICHARDS, Mark. Software Architecture Patterns. Sebastopol: O'Reilly Media, 2015.
+
 TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
-
-GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
-
-ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
-
-DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
-
-DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
-
-FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
-
-PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. Disponível em: https://plantuml.com. Acesso em: 12 maio 2026.
 
 # <a name="c9"></a>Anexos
 
