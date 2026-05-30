@@ -1820,6 +1820,7 @@ A seguir, o Quadro 29 ilustra a entidade Equipe e os seus atributos.
 | Equipe | Nome | Texto | Nome da equipe |
 | Equipe | UUID | Identificador único público | Código distribuído ao capitão para acesso sem login |
 | Equipe | Qr_Code | Imagem | Representação visual gerada a partir do UUID |
+| Equipe | Competicao_id | Chave estrangeira | Referência à competição à qual a equipe pertence |
 | Equipe | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
@@ -1840,6 +1841,7 @@ O Quadro 30 representa o dicionário de dados da entidade Corredor.
 | Corredor | Email | Texto | Endereço de e-mail do corredor | 
 | Corredor | Telefone | Texto | Contato telefônico do corredor | 
 | Corredor | Status | Categórico | Papel do corredor na equipe: corredor ou capitão |
+| Corredor | Equipe_id | Chave estrangeira | Referência à equipe à qual o corredor pertence |
 | Corredor | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
@@ -1857,9 +1859,13 @@ O Quadro 31 apresenta a entidade e os atributos de "Checkpoint".
 | Checkpoint | Código | Identificador | Identifica unicamente cada checkpoint |
 | Checkpoint | Identificador | Número | Identifica cada checkpoint e possibilita rastreabilidade e auditoria dos registros |
 | Checkpoint | Km | Numérico decimal | Distância percorrida registrada |
-| Checkpoint | Pace | Numérico decimal | Ritmo médio em minutos por km |
+| Checkpoint | Pace | Texto formatado | Ritmo médio do corredor no formato `M:SS/km` ou `MM:SS/km` |
 | Checkpoint | Tempo | Duração | Tempo total na esteira |
 | Checkpoint | Imagem | Arquivo | Foto do painel da esteira capturada via OCR |
+| Checkpoint | Corredor_id | Chave estrangeira | Referência ao corredor que realizou o checkpoint |
+| Checkpoint | Competicao_id | Chave estrangeira | Referência à competição em que o checkpoint foi registrado |
+| Checkpoint | Esteira_id | Chave estrangeira | Referência à esteira utilizada no checkpoint |
+| Checkpoint | Administrador_id | Chave estrangeira | Referência ao administrador responsável pela validação do checkpoint |
 | Checkpoint | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
