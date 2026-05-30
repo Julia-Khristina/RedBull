@@ -48,17 +48,17 @@ exatamente a condição de outlier que a regra RN06 determina destacar.
 | Operadores lógicos     | `AND`, `NOT`                                                             |
 | Operadores especiais   | `LIKE`                                                                   |
 | Operadores relacionais | `=`                                                                      |
-| RF atendido            | RF003, RF011                                                             |
-| RNs justificadas       | RN07 (apenas um atleta por equipe com status "Em corrida" simultaneamente) |
+| RF atendido            | RF003                                                                    |
+| RNs justificadas       | Não há RN específica; apoia a operação do RF003                          |
 | Tabela percorrida      | `corredor`                                                               |
 | Relacionamentos do DER | `corredor.equipe_id → equipe.id` (N:1)                                   |
-| Contexto de negócio    | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
+| Contexto de negócio    | Listar participantes comuns cujo nome começa com uma letra específica, excluindo capitães da busca operacional. |
 
-**Justificativa:** RF003 cobre o cadastro e a consulta de atletas; RF011
-exige a exibição do atleta em corrida no painel administrativo. A
-combinação de `LIKE` para busca textual com `NOT` para exclusão de status
-reflete a necessidade de filtrar corredores disponíveis para atribuição
-de turno.
+**Justificativa:** RF003 cobre o cadastro e a consulta de atletas. A
+combinação de `LIKE` para busca textual com `NOT` para exclusão do papel
+`capitao` permite filtrar participantes comuns sem violar a restrição
+física da tabela `corredor`, cujo campo `status` aceita apenas `corredor`
+e `capitao`.
 
 ---
 
@@ -70,17 +70,17 @@ de turno.
 | Operadores lógicos     | `AND`                                                                    |
 | Operadores especiais   | `IN`                                                                     |
 | Operadores relacionais | `=`                                                                      |
-| RF atendido            | RF011                                                                    |
-| RNs justificadas       | RN07 (ao confirmar troca, atleta anterior deve ser definido como "Em descanso" automaticamente) |
+| RF atendido            | RF003                                                                    |
+| RNs justificadas       | Não há RN específica; apoia a operação do RF003                          |
 | Tabela percorrida      | `corredor`                                                               |
 | Relacionamentos do DER | `corredor.equipe_id → equipe.id` (N:1)                                   |
-| Contexto de negócio    | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar. |
+| Contexto de negócio    | Atualizar o papel cadastral de corredores específicos de uma equipe, promovendo-os a capitães. |
 
-**Justificativa:** RN07 obriga que a troca de atleta seja feita de forma
-atômica — todos os corredores com status `Em corrida` ou `Próximo` de uma
-mesma equipe devem ser atualizados simultaneamente. O operador `IN`
-expressa essa condição de pertinência a um conjunto de estados de forma
-concisa, enquanto `AND` garante o escopo da equipe correta.
+**Justificativa:** RF003 cobre o gerenciamento de atletas vinculados a uma
+equipe. O operador `IN` expressa a seleção de um conjunto de corredores
+por identificador, enquanto `AND` garante que a atualização fique restrita
+à equipe correta. A consulta mantém compatibilidade com o `CHECK` do
+modelo físico ao atualizar o status para `capitao`.
 
 ---
 
@@ -133,8 +133,8 @@ funcionalidades.
 | Q   | Tipo     | Tabela principal | Operadores                        | RF            |
 |-----|----------|------------------|-----------------------------------|---------------|
 | Q01 | `SELECT` | `checkpoint`     | `AND`, `OR`, `=`, `>`, `<`        | RF008, RF009  |
-| Q02 | `SELECT` | `corredor`       | `AND`, `NOT`, `LIKE`, `=`         | RF003, RF011  |
-| Q03 | `UPDATE` | `corredor`       | `AND`, `IN`, `=`                  | RF011         |
+| Q02 | `SELECT` | `corredor`       | `AND`, `NOT`, `LIKE`, `=`         | RF003         |
+| Q03 | `UPDATE` | `corredor`       | `AND`, `IN`, `=`                  | RF003         |
 | Q04 | `DELETE` | `checkpoint`     | `AND`, `NOT LIKE`, `=`            | RF008         |
 | Q05 | `SELECT` | `checkpoint`     | `AND`, `BETWEEN`, `NOT IN`        | RF010, RF013  |
 

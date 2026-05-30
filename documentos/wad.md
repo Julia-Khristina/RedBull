@@ -2315,7 +2315,7 @@ A presente subseção apresenta um conjunto de consultas SQL utilizadas pela apl
 #### Q01 — `SELECT` com `AND` e `OR`
 
 <div align="center">
-  <sub>Quadro X - Consulta Q01</sub>
+  <sub>Quadro 31 - Consulta Q01</sub>
 </div>
 
 | Atributo | Conteúdo |
@@ -2394,7 +2394,7 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 | **Operadores lógicos** | `AND`, `NOT` |
 | **Operadores especiais** | `LIKE` |
 | **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
+| **Contexto de negócio** | Listar participantes comuns cujo nome começa com uma letra específica, excluindo capitães da busca operacional. |
 
 **Expressão SQL:**
 
@@ -2402,10 +2402,10 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 SELECT id, nome, status, equipe_id
 FROM corredor
 WHERE nome LIKE 'A%'
-  AND NOT status = 'Em descanso';
+  AND NOT status = 'capitao';
 ```
 
-**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
+**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão cadastrados como capitães. A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional. A consulta respeita a restrição física da tabela `corredor`, cujo campo `status` aceita apenas os valores `corredor` e `capitao`.
 
 #### Proposições lógicas
 
@@ -2414,8 +2414,8 @@ Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômica
 - **P:** o nome do corredor inicia com a letra “A”.  
   `nome LIKE 'A%'`
 
-- **Q:** o corredor está com status “Em descanso”.  
-  `status = 'Em descanso'`
+- **Q:** o corredor está com status “capitao”.
+  `status = 'capitao'`
 
 #### Expressão lógica proposicional
 
@@ -2426,12 +2426,12 @@ P ∧ ¬Q
 ```
 
 Em palavras:  
-o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver cadastrado como capitão.
 
 #### Identificação dos conectivos lógicos
 
 - **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao papel cadastral do corredor.
 
 #### Tabela-verdade
 
@@ -2444,28 +2444,28 @@ o corredor será selecionado se o nome iniciar com a letra “A” e o corredor 
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjutamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjuntamente, o corredor não está cadastrado como capitão. Caso o nome não comece com “A” ou o corredor possua status `capitao`, o registro não será selecionado.
 
 #### Q03 — `UPDATE` com `AND` e `IN`
 
 | Atributo | Conteúdo |
 |----------|----------|
 | **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND`, `OR` |
+| **Operadores lógicos** | `AND` |
 | **Operadores especiais** | `IN` |
 | **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
+| **Contexto de negócio** | Atualizar o papel cadastral de corredores específicos de uma equipe, promovendo-os a capitães conforme a configuração operacional da equipe. |
 
 **Expressão SQL:**
 
 ```sql
 UPDATE corredor
-SET status = 'Em descanso'
+SET status = 'capitao'
 WHERE equipe_id = 1
-  AND status IN ('Em corrida', 'Próximo');
+  AND id IN (1, 7);
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
+**Descrição em palavras:** atualiza o status para `capitao` dos corredores de identificadores `1` ou `7`, desde que eles pertençam à equipe de identificador `1`. A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade. A atualização utiliza apenas valores aceitos pela restrição `CHECK (status IN ('corredor', 'capitao'))` definida no modelo físico.
 
 #### Proposições lógicas
 
@@ -2474,11 +2474,11 @@ Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômica
 - **P:** o corredor pertence à equipe de identificador 1.  
   `equipe_id = 1`
 
-- **Q:** o corredor está com status “Em corrida”.  
-  `status = 'Em corrida'`
+- **Q:** o corredor possui identificador 1.
+  `id = 1`
 
-- **R:** o corredor está com status “Próximo”.  
-  `status = 'Próximo'`
+- **R:** o corredor possui identificador 7.
+  `id = 7`
 
 #### Expressão lógica proposicional
 
@@ -2489,12 +2489,12 @@ P ∧ (Q ∨ R)
 ```
 
 Em palavras:  
-o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+o status do corredor será atualizado para `capitao` se ele pertencer à equipe 1 e possuir identificador 1 ou 7.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
-- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de identificador;
+- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o identificador seja `1` ou `7`.
 
 #### Tabela-verdade
 
@@ -2511,7 +2511,13 @@ o status do corredor será atualizado para “Em descanso” se ele pertencer à
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
+#### Observação sobre dependências semânticas
+
+As proposições **Q** e **R** dependem do mesmo atributo `id`. Por isso, uma linha da tabela-verdade em que **Q = V** e **R = V** é proposicionalmente listada, mas não ocorre para um único registro real, já que um corredor não pode possuir simultaneamente os identificadores `1` e `7`.
+
+### Interpretação da tabela-verdade
+
+A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e seu identificador estiver no conjunto `{1, 7}`. Caso o corredor pertença a outra equipe ou tenha identificador fora do conjunto indicado, o registro não será atualizado.
 
 #### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
