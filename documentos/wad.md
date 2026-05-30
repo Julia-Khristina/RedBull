@@ -1,10 +1,3 @@
-<> **Link do prototipo (Sprint 3 - Semana 1 + Semana 2):** Acesse o prototipo de alta fidelidade completo na plataforma Figma: https://bit.ly/redbull24h-prototipo
-
-img src="../assets/l> **🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
-
-ogointeli.png">
-
-
 # WAD - Web Application Document - Módulo 2 - Inteli
 
 **_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
