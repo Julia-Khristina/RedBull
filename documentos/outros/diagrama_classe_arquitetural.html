@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Diagrama de Classes Arquitetural</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #fff; font-family: "Times New Roman", Times, serif; }
+  .wrap { padding: 24px; overflow-x: auto; }
+  h1 { font-size: 14px; font-weight: bold; text-align: center; margin-bottom: 4px; letter-spacing: 0.04em; }
+  p.sub { font-size: 10px; text-align: center; color: #444; margin-bottom: 16px; }
+  svg { display: block; }
+  .legend-wrap { margin-top: 16px; border-top: 1px solid #000; padding-top: 10px; display: flex; flex-wrap: wrap; gap: 20px; font-size: 10px; }
+  .leg-row { display: flex; align-items: center; gap: 6px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+<svg id="main" xmlns="http://www.w3.org/2000/svg" font-family="'Times New Roman', Times, serif">
+<defs>
+  <marker id="arr-dep" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polyline points="0,0 9,3.5 0,7" fill="none" stroke="#000" stroke-width="1"/>
+  </marker>
+  <marker id="arr-assoc" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+    <polygon points="0,0 9,3.5 0,7" fill="#000" stroke="#000" stroke-width="0.5"/>
+  </marker>
+  <marker id="arr-real" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto">
+    <polygon points="0,0 9,4 0,8" fill="#fff" stroke="#000" stroke-width="1"/>
+  </marker>
+</defs>
+</svg>
+
+<div class="legend-wrap">
+  <div class="leg-row">
+    <svg width="36" height="12" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="6" x2="28" y2="6" stroke="#000" stroke-width="1" marker-end="url(#arr-assoc-leg)"/><defs><marker id="arr-assoc-leg" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0,0 7,3 0,6" fill="#000"/></marker></defs></svg>
+    <span>Associação</span>
+  </div>
+  <div class="leg-row">
+    <svg width="36" height="12" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="6" x2="28" y2="6" stroke="#000" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr-dep-leg)"/><defs><marker id="arr-dep-leg" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polyline points="0,0 9,3.5 0,7" fill="none" stroke="#000" stroke-width="1"/></marker></defs></svg>
+    <span>Dependência</span>
+  </div>
+  <div class="leg-row">
+    <svg width="36" height="12" xmlns="http://www.w3.org/2000/svg"><line x1="0" y1="6" x2="22" y2="6" stroke="#000" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arr-real-leg)"/><defs><marker id="arr-real-leg" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><polygon points="0,0 9,4 0,8" fill="#fff" stroke="#000" stroke-width="1"/></marker></defs></svg>
+    <span>Tipagem / retorno</span>
+  </div>
+  <div class="leg-row">
+    <svg width="36" height="12" xmlns="http://www.w3.org/2000/svg"><rect x="0" y="1" width="36" height="10" fill="#fff" stroke="#000" stroke-width="1" stroke-dasharray="4,3"/></svg>
+    <span>«planned» ou arquivo vazio</span>
+  </div>
+  <div class="leg-row">
+    <span style="font-size:9px; border:1px solid #000; padding:1px 4px;">!</span>
+    <span>Método não implementado</span>
+  </div>
+</div>
+</div>
+
+<script>
+const BOX_W = 178;
+const TITLE_H = 32;
+const ROW_H = 16;
+const SEP_H = 8;
+const LAYER_GAP = 58;
+const BOX_GAP = 18;
+const MARGIN_LEFT = 30;
+const MARGIN_TOP = 30;
+
+const layers = [
+  {
+    label: "Controllers",
+    boxes: [
+      { id:"AuthCtrl", stereotype:"«controller»", name:"AuthController", planned:false, members:[
+        {vis:"+", text:"login(): void"},
+        {vis:"+", text:"refreshToken(): void"},
+        {vis:"+", text:"logout(): void"},
+        {sep:true},
+        {vis:"", text:"não registrado em app.ts", note:true},
+        {vis:"", text:"authRoutes.ts não existe", note:true},
+      ]},
+      { id:"AdminCtrl", stereotype:"«controller»", name:"AdministradorController", planned:false, members:[
+        {vis:"+", text:"listar(): void"},
+        {vis:"+", text:"buscarPorId(): void"},
+        {vis:"+", text:"criar(): void"},
+        {vis:"+", text:"atualizar(): void"},
+        {vis:"+", text:"excluir(): void"},
+      ]},
+      { id:"CompCtrl", stereotype:"«controller»", name:"CompetitionController", planned:false, members:[
+        {vis:"+", text:"create(): void"},
+        {vis:"+", text:"findAll(): void"},
+        {vis:"+", text:"findById(): void"},
+        {vis:"+", text:"update(): void"},
+        {vis:"+", text:"delete(): void"},
+        {vis:"+", text:"close(): void"},
+      ]},
+      { id:"TeamCtrl", stereotype:"«controller»", name:"TeamController", planned:false, members:[
+        {vis:"+", text:"create(): void"},
+        {vis:"+", text:"list(): void"},
+        {vis:"+", text:"findById(): void"},
+        {vis:"+", text:"update(): void"},
+        {vis:"+", text:"delete(): void"},
+      ]},
+      { id:"AthCtrl", stereotype:"«controller»", name:"AthleteController", planned:false, members:[
+        {vis:"+", text:"create(): void"},
+        {vis:"+", text:"list(): void"},
+        {vis:"+", text:"findById(): void"},
+        {vis:"+", text:"update(): void"},
+        {vis:"+", text:"delete(): void"},
+      ]},
+      { id:"CkpCtrl", stereotype:"«controller»", name:"CheckpointController", planned:false, members:[
+        {vis:"+", text:"create(): void"},
+        {vis:"+", text:"list(): void"},
+        {vis:"+", text:"findById(): void"},
+        {vis:"+", text:"findByCorredor(): void"},
+        {vis:"+", text:"findByCompeticao(): void"},
+        {vis:"+", text:"update(): void"},
+        {vis:"+", text:"remove(): void"},
+      ]},
+      { id:"RankCtrl", stereotype:"«controller»", name:"RankingController", planned:false, members:[
+        {vis:"+", text:"rankingEquipes(): void"},
+        {vis:"+", text:"rankingCorredores(): void"},
+      ]},
+      { id:"ExpCtrl", stereotype:"«controller»", name:"ExportController", planned:false, members:[
+        {vis:"+", text:"exportCompetition(): void"},
+        {sep:true},
+        {vis:"", text:"GET /competitions/:competicaoId/export", note:true},
+      ]},
+      { id:"UserCtrl", stereotype:"«controller»", name:"UserController", planned:true, members:[
+        {vis:"", text:"src/controllers/userController.ts vazio", note:true},
+      ]},
+    ]
+  },
+  {
+    label: "Validators",
+    boxes: [
+      { id:"CompVal", stereotype:"«validator»", name:"CompetitionValidator", planned:false, members:[
+        {vis:"+", text:"validateCreateCompetition(data)"},
+        {vis:"+", text:"validateUpdateCompetition(data)"},
+        {vis:"+", text:"validateCompetitionId(id): number"},
+      ]},
+      { id:"TeamVal", stereotype:"«validator»", name:"TeamValidator", planned:false, members:[
+        {vis:"+", text:"validateCreateTeam(data)"},
+        {vis:"+", text:"validateUpdateTeam(data)"},
+      ]},
+      { id:"AthVal", stereotype:"«validator»", name:"AthleteValidator", planned:false, members:[
+        {vis:"+", text:"validateCreateAthlete(data)"},
+        {vis:"+", text:"validateUpdateAthlete(data)"},
+      ]},
+      { id:"CkpVal", stereotype:"«validator»", name:"CheckpointValidator", planned:false, members:[
+        {vis:"+", text:"validateCreateCheckpoint(data)"},
+        {vis:"+", text:"validateUpdateCheckpoint(data)"},
+      ]},
+    ]
+  },
+  {
+    label: "Services",
+    boxes: [
+      { id:"AuthSvc", stereotype:"«service»", name:"AuthService", planned:false, members:[
+        {vis:"-", text:"administradorRepository"},
+        {sep:true},
+        {vis:"+", text:"autenticar(input): AuthResponse"},
+        {vis:"+", text:"refreshToken(token): AuthResponse"},
+        {vis:"+", text:"logout(token): void"},
+        {vis:"+", text:"getCurrentUser(token): User"},
+        {vis:"+", text:"validarPermissao(token): boolean"},
+        {vis:"+", text:"gerarToken(user): string"},
+      ]},
+      { id:"AdminSvc", stereotype:"«service»", name:"AdministradorService", planned:false, members:[
+        {vis:"-", text:"repository: AdministradorRepository"},
+        {sep:true},
+        {vis:"+", text:"listar(): Administrador[]"},
+        {vis:"+", text:"buscarPorId(id): Administrador"},
+        {vis:"+", text:"buscarPorEmail(email): Administrador"},
+        {vis:"+", text:"criar(dados): Administrador"},
+        {vis:"+", text:"atualizar(id,dados): Administrador"},
+        {vis:"+", text:"excluir(id): void"},
+      ]},
+      { id:"CompSvc", stereotype:"«service»", name:"CompetitionService", planned:false, members:[
+        {vis:"-", text:"competitionRepository"},
+        {sep:true},
+        {vis:"+", text:"create(payload): Competition"},
+        {vis:"+", text:"findAll(): Competition[]"},
+        {vis:"+", text:"findById(id): Competition"},
+        {vis:"+", text:"update(id,payload): Competition"},
+        {vis:"+", text:"delete(id): void"},
+        {vis:"+", text:"close(id): Competition"},
+      ]},
+      { id:"TeamSvc", stereotype:"«service»", name:"TeamService", planned:false, members:[
+        {vis:"-", text:"teamRepository"},
+        {sep:true},
+        {vis:"+", text:"create(payload): Team"},
+        {vis:"+", text:"findById(id): Team"},
+        {vis:"+", text:"findByCompetition(id): Team[]"},
+        {vis:"+", text:"update(id,payload): Team"},
+        {vis:"+", text:"delete(id): void"},
+      ]},
+      { id:"AthSvc", stereotype:"«service»", name:"AthleteService", planned:false, members:[
+        {vis:"-", text:"athleteRepository"},
+        {sep:true},
+        {vis:"+", text:"create(payload): Athlete"},
+        {vis:"+", text:"findByTeam(equipe_id): Athlete[]"},
+        {vis:"+", text:"findById(id,equipe_id): Athlete"},
+        {vis:"+", text:"update(id,equipe_id,payload): Athlete"},
+        {vis:"+", text:"delete(id,equipe_id): void"},
+      ]},
+      { id:"CkpSvc", stereotype:"«service»", name:"CheckpointService", planned:false, members:[
+        {vis:"-", text:"checkpointRepository"},
+        {sep:true},
+        {vis:"+", text:"findAll(): Checkpoint[]"},
+        {vis:"+", text:"findById(id): Checkpoint"},
+        {vis:"+", text:"findByCorredor(id): Checkpoint[]"},
+        {vis:"+", text:"findByCompeticao(id): Checkpoint[]"},
+        {vis:"+", text:"create(payload): Checkpoint"},
+        {vis:"+", text:"update(id,payload): Checkpoint"},
+        {vis:"+", text:"delete(id): void"},
+      ]},
+      { id:"RankSvc", stereotype:"«service»", name:"RankingService", planned:false, members:[
+        {vis:"-", text:"checkpointService"},
+        {vis:"-", text:"teamService"},
+        {sep:true},
+        {vis:"+", text:"gerarRankingCorredores(id): RankingRunner[]"},
+        {vis:"+", text:"gerarRankingEquipes(id): RankingTeam[]"},
+      ]},
+      { id:"ExpSvc", stereotype:"«service»", name:"ExportService", planned:false, members:[
+        {vis:"-", text:"exportRepository"},
+        {vis:"-", text:"rankingService"},
+        {sep:true},
+        {vis:"+", text:"exportCompetition(id): CompetitionExport"},
+      ]},
+      { id:"UserSvc", stereotype:"«service»", name:"UserService", planned:true, members:[
+        {vis:"", text:"src/services/userService.ts vazio", note:true},
+      ]},
+    ]
+  },
+  {
+    label: "Repositories",
+    boxes: [
+      { id:"AdminRepo", stereotype:"«repository»", name:"AdministradorRepository", planned:false, members:[
+        {vis:"-", text:"supabase: SupabaseClient"},
+        {sep:true},
+        {vis:"+", text:"findAll(): Administrador[]"},
+        {vis:"+", text:"findById(id): Administrador"},
+        {vis:"+", text:"findByEmail(email): Administrador"},
+        {vis:"+", text:"create(dados): Administrador"},
+        {vis:"+", text:"update(id,dados): Administrador"},
+        {vis:"+", text:"delete(id): boolean"},
+      ]},
+      { id:"CompRepo", stereotype:"«repository»", name:"CompetitionRepository", planned:false, members:[
+        {vis:"-", text:"supabase: SupabaseClient"},
+        {sep:true},
+        {vis:"+", text:"create(input): Competition"},
+        {vis:"+", text:"findAll(): Competition[]"},
+        {vis:"+", text:"findById(id): Competition"},
+        {vis:"+", text:"update(id,input): Competition"},
+        {vis:"+", text:"delete(id): boolean"},
+        {vis:"+", text:"close(id): Competition"},
+      ]},
+      { id:"TeamRepo", stereotype:"«repository»", name:"TeamRepository", planned:false, members:[
+        {vis:"-", text:"supabase: SupabaseClient"},
+        {sep:true},
+        {vis:"+", text:"create(input): Team"},
+        {vis:"+", text:"findById(id): Team"},
+        {vis:"+", text:"findByCompetition(id): Team[]"},
+        {vis:"+", text:"update(id,input): Team"},
+        {vis:"+", text:"delete(id): boolean"},
+      ]},
+      { id:"AthRepo", stereotype:"«repository»", name:"AthleteRepository", planned:false, members:[
+        {vis:"-", text:"supabase: SupabaseClient"},
+        {sep:true},
+        {vis:"+", text:"create(input): Athlete"},
+        {vis:"+", text:"findById(id,equipe_id): Athlete"},
+        {vis:"+", text:"findByTeam(equipe_id): Athlete[]"},
+        {vis:"+", text:"countByTeam(equipe_id): number"},
+        {vis:"+", text:"findTeamById(equipe_id): Team"},
+        {vis:"+", text:"update(id,equipe_id,input): Athlete"},
+        {vis:"+", text:"delete(id,equipe_id): boolean"},
+      ]},
+      { id:"CkpRepo", stereotype:"«repository»", name:"CheckpointRepository", planned:false, members:[
+        {vis:"-", text:"supabase: SupabaseClient"},
+        {sep:true},
+        {vis:"+", text:"create(input): Checkpoint"},
+        {vis:"+", text:"findAll(): Checkpoint[]"},
+        {vis:"+", text:"findById(id): Checkpoint"},
+        {vis:"+", text:"findByCorredor(id): Checkpoint[]"},
+        {vis:"+", text:"findByCompeticao(id): Checkpoint[]"},
+        {vis:"+", text:"update(id,input): Checkpoint"},
+        {vis:"+", text:"delete(id): boolean"},
+      ]},
+      { id:"ExpRepo", stereotype:"«repository»", name:"ExportRepository", planned:false, members:[
+        {vis:"-", text:"supabase: SupabaseClient"},
+        {sep:true},
+        {vis:"+", text:"findCompetitionExportData(id): CompetitionExportData"},
+      ]},
+      { id:"AuthRepo", stereotype:"«repository»", name:"AuthRepository", planned:true, members:[
+        {vis:"+", text:"findByEmail(email)"},
+        {vis:"+", text:"register(dados)"},
+        {vis:"+", text:"login(dados)"},
+        {vis:"+", text:"refresh(refreshToken)"},
+        {vis:"+", text:"logout(token)"},
+        {vis:"+", text:"getCurrentUser(token)"},
+        {sep:true},
+        {vis:"", text:"! todos os métodos lançam throw", note:true},
+        {vis:"", text:"authService usa AdministradorRepository", note:true},
+      ]},
+      { id:"UserRepo", stereotype:"«repository»", name:"UserRepository", planned:true, members:[
+        {vis:"", text:"src/repositories/userRepository.ts vazio", note:true},
+      ]},
+    ]
+  },
+  {
+    label: "Models / Interfaces",
+    boxes: [
+      { id:"AdminModel", stereotype:"«interface»", name:"Administrador", planned:false, members:[
+        {vis:"+", text:"id: number"},
+        {vis:"+", text:"nome: string"},
+        {vis:"+", text:"email: string"},
+        {vis:"+", text:"area: string"},
+        {vis:"+", text:"senha: string"},
+        {vis:"+", text:"criado_em: string"},
+      ]},
+      { id:"CompModel", stereotype:"«interface»", name:"Competition", planned:false, members:[
+        {vis:"+", text:"id: number"},
+        {vis:"+", text:"nome: string"},
+        {vis:"+", text:"endereco: string"},
+        {vis:"+", text:"data: string"},
+        {vis:"+", text:"status: CompetitionStatus"},
+        {vis:"+", text:"criado_em: string"},
+      ]},
+      { id:"TeamModel", stereotype:"«interface»", name:"Team", planned:false, members:[
+        {vis:"+", text:"id: number"},
+        {vis:"+", text:"nome: string"},
+        {vis:"+", text:"uuid: string"},
+        {vis:"+", text:"qr_code: object | null"},
+        {vis:"+", text:"competicao_id: number"},
+        {vis:"+", text:"criado_em: string"},
+      ]},
+      { id:"AthModel", stereotype:"«interface»", name:"Athlete", planned:false, members:[
+        {vis:"+", text:"id: number"},
+        {vis:"+", text:"nome: string"},
+        {vis:"+", text:"status: string"},
+        {vis:"+", text:"email: string"},
+        {vis:"+", text:"telefone: string | null"},
+        {vis:"+", text:"cpf: string"},
+        {vis:"+", text:"equipe_id: number"},
+        {vis:"+", text:"criado_em: string"},
+      ]},
+      { id:"CkpModel", stereotype:"«interface»", name:"Checkpoint", planned:false, members:[
+        {vis:"+", text:"id: number"},
+        {vis:"+", text:"identificador: string"},
+        {vis:"+", text:"km: number"},
+        {vis:"+", text:"pace?: string"},
+        {vis:"+", text:"tempo?: string"},
+        {vis:"+", text:"imagem?: object"},
+        {vis:"+", text:"corredor_id: number"},
+        {vis:"+", text:"competicao_id: number"},
+        {vis:"+", text:"esteira_id: number"},
+        {vis:"+", text:"administrador_id: number"},
+        {vis:"+", text:"criado_em: string"},
+      ]},
+      { id:"RankModel", stereotype:"«interface»", name:"Ranking", planned:false, members:[
+        {vis:"+", text:"RankingRunner"},
+        {vis:"+", text:"RankingTeam"},
+        {vis:"", text:"src/models/ranking.ts", note:true},
+      ]},
+      { id:"ExpModel", stereotype:"«interface»", name:"Export", planned:false, members:[
+        {vis:"+", text:"CompetitionExportData"},
+        {vis:"+", text:"CompetitionExport"},
+        {vis:"", text:"src/models/export.ts", note:true},
+      ]},
+      { id:"AuthModel", stereotype:"«interface»", name:"Auth", planned:false, members:[
+        {vis:"+", text:"User"},
+        {vis:"+", text:"AuthResponse"},
+        {vis:"+", text:"LoginInput"},
+        {vis:"+", text:"RegisterInput"},
+      ]},
+      { id:"UserModel", stereotype:"«interface»", name:"UserModel", planned:true, members:[
+        {vis:"", text:"src/models/user.ts vazio", note:true},
+        {vis:"", text:"User real está em auth.ts", note:true},
+      ]},
+    ]
+  },
+  {
+    label: "Infrastructure",
+    boxes: [
+      { id:"AsyncH", stereotype:"«helper»", name:"asyncHandler", planned:false, members:[
+        {vis:"+", text:"asyncHandler(fn): RequestHandler"},
+      ]},
+      { id:"ErrH", stereotype:"«middleware»", name:"errorHandler", planned:false, members:[
+        {vis:"+", text:"errorHandler(err,req,res,next): void"},
+      ]},
+      { id:"AppErr", stereotype:"«class»", name:"AppError", planned:false, members:[
+        {vis:"+", text:"message: string"},
+        {vis:"+", text:"statusCode: number"},
+        {vis:"+", text:"isOperational: boolean"},
+        {sep:true},
+        {vis:"+", text:"ValidationError"},
+        {vis:"+", text:"NotFoundError"},
+        {vis:"+", text:"ConflictError"},
+        {vis:"+", text:"UnauthorizedError"},
+      ]},
+      { id:"Supa", stereotype:"«external»", name:"SupabaseClient", planned:false, members:[
+        {vis:"+", text:"getSupabaseClient(): SupabaseClient"},
+      ]},
+    ]
+  },
+];
+
+function boxHeight(box) {
+  let h = TITLE_H + 8;
+  for (const m of box.members) h += m.sep ? SEP_H : ROW_H;
+  return h;
+}
+
+function layerHeight(layer) {
+  return Math.max(...layer.boxes.map(boxHeight));
+}
+
+const positions = {};
+let currentY = MARGIN_TOP + 20;
+for (const layer of layers) {
+  const lh = layerHeight(layer);
+  let currentX = MARGIN_LEFT;
+  for (const box of layer.boxes) {
+    const bh = boxHeight(box);
+    positions[box.id] = {
+      x: currentX, y: currentY, w: BOX_W, h: bh,
+      cx: currentX + BOX_W / 2, cy: currentY + bh / 2,
+      top: currentY, bot: currentY + bh,
+      left: currentX, right: currentX + BOX_W,
+      midY: currentY + bh / 2,
+    };
+    currentX += BOX_W + BOX_GAP;
+  }
+  layer._y = currentY;
+  layer._h = lh;
+  currentY += lh + LAYER_GAP;
+}
+
+const allPos = Object.values(positions);
+const svgW = Math.max(...allPos.map(p => p.right)) + MARGIN_LEFT;
+const svgH = currentY - LAYER_GAP + MARGIN_TOP;
+const svg = document.getElementById("main");
+svg.setAttribute("width", svgW);
+svg.setAttribute("height", svgH);
+svg.setAttribute("viewBox", `0 0 ${svgW} ${svgH}`);
+
+function el(tag, attrs, parent = svg) {
+  const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  parent.appendChild(e);
+  return e;
+}
+
+function txt(content, attrs, parent = svg) {
+  const e = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
+  e.textContent = content;
+  parent.appendChild(e);
+  return e;
+}
+
+for (const layer of layers) {
+  el("rect", { x:0, y:layer._y - 20, width:svgW, height:layer._h + 28, fill:"#f8f8f8", stroke:"#ccc", "stroke-width":"0.5" });
+  txt(layer.label.toUpperCase(), {
+    x:MARGIN_LEFT, y:layer._y - 6, "font-size":"9", "font-weight":"bold",
+    fill:"#555", "letter-spacing":"0.08em",
+  });
+}
+
+for (const layer of layers) {
+  for (const box of layer.boxes) {
+    const p = positions[box.id];
+    const g = el("g", {});
+    el("rect", {
+      x:p.x, y:p.y, width:p.w, height:p.h, fill:"#fff", stroke:"#000", "stroke-width":"1",
+      ...(box.planned ? {"stroke-dasharray":"5,3"} : {})
+    }, g);
+    el("rect", { x:p.x + 1, y:p.y + 1, width:p.w - 2, height:TITLE_H - 2, fill:"#eee" }, g);
+    txt(box.stereotype, { x:p.cx, y:p.y + 12, "font-size":"9", "text-anchor":"middle", "font-style":"italic" }, g);
+    txt(box.name, { x:p.cx, y:p.y + 26, "font-size":"11", "font-weight":"bold", "text-anchor":"middle" }, g);
+    el("line", { x1:p.x, y1:p.y + TITLE_H, x2:p.right, y2:p.y + TITLE_H, stroke:"#000", "stroke-width":"1" }, g);
+    if (box.planned) {
+      txt("«planned»", { x:p.cx, y:p.y + TITLE_H - 3, "font-size":"8", "text-anchor":"middle", fill:"#555", "font-style":"italic" }, g);
+    }
+    let y = p.y + TITLE_H + 12;
+    for (const m of box.members) {
+      if (m.sep) {
+        el("line", { x1:p.x + 4, y1:y - 4, x2:p.right - 4, y2:y - 4, stroke:"#000", "stroke-width":"0.5", "stroke-dasharray":"2,2" }, g);
+        y += SEP_H;
+        continue;
+      }
+      if (m.note) {
+        txt(m.text, { x:p.x + 8, y, "font-size":"8.5", fill:"#444", "font-style":"italic" }, g);
+      } else {
+        txt(m.vis, { x:p.x + 8, y, "font-size":"10", "font-weight":"bold" }, g);
+        txt(m.text, { x:p.x + 18, y, "font-size":"10" }, g);
+      }
+      y += ROW_H;
+    }
+  }
+}
+
+function drawArrow(fromId, toId, type, label = "") {
+  const A = positions[fromId];
+  const B = positions[toId];
+  if (!A || !B) return;
+  let x1, y1, x2, y2;
+  if (A.bot <= B.top + 5) {
+    x1 = A.cx; y1 = A.bot; x2 = B.cx; y2 = B.top;
+  } else if (A.top >= B.bot - 5) {
+    x1 = A.cx; y1 = A.top; x2 = B.cx; y2 = B.bot;
+  } else if (A.cx < B.cx) {
+    x1 = A.right; y1 = A.midY; x2 = B.left; y2 = B.midY;
+  } else {
+    x1 = A.left; y1 = A.midY; x2 = B.right; y2 = B.midY;
+  }
+  const marker = type === "assoc" ? "url(#arr-assoc)" : type === "real" ? "url(#arr-real)" : "url(#arr-dep)";
+  const attrs = { x1, y1, x2, y2, stroke:"#000", "stroke-width":"1", "marker-end":marker, opacity:"0.85" };
+  if (type === "dep" || type === "real") attrs["stroke-dasharray"] = "5,3";
+  el("line", attrs);
+  if (label) txt(label, { x:(x1+x2)/2 + 4, y:(y1+y2)/2 - 3, "font-size":"8", fill:"#333", "font-style":"italic" });
+}
+
+[
+  ["AuthCtrl","AuthSvc","dep"], ["AdminCtrl","AdminSvc","dep"], ["CompCtrl","CompSvc","dep"],
+  ["TeamCtrl","TeamSvc","dep"], ["AthCtrl","AthSvc","dep"], ["CkpCtrl","CkpSvc","dep"],
+  ["RankCtrl","RankSvc","dep"], ["ExpCtrl","ExpSvc","dep"], ["UserCtrl","UserSvc","dep"],
+  ["CompCtrl","CompVal","dep"], ["TeamCtrl","TeamVal","dep"], ["AthCtrl","AthVal","dep"], ["CkpCtrl","CkpVal","dep"],
+  ["AuthSvc","AdminRepo","assoc"], ["AdminSvc","AdminRepo","assoc"], ["CompSvc","CompRepo","assoc"],
+  ["TeamSvc","TeamRepo","assoc"], ["AthSvc","AthRepo","assoc"], ["CkpSvc","CkpRepo","assoc"],
+  ["RankSvc","CkpSvc","assoc"], ["RankSvc","TeamSvc","assoc"], ["ExpSvc","ExpRepo","assoc"],
+  ["ExpSvc","RankSvc","assoc"], ["UserSvc","UserRepo","assoc"],
+  ["AdminRepo","AdminModel","real"], ["CompRepo","CompModel","real"], ["TeamRepo","TeamModel","real"],
+  ["AthRepo","AthModel","real"], ["CkpRepo","CkpModel","real"], ["ExpRepo","ExpModel","real"],
+  ["AuthSvc","AuthModel","real"], ["RankSvc","RankModel","real"],
+  ["AdminRepo","Supa","dep"], ["CompRepo","Supa","dep"], ["TeamRepo","Supa","dep"],
+  ["AthRepo","Supa","dep"], ["CkpRepo","Supa","dep"], ["ExpRepo","Supa","dep"],
+  ["CompCtrl","AsyncH","dep"], ["TeamCtrl","AsyncH","dep"], ["AthCtrl","AsyncH","dep"],
+  ["CkpCtrl","AsyncH","dep"], ["RankCtrl","AsyncH","dep"], ["ExpCtrl","AsyncH","dep"],
+  ["AdminSvc","AppErr","dep"], ["CompSvc","AppErr","dep"], ["AthSvc","AppErr","dep"],
+  ["TeamSvc","AppErr","dep"], ["CkpSvc","AppErr","dep"], ["AuthSvc","AppErr","dep"],
+  ["ExpSvc","AppErr","dep"], ["ErrH","AppErr","assoc"],
+].forEach(([from, to, type]) => drawArrow(from, to, type));
+</script>
+</body>
+</html>
