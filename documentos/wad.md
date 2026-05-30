@@ -1178,6 +1178,7 @@ export function createCompetitionService(
 }
 ```
 
+```
 #### Exemplo de aplicação nos testes
 ```typescript
 const repository = createRepositoryMock();
@@ -2683,11 +2684,49 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 ## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
 
-*A RTM consolida a rastreabilidade completa do sistema. Um elo quebrado invalida toda a cadeia — mantenha-a atualizada a cada sprint. A partir da sprint 3 não deve haver lacunas nos fluxos centrais.*
+A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
 
-| Persona | RF    | RN   | Endpoint    | Tela     | Teste | Evidência        |
-|---------|-------|------|-------------|----------|-------|------------------|
-| ...     | RF001 | RN01 | `/usuarios` | Cadastro | CT02  | print, log, relatório de cobertura |
+A rastreabilidade contribui para a manutenção da consistência entre os artefatos do projeto, reduzindo ambiguidades e facilitando processos de validação, testes e evolução da solução ao longo das sprints.
+
+<div align="center">
+
+  <sub>Quadro 35 - Matriz de Rastreabilidade (RTM)</sub>
+
+</div>
+
+### Quadro XX – Matriz de Rastreabilidade (RTM)
+
+| Persona        | RF    | RN         | Endpoint                                            | Tela                           | Teste                        | Evidência                                                     |
+| -------------- | ----- | ---------- | --------------------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------- |
+| Marina Costa   | RF001 | RN03       | POST `/competitions`                                | Cadastro de Competição         | competition.e2e.spec.ts      | Competição criada com sucesso e persistida no banco           |
+| Marina Costa   | RF002 | RN18       | GET/POST `/competitions`                            | Dashboard Principal            | competitionService.spec.ts   | Dados da competição cadastrados e recuperados corretamente    |
+| Marina Costa   | RF003 | RN01, RN07 | POST `/competitions/:id/teams`                      | Cadastro de Equipes            | team.e2e.spec.ts             | Equipe criada e vinculada à competição                        |
+| Marina Costa   | RF003 | RN01       | POST `/competitions/:id/teams/:teamId/athletes`     | Cadastro de Equipes            | athlete.e2e.spec.ts          | Atleta vinculado corretamente à equipe                        |
+| Marina Costa   | RF004 | RN02, RN03 | POST `/auth/sessions`                               | Dashboard Principal            | authService.test.ts          | Sessão autenticada com sucesso                                |
+| Marina Costa   | RF005 | RN06       | POST `/ocr/extractions`                             | Captura da Foto da Esteira     | checkpointService.spec.ts    | Dados extraídos via OCR retornados para validação             |
+| Marina Costa   | RF006 | RN04, RN05 | POST `/ocr/extractions`                             | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados disponibilizados para conferência antes da persistência |
+| Marina Costa   | RF007 | RN06, RN12 | PATCH `/ocr/extractions/:extractionId`              | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados corrigidos e registrados em log                         |
+| Marina Costa   | RF008 | RN04, RN05 | POST `/checkpoints`                                 | Registro Manual                | checkpointService.spec.ts    | Checkpoint registrado com sucesso                             |
+| Marina Costa   | RF008 | RN04, RN05 | GET `/checkpoints`                                  | Checkpoints Salvos             | checkpointService.spec.ts    | Histórico de checkpoints recuperado corretamente              |
+| Marina Costa   | RF009 | RN06       | GET `/competitions/:id/checkpoints/inconsistencies` | Dados Extraídos via OCR        | checkpointService.spec.ts    | Inconsistências identificadas e exibidas ao operador          |
+| Bruno Monteiro | RF010 | RN09, RN11 | GET `/competitions/:id/ranking/teams`               | Dashboard Principal            | rankingService.spec.ts       | Ranking administrativo atualizado automaticamente             |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET `/competitions/:id/teams/:teamId/athletes`      | Painel Operacional das Equipes | athleteService.spec.ts       | Exibição do atleta em corrida e próximo atleta previsto       |
+| Bruno Monteiro | RF012 | RN14       | PATCH `/competitions/:id`                           | Dashboard Principal            | competitionService.spec.ts   | Competição encerrada e bloqueio de novos registros validado   |
+| Bruno Monteiro | RF013 | RN15       | GET `/competitions/:id/export`                      | Dashboard Principal            | export.e2e.spec.ts           | Arquivo de exportação gerado com sucesso                      |
+| Bruno Monteiro | RF014 | RN16, RN17 | GET `/competitions/:id/reports`                     | Dashboard Principal            | exportService.spec.ts        | Relatórios e indicadores gerados corretamente                 |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET `/competitions/:id/ranking/athletes`            | Painel Público da Equipe       | rankingService.spec.ts       | Ranking público atualizado e exibido corretamente             |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET `/administradores`                              | Dashboard Principal            | administratorService.spec.ts | Administradores recuperados corretamente                      |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST `/administradores`                             | Dashboard Principal            | administratorService.spec.ts | Administrador criado com sucesso                              |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT `/administradores/:id`                          | Dashboard Principal            | administratorService.spec.ts | Dados administrativos atualizados corretamente                |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE `/administradores/:id`                       | Dashboard Principal            | administratorService.spec.ts | Administrador removido corretamente                           |
+
+<div align="center">
+
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+
+</div>
+
+A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem rastreabilidade entre as necessidades das personas, os requisitos definidos, as regras de negócio estabelecidas, os endpoints implementados, as interfaces projetadas e os mecanismos de validação utilizados durante o desenvolvimento. Dessa forma, garante-se maior controle sobre a evolução da solução e alinhamento entre os artefatos produzidos ao longo das sprints.
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
@@ -2911,7 +2950,7 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
 MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
-
+D
 PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. PM3, [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/?utm_source=chatgpt.com. Acesso em: 13 maio 2026.
 
 AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
