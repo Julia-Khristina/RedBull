@@ -3132,6 +3132,11 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 &nbsp; &nbsp; &nbsp; &nbsp;O público-alvo da aplicação é composto pelo time operacional de Field Marketing da Red Bull responsável pela condução do evento Red Bull 24 Horas. Esse grupo inclui gerentes e coordenadores experientes, além de estagiários que atuam diretamente ao lado das esteiras como responsáveis pelo registro dos dados.
 
 
+Demograficamente, trata-se de profissionais e jovens em formação na faixa dos 18 a 38 anos. Segundo levantamento da Serasa Experian divulgado pelo Mundo do Marketing (2026), quase metade dos profissionais de marketing no Brasil, 45,5%, têm entre 29 e 38 anos, enquanto 13,7% estão na faixa de 18 a 28 anos, com forte concentração geográfica no Sudeste, onde São Paulo reúne 36% dos profissionais mapeados. As personas mapeadas no projeto, Marina Costa, 29 anos, coordenadora operacional no Rio de Janeiro, e Bruno Monteiro, 32 anos, Gerente de Field Marketing em São Paulo refletem esse espectro.
+
+
+Psicograficamente, são usuários orientados a resultado e execução, que valorizam objetividade e clareza nas ferramentas que utilizam. Os estagiários, em particular, podem ter pouca familiaridade prévia com sistemas operacionais de eventos, o que reforça a necessidade de uma curva de aprendizado mínima. Além disso, por ainda estarem em fase de treinamento, contam com a pressão e motivação de garantir que a prova transcorra sem falhas de registro.
+
 
 ## 6.5 Posicionamento
 
