@@ -3101,60 +3101,125 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.1 Resumo Executivo
 
-*Preencher com até 300 palavras, sem necessidade de fonte*
+*Até 300 palavras, sem necessidade de fonte.*
 
-*Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
+*Apresente de forma clara e objetiva os principais destaques do projeto, incluindo: oportunidade identificada no mercado; problema atendido pela aplicação; diferenciais competitivos da aplicação web; e objetivos estratégicos pretendidos.*
+
+*Valor: até 1,0 ponto.*
 
 ## 6.2 Análise de Mercado
 
-*a) Visão Geral do Setor (até 250 palavras)*
-*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+*Até 800 palavras, com fontes obrigatórias.*
 
-*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
-*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+### 6.2.1 Visão Geral do Setor
 
-*c) Tendências de Mercado (até 300 palavras)*
-*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
+*Até 250 palavras.*
 
-## 6.3 Análise da Concorrência
+*Contextualize o setor em que a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
 
-*a) Principais Concorrentes (até 250 palavras)*
-*Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
+*Valor: até 1,0 ponto.*
 
-*b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
-*Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
+### 6.2.2 Tamanho e Crescimento do Mercado
 
+*Até 250 palavras.*
 
-## 6.4 Público-Alvo
+*Apresente dados quantitativos que demonstrem o tamanho atual e as perspectivas de crescimento do mercado. Utilize fontes confiáveis.*
 
-*a) Segmentação de Mercado (até 250 palavras)*
-Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.*
+*Valor: até 1,0 ponto.*
 
-*b) Perfil do Público-Alvo (até 250 palavras)*
-*Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
+### 6.2.3 Tendências de Mercado
 
+*Até 300 palavras.*
 
-## 6.5 Posicionamento
+*Identifique tendências tecnológicas, comportamentais e mercadológicas que possam impactar a adoção da solução proposta. Utilize fontes confiáveis.*
 
-*a) Proposta de Valor Única (até 250 palavras)*
-*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+*Valor: até 1,0 ponto.*
 
-*b) Estratégia de Diferenciação (até 250 palavras)*
-*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
+## 6.3 Público-Alvo
 
-## 6.6 Estratégia de Marketing 
+*Até 500 palavras.*
 
-*a) Produto/Serviço (até 200 palavras)*
-*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+### 6.3.1 Segmentação de Mercado
 
-*b) Preço (até 200 palavras)*
-*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
+*Até 250 palavras.*
 
-*c) Praça (Distribuição) (até 200 palavras)*
-*Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
+*Descreva os segmentos de mercado que poderão ser atendidos pela aplicação.*
 
-*d) Promoção (até 200 palavras)*
-*Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
+*Valor: até 0,5 ponto.*
+
+### 6.3.2 Perfil do Público-Alvo
+
+*Até 250 palavras.*
+
+*Caracterize o público-alvo considerando aspectos demográficos e comportamentais, incluindo necessidades específicas, dores e expectativas relacionadas ao problema abordado.*
+
+*Valor: até 0,5 ponto.*
+
+## 6.4 Posicionamento e Branding
+
+*Até 500 palavras.*
+
+### 6.4.1 Proposta de Valor
+
+*Até 250 palavras.*
+
+*Defina o principal valor entregue pela aplicação para os seus usuários.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.4.2 Posicionamento e Diferenciação
+
+*Até 250 palavras.*
+
+*Explique como a aplicação pretende ser percebida pelo mercado e quais atributos a diferenciam de alternativas existentes.*
+
+*A análise deve considerar: concorrentes diretos e indiretos; atributos da marca; identidade pretendida; e percepção de valor desejada.*
+
+*Valor: até 1,0 ponto.*
+
+## 6.5 Business Model Canvas
+
+*Utilizar template do curso.*
+
+*Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e Estrutura de custos, somente se couber neste momento da análise com o parceiro.*
+
+*Valor: até 2,0 pontos.*
+
+## 6.6 Estratégia de Marketing (4Ps)
+
+*Até 800 palavras.*
+
+### 6.6.1 Produto/Serviço
+
+*Até 200 palavras.*
+
+*Descreva as principais funcionalidades, benefícios e diferenciais da aplicação.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.2 Preço
+
+*Até 200 palavras.*
+
+*Apresente o modelo de monetização ou precificação proposto e sua justificativa.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.3 Praça (Distribuição)
+
+*Até 200 palavras.*
+
+*Explique como a aplicação será disponibilizada aos usuários e quais canais serão utilizados.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.4 Promoção
+
+*Até 200 palavras.*
+
+*Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
+
+*Valor: até 0,5 ponto.*
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
