@@ -3120,8 +3120,14 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.4 Público-Alvo
 
-*a) Segmentação de Mercado (até 250 palavras)*
-Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.*
+### a) Segmentação de Mercado 
+
+A aplicação está inserida no mercado de eventos esportivos, com foco no segmento de organizações que utilizam eventos esportivos proprietários como estratégia de marketing, engajamento do público e fortalecimento de marca. Esse modelo se distingue do patrocínio tradicional, pois, em vez de apoiar eventos de terceiros, essas organizações criam e gerenciam suas próprias competições, assumindo controle direto sobre a experiência oferecida ao público. Para isso, são responsáveis pelo planejamento, execução e acompanhamento dos eventos, demandando processos eficientes de gestão e controle operacional.
+
+Trata-se de um segmento em expansão. O mercado global de software para gestão de eventos esportivos alcançou USD 8,4 bilhões em 2024 e projeta crescimento a uma taxa composta anual de 13,2% até 2033 (DATAINTELO, 2024). Esse cenário reflete a crescente adoção de soluções digitais para apoiar a organização, o monitoramento e a gestão de competições esportivas.
+
+As organizações que atuam nesse segmento compartilham necessidades semelhantes, como monitorar atividades em tempo real, coordenar equipes operacionais e garantir a confiabilidade das informações registradas ao longo do evento. A Red Bull integra esse mercado por meio da realização de eventos esportivos proprietários, sendo o evento Red Bull 24 Horas um exemplo dessas demandas, que motivaram o desenvolvimento desta aplicação.
+
 
 *b) Perfil do Público-Alvo (até 250 palavras)*
 *Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
