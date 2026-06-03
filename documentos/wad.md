@@ -2249,7 +2249,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Administrador` valida/supervisiona `Checkpoint` | FK `administrador_id` em `CHECKPOINT` |
 
 
-### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### . -b (sprints 2 e 4)
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
@@ -2903,8 +2903,6 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
   <sub>Quadro 35 - Matriz de Rastreabilidade (RTM)</sub>
 
 </div>
-
-### Quadro 35 – Matriz de Rastreabilidade (RTM)
 
 | Persona        | RF    | RN         | Endpoint                                            | Tela                           | Teste                        | Evidência                                                     |
 | -------------- | ----- | ---------- | --------------------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------- |
