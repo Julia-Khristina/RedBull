@@ -3175,6 +3175,8 @@ BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.
 
 CASAROTTO, Camila. Análise SWOT: o que é e como fazer. 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
 
+DATAINTELO. Sports Event Management Software Market Research Report. 2024. Disponível em: https://dataintelo.com/report/sports-event-management-software-market. Acesso em: 2 jun. 2026.
+
 DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
 
 DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
