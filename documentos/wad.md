@@ -743,11 +743,11 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as aÃ§
 | RF001 | O sistema deve permitir a criaÃ§Ã£o de uma sala administrativa vinculada a uma competiÃ§Ã£o                                                  | Alta       | ConcluÃ­do |
 | RF002 | O sistema deve permitir o cadastro de uma competiÃ§Ã£o contendo nome, data e local                                                                           | Alta       | ConcluÃ­do |
 | RF003 | O sistema deve permitir o cadastro, ediÃ§Ã£o e exclusÃ£o de equipes, com suporte para atÃ© 16 atletas por equipe                                                          | Alta       | ConcluÃ­do |
-| RF004 | O sistema deve permitir acesso Ã  Ã¡rea administrativa por meio de URLs identificadas por UUID Ãºnico e senha da sala                                | Alta       | Em progresso |
+| RF004 | O sistema deve permitir acesso Ã  Ã¡rea administrativa por meio de autenticaÃ§Ã£o com credenciais de administrador                                    | Alta       | Em progresso |
 | RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Em progresso |
 | RF006 | O sistema deve disponibilizar os dados capturados via API para validaÃ§Ã£o antes de serem persistidos.                                | Alta       | Em progresso |
 | RF007 | O sistema deve permitir a ediÃ§Ã£o manual dos dados capturados via OCR antes da confirmaÃ§Ã£o do checkpoint                                                               | Alta       | Em progresso |
-| RF008 | O sistema deve registrar checkpoints contendo distÃ¢ncia, pace, velocidade e tempo total somente apÃ³s validaÃ§Ã£o do usuÃ¡rio                                             | Alta       | ConcluÃ­do |
+| RF008 | O sistema deve registrar checkpoints contendo ao menos a distÃ¢ncia (km) somente apÃ³s validaÃ§Ã£o do usuÃ¡rio                                                             | Alta       | ConcluÃ­do |
 | RF009 | O sistema deve identificar inconsistÃªncias nos dados capturados via OCR e sinalizar ao usuÃ¡rio antes da validaÃ§Ã£o                                                     | MÃ©dia      | Em progresso |
 | RF010 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo em intervalos mÃ¡ximos de 5 minutos durante a competiÃ§Ã£o                                                        | MÃ©dia      | ConcluÃ­do |
 | RF011 | O sistema deve exibir o atleta em execuÃ§Ã£o e o prÃ³ximo atleta escalado por equipe no painel administrativo                                                            | Baixa      | Em progresso |
@@ -1812,8 +1812,7 @@ A paleta de cores da soluÃ§Ã£o foi definida com base na identidade visual da
 
 ## 3.5. <a name="prototipo-alta-fidelidade"></a>ProtÃ³tipo de alta fidelidade (sprint 3)
 
-**🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
-
+**ð Link do protÃ³tipo de alta fidelidade (Sprint 3 â Semana 1 + Semana 2):** [Acessar protÃ³tipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
 
 Esta seÃ§Ã£o apresenta a documentaÃ§Ã£o do protÃ³tipo de alta fidelidade desenvolvido para a aplicaÃ§Ã£o web. O objetivo do protÃ³tipo Ã© representar, de forma visual e funcional, a experiÃªncia que o usuÃ¡rio final terÃ¡ ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informaÃ§Ãµes e alinhamento com os fluxos definidos nas User Stories.
 
