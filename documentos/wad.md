@@ -2062,7 +2062,7 @@ O Quadro 28 apresenta a entidade e os atributos de "Competição".
 
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
-| Competição | Código | Identificador | Identifica unicamente cada competição | 
+| Competição | id | Identificador | Identifica unicamente cada competição | 
 | Competição | Endereço | Texto | Local onde a competição ocorre | 
 | Competição | Data | Data | Data de realização da competição |
 | Competição | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
@@ -2079,7 +2079,7 @@ A seguir, o Quadro 29 ilustra a entidade Equipe e os seus atributos.
 
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
-| Equipe | Código | Identificador | Identifica unicamente cada equipe |
+| Equipe | id | Identificador | Identifica unicamente cada equipe |
 | Equipe | Nome | Texto | Nome da equipe |
 | Equipe | UUID | Identificador único público | Código distribuído ao capitão para acesso sem login |
 | Equipe | Qr_Code | Imagem | Representação visual gerada a partir do UUID |
@@ -2097,7 +2097,7 @@ O Quadro 30 representa o dicionário de dados da entidade Corredor.
 
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
-| Corredor | Código | Identificador | Identifica unicamente cada corredor | 
+| Corredor | id | Identificador | Identifica unicamente cada corredor | 
 | Corredor | Nome | Texto | Nome completo do corredor |
 | Corredor | CPF | Texto | Documento de identificação civil único |
 | Corredor | Email | Texto | Endereço de e-mail do corredor | 
@@ -2117,7 +2117,7 @@ O Quadro 31 apresenta a entidade e os atributos de "Checkpoint".
 
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
-| Checkpoint | Código | Identificador | Identifica unicamente cada checkpoint |
+| Checkpoint | id | Identificador | Identifica unicamente cada checkpoint |
 | Checkpoint | Identificador | Número | Identifica cada checkpoint e possibilita rastreabilidade e auditoria dos registros |
 | Checkpoint | Km | Numérico decimal | Distância percorrida registrada |
 | Checkpoint | Pace | Numérico decimal | Ritmo médio em minutos por km |
@@ -2137,7 +2137,7 @@ A seguir, o Quadro 32 ilustra a entidade Administrador e os seus atributos.
 
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
-| Administrador | Código | Identificador | Identifica unicamente cada administrador |
+| Administrador | id | Identificador | Identifica unicamente cada administrador |
 | Administrador | Nome | Texto | Nome do administrador |
 | Administrador | Área | Texto | Área de atuação do administrador | 
 | Administrador | Senha | Texto protegido | Credencial de acesso ao painel administrativo |
@@ -2155,7 +2155,7 @@ O Quadro 33 representa o dicionário de dados da entidade Esteira.
 
 | Entidade | Atributo | Tipo semântico | Descrição |
 | -------- | --------- | -------------- | --------- | 
-| Esteira | Código | Identificador | Identifica unicamente cada esteira |
+| Esteira | id | Identificador | Identifica unicamente cada esteira |
 | Esteira | Nome | Texto | Nome ou apelido da esteira |
 | Esteira | Especificação | Texto | Descrição técnica do equipamento |
 | Esteira | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
@@ -2319,11 +2319,11 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 #### 3.6.3.2 Modelo Físico
 Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
-O arquivo pode ser visto aqui: [Modelo Físico](outros/migration.sql).
+Os scripts SQL de migração podem ser vistos aqui: [Diretório de Migrações](outros/migrations/).
 
 A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. O arquivo migration.sql reúne todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
 
-#### Tabela Competição
+##### Tabela Competição
 
  
 ##### Tabela `competicao`
@@ -2381,7 +2381,9 @@ CREATE TABLE corredor (
     PRIMARY KEY (id),
     UNIQUE (cpf),
     UNIQUE (email),
-    CHECK (status IN ('corredor', 'capitao'))
+    CHECK (status IN ('corredor', 'capitao')),
+    CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+    CHECK (cpf ~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$')
 );
  
 ALTER TABLE corredor
@@ -2443,7 +2445,9 @@ CREATE TABLE checkpoint (
  
     PRIMARY KEY (id),
     UNIQUE (identificador),
-    CHECK (km >= 0)
+    CHECK (km >= 0 AND km <= 1000),
+    CHECK (pace ~ '^[0-9]+:[0-9]{2}/km$'),
+    CHECK (tempo ~ '^[0-9]{2}:[0-9]{2}:[0-9]{2}$')
 );
  
 ALTER TABLE checkpoint
