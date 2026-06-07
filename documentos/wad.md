@@ -3139,6 +3139,8 @@ A aplicação se diferencia da concorrência, em primeiro lugar, por não compet
 
 Outro ponto que nos separa das alternativas é o uso de OCR como caminho intermediário entre o registro totalmente manual e uma automação completa que o evento ainda não comporta. O operador fotografa o visor da esteira e o sistema extrai os dados automaticamente, o que reduz o esforço de digitação e diminui o risco de erro, especialmente nas horas mais avançadas da competição, quando a fadiga já compromete a atenção. Isso não existe em nenhuma das ferramentas genéricas disponíveis hoje.
 
+Por fim, a separação entre uma interface privada para a organização e uma interface para as equipes participantes amplia o alcance da solução. Não estamos entregando valor apenas para quem opera o evento, mas também para quem compete nele, com acesso a ranking e calculadora de descanso via link direto, sem necessidade de login. Essa entrega simultânea para dois públicos distintos reforça o posicionamento da aplicação como uma solução completa, e não apenas uma substituição digital da prancheta.
+
 ## 6.6 Estratégia de Marketing 
 
 *a) Produto/Serviço (até 200 palavras)*
