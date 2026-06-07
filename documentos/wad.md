@@ -2951,7 +2951,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 </div>
 
 <div align="center">
-  <sub>Figura 1 - Pasta supabaseClient.ts</sub><br>
+  <sub>Figura 1 - Arquivo supabaseClient.ts</sub><br>
     <img src="../assets/programacao/pasta-supabaseClient.ts.png" width="100%" alt="Representação da pasta supabaseClient.ts do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2959,7 +2959,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 **- Configuração do ambiente e gestão de dependências:** o arquivo `package.json` foi estruturado contendo as dependências de produção e de desenvolvimento, além de scripts padronizados de execução (`dev`, `build`, `start`, `test`, `test:e2e`, `test:unit`, `test:integration`), garantindo que qualquer membro da equipe consiga rodar o projeto e os testes de forma consistente. Foi configurado também o arquivo `.env` para gerenciamento seguro de variáveis sensíveis (URL e chave do Supabase, porta da aplicação, ambiente de execução), com um `.env.example` versionado no repositório para servir de referência, mantendo o arquivo real fora do controle de versão via `.gitignore`. Essa estrutura padroniza o setup local, evita o vazamento de credenciais e prepara o projeto para deploy em diferentes ambientes (desenvolvimento, teste e produção).
 
 <div align="center">
-  <sub>Figura 1 - Pasta Package.json</sub><br>
+  <sub>Figura 1 - Arquivo Package.json</sub><br>
     <img src="../assets/programacao/pasta-package.json.png" width="100%" alt="Representação do package.json do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2973,7 +2973,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 **- Infraestrutura base:** servidor Express configurado, integração com Supabase, sistema de erros customizados (`ValidationError`, `NotFoundError`, `ConflictError`, `UnprocessableError`), middleware centralizado de tratamento de erros e helper `asyncHandler` para padronização do fluxo assíncrono.
 
 <div align="center">
-  <sub>Figura 1 - Pasta appError.ts</sub><br>
+  <sub>Figura 1 - Arquivo AppError.ts</sub><br>
     <img src="../assets/programacao/pasta-apperror.ts.png" width="100%" alt="Representação da pasta appError.ts do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
