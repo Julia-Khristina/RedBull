@@ -3135,6 +3135,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 ### b) Estratégia de Diferenciação
 Esta seção apresenta como a aplicação se posiciona no mercado frente às alternativas existentes, definindo o que a torna única e como pretende se destacar da concorrência. O posicionamento foi construído a partir das análises realizadas nas seções anteriores, considerando o perfil do público-alvo, o cenário competitivo e as lacunas identificadas nas soluções disponíveis atualmente.
 
+A aplicação se diferencia da concorrência, em primeiro lugar, por não competir com ferramentas genéricas no mesmo terreno. Soluções como Google Forms, Excel ou apps de coleta de dados até conseguem registrar informações, mas nenhuma delas foi pensada para funcionar durante 24 horas seguidas, com operadores se revezando, sob pressão de tempo e com a necessidade de registros rápidos e confiáveis. A lógica por trás do posicionamento é simples: em vez de adaptar uma ferramenta pronta a um contexto que ela não entende, construímos uma solução que já nasce moldada à realidade operacional do Red Bull 24 Horas
+
 ## 6.6 Estratégia de Marketing 
 
 *a) Produto/Serviço (até 200 palavras)*
