@@ -3132,8 +3132,8 @@ Descreva os principais segmentos de mercado a serem atendidos pela aplicação. 
 *a) Proposta de Valor Única (até 250 palavras)*
 *Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
 
-*b) Estratégia de Diferenciação (até 250 palavras)*
-*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
+### b) Estratégia de Diferenciação
+Esta seção apresenta como a aplicação se posiciona no mercado frente às alternativas existentes, definindo o que a torna única e como pretende se destacar da concorrência. O posicionamento foi construído a partir das análises realizadas nas seções anteriores, considerando o perfil do público-alvo, o cenário competitivo e as lacunas identificadas nas soluções disponíveis atualmente.
 
 ## 6.6 Estratégia de Marketing 
 
