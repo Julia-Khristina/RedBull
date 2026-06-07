@@ -27,7 +27,7 @@ router.get(
 
     // RF06 — Listar checkpoints por competição
     router.get(
-      "/competitions/:competicaoId/checkpoints",
+      "/competitions/:competitionId/checkpoints",
         asyncHandler(checkpointController.findByCompeticao)
         );
 

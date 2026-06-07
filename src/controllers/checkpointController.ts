@@ -31,11 +31,11 @@ function parseIntegerParam(value: unknown, name: string): number {
                                                         },
 
                                                           async findByCompeticao(req: Request, res: Response): Promise<void> {
-                                                              const competicaoId = parseIntegerParam(
-                                                                    req.params.competicaoId,
-                                                                          "competicaoId"
+                                                              const competitionId = parseIntegerParam(
+                                                                    req.params.competitionId,
+                                                                          "competitionId"
                                                                               );
-                                                                                  const checkpoints = await checkpointService.findByCompeticao(competicaoId);
+                                                                                  const checkpoints = await checkpointService.findByCompeticao(competitionId);
                                                                                       res.status(200).json(checkpoints);
                                                                                         },
 

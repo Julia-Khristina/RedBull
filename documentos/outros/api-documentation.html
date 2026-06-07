@@ -448,35 +448,35 @@ Content-Type: application/json</code></pre>
         <tbody>
           <tr>
             <td class="method">POST</td>
-            <td><code>/competitions/:competicaoId/teams</code></td>
+            <td><code>/competitions/:competitionId/teams</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Cria uma equipe dentro da competição informada.</td>
             <td>RF003, RN01, RN07</td>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/teams</code></td>
+            <td><code>/competitions/:competitionId/teams</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista as equipes de uma competição.</td>
             <td>RF003, RN01, RN07</td>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta uma equipe específica.</td>
             <td>RF003, RN01, RN07</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Atualiza os dados da equipe.</td>
             <td>RF003, RN01, RN07</td>
           </tr>
           <tr>
             <td class="method">DELETE</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Remove uma equipe.</td>
             <td>RF003, RN01, RN07</td>
@@ -511,31 +511,31 @@ Content-Type: application/json</code></pre>
         </thead>
         <tbody>
           <tr>
-            <td><code>POST /competitions/:competicaoId/teams</code></td>
+            <td><code>POST /competitions/:competitionId/teams</code></td>
             <td><code>201 Created</code></td>
             <td><code>400</code>, <code>404</code>, <code>409</code>, <code>500</code></td>
             <td>Retorna equipe criada com <code>uuid</code> público.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/teams</code></td>
+            <td><code>GET /competitions/:competitionId/teams</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna lista de equipes da competição.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>GET /competitions/:competitionId/teams/:teamId</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna uma equipe específica.</td>
           </tr>
           <tr>
-            <td><code>PUT /competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>PUT /competitions/:competitionId/teams/:teamId</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>409</code>, <code>500</code></td>
             <td>Retorna equipe atualizada.</td>
           </tr>
           <tr>
-            <td><code>DELETE /competitions/:competicaoId/teams/:teamId</code></td>
+            <td><code>DELETE /competitions/:competitionId/teams/:teamId</code></td>
             <td><code>204 No Content</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Nao retorna corpo em caso de sucesso.</td>
@@ -564,35 +564,35 @@ Content-Type: application/json</code></pre>
         <tbody>
           <tr>
             <td class="method">POST</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId/athletes</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Cadastra atleta em uma equipe.</td>
             <td>RF003, RN01</td>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId/athletes</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista atletas de uma equipe.</td>
             <td>RF011, RN07, RN10</td>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId/athletes/:athleteId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Consulta atleta específico.</td>
             <td>RF003, RN01</td>
           </tr>
           <tr>
             <td class="method">PUT</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId/athletes/:athleteId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Atualiza os dados do atleta.</td>
             <td>RF003, RN07</td>
           </tr>
           <tr>
             <td class="method">DELETE</td>
-            <td><code>/competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>/competitions/:competitionId/teams/:teamId/athletes/:athleteId</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Remove atleta da equipe.</td>
             <td>RF003, RN01</td>
@@ -633,31 +633,31 @@ Content-Type: application/json</code></pre>
         </thead>
         <tbody>
           <tr>
-            <td><code>POST /competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><code>POST /competitions/:competitionId/teams/:teamId/athletes</code></td>
             <td><code>201 Created</code></td>
             <td><code>400</code>, <code>404</code>, <code>409</code>, <code>422</code>, <code>500</code></td>
             <td>Retorna atleta criado. Pode rejeitar limite de atletas por equipe.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/teams/:teamId/athletes</code></td>
+            <td><code>GET /competitions/:competitionId/teams/:teamId/athletes</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna lista de atletas da equipe.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>GET /competitions/:competitionId/teams/:teamId/athletes/:athleteId</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna atleta específico.</td>
           </tr>
           <tr>
-            <td><code>PUT /competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>PUT /competitions/:competitionId/teams/:teamId/athletes/:athleteId</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>409</code>, <code>422</code>, <code>500</code></td>
             <td>Retorna atleta atualizado.</td>
           </tr>
           <tr>
-            <td><code>DELETE /competitions/:competicaoId/teams/:teamId/athletes/:athleteId</code></td>
+            <td><code>DELETE /competitions/:competitionId/teams/:teamId/athletes/:athleteId</code></td>
             <td><code>204 No Content</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Nao retorna corpo em caso de sucesso.</td>
@@ -837,14 +837,14 @@ Content-Type: application/json</code></pre>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/checkpoints</code></td>
+            <td><code>/competitions/:competitionId/checkpoints</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Lista checkpoints de uma competição.</td>
             <td>RF008, RN04, RN05</td>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/checkpoints/inconsistencies</code></td>
+            <td><code>/competitions/:competitionId/checkpoints/inconsistencies</code></td>
             <td><span class="tag planned">Planned</span></td>
             <td>Lista inconsistências de checkpoints.</td>
             <td>RF009, RN06</td>
@@ -915,13 +915,13 @@ Content-Type: application/json</code></pre>
             <td>Retorna lista filtrada por corredor.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/checkpoints</code></td>
+            <td><code>GET /competitions/:competitionId/checkpoints</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna lista filtrada por competição.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/checkpoints/inconsistencies</code></td>
+            <td><code>GET /competitions/:competitionId/checkpoints/inconsistencies</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna inconsistências identificadas nos checkpoints.</td>
@@ -950,14 +950,14 @@ Content-Type: application/json</code></pre>
         <tbody>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/ranking/teams</code></td>
+            <td><code>/competitions/:competitionId/ranking/teams</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Retorna ranking de equipes.</td>
             <td>RF010, RN09, RN11</td>
           </tr>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/ranking/athletes</code></td>
+            <td><code>/competitions/:competitionId/ranking/athletes</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Retorna ranking de atletas.</td>
             <td>RF015, RN09, RN11</td>
@@ -993,13 +993,13 @@ Content-Type: application/json</code></pre>
         </thead>
         <tbody>
           <tr>
-            <td><code>GET /competitions/:competicaoId/ranking/teams</code></td>
+            <td><code>GET /competitions/:competitionId/ranking/teams</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna ranking consolidado de equipes.</td>
           </tr>
           <tr>
-            <td><code>GET /competitions/:competicaoId/ranking/athletes</code></td>
+            <td><code>GET /competitions/:competitionId/ranking/athletes</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna ranking consolidado de atletas.</td>
@@ -1028,7 +1028,7 @@ Content-Type: application/json</code></pre>
         <tbody>
           <tr>
             <td class="method">GET</td>
-            <td><code>/competitions/:competicaoId/export</code></td>
+            <td><code>/competitions/:competitionId/export</code></td>
             <td><span class="tag implemented">Implemented</span></td>
             <td>Exporta dados consolidados da competição.</td>
             <td>RF013, RN15</td>
@@ -1061,7 +1061,7 @@ Content-Type: application/json</code></pre>
         </thead>
         <tbody>
           <tr>
-            <td><code>GET /competitions/:competicaoId/export</code></td>
+            <td><code>GET /competitions/:competitionId/export</code></td>
             <td><code>200 OK</code></td>
             <td><code>400</code>, <code>404</code>, <code>500</code></td>
             <td>Retorna dados consolidados da competição.</td>

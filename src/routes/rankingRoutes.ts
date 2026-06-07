@@ -5,12 +5,12 @@ import { asyncHandler } from "../helpers/asyncHandler";
 const router = Router();
 
 router.get(
-  "/competitions/:competicaoId/ranking/teams",
+  "/competitions/:competitionId/ranking/teams",
   asyncHandler(rankingController.rankingEquipes)
 );
 
 router.get(
-  "/competitions/:competicaoId/ranking/athletes",
+  "/competitions/:competitionId/ranking/athletes",
   asyncHandler(rankingController.rankingCorredores)
 );
 
