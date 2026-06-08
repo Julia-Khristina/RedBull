@@ -3158,9 +3158,11 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: durante 24 horas ininterruptas, operadores anotam à mão, em pranchetas, os horários de turno e os checkpoints de cada corredor. A fadiga ao longo da madrugada, a caligrafia e as distrações tornam esses registros pouco confiáveis, e não existe forma estruturada de auditar o que foi anotado. Como as esteiras do evento não se conectam a dispositivos externos, a apuração depende inteiramente desse trabalho manual.
 
-O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres. Antes de salvar, esses valores passam por conferência humana, e o sistema sinaliza em vermelho qualquer dado que destoe da média histórica do atleta. Cada checkpoint guarda se foi inserido via OCR ou manualmente, o que dá rastreabilidade ao processo inteiro.
+O público-alvo da solução se organiza em três perfis. Na área administrativa estão os operadores e a equipe de Field Marketing da Red Bull, representados pela coordenadora operacional, que registra checkpoints e trocas de atleta em campo, e pelo gerente de Field Marketing, que supervisiona a prova e analisa os relatórios. Na área pública estão os capitães e atletas das equipes, que acompanham o desempenho pelo painel acessível por link.
 
-O benefício direto para a equipe de Field Marketing é registrar mais rápido, errar menos e conseguir auditar os resultados ao final da prova. Ferramentas genéricas como planilhas ou formulários não foram pensadas para trocas rápidas de atleta sob pressão, nem oferecem validação automática ou alertas. O acesso público por URL com UUID, sem necessidade de login, ainda permite que capitães e atletas acompanhem o ranking em tempo real. É essa combinação de especialização e confiabilidade que sustenta a meta de manter o erro de apuração abaixo de 1%.
+O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres, com conferência humana antes de salvar e alerta visual para valores que destoem da média do atleta.
+
+Frente a planilhas ou formulários genéricos, os diferenciais são claros: especialização para trocas rápidas sob pressão, validação híbrida entre OCR e operador, rastreabilidade do método de cada checkpoint e acesso público por URL com UUID, sem login. É essa combinação que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
 ### 6.4.2 Posicionamento e Diferenciação
 
