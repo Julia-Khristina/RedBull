@@ -3174,6 +3174,12 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.5 Business Model Canvas
 
+A proposta de valor única da solução reside na transformação de um processo de apuração manual, fragmentado e suscetível a erros em um fluxo digital confiável, ágil e auditável, especificamente projetado para a dinâmica operacional do Red Bull 24 Horas. O principal problema enfrentado é a dependência de registros manuais em pranchetas ao longo de 24 horas ininterruptas, condição que gera sobrecarga operacional e alta incidência de erros humanos decorrentes de fadiga, falhas de interpretação e inconsistências de caligrafia, comprometendo a precisão da apuração e a transparência do evento.
+
+A aplicação oferece automação assistida por reconhecimento óptico de caracteres (OCR), permitindo que o operador capture imagens do visor da esteira para extração automática de distância, pace e tempo, submetidas à validação humana com emissão de alertas em caso de divergências. Esse modelo de validação híbrida aumenta a confiabilidade dos dados, reduz retrabalho e amplia a auditabilidade, registrando o método de entrada de cada checkpoint.
+
+Seu principal diferencial frente a alternativas genéricas, planilhas, formulários ou o próprio registro manual, é a especialização funcional para o contexto real do evento, priorizando velocidade de uso sob pressão e padronização dos registros, além do acesso público sem login via URL com UUID único. Ao centralizar informações atualizadas periodicamente e gerar relatórios analíticos, a solução entrega ganhos mensuráveis de eficiência e confiabilidade, criando valor estratégico para a operação de Field Marketing da Red Bull.
+
 *Utilizar template do curso.*
 
 *Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e Estrutura de custos, somente se couber neste momento da análise com o parceiro.*
