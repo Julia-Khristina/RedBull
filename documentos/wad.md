@@ -1812,6 +1812,8 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 ## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade (sprint 3)
 
+**🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
+
 Esta seção apresenta a documentação do protótipo de alta fidelidade desenvolvido para a aplicação web. O objetivo do protótipo é representar, de forma visual e funcional, a experiência que o usuário final terá ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informações e alinhamento com os fluxos definidos nas User Stories.
 
 Através das telas prototipadas, é possível validar a arquitetura de navegação, os componentes-chave da interface e os elementos visuais que compõem o sistema. Cada tela foi construída com base nos requisitos levantados, considerando as funcionalidades essenciais da plataforma, como o painel de administrador e do atleta.
@@ -3094,33 +3096,45 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.1 Resumo Executivo
 
-*Preencher com até 300 palavras, sem necessidade de fonte*
+*Até 300 palavras, sem necessidade de fonte.*
 
-*Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
+*Apresente de forma clara e objetiva os principais destaques do projeto, incluindo: oportunidade identificada no mercado; problema atendido pela aplicação; diferenciais competitivos da aplicação web; e objetivos estratégicos pretendidos.*
+
+*Valor: até 1,0 ponto.*
 
 ## 6.2 Análise de Mercado
 
-*a) Visão Geral do Setor (até 250 palavras)*
-*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+*Até 800 palavras, com fontes obrigatórias.*
 
-*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
-*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+### 6.2.1 Visão Geral do Setor
 
-*c) Tendências de Mercado (até 300 palavras)*
-*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
+*Até 250 palavras.*
 
-## 6.3 Análise da Concorrência
+*Contextualize o setor em que a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
 
-*a) Principais Concorrentes (até 250 palavras)*
-*Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
+*Valor: até 1,0 ponto.*
 
-*b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
-*Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
+### 6.2.2 Tamanho e Crescimento do Mercado
 
+*Até 250 palavras.*
 
-## 6.4 Público-Alvo
+*Apresente dados quantitativos que demonstrem o tamanho atual e as perspectivas de crescimento do mercado. Utilize fontes confiáveis.*
 
-### a) Segmentação de Mercado 
+*Valor: até 1,0 ponto.*
+
+### 6.2.3 Tendências de Mercado
+
+*Até 300 palavras.*
+
+*Identifique tendências tecnológicas, comportamentais e mercadológicas que possam impactar a adoção da solução proposta. Utilize fontes confiáveis.*
+
+*Valor: até 1,0 ponto.*
+
+## 6.3 Público-Alvo
+
+*Até 500 palavras.*
+
+### 6.3.1 Segmentação de Mercado
 
 A aplicação foi desenvolvida para atender às equipes internas da Red Bull envolvidas na organização e na gestão operacional do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, a segmentação de mercado é definida pelos diferentes perfis de usuários que interagem com a plataforma ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
 
@@ -3130,32 +3144,80 @@ A aplicação foi desenvolvida para atender às equipes internas da Red Bull env
 
 Esses segmentos compartilham a necessidade de uma solução centralizada que substitua processos manuais por um fluxo digital de registro, monitoramento e consulta de dados, reduzindo erros operacionais e aumentando a eficiência da gestão do evento.
 
+### 6.3.2 Perfil do Público-Alvo
 
-*b) Perfil do Público-Alvo (até 250 palavras)*
-*Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
+*Até 250 palavras.*
 
+*Caracterize o público-alvo considerando aspectos demográficos e comportamentais, incluindo necessidades específicas, dores e expectativas relacionadas ao problema abordado.*
 
-## 6.5 Posicionamento
+*Valor: até 0,5 ponto.*
 
-*a) Proposta de Valor Única (até 250 palavras)*
-*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+## 6.4 Posicionamento e Branding
 
-*b) Estratégia de Diferenciação (até 250 palavras)*
-*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
+*Até 500 palavras.*
 
-## 6.6 Estratégia de Marketing 
+### 6.4.1 Proposta de Valor
 
-*a) Produto/Serviço (até 200 palavras)*
-*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+*Até 250 palavras.*
 
-*b) Preço (até 200 palavras)*
-*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
+*Defina o principal valor entregue pela aplicação para os seus usuários.*
 
-*c) Praça (Distribuição) (até 200 palavras)*
-*Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
+*Valor: até 0,5 ponto.*
 
-*d) Promoção (até 200 palavras)*
-*Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
+### 6.4.2 Posicionamento e Diferenciação
+
+*Até 250 palavras.*
+
+*Explique como a aplicação pretende ser percebida pelo mercado e quais atributos a diferenciam de alternativas existentes.*
+
+*A análise deve considerar: concorrentes diretos e indiretos; atributos da marca; identidade pretendida; e percepção de valor desejada.*
+
+*Valor: até 1,0 ponto.*
+
+## 6.5 Business Model Canvas
+
+*Utilizar template do curso.*
+
+*Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e Estrutura de custos, somente se couber neste momento da análise com o parceiro.*
+
+*Valor: até 2,0 pontos.*
+
+## 6.6 Estratégia de Marketing (4Ps)
+
+*Até 800 palavras.*
+
+### 6.6.1 Produto/Serviço
+
+*Até 200 palavras.*
+
+*Descreva as principais funcionalidades, benefícios e diferenciais da aplicação.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.2 Preço
+
+*Até 200 palavras.*
+
+*Apresente o modelo de monetização ou precificação proposto e sua justificativa.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.3 Praça (Distribuição)
+
+*Até 200 palavras.*
+
+*Explique como a aplicação será disponibilizada aos usuários e quais canais serão utilizados.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.4 Promoção
+
+*Até 200 palavras.*
+
+*Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
+
+*Valor: até 0,5 ponto.*
+>>>>>>> dev
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
