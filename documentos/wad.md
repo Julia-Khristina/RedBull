@@ -3122,11 +3122,13 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### a) Segmentação de Mercado 
 
-A aplicação está inserida no mercado de eventos esportivos, com foco no segmento de organizações que utilizam eventos esportivos proprietários como estratégia de marketing, engajamento do público e fortalecimento de marca. Esse modelo se distingue do patrocínio tradicional, pois, em vez de apoiar eventos de terceiros, essas organizações criam e gerenciam suas próprias competições, assumindo controle direto sobre a experiência oferecida ao público. Para isso, são responsáveis pelo planejamento, execução e acompanhamento dos eventos, demandando processos eficientes de gestão e controle operacional.
+A aplicação foi desenvolvida para atender às equipes internas da Red Bull envolvidas na organização e na gestão operacional do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, a segmentação de mercado é definida pelos diferentes perfis de usuários que interagem com a plataforma ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
 
-Trata-se de um segmento em expansão. O mercado global de software para gestão de eventos esportivos alcançou USD 8,4 bilhões em 2024 e projeta crescimento a uma taxa composta anual de 13,2% até 2033 (DATAINTELO, 2024). Esse cenário reflete a crescente adoção de soluções digitais para apoiar a organização, o monitoramento e a gestão de competições esportivas.
+-  **Equipes de Field Marketing:** responsáveis pelo planejamento e pela execução do evento, representam os principais usuários da aplicação. Sua necessidade central é dispor de uma ferramenta que permita gerenciar as inscrições das equipes, acompanhar o andamento da competição e garantir o controle operacional ao longo das 24 horas de duração do evento.
+-  **Coordenadores e gestores de operações:** profissionais encarregados de supervisionar a execução das atividades em tempo real, coordenar equipes de apoio e assegurar que os registros do evento, como trocas de participantes e tempos percorridos, sejam capturados de forma confiável e precisa.
+-  **Analistas de resultados e desempenho:** responsáveis pelo acompanhamento dos dados gerados durante o evento, incluindo o desempenho das equipes participantes e o cumprimento das metas estabelecidas. Para esse segmento, a aplicação deve oferecer visibilidade sobre os resultados registrados e facilitar a obtenção de informações para relatórios pós-evento.
 
-As organizações que atuam nesse segmento compartilham necessidades semelhantes, como monitorar atividades em tempo real, coordenar equipes operacionais e garantir a confiabilidade das informações registradas ao longo do evento. A Red Bull integra esse mercado por meio da realização de eventos esportivos proprietários, sendo o evento Red Bull 24 Horas um exemplo dessas demandas, que motivaram o desenvolvimento desta aplicação.
+Esses segmentos compartilham a necessidade de uma solução centralizada que substitua processos manuais por um fluxo digital de registro, monitoramento e consulta de dados, reduzindo erros operacionais e aumentando a eficiência da gestão do evento.
 
 
 *b) Perfil do Público-Alvo (até 250 palavras)*
@@ -3174,8 +3176,6 @@ BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. e
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
 
 CASAROTTO, Camila. Análise SWOT: o que é e como fazer. 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
-
-DATAINTELO. Sports Event Management Software Market Research Report. 2024. Disponível em: https://dataintelo.com/report/sports-event-management-software-market. Acesso em: 2 jun. 2026.
 
 DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
 
