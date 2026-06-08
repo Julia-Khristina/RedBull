@@ -3156,11 +3156,11 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### 6.4.1 Proposta de Valor
 
-*Até 250 palavras.*
+A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: durante 24 horas ininterruptas, operadores anotam à mão, em pranchetas, os horários de turno e os checkpoints de cada corredor. A fadiga ao longo da madrugada, a caligrafia e as distrações tornam esses registros pouco confiáveis, e não existe forma estruturada de auditar o que foi anotado. Como as esteiras do evento não se conectam a dispositivos externos, a apuração depende inteiramente desse trabalho manual.
 
-*Defina o principal valor entregue pela aplicação para os seus usuários.*
+O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres. Antes de salvar, esses valores passam por conferência humana, e o sistema sinaliza em vermelho qualquer dado que destoe da média histórica do atleta. Cada checkpoint guarda se foi inserido via OCR ou manualmente, o que dá rastreabilidade ao processo inteiro.
 
-*Valor: até 0,5 ponto.*
+O benefício direto para a equipe de Field Marketing é registrar mais rápido, errar menos e conseguir auditar os resultados ao final da prova. Ferramentas genéricas como planilhas ou formulários não foram pensadas para trocas rápidas de atleta sob pressão, nem oferecem validação automática ou alertas. O acesso público por URL com UUID, sem necessidade de login, ainda permite que capitães e atletas acompanhem o ranking em tempo real. É essa combinação de especialização e confiabilidade que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
 ### 6.4.2 Posicionamento e Diferenciação
 
@@ -3173,12 +3173,6 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 *Valor: até 1,0 ponto.*
 
 ## 6.5 Business Model Canvas
-
-A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: durante 24 horas ininterruptas, operadores anotam à mão, em pranchetas, os horários de turno e os checkpoints de cada corredor. A fadiga ao longo da madrugada, a caligrafia e as distrações tornam esses registros pouco confiáveis, e não existe forma estruturada de auditar o que foi anotado. Como as esteiras do evento não se conectam a dispositivos externos, a apuração depende inteiramente desse trabalho manual.
-
-O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres. Antes de salvar, esses valores passam por conferência humana, e o sistema sinaliza em vermelho qualquer dado que destoe da média histórica do atleta. Cada checkpoint guarda se foi inserido via OCR ou manualmente, o que dá rastreabilidade ao processo inteiro.
-
-O benefício direto para a equipe de Field Marketing é registrar mais rápido, errar menos e conseguir auditar os resultados ao final da prova. Ferramentas genéricas como planilhas ou formulários não foram pensadas para trocas rápidas de atleta sob pressão, nem oferecem validação automática ou alertas. O acesso público por URL com UUID, sem necessidade de login, ainda permite que capitães e atletas acompanhem o ranking em tempo real. É essa combinação de especialização e confiabilidade que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
 *Utilizar template do curso.*
 
