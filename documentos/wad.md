@@ -3152,7 +3152,11 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.4 Posicionamento e Branding
 
-*Até 500 palavras.*
+A seção 6.4 dedica-se ao posicionamento da aplicação no contexto do mercado de gestão de eventos esportivos e à definição da identidade de marca que orienta sua comunicação com o parceiro Red Bull e com o público final. Embora se trate de uma aplicação resultante de uma parceria acadêmica — e não de um produto comercial autônomo —, o exercício de posicionamento é relevante para alinhar a percepção esperada pelos diferentes stakeholders (operadores, gerentes, atletas e parceiros institucionais) e para fundamentar as decisões editoriais, visuais e de experiência adotadas ao longo do desenvolvimento.
+
+A subseção 6.4.1 (Proposta de Valor) consolida o valor central entregue pela aplicação para cada perfil de usuário, retomando os elementos identificados no Value Proposition Canvas (seção 2.1.4) e nas Personas (seção 2.2). Em complemento, a subseção 6.4.2 (Posicionamento e Diferenciação) analisa como a aplicação pretende ser percebida frente a alternativas existentes — desde processos manuais (planilhas, formulários) até soluções verticais como sistemas profissionais de cronometragem — e quais atributos da marca e da experiência sustentam esse posicionamento.
+
+Em conjunto, as duas subseções compõem a base estratégica que conecta a Análise de Mercado e o Público-Alvo (seções 6.2 e 6.3) à Estratégia de Marketing detalhada nos 4Ps (seção 6.6), garantindo coerência entre o que a aplicação entrega, como é percebida e como é comunicada.
 
 ### 6.4.1 Proposta de Valor
 
