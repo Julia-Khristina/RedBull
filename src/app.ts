@@ -1,4 +1,5 @@
 import "dotenv/config";
+import path from "path";
 import express = require("express");
 import competitionRoutes from "./routes/competitionRoutes";
 import teamRoutes from "./routes/teamRoutes";
@@ -8,10 +9,22 @@ import checkpointRoutes from "./routes/checkpointRoutes";
 import rankingRoutes from "./routes/rankingRoutes";
 import exportRoutes from "./routes/exportRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
+import ejsLayouts from 'express-ejs-layouts';
+
 
 const app = express();
 
+// EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(ejsLayouts);
+app.set('layout', 'layouts/main');
+
+// Static files
+app.use(express.static(path.join(__dirname, '..', 'public')));
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(competitionRoutes);
 app.use(teamRoutes);
 app.use(athleteRoutes);
@@ -20,5 +33,9 @@ app.use(checkpointRoutes);
 app.use(rankingRoutes);
 app.use(exportRoutes);
 app.use(errorHandler);
+
+app.get('/dashboard', (req, res) => {
+  res.render('dashboard/dashboard');
+});
 
 export default app;
