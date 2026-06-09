@@ -3192,11 +3192,11 @@ Frente a planilhas ou formulários genéricos, os diferenciais são claros: espe
 
 ### 6.6.1 Produto/Serviço
 
-*Até 200 palavras.*
+A aplicação web é um sistema de gestão operacional especializado em competições esportivas de longa duração, com foco no formato Red Bull 24 Horas. O produto entrega um ambiente único capaz de cobrir o ciclo completo do evento: cadastro de competições, equipes e atletas; registro de checkpoints durante a prova com captura assistida por OCR; validação humana com sinalização de inconsistências; consolidação de ranking público acessível via URL com UUID; e exportação de relatórios consolidados para auditoria pós-evento.
 
-*Descreva as principais funcionalidades, benefícios e diferenciais da aplicação.*
+Como serviço, a aplicação atende três frentes simultâneas: a operação de campo (registro rápido e confiável durante a prova), a supervisão estratégica (acompanhamento centralizado por dashboards) e o engajamento do público (ranking aberto e atualizado periodicamente). Cada uma dessas frentes é entregue por interfaces especializadas, conectadas a uma WebAPI centralizada (seção 3.7).
 
-*Valor: até 0,5 ponto.*
+Os principais diferenciais são a especialização vertical para corridas de revezamento, a validação híbrida entre OCR e operador, a rastreabilidade integral do método de cada checkpoint e o acesso público sem login via UUID — atributos ausentes em alternativas genéricas como planilhas ou formulários e mais leves que sistemas profissionais de cronometragem.
 
 ### 6.6.2 Preço
 
