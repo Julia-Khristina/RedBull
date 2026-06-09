@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { athleteService } from "../services/athleteService";
+import { runnerService } from "../services/runnerService";
 import { ValidationError } from "../errors/AppError";
 
 function parseIntegerParam(value: unknown, name: string): number {
@@ -12,49 +12,54 @@ function parseIntegerParam(value: unknown, name: string): number {
   return parsed;
 }
 
-export const athleteController = {
+export const runnerController = {
   async create(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
-    const athlete = await athleteService.create({
+    const runner = await runnerService.create({
       ...req.body,
-      equipe_id: teamId,
+      id_team: teamId,
     });
 
-    res.status(201).json(athlete);
+    res.status(201).json(runner);
   },
 
   async list(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
-    const athletes = await athleteService.findByTeam(teamId);
+    const runners = await runnerService.findByTeam(teamId);
 
-    res.status(200).json(athletes);
+    res.status(200).json(runners);
   },
 
   async findById(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
-    const athleteId = parseIntegerParam(req.params.athleteId, "athleteId");
+    const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
 
-    const athlete = await athleteService.findById(athleteId, teamId);
+    const runner = await runnerService.findByTeamAndId(teamId, runnerId);
 
-    res.status(200).json(athlete);
+    res.status(200).json(runner);
   },
 
   async update(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
-    const athleteId = parseIntegerParam(req.params.athleteId, "athleteId");
+    const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
 
-    const athlete = await athleteService.update(athleteId, teamId, req.body);
+    const runner = await runnerService.updateByTeamAndId(teamId, runnerId, req.body);
 
-    res.status(200).json(athlete);
+    res.status(200).json(runner);
   },
 
   async delete(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
-    const athleteId = parseIntegerParam(req.params.athleteId, "athleteId");
+    const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
 
-    await athleteService.delete(athleteId, teamId);
+    await runnerService.deleteByTeamAndId(teamId, runnerId);
 
     res.status(204).send();
   },

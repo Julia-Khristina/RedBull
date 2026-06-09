@@ -1,8 +1,8 @@
-import { CreateAthleteInput, UpdateAthleteInput } from "../models/athlete";
+import { CreateRunnerInput, UpdateRunnerInput } from "../models/runner";
 import { ValidationError } from "../errors/AppError";
 
 const CPF_REGEX = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
-const VALID_STATUSES = ["corredor", "capitao"];
+const VALID_STATUSES = ["runner", "captain"];
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -30,12 +30,12 @@ function readOptionalText(
   return value.trim();
 }
 
-export function validateCreateAthlete(payload: unknown): CreateAthleteInput {
+export function validateCreateRunner(payload: unknown): CreateRunnerInput {
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
   }
 
-  const nome = readRequiredText(payload, "nome");
+  const name = readRequiredText(payload, "name");
 
   const cpfRaw = readRequiredText(payload, "cpf");
   if (!CPF_REGEX.test(cpfRaw)) {
@@ -47,22 +47,22 @@ export function validateCreateAthlete(payload: unknown): CreateAthleteInput {
     throw new ValidationError("email inválido");
   }
 
-  const equipe_id =
-    typeof payload.equipe_id === "number" &&
-    Number.isInteger(payload.equipe_id) &&
-    payload.equipe_id > 0
-      ? payload.equipe_id
+  const id_team =
+    typeof payload.id_team === "number" &&
+    Number.isInteger(payload.id_team) &&
+    payload.id_team > 0
+      ? payload.id_team
       : 0;
 
-  const result: CreateAthleteInput = {
-    nome,
+  const result: CreateRunnerInput = {
+    name,
     cpf: cpfRaw,
     email,
-    equipe_id,
+    id_team,
   };
 
-  if ("telefone" in payload) {
-    result.telefone = readOptionalText(payload, "telefone");
+  if ("phone" in payload) {
+    result.phone = readOptionalText(payload, "phone");
   }
 
   if ("status" in payload) {
@@ -78,7 +78,7 @@ export function validateCreateAthlete(payload: unknown): CreateAthleteInput {
   return result;
 }
 
-export function validateUpdateAthlete(payload: unknown): UpdateAthleteInput {
+export function validateUpdateRunner(payload: unknown): UpdateRunnerInput {
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
   }
@@ -87,10 +87,10 @@ export function validateUpdateAthlete(payload: unknown): UpdateAthleteInput {
     throw new ValidationError("CPF não pode ser alterado");
   }
 
-  const result: UpdateAthleteInput = {};
+  const result: UpdateRunnerInput = {};
 
-  if ("nome" in payload) {
-    result.nome = readOptionalText(payload, "nome");
+  if ("name" in payload) {
+    result.name = readOptionalText(payload, "name");
   }
 
   if ("email" in payload) {
@@ -101,8 +101,8 @@ export function validateUpdateAthlete(payload: unknown): UpdateAthleteInput {
     result.email = email;
   }
 
-  if ("telefone" in payload) {
-    result.telefone = readOptionalText(payload, "telefone");
+  if ("phone" in payload) {
+    result.phone = readOptionalText(payload, "phone");
   }
 
   if ("status" in payload) {

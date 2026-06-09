@@ -16,50 +16,53 @@ function parseIntegerParam(value: unknown, name: string): number {
 
 export const teamController = {
   async create(req: Request, res: Response): Promise<void> {
-    const competicao_id = parseIntegerParam(
-      req.params.competicaoId,
-      "competicaoId"
+    const competitionId = parseIntegerParam(
+      req.params.id,
+      "id"
     );
 
     const team = await teamService.create({
       ...req.body,
-      competicao_id,
+      id_competition: competitionId,
     });
 
     res.status(201).json(team);
   },
 
   async list(req: Request, res: Response): Promise<void> {
-    const competicao_id = parseIntegerParam(
-      req.params.competicaoId,
-      "competicaoId"
+    const competitionId = parseIntegerParam(
+      req.params.id,
+      "id"
     );
 
-    const teams = await teamService.findByCompetition(competicao_id);
+    const teams = await teamService.findByCompetition(competitionId);
 
     res.status(200).json(teams);
   },
 
   async findById(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
-    const team = await teamService.findById(teamId);
+    const team = await teamService.findByCompetitionAndId(competitionId, teamId);
 
     res.status(200).json(team);
   },
 
   async update(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
-    const team = await teamService.update(teamId, req.body);
+    const team = await teamService.updateByCompetitionAndId(competitionId, teamId, req.body);
 
     res.status(200).json(team);
   },
 
   async delete(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
-    await teamService.delete(teamId);
+    await teamService.deleteByCompetitionAndId(competitionId, teamId);
 
     res.status(204).send();
   },
