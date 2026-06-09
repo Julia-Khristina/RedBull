@@ -3116,11 +3116,7 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### 6.2.2 Tamanho e Crescimento do Mercado
 
-*Até 250 palavras.*
-
-*Apresente dados quantitativos que demonstrem o tamanho atual e as perspectivas de crescimento do mercado. Utilize fontes confiáveis.*
-
-*Valor: até 1,0 ponto.*
+O mercado brasileiro de corrida apresenta forte expansão, o que favorece a criação de eventos proprietários, experiências esportivas de marca e soluções de apoio à operação. Segundo levantamento da ABRACEO apresentado no 4º Summit ABRACEO/CBAt, o número de corridas de rua oficiais no Brasil cresceu 85% em 2025 em relação a 2024, enquanto o estado de São Paulo registrou 1.311 corridas no período, liderando o volume nacional de provas. A própria ABRACEO caracteriza o setor de corridas de rua
 
 ### 6.2.3 Tendências de Mercado
 
