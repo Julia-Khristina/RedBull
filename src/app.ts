@@ -8,6 +8,7 @@ import administradorRoutes from "./routes/administradorRoutes";
 import checkpointRoutes from "./routes/checkpointRoutes";
 import rankingRoutes from "./routes/rankingRoutes";
 import exportRoutes from "./routes/exportRoutes";
+import dashboardRoutes from "./routes/dashboardRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import ejsLayouts from 'express-ejs-layouts';
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(dashboardRoutes);
 app.use(competitionRoutes);
 app.use(teamRoutes);
 app.use(athleteRoutes);
@@ -33,9 +35,5 @@ app.use(checkpointRoutes);
 app.use(rankingRoutes);
 app.use(exportRoutes);
 app.use(errorHandler);
-
-app.get('/dashboard', (req, res) => {
-  res.render('dashboard/dashboard');
-});
 
 export default app;
