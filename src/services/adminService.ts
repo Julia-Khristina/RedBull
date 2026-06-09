@@ -1,42 +1,42 @@
 import { NotFoundError, ConflictError, AppError } from "../errors/AppError";
-import { Administrador, AdministradorInput } from "../models/administrador";
+import { Admin, AdminInput } from "../models/admin";
 
-export interface AdministradorRepository {
-  findAll(): Promise<Administrador[]>;
-  findById(id: number): Promise<Administrador | null>;
-  findByEmail(email: string): Promise<Administrador | null>;
-  create(dados: AdministradorInput): Promise<Administrador>;
-  update(id: number, dados: Partial<AdministradorInput>): Promise<Administrador | null>;
+export interface AdminRepository {
+  findAll(): Promise<Admin[]>;
+  findById(id: number): Promise<Admin | null>;
+  findByEmail(email: string): Promise<Admin | null>;
+  create(dados: AdminInput): Promise<Admin>;
+  update(id: number, dados: Partial<AdminInput>): Promise<Admin | null>;
   delete(id: number): Promise<boolean>;
 }
 
-export function createAdministradorService(repository: AdministradorRepository) {
+export function createAdminService(repository: AdminRepository) {
   return {
-    async listar(): Promise<Administrador[]> {
+    async findAll(): Promise<Admin[]> {
       return await repository.findAll();
     },
 
-    async buscarPorId(id: string): Promise<Administrador> {
+    async findById(id: string): Promise<Admin> {
       const numericId = parseInt(id, 10);
 
       if (isNaN(numericId)) {
         throw new AppError("ID de administrador inválido.", 400);
       }
 
-      const administrador = await repository.findById(numericId);
+      const admin = await repository.findById(numericId);
 
-      if (!administrador) {
+      if (!admin) {
         throw new NotFoundError("Administrador não encontrado");
       }
 
-      return administrador;
+      return admin;
     },
 
-    async buscarPorEmail(email: string): Promise<Administrador | null> {
+    async findByEmail(email: string): Promise<Admin | null> {
       return await repository.findByEmail(email);
     },
 
-    async criar(dados: AdministradorInput): Promise<Administrador> {
+    async create(dados: AdminInput): Promise<Admin> {
       const existe = await repository.findByEmail(dados.email);
 
       if (existe) {
@@ -46,16 +46,16 @@ export function createAdministradorService(repository: AdministradorRepository) 
       return await repository.create(dados);
     },
 
-    async atualizar(id: string, dados: Partial<AdministradorInput>): Promise<Administrador> {
+    async update(id: string, dados: Partial<AdminInput>): Promise<Admin> {
       const numericId = parseInt(id, 10);
 
       if (isNaN(numericId)) {
         throw new AppError("ID de administrador inválido.", 400);
       }
 
-      const administrador = await repository.findById(numericId);
+      const admin = await repository.findById(numericId);
 
-      if (!administrador) {
+      if (!admin) {
         throw new NotFoundError("Administrador não encontrado");
       }
 
@@ -68,16 +68,16 @@ export function createAdministradorService(repository: AdministradorRepository) 
       return atualizado;
     },
 
-    async excluir(id: string): Promise<void> {
+    async delete(id: string): Promise<void> {
       const numericId = parseInt(id, 10);
 
       if (isNaN(numericId)) {
         throw new AppError("ID de administrador inválido.", 400);
       }
 
-      const administrador = await repository.findById(numericId);
+      const admin = await repository.findById(numericId);
 
-      if (!administrador) {
+      if (!admin) {
         throw new NotFoundError("Administrador não encontrado");
       }
 
@@ -90,4 +90,4 @@ export function createAdministradorService(repository: AdministradorRepository) 
   };
 }
 
-export type AdministradorService = ReturnType<typeof createAdministradorService>;
+export type AdminServiceType = ReturnType<typeof createAdminService>;

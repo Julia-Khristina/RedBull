@@ -2,9 +2,9 @@ import request from "supertest";
 import app from "../src/app";
 
 const payloadValido = {
-  nome: "Red Bull 24h São Paulo",
-  data: "2026-06-15",
-  endereco: "São Paulo - SP",
+  name: "Red Bull 24h São Paulo",
+  date: "2026-06-15",
+  address: "São Paulo - SP",
 };
 
 async function createCompetition(payload = payloadValido) {
@@ -18,25 +18,25 @@ describe("POST /competitions", () => {
     const competition = await createCompetition();
 
     expect(competition).toMatchObject({
-      nome: payloadValido.nome,
-      data: payloadValido.data,
-      endereco: payloadValido.endereco,
+      name: payloadValido.name,
+      date: payloadValido.date,
+      address: payloadValido.address,
       status: "não iniciado",
     });
 
     expect(competition.id).toBeDefined();
-    expect(competition.criado_em).toBeDefined();
+    expect(competition.created_at).toBeDefined();
 
     await request(app).delete(`/competitions/${competition.id}`);
   });
 
   it.each([
-    ["nome", { data: payloadValido.data, endereco: payloadValido.endereco }],
-    ["data", { nome: payloadValido.nome, endereco: payloadValido.endereco }],
-    ["endereco", { nome: payloadValido.nome, data: payloadValido.data }],
-    ["nome vazio", { ...payloadValido, nome: "" }],
-    ["data vazia", { ...payloadValido, data: "" }],
-    ["endereco vazio", { ...payloadValido, endereco: "" }],
+    ["name", { date: payloadValido.date, address: payloadValido.address }],
+    ["date", { name: payloadValido.name, address: payloadValido.address }],
+    ["address", { name: payloadValido.name, date: payloadValido.date }],
+    ["name vazio", { ...payloadValido, name: "" }],
+    ["data vazia", { ...payloadValido, date: "" }],
+    ["address vazio", { ...payloadValido, address: "" }],
   ])("deve rejeitar payload inválido: %s", async (_caso, payload) => {
     const res = await request(app).post("/competitions").send(payload);
 
@@ -48,7 +48,7 @@ describe("CRUD /competitions", () => {
   it("deve listar competições", async () => {
     const competition = await createCompetition({
       ...payloadValido,
-      nome: "Competição para listagem",
+      name: "Competição para listagem",
     });
 
     const res = await request(app).get("/competitions");
@@ -59,7 +59,7 @@ describe("CRUD /competitions", () => {
       expect.arrayContaining([
         expect.objectContaining({
           id: competition.id,
-          nome: "Competição para listagem",
+          name: "Competição para listagem",
         }),
       ])
     );
@@ -70,7 +70,7 @@ describe("CRUD /competitions", () => {
   it("deve buscar competição por id", async () => {
     const competition = await createCompetition({
       ...payloadValido,
-      nome: "Competição para busca",
+      name: "Competição para busca",
     });
 
     const res = await request(app).get(`/competitions/${competition.id}`);
@@ -78,7 +78,7 @@ describe("CRUD /competitions", () => {
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({
       id: competition.id,
-      nome: "Competição para busca",
+      name: "Competição para busca",
       status: "não iniciado",
     });
 
@@ -94,13 +94,13 @@ describe("CRUD /competitions", () => {
   it("deve atualizar uma competição", async () => {
     const competition = await createCompetition({
       ...payloadValido,
-      nome: "Competição antes do update",
+      name: "Competição antes do update",
     });
 
     const updatePayload = {
-      nome: "Competição atualizada",
-      data: "2026-07-20",
-      endereco: "Rio de Janeiro - RJ",
+      name: "Competição atualizada",
+      date: "2026-07-20",
+      address: "Rio de Janeiro - RJ",
     };
 
     const res = await request(app)
@@ -120,7 +120,7 @@ describe("CRUD /competitions", () => {
   it("deve encerrar uma competição", async () => {
     const competition = await createCompetition({
       ...payloadValido,
-      nome: "Competição para encerramento",
+      name: "Competição para encerramento",
     });
 
     const res = await request(app).patch(`/competitions/${competition.id}`);
@@ -137,7 +137,7 @@ describe("CRUD /competitions", () => {
   it("deve deletar uma competição", async () => {
     const competition = await createCompetition({
       ...payloadValido,
-      nome: "Competição para deleção",
+      name: "Competição para deleção",
     });
 
     const deleteRes = await request(app).delete(`/competitions/${competition.id}`);

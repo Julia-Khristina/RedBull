@@ -6,7 +6,7 @@ import {
 } from "../models/team";
 import { getSupabaseClient } from "../database/supabaseClient";
 
-const SELECT_COLUMNS = "id, nome, uuid, qr_code, competicao_id, criado_em";
+const SELECT_COLUMNS = "id, nome:name, uuid, qr_code, competicao_id:id_competition, criado_em:created_at";
 
 export const teamRepository: TeamRepository = {
   async create(input: CreateTeamInput): Promise<Team> {
@@ -15,8 +15,8 @@ export const teamRepository: TeamRepository = {
     const { data, error } = await supabase
       .from("equipe")
       .insert({
-        nome: input.nome,
-        competicao_id: input.competicao_id,
+        nome: input.name,
+        competicao_id: input.id_competition,
       })
       .select(SELECT_COLUMNS)
       .single();
@@ -25,52 +25,58 @@ export const teamRepository: TeamRepository = {
       throw error;
     }
 
-    return data as Team;
+    return data as unknown as Team;
   },
 
-  async findById(id: number): Promise<Team | null> {
+  async findByCompetition(competitionId: number): Promise<Team[]> {
+    const supabase = getSupabaseClient();
+
+    const { data, error } = await supabase
+      .from("equipe")
+      .select(SELECT_COLUMNS)
+      .eq("competicao_id", competitionId);
+
+    if (error) {
+      throw error;
+    }
+
+    return (data ?? []) as unknown as Team[];
+  },
+
+  async findByCompetitionAndId(competitionId: number, id: number): Promise<Team | null> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("equipe")
       .select(SELECT_COLUMNS)
       .eq("id", id)
+      .eq("competicao_id", competitionId)
       .maybeSingle();
 
     if (error) {
       throw error;
     }
 
-    return data as Team | null;
+    return data as unknown as Team | null;
   },
 
-  async findByCompetition(competicaoId: number): Promise<Team[]> {
-    const supabase = getSupabaseClient();
-
-    const { data, error } = await supabase
-      .from("equipe")
-      .select(SELECT_COLUMNS)
-      .eq("competicao_id", competicaoId);
-
-    if (error) {
-      throw error;
-    }
-
-    return (data ?? []) as Team[];
-  },
-
-  async update(id: number, input: UpdateTeamInput): Promise<Team | null> {
+  async updateByCompetitionAndId(
+    competitionId: number,
+    id: number,
+    input: UpdateTeamInput
+  ): Promise<Team | null> {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {};
-    if (input.nome !== undefined) {
-      payload.nome = input.nome;
+    if (input.name !== undefined) {
+      payload.nome = input.name;
     }
 
     const { data, error } = await supabase
       .from("equipe")
       .update(payload)
       .eq("id", id)
+      .eq("competicao_id", competitionId)
       .select(SELECT_COLUMNS)
       .maybeSingle();
 
@@ -78,16 +84,17 @@ export const teamRepository: TeamRepository = {
       throw error;
     }
 
-    return data as Team | null;
+    return data as unknown as Team | null;
   },
 
-  async delete(id: number): Promise<boolean> {
+  async deleteByCompetitionAndId(competitionId: number, id: number): Promise<boolean> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("equipe")
       .delete()
       .eq("id", id)
+      .eq("competicao_id", competitionId)
       .select("id");
 
     if (error) {

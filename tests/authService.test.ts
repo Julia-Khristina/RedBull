@@ -3,7 +3,7 @@ import { AuthResponse, LoginInput } from "../src/models/auth";
 import { UnauthorizedError } from "../src/errors/AppError";
 
 describe("authService", () => {
-  let mockAdministradorRepository: any;
+  let mockAdminRepository: any;
   let authService: ReturnType<typeof createAuthService>;
 
   beforeAll(() => {
@@ -12,10 +12,10 @@ describe("authService", () => {
   });
 
   beforeEach(() => {
-    mockAdministradorRepository = {
+    mockAdminRepository = {
       findByEmail: jest.fn(),
     };
-    authService = createAuthService(mockAdministradorRepository);
+    authService = createAuthService(mockAdminRepository);
   });
 
   describe("login", () => {
@@ -23,16 +23,16 @@ describe("authService", () => {
       const loginInput: LoginInput = { email: "admin@example.com", password: "adminpass" };
       const expectedUser = { id: 1, email: "admin@example.com", name: "Admin", role: "admin" };
 
-      mockAdministradorRepository.findByEmail.mockResolvedValue({
+      mockAdminRepository.findByEmail.mockResolvedValue({
         id: 1,
-        nome: "Admin",
+        name: "Admin",
         email: "admin@example.com",
         area: "TI",
-        senha: "ignored",
-        criado_em: "",
+        password: "ignored",
+        created_at: "",
       });
 
-      const result = await authService.autenticar(loginInput);
+      const result = await authService.createSession(loginInput);
 
       expect(result.user).toEqual(expectedUser);
       expect(typeof result.accessToken).toBe("string");
@@ -43,24 +43,24 @@ describe("authService", () => {
     it("should throw UnauthorizedError for invalid email", async () => {
       const loginInput: LoginInput = { email: "invalid@example.com", password: "adminpass" };
 
-      mockAdministradorRepository.findByEmail.mockResolvedValue(null);
+      mockAdminRepository.findByEmail.mockResolvedValue(null);
 
-      await expect(authService.autenticar(loginInput)).rejects.toThrow(UnauthorizedError);
+      await expect(authService.createSession(loginInput)).rejects.toThrow(UnauthorizedError);
     });
 
     it("should throw UnauthorizedError for wrong password", async () => {
       const loginInput: LoginInput = { email: "admin@example.com", password: "wrongpass" };
 
-      mockAdministradorRepository.findByEmail.mockResolvedValue({
+      mockAdminRepository.findByEmail.mockResolvedValue({
         id: 1,
-        nome: "Admin",
+        name: "Admin",
         email: "admin@example.com",
         area: "TI",
-        senha: "ignored",
-        criado_em: "",
+        password: "ignored",
+        created_at: "",
       });
 
-      await expect(authService.autenticar(loginInput)).rejects.toThrow(UnauthorizedError);
+      await expect(authService.createSession(loginInput)).rejects.toThrow(UnauthorizedError);
     });
   });
 
@@ -68,16 +68,16 @@ describe("authService", () => {
     it("should issue a new token for a valid refresh token", async () => {
       const loginInput: LoginInput = { email: "admin@example.com", password: "adminpass" };
 
-      mockAdministradorRepository.findByEmail.mockResolvedValue({
+      mockAdminRepository.findByEmail.mockResolvedValue({
         id: 1,
-        nome: "Admin",
+        name: "Admin",
         email: "admin@example.com",
         area: "TI",
-        senha: "ignored",
-        criado_em: "",
+        password: "ignored",
+        created_at: "",
       });
 
-      const authResponse = await authService.autenticar(loginInput);
+      const authResponse = await authService.createSession(loginInput);
       const result = await authService.refreshToken(authResponse.refreshToken);
 
       expect(result.user).toEqual(authResponse.user);
@@ -90,27 +90,27 @@ describe("authService", () => {
     });
   });
 
-  describe("getCurrentUser", () => {
+  describe("validateToken", () => {
     it("should return the user payload for a valid token", async () => {
       const loginInput: LoginInput = { email: "admin@example.com", password: "adminpass" };
 
-      mockAdministradorRepository.findByEmail.mockResolvedValue({
+      mockAdminRepository.findByEmail.mockResolvedValue({
         id: 1,
-        nome: "Admin",
+        name: "Admin",
         email: "admin@example.com",
         area: "TI",
-        senha: "ignored",
-        criado_em: "",
+        password: "ignored",
+        created_at: "",
       });
 
-      const authResponse = await authService.autenticar(loginInput);
-      const result = await authService.getCurrentUser(authResponse.accessToken);
+      const authResponse = await authService.createSession(loginInput);
+      const result = await authService.validateToken(authResponse.accessToken);
 
       expect(result).toEqual(authResponse.user);
     });
 
     it("should throw UnauthorizedError for invalid token", async () => {
-      await expect(authService.getCurrentUser("invalid-token")).rejects.toThrow(UnauthorizedError);
+      await expect(authService.validateToken("invalid-token")).rejects.toThrow(UnauthorizedError);
     });
   });
 

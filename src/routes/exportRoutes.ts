@@ -5,7 +5,7 @@ import { asyncHandler } from "../helpers/asyncHandler";
 const router = Router();
 
 router.get(
-  "/competitions/:competicaoId/export",
+  "/competitions/:competitionId/export",
   asyncHandler(exportController.exportCompetition)
 );
 

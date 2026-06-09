@@ -1,21 +1,21 @@
 import {
-  Athlete,
-  AthleteRepository,
-  CreateAthleteInput,
-  UpdateAthleteInput,
-} from "../models/athlete";
-import { athleteRepository } from "../repositories/athleteRepository";
+  Runner,
+  RunnerRepository,
+  CreateRunnerInput,
+  UpdateRunnerInput,
+} from "../models/runner";
+import { runnerRepository } from "../repositories/runnerRepository";
 import {
-  validateCreateAthlete,
-  validateUpdateAthlete,
-} from "../validators/athleteValidator";
+  validateCreateRunner,
+  validateUpdateRunner,
+} from "../validators/runnerValidator";
 import {
   NotFoundError,
   ConflictError,
   UnprocessableError,
 } from "../errors/AppError";
 
-const MAX_ATHLETES_PER_TEAM = 16;
+const MAX_RUNNERS_PER_TEAM = 16;
 
 function isPgUniqueViolation(error: unknown): boolean {
   return (
@@ -49,22 +49,22 @@ function uniqueViolationMessage(error: unknown): string {
   return "Dado duplicado";
 }
 
-export function createAthleteService(
-  repository: AthleteRepository = athleteRepository
+export function createRunnerService(
+  repository: RunnerRepository = runnerRepository
 ) {
   return {
-    async create(payload: Partial<CreateAthleteInput>): Promise<Athlete> {
-      const input = validateCreateAthlete(payload);
+    async create(payload: Partial<CreateRunnerInput>): Promise<Runner> {
+      const input = validateCreateRunner(payload);
 
-      const team = await repository.findTeamById(input.equipe_id);
+      const team = await repository.findTeamById(input.id_team);
       if (!team) {
-        throw new NotFoundError(`Equipe ${input.equipe_id} não encontrada`);
+        throw new NotFoundError(`Equipe ${input.id_team} não encontrada`);
       }
 
-      const count = await repository.countByTeam(input.equipe_id);
-      if (count >= MAX_ATHLETES_PER_TEAM) {
+      const count = await repository.countByTeam(input.id_team);
+      if (count >= MAX_RUNNERS_PER_TEAM) {
         throw new UnprocessableError(
-          `Equipe já possui o número máximo de atletas (${MAX_ATHLETES_PER_TEAM})`
+          `Equipe já possui o número máximo de atletas (${MAX_RUNNERS_PER_TEAM})`
         );
       }
 
@@ -78,31 +78,31 @@ export function createAthleteService(
       }
     },
 
-    async findByTeam(equipe_id: number): Promise<Athlete[]> {
-      const team = await repository.findTeamById(equipe_id);
+    async findByTeam(teamId: number): Promise<Runner[]> {
+      const team = await repository.findTeamById(teamId);
       if (!team) {
-        throw new NotFoundError(`Equipe ${equipe_id} não encontrada`);
+        throw new NotFoundError(`Equipe ${teamId} não encontrada`);
       }
-      return repository.findByTeam(equipe_id);
+      return repository.findByTeam(teamId);
     },
 
-    async findById(id: number, equipe_id: number): Promise<Athlete> {
-      const athlete = await repository.findById(id, equipe_id);
-      if (!athlete) {
+    async findByTeamAndId(teamId: number, id: number): Promise<Runner> {
+      const runner = await repository.findByTeamAndId(teamId, id);
+      if (!runner) {
         throw new NotFoundError(`Atleta ${id} não encontrado`);
       }
-      return athlete;
+      return runner;
     },
 
-    async update(
+    async updateByTeamAndId(
+      teamId: number,
       id: number,
-      equipe_id: number,
-      payload: Partial<UpdateAthleteInput>
-    ): Promise<Athlete> {
-      const input = validateUpdateAthlete(payload);
+      payload: Partial<UpdateRunnerInput>
+    ): Promise<Runner> {
+      const input = validateUpdateRunner(payload);
 
       try {
-        const updated = await repository.update(id, equipe_id, input);
+        const updated = await repository.updateByTeamAndId(teamId, id, input);
         if (!updated) {
           throw new NotFoundError(`Atleta ${id} não encontrado`);
         }
@@ -115,9 +115,9 @@ export function createAthleteService(
       }
     },
 
-    async delete(id: number, equipe_id: number): Promise<void> {
+    async deleteByTeamAndId(teamId: number, id: number): Promise<void> {
       try {
-        const deleted = await repository.delete(id, equipe_id);
+        const deleted = await repository.deleteByTeamAndId(teamId, id);
         if (!deleted) {
           throw new NotFoundError(`Atleta ${id} não encontrado`);
         }
@@ -133,4 +133,4 @@ export function createAthleteService(
   };
 }
 
-export const athleteService = createAthleteService();
+export const runnerService = createRunnerService();

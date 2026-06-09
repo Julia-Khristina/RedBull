@@ -1,23 +1,25 @@
 import { getSupabaseClient } from "../database/supabaseClient";
-import { Administrador, AdministradorInput } from "../models/administrador";
+import { Admin, AdminInput } from "../models/admin";
 
-export const administradorRepository = {
-  async findAll(): Promise<Administrador[]> {
+const SELECT_COLUMNS = "id, nome:name, email, area, senha:password, criado_em:created_at";
+
+export const adminRepository = {
+  async findAll(): Promise<Admin[]> {
     const supabase = getSupabaseClient();
-    const { data, error } = await supabase.from("administradores").select("*");
+    const { data, error } = await supabase.from("administradores").select(SELECT_COLUMNS);
 
     if (error) {
       throw new Error(`Erro ao buscar administradores: ${error.message}`);
     }
 
-    return data || [];
+    return (data ?? []) as unknown as Admin[];
   },
 
-  async findById(id: number): Promise<Administrador | null> {
+  async findById(id: number): Promise<Admin | null> {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("administradores")
-      .select("*")
+      .select(SELECT_COLUMNS)
       .eq("id", id)
       .single();
 
@@ -25,14 +27,14 @@ export const administradorRepository = {
       throw new Error(`Erro ao buscar administrador: ${error.message}`);
     }
 
-    return data || null;
+    return data as unknown as Admin | null;
   },
 
-  async findByEmail(email: string): Promise<Administrador | null> {
+  async findByEmail(email: string): Promise<Admin | null> {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("administradores")
-      .select("*")
+      .select(SELECT_COLUMNS)
       .eq("email", email)
       .single();
 
@@ -40,38 +42,49 @@ export const administradorRepository = {
       throw new Error(`Erro ao buscar administrador por email: ${error.message}`);
     }
 
-    return data || null;
+    return data as unknown as Admin | null;
   },
 
-  async create(dados: AdministradorInput): Promise<Administrador> {
+  async create(dados: AdminInput): Promise<Admin> {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
       .from("administradores")
-      .insert([dados])
-      .select()
+      .insert([{
+        nome: dados.name,
+        email: dados.email,
+        area: dados.area,
+        senha: dados.password,
+      }])
+      .select(SELECT_COLUMNS)
       .single();
 
     if (error) {
       throw new Error(`Erro ao criar administrador: ${error.message}`);
     }
 
-    return data;
+    return data as unknown as Admin;
   },
 
-  async update(id: number, dados: Partial<AdministradorInput>): Promise<Administrador | null> {
+  async update(id: number, dados: Partial<AdminInput>): Promise<Admin | null> {
     const supabase = getSupabaseClient();
+    const payload: Record<string, unknown> = {};
+    if (dados.name !== undefined) payload.nome = dados.name;
+    if (dados.email !== undefined) payload.email = dados.email;
+    if (dados.area !== undefined) payload.area = dados.area;
+    if (dados.password !== undefined) payload.senha = dados.password;
+
     const { data, error } = await supabase
       .from("administradores")
-      .update(dados)
+      .update(payload)
       .eq("id", id)
-      .select()
+      .select(SELECT_COLUMNS)
       .single();
 
     if (error && error.code !== "PGRST116") {
       throw new Error(`Erro ao atualizar administrador: ${error.message}`);
     }
 
-    return data || null;
+    return data as unknown as Admin | null;
   },
 
   async delete(id: number): Promise<boolean> {

@@ -6,7 +6,7 @@ import {
 } from "../models/competition";
 import { getSupabaseClient } from "../database/supabaseClient";
 
-const competitionSelect = "id, nome, endereco, data, status, criado_em";
+const competitionSelect = "id, nome:name, endereco:address, data, status, criado_em:created_at";
 
 export const competitionRepository: CompetitionRepository = {
   async create(input: CreateCompetitionInput): Promise<Competition> {
@@ -15,9 +15,9 @@ export const competitionRepository: CompetitionRepository = {
     const { data, error } = await supabase
       .from("competicao")
       .insert({
-        nome: input.nome,
-        data: input.data,
-        endereco: input.endereco,
+        nome: input.name,
+        data: input.date,
+        endereco: input.address,
         status: "não iniciado",
       })
       .select(competitionSelect)
@@ -27,7 +27,7 @@ export const competitionRepository: CompetitionRepository = {
       throw error;
     }
 
-    return data as Competition;
+    return data as unknown as Competition;
   },
 
   async findAll(): Promise<Competition[]> {
@@ -43,7 +43,7 @@ export const competitionRepository: CompetitionRepository = {
       throw error;
     }
 
-    return data as Competition[];
+    return (data ?? []) as unknown as Competition[];
   },
 
   async findById(id: number): Promise<Competition | null> {
@@ -59,7 +59,7 @@ export const competitionRepository: CompetitionRepository = {
       throw error;
     }
 
-    return data as Competition | null;
+    return data as unknown as Competition | null;
   },
 
   async update(
@@ -71,9 +71,9 @@ export const competitionRepository: CompetitionRepository = {
     const { data, error } = await supabase
       .from("competicao")
       .update({
-        nome: input.nome,
-        data: input.data,
-        endereco: input.endereco,
+        nome: input.name,
+        data: input.date,
+        endereco: input.address,
       })
       .eq("id", id)
       .select(competitionSelect)
@@ -83,7 +83,7 @@ export const competitionRepository: CompetitionRepository = {
       throw error;
     }
 
-    return data as Competition | null;
+    return data as unknown as Competition | null;
   },
 
   async delete(id: number): Promise<boolean> {
@@ -93,8 +93,7 @@ export const competitionRepository: CompetitionRepository = {
       .from("competicao")
       .delete()
       .eq("id", id)
-      .select("id")
-      .maybeSingle();
+      .select("id");
 
     if (error) {
       throw error;
@@ -117,6 +116,6 @@ export const competitionRepository: CompetitionRepository = {
       throw error;
     }
 
-    return data as Competition | null;
+    return data as unknown as Competition | null;
   },
 };

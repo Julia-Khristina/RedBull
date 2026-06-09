@@ -1,27 +1,26 @@
-import { Athlete } from "../models/athlete";
+import { Runner } from "../models/runner";
 import { Checkpoint } from "../models/checkpoint";
 import { Competition } from "../models/competition";
 import { CompetitionExportData, ExportRepository } from "../models/export";
 import { Team } from "../models/team";
 import { getSupabaseClient } from "../database/supabaseClient";
 
-const COMPETITION_SELECT = "id, nome, endereco, data, status, criado_em";
-const TEAM_SELECT = "id, nome, uuid, qr_code, competicao_id, criado_em";
-const ATHLETE_SELECT =
-  "id, nome, status, email, telefone, cpf, equipe_id, criado_em";
+const COMPETITION_SELECT = "id, nome:name, endereco:address, data, status, criado_em:created_at";
+const TEAM_SELECT = "id, nome:name, uuid, qr_code, competicao_id:id_competition, criado_em:created_at";
+const RUNNER_SELECT =
+  "id, nome:name, status, email, telefone:phone, cpf, equipe_id:id_team, criado_em:created_at";
 const CHECKPOINT_SELECT =
-  "id, identificador, km, pace, tempo, imagem, corredor_id, competicao_id, esteira_id, administrador_id, criado_em, corredor:corredor_id(id, nome, equipe_id)";
+  "id, identificador:identifier, km:distance_km, pace, tempo:time, imagem:image, corredor_id:id_runner, competicao_id:id_competition, esteira_id:id_treadmill, administrador_id:id_admin, criado_em:created_at, runner:corredor_id(id, nome:name, equipe_id:id_team)";
 
-type SupabaseCheckpoint = Omit<Checkpoint, "corredor"> & {
-  corredor?: Checkpoint["corredor"] | Checkpoint["corredor"][];
-};
+type SupabaseCheckpoint = Record<string, unknown>;
 
 function normalizeCheckpoint(data: SupabaseCheckpoint): Checkpoint {
-  const corredor = Array.isArray(data.corredor)
-    ? data.corredor[0] ?? null
-    : data.corredor ?? null;
+  const runnerData = data.runner;
+  const runner = Array.isArray(runnerData)
+    ? (runnerData[0] as Checkpoint["runner"] ?? null)
+    : (runnerData as Checkpoint["runner"] ?? null);
 
-  return { ...data, corredor };
+  return { ...data as unknown as Checkpoint, runner };
 }
 
 function normalizeCheckpoints(data: SupabaseCheckpoint[] | null): Checkpoint[] {
@@ -30,14 +29,14 @@ function normalizeCheckpoints(data: SupabaseCheckpoint[] | null): Checkpoint[] {
 
 export const exportRepository: ExportRepository = {
   async findCompetitionExportData(
-    competicaoId: number
+    competitionId: number
   ): Promise<CompetitionExportData | null> {
     const supabase = getSupabaseClient();
 
     const { data: competition, error: competitionError } = await supabase
       .from("competicao")
       .select(COMPETITION_SELECT)
-      .eq("id", competicaoId)
+      .eq("id", competitionId)
       .maybeSingle();
 
     if (competitionError) {
@@ -51,20 +50,20 @@ export const exportRepository: ExportRepository = {
     const { data: teams, error: teamsError } = await supabase
       .from("equipe")
       .select(TEAM_SELECT)
-      .eq("competicao_id", competicaoId)
+      .eq("competicao_id", competitionId)
       .order("id", { ascending: true });
 
     if (teamsError) {
       throw teamsError;
     }
 
-    const teamIds = (teams ?? []).map((team) => team.id);
-    const athletes = await findAthletesByTeams(teamIds);
+    const teamIds = (teams ?? []).map((team: any) => team.id);
+    const runners = await findRunnersByTeams(teamIds);
 
     const { data: checkpoints, error: checkpointsError } = await supabase
       .from("checkpoint")
       .select(CHECKPOINT_SELECT)
-      .eq("competicao_id", competicaoId)
+      .eq("competicao_id", competitionId)
       .order("id", { ascending: true });
 
     if (checkpointsError) {
@@ -72,9 +71,9 @@ export const exportRepository: ExportRepository = {
     }
 
     return {
-      competition: competition as Competition,
-      teams: (teams ?? []) as Team[],
-      athletes,
+      competition: competition as unknown as Competition,
+      teams: (teams ?? []) as unknown as Team[],
+      runners,
       checkpoints: normalizeCheckpoints(
         checkpoints as unknown as SupabaseCheckpoint[] | null
       ),
@@ -82,7 +81,7 @@ export const exportRepository: ExportRepository = {
   },
 };
 
-async function findAthletesByTeams(teamIds: number[]): Promise<Athlete[]> {
+async function findRunnersByTeams(teamIds: number[]): Promise<Runner[]> {
   if (teamIds.length === 0) {
     return [];
   }
@@ -91,7 +90,7 @@ async function findAthletesByTeams(teamIds: number[]): Promise<Athlete[]> {
 
   const { data, error } = await supabase
     .from("corredor")
-    .select(ATHLETE_SELECT)
+    .select(RUNNER_SELECT)
     .in("equipe_id", teamIds)
     .order("id", { ascending: true });
 
@@ -99,5 +98,5 @@ async function findAthletesByTeams(teamIds: number[]): Promise<Athlete[]> {
     throw error;
   }
 
-  return (data ?? []) as Athlete[];
+  return (data ?? []) as unknown as Runner[];
 }

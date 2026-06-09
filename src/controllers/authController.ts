@@ -20,7 +20,7 @@ function obterTokenAutenticacao(req: Request): string {
 
 export const authController = {
   async login(req: Request, res: Response): Promise<void> {
-    const token = await authService.autenticar(req.body);
+    const token = await authService.createSession(req.body);
     res.status(200).json(token);
   },
 

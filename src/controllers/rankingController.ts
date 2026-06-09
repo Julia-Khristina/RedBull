@@ -13,24 +13,24 @@ function parseIntegerParam(value: unknown, name: string): number {
 }
 
 export const rankingController = {
-  async rankingEquipes(req: Request, res: Response): Promise<void> {
-    const competicaoId = parseIntegerParam(
-      req.params.competicaoId,
-      "competicaoId"
+  async teamRanking(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(
+      req.params.competitionId,
+      "competitionId"
     );
 
-    const ranking = await rankingService.gerarRankingEquipes(competicaoId);
+    const ranking = await rankingService.generateTeamRanking(competitionId);
 
     res.status(200).json(ranking);
   },
 
-  async rankingCorredores(req: Request, res: Response): Promise<void> {
-    const competicaoId = parseIntegerParam(
-      req.params.competicaoId,
-      "competicaoId"
+  async runnerRanking(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(
+      req.params.competitionId,
+      "competitionId"
     );
 
-    const ranking = await rankingService.gerarRankingCorredores(competicaoId);
+    const ranking = await rankingService.generateRunnerRanking(competitionId);
 
     res.status(200).json(ranking);
   },

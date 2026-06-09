@@ -1,25 +1,25 @@
 import {
-  Athlete,
-  AthleteRepository,
-  CreateAthleteInput,
-  UpdateAthleteInput,
-} from "../models/athlete";
+  Runner,
+  RunnerRepository,
+  CreateRunnerInput,
+  UpdateRunnerInput,
+} from "../models/runner";
 import { getSupabaseClient } from "../database/supabaseClient";
 
 const SELECT_COLUMNS =
-  "id, nome, status, email, telefone, cpf, equipe_id, criado_em";
+  "id, nome:name, status, email, telefone:phone, cpf, equipe_id:id_team, criado_em:created_at";
 
-export const athleteRepository: AthleteRepository = {
-  async create(input: CreateAthleteInput): Promise<Athlete> {
+export const runnerRepository: RunnerRepository = {
+  async create(input: CreateRunnerInput): Promise<Runner> {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {
-      nome: input.nome,
+      nome: input.name,
       cpf: input.cpf,
       email: input.email,
-      equipe_id: input.equipe_id,
+      equipe_id: input.id_team,
     };
-    if (input.telefone !== undefined) payload.telefone = input.telefone;
+    if (input.phone !== undefined) payload.telefone = input.phone;
     if (input.status !== undefined) payload.status = input.status;
 
     const { data, error } = await supabase
@@ -30,58 +30,58 @@ export const athleteRepository: AthleteRepository = {
 
     if (error) throw error;
 
-    return data as Athlete;
+    return data as unknown as Runner;
   },
 
-  async findById(id: number, equipe_id: number): Promise<Athlete | null> {
+  async findByTeamAndId(teamId: number, id: number): Promise<Runner | null> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("corredor")
       .select(SELECT_COLUMNS)
       .eq("id", id)
-      .eq("equipe_id", equipe_id)
+      .eq("equipe_id", teamId)
       .maybeSingle();
 
     if (error) throw error;
 
-    return data as Athlete | null;
+    return data as unknown as Runner | null;
   },
 
-  async findByTeam(equipe_id: number): Promise<Athlete[]> {
+  async findByTeam(teamId: number): Promise<Runner[]> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("corredor")
       .select(SELECT_COLUMNS)
-      .eq("equipe_id", equipe_id)
+      .eq("equipe_id", teamId)
       .order("id", { ascending: true });
 
     if (error) throw error;
 
-    return (data ?? []) as Athlete[];
+    return (data ?? []) as unknown as Runner[];
   },
 
-  async countByTeam(equipe_id: number): Promise<number> {
+  async countByTeam(teamId: number): Promise<number> {
     const supabase = getSupabaseClient();
 
     const { count, error } = await supabase
       .from("corredor")
       .select("id", { count: "exact", head: true })
-      .eq("equipe_id", equipe_id);
+      .eq("equipe_id", teamId);
 
     if (error) throw error;
 
     return count ?? 0;
   },
 
-  async findTeamById(equipe_id: number): Promise<{ id: number } | null> {
+  async findTeamById(teamId: number): Promise<{ id: number } | null> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("equipe")
       .select("id")
-      .eq("id", equipe_id)
+      .eq("id", teamId)
       .maybeSingle();
 
     if (error) throw error;
@@ -89,40 +89,40 @@ export const athleteRepository: AthleteRepository = {
     return data as { id: number } | null;
   },
 
-  async update(
+  async updateByTeamAndId(
+    teamId: number,
     id: number,
-    equipe_id: number,
-    input: UpdateAthleteInput
-  ): Promise<Athlete | null> {
+    input: UpdateRunnerInput
+  ): Promise<Runner | null> {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {};
-    if (input.nome !== undefined) payload.nome = input.nome;
+    if (input.name !== undefined) payload.nome = input.name;
     if (input.email !== undefined) payload.email = input.email;
-    if (input.telefone !== undefined) payload.telefone = input.telefone;
+    if (input.phone !== undefined) payload.telefone = input.phone;
     if (input.status !== undefined) payload.status = input.status;
 
     const { data, error } = await supabase
       .from("corredor")
       .update(payload)
       .eq("id", id)
-      .eq("equipe_id", equipe_id)
+      .eq("equipe_id", teamId)
       .select(SELECT_COLUMNS)
       .maybeSingle();
 
     if (error) throw error;
 
-    return data as Athlete | null;
+    return data as unknown as Runner | null;
   },
 
-  async delete(id: number, equipe_id: number): Promise<boolean> {
+  async deleteByTeamAndId(teamId: number, id: number): Promise<boolean> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
       .from("corredor")
       .delete()
       .eq("id", id)
-      .eq("equipe_id", equipe_id)
+      .eq("equipe_id", teamId)
       .select("id");
 
     if (error) throw error;

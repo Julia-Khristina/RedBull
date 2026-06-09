@@ -2,23 +2,23 @@ export type CompetitionStatus = "não iniciado" | "em andamento" | "encerrada";
 
 export interface Competition {
   id: number;
-  nome: string;
-  endereco: string;
-  data: string;
+  name: string;
+  address: string;
+  date: string;
   status: CompetitionStatus;
-  criado_em: string;
+  created_at: string;
 }
 
 export interface CreateCompetitionInput {
-  nome: string;
-  endereco: string;
-  data: string;
+  name: string;
+  address: string;
+  date: string;
 }
 
 export interface UpdateCompetitionInput {
-  nome: string;
-  endereco: string;
-  data: string;
+  name: string;
+  address: string;
+  date: string;
 }
 
 export interface CompetitionRepository {
