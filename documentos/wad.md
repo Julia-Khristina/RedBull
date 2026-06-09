@@ -2217,7 +2217,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 <div align="center">
   <sub>Figura 27 - Diagrama Entidade Relacionamento</sub><br>
-    <img src="../assets/Diagrama entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/programacao/diagrama-entidade-relacionamento.jpg" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
