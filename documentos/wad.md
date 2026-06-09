@@ -3096,11 +3096,13 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.1 Resumo Executivo
 
-*Até 300 palavras, sem necessidade de fonte.*
+O Red Bull 24 Horas configura-se como uma ativação esportiva de marca voltada à comunidade running, em que equipes de corredores se revezam em esteiras durante 24 horas ininterruptas com o objetivo de acumular a maior quilometragem possível. Nesse contexto, é identificada a oportunidade de modernizar a apuração dos resultados do evento, processo que atualmente depende de anotações manuais realizadas por operadores sob alta pressão operacional — cenário que eleva o risco de erros, inconsistências e retrabalho.
 
-*Apresente de forma clara e objetiva os principais destaques do projeto, incluindo: oportunidade identificada no mercado; problema atendido pela aplicação; diferenciais competitivos da aplicação web; e objetivos estratégicos pretendidos.*
+O problema atendido pela solução diz respeito à ausência de uma ferramenta digital confiável para o registro e validação de dados durante a competição. A coleta manual de quilometragem, pace, tempo e checkpoints impõe limitações à rastreabilidade dos resultados e à credibilidade da apuração final, especialmente em uma operação contínua de 24 horas, impactando diretamente operadores de evento e equipes técnicas responsáveis pela apuração.
 
-*Valor: até 1,0 ponto.*
+A solução desenvolvida consiste em uma plataforma web que integra captura de dados via OCR, validação humana assistida, registro de checkpoints, visualização de métricas em tempo real e exportação de relatórios estruturados. São identificados como diferenciais competitivos: a combinação de automação com supervisão operacional, garantindo precisão sem eliminar o controle humano; a rastreabilidade dos dados por meio de log de validações; e a adaptação específica ao fluxo operacional do Red Bull 24 Horas, sem dependência de infraestrutura externa de cronometragem.
+
+Os objetivos estratégicos do projeto abrangem a substituição parcial do fluxo manual de apuração por um processo auditável e eficiente; a ampliação da confiabilidade dos resultados entregues ao parceiro e ao público; e o estabelecimento de uma base tecnológica com potencial de reutilização em outros eventos esportivos da Red Bull que demandem coleta e validação de dados em tempo real.
 
 ## 6.2 Análise de Mercado
 
