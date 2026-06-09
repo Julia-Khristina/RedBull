@@ -53,6 +53,12 @@ export function createCheckpointService(
       return repository.findByCompetition(competitionId);
     },
 
+    async findInconsistenciesByCompetition(
+      competitionId: number
+    ): Promise<Checkpoint[]> {
+      return repository.findInconsistenciesByCompetition(competitionId);
+    },
+
     async create(payload: Partial<CreateCheckpointInput>): Promise<Checkpoint> {
       const input = validateCreateCheckpoint(payload);
 
@@ -66,7 +72,7 @@ export function createCheckpointService(
         }
         if (isPgFkViolation(error)) {
           throw new NotFoundError(
-            "Corredor, competição, esteira ou administrador não encontrado"
+            "Runner, competition, treadmill or admin not found"
           );
         }
         throw error;

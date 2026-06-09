@@ -1,23 +1,17 @@
-export interface User {
+export interface AuthAdmin {
   id: number;
   email: string;
   name: string;
-  role: "admin" | "user";
+  role: "admin";
 }
 
 export interface AuthResponse {
-  accessToken: string;
-  refreshToken: string;
-  user: User;
+  access_token: string;
+  refresh_token: string;
+  admin: AuthAdmin;
 }
 
 export interface LoginInput {
   email: string;
   password: string;
-}
-
-export interface RegisterInput {
-  email: string;
-  password: string;
-  name: string;
 }

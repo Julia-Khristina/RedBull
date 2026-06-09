@@ -58,13 +58,13 @@ export function createRunnerService(
 
       const team = await repository.findTeamById(input.id_team);
       if (!team) {
-        throw new NotFoundError(`Equipe ${input.id_team} não encontrada`);
+        throw new NotFoundError(`Team ${input.id_team} não encontrada`);
       }
 
       const count = await repository.countByTeam(input.id_team);
       if (count >= MAX_RUNNERS_PER_TEAM) {
         throw new UnprocessableError(
-          `Equipe já possui o número máximo de atletas (${MAX_RUNNERS_PER_TEAM})`
+          `Team already has the maximum number of runners (${MAX_RUNNERS_PER_TEAM})`
         );
       }
 
@@ -81,7 +81,7 @@ export function createRunnerService(
     async findByTeam(teamId: number): Promise<Runner[]> {
       const team = await repository.findTeamById(teamId);
       if (!team) {
-        throw new NotFoundError(`Equipe ${teamId} não encontrada`);
+        throw new NotFoundError(`Team ${teamId} não encontrada`);
       }
       return repository.findByTeam(teamId);
     },
@@ -89,7 +89,7 @@ export function createRunnerService(
     async findByTeamAndId(teamId: number, id: number): Promise<Runner> {
       const runner = await repository.findByTeamAndId(teamId, id);
       if (!runner) {
-        throw new NotFoundError(`Atleta ${id} não encontrado`);
+        throw new NotFoundError(`Runner ${id} não encontrado`);
       }
       return runner;
     },
@@ -104,7 +104,7 @@ export function createRunnerService(
       try {
         const updated = await repository.updateByTeamAndId(teamId, id, input);
         if (!updated) {
-          throw new NotFoundError(`Atleta ${id} não encontrado`);
+          throw new NotFoundError(`Runner ${id} não encontrado`);
         }
         return updated;
       } catch (error) {
@@ -119,12 +119,12 @@ export function createRunnerService(
       try {
         const deleted = await repository.deleteByTeamAndId(teamId, id);
         if (!deleted) {
-          throw new NotFoundError(`Atleta ${id} não encontrado`);
+          throw new NotFoundError(`Runner ${id} não encontrado`);
         }
       } catch (error) {
         if (isPgFkViolation(error)) {
           throw new ConflictError(
-            "Atleta possui checkpoints registrados e não pode ser removido"
+            "Runner possui checkpoints registrados e não pode ser removido"
           );
         }
         throw error;

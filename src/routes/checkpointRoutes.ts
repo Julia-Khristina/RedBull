@@ -20,8 +20,13 @@ router.get(
 );
 
 router.get(
-  "/competitions/:competitionId/checkpoints",
+  "/competitions/:id/checkpoints",
   asyncHandler(checkpointController.findByCompetition)
+);
+
+router.get(
+  "/competitions/:id/checkpoints/inconsistencies",
+  asyncHandler(checkpointController.findInconsistenciesByCompetition)
 );
 
 export default router;

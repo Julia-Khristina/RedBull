@@ -21,7 +21,7 @@ describe("POST /competitions", () => {
       name: payloadValido.name,
       date: payloadValido.date,
       address: payloadValido.address,
-      status: "não iniciado",
+      status: "not_started",
     });
 
     expect(competition.id).toBeDefined();
@@ -79,7 +79,7 @@ describe("CRUD /competitions", () => {
     expect(res.body).toMatchObject({
       id: competition.id,
       name: "Competição para busca",
-      status: "não iniciado",
+      status: "not_started",
     });
 
     await request(app).delete(`/competitions/${competition.id}`);
@@ -111,7 +111,7 @@ describe("CRUD /competitions", () => {
     expect(res.body).toMatchObject({
       id: competition.id,
       ...updatePayload,
-      status: "não iniciado",
+      status: "not_started",
     });
 
     await request(app).delete(`/competitions/${competition.id}`);
@@ -128,7 +128,7 @@ describe("CRUD /competitions", () => {
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({
       id: competition.id,
-      status: "encerrada",
+      status: "closed",
     });
 
     await request(app).delete(`/competitions/${competition.id}`);

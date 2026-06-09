@@ -64,10 +64,10 @@ function formatPace(seconds: number | null): string | null {
 }
 
 function getCheckpointPaceSeconds(checkpoint: Checkpoint): number | null {
-  const tempoSeconds = parseTimeToSeconds(checkpoint.time);
+  const timeSeconds = parseTimeToSeconds(checkpoint.time);
 
-  if (tempoSeconds !== null && checkpoint.distance_km > 0) {
-    return tempoSeconds / checkpoint.distance_km;
+  if (timeSeconds !== null && checkpoint.distance_km > 0) {
+    return timeSeconds / checkpoint.distance_km;
   }
 
   return parseTimeToSeconds(checkpoint.pace);
@@ -114,7 +114,7 @@ export function createRankingService(
     for (const checkpoint of competitionCheckpoints) {
       const current = aggregates.get(checkpoint.id_runner);
       const paceSeconds = getCheckpointPaceSeconds(checkpoint);
-      const tempoSeconds = parseTimeToSeconds(checkpoint.time);
+      const timeSeconds = parseTimeToSeconds(checkpoint.time);
 
       if (!current || checkpoint.distance_km > current.total_distance_km) {
         aggregates.set(checkpoint.id_runner, {
@@ -122,7 +122,7 @@ export function createRankingService(
           runner_name: checkpoint.runner?.name ?? null,
           id_team: checkpoint.runner?.id_team ?? null,
           total_distance_km: checkpoint.distance_km,
-          time_seconds: tempoSeconds,
+          time_seconds: timeSeconds,
           pace_seconds: paceSeconds,
           pace_samples: paceSeconds === null ? 0 : 1,
         });

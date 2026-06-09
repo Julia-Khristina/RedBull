@@ -6,7 +6,7 @@ import { teamRepository } from "../src/repositories/teamRepository";
 
 const RUN = Date.now().toString().slice(-7);
 
-describe("GET /competitions/:competitionId/export", () => {
+describe("GET /competitions/:id/export", () => {
   let competitionId: number;
   let teamId: number;
   let runnerId: number;

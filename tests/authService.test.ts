@@ -18,10 +18,10 @@ describe("authService", () => {
     authService = createAuthService(mockAdminRepository);
   });
 
-  describe("login", () => {
+  describe("createSession", () => {
     it("should return auth response for valid admin credentials", async () => {
       const loginInput: LoginInput = { email: "admin@example.com", password: "adminpass" };
-      const expectedUser = { id: 1, email: "admin@example.com", name: "Admin", role: "admin" };
+      const expectedAdmin = { id: 1, email: "admin@example.com", name: "Admin", role: "admin" };
 
       mockAdminRepository.findByEmail.mockResolvedValue({
         id: 1,
@@ -34,10 +34,10 @@ describe("authService", () => {
 
       const result = await authService.createSession(loginInput);
 
-      expect(result.user).toEqual(expectedUser);
-      expect(typeof result.accessToken).toBe("string");
-      expect(typeof result.refreshToken).toBe("string");
-      expect(result.refreshToken).toEqual(result.accessToken);
+      expect(result.admin).toEqual(expectedAdmin);
+      expect(typeof result.access_token).toBe("string");
+      expect(typeof result.refresh_token).toBe("string");
+      expect(result.refresh_token).toEqual(result.access_token);
     });
 
     it("should throw UnauthorizedError for invalid email", async () => {
@@ -78,11 +78,11 @@ describe("authService", () => {
       });
 
       const authResponse = await authService.createSession(loginInput);
-      const result = await authService.refreshToken(authResponse.refreshToken);
+      const result = await authService.refreshToken(authResponse.refresh_token);
 
-      expect(result.user).toEqual(authResponse.user);
-      expect(typeof result.accessToken).toBe("string");
-      expect(typeof result.refreshToken).toBe("string");
+      expect(result.admin).toEqual(authResponse.admin);
+      expect(typeof result.access_token).toBe("string");
+      expect(typeof result.refresh_token).toBe("string");
     });
 
     it("should throw UnauthorizedError for invalid refresh token", async () => {
@@ -104,9 +104,9 @@ describe("authService", () => {
       });
 
       const authResponse = await authService.createSession(loginInput);
-      const result = await authService.validateToken(authResponse.accessToken);
+      const result = await authService.validateToken(authResponse.access_token);
 
-      expect(result).toEqual(authResponse.user);
+      expect(result).toEqual(authResponse.admin);
     });
 
     it("should throw UnauthorizedError for invalid token", async () => {

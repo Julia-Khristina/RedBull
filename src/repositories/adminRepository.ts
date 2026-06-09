@@ -1,12 +1,12 @@
 import { getSupabaseClient } from "../database/supabaseClient";
 import { Admin, AdminInput } from "../models/admin";
 
-const SELECT_COLUMNS = "id, nome:name, email, area, senha:password, criado_em:created_at";
+const SELECT_COLUMNS = "id, name, email, area, password, created_at";
 
 export const adminRepository = {
   async findAll(): Promise<Admin[]> {
     const supabase = getSupabaseClient();
-    const { data, error } = await supabase.from("administradores").select(SELECT_COLUMNS);
+    const { data, error } = await supabase.from("admin").select(SELECT_COLUMNS);
 
     if (error) {
       throw new Error(`Erro ao buscar administradores: ${error.message}`);
@@ -18,7 +18,7 @@ export const adminRepository = {
   async findById(id: number): Promise<Admin | null> {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from("administradores")
+      .from("admin")
       .select(SELECT_COLUMNS)
       .eq("id", id)
       .single();
@@ -33,7 +33,7 @@ export const adminRepository = {
   async findByEmail(email: string): Promise<Admin | null> {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from("administradores")
+      .from("admin")
       .select(SELECT_COLUMNS)
       .eq("email", email)
       .single();
@@ -45,15 +45,15 @@ export const adminRepository = {
     return data as unknown as Admin | null;
   },
 
-  async create(dados: AdminInput): Promise<Admin> {
+  async create(input: AdminInput): Promise<Admin> {
     const supabase = getSupabaseClient();
     const { data, error } = await supabase
-      .from("administradores")
+      .from("admin")
       .insert([{
-        nome: dados.name,
-        email: dados.email,
-        area: dados.area,
-        senha: dados.password,
+        name: input.name,
+        email: input.email,
+        area: input.area,
+        password: input.password,
       }])
       .select(SELECT_COLUMNS)
       .single();
@@ -65,16 +65,16 @@ export const adminRepository = {
     return data as unknown as Admin;
   },
 
-  async update(id: number, dados: Partial<AdminInput>): Promise<Admin | null> {
+  async update(id: number, input: Partial<AdminInput>): Promise<Admin | null> {
     const supabase = getSupabaseClient();
     const payload: Record<string, unknown> = {};
-    if (dados.name !== undefined) payload.nome = dados.name;
-    if (dados.email !== undefined) payload.email = dados.email;
-    if (dados.area !== undefined) payload.area = dados.area;
-    if (dados.password !== undefined) payload.senha = dados.password;
+    if (input.name !== undefined) payload.name = input.name;
+    if (input.email !== undefined) payload.email = input.email;
+    if (input.area !== undefined) payload.area = input.area;
+    if (input.password !== undefined) payload.password = input.password;
 
     const { data, error } = await supabase
-      .from("administradores")
+      .from("admin")
       .update(payload)
       .eq("id", id)
       .select(SELECT_COLUMNS)
@@ -89,7 +89,7 @@ export const adminRepository = {
 
   async delete(id: number): Promise<boolean> {
     const supabase = getSupabaseClient();
-    const { error } = await supabase.from("administradores").delete().eq("id", id);
+    const { error } = await supabase.from("admin").delete().eq("id", id);
 
     if (error) {
       throw new Error(`Erro ao deletar administrador: ${error.message}`);

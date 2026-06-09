@@ -5,8 +5,8 @@ export interface AdminRepository {
   findAll(): Promise<Admin[]>;
   findById(id: number): Promise<Admin | null>;
   findByEmail(email: string): Promise<Admin | null>;
-  create(dados: AdminInput): Promise<Admin>;
-  update(id: number, dados: Partial<AdminInput>): Promise<Admin | null>;
+  create(input: AdminInput): Promise<Admin>;
+  update(id: number, input: Partial<AdminInput>): Promise<Admin | null>;
   delete(id: number): Promise<boolean>;
 }
 
@@ -36,17 +36,17 @@ export function createAdminService(repository: AdminRepository) {
       return await repository.findByEmail(email);
     },
 
-    async create(dados: AdminInput): Promise<Admin> {
-      const existe = await repository.findByEmail(dados.email);
+    async create(input: AdminInput): Promise<Admin> {
+      const existing = await repository.findByEmail(input.email);
 
-      if (existe) {
+      if (existing) {
         throw new ConflictError("Email já cadastrado");
       }
 
-      return await repository.create(dados);
+      return await repository.create(input);
     },
 
-    async update(id: string, dados: Partial<AdminInput>): Promise<Admin> {
+    async update(id: string, input: Partial<AdminInput>): Promise<Admin> {
       const numericId = parseInt(id, 10);
 
       if (isNaN(numericId)) {
@@ -59,13 +59,13 @@ export function createAdminService(repository: AdminRepository) {
         throw new NotFoundError("Administrador não encontrado");
       }
 
-      const atualizado = await repository.update(numericId, dados);
+      const updated = await repository.update(numericId, input);
 
-      if (!atualizado) {
+      if (!updated) {
         throw new AppError("Falha ao atualizar administrador.", 500);
       }
 
-      return atualizado;
+      return updated;
     },
 
     async delete(id: string): Promise<void> {

@@ -24,7 +24,7 @@ describe("Endpoints REST de equipes", () => {
     return created.body.id;
   }
 
-  describe("POST /competitions/:competitionId/teams", () => {
+  describe("POST /competitions/:id/teams", () => {
     it("deve criar uma equipe com payload válido", async () => {
       const res = await request(app)
         .post(`/competitions/${competitionId}/teams`)
@@ -61,7 +61,7 @@ describe("Endpoints REST de equipes", () => {
     });
   });
 
-  describe("GET /competitions/:competitionId/teams", () => {
+  describe("GET /competitions/:id/teams", () => {
     it("deve retornar array com as equipes da competição", async () => {
       await request(app)
         .post(`/competitions/${competitionId}/teams`)
@@ -77,7 +77,7 @@ describe("Endpoints REST de equipes", () => {
     });
   });
 
-  describe("GET /competitions/:competitionId/teams/:teamId", () => {
+  describe("GET /competitions/:id/teams/:teamId", () => {
     it("deve retornar a equipe quando existe", async () => {
       const created = await request(app)
         .post(`/competitions/${competitionId}/teams`)
@@ -101,7 +101,7 @@ describe("Endpoints REST de equipes", () => {
     });
   });
 
-  describe("PUT /competitions/:competitionId/teams/:teamId", () => {
+  describe("PUT /competitions/:id/teams/:teamId", () => {
     it("deve atualizar o nome da equipe", async () => {
       const created = await request(app)
         .post(`/competitions/${competitionId}/teams`)
@@ -138,7 +138,7 @@ describe("Endpoints REST de equipes", () => {
     });
   });
 
-  describe("DELETE /competitions/:competitionId/teams/:teamId", () => {
+  describe("DELETE /competitions/:id/teams/:teamId", () => {
     it("deve deletar a equipe e retornar 204", async () => {
       const created = await request(app)
         .post(`/competitions/${competitionId}/teams`)

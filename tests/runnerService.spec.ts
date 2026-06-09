@@ -9,7 +9,7 @@ import {
 const runnerFixture: Runner = {
   id: 1,
   name: "João Silva",
-  status: "corredor",
+  status: "runner",
   email: "joao@test.com",
   phone: null,
   cpf: "111.222.333-44",

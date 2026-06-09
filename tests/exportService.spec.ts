@@ -8,7 +8,7 @@ const exportData: CompetitionExportData = {
     name: "Red Bull 24h Sao Paulo",
     date: "2026-06-15",
     address: "Sao Paulo - SP",
-    status: "nao iniciado" as never,
+    status: "not_started",
     created_at: "2026-05-21T00:00:00.000Z",
   },
   teams: [
@@ -25,7 +25,7 @@ const exportData: CompetitionExportData = {
     {
       id: 100,
       name: "Ana Silva",
-      status: "corredor",
+      status: "runner",
       email: "ana@example.com",
       phone: null,
       cpf: "123.456.789-00",

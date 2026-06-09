@@ -42,6 +42,7 @@ export interface CheckpointRepository {
   findById(id: number): Promise<Checkpoint | null>;
   findByRunner(runnerId: number): Promise<Checkpoint[]>;
   findByCompetition(competitionId: number): Promise<Checkpoint[]>;
+  findInconsistenciesByCompetition(competitionId: number): Promise<Checkpoint[]>;
   update(id: number, input: UpdateCheckpointInput): Promise<Checkpoint | null>;
   delete(id: number): Promise<boolean>;
 }

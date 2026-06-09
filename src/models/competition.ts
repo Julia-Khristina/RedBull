@@ -1,4 +1,4 @@
-export type CompetitionStatus = "não iniciado" | "em andamento" | "encerrada";
+export type CompetitionStatus = "not_started" | "in_progress" | "closed";
 
 export interface Competition {
   id: number;

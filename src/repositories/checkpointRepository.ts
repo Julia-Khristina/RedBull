@@ -7,7 +7,7 @@ import {
 import { getSupabaseClient } from "../database/supabaseClient";
 
 const SELECT_COLUMNS =
-  "id, identificador:identifier, km:distance_km, pace, tempo:time, imagem:image, corredor_id:id_runner, competicao_id:id_competition, esteira_id:id_treadmill, administrador_id:id_admin, criado_em:created_at, runner:corredor_id(id, nome:name, equipe_id:id_team)";
+  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team)";
 
 type SupabaseCheckpoint = Record<string, unknown>;
 
@@ -29,16 +29,16 @@ export const checkpointRepository: CheckpointRepository = {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {
-      identificador: input.identifier,
-      km: input.distance_km,
-      corredor_id: input.id_runner,
-      competicao_id: input.id_competition,
-      esteira_id: input.id_treadmill,
-      administrador_id: input.id_admin,
+      identifier: input.identifier,
+      distance_km: input.distance_km,
+      id_runner: input.id_runner,
+      id_competition: input.id_competition,
+      id_treadmill: input.id_treadmill,
+      id_admin: input.id_admin,
     };
     if (input.pace !== undefined) payload.pace = input.pace;
-    if (input.time !== undefined) payload.tempo = input.time;
-    if (input.image !== undefined) payload.imagem = input.image;
+    if (input.time !== undefined) payload.time = input.time;
+    if (input.image !== undefined) payload.image = input.image;
 
     const { data, error } = await supabase
       .from("checkpoint")
@@ -84,7 +84,7 @@ export const checkpointRepository: CheckpointRepository = {
     const { data, error } = await supabase
       .from("checkpoint")
       .select(SELECT_COLUMNS)
-      .eq("corredor_id", runnerId)
+      .eq("id_runner", runnerId)
       .order("id", { ascending: true });
 
     if (error) throw error;
@@ -98,12 +98,22 @@ export const checkpointRepository: CheckpointRepository = {
     const { data, error } = await supabase
       .from("checkpoint")
       .select(SELECT_COLUMNS)
-      .eq("competicao_id", competitionId)
+      .eq("id_competition", competitionId)
       .order("id", { ascending: true });
 
     if (error) throw error;
 
     return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
+  },
+
+  async findInconsistenciesByCompetition(
+    competitionId: number
+  ): Promise<Checkpoint[]> {
+    const checkpoints = await checkpointRepository.findByCompetition(
+      competitionId
+    );
+
+    return checkpoints.filter((checkpoint) => !checkpoint.runner);
   },
 
   async update(
@@ -113,10 +123,10 @@ export const checkpointRepository: CheckpointRepository = {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {};
-    if (input.distance_km !== undefined) payload.km = input.distance_km;
+    if (input.distance_km !== undefined) payload.distance_km = input.distance_km;
     if (input.pace !== undefined) payload.pace = input.pace;
-    if (input.time !== undefined) payload.tempo = input.time;
-    if (input.image !== undefined) payload.imagem = input.image;
+    if (input.time !== undefined) payload.time = input.time;
+    if (input.image !== undefined) payload.image = input.image;
 
     const { data, error } = await supabase
       .from("checkpoint")

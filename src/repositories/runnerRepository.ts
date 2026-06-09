@@ -7,23 +7,23 @@ import {
 import { getSupabaseClient } from "../database/supabaseClient";
 
 const SELECT_COLUMNS =
-  "id, nome:name, status, email, telefone:phone, cpf, equipe_id:id_team, criado_em:created_at";
+  "id, name, status, email, phone, cpf, id_team, created_at";
 
 export const runnerRepository: RunnerRepository = {
   async create(input: CreateRunnerInput): Promise<Runner> {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {
-      nome: input.name,
+      name: input.name,
       cpf: input.cpf,
       email: input.email,
-      equipe_id: input.id_team,
+      id_team: input.id_team,
     };
-    if (input.phone !== undefined) payload.telefone = input.phone;
+    if (input.phone !== undefined) payload.phone = input.phone;
     if (input.status !== undefined) payload.status = input.status;
 
     const { data, error } = await supabase
-      .from("corredor")
+      .from("runner")
       .insert(payload)
       .select(SELECT_COLUMNS)
       .single();
@@ -37,10 +37,10 @@ export const runnerRepository: RunnerRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("corredor")
+      .from("runner")
       .select(SELECT_COLUMNS)
       .eq("id", id)
-      .eq("equipe_id", teamId)
+      .eq("id_team", teamId)
       .maybeSingle();
 
     if (error) throw error;
@@ -52,9 +52,9 @@ export const runnerRepository: RunnerRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("corredor")
+      .from("runner")
       .select(SELECT_COLUMNS)
-      .eq("equipe_id", teamId)
+      .eq("id_team", teamId)
       .order("id", { ascending: true });
 
     if (error) throw error;
@@ -66,9 +66,9 @@ export const runnerRepository: RunnerRepository = {
     const supabase = getSupabaseClient();
 
     const { count, error } = await supabase
-      .from("corredor")
+      .from("runner")
       .select("id", { count: "exact", head: true })
-      .eq("equipe_id", teamId);
+      .eq("id_team", teamId);
 
     if (error) throw error;
 
@@ -79,7 +79,7 @@ export const runnerRepository: RunnerRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("equipe")
+      .from("team")
       .select("id")
       .eq("id", teamId)
       .maybeSingle();
@@ -97,16 +97,16 @@ export const runnerRepository: RunnerRepository = {
     const supabase = getSupabaseClient();
 
     const payload: Record<string, unknown> = {};
-    if (input.name !== undefined) payload.nome = input.name;
+    if (input.name !== undefined) payload.name = input.name;
     if (input.email !== undefined) payload.email = input.email;
-    if (input.phone !== undefined) payload.telefone = input.phone;
+    if (input.phone !== undefined) payload.phone = input.phone;
     if (input.status !== undefined) payload.status = input.status;
 
     const { data, error } = await supabase
-      .from("corredor")
+      .from("runner")
       .update(payload)
       .eq("id", id)
-      .eq("equipe_id", teamId)
+      .eq("id_team", teamId)
       .select(SELECT_COLUMNS)
       .maybeSingle();
 
@@ -119,10 +119,10 @@ export const runnerRepository: RunnerRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("corredor")
+      .from("runner")
       .delete()
       .eq("id", id)
-      .eq("equipe_id", teamId)
+      .eq("id_team", teamId)
       .select("id");
 
     if (error) throw error;

@@ -2,7 +2,7 @@ import { CreateRunnerInput, UpdateRunnerInput } from "../models/runner";
 import { ValidationError } from "../errors/AppError";
 
 const CPF_REGEX = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
-const VALID_STATUSES = ["corredor", "capitao"];
+const VALID_STATUSES = ["runner", "captain"];
 
 function isObject(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);

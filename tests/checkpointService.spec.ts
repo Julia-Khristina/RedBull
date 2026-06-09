@@ -29,6 +29,7 @@ function makeRepositoryMock(
     findById: jest.fn(),
     findByRunner: jest.fn(),
     findByCompetition: jest.fn(),
+    findInconsistenciesByCompetition: jest.fn(),
     update: jest.fn(),
     delete: jest.fn(),
     ...overrides,
@@ -47,6 +48,22 @@ describe("checkpointService.findAll", () => {
     expect(result).toHaveLength(1);
     expect(result[0]).toMatchObject({ identifier: "CP-001" });
     expect(repository.findAll).toHaveBeenCalled();
+  });
+});
+
+describe("checkpointService.findInconsistenciesByCompetition", () => {
+  it("deve retornar inconsistencies por competição", async () => {
+    const repository = makeRepositoryMock({
+      findInconsistenciesByCompetition: jest
+        .fn()
+        .mockResolvedValue([checkpointFixture]),
+    });
+    const service = createCheckpointService(repository);
+
+    const result = await service.findInconsistenciesByCompetition(1);
+
+    expect(result).toEqual([checkpointFixture]);
+    expect(repository.findInconsistenciesByCompetition).toHaveBeenCalledWith(1);
   });
 });
 

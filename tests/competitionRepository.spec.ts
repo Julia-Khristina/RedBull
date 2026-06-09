@@ -12,7 +12,7 @@ describe("competitionRepository", () => {
       name: "Red Bull 24h São Paulo",
       date: "2026-06-15",
       address: "São Paulo - SP",
-      status: "não iniciado",
+      status: "not_started",
     });
     expect(competition.id).toBeDefined();
     expect(competition.created_at).toBeDefined();
@@ -46,7 +46,7 @@ describe("competitionRepository", () => {
     const closed = await competitionRepository.close(competition.id);
     expect(closed).toMatchObject({
       id: competition.id,
-      status: "encerrada",
+      status: "closed",
     });
 
     const deleted = await competitionRepository.delete(competition.id);

@@ -5,12 +5,12 @@ import { CompetitionExportData, ExportRepository } from "../models/export";
 import { Team } from "../models/team";
 import { getSupabaseClient } from "../database/supabaseClient";
 
-const COMPETITION_SELECT = "id, nome:name, endereco:address, data, status, criado_em:created_at";
-const TEAM_SELECT = "id, nome:name, uuid, qr_code, competicao_id:id_competition, criado_em:created_at";
+const COMPETITION_SELECT = "id, name, address, date, status, created_at";
+const TEAM_SELECT = "id, name, uuid, qr_code, id_competition, created_at";
 const RUNNER_SELECT =
-  "id, nome:name, status, email, telefone:phone, cpf, equipe_id:id_team, criado_em:created_at";
+  "id, name, status, email, phone, cpf, id_team, created_at";
 const CHECKPOINT_SELECT =
-  "id, identificador:identifier, km:distance_km, pace, tempo:time, imagem:image, corredor_id:id_runner, competicao_id:id_competition, esteira_id:id_treadmill, administrador_id:id_admin, criado_em:created_at, runner:corredor_id(id, nome:name, equipe_id:id_team)";
+  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team)";
 
 type SupabaseCheckpoint = Record<string, unknown>;
 
@@ -34,7 +34,7 @@ export const exportRepository: ExportRepository = {
     const supabase = getSupabaseClient();
 
     const { data: competition, error: competitionError } = await supabase
-      .from("competicao")
+      .from("competition")
       .select(COMPETITION_SELECT)
       .eq("id", competitionId)
       .maybeSingle();
@@ -48,9 +48,9 @@ export const exportRepository: ExportRepository = {
     }
 
     const { data: teams, error: teamsError } = await supabase
-      .from("equipe")
+      .from("team")
       .select(TEAM_SELECT)
-      .eq("competicao_id", competitionId)
+      .eq("id_competition", competitionId)
       .order("id", { ascending: true });
 
     if (teamsError) {
@@ -63,7 +63,7 @@ export const exportRepository: ExportRepository = {
     const { data: checkpoints, error: checkpointsError } = await supabase
       .from("checkpoint")
       .select(CHECKPOINT_SELECT)
-      .eq("competicao_id", competitionId)
+      .eq("id_competition", competitionId)
       .order("id", { ascending: true });
 
     if (checkpointsError) {
@@ -89,9 +89,9 @@ async function findRunnersByTeams(teamIds: number[]): Promise<Runner[]> {
   const supabase = getSupabaseClient();
 
   const { data, error } = await supabase
-    .from("corredor")
+    .from("runner")
     .select(RUNNER_SELECT)
-    .in("equipe_id", teamIds)
+    .in("id_team", teamIds)
     .order("id", { ascending: true });
 
   if (error) {

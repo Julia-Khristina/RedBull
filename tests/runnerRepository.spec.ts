@@ -28,7 +28,7 @@ describe("runnerRepository.create", () => {
     expect(runner.id).toBeDefined();
     expect(runner.created_at).toBeDefined();
     expect(runner.id_team).toBe(team.id);
-    expect(runner.status).toBe("corredor");
+    expect(runner.status).toBe("runner");
     expect(runner.cpf).toBe(cpf);
   });
 });

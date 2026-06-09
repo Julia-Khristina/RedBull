@@ -14,7 +14,7 @@ function email(tag: string): string {
   return `${tag}${RUN}@e2e.com`;
 }
 
-describe("Endpoints REST de atletas", () => {
+describe("Endpoints REST de runners", () => {
   let competitionId: number;
   let teamId: number;
 
@@ -44,7 +44,7 @@ describe("Endpoints REST de atletas", () => {
     return res.body.id;
   }
 
-  describe("POST /competitions/:competitionId/teams/:teamId/runners", () => {
+  describe("POST /competitions/:id/teams/:teamId/runners", () => {
     it("deve criar atleta com payload válido e retornar 201", async () => {
       const res = await request(app)
         .post(baseUrl())
@@ -54,7 +54,7 @@ describe("Endpoints REST de atletas", () => {
       expect(res.body).toMatchObject({ name: "João Silva", id_team: teamId });
       expect(res.body.id).toBeDefined();
       expect(res.body.created_at).toBeDefined();
-      expect(res.body.status).toBe("corredor");
+      expect(res.body.status).toBe("runner");
     });
 
     it.each([
@@ -104,7 +104,7 @@ describe("Endpoints REST de atletas", () => {
     });
   });
 
-  describe("GET /competitions/:competitionId/teams/:teamId/runners", () => {
+  describe("GET /competitions/:id/teams/:teamId/runners", () => {
     it("deve retornar array com os atletas da equipe → 200", async () => {
       const res = await request(app).get(baseUrl());
       expect(res.status).toBe(200);
@@ -125,7 +125,7 @@ describe("Endpoints REST de atletas", () => {
     });
   });
 
-  describe("GET /competitions/:competitionId/teams/:teamId/runners/:runnerId", () => {
+  describe("GET /competitions/:id/teams/:teamId/runners/:runnerId", () => {
     it("deve retornar o atleta quando existe → 200", async () => {
       const created = await request(app)
         .post(baseUrl())
@@ -143,7 +143,7 @@ describe("Endpoints REST de atletas", () => {
     });
   });
 
-  describe("PUT /competitions/:competitionId/teams/:teamId/runners/:runnerId", () => {
+  describe("PUT /competitions/:id/teams/:teamId/runners/:runnerId", () => {
     it("deve atualizar name e retornar 200", async () => {
       const created = await request(app)
         .post(baseUrl())
@@ -189,7 +189,7 @@ describe("Endpoints REST de atletas", () => {
     });
   });
 
-  describe("DELETE /competitions/:competitionId/teams/:teamId/runners/:runnerId", () => {
+  describe("DELETE /competitions/:id/teams/:teamId/runners/:runnerId", () => {
     it("deve deletar e retornar 204; GET posterior retorna 404", async () => {
       const created = await request(app)
         .post(baseUrl())

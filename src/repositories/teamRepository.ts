@@ -6,17 +6,17 @@ import {
 } from "../models/team";
 import { getSupabaseClient } from "../database/supabaseClient";
 
-const SELECT_COLUMNS = "id, nome:name, uuid, qr_code, competicao_id:id_competition, criado_em:created_at";
+const SELECT_COLUMNS = "id, name, uuid, qr_code, id_competition, created_at";
 
 export const teamRepository: TeamRepository = {
   async create(input: CreateTeamInput): Promise<Team> {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("equipe")
+      .from("team")
       .insert({
-        nome: input.name,
-        competicao_id: input.id_competition,
+        name: input.name,
+        id_competition: input.id_competition,
       })
       .select(SELECT_COLUMNS)
       .single();
@@ -32,9 +32,9 @@ export const teamRepository: TeamRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("equipe")
+      .from("team")
       .select(SELECT_COLUMNS)
-      .eq("competicao_id", competitionId);
+      .eq("id_competition", competitionId);
 
     if (error) {
       throw error;
@@ -47,10 +47,10 @@ export const teamRepository: TeamRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("equipe")
+      .from("team")
       .select(SELECT_COLUMNS)
       .eq("id", id)
-      .eq("competicao_id", competitionId)
+      .eq("id_competition", competitionId)
       .maybeSingle();
 
     if (error) {
@@ -69,14 +69,14 @@ export const teamRepository: TeamRepository = {
 
     const payload: Record<string, unknown> = {};
     if (input.name !== undefined) {
-      payload.nome = input.name;
+      payload.name = input.name;
     }
 
     const { data, error } = await supabase
-      .from("equipe")
+      .from("team")
       .update(payload)
       .eq("id", id)
-      .eq("competicao_id", competitionId)
+      .eq("id_competition", competitionId)
       .select(SELECT_COLUMNS)
       .maybeSingle();
 
@@ -91,10 +91,10 @@ export const teamRepository: TeamRepository = {
     const supabase = getSupabaseClient();
 
     const { data, error } = await supabase
-      .from("equipe")
+      .from("team")
       .delete()
       .eq("id", id)
-      .eq("competicao_id", competitionId)
+      .eq("id_competition", competitionId)
       .select("id");
 
     if (error) {

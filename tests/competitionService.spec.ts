@@ -8,7 +8,7 @@ function createRepositoryMock() {
       name: "Red Bull 24h São Paulo",
       date: "2026-06-15",
       address: "São Paulo - SP",
-      status: "não iniciado",
+      status: "not_started",
       created_at: "2026-05-21T00:00:00.000Z",
     }),
     findAll: jest.fn().mockResolvedValue([]),
@@ -20,7 +20,7 @@ function createRepositoryMock() {
 }
 
 describe("competitionService", () => {
-  it("deve criar competição com status inicial não iniciado", async () => {
+  it("deve criar competição com status inicial not_started", async () => {
     const repository = createRepositoryMock();
     const competitionService = createCompetitionService(repository);
 
@@ -34,7 +34,7 @@ describe("competitionService", () => {
       name: "Red Bull 24h São Paulo",
       date: "2026-06-15",
       address: "São Paulo - SP",
-      status: "não iniciado",
+      status: "not_started",
     });
     expect(competition.id).toBeDefined();
     expect(competition.created_at).toBeDefined();
@@ -53,7 +53,7 @@ describe("competitionService", () => {
         name: "Red Bull 24h São Paulo",
         date: "2026-06-15",
         address: "São Paulo - SP",
-        status: "não iniciado",
+        status: "not_started",
         created_at: "2026-05-21T00:00:00.000Z",
       },
     ]);
@@ -72,7 +72,7 @@ describe("competitionService", () => {
       name: "Red Bull 24h São Paulo",
       date: "2026-06-15",
       address: "São Paulo - SP",
-      status: "não iniciado",
+      status: "not_started",
       created_at: "2026-05-21T00:00:00.000Z",
     });
     const competitionService = createCompetitionService(repository);
@@ -99,7 +99,7 @@ describe("competitionService", () => {
       name: "Competição atualizada",
       date: "2026-07-20",
       address: "Rio de Janeiro - RJ",
-      status: "não iniciado",
+      status: "not_started",
       created_at: "2026-05-21T00:00:00.000Z",
     });
     const competitionService = createCompetitionService(repository);
@@ -134,14 +134,14 @@ describe("competitionService", () => {
       name: "Red Bull 24h São Paulo",
       date: "2026-06-15",
       address: "São Paulo - SP",
-      status: "encerrada",
+      status: "closed",
       created_at: "2026-05-21T00:00:00.000Z",
     });
     const competitionService = createCompetitionService(repository);
 
     const competition = await competitionService.close("1");
 
-    expect(competition.status).toBe("encerrada");
+    expect(competition.status).toBe("closed");
     expect(repository.close).toHaveBeenCalledWith(1);
   });
 });

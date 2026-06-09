@@ -14,6 +14,7 @@ function parseIntegerParam(value: unknown, name: string): number {
 
 export const runnerController = {
   async create(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
     const runner = await runnerService.create({
@@ -25,6 +26,7 @@ export const runnerController = {
   },
 
   async list(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
     const runners = await runnerService.findByTeam(teamId);
@@ -33,6 +35,7 @@ export const runnerController = {
   },
 
   async findById(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
     const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
 
@@ -42,6 +45,7 @@ export const runnerController = {
   },
 
   async update(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
     const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
 
@@ -51,6 +55,7 @@ export const runnerController = {
   },
 
   async delete(req: Request, res: Response): Promise<void> {
+    parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
     const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
 

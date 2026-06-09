@@ -17,8 +17,8 @@ function parseIntegerParam(value: unknown, name: string): number {
 export const teamController = {
   async create(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(
-      req.params.competitionId,
-      "competitionId"
+      req.params.id,
+      "id"
     );
 
     const team = await teamService.create({
@@ -31,8 +31,8 @@ export const teamController = {
 
   async list(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(
-      req.params.competitionId,
-      "competitionId"
+      req.params.id,
+      "id"
     );
 
     const teams = await teamService.findByCompetition(competitionId);
@@ -41,7 +41,7 @@ export const teamController = {
   },
 
   async findById(req: Request, res: Response): Promise<void> {
-    const competitionId = parseIntegerParam(req.params.competitionId, "competitionId");
+    const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
     const team = await teamService.findByCompetitionAndId(competitionId, teamId);
@@ -50,7 +50,7 @@ export const teamController = {
   },
 
   async update(req: Request, res: Response): Promise<void> {
-    const competitionId = parseIntegerParam(req.params.competitionId, "competitionId");
+    const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
     const team = await teamService.updateByCompetitionAndId(competitionId, teamId, req.body);
@@ -59,7 +59,7 @@ export const teamController = {
   },
 
   async delete(req: Request, res: Response): Promise<void> {
-    const competitionId = parseIntegerParam(req.params.competitionId, "competitionId");
+    const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
     await teamService.deleteByCompetitionAndId(competitionId, teamId);

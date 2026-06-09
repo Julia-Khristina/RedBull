@@ -32,10 +32,20 @@ export const checkpointController = {
 
   async findByCompetition(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(
-      req.params.competitionId,
-      "competitionId"
+      req.params.id,
+      "id"
     );
     const checkpoints = await checkpointService.findByCompetition(competitionId);
+    res.status(200).json(checkpoints);
+  },
+
+  async findInconsistenciesByCompetition(
+    req: Request,
+    res: Response
+  ): Promise<void> {
+    const competitionId = parseIntegerParam(req.params.id, "id");
+    const checkpoints =
+      await checkpointService.findInconsistenciesByCompetition(competitionId);
     res.status(200).json(checkpoints);
   },
 
