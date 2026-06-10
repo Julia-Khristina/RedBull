@@ -34,7 +34,8 @@ interface TeamAggregate {
 function parseTimeToSeconds(value: string | null): number | null {
   if (!value) return null;
 
-  const parts = value.split(":").map((part) => Number(part));
+  const normalized = value.endsWith("/km") ? value.slice(0, -3) : value;
+  const parts = normalized.split(":").map((part) => Number(part));
 
   if (parts.some((part) => !Number.isFinite(part) || part < 0)) {
     return null;
