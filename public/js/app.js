@@ -76,6 +76,183 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ===========================================================================
+  // Teams page — Sprint 4, task #328 (Integração CRUD via API)
+  // [A1] Endpoints da Seção 7 do agent.md:
+  //   POST   /competitions/:id/teams              — cadastro
+  //   PUT    /competitions/:id/teams/:teamId      — edição
+  //   DELETE /competitions/:id/teams/:teamId      — exclusão
+  // [A3] competitionId vem de data-competition-id do <main> (mock do controller
+  //   até o fluxo administrativo definir a origem real).
+  // ===========================================================================
+  if (path === '/teams') {
+    const teamsContainer = document.querySelector('[data-teams]');
+
+    if (teamsContainer) {
+      const competitionId   = teamsContainer.dataset.competitionId;
+      const modal           = document.querySelector('[data-teams-modal]');
+      const modalTitle      = document.querySelector('[data-teams-modal-title]');
+      const form            = document.querySelector('[data-teams-form]');
+      const teamIdInput     = form ? form.querySelector('[data-team-id-input]') : null;
+      const nameInput       = form ? form.querySelector('input[name="name"]') : null;
+      const errorEl         = form ? form.querySelector('[data-teams-form-error]') : null;
+      const submitBtn       = form ? form.querySelector('.teams__form-submit') : null;
+
+      function showError(message) {
+        if (!errorEl) return;
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+
+      function clearError() {
+        if (!errorEl) return;
+        errorEl.textContent = '';
+        errorEl.hidden = true;
+      }
+
+      function openModal(mode, team) {
+        if (!modal || !modalTitle || !teamIdInput || !nameInput) return;
+
+        if (mode === 'edit' && team) {
+          modalTitle.textContent = 'Editar Equipe';
+          teamIdInput.value = team.id || '';
+          nameInput.value   = team.name || '';
+        } else {
+          modalTitle.textContent = 'Nova Equipe';
+          teamIdInput.value = '';
+          nameInput.value   = '';
+        }
+        clearError();
+        modal.hidden = false;
+        setTimeout(function () { nameInput.focus(); }, 50);
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.hidden = true;
+      }
+
+      function hasValidCompetition() {
+        return competitionId && competitionId !== '0';
+      }
+
+      async function submitForm(event) {
+        event.preventDefault();
+
+        if (!form || !nameInput || !teamIdInput || !submitBtn) return;
+
+        const name = nameInput.value.trim();
+
+        if (!name) {
+          showError('Nome da equipe é obrigatório.');
+          return;
+        }
+
+        if (!hasValidCompetition()) {
+          showError('Competição ativa não foi identificada. Tente recarregar a página.');
+          return;
+        }
+
+        const teamId = teamIdInput.value;
+        const isEdit = !!teamId;
+        const url    = isEdit
+          ? '/competitions/' + competitionId + '/teams/' + teamId
+          : '/competitions/' + competitionId + '/teams';
+        const method = isEdit ? 'PUT' : 'POST';
+
+        clearError();
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Salvando...';
+
+        try {
+          const res = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name }),
+          });
+
+          if (!res.ok) {
+            const data = await res.json().catch(function () {
+              return { message: 'Erro inesperado.' };
+            });
+            throw new Error(data.message || 'HTTP ' + res.status);
+          }
+
+          // [D1] Reload simples — atualiza a lista sem reimplementar render no cliente.
+          window.location.reload();
+        } catch (err) {
+          showError(err.message || 'Não foi possível salvar a equipe.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      }
+
+      async function deleteTeam(teamId, teamName) {
+        if (!hasValidCompetition()) {
+          window.alert('Competição ativa não foi identificada.');
+          return;
+        }
+
+        const confirmed = window.confirm(
+          'Excluir a equipe "' + teamName + '"? Esta ação não pode ser desfeita.'
+        );
+        if (!confirmed) return;
+
+        try {
+          const res = await fetch(
+            '/competitions/' + competitionId + '/teams/' + teamId,
+            { method: 'DELETE' }
+          );
+
+          if (!res.ok && res.status !== 204) {
+            const data = await res.json().catch(function () {
+              return { message: 'Erro inesperado.' };
+            });
+            throw new Error(data.message || 'HTTP ' + res.status);
+          }
+
+          window.location.reload();
+        } catch (err) {
+          window.alert('Erro ao excluir: ' + (err.message || 'desconhecido'));
+        }
+      }
+
+      // [D1] Event delegation no container — funciona inclusive para itens
+      // adicionados dinamicamente em iterações futuras.
+      teamsContainer.addEventListener('click', function (event) {
+        const target = event.target.closest('[data-teams-action]');
+        if (!target) return;
+
+        const action = target.dataset.teamsAction;
+
+        if (action === 'open-new') {
+          openModal('new');
+        } else if (action === 'open-edit') {
+          openModal('edit', {
+            id: target.dataset.teamId,
+            name: target.dataset.teamName,
+          });
+        } else if (action === 'open-delete') {
+          deleteTeam(target.dataset.teamId, target.dataset.teamName);
+        } else if (action === 'close-modal') {
+          closeModal();
+        }
+      });
+
+      if (form) {
+        form.addEventListener('submit', submitForm);
+      }
+
+      // Tecla Esc fecha o modal
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal && !modal.hidden) {
+          closeModal();
+        }
+      });
+    }
+  }
+
   // Ativar item do menu correspondente à rota atual
   document.querySelectorAll('.nav-item').forEach(function (item) {
     const href = item.getAttribute('href');
