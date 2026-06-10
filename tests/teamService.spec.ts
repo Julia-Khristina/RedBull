@@ -4,11 +4,11 @@ import { NotFoundError, ValidationError } from "../src/errors/AppError";
 
 const teamFixture: Team = {
   id: 1,
-  nome: "Equipe Alpha",
+  name: "Equipe Alpha",
   uuid: "d106eb1a-93d2-4f13-becd-b6a28bbe7bdb",
   qr_code: null,
-  competicao_id: 40,
-  criado_em: "2026-05-25T12:51:10.675699",
+  id_competition: 40,
+  created_at: "2026-05-25T12:51:10.675699",
 };
 
 function makeRepositoryMock(
@@ -16,116 +16,116 @@ function makeRepositoryMock(
 ): TeamRepository {
   return {
     create: jest.fn(),
-    findById: jest.fn(),
     findByCompetition: jest.fn(),
-    update: jest.fn(),
-    delete: jest.fn(),
+    findByCompetitionAndId: jest.fn(),
+    updateByCompetitionAndId: jest.fn(),
+    deleteByCompetitionAndId: jest.fn(),
     ...overrides,
   };
 }
 
 describe("teamService.create", () => {
-  it("deve criar equipe com nome e competicao_id validados", async () => {
+  it("deve criar equipe com name e id_competition validados", async () => {
     const repository = makeRepositoryMock({
       create: jest.fn().mockResolvedValue(teamFixture),
     });
     const teamService = createTeamService(repository);
 
     const team = await teamService.create({
-      nome: "Equipe Alpha",
-      competicao_id: 40,
+      name: "Equipe Alpha",
+      id_competition: 40,
     });
 
     expect(team).toMatchObject({
-      nome: "Equipe Alpha",
-      competicao_id: 40,
+      name: "Equipe Alpha",
+      id_competition: 40,
     });
     expect(team.uuid).toBeDefined();
     expect(repository.create).toHaveBeenCalledWith({
-      nome: "Equipe Alpha",
-      competicao_id: 40,
+      name: "Equipe Alpha",
+      id_competition: 40,
     });
   });
 
-  it("deve lançar ValidationError quando nome está ausente", async () => {
+  it("deve lançar ValidationError quando name está ausente", async () => {
     const repository = makeRepositoryMock();
     const teamService = createTeamService(repository);
 
     await expect(
-      teamService.create({ competicao_id: 40 } as never)
+      teamService.create({ id_competition: 40 } as never)
     ).rejects.toBeInstanceOf(ValidationError);
     expect(repository.create).not.toHaveBeenCalled();
   });
 });
 
-describe("teamService.findById", () => {
+describe("teamService.findByCompetitionAndId", () => {
   it("deve retornar equipe quando existe", async () => {
     const repository = makeRepositoryMock({
-      findById: jest.fn().mockResolvedValue(teamFixture),
+      findByCompetitionAndId: jest.fn().mockResolvedValue(teamFixture),
     });
     const teamService = createTeamService(repository);
 
-    const team = await teamService.findById(1);
+    const team = await teamService.findByCompetitionAndId(40, 1);
 
     expect(team).toEqual(teamFixture);
   });
 
   it("deve lançar NotFoundError quando equipe não existe", async () => {
     const repository = makeRepositoryMock({
-      findById: jest.fn().mockResolvedValue(null),
+      findByCompetitionAndId: jest.fn().mockResolvedValue(null),
     });
     const teamService = createTeamService(repository);
 
-    await expect(teamService.findById(999)).rejects.toBeInstanceOf(
+    await expect(teamService.findByCompetitionAndId(40, 999)).rejects.toBeInstanceOf(
       NotFoundError
     );
   });
 });
 
-describe("teamService.update", () => {
+describe("teamService.updateByCompetitionAndId", () => {
   it("deve atualizar equipe existente", async () => {
-    const updated = { ...teamFixture, nome: "Renomeada" };
+    const updated = { ...teamFixture, name: "Renomeada" };
     const repository = makeRepositoryMock({
-      update: jest.fn().mockResolvedValue(updated),
+      updateByCompetitionAndId: jest.fn().mockResolvedValue(updated),
     });
     const teamService = createTeamService(repository);
 
-    const team = await teamService.update(1, { nome: "Renomeada" });
+    const team = await teamService.updateByCompetitionAndId(40, 1, { name: "Renomeada" });
 
-    expect(team.nome).toBe("Renomeada");
-    expect(repository.update).toHaveBeenCalledWith(1, { nome: "Renomeada" });
+    expect(team.name).toBe("Renomeada");
+    expect(repository.updateByCompetitionAndId).toHaveBeenCalledWith(40, 1, { name: "Renomeada" });
   });
 
   it("deve lançar NotFoundError quando equipe não existe", async () => {
     const repository = makeRepositoryMock({
-      update: jest.fn().mockResolvedValue(null),
+      updateByCompetitionAndId: jest.fn().mockResolvedValue(null),
     });
     const teamService = createTeamService(repository);
 
     await expect(
-      teamService.update(999, { nome: "Qualquer" })
+      teamService.updateByCompetitionAndId(40, 999, { name: "Qualquer" })
     ).rejects.toBeInstanceOf(NotFoundError);
   });
 });
 
-describe("teamService.delete", () => {
+describe("teamService.deleteByCompetitionAndId", () => {
   it("deve deletar equipe existente", async () => {
     const repository = makeRepositoryMock({
-      delete: jest.fn().mockResolvedValue(true),
+      deleteByCompetitionAndId: jest.fn().mockResolvedValue(true),
     });
     const teamService = createTeamService(repository);
 
-    await expect(teamService.delete(1)).resolves.toBeUndefined();
-    expect(repository.delete).toHaveBeenCalledWith(1);
+    await expect(teamService.deleteByCompetitionAndId(40, 1)).resolves.toBeUndefined();
+    expect(repository.deleteByCompetitionAndId).toHaveBeenCalledWith(40, 1);
   });
 
   it("deve lançar NotFoundError quando equipe não existe", async () => {
     const repository = makeRepositoryMock({
-      delete: jest.fn().mockResolvedValue(false),
+      deleteByCompetitionAndId: jest.fn().mockResolvedValue(false),
     });
     const teamService = createTeamService(repository);
 
-    await expect(teamService.delete(999)).rejects.toBeInstanceOf(
+    await expect(teamService.deleteByCompetitionAndId(40, 999)).rejects.toBeInstanceOf(
       NotFoundError
     );
   });

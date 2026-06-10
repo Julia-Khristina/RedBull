@@ -1,25 +1,25 @@
 export interface Team {
   id: number;
-  nome: string;
+  name: string;
   uuid: string;
   qr_code: unknown | null;
-  competicao_id: number;
-  criado_em: string;
+  id_competition: number;
+  created_at: string;
 }
 
 export interface CreateTeamInput {
-  nome: string;
-  competicao_id: number;
+  name: string;
+  id_competition: number;
 }
 
 export interface UpdateTeamInput {
-  nome?: string;
+  name?: string;
 }
 
 export interface TeamRepository {
   create(input: CreateTeamInput): Promise<Team>;
-  findById(id: number): Promise<Team | null>;
-  findByCompetition(competicaoId: number): Promise<Team[]>;
-  update(id: number, input: UpdateTeamInput): Promise<Team | null>;
-  delete(id: number): Promise<boolean>;
+  findByCompetition(competitionId: number): Promise<Team[]>;
+  findByCompetitionAndId(competitionId: number, id: number): Promise<Team | null>;
+  updateByCompetitionAndId(competitionId: number, id: number, input: UpdateTeamInput): Promise<Team | null>;
+  deleteByCompetitionAndId(competitionId: number, id: number): Promise<boolean>;
 }
