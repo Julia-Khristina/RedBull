@@ -1,0 +1,428 @@
+/* =============================================================
+   RANKING VIEW  — ranking.css
+   Fiel ao visual do mockup aprovado
+   Todas as cores referenciam variables.css; hardcoded apenas
+   onde não existe variável equivalente (dourado, vermelho líder)
+   ============================================================= */
+
+/* ── Page shell ── */
+.ranking-page {
+  padding: var(--spacing-lg, 24px) var(--spacing-xl, 32px);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+/* ── Top bar: subtítulo + botão freeze ── */
+.ranking-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.ranking-topbar-left {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ranking-competition-label {
+  margin-top: 15px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-medium);
+  color: var(--texto);
+}
+
+.btn-freeze {
+  padding: 10px 20px;
+  border: 2px solid var(--vermelho);
+  border-radius: 24px;
+  background: transparent;
+  color: var(--vermelho);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold, 700);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.btn-freeze:hover {
+  background: var(--vermelho);
+  color: #fff;
+}
+
+.btn-freeze.frozen {
+  background: var(--vermelho);
+  color: #fff;
+}
+
+/* ── Main title ── */
+.ranking-main-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h2, 28px);
+  font-weight: var(--font-weight-extrabold, 800);
+  color: var(--azul-principal);
+  margin: 0 0 var(--spacing-lg, 24px);
+}
+
+/* ── Stat cards ── */
+.stat-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-md, 16px);
+  margin-bottom: var(--spacing-xl, 32px);
+}
+
+.stat-card {
+  background: var(--azul-principal);
+  border-radius: var(--border-radius, 15px);
+  border: 1px solid var(--amarelo);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.stat-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho, 12px);
+  font-weight: var(--font-weight-medium, 500);
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.3;
+}
+
+.stat-value {
+  font-family: var(--font-family);
+  font-size: 30px;
+  font-weight: var(--font-weight-extrabold, 800);
+  color: #fff;
+  line-height: 1.1;
+}
+
+/* ── Section title ── */
+.section-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3, 22px);
+  font-weight: var(--font-weight-extrabold, 800);
+  color: var(--azul-principal);
+  margin: 0 0 var(--spacing-md, 16px);
+}
+
+/* ── Live section ── */
+.live-section {
+  margin-bottom: var(--spacing-xl, 32px);
+}
+
+/* ── Team cards ── */
+.team-card {
+  display: flex;
+  align-items: stretch;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: var(--border-radius, 15px);
+  overflow: hidden;
+  margin-bottom: var(--spacing-md, 16px);
+  background: var(--fundo-cards, #fff);
+  transition: box-shadow 0.2s;
+}
+
+.team-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.team-card--leader {
+  border-color: var(--vermelho);
+}
+
+/* Left colored band with position number */
+.team-card-left {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 24px;
+  min-width: 88px;
+}
+
+.team-card--leader .team-card-left {
+  background: var(--vermelho);
+}
+
+.team-card:not(.team-card--leader) .team-card-left {
+  background: var(--azul-principal);
+}
+
+.team-pos-badge {
+  font-family: var(--font-family);
+  font-size: 36px;
+  font-weight: var(--font-weight-extrabold, 800);
+  color: #fff;
+  line-height: 1;
+}
+
+/* Card body */
+.team-card-body {
+  flex: 1;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.team-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.team-name {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--azul-principal);
+}
+
+.leader-pill {
+  display: inline-block;
+  background: var(--vermelho);
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: var(--font-weight-bold, 700);
+  padding: 2px 12px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.team-stats-row {
+  display: flex;
+  align-items: center;
+  gap: 80px;
+}
+
+.team-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.team-stat-subtext {
+  font-family: var(--font-family);
+  font-size: 12px;
+  color: var(--texto);
+}
+
+.team-stat-value{
+  font-family: var(--font-family);
+  font-size: 22px;
+  font-weight: var(--font-weight-extrabold, 800);
+  color: var(--azul-principal);
+  line-height: 1.1;
+}
+
+.team-stat-label {
+  font-family: var(--font-family);
+  font-size: 12px;
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--texto);
+}
+
+/* ── Gap separator ── */
+.gap-separator {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 4px 0 20px;
+}
+
+.gap-line {
+  flex: 1;
+  height: 2px;
+  background: #e6c000;
+  border-radius: 1px;
+}
+
+.gap-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+}
+
+.gap-label {
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--azul-principal);
+}
+
+.gap-value {
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: var(--font-weight-extrabold, 800);
+  color: var(--azul-principal);
+}
+
+/* ── Runners section ── */
+.runners-section {
+  margin-bottom: var(--spacing-xl, 32px);
+}
+
+/*
+.runners-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-md, 16px);
+}
+*/
+
+/* ── Runner card ── */
+.runner-card {
+  background: #fff;
+  border-radius: 24px;
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.08),
+    0 8px 20px rgba(0, 0, 0, 0.06);
+
+  margin-bottom: 16px;
+}
+
+.runner-card-top {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px 14px;
+}
+
+.runner-pos-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 20px;
+  font-weight: var(--font-weight-extrabold, 800);
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.runner-pos-leader {
+  background: var(--vermelho);
+}
+
+.runner-pos-other {
+  background: var(--azul-principal);
+}
+
+.runner-identity {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.runner-name {
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: var(--font-weight-bold);
+  color: var(--azul-principal);
+}
+
+.runner-team {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: var(--azul-principal);
+}
+
+.runner-treadmill {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;  /* ← adicionar */
+  gap: 2px;
+  min-width: 90px;        /* ← evita colapso */
+}
+
+.runner-treadmill-time {
+  font-family: var(--font-family);
+  font-size: 15px;
+  font-weight: var(--font-weight-bold, 700);
+  color: var(--azul-principal);
+}
+
+.runner-treadmill-label {
+  font-family: var(--font-family);
+  font-size: 11px;
+  color: var(--azul-principal);
+}
+
+.runner-card-bottom {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--bordas-separadores);
+}
+
+.runner-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.runner-stat-label {
+  font-family: var(--font-family);
+  font-size: 11px;
+  color: var(--azul-principal);
+}
+
+.runner-stat-value {
+  font-family: var(--font-family);
+  font-size: 16px;
+  font-weight: var(--font-weight-extrabold, 800);
+  color: var(--azul-principal);
+}
+
+/* ── Fetch error ── */
+.fetch-error {
+  background: rgba(210, 0, 60, 0.08);
+  border: 1px solid var(--vermelho);
+  border-radius: var(--border-radius, 15px);
+  padding: var(--spacing-sm, 8px) var(--spacing-md, 16px);
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho, 12px);
+  color: var(--vermelho);
+  margin-bottom: var(--spacing-md, 16px);
+}
+
+/* ── Empty state ── */
+.empty-state {
+  text-align: center;
+  padding: var(--spacing-xl, 32px);
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo, 16px);
+  color: var(--bordas-separadores, #999);
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .stat-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .runners-grid {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+
+  .team-stats-row {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ranking-page {
+    padding: var(--spacing-md, 16px);
+  }
+}
