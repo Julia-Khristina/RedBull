@@ -15,6 +15,32 @@ function parseIntegerParam(value: unknown, name: string): number {
 }
 
 export const teamController = {
+  // [C2 — Parcial] Render SSR da tela de Equipes (Sprint 4, task #327).
+  // [A3 ⚠] ID da competição ativa: pendente de definição de fluxo administrativo
+  //   (sessionStorage, query string ou middleware ainda não implementado).
+  // Por enquanto injeta mock para a estrutura visual; integração real fica para a #328.
+  async renderTeams(_req: Request, res: Response): Promise<void> {
+    try {
+      const mockCompetition = {
+        id: 1,
+        name: "Red Bull 24h São Paulo 2026",
+        status: "em andamento",
+      };
+      // [C2] Lista vazia por padrão para evidenciar o empty state; a integração
+      // real virá em #328 (GET /competitions/:id/teams).
+      const mockTeams: unknown[] = [];
+
+      res.render("teams/teams", {
+        title: "Equipes — Red Bull 24h",
+        competition: mockCompetition,
+        teams: mockTeams,
+        currentPage: "teams",
+      });
+    } catch (_error) {
+      res.status(500).render("errors/500", { title: "Erro interno" });
+    }
+  },
+
   async create(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(
       req.params.id,

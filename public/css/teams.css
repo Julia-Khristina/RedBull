@@ -1,0 +1,504 @@
+/*
+ * teams.css
+ * Estilos da Tela de Equipes — Sprint 4, task #327 (Estrutura visual).
+ * Tokens usados a partir de variables.css: cores, tipografia e raio padrão.
+ * Classes em BEM (teams__elemento) para evitar colisão com menu/operational-panel.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Container principal — alinhado ao conteúdo após o menu lateral
+ * ------------------------------------------------------------------------- */
+
+.teams {
+    padding: 40px 48px 64px;
+    font-family: var(--font-family);
+    color: var(--texto);
+    background-color: var(--fundo);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+ * Cabeçalho — título da página + botão "Nova Equipe"
+ * ------------------------------------------------------------------------- */
+
+.teams__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--bordas-separadores);
+}
+
+.teams__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.teams__title {
+    margin: 0;
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--azul-principal);
+    letter-spacing: -0.5px;
+}
+
+.teams__subtitle {
+    margin: 0;
+    font-size: var(--font-size-subtitulo);
+    font-weight: var(--font-weight-medium);
+    color: var(--azul-secundario);
+}
+
+.teams__new-btn {
+    flex-shrink: 0;
+    padding: 14px 28px;
+    font-family: var(--font-family);
+    font-size: 15px;
+    font-weight: var(--font-weight-bold);
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.teams__new-btn:hover {
+    background-color: #b00033;
+}
+
+.teams__new-btn:active {
+    transform: translateY(1px);
+}
+
+.teams__new-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Empty State — exibido quando não há equipes cadastradas
+ * ------------------------------------------------------------------------- */
+
+.teams__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 64px 32px;
+    background-color: var(--fundo-cards);
+    border: 1px dashed var(--bordas-separadores);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.teams__empty-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--azul-secundario);
+}
+
+.teams__empty-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.teams__empty-title {
+    margin: 0;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+}
+
+.teams__empty-text {
+    margin: 0;
+    font-size: 15px;
+    color: var(--azul-secundario);
+    max-width: 380px;
+}
+
+.teams__empty-cta {
+    margin-top: 8px;
+    padding: 12px 24px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    color: var(--vermelho);
+    background-color: transparent;
+    border: 2px solid var(--vermelho);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.teams__empty-cta:hover {
+    background-color: var(--vermelho);
+    color: #ffffff;
+}
+
+.teams__empty-cta:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Listagem de equipes — cards
+ * ------------------------------------------------------------------------- */
+
+.teams__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+}
+
+.teams__card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    background-color: var(--fundo-cards);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: var(--border-radius);
+    transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.teams__card:hover {
+    box-shadow: 0 6px 24px rgba(15, 0, 105, 0.08);
+    transform: translateY(-1px);
+}
+
+.teams__card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.teams__card-name {
+    margin: 0;
+    font-size: var(--font-size-subtitulo);
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+}
+
+.teams__card-meta {
+    margin: 0;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--azul-secundario);
+}
+
+/* ---------------------------------------------------------------------------
+ * Bloco de URL pública (UUID) dentro de cada card
+ * ------------------------------------------------------------------------- */
+
+.teams__card-uuid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.teams__uuid-label {
+    font-size: var(--font-size-texto-cabecalho);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--azul-secundario);
+}
+
+.teams__uuid-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.teams__uuid-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--texto);
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 8px;
+}
+
+.teams__copy-btn {
+    flex-shrink: 0;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.teams__copy-btn:hover {
+    background-color: var(--azul-principal);
+    color: #ffffff;
+}
+
+.teams__copy-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Ações do card (Editar / Excluir)
+ * ------------------------------------------------------------------------- */
+
+.teams__card-actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--bordas-separadores);
+}
+
+.teams__edit-btn,
+.teams__delete-btn {
+    flex: 1 1 0;
+    padding: 10px 12px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.teams__edit-btn {
+    color: var(--azul-principal);
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+}
+
+.teams__edit-btn:hover {
+    background-color: var(--azul-principal);
+    color: #ffffff;
+}
+
+.teams__delete-btn {
+    color: var(--vermelho);
+    background-color: transparent;
+    border: 1px solid var(--vermelho);
+}
+
+.teams__delete-btn:hover {
+    background-color: var(--vermelho);
+    color: #ffffff;
+}
+
+.teams__edit-btn:focus-visible,
+.teams__delete-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Modal de cadastro / edição
+ * ------------------------------------------------------------------------- */
+
+.teams__modal[hidden] {
+    display: none;
+}
+
+.teams__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.teams__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(15, 0, 105, 0.35);
+    backdrop-filter: blur(2px);
+}
+
+.teams__modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--fundo-cards);
+    border-radius: var(--border-radius);
+    box-shadow: 0 18px 48px rgba(15, 0, 105, 0.25);
+    overflow: hidden;
+}
+
+.teams__modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--bordas-separadores);
+}
+
+.teams__modal-title {
+    margin: 0;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+}
+
+.teams__modal-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--azul-secundario);
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.teams__modal-close:hover {
+    background-color: var(--bordas-separadores);
+}
+
+/* ---------------------------------------------------------------------------
+ * Formulário dentro do modal
+ * ------------------------------------------------------------------------- */
+
+.teams__form {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.teams__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.teams__form-label {
+    font-size: var(--font-size-texto-cabecalho);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--azul-secundario);
+}
+
+.teams__form-input {
+    padding: 12px 14px;
+    font-family: var(--font-family);
+    font-size: 15px;
+    color: var(--texto);
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 8px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.teams__form-input:focus {
+    outline: none;
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 3px rgba(15, 0, 105, 0.15);
+}
+
+.teams__form-input:invalid:not(:placeholder-shown) {
+    border-color: var(--vermelho);
+}
+
+.teams__form-error[hidden] {
+    display: none;
+}
+
+.teams__form-error {
+    margin: 0;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--vermelho);
+}
+
+.teams__form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 4px;
+}
+
+.teams__form-cancel,
+.teams__form-submit {
+    padding: 12px 20px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.teams__form-cancel {
+    color: var(--azul-secundario);
+    background-color: transparent;
+    border: 1px solid var(--bordas-separadores);
+}
+
+.teams__form-cancel:hover {
+    background-color: var(--bordas-separadores);
+}
+
+.teams__form-submit {
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border: 1px solid var(--vermelho);
+}
+
+.teams__form-submit:hover {
+    background-color: #b00033;
+}
+
+.teams__form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.teams__form-cancel:focus-visible,
+.teams__form-submit:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Responsivo — telas estreitas (iPad em pé / mobile)
+ * ------------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+    .teams {
+        padding: 24px 16px 40px;
+    }
+
+    .teams__header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .teams__new-btn {
+        width: 100%;
+    }
+
+    .teams__list {
+        grid-template-columns: 1fr;
+    }
+}
