@@ -34,8 +34,7 @@ interface TeamAggregate {
 function parseTimeToSeconds(value: string | null): number | null {
   if (!value) return null;
 
-  const normalized = value.endsWith("/km") ? value.slice(0, -3) : value;
-  const parts = normalized.split(":").map((part) => Number(part));
+  const parts = value.split(":").map((part) => Number(part));
 
   if (parts.some((part) => !Number.isFinite(part) || part < 0)) {
     return null;
@@ -107,15 +106,29 @@ export function createRankingService(
   async function generateRunnerRanking(
     competitionId: number
   ): Promise<RankingRunner[]> {
-    const competitionCheckpoints =
-      await checkpoints.findByCompetition(competitionId);
+    const [competitionCheckpoints, teamsData] = await Promise.all([
+      checkpoints.findByCompetition(competitionId),
+      teams.findByCompetition(competitionId),
+    ]);
+
+    const teamNameById = new Map<number, string>(
+      teamsData.map((team) => [team.id, team.name])
+    );
 
     const aggregates = new Map<number, RunnerAggregate>();
+    const latestCheckpointByRunner = new Map<number, Checkpoint>();
 
     for (const checkpoint of competitionCheckpoints) {
       const current = aggregates.get(checkpoint.id_runner);
       const paceSeconds = getCheckpointPaceSeconds(checkpoint);
       const timeSeconds = parseTimeToSeconds(checkpoint.time);
+      const previousLatest = latestCheckpointByRunner.get(checkpoint.id_runner);
+      const checkpointTime = Date.parse(checkpoint.created_at) || 0;
+      const previousTime = previousLatest ? Date.parse(previousLatest.created_at) || 0 : 0;
+
+      if (!previousLatest || checkpointTime > previousTime) {
+        latestCheckpointByRunner.set(checkpoint.id_runner, checkpoint);
+      }
 
       if (!current || checkpoint.distance_km > current.total_distance_km) {
         aggregates.set(checkpoint.id_runner, {
@@ -144,10 +157,15 @@ export function createRankingService(
             ? runner.pace_seconds / runner.pace_samples
             : null;
 
+      const latestCheckpoint = latestCheckpointByRunner.get(runner.id_runner);
+
       return {
         id_runner: runner.id_runner,
         runner_name: runner.runner_name,
         id_team: runner.id_team,
+        team_name: runner.id_team ? teamNameById.get(runner.id_team) ?? null : null,
+        last_checkpoint: latestCheckpoint?.identifier ?? null,
+        treadmill_time: latestCheckpoint?.time ?? latestCheckpoint?.pace ?? null,
         total_distance_km: runner.total_distance_km,
         average_pace: formatPace(averagePaceSeconds),
         average_pace_seconds: averagePaceSeconds,
@@ -169,24 +187,27 @@ export function createRankingService(
       const teamById = new Map(teamsData.map((team) => [team.id, team]));
       const aggregates = new Map<number, TeamAggregate>();
 
+      for (const team of teamsData) {
+        aggregates.set(team.id, {
+          id_team: team.id,
+          team_name: team.name,
+          id_competition: team.id_competition,
+          total_distance_km: 0,
+          time_seconds: null,
+          pace_seconds_total: 0,
+          pace_samples: 0,
+          runners: new Set<number>(),
+        });
+      }
+
       for (const runner of runnerRanking) {
         if (runner.id_team === null) continue;
 
         const team = teamById.get(runner.id_team);
         if (!team) continue;
 
-        const current =
-          aggregates.get(team.id) ??
-          ({
-            id_team: team.id,
-            team_name: team.name,
-            id_competition: team.id_competition,
-            total_distance_km: 0,
-            time_seconds: null,
-            pace_seconds_total: 0,
-            pace_samples: 0,
-            runners: new Set<number>(),
-          } satisfies TeamAggregate);
+        const current = aggregates.get(team.id);
+        if (!current) continue;
 
         current.total_distance_km += runner.total_distance_km;
         current.runners.add(runner.id_runner);
@@ -195,8 +216,6 @@ export function createRankingService(
           current.pace_seconds_total += runner.average_pace_seconds;
           current.pace_samples += 1;
         }
-
-        aggregates.set(team.id, current);
       }
 
       const ranking = Array.from(aggregates.values()).map((team) => {
