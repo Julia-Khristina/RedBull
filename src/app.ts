@@ -32,11 +32,12 @@ app.use(dashboardRoutes);
 app.use(competitionRoutes);
 app.use(teamRoutes);
 app.use(runnerRoutes);
+// Register auth routes before admin routes to avoid /admin/:id collisions
+app.use(authRoutes);
 app.use("/admin", adminRoutes);
 app.use(checkpointRoutes);
 app.use(rankingRoutes);
 app.use(exportRoutes);
-app.use(authRoutes);
 app.use(reportRoutes);
 app.use(errorHandler);
 
