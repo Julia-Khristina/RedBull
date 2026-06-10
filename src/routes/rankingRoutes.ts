@@ -14,4 +14,10 @@ router.get(
   asyncHandler(rankingController.runnerRanking)
 );
 
+// [A1] Rota SSR — Seção 11 agent.md: GET /view/competitions/:id/ranking
+router.get(
+  "/view/competitions/:id/ranking",
+  asyncHandler(rankingController.renderRanking)
+);
+
 export default router;
