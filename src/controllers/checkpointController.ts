@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { checkpointService } from "../services/checkpointService";
+import { treadmillService } from "../services/treadmillService";
 import { ValidationError } from "../errors/AppError";
 
 function parseIntegerParam(value: unknown, name: string): number {
@@ -12,7 +13,42 @@ function parseIntegerParam(value: unknown, name: string): number {
   return parsed;
 }
 
+function readQueryString(value: unknown): string {
+  return typeof value === "string" ? value : "";
+}
+
 export const checkpointController = {
+  async renderOperationalPanel(req: Request, res: Response): Promise<void> {
+    const defaultTreadmill = await treadmillService.getOrCreateDefault();
+    const selectedRunner = {
+      id: readQueryString(req.query.id_runner),
+      name: readQueryString(req.query.runner_name),
+    };
+
+    const checkpointContext = {
+      identifier: readQueryString(req.query.identifier),
+      id_runner: readQueryString(req.query.id_runner),
+      id_competition: readQueryString(req.query.id_competition),
+      id_treadmill:
+        readQueryString(req.query.id_treadmill) || String(defaultTreadmill.id),
+      id_admin: readQueryString(req.query.id_admin),
+    };
+
+    res.render("operational-panel/operationalPanel", {
+      title: "Painel operacional",
+      currentPage: "operational-panel",
+      selectedRunner,
+      checkpointContext,
+      manualCheckpoint: {
+        checkpointClock: new Date().toLocaleTimeString("pt-BR", {
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        }),
+      },
+    });
+  },
+
   async list(_req: Request, res: Response): Promise<void> {
     const checkpoints = await checkpointService.findAll();
     res.status(200).json(checkpoints);
