@@ -4,6 +4,11 @@ import { asyncHandler } from "../helpers/asyncHandler";
 
 const router = Router();
 
+router.get(
+  "/view/competitions/:id/teams/:teamId/checkpoints/saved",
+  asyncHandler(checkpointController.renderSavedByTeam)
+);
+
 router.post("/checkpoints", asyncHandler(checkpointController.create));
 
 router.get("/checkpoints", asyncHandler(checkpointController.list));
