@@ -36,12 +36,12 @@ export function validateCreateTeam(payload: unknown): CreateTeamInput {
     throw new ValidationError("Payload inválido");
   }
 
-  const nome = readRequiredText(payload, "nome");
-  const competicao_id = readPositiveInteger(payload, "competicao_id");
+  const name = readRequiredText(payload, "name");
+  const id_competition = readPositiveInteger(payload, "id_competition");
 
   return {
-    nome,
-    competicao_id,
+    name,
+    id_competition,
   };
 }
 
@@ -52,8 +52,8 @@ export function validateUpdateTeam(payload: unknown): UpdateTeamInput {
 
   const result: UpdateTeamInput = {};
 
-  if ("nome" in payload) {
-    result.nome = readRequiredText(payload, "nome");
+  if ("name" in payload) {
+    result.name = readRequiredText(payload, "name");
   }
 
   if (Object.keys(result).length === 0) {

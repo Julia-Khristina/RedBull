@@ -20,8 +20,12 @@ export function createTeamService(
       return repository.create(input);
     },
 
-    async findById(id: number): Promise<Team> {
-      const team = await repository.findById(id);
+    async findByCompetition(competitionId: number): Promise<Team[]> {
+      return repository.findByCompetition(competitionId);
+    },
+
+    async findByCompetitionAndId(competitionId: number, id: number): Promise<Team> {
+      const team = await repository.findByCompetitionAndId(competitionId, id);
 
       if (!team) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);
@@ -30,16 +34,13 @@ export function createTeamService(
       return team;
     },
 
-    async findByCompetition(competicaoId: number): Promise<Team[]> {
-      return repository.findByCompetition(competicaoId);
-    },
-
-    async update(
+    async updateByCompetitionAndId(
+      competitionId: number,
       id: number,
       payload: Partial<UpdateTeamInput>
     ): Promise<Team> {
       const input = validateUpdateTeam(payload);
-      const updated = await repository.update(id, input);
+      const updated = await repository.updateByCompetitionAndId(competitionId, id, input);
 
       if (!updated) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);
@@ -48,8 +49,8 @@ export function createTeamService(
       return updated;
     },
 
-    async delete(id: number): Promise<void> {
-      const deleted = await repository.delete(id);
+    async deleteByCompetitionAndId(competitionId: number, id: number): Promise<void> {
+      const deleted = await repository.deleteByCompetitionAndId(competitionId, id);
 
       if (!deleted) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);

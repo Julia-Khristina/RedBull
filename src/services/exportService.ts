@@ -5,14 +5,14 @@ import { rankingService } from "./rankingService";
 
 type RankingServiceDependency = Pick<
   typeof rankingService,
-  "gerarRankingEquipes" | "gerarRankingCorredores"
+  "generateTeamRanking" | "generateRunnerRanking"
 >;
 
 function parseCompetitionId(value: unknown): number {
   const parsed = typeof value === "string" ? Number(value) : NaN;
 
   if (!Number.isInteger(parsed) || parsed <= 0) {
-    throw new ValidationError("competicaoId deve ser um numero inteiro positivo");
+    throw new ValidationError("competitionId deve ser um numero inteiro positivo");
   }
 
   return parsed;
@@ -23,28 +23,28 @@ export function createExportService(
   rankings: RankingServiceDependency = rankingService
 ) {
   return {
-    async exportCompetition(competicaoIdParam: unknown): Promise<CompetitionExport> {
-      const competicaoId = parseCompetitionId(competicaoIdParam);
-      const data = await repository.findCompetitionExportData(competicaoId);
+    async exportCompetition(competitionIdParam: unknown): Promise<CompetitionExport> {
+      const competitionId = parseCompetitionId(competitionIdParam);
+      const data = await repository.findCompetitionExportData(competitionId);
 
       if (!data) {
         throw new NotFoundError("Competicao nao encontrada");
       }
 
-      const [rankingTeams, rankingAthletes] = await Promise.all([
-        rankings.gerarRankingEquipes(competicaoId),
-        rankings.gerarRankingCorredores(competicaoId),
+      const [rankingTeams, rankingRunners] = await Promise.all([
+        rankings.generateTeamRanking(competitionId),
+        rankings.generateRunnerRanking(competitionId),
       ]);
 
       return {
-        exportedAt: new Date().toISOString(),
+        exported_at: new Date().toISOString(),
         competition: data.competition,
         teams: data.teams,
-        athletes: data.athletes,
+        runners: data.runners,
         checkpoints: data.checkpoints,
         rankings: {
           teams: rankingTeams,
-          athletes: rankingAthletes,
+          runners: rankingRunners,
         },
       };
     },
