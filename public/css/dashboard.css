@@ -1,0 +1,126 @@
+/* === Dashboard — estilos específicos da view dashboard/dashboard.ejs === */
+/* Todas as cores e fontes via variáveis de public/css/variables.css [A1] */
+
+.db-main {
+  padding: 24px 32px 48px;
+  max-width: 860px;
+}
+
+/* ── Header banner ── */
+.db-banner {
+  background-color: var(--azul-principal);
+  border-radius: var(--border-radius);
+  padding: 20px 28px;
+  margin-bottom: 28px;
+}
+
+.db-banner-title {
+  color: var(--fundo-cards);
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+  margin: 0 0 4px 0;
+}
+
+.db-banner-date {
+  color: var(--amarelo);
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-medium);
+  margin: 0;
+}
+
+/* ── Título da página ── */
+.db-page-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  color: var(--azul-principal);
+  margin: 0 0 20px 0;
+}
+
+/* ── Cards ── */
+.db-card {
+  background-color: var(--fundo-cards);
+  border-radius: var(--border-radius);
+  padding: 20px 24px;
+  margin-bottom: 24px;
+}
+
+.db-card-heading {
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  margin: 0 0 12px 0;
+}
+
+.db-divider {
+  border: none;
+  border-top: 1.5px solid var(--vermelho);
+  margin: 0 0 16px 0;
+}
+
+.db-card-body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--texto);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Seções ── */
+.db-section {
+  margin-bottom: 28px;
+}
+
+.db-section-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-bold);
+  color: var(--azul-principal);
+  margin: 0 0 12px 0;
+}
+
+/* ── Lista do tutorial ── */
+.db-tutorial-list {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--texto);
+  line-height: 1.8;
+  padding-left: 20px;
+  margin: 0;
+}
+
+.db-tutorial-list li {
+  margin-bottom: 2px;
+}
+
+/* ── Botões de ação rápida ── */
+.db-actions {
+  display: flex;
+  gap: 20px;
+}
+
+.db-action-btn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--azul-principal);
+  color: var(--fundo-cards);
+  border: 2.5px solid var(--amarelo);
+  border-radius: var(--border-radius);
+  padding: 44px 20px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+  text-decoration: none;
+  text-align: center;
+  line-height: 1.3;
+  transition: background-color 0.15s ease;
+}
+
+.db-action-btn:hover {
+  background-color: var(--azul-secundario);
+}

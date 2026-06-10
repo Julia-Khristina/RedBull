@@ -76,6 +76,58 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ── Formulário de nova competição (/competitions/new) ──────────────────
+  // [A1] Fetch para POST /competitions — confirmado em src/routes/competitionRoutes.ts
+  // [B2] Response shape inferido de src/models/competition.ts: { id, name, ... }
+  if (path === '/competitions/new') {
+    const form      = document.getElementById('competition-form');
+    const errorEl   = document.getElementById('competition-error');
+    const submitBtn = document.getElementById('competition-submit');
+
+    if (form && errorEl && submitBtn) {
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        errorEl.classList.remove('visible');
+        errorEl.textContent = '';
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Criando...';
+
+        const data = new FormData(form);
+
+        try {
+          const res = await fetch('/competitions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            // [D2] 'description' omitido — campo não existe no model Competition
+            body: JSON.stringify({
+              name:    data.get('name'),
+              date:    data.get('date'),
+              address: data.get('address')
+            })
+          });
+
+          if (!res.ok) {
+            const payload = await res.json().catch(function () {
+              return { message: 'Erro ao criar competição.' };
+            });
+            throw new Error(payload.message || 'Erro ao criar competição.');
+          }
+
+          // [A1] Redireciona para dashboard com flag de sucesso → exibe tela3
+          window.location.href = '/dashboard?created=1';
+
+        } catch (err) {
+          errorEl.textContent = err.message;
+          errorEl.classList.add('visible');
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Criar nova Competição';
+        }
+      });
+    }
+  }
+
   // Ativar item do menu correspondente à rota atual
   document.querySelectorAll('.nav-item').forEach(function (item) {
     const href = item.getAttribute('href');
