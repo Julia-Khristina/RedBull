@@ -3,10 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Red Bull 24H</title>
+    <title><%= typeof title !== 'undefined' ? title : 'Red Bull 24H' %></title>
     <link rel="stylesheet" href="/css/variables.css">
     <link rel="stylesheet" href="/css/menu.css">
     <link rel="stylesheet" href="/css/operational-panel.css">
+
+
+    <% if (typeof pageCSS !== 'undefined' && pageCSS) { %>
+    <link rel="stylesheet" href="<%= pageCSS %>">
+    <% } %>
 </head>
 <body>
     <%- include('../partials/menu') %>

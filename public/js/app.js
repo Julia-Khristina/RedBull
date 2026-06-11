@@ -7,9 +7,11 @@ document.addEventListener('DOMContentLoaded', function () {
 function highlightCurrentNavigation() {
   const path = window.location.pathname;
 
-  // [A1] RN03 — Redirecionar para login se não autenticado (exceto na própria página de login)
+  // [A1] RN03 — Redirecionar para login se não autenticado
+  // [A1] RN13 — Páginas públicas (/public/*) são acessadas via UUID sem login
   // [D1] Proteção client-side — o backend deve ter middleware próprio para segurança real
-  if (path !== '/admin/login') {
+  const isPublicPage = path.startsWith('/public/');
+  if (path !== '/admin/login' && !isPublicPage) {
     const token = sessionStorage.getItem('rb24_token');
     if (!token) {
       window.location.href = '/admin/login';
@@ -79,6 +81,26 @@ function highlightCurrentNavigation() {
         }
       });
     }
+  }
+
+  // ── Botão compartilhar — painel público de equipe (/public/team/:uuid)
+  // Gatilho: click → copia o link único da equipe para clipboard → mostra toast por 2s
+  var shareBtn = document.getElementById('btn-share');
+  if (shareBtn) {
+    shareBtn.addEventListener('click', function () {
+      var uuid = shareBtn.dataset.shareUuid;
+      // [A1] Link único da página pública desta equipe (agent.md Seção 10)
+      var url = window.location.origin + '/public/team/' + uuid;
+      navigator.clipboard.writeText(url).then(function () {
+        var toast = document.getElementById('share-toast');
+        if (toast) {
+          toast.classList.remove('hidden');
+          setTimeout(function () { toast.classList.add('hidden'); }, 2000);
+        }
+      }).catch(function (err) {
+        console.error('Erro ao copiar link:', err);
+      });
+    });
   }
 
   // Ativar item do menu correspondente à rota atual
