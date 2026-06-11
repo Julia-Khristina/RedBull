@@ -6,7 +6,13 @@
     <title><%= typeof title !== 'undefined' ? title : 'Red Bull 24H' %></title>
     <link rel="stylesheet" href="/css/variables.css">
     <link rel="stylesheet" href="/css/menu.css">
+
+    <% if (locals.pageCSS) { %>
+    <link rel="stylesheet" href="<%= locals.pageCSS %>">
+    <% } %>
+
     <link rel="stylesheet" href="/css/teams.css">
+
 </head>
 <body>
     <%- include('../partials/menu') %>
