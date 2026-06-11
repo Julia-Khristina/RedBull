@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
+import { treadmillService } from "../services/treadmillService";
 import { ValidationError } from "../errors/AppError";
 
 function parseIntegerParam(value: unknown, name: string): number {
