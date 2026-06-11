@@ -3233,11 +3233,16 @@ Esta seção está dividida em dois subítens: a segmentação de mercado, que d
 
 ### 6.3.1 Segmentação de Mercado
 
-*Até 250 palavras.*
+A segmentação de mercado é o processo de dividir um público em grupos com características e necessidades semelhantes, permitindo o desenvolvimento de produtos e serviços mais adequados a cada perfil de usuário. Essa prática possibilita compreender melhor as demandas de cada segmento e direcionar soluções de forma mais eficiente (HUBSPOT, 2025). 
 
-*Descreva os segmentos de mercado que poderão ser atendidos pela aplicação.*
+Neste projeto, a segmentação está relacionada aos usuários que utilizam a plataforma durante a organização, operação e acompanhamento do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, os segmentos são definidos pelos diferentes grupos que interagem com o sistema ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
 
-*Valor: até 0,5 ponto.*
+-  **Equipes de Field Marketing:** responsáveis pelo planejamento e pela execução do evento. Sua necessidade central é dispor de uma ferramenta que permita gerenciar as inscrições das equipes, acompanhar o andamento da competição e garantir o controle operacional ao longo das 24 horas de duração do evento.
+-  **Coordenadores e gestores de operações:** profissionais encarregados de supervisionar a execução das atividades em tempo real, coordenar equipes de apoio e assegurar que os registros do evento, como trocas de participantes e tempos percorridos, sejam capturados de forma confiável e precisa.
+-  **Analistas de resultados e desempenho:** responsáveis pelo acompanhamento dos dados gerados durante o evento, incluindo o desempenho das equipes participantes e o cumprimento das metas estabelecidas. Para esse segmento, a aplicação deve oferecer visibilidade sobre os resultados registrados e facilitar a obtenção de informações para relatórios pós-evento.
+-  **Participantes e Capitães de Equipe:** usuários que acessam a área pública da plataforma para acompanhar rankings, desempenho das equipes e informações atualizadas da competição.
+
+Esses segmentos compartilham a necessidade de uma solução centralizada que substitua processos manuais por um fluxo digital de registro, monitoramento e consulta de dados, reduzindo erros operacionais e aumentando a eficiência da gestão do evento.
 
 ### 6.3.2 Perfil do Público-Alvo
 
@@ -3327,6 +3332,10 @@ Nesse contexto, serão apresentados os principais atributos da solução, seu mo
 *Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
 
 *Valor: até 0,5 ponto.*
+<<<<<<< HEAD
+>>>>>>> dev
+=======
+>>>>>>> dev
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
@@ -3359,6 +3368,8 @@ FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponíve
 FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison-Wesley, 2002.
 
 GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
+
+HUBSPOT. Segmentação de mercado. HubSpot Brasil. Disponível em: HubSpot Brasil - Segmentação de Mercado. Acesso em: 11 jun. 2026.
 
 Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
 
