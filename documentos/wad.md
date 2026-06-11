@@ -3136,13 +3136,14 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### 6.3.1 Segmentação de Mercado
 
-A segmentação de mercado é o processo de dividir um público em grupos com características e necessidades semelhantes, permitindo o desenvolvimento de produtos e serviços mais adequados a cada perfil de usuário. Essa prática possibilita compreender melhor as demandas de cada segmento e direcionar soluções de forma mais eficiente (HUBSPOT, 2025). No contexto deste projeto, a segmentação é definida pelos diferentes perfis de usuários que utilizam a plataforma durante a organização e execução do evento.
+A segmentação de mercado é o processo de dividir um público em grupos com características e necessidades semelhantes, permitindo o desenvolvimento de produtos e serviços mais adequados a cada perfil de usuário. Essa prática possibilita compreender melhor as demandas de cada segmento e direcionar soluções de forma mais eficiente (HUBSPOT, 2025). 
 
-A aplicação foi desenvolvida para atender às equipes internas da Red Bull envolvidas na organização e na gestão operacional do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, a segmentação de mercado é definida pelos diferentes perfis de usuários que interagem com a plataforma ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
+Neste projeto, a segmentação está relacionada aos usuários que utilizam a plataforma durante a organização, operação e acompanhamento do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, os segmentos são definidos pelos diferentes grupos que interagem com o sistema ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
 
--  **Equipes de Field Marketing:** responsáveis pelo planejamento e pela execução do evento, representam os principais usuários da aplicação. Sua necessidade central é dispor de uma ferramenta que permita gerenciar as inscrições das equipes, acompanhar o andamento da competição e garantir o controle operacional ao longo das 24 horas de duração do evento.
+-  **Equipes de Field Marketing:** responsáveis pelo planejamento e pela execução do evento. Sua necessidade central é dispor de uma ferramenta que permita gerenciar as inscrições das equipes, acompanhar o andamento da competição e garantir o controle operacional ao longo das 24 horas de duração do evento.
 -  **Coordenadores e gestores de operações:** profissionais encarregados de supervisionar a execução das atividades em tempo real, coordenar equipes de apoio e assegurar que os registros do evento, como trocas de participantes e tempos percorridos, sejam capturados de forma confiável e precisa.
 -  **Analistas de resultados e desempenho:** responsáveis pelo acompanhamento dos dados gerados durante o evento, incluindo o desempenho das equipes participantes e o cumprimento das metas estabelecidas. Para esse segmento, a aplicação deve oferecer visibilidade sobre os resultados registrados e facilitar a obtenção de informações para relatórios pós-evento.
+-  **Participantes e Capitães de Equipe:** usuários que acessam a área pública da plataforma para acompanhar rankings, desempenho das equipes e informações atualizadas da competição.
 
 Esses segmentos compartilham a necessidade de uma solução centralizada que substitua processos manuais por um fluxo digital de registro, monitoramento e consulta de dados, reduzindo erros operacionais e aumentando a eficiência da gestão do evento.
 
