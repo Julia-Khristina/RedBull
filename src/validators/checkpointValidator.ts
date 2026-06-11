@@ -47,6 +47,44 @@ function readRequiredPositiveInteger(
   return value;
 }
 
+function readOptionalPace(
+  payload: Record<string, unknown>,
+  field: string
+): string | undefined {
+  if (!(field in payload)) return undefined;
+
+  const pace = payload[field];
+  if (typeof pace !== "string" || pace.trim().length === 0) {
+    throw new ValidationError("pace nao pode ser vazio");
+  }
+
+  const normalized = pace.trim();
+  if (!/^[0-9]{1,2}:[0-9]{2}\/km$/.test(normalized)) {
+    throw new ValidationError("pace deve estar no formato mm:ss/km");
+  }
+
+  return normalized;
+}
+
+function readOptionalTime(
+  payload: Record<string, unknown>,
+  field: string
+): string | undefined {
+  if (!(field in payload)) return undefined;
+
+  const time = payload[field];
+  if (typeof time !== "string" || time.trim().length === 0) {
+    throw new ValidationError("time nao pode ser vazio");
+  }
+
+  const normalized = time.trim();
+  if (!/^[0-9]{2}:[0-9]{2}:[0-9]{2}$/.test(normalized)) {
+    throw new ValidationError("time deve estar no formato hh:mm:ss");
+  }
+
+  return normalized;
+}
+
 export function validateCreateCheckpoint(
   payload: unknown
 ): CreateCheckpointInput {
@@ -70,21 +108,11 @@ export function validateCreateCheckpoint(
     id_admin,
   };
 
-  if ("pace" in payload) {
-    const pace = payload["pace"];
-    if (typeof pace !== "string" || pace.trim().length === 0) {
-      throw new ValidationError("pace não pode ser vazio");
-    }
-    result.pace = pace.trim();
-  }
+  const pace = readOptionalPace(payload, "pace");
+  if (pace !== undefined) result.pace = pace;
 
-  if ("time" in payload) {
-    const time = payload["time"];
-    if (typeof time !== "string" || time.trim().length === 0) {
-      throw new ValidationError("time não pode ser vazio");
-    }
-    result.time = time.trim();
-  }
+  const time = readOptionalTime(payload, "time");
+  if (time !== undefined) result.time = time;
 
   if ("image" in payload) {
     if (!isObject(payload["image"])) {
@@ -109,21 +137,11 @@ export function validateUpdateCheckpoint(
     result.distance_km = readRequiredPositiveNumber(payload, "distance_km");
   }
 
-  if ("pace" in payload) {
-    const pace = payload["pace"];
-    if (typeof pace !== "string" || pace.trim().length === 0) {
-      throw new ValidationError("pace não pode ser vazio");
-    }
-    result.pace = pace.trim();
-  }
+  const pace = readOptionalPace(payload, "pace");
+  if (pace !== undefined) result.pace = pace;
 
-  if ("time" in payload) {
-    const time = payload["time"];
-    if (typeof time !== "string" || time.trim().length === 0) {
-      throw new ValidationError("time não pode ser vazio");
-    }
-    result.time = time.trim();
-  }
+  const time = readOptionalTime(payload, "time");
+  if (time !== undefined) result.time = time;
 
   if ("image" in payload) {
     if (!isObject(payload["image"])) {
