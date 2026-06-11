@@ -252,6 +252,15 @@
     outline-offset: 2px;
 }
 
+/* Estado "Copiado!" — feedback visual de 2 segundos após cópia bem-sucedida */
+.teams__copy-btn--success,
+.teams__copy-btn--success:hover {
+    color: #ffffff;
+    background-color: var(--verde);
+    border-color: var(--verde);
+    cursor: default;
+}
+
 /* ---------------------------------------------------------------------------
  * Ações do card (Editar / Excluir)
  * ------------------------------------------------------------------------- */

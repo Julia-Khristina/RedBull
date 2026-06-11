@@ -237,8 +237,66 @@ document.addEventListener('DOMContentLoaded', function () {
           deleteTeam(target.dataset.teamId, target.dataset.teamName);
         } else if (action === 'close-modal') {
           closeModal();
+        } else if (action === 'copy-uuid') {
+          copyUuid(target.dataset.uuid, target);
         }
       });
+
+      // =======================================================================
+      // Task #329 — Copiar URL pública (UUID) com feedback visual
+      // [A1] Botão estruturado em teams.ejs com data-teams-action="copy-uuid"
+      //   e data-uuid contendo o UUID gerado pelo backend (RN01).
+      // [D1] Fallback para document.execCommand quando navigator.clipboard
+      //   não estiver disponível (browsers antigos / contexto inseguro).
+      // =======================================================================
+      function showCopyFeedback(button) {
+        if (!button || button.dataset.copyBusy === 'true') return;
+
+        const originalText = button.textContent;
+        button.dataset.copyBusy = 'true';
+        button.textContent = 'Copiado!';
+        button.classList.add('teams__copy-btn--success');
+
+        setTimeout(function () {
+          button.textContent = originalText;
+          button.classList.remove('teams__copy-btn--success');
+          delete button.dataset.copyBusy;
+        }, 2000);
+      }
+
+      function copyUuidFallback(uuid, button) {
+        // Usa o input readonly do próprio card como fonte para o execCommand.
+        const card = button.closest('.teams__card');
+        const input = card ? card.querySelector('.teams__uuid-input') : null;
+        if (!input) return false;
+
+        try {
+          input.removeAttribute('readonly');
+          input.select();
+          input.setSelectionRange(0, input.value.length);
+          const ok = document.execCommand('copy');
+          input.setAttribute('readonly', 'readonly');
+          window.getSelection().removeAllRanges();
+          if (ok) showCopyFeedback(button);
+          return ok;
+        } catch (_err) {
+          input.setAttribute('readonly', 'readonly');
+          return false;
+        }
+      }
+
+      function copyUuid(uuid, button) {
+        if (!uuid || !button) return;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(uuid).then(
+            function () { showCopyFeedback(button); },
+            function () { copyUuidFallback(uuid, button); }
+          );
+        } else {
+          copyUuidFallback(uuid, button);
+        }
+      }
 
       if (form) {
         form.addEventListener('submit', submitForm);

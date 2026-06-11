@@ -2,15 +2,17 @@
   VIEW: teams/teams.ejs
   ESTADO: [C2 — Parcial]
   LACUNAS:
-    - ID da competição ativa será resolvido pelo controller de fluxo administrativo (ainda não existe) ou via sessionStorage. Por enquanto o controller injeta mock para a estrutura visual. [A3][D2]
-    - Fluxo de submit/delete/edit via fetch ainda não implementado — pendente para a task #328 (Integração CRUD via API). [C2]
-    - Ação "Copiar URL pública (UUID)" estruturalmente preparada (botão com data-uuid) mas sem JS funcional — pendente para a task #329. [C2]
+    - ID da competição ativa segue como mock (id=1) até o fluxo administrativo definir a origem real (sessionStorage / query string / middleware). [A3][D2]
     - Estilo visual segue tokens de variables.css; ajuste fino contra Figma fica para iteração posterior. [D2]
-  ENDPOINTS CONSUMIDOS (estrutura preparada, integração pendente):
-    - GET    /competitions/:id/teams              — listagem        [A1][B1]
-    - POST   /competitions/:id/teams              — cadastro        [A1][B1]
-    - PUT    /competitions/:id/teams/:teamId      — edição          [A1][B1]
-    - DELETE /competitions/:id/teams/:teamId      — exclusão        [A1][B1]
+  ENTREGA COMPLETA NAS TASKS:
+    - #327 — Estrutura visual (lista, cards, modal, empty state).
+    - #328 — CRUD via fetch (POST/PUT/DELETE) + leitura SSR via teamService.
+    - #329 — Cópia da URL pública (UUID) com feedback visual.
+  ENDPOINTS CONSUMIDOS:
+    - GET    /competitions/:id/teams              — listagem (SSR) [A1][B1]
+    - POST   /competitions/:id/teams              — cadastro       [A1][B1]
+    - PUT    /competitions/:id/teams/:teamId      — edição         [A1][B1]
+    - DELETE /competitions/:id/teams/:teamId      — exclusão       [A1][B1]
   ÚLTIMA ATUALIZAÇÃO: 2026-06-10
 %>
 
