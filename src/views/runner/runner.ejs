@@ -1,0 +1,259 @@
+<%#
+  VIEW: runner/runner.ejs
+  ROTA: GET /public/team/:uuid  — painel PÚBLICO da equipe, acesso via link único (UUID), sem login (RN13)
+  ESTADO: [C2 — Parcial]
+  LACUNAS:
+    - "Velocidade máx." computada a partir do pace mais rápido nos checkpoints [D2 — inferido, sem campo direto no model]
+    - "Próximo atleta" = primeiro runner sem checkpoint registrado na competição [D2 — sem endpoint de scheduling na Seção 7]
+    - "Calculadora de descanso": 50 min default — RN08 exige parâmetros do evento não expostos via API [D3 — não implementável sem novo endpoint]
+    - Percentual de descanso computado por tempo decorrido desde último checkpoint, não por fórmula oficial [D2]
+    - "Posição durante à competição" (gráfico) — histórico temporal de ranking não disponível na Seção 7 [D3 — placeholder]
+    - "Tempo de competição" calculado a partir de competition.date meia-noite (sem campo start_time) [D2]
+  DECISÕES VALIDADAS (humano):
+    - RN13: exibir dados individuais por atleta (pace/velocidade/distância) foi APROVADO seguindo o Figma Equipes.png — não simplificar o leaderboard nesta tela.
+  ENDPOINTS CONSUMIDOS (via SSR):
+    - teamService.findByUuid(uuid)                 [A1][B1] — resolve a equipe pelo link único
+    - competitionService.findById(id)             [A1][B1]
+    - runnerService.findByTeam(teamId)             [A1][B1]
+    - rankingService.generateTeamRanking(id)       [A1][B1]
+    - rankingService.generateRunnerRanking(id)     [A1][B1]
+    - checkpointService.findByCompetition(id)      [A1][B1]
+  ÚLTIMA ATUALIZAÇÃO: Sprint atual
+%>
+
+<main class="runner-main">
+
+  <%# ── Header ──────────────────────────────────────────────── %>
+  <header class="runner-header">
+    <div>
+      <h1 class="runner-title"><%= team.name %></h1>
+      <p class="runner-subtitle">
+        <% if (teamStats.position > 0) { %>
+          <%= teamStats.position %>º no ranking global
+        <% } else { %>
+          Ranking global
+        <% } %>
+      </p>
+    </div>
+
+    <%# Botão compartilhar — [A1] copia URL pública /public/team/:uuid/ranking para clipboard %>
+    <button
+      id="btn-share"
+      class="btn-share"
+      data-share-uuid="<%= team.uuid %>"
+      aria-label="Compartilhar link da equipe"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+           stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round"
+              d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+      </svg>
+    </button>
+  </header>
+
+  <%# ── Cards de métricas ───────────────────────────────────── %>
+  <section class="runner-metrics" aria-label="Métricas da equipe">
+
+    <div class="metric-card">
+      <p class="metric-label">Tempo de competição</p>
+      <%# [D2] Calculado a partir de competition.date meia-noite — sem start_time no model %>
+      <p class="metric-value"><%= competitionTimeFormatted %></p>
+    </div>
+
+    <div class="metric-card">
+      <p class="metric-label">Distância para o líder</p>
+      <% if (teamStats.is_leader) { %>
+        <p class="metric-value">Líder</p>
+      <% } else { %>
+        <p class="metric-value">+ <%= teamStats.distance_to_leader_km.toFixed(2) %> km</p>
+      <% } %>
+    </div>
+
+    <div class="metric-card">
+      <p class="metric-label">Pace médio da equipe</p>
+      <% if (teamStats.average_pace) { %>
+        <%
+          var paceParts = teamStats.average_pace.split(':');
+          var paceMin = paceParts[0];
+          var paceSec = paceParts.length > 1 ? paceParts[1] : '00';
+        %>
+        <p class="metric-value"><%= paceMin %>'<%= paceSec %>''/km</p>
+      <% } else { %>
+        <p class="metric-value">—</p>
+      <% } %>
+    </div>
+
+  </section>
+
+  <%# ── Tabela de atletas ───────────────────────────────────── %>
+  <section class="athletes-section">
+    <h2 class="section-title">Status por atleta da equipe</h2>
+
+    <% if (runnersEnriched.length === 0) { %>
+      <div class="empty-state">Nenhum atleta cadastrado nesta equipe.</div>
+    <% } else { %>
+      <div class="table-wrapper">
+        <table class="athletes-table">
+          <thead>
+            <tr>
+              <th>Atleta</th>
+              <th>Pace médio geral</th>
+              <%# [D2] Velocidade máx. inferida do pace mais rápido registrado %>
+              <th>Velocidade máx.</th>
+              <th>Distância</th>
+              <th>Último Checkpoint</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% runnersEnriched.forEach(function(runner) { %>
+              <tr>
+                <td><%= runner.name %></td>
+                <td>
+                  <% if (runner.average_pace) { %>
+                    <%= runner.average_pace %> min/km
+                  <% } else { %>
+                    —
+                  <% } %>
+                </td>
+                <td>
+                  <% if (runner.max_speed_kmh !== null) { %>
+                    <%= runner.max_speed_kmh %> km/h
+                  <% } else { %>
+                    —
+                  <% } %>
+                </td>
+                <td>
+                  <% if (runner.total_distance_km > 0) { %>
+                    <%= runner.total_distance_km.toFixed(1) %> km
+                  <% } else { %>
+                    —
+                  <% } %>
+                </td>
+                <td><%= runner.last_checkpoint_at %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </section>
+
+  <%# ── Calculadora de descanso + Gráfico ─────────────────── %>
+  <section class="bottom-section">
+
+    <%# Calculadora de descanso %>
+    <div class="rest-calculator">
+      <h2 class="section-title">Calculadora de descanso</h2>
+
+      <div class="rest-content">
+
+        <%# [D2] Percentual: tempo decorrido desde último checkpoint / 50 min recomendados %>
+        <div class="circle-wrapper" aria-label="<%= restPct %>% do tempo de descanso concluído">
+          <svg class="circle-svg" viewBox="0 0 120 120" aria-hidden="true">
+            <circle cx="60" cy="60" r="50" fill="none"
+                    stroke="var(--bordas-separadores)" stroke-width="12"/>
+            <circle cx="60" cy="60" r="50" fill="none"
+                    stroke="<%= restPct >= 100 ? 'var(--verde)' : 'var(--amarelo)' %>"
+                    stroke-width="12"
+                    stroke-linecap="round"
+                    stroke-dasharray="314.16"
+                    stroke-dashoffset="<%= restOffset %>"
+                    transform="rotate(-90 60 60)"/>
+          </svg>
+          <span class="circle-text"><%= restPct %>%</span>
+        </div>
+
+        <div class="rest-info">
+
+          <% if (restPct >= 100) { %>
+            <div class="rest-status-badge ready">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"
+                   viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+              </svg>
+              Pronto para Voltar!
+            </div>
+            <p class="rest-desc">Tempo de descanso atingido...</p>
+          <% } else { %>
+            <div class="rest-status-badge resting">
+              Em descanso
+            </div>
+            <p class="rest-desc">Aguardando tempo de descanso...</p>
+          <% } %>
+
+          <%#
+            [D3 ⚠ NÃO IMPLEMENTADO — aguardando confirmação]
+            Valor de 50 min hardcoded — RN08 exige parâmetros do evento (não expostos na Seção 7).
+            Implementar quando endpoint de parâmetros do evento for disponibilizado.
+          %>
+          <div class="rest-recommended">
+            Tempo recomendado de descanso: <strong>50 min</strong>
+          </div>
+
+          <%#
+            [D2] Próximo atleta: runner sem checkpoint registrado nesta competição.
+            Sem endpoint de scheduling na Seção 7 — inferido por ausência de registros.
+          %>
+          <p class="rest-next">
+            Próximo atleta:
+            <% if (nextRunner) { %>
+              <strong><%= nextRunner.name %></strong>
+            <% } else { %>
+              <strong>—</strong>
+            <% } %>
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    <%# Gráfico de posição — [D3] placeholder %>
+    <div class="chart-section">
+      <h3 class="chart-title">Posição durante à competição</h3>
+
+      <%#
+        [D3 ⚠ NÃO IMPLEMENTADO — aguardando confirmação]
+        Histórico temporal de ranking não está disponível em nenhum endpoint da Seção 7.
+        Implementar quando endpoint de série temporal for disponibilizado.
+      %>
+      <svg class="chart-placeholder-svg" viewBox="0 0 360 160" aria-label="Gráfico de posição — dados indisponíveis">
+
+        <%# Eixos %>
+        <line x1="40" y1="20" x2="40" y2="140" stroke="var(--bordas-separadores)" stroke-width="1.5"/>
+        <line x1="40" y1="140" x2="340" y2="140" stroke="var(--bordas-separadores)" stroke-width="1.5"/>
+
+        <%# Labels eixo Y (posições) %>
+        <text x="30" y="25" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">1</text>
+        <text x="30" y="60" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">2</text>
+        <text x="30" y="95" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">3</text>
+        <text x="30" y="140" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">4</text>
+
+        <%# Labels eixo X (tempo) %>
+        <text x="40"  y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">0h</text>
+        <text x="130" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">6h</text>
+        <text x="220" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">12h</text>
+        <text x="310" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">18h</text>
+        <text x="340" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">24h</text>
+
+        <%# Curva decorativa — linha tracejada indicando dados indisponíveis %>
+        <path d="M40,80 C90,60 140,100 190,70 S280,50 340,80"
+              fill="none" stroke="var(--azul-secundario)" stroke-width="2"
+              stroke-dasharray="6 4" opacity="0.4"/>
+
+        <%# Texto central indicando lacuna %>
+        <text x="190" y="82" text-anchor="middle"
+              font-family="var(--font-family)" font-size="11" fill="#aaa">
+          Dados históricos indisponíveis
+        </text>
+
+      </svg>
+    </div>
+
+  </section>
+
+</main>
+
+<%# Toast feedback do botão compartilhar %>
+<div id="share-toast" class="share-toast hidden" role="status" aria-live="polite">
+  Link copiado!
+</div>

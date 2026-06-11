@@ -30,18 +30,18 @@ export function validateCreateCompetition(
     throw new ValidationError("Payload inválido");
   }
 
-  const nome = readRequiredText(payload, "nome");
-  const data = readRequiredText(payload, "data");
-  const endereco = readRequiredText(payload, "endereco");
+  const name = readRequiredText(payload, "name");
+  const date = readRequiredText(payload, "date");
+  const address = readRequiredText(payload, "address");
 
-  if (!isValidDate(data)) {
-    throw new ValidationError("data deve ser uma data válida");
+  if (!isValidDate(date)) {
+    throw new ValidationError("date deve ser uma data válida");
   }
 
   return {
-    nome,
-    data,
-    endereco,
+    name,
+    date,
+    address,
   };
 }
 

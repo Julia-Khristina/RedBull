@@ -1,0 +1,189 @@
+/* SIDEBAR */
+
+.sidebar {
+  width: 165px;
+  min-height: 100vh;
+  background-color: var(--azul-principal);
+  display: flex;
+  flex-direction: column;
+  border-radius: 0 var(--border-radius) var(--border-radius) 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* Imagem de fundo com overlay */
+
+.sidebar-bg {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.sidebar-bg img {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 70%;
+  object-fit: cover;
+  object-position: center top;
+  opacity: 0.8;
+}
+
+/* Gradient: escurece a parte inferior para integrar a foto ao fundo azul */
+.sidebar-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    var(--azul-principal) 40%,
+    var(--azul-principal) 0%,
+    var(--azul-principal) 0%,
+    transparent 100%
+  );
+}
+
+/* Logo */
+
+.sidebar-logo {
+  padding: 20px 16px 16px;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.logo-image {
+  width: 160px;
+  height: auto;
+}
+
+/* Navegação principal */
+
+.sidebar-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 4px 0 0 8px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Wrapper para cada item — necessário para posicionar a barra vermelha */
+.nav-item-wrapper {
+  position: relative;
+  padding: 0px 0px  8px 8px; /* margem lateral que aparece na imagem */
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s ease;
+  border: none;
+  background: transparent;
+  width: 100%;
+  box-sizing: border-box;
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  position: relative;
+}
+
+.nav-item:hover {
+  background: rgba(248, 248, 250, 0.08);
+}
+
+/* Item ativo: fundo azul secundário + border-radius */
+.nav-item.active {
+  background: var(--azul-secundario);
+  border-top-left-radius: var(--border-radius);
+  border-bottom-left-radius: var(--border-radius);
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.nav-item.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 100%;
+  background-color: red;
+}
+
+/* Barra vermelha vertical na borda direita da sidebar — só no item ativo */
+.nav-item-wrapper.active::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -8px; /* alinha na borda externa do wrapper, tocando a borda da sidebar */
+  width: 4px;
+  height: 100%;
+  background-color: var(--vermelho);
+  border-radius: 2px 0 0 2px;
+}
+
+/* Ícone */
+
+.icon-wrap {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon-wrap svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Labels */
+
+.nav-label {
+  color: var(--fundo);
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho); /* 12px */
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+}
+
+.nav-item.active .nav-label {
+  font-weight: var(--font-weight-bold);
+}
+
+/* Rodapé da sidebar — botão Sair */
+
+.sidebar-bottom {
+  border-top: 1px solid rgba(248, 248, 250, 0.1);
+  padding: 8px 0 16px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Área de conteúdo principal (fora da sidebar) */
+
+.content-wrapper {
+  margin-left: 160px;
+  min-height: 100vh;
+  background-color: var(--fundo);
+}
