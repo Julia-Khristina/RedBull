@@ -9,4 +9,9 @@ router.get(
   asyncHandler(reportController.generateCompetitionReport)
 );
 
+router.get(
+  "/view/competitions/:id/reports",
+  asyncHandler(reportController.renderReports)
+);
+
 export default router;
