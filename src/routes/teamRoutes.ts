@@ -4,6 +4,11 @@ import { asyncHandler } from "../helpers/asyncHandler";
 
 const router = Router();
 
+// [A1] Rota SSR da tela de Equipes — segue o padrão sem :id no path adotado em
+// dashboardRoutes, conforme menu.ejs linha 37 (`href="/teams"`).
+// O ID da competição ativa é resolvido pelo controller (mock até a #328).
+router.get("/teams", asyncHandler(teamController.renderTeams));
+
 router.post(
   "/competitions/:id/teams",
   asyncHandler(teamController.create)
