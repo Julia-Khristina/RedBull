@@ -5,8 +5,8 @@ import { asyncHandler } from "../helpers/asyncHandler";
 const router = Router();
 
 router.get(
-  "/operational-panel",
-  asyncHandler(checkpointController.renderOperationalPanel)
+  "/view/competitions/:id/teams/:teamId/checkpoints/saved",
+  asyncHandler(checkpointController.renderSavedByTeam)
 );
 
 router.post("/checkpoints", asyncHandler(checkpointController.create));

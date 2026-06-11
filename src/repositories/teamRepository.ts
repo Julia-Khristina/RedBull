@@ -43,6 +43,22 @@ export const teamRepository: TeamRepository = {
     return (data ?? []) as unknown as Team[];
   },
 
+  async findByUuid(uuid: string): Promise<Team | null> {
+    const supabase = getSupabaseClient();
+
+    const { data, error } = await supabase
+      .from("team")
+      .select(SELECT_COLUMNS)
+      .eq("uuid", uuid)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    return data as unknown as Team | null;
+  },
+
   async findByCompetitionAndId(competitionId: number, id: number): Promise<Team | null> {
     const supabase = getSupabaseClient();
 

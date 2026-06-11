@@ -1,15 +1,12 @@
 // [D1] Padrão: verificação de autenticação + ativação de menu
 document.addEventListener('DOMContentLoaded', function () {
-  highlightCurrentNavigation();
-  initManualCheckpointForm();
-});
-
-function highlightCurrentNavigation() {
   const path = window.location.pathname;
 
-  // [A1] RN03 — Redirecionar para login se não autenticado (exceto na própria página de login)
+  // [A1] RN03 — Redirecionar para login se não autenticado
+  // [A1] RN13 — Páginas públicas (/public/*) são acessadas via UUID sem login
   // [D1] Proteção client-side — o backend deve ter middleware próprio para segurança real
-  if (path !== '/admin/login') {
+  const isPublicPage = path.startsWith('/public/');
+  if (path !== '/admin/login' && !isPublicPage) {
     const token = sessionStorage.getItem('rb24_token');
     if (!token) {
       window.location.href = '/admin/login';
@@ -133,397 +130,550 @@ function highlightCurrentNavigation() {
     }
   }
 
+  // ===========================================================================
+  // Teams page — Sprint 4, task #328 (Integração CRUD via API)
+  // [A1] Endpoints da Seção 7 do agent.md:
+  //   POST   /competitions/:id/teams              — cadastro
+  //   PUT    /competitions/:id/teams/:teamId      — edição
+  //   DELETE /competitions/:id/teams/:teamId      — exclusão
+  // [A3] competitionId vem de data-competition-id do <main> (mock do controller
+  //   até o fluxo administrativo definir a origem real).
+  // ===========================================================================
+  if (path === '/teams') {
+    const teamsContainer = document.querySelector('[data-teams]');
+
+    if (teamsContainer) {
+      const competitionId   = teamsContainer.dataset.competitionId;
+      const modal           = document.querySelector('[data-teams-modal]');
+      const modalTitle      = document.querySelector('[data-teams-modal-title]');
+      const form            = document.querySelector('[data-teams-form]');
+      const teamIdInput     = form ? form.querySelector('[data-team-id-input]') : null;
+      const nameInput       = form ? form.querySelector('input[name="name"]') : null;
+      const errorEl         = form ? form.querySelector('[data-teams-form-error]') : null;
+      const submitBtn       = form ? form.querySelector('.teams__form-submit') : null;
+
+      function showError(message) {
+        if (!errorEl) return;
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+
+      function clearError() {
+        if (!errorEl) return;
+        errorEl.textContent = '';
+        errorEl.hidden = true;
+      }
+
+      function openModal(mode, team) {
+        if (!modal || !modalTitle || !teamIdInput || !nameInput) return;
+
+        if (mode === 'edit' && team) {
+          modalTitle.textContent = 'Editar Equipe';
+          teamIdInput.value = team.id || '';
+          nameInput.value   = team.name || '';
+        } else {
+          modalTitle.textContent = 'Nova Equipe';
+          teamIdInput.value = '';
+          nameInput.value   = '';
+        }
+        clearError();
+        modal.hidden = false;
+        setTimeout(function () { nameInput.focus(); }, 50);
+      }
+
+      function closeModal() {
+        if (!modal) return;
+        modal.hidden = true;
+      }
+
+      function hasValidCompetition() {
+        return competitionId && competitionId !== '0';
+      }
+
+      async function submitForm(event) {
+        event.preventDefault();
+
+        if (!form || !nameInput || !teamIdInput || !submitBtn) return;
+
+        const name = nameInput.value.trim();
+
+        if (!name) {
+          showError('Nome da equipe é obrigatório.');
+          return;
+        }
+
+        if (!hasValidCompetition()) {
+          showError('Competição ativa não foi identificada. Tente recarregar a página.');
+          return;
+        }
+
+        const teamId = teamIdInput.value;
+        const isEdit = !!teamId;
+        const url    = isEdit
+          ? '/competitions/' + competitionId + '/teams/' + teamId
+          : '/competitions/' + competitionId + '/teams';
+        const method = isEdit ? 'PUT' : 'POST';
+
+        clearError();
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Salvando...';
+
+        try {
+          const res = await fetch(url, {
+            method: method,
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: name }),
+          });
+
+          if (!res.ok) {
+            const data = await res.json().catch(function () {
+              return { message: 'Erro inesperado.' };
+            });
+            throw new Error(data.message || 'HTTP ' + res.status);
+          }
+
+          // [D1] Reload simples — atualiza a lista sem reimplementar render no cliente.
+          window.location.reload();
+        } catch (err) {
+          showError(err.message || 'Não foi possível salvar a equipe.');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
+        }
+      }
+
+      async function deleteTeam(teamId, teamName) {
+        if (!hasValidCompetition()) {
+          window.alert('Competição ativa não foi identificada.');
+          return;
+        }
+
+        const confirmed = window.confirm(
+          'Excluir a equipe "' + teamName + '"? Esta ação não pode ser desfeita.'
+        );
+        if (!confirmed) return;
+
+        try {
+          const res = await fetch(
+            '/competitions/' + competitionId + '/teams/' + teamId,
+            { method: 'DELETE' }
+          );
+
+          if (!res.ok && res.status !== 204) {
+            const data = await res.json().catch(function () {
+              return { message: 'Erro inesperado.' };
+            });
+            throw new Error(data.message || 'HTTP ' + res.status);
+          }
+
+          window.location.reload();
+        } catch (err) {
+          window.alert('Erro ao excluir: ' + (err.message || 'desconhecido'));
+        }
+      }
+
+      // [D1] Event delegation no container — funciona inclusive para itens
+      // adicionados dinamicamente em iterações futuras.
+      teamsContainer.addEventListener('click', function (event) {
+        const target = event.target.closest('[data-teams-action]');
+        if (!target) return;
+
+        const action = target.dataset.teamsAction;
+
+        if (action === 'open-new') {
+          openModal('new');
+        } else if (action === 'open-edit') {
+          openModal('edit', {
+            id: target.dataset.teamId,
+            name: target.dataset.teamName,
+          });
+        } else if (action === 'open-delete') {
+          deleteTeam(target.dataset.teamId, target.dataset.teamName);
+        } else if (action === 'close-modal') {
+          closeModal();
+        } else if (action === 'copy-uuid') {
+          copyUuid(target.dataset.uuid, target);
+        }
+      });
+
+      // =======================================================================
+      // Task #329 — Copiar URL pública (UUID) com feedback visual
+      // [A1] Botão estruturado em teams.ejs com data-teams-action="copy-uuid"
+      //   e data-uuid contendo o UUID gerado pelo backend (RN01).
+      // [D1] Fallback para document.execCommand quando navigator.clipboard
+      //   não estiver disponível (browsers antigos / contexto inseguro).
+      // =======================================================================
+      function showCopyFeedback(button) {
+        if (!button || button.dataset.copyBusy === 'true') return;
+
+        const originalText = button.textContent;
+        button.dataset.copyBusy = 'true';
+        button.textContent = 'Copiado!';
+        button.classList.add('teams__copy-btn--success');
+
+        setTimeout(function () {
+          button.textContent = originalText;
+          button.classList.remove('teams__copy-btn--success');
+          delete button.dataset.copyBusy;
+        }, 2000);
+      }
+
+      function copyUuidFallback(uuid, button) {
+        // Usa o input readonly do próprio card como fonte para o execCommand.
+        const card = button.closest('.teams__card');
+        const input = card ? card.querySelector('.teams__uuid-input') : null;
+        if (!input) return false;
+
+        try {
+          input.removeAttribute('readonly');
+          input.select();
+          input.setSelectionRange(0, input.value.length);
+          const ok = document.execCommand('copy');
+          input.setAttribute('readonly', 'readonly');
+          window.getSelection().removeAllRanges();
+          if (ok) showCopyFeedback(button);
+          return ok;
+        } catch (_err) {
+          input.setAttribute('readonly', 'readonly');
+          return false;
+        }
+      }
+
+      function copyUuid(uuid, button) {
+        if (!uuid || !button) return;
+
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(uuid).then(
+            function () { showCopyFeedback(button); },
+            function () { copyUuidFallback(uuid, button); }
+          );
+        } else {
+          copyUuidFallback(uuid, button);
+        }
+      }
+
+      if (form) {
+        form.addEventListener('submit', submitForm);
+      }
+
+      // Tecla Esc fecha o modal
+      document.addEventListener('keydown', function (event) {
+        if (event.key === 'Escape' && modal && !modal.hidden) {
+          closeModal();
+        }
+      });
+    }
+  }
+
   // Ativar item do menu correspondente à rota atual
   document.querySelectorAll('.nav-item').forEach(function (item) {
     const href = item.getAttribute('href');
-    const wrapper = item.closest('.nav-item-wrapper');
-
-    if (href && wrapper && path.startsWith(href)) {
+    if (href && path.startsWith(href)) {
       item.classList.add('active');
-      wrapper.classList.add('active');
+      item.closest('.nav-item-wrapper').classList.add('active');
     }
   });
-}
 
-function initManualCheckpointForm() {
-  const form = document.querySelector('[data-operational-manual-form]');
+  // ============================================================
+  // RANKING — Auto-polling (admin: 5 min, public: 1h)
+  // RN11: painel adm a cada 5 min
+  // RN09: painel público a cada 1h
+  // ============================================================
+  var competitionId = window.COMPETITION_ID;
+  var isAdmin = window.IS_ADMIN;
 
-  if (!form) return;
+  if (competitionId) {
+    var pollIntervalMs = isAdmin ? 5 * 60 * 1000 : 60 * 60 * 1000;
 
-  const cancelButton = form.querySelector('[data-manual-cancel]');
-
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
-    submitManualCheckpoint(form);
-  });
-
-  if (cancelButton) {
-    cancelButton.addEventListener('click', function () {
-      resetManualCheckpointForm(form);
-    });
+    fetchRanking(competitionId, isAdmin);
+    setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);
   }
+});
+
+// [A1][B1] Endpoint: GET /competitions/:id/ranking/teams — retorna RankingTeam[]
+// [A1][B1] Endpoint: GET /competitions/:id/ranking/runners — retorna RankingRunner[]
+// Modelos confirmados em src/models/ranking.ts
+function fetchRanking(competitionId, isAdmin) {
+  var teamRequest = fetch('/competitions/' + competitionId + '/ranking/teams');
+  var checkpointRequest = fetch('/competitions/' + competitionId + '/checkpoints');
+  var runnerRequest = isAdmin ? fetch('/competitions/' + competitionId + '/ranking/runners') : Promise.resolve(null);
+
+  Promise.all([teamRequest, checkpointRequest, runnerRequest])
+    .then(function (responses) {
+      var teamRes = responses[0];
+      var checkpointRes = responses[1];
+      var runnerRes = responses[2];
+
+      if (!teamRes.ok) throw new Error('HTTP ' + teamRes.status);
+      if (!checkpointRes.ok) throw new Error('HTTP ' + checkpointRes.status);
+      if (runnerRes && !runnerRes.ok) throw new Error('HTTP ' + runnerRes.status);
+
+      return Promise.all([
+        teamRes.json(),
+        checkpointRes.json(),
+        runnerRes ? runnerRes.json() : Promise.resolve([]),
+      ]);
+    })
+    .then(function (data) {
+      var teams = data[0] || [];
+      var checkpoints = data[1] || [];
+      var runners = data[2] || [];
+
+      renderTeamRanking(teams, checkpoints.length);
+      if (isAdmin) {
+        renderLatestRunner(checkpoints, runners, teams);
+      }
+      updateLastUpdate();
+      hideError('team-ranking-error');
+      hideError('runner-ranking-error');
+    })
+    .catch(function (err) {
+      console.error('Erro ao atualizar ranking:', err);
+      showError('team-ranking-error', 'Não foi possível atualizar o ranking. Tentando novamente em alguns minutos.');
+      if (isAdmin) {
+        showError('runner-ranking-error', 'Não foi possível atualizar o ranking de corredores.');
+      }
+    });
 }
 
-async function submitManualCheckpoint(form) {
-  const submitButton = form.querySelector('[data-manual-submit]');
-  const feedback = form.querySelector('[data-manual-form-feedback]');
-  const rankingStatus = form.querySelector('[data-manual-ranking-status]');
+function renderTeamRanking(teams, checkpointCount) {
+  var container = document.querySelector('#live-teams-list');
+  if (!container) return;
 
-  clearManualFieldErrors(form);
-  setFeedback(feedback, '', '');
-  setFeedback(rankingStatus, '', '');
-
-  const validation = buildManualCheckpointPayload(form);
-
-  if (!validation.ok) {
-    setFeedback(feedback, validation.message, 'error');
-    if (validation.field) markManualFieldInvalid(form, validation.field);
+  if (!teams || teams.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>Nenhum checkpoint registrado ainda. O ranking será exibido assim que houver dados.</p></div>';
+    updateStatCard('stat-total-km', '—');
+    updateStatCard('stat-avg-pace', '—');
+    updateStatCard('stat-checkpoints', '—');
     return;
   }
 
-  setButtonLoading(submitButton, true);
-  setFeedback(feedback, 'Salvando registro manual...', 'loading');
+  var sortedTeams = teams.slice().sort(function (a, b) {
+    return (a.position || Number.POSITIVE_INFINITY) - (b.position || Number.POSITIVE_INFINITY);
+  });
 
-  try {
-    // [A1][B1][D1] Endpoint confirmado em agent.md, route e checkpointController.create.
-    const response = await fetch(form.dataset.endpoint || '/checkpoints', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(validation.payload),
-    });
-
-    if (!response.ok) {
-      throw new Error(await readResponseError(response));
-    }
-
-    // [B1] checkpointController.create retorna o Checkpoint criado pelo service/repository.
-    const checkpoint = await response.json();
-    const checkpointLabel = checkpoint && checkpoint.id ? ` #${checkpoint.id}` : '';
-
-    setFeedback(feedback, `Registro manual${checkpointLabel} salvo com sucesso.`, 'success');
-    await refreshManualRanking(form, validation.payload.id_competition, rankingStatus);
-  } catch (error) {
-    setFeedback(
-      feedback,
-      error.message || 'Nao foi possivel salvar o registro manual.',
-      'error'
-    );
-  } finally {
-    setButtonLoading(submitButton, false);
+  var gap = 0;
+  if (sortedTeams.length > 1) {
+    var firstDistance = Number(sortedTeams[0].total_distance_km || 0);
+    var secondDistance = Number(sortedTeams[1].total_distance_km || 0);
+    gap = Math.max(0, firstDistance - secondDistance);
   }
+
+  var cards = sortedTeams.map(function (team) {
+    return '<div class="team-card ' + (team.position === 1 ? 'team-card--leader' : '') + '"' +
+      ' data-position="' + team.position + '" data-id="' + team.id_team + '">' +
+        '<div class="team-card-left">' +
+          '<div class="team-pos-badge team-pos-' + (team.position === 1 ? 'leader' : 'other') + '">' +
+            team.position +
+          '</div>' +
+        '</div>' +
+        '<div class="team-card-body">' +
+          '<div class="team-name-row">' +
+            '<span class="team-name">' + escapeHtml(team.team_name) + '</span>' +
+            (team.position === 1 ? '<span class="leader-pill">Líder</span>' : '') +
+          '</div>' +
+          '<div class="team-stats-row">' +
+            '<div class="team-stat">' +
+              '<span class="team-stat-value">' + Number(team.total_distance_km).toFixed(1) + ' km</span>' +
+              '<span class="team-stat-label">Distância total</span>' +
+            '</div>' +
+            '<div class="team-stat">' +
+              '<span class="team-stat-label">Pace médio</span>' +
+              '<span class="team-stat-value">' + (team.average_pace || '—') + '/km</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+  });
+
+  var gapHtml = '';
+  if (sortedTeams.length > 1) {
+    gapHtml = '<div class="gap-separator" id="gap-separator">' +
+      '<div class="gap-line"></div>' +
+      '<div class="gap-info">' +
+        '<span class="gap-label">Diferença para o líder</span>' +
+        '<span class="gap-value" id="gap-value">' + gap.toFixed(1) + ' km</span>' +
+      '</div>' +
+      '<div class="gap-line"></div>' +
+    '</div>';
+  }
+
+  container.innerHTML = cards[0] + gapHtml + cards.slice(1).join('');
+
+  updateRankingStats(sortedTeams, checkpointCount);
 }
 
-function buildManualCheckpointPayload(form) {
-  const distanceField = getManualField(form, 'distance_km');
-  const distance = readNumber(distanceField);
+function renderLatestRunner(checkpoints, runners, teams) {
+  var container = document.querySelector('#live-runners-grid');
+  if (!container) return;
 
-  if (distance === null || distance < 0) {
-    return {
-      ok: false,
-      field: 'distance_km',
-      message: 'Informe uma distancia em km maior ou igual a zero.',
-    };
-  }
-
-  const idRunner = readContextInteger(form, 'id_runner');
-  const idCompetition = readContextInteger(form, 'id_competition');
-  const idTreadmill = readContextInteger(form, 'id_treadmill');
-  const idAdmin = readContextInteger(form, 'id_admin');
-
-  if (!idRunner) {
-    return missingContextResult('id_runner', 'atleta selecionado');
-  }
-
-  if (!idCompetition) {
-    return missingContextResult('id_competition', 'competicao');
-  }
-
-  if (!idTreadmill) {
-    return missingContextResult('id_treadmill', 'esteira');
-  }
-
-  if (!idAdmin) {
-    return missingContextResult('id_admin', 'administrador');
-  }
-
-  const identifierField = getManualField(form, 'identifier');
-  const identifier = readText(identifierField) || buildManualIdentifier(idRunner);
-  const paceResult = readOptionalPace(getManualField(form, 'pace'));
-  const timeResult = readOptionalTime(getManualField(form, 'time'));
-
-  if (!paceResult.ok) {
-    return {
-      ok: false,
-      field: 'pace',
-      message: "Use pace no formato mm:ss, mm:ss/km ou m'ss''.",
-    };
-  }
-
-  if (!timeResult.ok) {
-    return {
-      ok: false,
-      field: 'time',
-      message: 'Use tempo total no formato mm:ss ou hh:mm:ss.',
-    };
-  }
-
-  const payload = {
-    identifier,
-    distance_km: distance,
-    id_runner: idRunner,
-    id_competition: idCompetition,
-    id_treadmill: idTreadmill,
-    id_admin: idAdmin,
-    // [A1][B1][D2] image aceita objeto JSON; usado como metadata manual porque nao ha campo input_method dedicado.
-    image: {
-      input_method: form.dataset.inputMethod || 'manual',
-    },
-  };
-
-  if (paceResult.value) payload.pace = paceResult.value;
-  if (timeResult.value) payload.time = timeResult.value;
-
-  return {
-    ok: true,
-    payload,
-  };
-}
-
-async function refreshManualRanking(form, competitionId, rankingStatus) {
-  const template = form.dataset.rankingEndpointTemplate;
-
-  if (!template || !competitionId) {
-    setFeedback(rankingStatus, '', '');
+  if (!checkpoints || checkpoints.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>Nenhum corredor com checkpoint registrado.</p></div>';
     return;
   }
 
-  const endpoint = template.replace(':id', String(competitionId));
-  setFeedback(rankingStatus, 'Atualizando ranking...', 'loading');
+  var latestCheckpointByTeam = {};
+  var teamMap = (teams || []).reduce(function (acc, team) {
+    acc[team.id_team] = team.team_name;
+    return acc;
+  }, {});
 
-  try {
-    // [A1][B1][D1] Endpoint confirmado em rankingRoutes/rankingController/rankingService.
-    const response = await fetch(endpoint);
+  checkpoints.forEach(function (checkpoint) {
+    if (!checkpoint.runner || checkpoint.runner.id_team == null) return;
 
-    if (!response.ok) {
-      throw new Error(await readResponseError(response));
+    var teamId = checkpoint.runner.id_team;
+    var current = latestCheckpointByTeam[teamId];
+    var itemTime = Date.parse(checkpoint.created_at) || 0;
+    var currentTime = current ? Date.parse(current.created_at) || 0 : 0;
+
+    if (!current || itemTime > currentTime) {
+      latestCheckpointByTeam[teamId] = checkpoint;
     }
-
-    const ranking = await response.json();
-    const count = Array.isArray(ranking) ? ranking.length : 0;
-    setFeedback(rankingStatus, `Ranking atualizado (${count} equipes).`, 'success');
-  } catch (error) {
-    setFeedback(
-      rankingStatus,
-      error.message || 'Registro salvo, mas o ranking nao foi atualizado.',
-      'error'
-    );
-  }
-}
-
-function resetManualCheckpointForm(form) {
-  clearManualFieldErrors(form);
-  setFeedback(form.querySelector('[data-manual-form-feedback]'), '', '');
-  setFeedback(form.querySelector('[data-manual-ranking-status]'), '', '');
-
-  form.querySelectorAll('[data-initial-value]').forEach(function (field) {
-    field.value = field.dataset.initialValue || '';
   });
+
+  var cards = Object.keys(latestCheckpointByTeam)
+    .map(function (teamId) {
+      var teamCheckpoint = latestCheckpointByTeam[teamId];
+      var runner = (runners || []).find(function (item) {
+        return item.id_runner === teamCheckpoint.id_runner;
+      });
+      var teamName = teamMap[teamId] || (runner && runner.team_name) || '—';
+      var totalDistance = runner ? Number(runner.total_distance_km || 0) : Number(teamCheckpoint.distance_km || 0);
+      var averagePace = runner ? runner.average_pace || formatCheckpointPace(teamCheckpoint) : formatCheckpointPace(teamCheckpoint) || '—';
+      var checkpointTime = teamCheckpoint.time || teamCheckpoint.pace || '—';
+      var lastCheckpoint = teamCheckpoint.identifier || '—';
+      var position = runner ? runner.position : Number.POSITIVE_INFINITY;
+      var runnerName = runner ? runner.runner_name : (teamCheckpoint.runner ? teamCheckpoint.runner.name : '—');
+
+      return {
+        position: position,
+        html:
+          '<div class="runner-card" data-position="' + position + '" data-id="' + teamCheckpoint.id_runner + '">' +
+          '<div class="runner-card-top">' +
+            '<div class="runner-pos-badge runner-pos-' + (position === 1 ? 'leader' : 'other') + '">' +
+              (position === Number.POSITIVE_INFINITY ? '—' : position) +
+            '</div>' +
+            '<div class="runner-identity">' +
+              '<span class="runner-name">' + escapeHtml(runnerName || '—') + '</span>' +
+              '<span class="runner-team">' + escapeHtml(teamName) + '</span>' +
+            '</div>' +
+            '<div class="runner-treadmill">' +
+              '<span class="runner-treadmill-time">' + escapeHtml(checkpointTime) + '</span>' +
+              '<span class="runner-treadmill-label">Tempo do checkpoint</span>' +
+            '</div>' +
+          '</div>' +
+          '<div class="runner-card-bottom">' +
+            '<div class="runner-stat">' +
+              '<span class="runner-stat-label">Distância atual</span>' +
+              '<span class="runner-stat-value">' + totalDistance.toFixed(1) + ' km</span>' +
+            '</div>' +
+            '<div class="runner-stat">' +
+              '<span class="runner-stat-label">Pace atual</span>' +
+              '<span class="runner-stat-value">' + escapeHtml(averagePace) + '/km</span>' +
+            '</div>' +
+            '<div class="runner-stat">' +
+              '<span class="runner-stat-label">Último CP</span>' +
+              '<span class="runner-stat-value">' + escapeHtml(lastCheckpoint) + '</span>' +
+            '</div>' +
+          '</div>' +
+        '</div>',
+      };
+    })
+    .sort(function (a, b) {
+      return a.position - b.position;
+    });
+
+  if (cards.length === 0) {
+    container.innerHTML = '<div class="empty-state"><p>Nenhum corredor com checkpoint registrado.</p></div>';
+    return;
+  }
+
+  container.innerHTML = cards.map(function (item) { return item.html; }).join('');
 }
 
-function getManualField(form, name) {
-  return form.querySelector(`[name="${name}"]`);
+function updateRankingStats(teams, checkpointCount) {
+  var totalDistance = teams.reduce(function (sum, team) {
+    return sum + Number(team.total_distance_km || 0);
+  }, 0);
+
+  var totalPaceSeconds = teams.reduce(function (sum, team) {
+    var paceSeconds = Number(team.average_pace_seconds || 0);
+    var distance = Number(team.total_distance_km || 0);
+    return sum + paceSeconds * distance;
+  }, 0);
+
+  var averagePaceSeconds = totalDistance > 0 ? totalPaceSeconds / totalDistance : null;
+
+  updateStatCard('stat-total-km', totalDistance > 0 ? totalDistance.toFixed(1) + ' km' : '—');
+  updateStatCard('stat-avg-pace', averagePaceSeconds ? formatPace(averagePaceSeconds) + '/km' : '—');
+  updateStatCard('stat-checkpoints', checkpointCount != null ? checkpointCount : '—');
 }
 
-function readText(field) {
-  return field && typeof field.value === 'string' ? field.value.trim() : '';
+function updateStatCard(id, value) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = value;
 }
 
-function readNumber(field) {
-  const rawValue = readText(field).replace(',', '.');
-
-  if (!rawValue) return null;
-
-  const number = Number(rawValue);
-  return Number.isFinite(number) ? number : null;
+function formatPace(seconds) {
+  if (seconds === null || seconds === undefined || !Number.isFinite(seconds)) return '—';
+  var rounded = Math.round(seconds);
+  var minutes = Math.floor(rounded / 60);
+  var remainingSeconds = String(rounded % 60).padStart(2, '0');
+  return minutes + ':' + remainingSeconds;
 }
 
-function readPositiveInteger(field) {
-  const value = readNumber(field);
+function formatCheckpointPace(checkpoint) {
+  if (checkpoint.pace) return checkpoint.pace;
+  if (!checkpoint.time || !checkpoint.distance_km) return null;
 
-  if (value === null || !Number.isInteger(value) || value <= 0) {
+  var parts = checkpoint.time.split(':').map(function (part) {
+    return Number(part);
+  });
+  if (parts.some(function (value) { return !Number.isFinite(value) || value < 0; })) {
     return null;
   }
 
-  return value;
-}
-
-function readContextInteger(form, name) {
-  const field = getManualField(form, name);
-  const fieldValue = readPositiveInteger(field);
-
-  if (fieldValue) return fieldValue;
-
-  // [A1][B1][C2][D1] Fallback para preservar o contexto SSR quando o preview mantem DOM antigo ou hidden vazio.
-  const queryValue = new URLSearchParams(window.location.search).get(name);
-  const parsedQueryValue = Number(queryValue);
-
-  if (Number.isInteger(parsedQueryValue) && parsedQueryValue > 0) {
-    if (field) field.value = String(parsedQueryValue);
-    return parsedQueryValue;
-  }
-
-  return null;
-}
-
-function readOptionalPace(field) {
-  const value = readText(field);
-
-  if (!value) {
-    return {
-      ok: true,
-      value: '',
-    };
-  }
-
-  const normalized = value
-    .replace(/\u2019/g, "'")
-    .replace(/\u00b4/g, "'")
-    .replace(/`/g, "'");
-  const quoteMatch = normalized.match(/^(\d{1,3})\s*'\s*(\d{1,2})\s*''?$/);
-  const colonMatch = normalized.match(/^(\d{1,3}):(\d{1,2})$/);
-  const match = quoteMatch || colonMatch;
-
-  if (!match) {
-    return {
-      ok: false,
-    };
-  }
-
-  const minutes = Number(match[1]);
-  const seconds = Number(match[2]);
-
-  if (!Number.isFinite(minutes) || !Number.isFinite(seconds) || seconds > 59) {
-    return {
-      ok: false,
-    };
-  }
-
-  return {
-    ok: true,
-    value: `${minutes}:${String(seconds).padStart(2, '0')}/km`,
-  };
-}
-
-function readOptionalTime(field) {
-  const value = readText(field);
-
-  if (!value) {
-    return {
-      ok: true,
-      value: '',
-    };
-  }
-
-  const parts = value.split(':');
-
-  if (parts.length < 2 || parts.length > 3) {
-    return {
-      ok: false,
-    };
-  }
-
-  const numbers = parts.map(function (part) {
-    return Number(part);
-  });
-
-  if (numbers.some(function (number) {
-    return !Number.isInteger(number) || number < 0;
-  })) {
-    return {
-      ok: false,
-    };
-  }
-
-  const minutesIndex = numbers.length === 3 ? 1 : 0;
-  const secondsIndex = numbers.length === 3 ? 2 : 1;
-
-  if (numbers[minutesIndex] > 59 || numbers[secondsIndex] > 59) {
-    return {
-      ok: false,
-    };
-  }
-
-  return {
-    ok: true,
-    value,
-  };
-}
-
-function missingContextResult(field, label) {
-  return {
-    ok: false,
-    field,
-    message: `Nao foi possivel salvar: ${label} nao foi informado pelo contexto da pagina.`,
-  };
-}
-
-function buildManualIdentifier(runnerId) {
-  // [A1][B1][D2] identifier e obrigatorio/unico; fallback inferido para a tela manual sem campo visual no PNG.
-  return `manual-${runnerId}-${Date.now()}`;
-}
-
-function markManualFieldInvalid(form, name) {
-  const field = getManualField(form, name);
-
-  if (field) {
-    field.setAttribute('aria-invalid', 'true');
-    field.focus();
-  }
-}
-
-function clearManualFieldErrors(form) {
-  form.querySelectorAll('[aria-invalid="true"]').forEach(function (field) {
-    field.removeAttribute('aria-invalid');
-  });
-}
-
-function setButtonLoading(button, isLoading) {
-  if (!button) return;
-
-  if (isLoading) {
-    button.dataset.originalText = button.textContent;
-    button.textContent = 'Salvando...';
-    button.disabled = true;
-    return;
-  }
-
-  button.textContent = button.dataset.originalText || 'Salvar registro manual';
-  button.disabled = false;
-}
-
-function setFeedback(element, message, state) {
-  if (!element) return;
-
-  element.textContent = message;
-
-  if (state) {
-    element.dataset.state = state;
+  var seconds;
+  if (parts.length === 2) {
+    seconds = parts[0] * 60 + parts[1];
+  } else if (parts.length === 3) {
+    seconds = parts[0] * 3600 + parts[1] * 60 + parts[2];
   } else {
-    delete element.dataset.state;
+    return null;
   }
+
+  return formatPace(seconds / Number(checkpoint.distance_km));
 }
 
-async function readResponseError(response) {
-  try {
-    const data = await response.json();
+function updateLastUpdate() {
+  var el = document.querySelector('#last-update');
+  if (!el) return;
+  var now = new Date();
+  var hours = String(now.getHours()).padStart(2, '0');
+  var minutes = String(now.getMinutes()).padStart(2, '0');
+  var seconds = String(now.getSeconds()).padStart(2, '0');
+  el.textContent = 'Última atualização: ' + hours + ':' + minutes + ':' + seconds;
+}
 
-    if (data && typeof data.message === 'string') return data.message;
-    if (data && typeof data.error === 'string') return data.error;
-  } catch (_error) {
-    return `Erro HTTP ${response.status}`;
-  }
+function hideError(id) {
+  var el = document.querySelector('#' + id);
+  if (el) el.style.display = 'none';
+}
 
-  return `Erro HTTP ${response.status}`;
+function showError(id, msg) {
+  var el = document.querySelector('#' + id);
+  if (!el) return;
+  el.textContent = msg;
+  el.style.display = '';
+}
+
+// [D1] Escape manual no JS de cliente — proteção contra XSS
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }

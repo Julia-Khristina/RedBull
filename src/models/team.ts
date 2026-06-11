@@ -19,6 +19,7 @@ export interface UpdateTeamInput {
 export interface TeamRepository {
   create(input: CreateTeamInput): Promise<Team>;
   findByCompetition(competitionId: number): Promise<Team[]>;
+  findByUuid(uuid: string): Promise<Team | null>;
   findByCompetitionAndId(competitionId: number, id: number): Promise<Team | null>;
   updateByCompetitionAndId(competitionId: number, id: number, input: UpdateTeamInput): Promise<Team | null>;
   deleteByCompetitionAndId(competitionId: number, id: number): Promise<boolean>;
