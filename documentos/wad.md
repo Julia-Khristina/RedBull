@@ -2236,8 +2236,8 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | # | Entidade A | Entidade B | A → B | B → A |
 |---|---|---|---|---|
 | 1 | COMPETITION | TEAM | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
-| 2 | TEAM | ATHLETE | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
-| 3 | ATHLETE | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
+| 2 | TEAM | RUNNER | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
+| 3 | RUNNER | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
 | 4 | ADMIN | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
 | 5 | TREADMILL | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
 | 6 | COMPETITION | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
@@ -2246,6 +2246,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 | Diagrama de Classes                                         | DER                                   |
 | ----------------------------------------------------------- | ------------------------------------- |
+<<<<<<< HEAD
 | Classe `Competition`                                        | Tabela `competition`                  |
 | Classe `Team`                                               | Tabela `team`                         |
 | Classe `Runner`                                             | Tabela `runner`                       |
@@ -2258,6 +2259,20 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                | FK `id_competition` em `checkpoint`   |
 | Associação `Treadmill` é usada em `Checkpoint`              | FK `id_treadmill` em `checkpoint`     |
 | Associação `Admin` valida/supervisiona `Checkpoint`         | FK `id_admin` em `checkpoint`         |
+=======
+| Classe `Competition`                                         | Tabela `COMPETITION`                   |
+| Classe `Team`                                             | Tabela `TEAM`                       |
+| Classe `Runner`                                  | Tabela `RUNNER`                     |
+| Classe `Admin`                               | Tabela `ADMIN`                |
+| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
+| Classe `Treadmill`                                            | Tabela `TREADMILL`                      |
+| Associação `Competition` possui `Team`                     | FK `id_competition` em `TEAM`        |
+| Associação `Team` possui `Runner`                       | FK `id_team` em `RUNNER`          |
+| Associação `Runner` registra `Checkpoint`                 | FK `id_runner` em `CHECKPOINT`      |
+| Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
+| Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
+| Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
+>>>>>>> cde49d5e95287fb3845f57198575132089f3fb88
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
