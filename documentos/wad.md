@@ -3258,6 +3258,8 @@ FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison
 
 GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
 
+HUBSPOT. Segmentação de mercado. HubSpot Brasil. Disponível em: HubSpot Brasil - Segmentação de Mercado. Acesso em: 11 jun. 2026.
+
 Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
 
 LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento?. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.  
