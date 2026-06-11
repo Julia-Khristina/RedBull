@@ -44,7 +44,7 @@ A Red Bull, marca global atuante em eventos esportivos e experiências de marca,
 
 Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance com atualização periódica dos dados ao longo da competição, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Considerando as limitações de padronização visual das esteiras e as variáveis do ambiente operacional do evento, a viabilidade da solução ainda depende de validações práticas relacionadas à precisão e consistência da leitura automatizada. Os dados extraídos são submetidos à validação humana, com emissão de alertas em caso de inconsistências, garantindo maior confiabilidade e controle sobre o processo de apuração.
 
-A plataforma é dividida em duas interfaces principais: uma área privada de operação, onde os administradores registram checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição; e uma área pública por equipe, acessada sem login por meio de uma URL com UUID único entregue ao capitão de cada equipe, responsável pela exibição do ranking, status individual dos atletas e calculadora de descanso durante a competição.
+A plataforma é dividida em duas interfaces principais: uma área privada de operação, onde os admins registram checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição; e uma área pública por equipe, acessada sem login por meio de uma URL com UUID único entregue ao capitão de cada equipe, responsável pela exibição do ranking, status individual dos corredores e calculadora de descanso durante a competição.
 
 A criação de valor do sistema se concentra em quatro eixos principais: redução de erros no processo de apuração, aumento da confiabilidade e auditabilidade dos dados, ganho de eficiência operacional para a equipe organizadora da Red Bull e disponibilização de informações atualizadas a cada checkpoint operacional da competição.
 
@@ -112,7 +112,7 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que per
 
 #### Fraquezas
 
-   Entre as fraquezas, observa-se a ausência de integração com as esteiras, o que limita a automação da coleta de dados e mantém a dependência de processos manuais. Adicionalmente, a baixa consolidação de dados em tempo real compromete a visibilidade geral da competição e pode impactar a confiabilidade das informações durante o evento, reduzindo a qualidade da experiência em comparação a soluções mais automatizadas adotadas por concorrentes.
+   Entre as fraquezas, observa-se a ausência de integração com as esteiras, o que limita a automação da coleta de dados e mantém a dependência de processos manuais. Adicionalmente, a baixa consolidação periódica de dados compromete a visibilidade geral da competição e pode impactar a confiabilidade das informações durante o evento, reduzindo a qualidade da experiência em comparação a soluções mais automatizadas adotadas por concorrentes.
 
 #### Oportunidades
 No ambiente externo, identificam-se oportunidades relacionadas ao uso estratégico de dados para geração de valor em marketing, mídia e engajamento do público, por meio de dashboards e indicadores relevantes. Há potencial de escalabilidade da solução para outros eventos da Red Bull, fortalecendo sua vantagem competitiva. Além disso, a crescente tendência de eventos esportivos orientados a dados e o crescimento das running crews no Brasil ampliam o público-alvo e favorecem a adoção da solução proposta.
@@ -133,15 +133,15 @@ Como base inicial, foi utilizado o site oficial do evento Red Bull 24 Hours, for
 
 #### c) Solução proposta
 
-Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de equipes e atletas, atualização periódica dos dados, visualização de rankings globais e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
+Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de equipes e corredores, atualização periódica dos dados, visualização de rankings globais e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
 
 #### d) Forma de utilização da solução
 
-A solução será estruturada em dois ambientes principais: um administrativo e outro público. No ambiente administrativo, acessado por meio de identificadores UUID únicos previamente disponibilizados aos operadores, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente público, usuários terão acesso a um painel com ranking atualizado periodicamente, desempenho das equipes e métricas relevantes. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
+A solução será estruturada em dois ambientes principais: um administrativo e outro público. No ambiente administrativo, acessado por autenticação com credenciais de admin, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente público, usuários terão acesso por meio da URL com UUID único da equipe a um painel com ranking atualizado periodicamente, desempenho das equipes e métricas relevantes. Ao final da competição, admins poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
 
 #### e) Benefícios esperados
 
-A implementação da solução proporcionará significativa redução de erros operacionais, aumento da eficiência no processo de coleta de dados e maior confiabilidade das informações registradas. A disponibilização de métricas periódicamente permitirá melhor acompanhamento do desempenho das equipes durante o evento. Além disso, os relatórios analíticos contribuirão para decisões mais assertivas, melhoria contínua das edições futuras e fortalecimento da experiência dos participantes e da gestão do evento.
+A implementação da solução proporcionará significativa redução de erros operacionais, aumento da eficiência no processo de coleta de dados e maior confiabilidade das informações registradas. A disponibilização de métricas periodicamente permitirá melhor acompanhamento do desempenho das equipes durante o evento. Além disso, os relatórios analíticos contribuirão para decisões mais assertivas, melhoria contínua das edições futuras e fortalecimento da experiência dos participantes e da gestão do evento.
 
 #### f) Critério de sucesso e como será avaliado
 
@@ -149,7 +149,7 @@ O sucesso da solução será mensurado por meio de indicadores objetivos, como a
 
 ### 2.1.4. Value Proposition Canvas (sprint 1): 
 
-O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
+O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações com atualização periódica. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
 A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o projeto em análise.
 
@@ -295,26 +295,26 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 </ul>
 
 #### Biografia
-Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esportivos e ativações de marca, sendo responsável pela organização e execução de dinâmicas em campo. No contexto do Red Bull 24 Horas, acompanha a operação das equipes, monitorando as esteiras e registrando manualmente informações essenciais como entrada e saída dos atletas, quilometragem, pace e os checkpoints gerais da prova de 5 em 5 minutos. 
+Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esportivos e ativações de marca, sendo responsável pela organização e execução de dinâmicas em campo. No contexto do Red Bull 24 Horas, acompanha a operação das equipes, monitorando as esteiras e registrando manualmente informações essenciais como entrada e saída dos corredores, quilometragem, pace e os checkpoints gerais da prova de 5 em 5 minutos.
 
 #### Objetivos
 <ul>
     <li>Ser reconhecida como uma coordenadora operacional altamente capacitada</li>
     <li>Garantir registros rápidos </li>
-    <li>Ter visão consolidada do evento em tempo real</li>
+    <li>Ter visão consolidada do evento com atualização periódica</li>
 </ul>
 
 #### Necessidades
 <ul>
     <li>Uma interface simples e rápida para registrar trocas e checkpoints</li>
-    <li>Visualização clara dos dados dos atletas</li>
+    <li>Visualização clara dos dados dos corredores</li>
     <li>Possibilidade de editar registros em caso de inconsistências</li>
 </ul>
 
 #### Frustrações
 <ul>
-    <li>Pressão operacional nas trocas rápidas entre atletas </li>
-    <li>Dificuldade de consolidar dados em tempo real </li>
+    <li>Pressão operacional nas trocas rápidas entre corredores </li>
+    <li>Dificuldade de consolidar dados durante a competição </li>
     <li>Dependência de processos manuais </li>
     <li>Risco de erros ou perda de registros manuais</li>
 </ul>
@@ -342,7 +342,7 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 </ul>
 
 #### Biografia
-Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos atletas,  estejam consistentes e confiáveis para a análise de resultados no fim da prova. 
+Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos corredores,  estejam consistentes e confiáveis para a análise de resultados no fim da prova.
 
 
 
@@ -366,21 +366,21 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 <ul>
     <li>Dependência de registros manuais, sujeitos a erro humano</li>
     <li>Dificuldade em identificar inconsistências </li>
-    <li>Falta de resultados em tempo real</li>
+    <li>Falta de resultados atualizados periodicamente</li>
     <li>Alto esforço operacional para acompanhar múltiplas equipes simultaneamente</li>
 </ul>
 
 #### Interesses
 <ul>
     <li>Eficiência e redução de erros</li>
-    <li>Tecnologias de automação e monitoramento em tempo real</li>
+    <li>Tecnologias de automação e monitoramento periódico</li>
     <li>Melhoria do evento para globalizá-lo</li>
     <li>Experiência fluida para equipe e para os participantes</li>
 </ul> <br>
 
 <div align="center">
-  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
-  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
+  <sub>Figura 7 - Persona 3: Amanda Azevedo, Corredora da RedBull 24 horas</sub><br>
+  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma corredora da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -388,7 +388,7 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 <ul>
     <li>Idade: 20 anos;</li>
     <li>Localização: São Paulo - SP</li>
-    <li>Cargo: Atleta do RedBull 24 horas</li>
+    <li>Cargo: Corredora do RedBull 24 horas</li>
     <li>Gênero: Feminino</li>
 </ul>
 
@@ -421,7 +421,7 @@ Amanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando um
 #### Interesses
 <ul>
     <li>Que sua quilometragem seja registrada corretamente</li>
-    <li>Acompanhar o desempenho da equipe em tempo real </li>
+    <li>Acompanhar o desempenho da equipe com atualização periódica </li>
     <li>Ganhar a competição </li>
 </ul> <br>
 
@@ -447,10 +447,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar o painel do admin, para gerenciar a competição e acessar todas as funcionalidades do sistema de forma centralizada." |
-| **Critério de aceite 1** | CR1: O sistema deve permitir o acesso ao painel do admin em ambiente controlado. **Teste**: Dado que o administrador acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin. |
+| **Critério de aceite 1** | CR1: O sistema deve permitir o acesso ao painel do admin em ambiente controlado. **Teste**: Dado que o admin acessa o sistema, quando entra na plataforma, então deve ser direcionado ao painel do admin. |
 | **Critério de aceite 2** | CR2: O painel deve exibir as principais seções do sistema. **Teste**: Dado que o admin acessa o painel, quando a página carrega, então deve visualizar opções como "criar competição", "equipes", "ranking" e "relatórios". |
 | **Critério de aceite 3** | CR3: O painel deve exibir o estado atual do sistema (com ou sem competição). **Teste**: Dado que não há competição cadastrada, quando o painel é exibido, então deve mostrar a opção "Criar competição". Além disso, dado que existe uma competição cadastrada, quando o painel é exibido, então deve mostrar status, tempo e equipes. |
-| Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois o painel do admin pode ser construído sem que o sistema de login ou o ranking estejam finalizados. <br> Negociável: A forma de acesso ao painel e as seções exibidas podem ser redefinidas conforme as necessidades identificadas durante o projeto. <br> Valorosa: Centraliza o controle do sistema, oferecendo ao administrador um ponto único de acesso a todas as funcionalidades da competição. <br> Estimável: Escopo claro e limitado a uma tela principal com exibição condicional de estado. <br> Pequena: Compreende apenas a tela principal do admin e sua lógica de exibição de estado. <br> Testável: Os comportamentos de redirecionamento e exibição condicional são verificáveis objetivamente para cada estado do sistema. |
+| Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois o painel do admin pode ser construído sem que o sistema de login ou o ranking estejam finalizados. <br> Negociável: A forma de acesso ao painel e as seções exibidas podem ser redefinidas conforme as necessidades identificadas durante o projeto. <br> Valorosa: Centraliza o controle do sistema, oferecendo ao admin um ponto único de acesso a todas as funcionalidades da competição. <br> Estimável: Escopo claro e limitado a uma tela principal com exibição condicional de estado. <br> Pequena: Compreende apenas a tela principal do admin e sua lógica de exibição de estado. <br> Testável: Os comportamentos de redirecionamento e exibição condicional são verificáveis objetivamente para cada estado do sistema. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -480,12 +480,12 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US03 |
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
-| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente." |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso cadastrar e editar equipes com seus corredores, para garantir que todos os participantes estejam registrados corretamente." |
 | **Critério de aceite 1** | CR1: O sistema deve permitir criar uma equipe. **Teste**: Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista. |
-| **Critério de aceite 2** | CR2: O sistema deve permitir adicionar atletas. **Teste**: Dado que o admin adiciona atletas à equipe, quando salva, então os atletas devem estar corretamente vinculados à equipe. |
-| **Critério de aceite 3** | CR3: O sistema deve permitir edição e remoção de atletas. **Teste**: Dado que o admin altera ou remove dados de um atleta, quando salva, então as mudanças devem ser refletidas corretamente na equipe. |
+| **Critério de aceite 2** | CR2: O sistema deve permitir adicionar corredores. **Teste**: Dado que o admin adiciona corredores à equipe, quando salva, então os corredores devem estar corretamente vinculados à equipe. |
+| **Critério de aceite 3** | CR3: O sistema deve permitir edição e remoção de corredores. **Teste**: Dado que o admin altera ou remove dados de um corredor, quando salva, então as mudanças devem ser refletidas corretamente na equipe. |
 | **Critério de aceite 4** | CR4: Quando não há equipes cadastradas, a tela deve exibir um botão de adição com instrução visual. **Teste**: Dado que o admin acessa /admin/equipes sem nenhuma equipe cadastrada, quando a página carrega, então deve exibir o botão "+ Adicionar equipe" acompanhado de instrução visual, sem exibir uma lista vazia. |
-| Critérios INVEST | Independente: Esta US pode ser desenvolvida sem depender de outras funcionalidades, pois o cadastro de equipes é uma operação isolada. <br> Negociável: A estrutura dos dados da equipe, como campos obrigatórios e opcionais, pode ser ajustada conforme as necessidades do projeto. <br> Valorosa: É essencial para o funcionamento da competição, pois sem equipes e atletas cadastrados nenhuma corrida pode ser realizada. <br> Estimável: Trata-se de um CRUD simples com escopo bem definido. <br> Pequena: Compreende apenas as operações de criação, edição e remoção dentro do cadastro de equipes. <br> Testável: Cada operação de CRUD possui comportamento verificável e resultado esperado claro. |
+| Critérios INVEST | Independente: Esta US pode ser desenvolvida sem depender de outras funcionalidades, pois o cadastro de equipes é uma operação isolada. <br> Negociável: A estrutura dos dados da equipe, como campos obrigatórios e opcionais, pode ser ajustada conforme as necessidades do projeto. <br> Valorosa: É essencial para o funcionamento da competição, pois sem equipes e corredores cadastrados nenhuma corrida pode ser realizada. <br> Estimável: Trata-se de um CRUD simples com escopo bem definido. <br> Pequena: Compreende apenas as operações de criação, edição e remoção dentro do cadastro de equipes. <br> Testável: Cada operação de CRUD possui comportamento verificável e resultado esperado claro. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -502,7 +502,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 1** | CR1: O sistema deve exibir relatórios da competição. **Teste**: Dado que o admin acessa a seção de relatórios, quando seleciona um tipo — visão geral da competição, relatório por equipe ou relatório de inconsistências —, então os dados correspondentes devem ser exibidos corretamente. |
 | **Critério de aceite 2** | CR2: O sistema deve identificar e listar inconsistências. **Teste**: Dado que existem divergências entre os dados capturados via OCR e os inseridos manualmente, quando o relatório de inconsistências é gerado, então o sistema deve listar todas as ocorrências identificadas. |
 | **Critério de aceite 3** | CR3: O sistema deve permitir a exportação dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo CSV com os dados correspondentes. |
-| Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o administrador, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes — exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
+| Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o admin, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes — exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -516,7 +516,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login." |
-| **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o administrador clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar link". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
+| **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o admin clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar link". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
 | **Critério de aceite 2** | CR2: O UUID e o botão "Copiar link" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar link". Além disso, dado que o admin clica em "Copiar link", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
 | **Critério de aceite 3** | CR3: O UUID não deve expirar enquanto o evento estiver ativo. **Teste**: Dado que o evento está em andamento, quando o link gerado é acessado, então a página deve carregar corretamente. |
 | Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois a geração do UUID ocorre de forma isolada no momento do cadastro da equipe. <br> Negociável: A implementação pode ser simplificada ou refinada em conjunto com o parceiro e os demais envolvidos no projeto. <br> Valorosa: Elimina a necessidade de login para a equipe, facilitando o acesso ao painel sem barreiras de autenticação. <br> Estimável: O fluxo de geração do UUID no momento do cadastro é claro e bem delimitado. <br> Pequena: Escopo limitado à geração, exibição e cópia do link. <br> Testável: O comportamento é verificável via criação de equipes e acesso ao link gerado. |
@@ -532,7 +532,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US06 |
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
-| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a aba de equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e atletas da competição." |
+| **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a aba de equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e corredores da competição." |
 | **Critério de aceite 1** | CR1: O menu fixo deve exibir o item "Equipes" em todas as telas do admin e redirecionar corretamente. **Teste**: Dado que o admin está em qualquer tela do sistema, quando clica em "Equipes" no menu fixo, então deve ser redirecionado para /admin/equipes e o item deve ficar destacado como ativo no menu. |
 | **Critério de aceite 2** | CR2: O card "Gerenciar equipes" na Home deve redirecionar para a tela de gestão de equipes. **Teste**: Dado que o admin está na Home, quando clica no card "Gerenciar equipes", então deve ser redirecionado para /admin/equipes. |
 | Critérios INVEST | Independente: Esta US não depende de outros fluxos, pois a navegação até a tela de equipes pode ser desenvolvida de forma isolada. <br> Negociável: Os atalhos, ícones e rótulos do menu podem ser ajustados conforme necessidade do projeto. <br> Valorosa: Centraliza o gerenciamento de equipes e oferece acesso rápido por dois pontos de entrada distintos. <br> Estimável: O padrão de navegação é bem definido e de complexidade baixa. <br> Pequena: Escopo limitado à navegação entre telas por dois pontos de entrada distintos, sem envolver lógica de exibição de conteúdo ou estado da listagem. <br> Testável: As rotas e os estados de tela são verificáveis objetivamente. |
@@ -548,10 +548,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US07 |
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
-| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso clicar no botão 'Acessar competição' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros em tempo real." |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso clicar no botão 'Acessar competição' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros com atualização periódica." |
 | **Critério de aceite 1** | CR1: O sistema deve navegar para o painel operacional da equipe selecionada ao clicar em "Acessar competição". **Teste**: Dado que o admin clica em "Acessar competição" no card de uma equipe, quando a navegação ocorre, então o sistema deve exibir o painel em /admin/equipes/operacional com os dados da equipe correta. |
-| **Critério de aceite 2** | CR2: O painel operacional deve conter os três blocos definidos na especificação. **Teste**: Dado que o admin abre o painel operacional, quando a página carrega, então devem estar presentes a área de controle do juiz, o fluxo de registro de checkpoint e a tabela de dados da equipe. Além disso, o dropdown de atletas deve listar todos os membros da equipe selecionada. |
-| Critérios INVEST | Independente: Esta US depende apenas do cadastro prévio da equipe, sendo desenvolvível de forma isolada após essa etapa. <br> Negociável: O layout e a organização dos blocos do painel podem ser reorganizados conforme feedback do parceiro. <br> Valorosa: É a tela operacional principal da competição, centralizando o controle em tempo real. <br> Estimável: Escopo bem delimitado pela especificação, com dois critérios de aceite claros. <br> Pequena: Limitada ao acesso e ao carregamento correto do painel operacional. <br> Testável: A navegação e a presença dos componentes são verificáveis objetivamente. |
+| **Critério de aceite 2** | CR2: O painel operacional deve conter os três blocos definidos na especificação. **Teste**: Dado que o admin abre o painel operacional, quando a página carrega, então devem estar presentes a área de controle do juiz, o fluxo de registro de checkpoint e a tabela de dados da equipe. Além disso, o dropdown de corredores deve listar todos os membros da equipe selecionada. |
+| Critérios INVEST | Independente: Esta US depende apenas do cadastro prévio da equipe, sendo desenvolvível de forma isolada após essa etapa. <br> Negociável: O layout e a organização dos blocos do painel podem ser reorganizados conforme feedback do parceiro. <br> Valorosa: É a tela operacional principal da competição, centralizando o controle com dados atualizados periodicamente. <br> Estimável: Escopo bem delimitado pela especificação, com dois critérios de aceite claros. <br> Pequena: Limitada ao acesso e ao carregamento correto do painel operacional. <br> Testável: A navegação e a presença dos componentes são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -564,10 +564,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US08 |
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
-| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso selecionar o atleta ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
-| **Critério de aceite 1** | CR1: O dropdown deve exibir todos os atletas da equipe com seu status atual. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os atletas da equipe devem aparecer com seu respectivo status — Em corrida, Em descanso ou Pronto para entrar — visível ao lado do nome. |
-| **Critério de aceite 2** | CR2: Os botões de status devem ser atualizados automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ter seu status alterado para "Em descanso" e o atleta atual para "Em corrida". |
-| Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O número de status possíveis e o fluxo de troca podem ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso selecionar o corredor ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
+| **Critério de aceite 1** | CR1: O dropdown deve exibir todos os corredores da equipe com seu status atual. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os corredores da equipe devem aparecer com seu respectivo status — Em corrida, Em descanso ou Pronto para entrar — visível ao lado do nome. |
+| **Critério de aceite 2** | CR2: Os botões de status devem ser atualizados automaticamente após a troca de corredor. **Teste**: Dado que o juiz clica em "Trocar corredor" e confirma a entrada do próximo corredor, quando a ação é concluída, então o corredor anterior deve ter seu status alterado para "Em descanso" e o corredor atual para "Em corrida". |
+| Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O número de status possíveis e o fluxo de troca podem ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de corredores. <br> Estimável: O fluxo de seleção e troca de corredores é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de corredor ativo, sem envolver o registro de performance. <br> Testável: Os estados dos corredores após cada ação são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -580,9 +580,9 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US09 |
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
-| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do atleta." |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do corredor." |
 | **Critério de aceite 1** | CR1: O sistema deve capturar a imagem e extrair os dados via OCR. **Teste**: Dado que o admin clica em "Tirar foto da esteira", quando a câmera integrada é aberta e a foto é capturada, então o sistema deve exibir o preview da imagem ao lado dos dados extraídos — distância (km), pace (min/km) e tempo total. |
-| **Critério de aceite 2** | CR2: O sistema deve alertar visualmente quando o valor extraído apresentar discrepância. **Teste**: Dado que o OCR extrai um valor que diverge da média histórica do atleta ou da meta da prova, quando o dado é exibido, então o campo deve ser marcado em vermelho com mensagem de alerta. Além disso, dado que o valor está dentro do esperado, quando exibido, então nenhum alerta deve ser apresentado. |
+| **Critério de aceite 2** | CR2: O sistema deve alertar visualmente quando o valor extraído apresentar discrepância. **Teste**: Dado que o OCR extrai um valor que diverge da média histórica do corredor ou da meta da prova, quando o dado é exibido, então o campo deve ser marcado em vermelho com mensagem de alerta. Além disso, dado que o valor está dentro do esperado, quando exibido, então nenhum alerta deve ser apresentado. |
 | **Critério de aceite 3** | CR3: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
 | Critérios INVEST | Independente: O fluxo OCR é autossuficiente; o modo de entrada manual é tratado como US separada. <br> Negociável: A engine de OCR utilizada e o limiar de discrepância podem ser ajustados conforme os resultados obtidos em testes. <br> Valorosa: Elimina erros de digitação e agiliza o registro de checkpoints durante a competição. <br> Estimável: O fluxo de cinco etapas — captura, extração, alerta, revisão e confirmação — está bem especificado. <br> Pequena: Limitada à captura, extração e confirmação de um único checkpoint. <br> Testável: Os dados extraídos, os alertas de discrepância e os logs de auditoria são verificáveis objetivamente. |
 
@@ -598,7 +598,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
 | **User Story** | "Como Marina Costa, Coordenadora Operacional, posso registrar um checkpoint manualmente digitando os dados quando a câmera falhar ou a foto estiver ilegível, para que nenhum registro seja perdido por falha técnica." |
-| **Critério de aceite 1** | CR1: O modo manual deve disponibilizar um formulário com os campos de distância, pace e tempo total. **Teste**: Dado que o admin acessa o modo de entrada manual, quando preenche os campos de distância (km), pace (min/km) e tempo total e clica em "Salvar registro manual", então os dados devem ser salvos corretamente no checkpoint da equipe e do atleta. |
+| **Critério de aceite 1** | CR1: O modo manual deve disponibilizar um formulário com os campos de distância, pace e tempo total. **Teste**: Dado que o admin acessa o modo de entrada manual, quando preenche os campos de distância (km), pace (min/km) e tempo total e clica em "Salvar registro manual", então os dados devem ser salvos corretamente no checkpoint da equipe e do corredor. |
 | **Critério de aceite 2** | CR2: O sistema deve registrar automaticamente que o checkpoint foi inserido em modo manual. **Teste**: Dado que o admin salva um registro pelo modo manual, quando o dado é persistido, então o log de auditoria deve exibir a flag "manual" para distingui-lo dos registros inseridos via OCR. |
 | Critérios INVEST | Independente: É o caminho de contingência do sistema e pode ser desenvolvido de forma independente do fluxo OCR. <br> Negociável: Os campos disponíveis no modo manual podem ser expandidos conforme necessidade identificada durante o projeto. <br> Valorosa: Garante continuidade operacional em situações de falha técnica, evitando perda de registros durante a competição. <br> Estimável: Trata-se de um formulário simples com campos bem definidos e comportamento claro. <br> Pequena: Escopo limitado à entrada e ao salvamento manual de um único checkpoint. <br> Testável: Os dados salvos e a flag de método no log de auditoria são verificáveis objetivamente. |
 
@@ -614,10 +614,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
 | **User Story** | "Como Marina Costa, Coordenadora Operacional, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza automaticamente a cada 5 minutos, para acompanhar a evolução da performance sem precisar recarregar a página." |
-| **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados com timestamp e atleta, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
+| **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados com timestamp e corredor, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
 | **Critério de aceite 2** | CR2: A tabela deve ser atualizada automaticamente a cada 5 minutos sem ação do usuário. **Teste**: Dado que um novo checkpoint é registrado, quando o intervalo de 5 minutos é atingido, então o novo registro deve aparecer na tabela sem que o admin recarregue a página. Além disso, deve ser exibido um indicador visual ou timestamp da última atualização. |
 | **Critério de aceite 3** | CR3: Os valores de pace médio e distância total devem ser recalculados corretamente a cada atualização. **Teste**: Dado que múltiplos checkpoints foram registrados, quando a tabela é atualizada, então o pace médio deve corresponder à média ponderada correta e a distância total deve ser a soma de todos os checkpoints da sessão. |
-| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: O intervalo de atualização de 5 minutos pode ser tornado configurável em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
+| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: O intervalo de atualização de 5 minutos pode ser tornado configurável em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada periodicamente da performance da equipe. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -629,11 +629,11 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 | Identificação | US12 |
 ---| ---
-| **Persona** | Amanda Azevedo (Atleta) |
-| **User Story** | "Como Amanda Azevedo, atleta da competição, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe em tempo real diretamente pelo link recebido do administrador." |
+| **Persona** | Amanda Azevedo (Corredora) |
+| **User Story** | "Como Amanda Azevedo, corredora da competição, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe com atualização periódica diretamente pelo link recebido do admin." |
 | **Critério de aceite 1** | CR1: O painel deve ser acessível publicamente sem exigir autenticação. **Teste**: Dado que qualquer pessoa acessa o link em modo anônimo ou aba privada, quando a URL é carregada, então a tela deve ser exibida corretamente sem campos de login ou solicitação de senha. Além disso, dado que um UUID inválido é acessado, quando a requisição é feita, então o sistema deve exibir uma mensagem de erro. |
 | **Critério de aceite 2** | CR2: A tela deve exibir apenas os dados correspondentes à equipe vinculada ao UUID acessado. **Teste**: Dado que dois links de equipes diferentes são acessados, quando cada um é carregado, então cada painel deve exibir exclusivamente os dados da equipe correta, sem expor informações de outras equipes. |
-| Critérios INVEST | Independente: Esta US depende apenas do UUID gerado pelo administrador, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores e torcida, permitindo acompanhamento em tempo real sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
+| Critérios INVEST | Independente: Esta US depende apenas do UUID gerado no cadastro da equipe, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores e torcida, permitindo acompanhamento periódico sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -645,11 +645,11 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 | Identificação            | US13  |
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**              | Amanda Azevedo (Atleta)   |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar o ranking global da competição no painel da equipe, para acompanhar a posição da minha equipe durante o evento."  |
-| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem ser exibidos a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior.  |
+| **Persona**              | Amanda Azevedo (Corredora)   |
+| **User Story**           | "Como Amanda Azevedo, corredora da competição, posso visualizar o ranking global da competição no painel da equipe, para acompanhar a posição da minha equipe durante o evento."  |
+| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que a corredora acessa o painel, quando a página carrega, então devem ser exibidos a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior.  |
 | **Critério de aceite 2** | CR2: O ranking não deve ser atualizado antes do intervalo definido. **Teste**: Dado que menos de 1 hora se passou desde a última atualização, quando o painel é acessado novamente, então o ranking exibido deve permanecer inalterado. |
-| Critérios INVEST         | Independente: O ranking pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: As métricas exibidas no ranking podem ser alteradas conforme feedback dos usuários. <br> Valorosa: Permite que a atleta acompanhe o desempenho geral da equipe durante a competição. <br> Estimável: O comportamento de atualização e exibição do ranking é claro e bem delimitado. <br> Pequena: Escopo limitado à exibição do ranking global. <br> Testável: Os dados exibidos e o intervalo de atualização são verificáveis objetivamente. |
+| Critérios INVEST         | Independente: O ranking pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: As métricas exibidas no ranking podem ser alteradas conforme feedback dos usuários. <br> Valorosa: Permite que a corredora acompanhe o desempenho geral da equipe durante a competição. <br> Estimável: O comportamento de atualização e exibição do ranking é claro e bem delimitado. <br> Pequena: Escopo limitado à exibição do ranking global. <br> Testável: Os dados exibidos e o intervalo de atualização são verificáveis objetivamente. |
 
 
 
@@ -663,11 +663,11 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 | Identificação            | US14 |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**              | Amanda Azevedo (Atleta) |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar o status individual e as métricas dos atletas da minha equipe, para acompanhar o desempenho coletivo durante a prova." |
-| **Critério de aceite 1** | CR1: O painel deve exibir os dados individuais dos atletas da equipe. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem estar presentes pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual de cada atleta. |
-| **Critério de aceite 2** | CR2: Os dados devem refletir novos checkpoints registrados. **Teste**: Dado que um checkpoint é registrado pelo administrador, quando o painel é atualizado, então os dados do atleta correspondente devem refletir as novas informações.|
-| Critérios INVEST         | Independente: A exibição das métricas dos atletas pode ser desenvolvida independentemente do ranking e da calculadora de descanso. <br> Negociável: As métricas exibidas podem ser ajustadas conforme necessidade do parceiro. <br> Valorosa: Permite acompanhamento detalhado do desempenho da equipe durante a competição. <br> Estimável: Os campos e comportamentos esperados estão claramente definidos. <br> Pequena: Escopo limitado à visualização de métricas dos atletas. <br> Testável: Todos os campos exibidos podem ser verificados objetivamente. |
+| **Persona**              | Amanda Azevedo (Corredora) |
+| **User Story**           | "Como Amanda Azevedo, corredora da competição, posso visualizar o status individual e as métricas dos corredores da minha equipe, para acompanhar o desempenho coletivo durante a prova." |
+| **Critério de aceite 1** | CR1: O painel deve exibir os dados individuais dos corredores da equipe. **Teste**: Dado que a corredora acessa o painel, quando a página carrega, então devem estar presentes pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual de cada corredor. |
+| **Critério de aceite 2** | CR2: Os dados devem refletir novos checkpoints registrados. **Teste**: Dado que um checkpoint é registrado pelo admin, quando o painel é atualizado, então os dados do corredor correspondente devem refletir as novas informações.|
+| Critérios INVEST         | Independente: A exibição das métricas dos corredores pode ser desenvolvida independentemente do ranking e da calculadora de descanso. <br> Negociável: As métricas exibidas podem ser ajustadas conforme necessidade do parceiro. <br> Valorosa: Permite acompanhamento detalhado do desempenho da equipe durante a competição. <br> Estimável: Os campos e comportamentos esperados estão claramente definidos. <br> Pequena: Escopo limitado à visualização de métricas dos corredores. <br> Testável: Todos os campos exibidos podem ser verificados objetivamente. |
 
 
 <div align="center">
@@ -680,11 +680,11 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 | Identificação            | US15|
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**              | Amanda Azevedo (Atleta) |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar uma calculadora de descanso inteligente, para entender meu tempo recomendado de recuperação entre turnos." |
-| **Critério de aceite 1** | CR1: A calculadora deve exibir indicador visual baseado no estado físico do atleta. **Teste**: Dado que o status do atleta varia, quando o indicador é exibido, então a barra deve mudar de cor conforme o estado — verde, amarelo ou vermelho. |
-| **Critério de aceite 2** | CR2: A calculadora deve exibir o tempo recomendado de descanso e a contagem regressiva. **Teste**: Dado que um atleta realizou uma corrida recente e intensa, quando o cálculo é executado, então o sistema deve exibir o tempo recomendado de descanso acompanhado de contagem regressiva. |
-| Critérios INVEST         | Independente: A calculadora pode ser implementada sem dependência das demais funcionalidades do painel público. <br> Negociável: As regras de cálculo e os indicadores podem ser ajustados conforme testes futuros. <br> Valorosa: Auxilia atletas no gerenciamento de descanso durante a competição. <br> Estimável: A lógica de cálculo e exibição possui escopo claro. <br> Pequena: Escopo limitado à recomendação de descanso. <br> Testável: Os indicadores e tempos exibidos podem ser verificados objetivamente. |
+| **Persona**              | Amanda Azevedo (Corredora) |
+| **User Story**           | "Como Amanda Azevedo, corredora da competição, posso visualizar uma calculadora de descanso inteligente, para entender meu tempo recomendado de recuperação entre turnos." |
+| **Critério de aceite 1** | CR1: A calculadora deve exibir indicador visual baseado no estado físico do corredor. **Teste**: Dado que o status do corredor varia, quando o indicador é exibido, então a barra deve mudar de cor conforme o estado — verde, amarelo ou vermelho. |
+| **Critério de aceite 2** | CR2: A calculadora deve exibir o tempo recomendado de descanso e a contagem regressiva. **Teste**: Dado que um corredor realizou uma corrida recente e intensa, quando o cálculo é executado, então o sistema deve exibir o tempo recomendado de descanso acompanhado de contagem regressiva. |
+| Critérios INVEST         | Independente: A calculadora pode ser implementada sem dependência das demais funcionalidades do painel público. <br> Negociável: As regras de cálculo e os indicadores podem ser ajustados conforme testes futuros. <br> Valorosa: Auxilia corredores no gerenciamento de descanso durante a competição. <br> Estimável: A lógica de cálculo e exibição possui escopo claro. <br> Pequena: Escopo limitado à recomendação de descanso. <br> Testável: Os indicadores e tempos exibidos podem ser verificados objetivamente. |
 
 
 <div align="center">
@@ -697,10 +697,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 | Identificação            | US16 |
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**              | Amanda Azevedo (Atleta) |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso compartilhar o ranking simplificado da equipe, para divulgar o desempenho da competição sem expor dados sensíveis dos atletas."|
-| **Critério de aceite 1** | CR1: O sistema deve gerar um link simplificado de compartilhamento. **Teste**: Dado que a atleta clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link contendo apenas o leaderboard simplificado da competição. |
-| **Critério de aceite 2** | CR2: O link compartilhado não deve expor dados individuais sensíveis. **Teste**: Dado que o link é acessado por terceiros, quando a página carrega, então apenas informações gerais do ranking devem ser exibidas, sem métricas individuais dos atletas. |
+| **Persona**              | Amanda Azevedo (Corredora) |
+| **User Story**           | "Como Amanda Azevedo, corredora da competição, posso compartilhar o ranking simplificado da equipe, para divulgar o desempenho da competição sem expor dados sensíveis dos corredores."|
+| **Critério de aceite 1** | CR1: O sistema deve gerar um link simplificado de compartilhamento. **Teste**: Dado que a corredora clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link contendo apenas o leaderboard simplificado da competição. |
+| **Critério de aceite 2** | CR2: O link compartilhado não deve expor dados individuais sensíveis. **Teste**: Dado que o link é acessado por terceiros, quando a página carrega, então apenas informações gerais do ranking devem ser exibidas, sem métricas individuais dos corredores. |
 | Critérios INVEST         | Independente: O compartilhamento pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: Os formatos de compartilhamento podem evoluir conforme necessidade do projeto. <br> Valorosa: Facilita divulgação da competição e engajamento das equipes. <br> Estimável: O comportamento do link e dos dados exibidos é bem definido. <br> Pequena: Escopo limitado à geração e exibição do link compartilhável. <br> Testável: O conteúdo exibido no link pode ser validado objetivamente. |
 
 
@@ -716,7 +716,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Persona**              | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story**           | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a Matriz de Rastreabilidade do sistema, para verificar a cobertura entre requisitos funcionais, regras de negócio, endpoints e telas implementadas."|
-| **Critério de aceite 1** | CR1: A RTM deve estar acessível e atualizada no documento WAD, cobrindo todos os RFs implementados. **Teste:** Dado que o administrador acessa a seção 3.9 do WAD, quando a página é exibida, então a matriz deve conter todas as linhas de rastreabilidade com persona, RF, RN, endpoint, tela, teste e evidência preenchidos. |
+| **Critério de aceite 1** | CR1: A RTM deve estar acessível e atualizada no documento WAD, cobrindo todos os RFs implementados. **Teste:** Dado que o admin acessa a seção 3.9 do WAD, quando a página é exibida, então a matriz deve conter todas as linhas de rastreabilidade com persona, RF, RN, endpoint, tela, teste e evidência preenchidos. |
 | **Critério de aceite 2** | CR2: A RTM deve permitir identificar lacunas de cobertura entre requisitos e implementação. **Teste:** Dado que um RF foi implementado, quando a RTM é consultada, então deve existir ao menos uma linha correspondente conectando persona → RF → RN → endpoint → tela → teste → evidência. |
 | **Critérios INVEST**     | Independente: Esta US pode ser validada de forma isolada, pois depende apenas da documentação existente. <br> Negociável: As colunas da RTM podem ser expandidas conforme necessidades identificadas ao longo das sprints. <br> Valorosa: Garante rastreabilidade completa entre necessidades, implementação e validação, essencial para auditoria e controle de qualidade. <br> Estimável: O escopo é bem definido — preencher e manter a RTM atualizada. <br> Pequena: Limitada à criação e manutenção da matriz de rastreabilidade. <br> Testável: A presença e completude das linhas da RTM são verificáveis objetivamente. |
 
@@ -740,20 +740,20 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
 | ----- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------- |
-| RF001 | O sistema deve permitir a criação de uma sala administrativa vinculada a uma competição                                                  | Alta       | Concluído |
+| RF001 | O sistema deve permitir a criação e gestão de uma competição com acesso administrativo por credenciais de admin                                                  | Alta       | Concluído |
 | RF002 | O sistema deve permitir o cadastro de uma competição contendo nome, data e local                                                                           | Alta       | Concluído |
-| RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 atletas por equipe                                                          | Alta       | Concluído |
-| RF004 | O sistema deve permitir acesso à área administrativa por meio de autenticação com credenciais de administrador                                    | Alta       | Em progresso |
+| RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 corredores por equipe                                                          | Alta       | Concluído |
+| RF004 | O sistema deve permitir acesso à área administrativa por meio de autenticação com credenciais de admin                                    | Alta       | Em progresso |
 | RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Em progresso |
 | RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes de serem persistidos.                                | Alta       | Em progresso |
 | RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Em progresso |
 | RF008 | O sistema deve registrar checkpoints contendo ao menos a distância (km) somente após validação do usuário                                                             | Alta       | Concluído |
 | RF009 | O sistema deve identificar inconsistências nos dados capturados via OCR e sinalizar ao usuário antes da validação                                                     | Média      | Em progresso |
 | RF010 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo em intervalos máximos de 5 minutos durante a competição                                                        | Média      | Concluído |
-| RF011 | O sistema deve exibir o atleta em execução e o próximo atleta escalado por equipe no painel administrativo                                                            | Baixa      | Em progresso |
+| RF011 | O sistema deve exibir o corredor em execução e o próximo corredor escalado por equipe no painel administrativo                                                            | Baixa      | Em progresso |
 | RF012 | O sistema deve permitir o encerramento da competição pelo usuário, bloqueando novos registros de checkpoints                                                          | Alta       | Concluído |
 | RF013 | O sistema deve exportar os dados da competição em formato CSV, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
-| RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
+| RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por corredor, equipe e geral                                          | Baixa      | Planejado |
 | RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora                                                   | Média      | Concluído |
 
 <div align="center">
@@ -766,18 +766,18 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | RF001 | Dado que o usuário informe os dados da competição, quando a operação for confirmada, então a competição deve ser criada e persistida no banco de dados.                                |
 | RF002 | Dado que o usuário informe nome, data e local válidos, quando a operação for confirmada, então a competição deve ser registrada no sistema. |
-| RF003 | Dado que o usuário realize o cadastro de uma equipe, quando os dados forem confirmados, então o sistema deve permitir registrar até 16 atletas vinculados à equipe. |
-| RF004 | Dado que o operador possua credenciais de administrador válidas, quando acessar a área administrativa, então o sistema deve permitir acesso às funcionalidades operacionais. |
+| RF003 | Dado que o usuário realize o cadastro de uma equipe, quando os dados forem confirmados, então o sistema deve permitir registrar até 16 corredores vinculados à equipe. |
+| RF004 | Dado que o operador possua credenciais de admin válidas, quando acessar a área administrativa, então o sistema deve permitir acesso às funcionalidades operacionais. |
 | RF005 | Dado que o operador envie uma imagem válida da esteira, quando o OCR for executado, então o sistema deve retornar distância, pace, velocidade e tempo em até 3 segundos.              |
 | RF006 | Dado que os dados sejam extraídos via OCR, quando o processamento for concluído, então o sistema deve disponibilizar os dados para validação antes da persistência. |
 | RF007 | Dado que os dados extraídos via OCR sejam exibidos, quando o operador editar os campos e confirmar, então o sistema deve registrar os dados corrigidos no checkpoint.                 |
 | RF008 | Dado que os dados do checkpoint estejam validados, quando o usuário confirmar o registro, então o sistema deve persistir ao menos a distância (km) no banco de dados. |
 | RF009 | Dado que o sistema identifique inconsistências nos dados extraídos, quando o OCR finalizar o processamento, então o sistema deve sinalizar os campos divergentes ao usuário. |
 | RF010 | Dado que existam novos checkpoints validados, quando o intervalo máximo de atualização do painel administrativo for atingido, então o sistema deve atualizar automaticamente o ranking das equipes.                                          |
-| RF011 | Dado que exista escalação cadastrada para a equipe, quando o painel administrativo for atualizado, então o sistema deve exibir o atleta em corrida e o próximo atleta previsto. |
+| RF011 | Dado que exista escalação cadastrada para a equipe, quando o painel administrativo for atualizado, então o sistema deve exibir o corredor em corrida e o próximo corredor previsto. |
 | RF012 | Dado que a competição seja encerrada, quando o usuário confirmar a operação, então o sistema deve bloquear novos registros de checkpoints.                                            |
 | RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo CSV contendo checkpoints, timestamps e logs de validação.                 |
-| RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
+| RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por corredor, equipe e geral.  |
 | RF015	| Dado que existam novos checkpoints consolidados, quando o intervalo máximo de atualização do painel público for atingido, então o sistema deve atualizar o ranking exibido às equipes.  |
 
 
@@ -793,18 +793,18 @@ No Quadro 20, são apresentadas as regras de negócio do sistema, as quais defin
 | ---- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------ |
 | RN01 | Ao salvar uma equipe, o sistema deve gerar automaticamente um UUID único e criar um link público acessível sem autenticação.                                                                                                      | RF003, RF001       |
 | RN02 | O UUID gerado deve permanecer válido enquanto o evento estiver ativo e expirar automaticamente ao término do evento.                                                                                                              | RF001, RF004       |
-| RN03 | O acesso ao painel administrativo deve exigir autenticação via senha do administrador.                                                                                                 | RF001, RF004       |
+| RN03 | O acesso ao painel administrativo deve exigir autenticação via credenciais de admin.                                                                                                 | RF001, RF004       |
 | RN04 | O registro de checkpoint deve exigir obrigatoriamente a distância (km), enquanto campos como pace e tempo podem ser capturados via OCR ou informados opcionalmente.                                                                             | RF008              |
 | RN05 | Todo checkpoint registrado deve incluir no log de auditoria o método de entrada utilizado (OCR ou manual).                                                                                                                        | RF005, RF007, RF008|
-| RN06 | Valores extraídos via OCR que divergirem da média histórica do atleta ou da meta da prova devem ser destacados e exigir confirmação ou correção manual antes do salvamento.                                                       | RF009, RF007       |
-| RN07 | O sistema deve suportar os papéis de "corredor" e "capitão" para os atletas, garantindo que a estrutura da equipe seja respeitada conforme o cadastro.                               | RF003, RF011       |
+| RN06 | Valores extraídos via OCR que divergirem da média histórica do corredor ou da meta da prova devem ser destacados e exigir confirmação ou correção manual antes do salvamento.                                                       | RF009, RF007       |
+| RN07 | O sistema deve suportar os papéis de "runner" e "captain" para os corredores, garantindo que a estrutura da equipe seja respeitada conforme o cadastro.                               | RF003, RF011       |
 | RN08 | A calculadora de descanso deve utilizar o pace da última corrida, a duração do último turno e os parâmetros do evento, classificando o resultado em categorias (verde, amarelo ou vermelho).                                      | RF011              |
 | RN09 | O ranking exibido no painel da equipe deve ser atualizado a cada 1 hora, enquanto o painel administrativo deve atualizar o leaderboard a cada novo checkpoint registrado.                                                         | RF010, RF015       |
-| RN10 | O painel administrativo deve exibir automaticamente o atleta atualmente em corrida e o próximo atleta previsto, sem necessidade de atualização manual.                                                                            | RF011              |
+| RN10 | O painel administrativo deve exibir automaticamente o corredor atualmente em corrida e o próximo corredor previsto, sem necessidade de atualização manual.                                                                            | RF011              |
 | RN11 | O painel administrativo deve recalcular automaticamente métricas operacionais, incluindo pace médio e distância acumulada, a cada 5 minutos. | RF010 |
 | RN12 | Edições retroativas em checkpoints devem registrar obrigatoriamente no log de auditoria o usuário responsável pela alteração e o motivo informado.                                                                                | RF007, RF008       |
 | RN13 | O link de compartilhamento gerado pela equipe deve conter apenas o leaderboard simplificado do geral das equipes, sem expor dados individuais que ofereçam vantagens aos concorrentes. | RF001, RF010       |
-| RN14 | O encerramento do evento deve ser permitido apenas a um administrador e deve bloquear novos registros de checkpoint após sua execução.                                                                                      | RF012              |
+| RN14 | O encerramento do evento deve ser permitido apenas a um admin e deve bloquear novos registros de checkpoint após sua execução.                                                                                      | RF012              |
 | RN15 | A exportação em CSV deve incluir todos os checkpoints com timestamps e logs de validação para auditoria.                                                                                         | RF013              |
 | RN16 | Os highlights pós-evento devem ser gerados automaticamente ao encerrar a competição, sem necessidade de configuração manual.                                                                                                      | RF012, RF014       |
 | RN17 | Os highlights devem incluir recordes nas categorias: individual (pace, velocidade, distância, tempo total), por equipe (consistência, volume, sincronismo de troca) e geral da edição.                                            | RF014              |
@@ -828,9 +828,9 @@ Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de 
 | CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação humana e persistência dos checkpoints | Taxa de inconsistência inferior a 1% entre dados capturados e dados persistidos durante a competição | Logs de validação, testes automatizados e conferência entre OCR e registro persistido  |
 | DES — Desempenho | O sistema deve atualizar o painel administrativo periodicamente durante a competição | Atualização concluída em até 5 minutos após novos checkpoints | Testes de performance no fluxo completo |
 | SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Estrutura modular e separação em camadas |
-| SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de senha de administradores cadastrados  | 100% das tentativas sem credenciais válidas devem ser bloqueadas com resposta HTTP 401 | Validação de credenciais no backend antes do acesso às rotas administrativas |
+| SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de credenciais de admins cadastrados  | 100% das tentativas sem credenciais válidas devem ser bloqueadas com resposta HTTP 401 | Validação de credenciais no backend antes do acesso às rotas administrativas |
 | CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Testes de carga                                    |
-| REST — Restrições de Design | O sistema deve operar com validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter vínculo com corredor, competição, esteira e administrador responsável | Modelagem relacional com campos obrigatórios, FKs e validação via API |
+| REST — Restrições de Design | O sistema deve operar com validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter vínculo com corredor, competição, esteira e admin responsável | Modelagem relacional com campos obrigatórios, FKs e validação via API |
 | ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com rastreabilidade entre tarefas, commits e entregas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas|
 
 <div align="center">
@@ -879,11 +879,11 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 | RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | GET    |
 | RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | PUT    |
 | RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | DELETE |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes`                    | POST   |
-| RF011 | RN07, RN10          | `/competitions/:id/teams/:teamId/athletes`                    | GET    |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | GET    |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | PUT    |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | DELETE |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/runners`                     | POST   |
+| RF011 | RN07, RN10          | `/competitions/:id/teams/:teamId/runners`                     | GET    |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/runners/:runnerId`           | GET    |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/runners/:runnerId`           | PUT    |
+| RF003 | RN01                | `/competitions/:id/teams/:teamId/runners/:runnerId`           | DELETE |
 | RF004 | RN02, RN03          | `/auth/sessions`                                              | POST   |
 | RF005 | RN06                | `/ocr/extractions`                                            | POST   |
 | RF006 | RN04, RN05          | `/ocr/extractions`                                            | POST   |
@@ -893,18 +893,18 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 | RF008 | RN04, RN05          | `/checkpoints/:id`                                            | GET    |
 | RF007 | RN06, RN12          | `/checkpoints/:id`                                            | PUT    |
 | RF008 | RN04, RN05          | `/checkpoints/:id`                                            | DELETE |
-| RF008 | RN04, RN05          | `/corredores/:corredorId/checkpoints`                         | GET    |
+| RF008 | RN04, RN05          | `/runners/:runnerId/checkpoints`                              | GET    |
 | RF008 | RN04, RN05          | `/competitions/:id/checkpoints`                               | GET    |
 | RF009 | RN06                | `/competitions/:id/checkpoints/inconsistencies`               | GET    |
 | RF010 | RN09, RN11          | `/competitions/:id/ranking/teams`                             | GET    |
-| RF015 | RN09, RN11          | `/competitions/:id/ranking/athletes`                          | GET    |
+| RF015 | RN09, RN11          | `/competitions/:id/ranking/runners`                           | GET    |
 | RF013 | RN15                | `/competitions/:id/export`                                    | GET    |
 | RF014 | RN16, RN17          | `/competitions/:id/reports`                                   | GET    |
-| RF004 | RN02, RN03          | `/administradores`                                            | GET    |
-| RF004 | RN02, RN03          | `/administradores/:id`                                        | GET    |
-| RF004 | RN02, RN03          | `/administradores`                                            | POST   |
-| RF004 | RN02, RN03          | `/administradores/:id`                                        | PUT    |
-| RF004 | RN02, RN03          | `/administradores/:id`                                        | DELETE |
+| RF004 | RN02, RN03          | `/admin`                                                      | GET    |
+| RF004 | RN02, RN03          | `/admin/:id`                                                  | GET    |
+| RF004 | RN02, RN03          | `/admin`                                                      | POST   |
+| RF004 | RN02, RN03          | `/admin/:id`                                                  | PUT    |
+| RF004 | RN02, RN03          | `/admin/:id`                                                  | DELETE |
 
 <div align="center">
 
@@ -922,9 +922,9 @@ O Diagrama de Classes Arquitetural é uma das representações da UML (Unified M
 
 No projeto em questão, a arquitetura adotada segue o padrão em três camadas: Controller, Service e Repository, amplamente utilizado em aplicações back-end por promover separação de responsabilidades, facilitar a manutenção e viabilizar a testabilidade independente de cada camada. A camada Controller é responsável por receber as requisições HTTP e delegar o processamento para a camada de serviço. Já a camada Service concentra as regras de negócio da aplicação. Além disso, a camada Repository abstrai o acesso ao banco de dados, expondo métodos padronizados de consulta e persistência.
 
-O diagrama é composto pelos seguintes módulos principais: Administrador, Autenticação (Auth), Competição, Corredor, Checkpoint, Esteira, Equipe, Ranking e OCR. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, fogem a essa regra por terem uma função de suporte geral à aplicação, sendo o caso do AuthService, do ValidacaoService e do OCRService, que são utilizados por diferentes partes do sistema. Além disso, o diagrama também apresenta interfaces de modelo (como CompeticaoModel, EquipeModel, CorredorModel, CheckpointModel e EsteiraModel), cuja função é validar os dados recebidos pela aplicação antes de serem processados, evitando inconsistências.
+O diagrama é composto pelos seguintes módulos principais: Admin, Auth, Competition, Runner, Checkpoint, Treadmill, Team, Ranking, Export, Report e OCR. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, têm função transversal de suporte à aplicação, como `AuthService`, `ExportService`, `ReportService` e o módulo OCR. Além disso, o diagrama também apresenta interfaces de modelo (como `Competition`, `Team`, `Runner`, `Checkpoint`, `Treadmill` e `Admin`), cuja função é tipar os dados recebidos pela aplicação antes de serem processados, evitando inconsistências.
 
-As dependências entre as classes são representadas por setas tracejadas, indicando uso ou associação. Destaca-se a dependência do CheckpointService com os serviços CorredorService, EsteiraService, ValidacaoService e OCRService, refletindo a centralidade da lógica de registro de checkpoints no fluxo operacional da competição. O RankingService, por sua vez, depende do CheckpointService e do EquipeService para calcular posições, pace médio e gerar o ranking das equipes em tempo real.
+As dependências entre as classes são representadas por setas tracejadas, indicando uso ou associação. Destaca-se a dependência do `CheckpointService` com os contratos de `Runner`, `Competition`, `Treadmill` e `Admin`, refletindo a centralidade da lógica de registro de checkpoints no fluxo operacional da competição. O `RankingService`, por sua vez, utiliza checkpoints consolidados para calcular posições, pace médio e gerar rankings de equipes e corredores com atualização periódica.
 
 <div align="center">
   <sub>Figura 8 - Diagrama de Classes Arquitetural</sub><br>
@@ -953,13 +953,13 @@ Toda requisição originada no cliente, seja proveniente do painel administrativ
 
 **Repository** abstrai o acesso ao banco de dados PostgreSQL por meio de queries SQL parametrizadas. Recebe e retorna instâncias de Model, isolando as camadas superiores de quaisquer detalhes de implementação do mecanismo de persistência. Essa abstração viabiliza a substituição do banco de dados ou a utilização de dublês de teste (*mocks*) sem alteração nas camadas de Service ou Controller.
 
-**Model** define a estrutura de dados das entidades de domínio da aplicação: `Competicao`, `Equipe`, `Corredor`, `Checkpoint` e `Administrador`. Os Models não contêm lógica de persistência nem de negócio; representam o esquema de dados esperado e funcionam como contrato entre as camadas de Repository e Service.
+**Model** define a estrutura de dados das entidades de domínio da aplicação: `Competition`, `Team`, `Runner`, `Checkpoint`, `Treadmill`, `Admin`, `Auth`, `Ranking`, `Export` e `Report`. Os Models não contêm lógica de persistência nem de negócio; representam o esquema de dados esperado e funcionam como contrato entre as camadas de Repository e Service.
 
-**PostgreSQL** é a camada de persistência definitiva, acessada pela aplicação via cliente Supabase (`src/database/supabaseClient.ts`). Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados localizados em `documentos/outros/migrations/` (arquivos `0000__extensions.sql` a `0006_create_checkpoint.sql`), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
+**PostgreSQL** é a camada de persistência definitiva, acessada pela aplicação via cliente Supabase (`src/database/supabaseClient.ts`). Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados localizados em `documentos/outros/migrations/` (arquivos `0000_extensions.sql` a `0008_create_competition_report.sql`), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
 
 **Fluxo OCR Assíncrono** *(funcionalidade planejada)*
 
-O processamento de imagens capturadas pelos funcionários da Red Bull 24h constitui um fluxo assíncrono paralelo ao fluxo transacional principal, planejado para implementação futura. Ao receber uma imagem via requisição `POST /ocr/extractions`, o `CheckpointController` delegará imediatamente ao `OCRService` a responsabilidade de enfileirar o processamento, retornando ao cliente uma resposta `202 Accepted` com identificador de rastreamento. O `OCRService` encaminhará a imagem ao motor de reconhecimento óptico de caracteres externo de forma não bloqueante. Após a extração dos dados, o `OCRService` validará o score de confiança conforme RN06, extrações com score abaixo de 85% serão rejeitadas, e acionará o `CheckpointService`, que validará os dados extraídos segundo as demais regras de negócio vigentes (RN04, RN05, RN12) e persistirá o resultado via `CheckpointRepository`. Registros de auditoria serão gerados pelo `AuditService` ao longo de todo o fluxo, em conformidade com a RN05.
+O processamento de imagens capturadas pelos funcionários da Red Bull 24h constitui um fluxo assíncrono paralelo ao fluxo transacional principal. Ao receber uma imagem via requisição `POST /ocr/extractions`, o sistema registra a extração em `ocr_extraction`, retorna os dados extraídos para validação humana e, após confirmação ou correção, aciona o `CheckpointService`, que valida os dados segundo as regras de negócio vigentes (RN04, RN05, RN12) e persiste o resultado via `CheckpointRepository`. A rastreabilidade do método de entrada é registrada nos dados de checkpoint e extração OCR.
 
 Esse desenho evita que a latência do motor OCR impacte a resposta percebida pelos operadores no iPad, mantendo a experiência administrativa fluida durante picos de carga gerados por múltiplos checkpoints simultâneos.
 
@@ -975,7 +975,7 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 | **Controller** | Extrai parâmetros de `req` (body, params, query, headers), delega ao Service correspondente e retorna resposta HTTP com status code adequado. | Não implementa regras de negócio; não acessa banco de dados; não executa queries SQL. | `src/controllers/` |
 | **Service** | Implementa todas as regras de negócio do domínio da competição Red Bull 24h, orquestra chamadas a múltiplos repositórios, valida integridade de dados e encaminha processamento assíncrono de OCR. | Não conhece o protocolo HTTP; não executa queries SQL diretamente; não manipula `req` ou `res`. | `src/services/` |
 | **Repository** | Executa queries SQL parametrizadas contra o PostgreSQL via cliente Supabase, mapeia resultados de banco para instâncias de Model e persiste alterações de estado das entidades de domínio. | Não implementa regras de negócio; não conhece o protocolo HTTP; não é chamado diretamente pelo Controller. | `src/repositories/` |
-| **Model** | Define a estrutura de dados das entidades de domínio (`Competicao`, `Equipe`, `Corredor`, `Checkpoint`, `Administrador`) como contratos de dados entre camadas. | Não contém lógica de persistência; não contém lógica de negócio; não realiza validações de entrada. | `src/models/` |
+| **Model** | Define a estrutura de dados das entidades de domínio (`Competition`, `Team`, `Runner`, `Checkpoint`, `Treadmill`, `Admin`, `Auth`, `Ranking`, `Export` e `Report`) como contratos de dados entre camadas. | Não contém lógica de persistência; não contém lógica de negócio; não realiza validações de entrada. | `src/models/` |
 | **PostgreSQL** | Armazena e recupera dados de forma persistente, garante integridade referencial por meio de constraints de chave estrangeira e executa transações ACID. | Não recebe conexões de nenhuma camada além do Repository; não aplica regras de negócio. | `src/database/` · `documentos/outros/migrations/` |
 
 <div align="center">
@@ -993,31 +993,31 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 | Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
 | -------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
 | **Controller** | `CompetitionController` | Recebe `POST /competitions` e delega ao `CompetitionService` para criação de competição; recebe `GET /competitions/:id` e delega ao `CompetitionService` para consulta de estado.                                       | RF02, RF12                   |
-| **Controller** | `TeamController`        | Recebe `POST /competitions/:competicaoId/teams` e delega ao `TeamService` para criação de equipe com geração de UUID e QR Code; recebe `GET /competitions/:competicaoId/teams` e delega ao `TeamService` para listagem. | RF03, RF01, RN01             |
-| **Controller** | `AthleteController`     | Recebe `POST /athletes` e delega ao `AthleteService` para cadastro de corredor; recebe `GET /athletes/:id` e delega ao `AthleteService` para recuperação de dados individuais.                                          | RF01                         |
-| **Controller** | `UserController`        | Recebe `POST /users` e delega ao `UserService` para criação de usuário administrativo; recebe `POST /users/login` e delega ao `UserService` para validação de acesso.                                                   | RF04                         |
+| **Controller** | `TeamController`        | Recebe `POST /competitions/:id/teams` e delega ao `TeamService` para criação de equipe com geração de UUID e QR Code; recebe `GET /competitions/:id/teams` e delega ao `TeamService` para listagem. | RF03, RF01, RN01             |
+| **Controller** | `RunnerController`      | Recebe `POST /competitions/:id/teams/:teamId/runners` e delega ao `RunnerService` para cadastro de corredor; recebe `GET /competitions/:id/teams/:teamId/runners/:runnerId` e delega ao `RunnerService` para recuperação de dados individuais. | RF03, RF11                   |
+| **Controller** | `AdminController`       | Recebe `POST /admin` e delega ao `AdminService` para criação de admin; recebe `GET /admin` e `GET /admin/:id` para consulta dos usuários administrativos.                                                   | RF04                         |
 | **Controller** | `CheckpointController`  | Recebe `POST /checkpoints` e delega ao `CheckpointService` para registro manual de passagem; recebe `POST /ocr/extractions` e delega ao `OCRService` para processamento assíncrono de OCR.                              | RF05, RF07, RF08, RF09       |
-| **Controller** | `AuthController`        | Recebe `POST /auth/login` e delega ao `AuthService` para validação de credenciais e emissão de JWT; recebe `POST /auth/logout` e delega ao `AuthService` para encerramento de sessão.                                   | RF04, RN03                   |
+| **Controller** | `AuthController`        | Recebe `POST /auth/sessions` e delega ao `AuthService` para validação de credenciais e emissão de JWT; mantém `POST /admin/login` como rota de compatibilidade para o frontend.                                   | RF04, RN03                   |
 | **Service**    | `CompetitionService`    | Cria competições, valida regras de período e estado da competição e coordena operações por meio do `CompetitionRepository`.                                                                                             | RF02, RF12, RN02             |
 | **Service**    | `TeamService`           | Cria equipes, gera UUID e QR Code de identificação e valida unicidade do nome da equipe dentro da competição.                                                                                                           | RF01, RF03, RN01             |
-| **Service**    | `AthleteService`        | Cadastra corredores, valida dados obrigatórios e garante integridade das informações dos participantes.                                                                                                                 | RF01                         |
-| **Service**    | `UserService`           | Valida credenciais de acesso administrativo e gerencia criação de usuários autorizados.                                                                                                                                 | RF04                         |
+| **Service**    | `RunnerService`         | Cadastra corredores, valida dados obrigatórios e garante integridade das informações dos participantes.                                                                                                                 | RF03, RF11                   |
+| **Service**    | `AdminService`          | Gerencia criação, consulta, atualização e remoção de admins autorizados.                                                                                                                                 | RF04                         |
 | **Service**    | `OCRService`            | Encaminha imagens para processamento OCR assíncrono, valida score mínimo de confiança e aciona o `CheckpointService` para persistência dos resultados válidos.                                                          | RF05, RF06, RF09, RN05, RN06 |
 | **Service**    | `CheckpointService`     | Valida pertencimento do corredor à equipe, aplica regras temporais da competição, registra checkpoints e aciona mecanismos de auditoria.                                                                                | RF08, RN04, RN05, RN12       |
-| **Service**    | `RankingService`        | Calcula ranking em tempo real a partir dos checkpoints registrados, aplicando critérios de desempate definidos pelas regras de negócio.                                                                                 | RF10, RF15, RN09, RN11       |
-| **Service**    | `AuditService`          | Registra logs imutáveis das operações críticas executadas no sistema para garantir rastreabilidade e conformidade com auditoria.                                                                                        | RN05                         |
+| **Service**    | `RankingService`        | Calcula rankings de equipes e corredores a partir dos checkpoints registrados, aplicando critérios de desempate definidos pelas regras de negócio.                                                                                 | RF10, RF15, RN09, RN11       |
+| **Service**    | `ReportService`         | Gera relatórios consolidados da competição a partir dos dados persistidos e rankings calculados.                                                                                        | RF13, RF14                   |
 | **Repository** | `CompetitionRepository` | Executa operações de persistência relacionadas às competições, incluindo criação, consulta e atualização de estado.                                                                                                     | RF02, RF12                   |
 | **Repository** | `TeamRepository`        | Executa operações de persistência das equipes, incluindo armazenamento de UUID e QR Code e consultas por competição.                                                                                                    | RF01, RF03                   |
-| **Repository** | `AthleteRepository`     | Executa operações de persistência dos corredores, incluindo consultas por identificador e número de dorsal.                                                                                                             | RF01                         |
-| **Repository** | `UserRepository`        | Executa operações de persistência relacionadas aos usuários administrativos e consultas para autenticação.                                                                                                              | RF04                         |
+| **Repository** | `RunnerRepository`      | Executa operações de persistência dos corredores, incluindo consultas por identificador e vínculo com equipe.                                                                                                             | RF03, RF11                   |
+| **Repository** | `AdminRepository`       | Executa operações de persistência relacionadas aos admins e consultas para autenticação.                                                                                                              | RF04                         |
 | **Repository** | `CheckpointRepository`  | Executa persistência e recuperação de checkpoints e fornece dados agregados para cálculo de rankings.                                                                                                                   | RF05, RF08, RF10             |
-| **Repository** | `AuditRepository`       | Executa persistência dos registros de auditoria produzidos pelo `AuditService`.                                                                                                                                         | RN05                         |
-| **Model**      | `Competicao`            | Representa a entidade de competição contendo informações de identificação, período de realização e estado operacional.                                                                                                  | RF02                         |
-| **Model**      | `Equipe`                | Representa a entidade de equipe contendo identificadores públicos, QR Code e vínculo com a competição.                                                                                                                  | RF01, RF03                   |
-| **Model**      | `Corredor`              | Representa os participantes vinculados às equipes da competição.                                                                                                                                                        | RF01                         |
-| **Model**      | `Administrador`         | Representa os usuários autorizados a operar o sistema administrativo da competição.                                                                                                                                     | RF04                         |
+| **Repository** | `ReportRepository`      | Executa consultas para consolidar os dados usados nos relatórios da competição.                                                                                                                                         | RF13, RF14                   |
+| **Model**      | `Competition`           | Representa a entidade de competição contendo informações de identificação, período de realização e estado operacional.                                                                                                  | RF02                         |
+| **Model**      | `Team`                  | Representa a entidade de equipe contendo identificadores públicos, QR Code e vínculo com a competição.                                                                                                                  | RF01, RF03                   |
+| **Model**      | `Runner`                | Representa os participantes vinculados às equipes da competição.                                                                                                                                                        | RF03, RF11                   |
+| **Model**      | `Admin`                 | Representa os usuários autorizados a operar o sistema administrativo da competição.                                                                                                                                     | RF04                         |
 | **Model**      | `Checkpoint`            | Representa os registros de passagem utilizados para cálculo de desempenho e ranking.                                                                                                                                    | RF05, RF08                   |
-| **Model**      | `AuditLog`              | Representa os registros persistidos de auditoria contendo informações sobre operações críticas executadas no sistema.                                                                                                   | RN05                         |
+| **Model**      | `Report`                | Representa os relatórios consolidados da competição e seus highlights.                                                                                                   | RF13, RF14                   |
 
 
 <div align="center">
@@ -1040,17 +1040,17 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 
 A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os diagramas de sequência UML (seção 3.2.4), o diagrama de entidade-relacionamento (seção 3.6.1) e os arquivos de migração localizados em `documentos/outros/migrations/`, identificando pontos de atenção e ações necessárias.
 
-**Nomenclatura de camadas.** Os nomes `Controller`, `Service`, `Repository` e `Model` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A inconsistência de nomenclatura entre entidades em inglês (`CompetitionController`, `TeamController`) e os Models em português (`Competicao`, `Equipe`) foi mantida intencionalmente para preservar compatibilidade com o código existente, e deve ser padronizada para um único idioma no próximo ciclo de refatoração.
+**Nomenclatura de camadas.** Os nomes `Controller`, `Service`, `Repository` e `Model` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A nomenclatura técnica das entidades foi padronizada em inglês, alinhada ao código atual: `Competition`, `Team`, `Runner`, `Admin`, `Treadmill`, `Checkpoint`, `OCRExtraction` e `CompetitionReport`.
 
-**Coerência entre Models e tabelas de banco.** Os campos dos Models implementados; `Equipe` (`uuid`, `qr_code`, `competicao_id`, `criado_em`) e `Administrador` (`senha`, `area`); foram alinhados com o schema real das migrations. O Model `Checkpoint`, ainda planejado, utilizará os campos `identificador`, `km`, `pace`, `tempo`, `imagem`, `competicao_id`, `administrador_id` e `criado_em`, conforme definido em `0006_create_checkpoint.sql`.
+**Coerência entre Models e tabelas de banco.** Os campos dos Models implementados foram alinhados com o schema real das migrations: `Team` (`uuid`, `qr_code`, `id_competition`, `created_at`), `Admin` (`email`, `password`, `area`, `created_at`) e `Checkpoint` (`identifier`, `distance_km`, `pace`, `time`, `image`, `id_runner`, `id_competition`, `id_treadmill`, `id_admin`, `created_at`), conforme definido em `0002_create_team.sql`, `0005_create_admin.sql` e `0006_create_checkpoint.sql`.
 
-**Tabela `audit_logs`.** A RN05 exige log imutável de todas as operações críticas. O `AuditService` está previsto na arquitetura para atender essa regra de negócio, porém a tabela `audit_logs` ainda não está presente nas migrations atuais (`0000` a `0006`). Recomenda-se a criação de uma migration `0007_create_audit_logs.sql` contendo as colunas `id`, `tipo_operacao`, `entidade`, `entidade_id`, `operador_id`, `timestamp` e `payload_json`, garantindo suporte completo à rastreabilidade operacional exigida pelo sistema.
+**Rastreabilidade de OCR e relatórios.** As migrations atuais (`0000` a `0008`) contemplam `ocr_extraction` e `competition_report`, permitindo registrar extrações OCR e consolidar relatórios por competição. Logs de auditoria dedicados podem evoluir em ciclo futuro, mas não devem ser descritos como tabela implementada no schema atual.
 
-**Autenticação JWT.** O middleware de autenticação JWT não está implementado; `src/middlewares/` contém apenas `errorHandler.ts`. A dependência `jsonwebtoken` não consta no `package.json`. A implementação do `AuthController` e do middleware JWT está planejada para sprint futura, conforme indicado na coluna "Status" do Quadro 24.
+**Autenticação JWT.** A dependência `jsonwebtoken` consta no `package.json` e o `AuthController` atual emite sessão por `POST /auth/sessions`, mantendo `POST /admin/login` como compatibilidade de frontend. O middleware dedicado de proteção das rotas administrativas ainda pode ser refinado em sprint futura.
 
 **Fluxo OCR nos diagramas de sequência (3.2.4).** O retorno `202 Accepted` pelo `CheckpointController` e o callback assíncrono do motor externo para o `OCRService` deverão estar representados nos diagramas de sequência com marcação explícita de assincronicidade (fragmento `async` ou notação equivalente em UML 2.x) quando o fluxo for implementado.
 
-**Constraint `UNIQUE` sobre `uuid`.** Para garantir integridade nas consultas do fluxo público, a coluna `equipes.uuid` deve possuir constraint `UNIQUE` no schema do banco, verificando sua presença em `documentos/outros/migrations/`.
+**Constraint `UNIQUE` sobre `uuid`.** Para garantir integridade nas consultas do fluxo público, a coluna `team.uuid` possui constraint `UNIQUE` no schema do banco, conforme `0002_create_team.sql`.
 
 
 ### 3.2.2. Diagrama de Casos de Uso (sprint 1)
@@ -1069,7 +1069,7 @@ fazer e o que o sistema deve oferecer.
 
 A Figura 8 apresenta o diagrama de casos de uso do Sistema Red Bull 24
 Horas, modelando as interações entre os três atores identificados,
-Administrador / Juiz, Corredor e Sistema OCR, e os principais fluxos
+Admin / Juiz, Corredor e Sistema OCR, e os principais fluxos
 do sistema.
 
 Figura 8 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
@@ -1078,22 +1078,22 @@ Figura 8 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
 
 Fonte: Material produzido pelos autores (2026).
 
-O **Administrador / Juiz** unifica as personas Mariana (Coordenadora
+O **Admin / Juiz** unifica as personas Mariana (Coordenadora
 Operacional) e Bruno (Gerente de Field Marketing), responsáveis pela
 operação e supervisão do evento. É o ator com maior número de casos de
 uso, atuando desde a criação da competição e cadastro de equipes até o
 registro de checkpoints, acompanhamento do ranking, acesso ao relatório
-e encerramento da competição. O **Corredor** representa atletas e
+e encerramento da competição. O **Corredor** representa corredores e
 capitães das equipes, acessando o sistema via URL única sem autenticação
-para acompanhar o ranking, o status dos atletas e a calculadora de
+para acompanhar o ranking, o status dos corredores e a calculadora de
 descanso. O **Sistema OCR**, marcado com o estereótipo «system», é um
 serviço externo consumido via API que extrai dados das fotos do visor
 da esteira e alerta inconsistências.
 
 O diagrama emprega relações «include» e «extend» para representar
 dependências entre casos de uso. A geração do UUID é «include» de
-"Cadastrar equipes/atletas", refletindo que o identificador único é
-gerado automaticamente ao salvar uma equipe. A seleção do atleta ativo
+"Cadastrar equipes e corredores", refletindo que o identificador único é
+gerado automaticamente ao salvar uma equipe. A seleção do corredor ativo
 é «include» dos dois fluxos de registro de checkpoint, sendo etapa
 obrigatória antes do registro. O fluxo manual de registro estende o
 fluxo via OCR como caminho alternativo em caso de falha técnica, e
@@ -1130,17 +1130,17 @@ O primeiro diagrama representa o fluxo de registro de checkpoint via OCR. Nele, 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O administrador cadastra a equipe em uma competição, o Controller aciona o Service, o Service utiliza o Repository para persistir equipes e atletas no Banco de Dados, e a aplicação retorna o link público após registrar os dados. O fluxo também evidencia a atualização assíncrona de ranking em segundo plano e a consulta posterior da equipe por meio da mesma arquitetura em camadas.
+O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O admin cadastra a equipe em uma competição, o Controller aciona o Service, o Service utiliza o Repository para persistir equipes e corredores no Banco de Dados, e a aplicação retorna o link público após registrar os dados. O fluxo também evidencia a atualização periódica de ranking em segundo plano e a consulta posterior da equipe por meio da mesma arquitetura em camadas.
 
 <div align="center">
   <sub>Figura 10 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de atletas e geração de link público com UUID"><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de corredores e geração de link público com UUID"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
-O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da imagem do visor da esteira pelo fiscal, seguida pelo envio da imagem para processamento. Após a extração dos dados, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
+O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da imagem do visor da esteira pelo fiscal, seguida pelo envio da imagem para processamento. Após a extração dos dados, o sistema realiza validações relacionadas ao corredor, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
 
 <div align="center">
   <sub>Figura 26 - Diagrama de atividades do registro de checkpoint via OCR</sub><br>
@@ -1180,7 +1180,7 @@ Sem a utilização desse padrão, operações relacionadas ao banco de dados fic
 Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura. Além disso, qualquer alteração relacionada às operações de persistência precisaria ser realizada em diferentes pontos da aplicação.
 
 #### Justificativa da adoção
-Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades de competição, equipes e atletas. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio da aplicação, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema.
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades de competition, team e runner. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio da aplicação, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema.
 
 A centralização das operações de persistência em arquivos de repositório também contribui para:
 <ul>
@@ -1195,7 +1195,7 @@ A centralização das operações de persistência em arquivos de repositório t
 O padrão foi aplicado nos seguintes arquivos:
 -  `competitionRepository.ts`
 -  `teamRepository.ts`
--  `athleteRepository.ts`
+-  `runnerRepository.ts`
 
 Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
 
@@ -1205,7 +1205,7 @@ async findById(id: number): Promise<Competition | null> {
   const supabase = getSupabaseClient();
 
   const { data, error } = await supabase
-    .from("competicao")
+    .from("competition")
     .select(competitionSelect)
     .eq("id", id)
     .maybeSingle();
@@ -1250,7 +1250,7 @@ Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das
 O padrão foi aplicado nos seguintes arquivos:
 - `competitionService.ts`
 -  `teamService.ts`
--  `athleteService.ts`
+-  `runnerService.ts`
 
 Esses arquivos centralizam as regras de negócio relacionadas às entidades da aplicação antes da comunicação com os repositórios.
 
@@ -1454,7 +1454,7 @@ Os wireframes de baixa fidelidade foram utilizados para validar arquitetura da i
 
 ### 3.3.1 Personas Administrativas — Marina Costa e Bruno Monteiro
 
-As personas Marina Costa e Bruno Monteiro compartilham o mesmo fluxo principal de navegação dentro da plataforma administrativa da solução. Enquanto Marina atua diretamente na preparação operacional da competição, realizando cadastro de equipes, organização dos atletas e acompanhamento dos checkpoints, Bruno é responsável pela supervisão geral do evento, monitoramento da prova e análise estratégica das informações geradas pelo sistema.
+As personas Marina Costa e Bruno Monteiro compartilham o mesmo fluxo principal de navegação dentro da plataforma administrativa da solução. Enquanto Marina atua diretamente na preparação operacional da competição, realizando cadastro de equipes, organização dos corredores e acompanhamento dos checkpoints, Bruno é responsável pela supervisão geral do evento, monitoramento da prova e análise estratégica das informações geradas pelo sistema.
 
 Por utilizarem o mesmo ambiente administrativo e acessarem funcionalidades complementares dentro da mesma arquitetura operacional, os wireframes apresentados nesta subseção foram organizados de forma conjunta. O fluxo contempla desde o acesso inicial ao painel administrativo até o gerenciamento operacional da competição, incluindo cadastro de equipes, geração de UUIDs, captura OCR, validação de checkpoints, visualização consolidada dos dados e geração de relatórios operacionais.
 
@@ -1470,7 +1470,7 @@ O fluxo abaixo representa a navegação realizada pelas personas administrativas
 
 - O fluxo completo de navegação das personas administrativas pode ser consultado em: [Fluxo do Operador](outros/fluxo_operador.md).
 
-O fluxo apresentado evidencia a sequência de navegação utilizada pelos administradores durante a competição. A partir do dashboard principal, os operadores conseguem acessar rapidamente módulos de equipes, checkpoints, ranking e relatórios operacionais, reduzindo a quantidade de interações necessárias durante a execução operacional da prova e centralizando todas as funcionalidades críticas em um único ambiente.
+O fluxo apresentado evidencia a sequência de navegação utilizada pelos admins durante a competição. A partir do dashboard principal, os operadores conseguem acessar rapidamente módulos de equipes, checkpoints, ranking e relatórios operacionais, reduzindo a quantidade de interações necessárias durante a execução operacional da prova e centralizando todas as funcionalidades críticas em um único ambiente.
 
 #### Wireframe de Baixa Fidelidade — Operadores
 
@@ -1495,11 +1495,11 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 |------|-------------|------------|
 | US01 | Acessar painel admin | Estados sem e com competição |
 | US02 | Cadastrar nova competição | Cadastro com data e localização |
-| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e atletas |
+| US03 | Cadastrar e editar equipes | Gerenciamento de equipes e corredores |
 | US05 | Gerar URL UUID automaticamente | Geração automática ao cadastrar equipe |
 | US06 | Acessar aba de equipes | Navegação pelo menu ou atalho |
-| US07 | Acessar painel operacional completo da equipe | Visualização de informações da equipe, atletas e checkpoints em tempo real |
-| US08 | Selecionar o atleta ativo | Controle realizado pelo juiz para definir o atleta atualmente monitorado |
+| US07 | Acessar painel operacional completo da equipe | Visualização de informações da equipe, corredores e checkpoints com atualização periódica |
+| US08 | Selecionar o corredor ativo | Controle realizado pelo juiz para definir o corredor atualmente monitorado |
 | US09 | Fotografar a esteira para extração via OCR | Captura da imagem da esteira para leitura automática de dados utilizando OCR |
 | US10 | Registrar checkpoint manualmente | Inserção manual de checkpoint como alternativa em caso de falha do OCR |
 | US11 | Visualizar tabela com auto-refresh a cada 5 min | Atualização automática periódica das informações operacionais da competição |
@@ -1528,11 +1528,11 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 
 **Configuração inicial da competição**
 
-O primeiro conjunto de telas representa o fluxo inicial de configuração da competição, incluindo criação da sala administrativa e definição das informações básicas do evento.
+O primeiro conjunto de telas representa o fluxo inicial de configuração da competição, incluindo acesso ao painel administrativo e definição das informações básicas do evento.
 
 <div align="center">
   <sub>Figura 12 - Wireframe de baixa fidelidade do fluxo inicial de configuração da competição</sub><br>
-  <img src="../assets/design/wireframe-persona1-1.png" width="100%" alt="Wireframe de baixa fidelidade representando o fluxo inicial de configuração da competição e criação da sala administrativa."><br>
+  <img src="../assets/design/wireframe-persona1-1.png" width="100%" alt="Wireframe de baixa fidelidade representando o fluxo inicial de configuração da competição e acesso ao painel administrativo."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
@@ -1540,11 +1540,11 @@ O primeiro conjunto de telas representa o fluxo inicial de configuração da com
 
 **Cadastro e gerenciamento das equipes**
 
-O segundo conjunto de telas representa o processo de cadastro, edição e gerenciamento das equipes e atletas participantes da competição.
+O segundo conjunto de telas representa o processo de cadastro, edição e gerenciamento das equipes e corredores participantes da competição.
 
 <div align="center">
   <sub>Figura 13 - Wireframe de baixa fidelidade do gerenciamento das equipes</sub><br>
-  <img src="../assets/design/wireframe-persona1-2.png" width="100%" alt="Wireframe de baixa fidelidade do fluxo de cadastro e gerenciamento das equipes e atletas da competição."><br>
+  <img src="../assets/design/wireframe-persona1-2.png" width="100%" alt="Wireframe de baixa fidelidade do fluxo de cadastro e gerenciamento das equipes e corredores da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
@@ -1576,9 +1576,9 @@ O último conjunto de telas representa as funcionalidades de revisão, validaç�
 
 Os wireframes de alta fidelidade representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, tipografia, hierarquia visual e estrutura de navegação da plataforma. O nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato fundamental para validação visual e operacional antes da implementação definitiva do sistema (Garrett, 2011).
 
-As interfaces apresentadas a seguir representam o painel operacional administrativo da competição Red Bull 24 Horas, desenvolvido para centralizar o monitoramento dos atletas, o controle dos checkpoints e o gerenciamento operacional das equipes participantes durante a execução da prova.
+As interfaces apresentadas a seguir representam o painel operacional administrativo da competição Red Bull 24 Horas, desenvolvido para centralizar o monitoramento dos corredores, o controle dos checkpoints e o gerenciamento operacional das equipes participantes durante a execução da prova.
 
-A construção das telas priorizou rápida interpretação das informações, organização visual dos dados e redução da sobrecarga operacional dos administradores durante a competição.
+A construção das telas priorizou rápida interpretação das informações, organização visual dos dados e redução da sobrecarga operacional dos admins durante a competição.
 
 ---
 
@@ -1602,7 +1602,7 @@ As Figuras 16 e 17 apresentam o início do fluxo administrativo, desde a tela pr
 
 ---
 
-As Figuras 18 e 19 mostram a etapa de preparação das equipes, contemplando o estado inicial sem equipes cadastradas e o formulário de cadastro com capitão e atletas.
+As Figuras 18 e 19 mostram a etapa de preparação das equipes, contemplando o estado inicial sem equipes cadastradas e o formulário de cadastro com capitão e corredores.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -1613,8 +1613,8 @@ As Figuras 18 e 19 mostram a etapa de preparação das equipes, contemplando o e
   </div>
 
   <div>
-    <sub>Figura 19 - Cadastro de equipe e atletas</sub><br>
-    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Cadastrar Equipe.png" width="400px" alt="Formulário de cadastro de equipe com capitão e atletas."><br>
+    <sub>Figura 19 - Cadastro de equipe e corredores</sub><br>
+    <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Cadastrar Equipe.png" width="400px" alt="Formulário de cadastro de equipe com capitão e corredores."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
@@ -1642,7 +1642,7 @@ As Figuras 20 e 21 apresentam a continuidade do gerenciamento das equipes, inclu
 
 ---
 
-As Figuras 22 e 23 apresentam a visão geral do painel operacional administrativo e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores em tempo real.
+As Figuras 22 e 23 apresentam a visão geral do painel operacional administrativo e a interface de seleção do corredor ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores com atualização periódica.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -1653,8 +1653,8 @@ As Figuras 22 e 23 apresentam a visão geral do painel operacional administrativ
   </div>
 
   <div>
-    <sub>Figura 23 - Seleção do atleta ativo</sub><br>
-    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt="Interface de seleção do atleta ativo durante a competição."><br>
+    <sub>Figura 23 - Seleção do corredor ativo</sub><br>
+    <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt="Interface de seleção do corredor ativo durante a competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
@@ -1707,13 +1707,13 @@ As Figuras 26, 27 e 28 apresentam funcionalidades complementares da plataforma, 
 
 </div>
 
-Os wireframes apresentados permitiram validar visualmente os principais fluxos administrativos da solução, evidenciando como as funcionalidades operacionais se integram dentro da plataforma e como os administradores interagem com o sistema durante a execução da competição.
+Os wireframes apresentados permitiram validar visualmente os principais fluxos administrativos da solução, evidenciando como as funcionalidades operacionais se integram dentro da plataforma e como os admins interagem com o sistema durante a execução da competição.
 
 ### 3.3.2 Persona Corredor — Amanda Azevedo
 
-Amanda Azevedo representa os atletas participantes da competição, utilizando o painel público da equipe para acompanhar métricas da prova, ranking geral, desempenho dos corredores e informações estratégicas relacionadas ao descanso e posicionamento da equipe durante o evento.
+Amanda Azevedo representa os corredores participantes da competição, utilizando o painel público da equipe para acompanhar métricas da prova, ranking geral, desempenho dos corredores e informações estratégicas relacionadas ao descanso e posicionamento da equipe durante o evento.
 
-Diferentemente das personas administrativas, Amanda interage exclusivamente com a área pública da plataforma, acessada por meio do link gerado automaticamente pelo sistema. Seu fluxo prioriza rapidez na visualização das informações, simplicidade de navegação e acompanhamento contínuo da competição em tempo real.
+Diferentemente das personas administrativas, Amanda interage exclusivamente com a área pública da plataforma, acessada por meio do link gerado automaticamente pelo sistema. Seu fluxo prioriza rapidez na visualização das informações, simplicidade de navegação e acompanhamento contínuo da competição com atualização periódica.
 
 <div align="center"> 
   <sub>Quadro 25 - User Stories cobertas pela Persona Corredor</sub> 
@@ -1722,8 +1722,8 @@ Diferentemente das personas administrativas, Amanda interage exclusivamente com 
 | ID | User Story | Descrição |
 |----|-------------|------------|
 | US13 | Visualizar ranking global | Acompanhamento da posição da equipe |
-| US14 | Visualizar métricas dos atletas | Desempenho individual e coletivo |
-| US15 | Utilizar calculadora de descanso | Apoio operacional ao atleta |
+| US14 | Visualizar métricas dos corredores | Desempenho individual e coletivo |
+| US15 | Utilizar calculadora de descanso | Apoio operacional ao corredor |
 | US16 | Compartilhar ranking | Compartilhamento simplificado da equipe |
 
 <div align="center"> 
@@ -1752,11 +1752,11 @@ O fluxo apresentado demonstra a navegação simplificada utilizada pelos corredo
 
 O wireframe de baixa fidelidade da persona corredor foi desenvolvido para validar rapidamente a organização estrutural do painel público da equipe, priorizando hierarquia visual, distribuição das informações e fluxo simplificado de navegação.
 
-A prototipação buscou representar os principais elementos utilizados pelos atletas durante a competição, incluindo ranking geral, métricas da equipe, informações dos corredores e funcionalidades estratégicas relacionadas ao acompanhamento da prova.
+A prototipação buscou representar os principais elementos utilizados pelos corredores durante a competição, incluindo ranking geral, métricas da equipe, informações dos corredores e funcionalidades estratégicas relacionadas ao acompanhamento da prova.
 
 <div align="center">
   <sub>Figura 24 - Wireframe de baixa fidelidade do painel público da equipe</sub><br>
-  <img src="../assets/design/WF-persona2.png" width="100%" alt="Wireframe de baixa fidelidade do painel público da equipe, incluindo ranking, métricas dos atletas e acompanhamento da competição."><br>
+  <img src="../assets/design/WF-persona2.png" width="100%" alt="Wireframe de baixa fidelidade do painel público da equipe, incluindo ranking, métricas dos corredores e acompanhamento da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
@@ -1766,13 +1766,13 @@ O wireframe apresentado permitiu validar rapidamente a disposição das informa�
 
 Os wireframes de alta fidelidade da persona corredor representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, hierarquia visual, tipografia e estrutura de navegação do painel público da equipe. Conforme Garrett (2011), o nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato essencial para validações visuais e operacionais antes da implementação definitiva da interface.
 
-As telas abaixo representam o painel público da equipe, desenvolvido para acompanhamento da competição pelos atletas participantes durante a prova. A interface foi projetada para apresentar de forma clara e organizada as principais informações estratégicas da competição, permitindo rápida interpretação dos dados durante o evento.
+As telas abaixo representam o painel público da equipe, desenvolvido para acompanhamento da competição pelos corredores participantes durante a prova. A interface foi projetada para apresentar de forma clara e organizada as principais informações estratégicas da competição, permitindo rápida interpretação dos dados durante o evento.
 
-O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a leitura de métricas como ranking, pace, velocidade, distância percorrida e descanso dos atletas. Além disso, a interface contempla funcionalidades estratégicas, como a Calculadora de Descanso e o compartilhamento simplificado do ranking da equipe, priorizando legibilidade, organização visual e rápida navegação durante a competição.
+O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a leitura de métricas como ranking, pace, velocidade, distância percorrida e descanso dos corredores. Além disso, a interface contempla funcionalidades estratégicas, como a Calculadora de Descanso e o compartilhamento simplificado do ranking da equipe, priorizando legibilidade, organização visual e rápida navegação durante a competição.
 
 <div align="center">
   <sub>Figura 25 - Painel público da equipe</sub><br>
-  <img src="../assets/design/wireframe de alta-fi.png" width="100%" alt="Painel público da equipe com ranking geral, métricas dos atletas, calculadora de descanso e compartilhamento do ranking."><br>
+  <img src="../assets/design/wireframe de alta-fi.png" width="100%" alt="Painel público da equipe com ranking geral, métricas dos corredores, calculadora de descanso e compartilhamento do ranking."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
@@ -1816,13 +1816,13 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 Esta seção apresenta a documentação do protótipo de alta fidelidade desenvolvido para a aplicação web. O objetivo do protótipo é representar, de forma visual e funcional, a experiência que o usuário final terá ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informações e alinhamento com os fluxos definidos nas User Stories.
 
-Através das telas prototipadas, é possível validar a arquitetura de navegação, os componentes-chave da interface e os elementos visuais que compõem o sistema. Cada tela foi construída com base nos requisitos levantados, considerando as funcionalidades essenciais da plataforma, como o painel de administrador e do atleta.
+Através das telas prototipadas, é possível validar a arquitetura de navegação, os componentes-chave da interface e os elementos visuais que compõem o sistema. Cada tela foi construída com base nos requisitos levantados, considerando as funcionalidades essenciais da plataforma, como o painel de admin e do corredor.
 
 O protótipo também está servindo como referência para o desenvolvimento front-end e será utilizado durante as etapas de implementação, testes de usabilidade e iteração do produto.
 
 ### Persona 1 - Marina Costa
 #### Dashboard Principal
-&nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao administrador e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
+&nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao admin e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
 
 
 <div align="center">
@@ -1832,22 +1832,22 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 #### Cadastro de nova competição.
-&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo um formulário de cadastro de competição, permitindo ao administrador inserir nome do evento, data, localização e uma descrição opcional. Ao finalizar o preenchimento, o administrador pode confirmar a criação por meio do botão "Criar nova Competição" ou cancelar a ação e retornar ao Dashboard.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo um formulário de cadastro de competição, permitindo ao admin inserir nome do evento, data, localização e uma descrição opcional. Ao finalizar o preenchimento, o admin pode confirmar a criação por meio do botão "Criar nova Competição" ou cancelar a ação e retornar ao Dashboard.
 
 
 <div align="center">
   <sub>Figura 2 - Cadastro de competição </sub><br>
-    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Dashboard pós-cadastro de Competição.
-&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
+&nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e corredores permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
 
 
 <div align="center">
   <sub>Figura 3 - Competição Cadastrada </sub><br>
-    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard após cadastro de competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1862,7 +1862,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 #### Cadastro de equipes.
-&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
+&nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao admin inserir o nome da equipe, definir o capitão e registrar os corredores participantes. O sistema também oferece a opção de adicionar novos corredores dinamicamente. Ao finalizar o preenchimento, o admin pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
 
 
 <div align="center">
@@ -1872,8 +1872,8 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 
-#### Painel de administração das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
+#### Painel de admin das equipes.
+&nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de admin das equipes, que permite ao admin visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição com atualização periódica.
 
 
 <div align="center">
@@ -1884,7 +1884,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 #### Painel operacional das equipes.
-&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
+&nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o corredor durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
 
 
 <div align="center">
@@ -1895,7 +1895,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 #### Painel operacional das equipes com dropdown.
-&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
+&nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de corredor ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada corredor, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
 
 
 <div align="center">
@@ -1911,7 +1911,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 <div align="center">
   <sub>Figura 9 - Captura da foto da esteira </sub><br>
-    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de captura da foto da esteira"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1921,44 +1921,44 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 <div align="center">
   <sub>Figura 10 - Dados extraídos via OCR </sub><br>
-    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de validação dos dados extraídos via OCR"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Registro Manual.
-&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de registro manual de checkpoints, utilizada em situações nas quais a captura automática ou a leitura via OCR não funcionem corretamente. Nela, o operador pode inserir manualmente os dados do atleta, como distância percorrida, pace e tempo total, garantindo a continuidade do registro da competição. A interface também exibe um alerta indicando que a ação será registrada no log de auditoria do sistema para fins de rastreabilidade e validação posterior.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de registro manual de checkpoints, utilizada em situações nas quais a captura automática ou a leitura via OCR não funcionem corretamente. Nela, o operador pode inserir manualmente os dados do corredor, como distância percorrida, pace e tempo total, garantindo a continuidade do registro da competição. A interface também exibe um alerta indicando que a ação será registrada para fins de rastreabilidade e validação posterior.
 
 
 <div align="center">
   <sub>Figura 11 -  Registro Manual </sub><br>
-    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de registro manual de checkpoint"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Checkpoints salvos.
-&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo apresenta a tela de visualização dos checkpoints salvos da equipe durante a competição. Nela, o operador pode acompanhar métricas gerais da equipe, como distância acumulada, pace médio e tempo total registrado, além de visualizar o histórico completo dos checkpoints realizados por cada atleta. A interface também informa o método utilizado em cada registro, permitindo identificar se os dados foram capturados automaticamente ou inseridos manualmente, garantindo maior controle e rastreabilidade das informações registradas no sistema.
+&nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo apresenta a tela de visualização dos checkpoints salvos da equipe durante a competição. Nela, o operador pode acompanhar métricas gerais da equipe, como distância acumulada, pace médio e tempo total registrado, além de visualizar o histórico completo dos checkpoints realizados por cada corredor. A interface também informa o método utilizado em cada registro, permitindo identificar se os dados foram capturados automaticamente ou inseridos manualmente, garantindo maior controle e rastreabilidade das informações registradas no sistema.
 
 
 <div align="center">
   <sub>Figura 12 -  Checkpoints salvos </sub><br>
-    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de checkpoints salvos"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
-### Ranking em tempo real
+### Ranking com atualização periódica
 
-Tela de ranking em tempo real da competição, exibindo métricas globais como total de quilômetros percorridos, pace médio global e número de checkpoints. Na seção "Disputa ao vivo", são apresentadas as duas equipes em competição, com a diferença de quilômetros entre elas. Ao final, exibe os atletas atualmente em corrida, com informações individuais de distância, pace atual e último checkpoint registrado. Um botão "Congelar ranking" está disponível no canto superior direito para pausar a atualização em tempo real.
+Tela de ranking com atualização periódica da competição, exibindo métricas globais como total de quilômetros percorridos, pace médio global e número de checkpoints. Na seção "Disputa ao vivo", são apresentadas as duas equipes em competição, com a diferença de quilômetros entre elas. Ao final, exibe os corredores atualmente em corrida, com informações individuais de distância, pace atual e último checkpoint registrado. Um botão "Congelar ranking" está disponível no canto superior direito para pausar a atualização.
 
 <div align="center">
-  <sub>Figura 5 - Ranking em tempo real</sub><br>
-    <img src="../assets/design/protótipo/Ranking.png"  width="100%" alt="Representação da tela de ranking em tempo real da competição"><br>
+  <sub>Figura 5 - Ranking com atualização periódica</sub><br>
+    <img src="../assets/design/protótipo/Ranking.png"  width="100%" alt="Representação da tela de ranking com atualização periódica da competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Relatório da competição
 
-Tela de relatório final da competição, apresentando um resumo geral com total de quilômetros percorridos, média geral de pace e número de checkpoints. Exibe um gráfico de linha com a evolução das posições das equipes ao longo do tempo (de 0h a 24h), permitindo visualizar as variações de liderança durante a prova. Abaixo, há uma seção de "Relatório de inconsistências" com uma tabela de registros corrigidos manualmente, contendo informações de data, atleta, equipe, checkpoint, valor OCR original, valor corrigido, diferença e usuário responsável pela correção. Um botão "Log de Auditoria" e outro de "Exportar dados" estão disponíveis para rastreabilidade e extração das informações.
+Tela de relatório final da competição, apresentando um resumo geral com total de quilômetros percorridos, média geral de pace e número de checkpoints. Exibe um gráfico de linha com a evolução das posições das equipes ao longo do tempo (de 0h a 24h), permitindo visualizar as variações de liderança durante a prova. Abaixo, há uma seção de "Relatório de inconsistências" com uma tabela de registros corrigidos manualmente, contendo informações de data, corredor, equipe, checkpoint, valor OCR original, valor corrigido, diferença e usuário responsável pela correção. Um botão "Log de Auditoria" e outro de "Exportar dados" estão disponíveis para rastreabilidade e extração das informações.
 
 <div align="center">
   <sub>Figura 6 - Relatório da competição</sub><br>
@@ -1969,7 +1969,7 @@ Tela de relatório final da competição, apresentando um resumo geral com total
 ### Persona 3 - Amanda Azevedo
 
 #### Painel operacional da equipe.
-Painel operacional da Equipe, acessado apenas pelos integrantes da mesma, exibindo métricas em tempo real como tempo de competição, distância para o líder e pace médio da equipe. A seção "Status por atleta da equipe" apresenta uma tabela com dados individuais de cada atleta, incluindo pace médio geral, velocidade máxima, distância percorrida e último checkpoint registrado. Na parte inferior, a "Calculadora de descanso" indica que o atleta atual atingiu 100% do tempo de descanso recomendado (50 min) e está pronto para voltar, apontando o próximo atleta como Rafael Lima. Um gráfico de posição ao longo do tempo complementa o painel, permitindo ao capitão acompanhar a evolução da equipe na disputa.
+Painel operacional da equipe, acessado apenas pelos integrantes da mesma, exibindo métricas atualizadas periodicamente como tempo de competição, distância para o líder e pace médio da equipe. A seção "Status por corredor da equipe" apresenta uma tabela com dados individuais de cada corredor, incluindo pace médio geral, velocidade máxima, distância percorrida e último checkpoint registrado. Na parte inferior, a "Calculadora de descanso" indica que o corredor atual atingiu 100% do tempo de descanso recomendado (50 min) e está pronto para voltar, apontando o próximo corredor como Rafael Lima. Um gráfico de posição ao longo do tempo complementa o painel, permitindo ao capitão acompanhar a evolução da equipe na disputa.
 
 Durante o processo de validação com o parceiro de projeto, foi identificado que as competições Red Bull 24h não ocorrem simultaneamente em diferentes localidades do Brasil, o que inviabilizou a existência de um ranking global entre eventos distintos. Essa informação levou à reestruturação da tela de equipe, com a remoção do componente de "Ranking global" e a adição de modais quantitativos exibindo o tempo total de competição e o pace médio da equipe, além de um gráfico de evolução da posição da equipe ao longo do evento em função do tempo, tornando o painel mais aderente à realidade operacional da competição.
 
@@ -2022,12 +2022,12 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 
 | Entidade | Papel no sistema | Relacionamentos |
 | --------- | ---------------- | --------------- |
-| Competição | Representa o evento Red Bull 24h | Possui N Equipes, Possui N Esteiras |
-| Equipe | Agrupa corredores sob um identificador único | Pertence a 1 Competição, Possui N Corredores |
-| Corredor | Atleta participante vinculado a uma equipe | Pertence a 1 Equipe, Possui N Checkpoints |
-| Checkpoint | Registro de performance do corredor na esteira | Pertence a 1 Corredor, Pertence a 1 Esteira, Possui N:1 Administrador | 
-| Administrador | Operador responsável por registrar checkpoints | Possui N Checkpoints |
-| Esteira | Equipamento onde a corrida é realizada | Pertence a N Competições, possui N Checkpoints |
+| Competition | Representa o evento Red Bull 24h | Possui N Teams, Possui N Checkpoints |
+| Team | Agrupa runners sob um identificador único | Pertence a 1 Competition, Possui N Runners |
+| Runner | Corredor participante vinculado a uma equipe | Pertence a 1 Team, Possui N Checkpoints |
+| Checkpoint | Registro de performance do runner na treadmill | Pertence a 1 Runner, 1 Competition, 1 Treadmill e 1 Admin |
+| Admin | Operador responsável por registrar checkpoints | Possui N Checkpoints |
+| Treadmill | Equipamento onde a corrida é realizada | Possui N Checkpoints |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2043,10 +2043,10 @@ A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados n
 
 | Elemento |  Símbolo  | Aplicação ao MER |
 | -------- | --------- | ---------------- |
-| Entidade | Retângulo | Competição, Equipe, Corredor, Checkpoint, Administrador e Esteira |
-| Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
-| Relacionamento | Losango | Equipe possui Corredor |
-| Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
+| Entidade | Retângulo | Competition, Team, Runner, Checkpoint, Admin e Treadmill |
+| Atributo | Elipse    | `address` em `Competition`, `name` em `Runner` |
+| Relacionamento | Losango | Team possui Runner |
+| Cardinalidade | 1, N nas arestas | Um runner possui N checkpoints |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2056,56 +2056,60 @@ A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados n
 
 Por meio de quadros, será detalhado cada entidade, listando seus atributos baseados no tipo semântico e descrição afim de contextualizar a implementação ao sistema.
 
-O Quadro 28 apresenta a entidade e os atributos de "Competição".
+O Quadro 28 apresenta a entidade e os atributos de `Competition`.
 
 <div align="center">
-  <sub>Quadro 28 - Dicionário de Dados da Entidade Competição</sub>
+  <sub>Quadro 28 - Dicionário de Dados da Entidade Competition</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Competição | Código | Identificador | Identifica unicamente cada competição | 
-| Competição | Endereço | Texto | Local onde a competição ocorre | 
-| Competição | Data | Data | Data de realização da competição |
-| Competição | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| -------- | --------- | -------------- | --------- |
+| Competition | `id` | Identificador | Identifica unicamente cada competição |
+| Competition | `name` | Texto | Nome da competição |
+| Competition | `address` | Texto | Local onde a competição ocorre |
+| Competition | `date` | Data | Data de realização da competição |
+| Competition | `status` | Categórico | Estado da competição: `not_started`, `in_progress` ou `closed` |
+| Competition | `created_at` | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, o Quadro 29 ilustra a entidade Equipe e os seus atributos.
+A seguir, o Quadro 29 ilustra a entidade `Team` e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 29 - Dicionário de Dados da Entidade Equipe</sub>
+  <sub>Quadro 29 - Dicionário de Dados da Entidade Team</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Equipe | Código | Identificador | Identifica unicamente cada equipe |
-| Equipe | Nome | Texto | Nome da equipe |
-| Equipe | UUID | Identificador único público | Código distribuído ao capitão para acesso sem login |
-| Equipe | Qr_Code | Imagem | Representação visual gerada a partir do UUID |
-| Equipe | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| -------- | --------- | -------------- | --------- |
+| Team | `id` | Identificador | Identifica unicamente cada equipe |
+| Team | `name` | Texto | Nome da equipe |
+| Team | `uuid` | Identificador único público | Código distribuído ao capitão para acesso sem login |
+| Team | `qr_code` | JSONB | Representação visual gerada a partir do UUID |
+| Team | `id_competition` | Chave estrangeira | Vincula a equipe à competição |
+| Team | `created_at` | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 30 representa o dicionário de dados da entidade Corredor.
+O Quadro 30 representa o dicionário de dados da entidade `Runner`.
 
 <div align="center">
-  <sub>Quadro 30 - Dicionário de Dados da Entidade Corredor</sub>
+  <sub>Quadro 30 - Dicionário de Dados da Entidade Runner</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Corredor | Código | Identificador | Identifica unicamente cada corredor | 
-| Corredor | Nome | Texto | Nome completo do corredor |
-| Corredor | CPF | Texto | Documento de identificação civil único |
-| Corredor | Email | Texto | Endereço de e-mail do corredor | 
-| Corredor | Telefone | Texto | Contato telefônico do corredor | 
-| Corredor | Status | Categórico | Papel do corredor na equipe: corredor ou capitão |
-| Corredor | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| -------- | --------- | -------------- | --------- |
+| Runner | `id` | Identificador | Identifica unicamente cada corredor |
+| Runner | `name` | Texto | Nome completo do corredor |
+| Runner | `status` | Categórico | Papel do corredor na equipe: `runner` ou `captain` |
+| Runner | `email` | Texto | Endereço de e-mail do corredor |
+| Runner | `phone` | Texto | Contato telefônico do corredor |
+| Runner | `cpf` | Texto | Documento de identificação civil único |
+| Runner | `id_team` | Chave estrangeira | Vincula o corredor à equipe |
+| Runner | `created_at` | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2118,49 +2122,54 @@ O Quadro 31 apresenta a entidade e os atributos de "Checkpoint".
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Checkpoint | Código | Identificador | Identifica unicamente cada checkpoint |
-| Checkpoint | Identificador | Número | Identifica cada checkpoint e possibilita rastreabilidade e auditoria dos registros |
-| Checkpoint | Km | Numérico decimal | Distância percorrida registrada |
-| Checkpoint | Pace | Numérico decimal | Ritmo médio em minutos por km |
-| Checkpoint | Tempo | Duração | Tempo total na esteira |
-| Checkpoint | Imagem | Arquivo | Foto do painel da esteira capturada via OCR |
-| Checkpoint | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| -------- | --------- | -------------- | --------- |
+| Checkpoint | `id` | Identificador | Identifica unicamente cada checkpoint |
+| Checkpoint | `identifier` | Texto | Identifica cada checkpoint e possibilita rastreabilidade dos registros |
+| Checkpoint | `distance_km` | Numérico decimal | Distância percorrida registrada |
+| Checkpoint | `pace` | Texto | Ritmo médio em minutos por km |
+| Checkpoint | `time` | Duração | Tempo total na esteira |
+| Checkpoint | `image` | JSONB | Foto ou metadados da evidência capturada |
+| Checkpoint | `id_runner` | Chave estrangeira | Vincula o checkpoint ao corredor |
+| Checkpoint | `id_competition` | Chave estrangeira | Vincula o checkpoint à competição |
+| Checkpoint | `id_treadmill` | Chave estrangeira | Vincula o checkpoint à esteira |
+| Checkpoint | `id_admin` | Chave estrangeira | Vincula o checkpoint ao admin responsável |
+| Checkpoint | `created_at` | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, o Quadro 32 ilustra a entidade Administrador e os seus atributos.
+A seguir, o Quadro 32 ilustra a entidade `Admin` e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 32 - Dicionário de Dados da Entidade Administrador</sub>
+  <sub>Quadro 32 - Dicionário de Dados da Entidade Admin</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Administrador | Código | Identificador | Identifica unicamente cada administrador |
-| Administrador | Nome | Texto | Nome do administrador |
-| Administrador | Área | Texto | Área de atuação do administrador | 
-| Administrador | Senha | Texto protegido | Credencial de acesso ao painel administrativo |
-| Administrador | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| -------- | --------- | -------------- | --------- |
+| Admin | `id` | Identificador | Identifica unicamente cada admin |
+| Admin | `name` | Texto | Nome do admin |
+| Admin | `email` | Texto | E-mail usado para autenticação |
+| Admin | `area` | Texto | Área de atuação do admin |
+| Admin | `password` | Texto protegido | Credencial de acesso ao painel administrativo |
+| Admin | `created_at` | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 33 representa o dicionário de dados da entidade Esteira.
+O Quadro 33 representa o dicionário de dados da entidade `Treadmill`.
 
 <div align="center">
-  <sub>Quadro 33 - Dicionário de Dados da Entidade Esteira </sub>
+  <sub>Quadro 33 - Dicionário de Dados da Entidade Treadmill </sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Esteira | Código | Identificador | Identifica unicamente cada esteira |
-| Esteira | Nome | Texto | Nome ou apelido da esteira |
-| Esteira | Especificação | Texto | Descrição técnica do equipamento |
-| Esteira | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| -------- | --------- | -------------- | --------- |
+| Treadmill | `id` | Identificador | Identifica unicamente cada esteira |
+| Treadmill | `name` | Texto | Nome ou apelido da esteira |
+| Treadmill | `specification` | Texto | Descrição técnica do equipamento |
+| Treadmill | `created_at` | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2176,12 +2185,12 @@ A seguir, o Quadro 34 apresenta a rastreabilidade entre as entidades criadas com
 
 | Entidade | RF que origina | RN que governa |
 | --------- | -------------- | -------------|
-| Competição | RF001, RF002 | RN14 |
-| Equipe | RF003 | RN01, RN02, RN07 | 
-| Corredor | RF003 | RN07 | 
+| Competition | RF001, RF002 | RN14 |
+| Team | RF003 | RN01, RN02, RN07 |
+| Runner | RF003 | RN07 |
 | Checkpoint | RF005, RF008 | RN04, RN05, RN12 |
-| Administrador | RF004 | RN03 |
-| Esteira | RF005 | — |
+| Admin | RF004 | RN03 |
+| Treadmill | RF005 | — |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2193,7 +2202,7 @@ O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelage
 
 A principal finalidade do DER é facilitar o planejamento do banco de dados, reduzindo erros de estrutura e garantindo que os dados sejam armazenados de maneira organizada e eficiente. Além disso, o diagrama contribui para a comunicação entre os membros da equipe, pois apresenta, de forma clara, como as informações se conectam dentro do sistema (DEVMEDIA, 2014).
 
-No contexto do projeto, o DER é importante para representar os elementos fundamentais da plataforma, como competições, equipes, corredores e registros de desempenho. A partir dele, é possível visualizar como essas entidades se relacionam, garantindo que o banco de dados suporte corretamente as funcionalidades do sistema, como cadastro de atletas, monitoramento em tempo real e atualização de rankings. Dessa forma, o DER contribui diretamente para a organização, integridade e funcionamento adequado do banco de dados do projeto.
+No contexto do projeto, o DER é importante para representar os elementos fundamentais da plataforma, como competições, equipes, corredores e registros de desempenho. A partir dele, é possível visualizar como essas entidades se relacionam, garantindo que o banco de dados suporte corretamente as funcionalidades do sistema, como cadastro de corredores, monitoramento periódico e atualização de rankings. Dessa forma, o DER contribui diretamente para a organização, integridade e funcionamento adequado do banco de dados do projeto.
 
 ### Notação Crow's Foot
 
@@ -2226,29 +2235,29 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 | # | Entidade A | Entidade B | A → B | B → A |
 |---|---|---|---|---|
-| 1 | COMPETICAO | EQUIPE | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
-| 2 | EQUIPE | CORREDOR | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
-| 3 | CORREDOR | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
-| 4 | ADMINISTRADOR | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
-| 5 | ESTEIRA | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
-| 6 | COMPETICAO | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
+| 1 | COMPETITION | TEAM | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
+| 2 | TEAM | RUNNER | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
+| 3 | RUNNER | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
+| 4 | ADMIN | CHECKPOINT | 1 admin supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único admin (N:1) |
+| 5 | TREADMILL | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
+| 6 | COMPETITION | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
 
 ### Coerência com o Diagrama de Classes
 
 | Diagrama de Classes                                         | DER                                   |
 | ----------------------------------------------------------- | ------------------------------------- |
-| Classe `Competição`                                         | Tabela `COMPETICAO`                   |
-| Classe `Equipe`                                             | Tabela `EQUIPE`                       |
-| Classe `Corredor / Atleta`                                  | Tabela `CORREDOR`                     |
-| Classe `Administrador / Juiz`                               | Tabela `ADMINISTRADOR`                |
+| Classe `Competition`                                        | Tabela `competition`                  |
+| Classe `Team`                                               | Tabela `team`                         |
+| Classe `Runner`                                             | Tabela `runner`                       |
+| Classe `Admin`                                              | Tabela `admin`                        |
 | Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
-| Classe `Esteira`                                            | Tabela `ESTEIRA`                      |
-| Associação `Competição` possui `Equipe`                     | FK `competicao_id` em `EQUIPE`        |
-| Associação `Equipe` possui `Corredor`                       | FK `equipe_id` em `CORREDOR`          |
-| Associação `Corredor` registra `Checkpoint`                 | FK `corredor_id` em `CHECKPOINT`      |
-| Associação `Competição` possui `Checkpoint`                 | FK `competicao_id` em `CHECKPOINT`    |
-| Associação `Esteira` é usada em `Checkpoint`                | FK `esteira_id` em `CHECKPOINT`       |
-| Associação `Administrador` valida/supervisiona `Checkpoint` | FK `administrador_id` em `CHECKPOINT` |
+| Classe `Treadmill`                                          | Tabela `treadmill`                    |
+| Associação `Competition` possui `Team`                      | FK `id_competition` em `team`         |
+| Associação `Team` possui `Runner`                           | FK `id_team` em `runner`              |
+| Associação `Runner` registra `Checkpoint`                   | FK `id_runner` em `checkpoint`        |
+| Associação `Competition` possui `Checkpoint`                | FK `id_competition` em `checkpoint`   |
+| Associação `Treadmill` é usada em `Checkpoint`              | FK `id_treadmill` em `checkpoint`     |
+| Associação `Admin` valida/supervisiona `Checkpoint`         | FK `id_admin` em `checkpoint`         |
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -2263,42 +2272,50 @@ Com base nos requisitos funcionais, nas regras de negócio e na modelagem concei
 
 <div align="center">
   <sub>Figura 28 - Modelo Relacional</sub><br>
-  <img src="../assets/programacao/modelorelacional.png" width="100%" alt="Modelo relacional do sistema representando as tabelas do banco de dados, seus atributos, chaves primárias, chaves estrangeiras e os relacionamentos entre competições, equipes, corredores, checkpoints, administradores e esteiras"><br>
+  <img src="../assets/programacao/modelorelacional.png" width="100%" alt="Modelo relacional do sistema representando as tabelas do banco de dados, seus atributos, chaves primárias, chaves estrangeiras e os relacionamentos entre competition, team, runner, checkpoint, admin e treadmill"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 ##### Descrição das entidades
 
-**Tabela `competicao`**  
-A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+**Tabela `competition`**
+A tabela `competition` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo nome, endereço, data e status operacional. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
 
-**Tabela `equipe`**  
-A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
+**Tabela `team`**
+A tabela `team` registra os grupos participantes vinculados a uma competição específica por meio de `id_competition`. Além de sua chave primária, contempla `uuid` e `qr_code`, usados no acesso público sem login ao painel da equipe.
 
-**Tabela `corredor`**  
-A tabela `corredor` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF, além de um indicador de status operacional, utilizado para representar a situação atual do participante no sistema. Por meio da chave estrangeira `equipe_id`, cada corredor é associado à sua respectiva equipe.
+**Tabela `runner`**
+A tabela `runner` armazena os dados cadastrais dos corredores, incluindo nome, status (`runner` ou `captain`), e-mail, telefone, CPF e vínculo com a equipe por meio de `id_team`.
 
-**Tabela `esteira`**  
-A tabela `esteira` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
+**Tabela `treadmill`**
+A tabela `treadmill` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando nome e especificação técnica do dispositivo utilizado durante a competição.
 
-**Tabela `administrador`**  
-A tabela `administrador` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de identificação, autenticação e rastreabilidade temporal.
+**Tabela `admin`**
+A tabela `admin` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo nome, e-mail, área de atuação, senha protegida e rastreabilidade temporal.
 
-**Tabela `checkpoint`**  
-A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `corredor`, `competicao`, `esteira` e `administrador`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
+**Tabela `checkpoint`**
+A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando identificador único, distância, pace, tempo, evidência de imagem e vínculos com `runner`, `competition`, `treadmill` e `admin` por meio das FKs `id_runner`, `id_competition`, `id_treadmill` e `id_admin`.
 
-Adicionalmente, todas as entidades contemplam atributos temporais, como `criado_em`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
+**Tabela `ocr_extraction`**
+A tabela `ocr_extraction` registra imagens submetidas ao fluxo OCR, dados extraídos, validação, status de processamento e vínculo opcional com `checkpoint` por meio de `id_checkpoint`.
+
+**Tabela `competition_report`**
+A tabela `competition_report` armazena relatórios consolidados por competição, com `summary`, `highlights` e data de geração, vinculada à competição por `id_competition`.
+
+Adicionalmente, as entidades contemplam atributos temporais como `created_at`, `updated_at` ou `generated_at`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
 
 ##### Relacionamentos e integridade referencial
 
 Os relacionamentos entre as entidades foram definidos por meio de chaves primárias (*Primary Keys*) e chaves estrangeiras (*Foreign Keys*), respeitando as dependências identificadas durante a modelagem conceitual e garantindo integridade referencial entre as tabelas. Nesse contexto:
 
-- uma `competicao` pode possuir múltiplas `equipes` *(1:N)*;
-- uma `equipe` pode possuir múltiplos `corredores` *(1:N)*;
-- um `corredor` pode gerar múltiplos `checkpoints` *(1:N)*;
-- uma `competicao` pode possuir múltiplos `checkpoints` *(1:N)*;
-- uma `esteira` pode estar associada a múltiplos `checkpoints` *(1:N)*;
-- Um `administrador` pode validar múltiplos checkpoints (1:N).
+- uma `competition` pode possuir múltiplas `teams` *(1:N)*;
+- uma `team` pode possuir múltiplos `runners` *(1:N)*;
+- um `runner` pode gerar múltiplos `checkpoints` *(1:N)*;
+- uma `competition` pode possuir múltiplos `checkpoints` *(1:N)*;
+- uma `treadmill` pode estar associada a múltiplos `checkpoints` *(1:N)*;
+- um `admin` pode validar múltiplos checkpoints *(1:N)*;
+- uma `ocr_extraction` pode se vincular opcionalmente a um `checkpoint` *(N:1 opcional)*;
+- uma `competition` pode possuir um `competition_report` consolidado *(1:1)*.
 
 ##### Constraints do modelo relacional
 
@@ -2307,177 +2324,239 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | Tabela | Constraint | Campo(s) | Finalidade |
 | :--- | :--- | :--- | :--- |
 | Todas as tabelas | `PRIMARY KEY` | `id` | Garante a identificação única dos registros principais do sistema. |
-| `equipe` | `FOREIGN KEY` | `competicao_id` | Indica que cada equipe pertence a uma competição. |
-| `corredor` | `FOREIGN KEY` | `equipe_id` | Indica que cada corredor pertence a uma equipe. |
-| `checkpoint` | `FOREIGN KEY` | `corredor_id`, `competicao_id`, `esteira_id`, `administrador_id` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um administrador. |
-| `equipe` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
-| `corredor` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
-| `checkpoint` | `UNIQUE` | `identificador` | Define que cada registro operacional possui um identificador próprio. |
-| `corredor` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
-| `checkpoint` | `CHECK` | `km` | Impede valores incompatíveis com a regra de distância percorrida. |
+| `team` | `FOREIGN KEY` | `id_competition` | Indica que cada equipe pertence a uma competição. |
+| `runner` | `FOREIGN KEY` | `id_team` | Indica que cada corredor pertence a uma equipe. |
+| `checkpoint` | `FOREIGN KEY` | `id_runner`, `id_competition`, `id_treadmill`, `id_admin` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um admin. |
+| `ocr_extraction` | `FOREIGN KEY` | `id_checkpoint` | Vincula opcionalmente uma extração OCR a um checkpoint validado. |
+| `competition_report` | `FOREIGN KEY` | `id_competition` | Vincula o relatório consolidado à competição. |
+| `team` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
+| `runner` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
+| `admin` | `UNIQUE` | `email` | Define que o e-mail de admin não pode se repetir. |
+| `checkpoint` | `UNIQUE` | `identifier` | Define que cada registro operacional possui um identificador próprio. |
+| `runner` | `CHECK` | `status` | Limita o status do participante aos papéis `runner` e `captain`. |
+| `checkpoint` | `CHECK` | `distance_km`, `pace`, `time` | Impede valores incompatíveis com distância, pace e tempo registrados. |
 | Principais campos obrigatórios | `NOT NULL` | Campos de identificação, relacionamento e rastreabilidade | Define quais informações mínimas precisam existir para manter a consistência dos cadastros e registros operacionais. |
 
 
 #### 3.6.3.2 Modelo Físico
 Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
-O arquivo pode ser visto aqui: [Modelo Físico](outros/migration.sql).
+Os arquivos podem ser vistos em [Migrations](outros/migrations/).
+A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. Os arquivos em `documentos/outros/migrations/` reúnem as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
+#### Tabela `competition`
 
-A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. O arquivo migration.sql reúne todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
-
-#### Tabela Competição
-
- 
-##### Tabela `competicao`
- 
 ```sql
-CREATE TABLE competicao (
-    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    endereco    VARCHAR(255)    NOT NULL,
-    data        DATE            NOT NULL,
-    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id)
+CREATE TABLE competition (
+    id          INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name        VARCHAR(100)  NOT NULL,
+    address     VARCHAR(255)  NOT NULL,
+    date        DATE          NOT NULL,
+    status      VARCHAR(30)   NOT NULL DEFAULT 'not_started',
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_competition PRIMARY KEY (id),
+    CONSTRAINT ck_competition_status
+        CHECK (status IN ('not_started', 'in_progress', 'closed')),
+    CONSTRAINT ck_competition_name_not_empty
+        CHECK (length(trim(name)) > 0),
+    CONSTRAINT ck_competition_date_min
+        CHECK (date >= DATE '2020-01-01')
 );
- 
-CREATE INDEX idx_competicao_data ON competicao (data);
+
+CREATE INDEX idx_competition_date ON competition (date);
 ```
 
-A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
+A tabela `competition` não possui dependências externas e, portanto, é criada antes das entidades que dependem de competição.
 
-#### Tabela equipe
+#### Tabela `team`
+
 ```sql
-CREATE TABLE equipe (
-    id              SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome            VARCHAR(100)    NOT NULL,
-    uuid            UUID            NOT NULL DEFAULT gen_random_uuid(),
-    qr_code         JSON            NULL,
-    competicao_id   SMALLINT        NOT NULL,
-    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id),
-    UNIQUE (uuid)
+CREATE TABLE team (
+    id              INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name            VARCHAR(100)  NOT NULL,
+    uuid            UUID          NOT NULL DEFAULT gen_random_uuid(),
+    qr_code         JSONB         NULL,
+    id_competition  INTEGER       NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_team PRIMARY KEY (id),
+    CONSTRAINT uq_team_uuid UNIQUE (uuid),
+    CONSTRAINT ck_team_name_not_empty
+        CHECK (length(trim(name)) > 0),
+    CONSTRAINT fk_team_id_competition
+        FOREIGN KEY (id_competition) REFERENCES competition (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
- 
-ALTER TABLE equipe
-    ADD CONSTRAINT equipe_competicao_id_foreign
-    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
- 
-CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
-```
-A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo **uuid** utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **qr_code** é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
 
-#### Tabela corredor
- 
+CREATE INDEX idx_team_id_competition ON team (id_competition);
+```
+
+A tabela `team` depende de `competition` por meio da chave estrangeira `id_competition`. O campo `uuid` utiliza `gen_random_uuid()` e possui restrição `UNIQUE`, garantindo identificador público único para acesso por link/QR Code.
+
+#### Tabela `runner`
+
 ```sql
-CREATE TABLE corredor (
-    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome        VARCHAR(100)    NOT NULL,
-    status      VARCHAR(50)     NOT NULL DEFAULT 'corredor',
-    email       VARCHAR(150)    NOT NULL,
-    telefone    VARCHAR(20)     NULL,
-    cpf         VARCHAR(14)     NOT NULL,
-    equipe_id   SMALLINT        NOT NULL,
-    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id),
-    UNIQUE (cpf),
-    UNIQUE (email),
-    CHECK (status IN ('corredor', 'capitao'))
+CREATE TABLE runner (
+    id          INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name        VARCHAR(100)  NOT NULL,
+    status      VARCHAR(50)   NOT NULL DEFAULT 'runner',
+    email       VARCHAR(150)  NOT NULL,
+    phone       VARCHAR(20)   NULL,
+    cpf         VARCHAR(14)   NOT NULL,
+    id_team     INTEGER       NOT NULL,
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_runner PRIMARY KEY (id),
+    CONSTRAINT uq_runner_cpf UNIQUE (cpf),
+    CONSTRAINT uq_runner_email UNIQUE (email),
+    CONSTRAINT ck_runner_status
+        CHECK (status IN ('runner', 'captain')),
+    CONSTRAINT fk_runner_id_team
+        FOREIGN KEY (id_team) REFERENCES team (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
- 
-ALTER TABLE corredor
-    ADD CONSTRAINT corredor_equipe_id_foreign
-    FOREIGN KEY (equipe_id) REFERENCES equipe (id);
- 
-CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
-CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
-```
- 
-A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação.
- 
 
-#### Tabela esteira
- 
-```sql
-CREATE TABLE esteira (
-    id              SMALLINT    NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome            TEXT        NOT NULL,
-    especificacao   TEXT        NULL,
-    criado_em       TIMESTAMP   NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id)
-);
+CREATE INDEX idx_runner_id_team ON runner (id_team);
+CREATE INDEX idx_runner_cpf     ON runner (cpf);
 ```
- 
-A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **nome** e **especificacao** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo **especificacao** é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
 
-#### Tabela administrador
- 
+A tabela `runner` depende de `team` por meio da chave estrangeira `id_team`. O campo `status` diferencia os papéis `runner` e `captain`, conforme o padrão técnico adotado no código.
+
+#### Tabela `treadmill`
+
 ```sql
-CREATE TABLE administrador (
-    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome        VARCHAR(100)    NOT NULL,
-    area        VARCHAR(100)    NULL,
-    senha       VARCHAR(255)    NOT NULL,
-    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id)
+CREATE TABLE treadmill (
+    id             INTEGER    NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name           TEXT       NOT NULL,
+    specification  TEXT       NULL,
+    created_at     TIMESTAMP  NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_treadmill PRIMARY KEY (id),
+    CONSTRAINT ck_treadmill_name_not_empty
+        CHECK (length(trim(name)) > 0)
 );
 ```
-A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
- 
- #### Tabela checkpoint
- 
+
+A tabela `treadmill` não possui chaves estrangeiras e pode ser criada de forma independente.
+
+#### Tabela `admin`
+
+```sql
+CREATE TABLE admin (
+    id          INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name        VARCHAR(100)  NOT NULL,
+    email       VARCHAR(150)  NOT NULL,
+    area        VARCHAR(100)  NULL,
+    password    VARCHAR(255)  NOT NULL,
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_admin PRIMARY KEY (id),
+    CONSTRAINT uq_admin_email UNIQUE (email),
+    CONSTRAINT ck_admin_name_not_empty
+        CHECK (length(trim(name)) > 0)
+);
+```
+
+A tabela `admin` armazena os usuários administrativos autenticáveis. O campo `password` representa a credencial protegida usada no fluxo de autenticação.
+
+#### Tabela `checkpoint`
+
 ```sql
 CREATE TABLE checkpoint (
-    id                  SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    identificador       VARCHAR(100)    NOT NULL,
-    km                  NUMERIC(6, 3)   NOT NULL,
-    pace                VARCHAR(20)     NULL,
-    tempo               VARCHAR(20)     NULL,
-    imagem              JSON            NULL,
-    corredor_id         SMALLINT        NOT NULL,
-    competicao_id       SMALLINT        NOT NULL,
-    esteira_id          SMALLINT        NOT NULL,
-    administrador_id    SMALLINT        NOT NULL,
-    criado_em           TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id),
-    UNIQUE (identificador),
-    CHECK (km >= 0)
+    id              INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    identifier      VARCHAR(100)  NOT NULL,
+    distance_km     NUMERIC(6, 3) NOT NULL,
+    pace            VARCHAR(20)   NULL,
+    time            VARCHAR(20)   NULL,
+    image           JSONB         NULL,
+    id_runner       INTEGER       NOT NULL,
+    id_competition  INTEGER       NOT NULL,
+    id_treadmill    INTEGER       NOT NULL,
+    id_admin        INTEGER       NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_checkpoint PRIMARY KEY (id),
+    CONSTRAINT uq_checkpoint_identifier UNIQUE (identifier),
+    CONSTRAINT ck_checkpoint_distance_km
+        CHECK (distance_km >= 0 AND distance_km <= 1000),
+    CONSTRAINT fk_checkpoint_id_runner
+        FOREIGN KEY (id_runner) REFERENCES runner (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_checkpoint_id_competition
+        FOREIGN KEY (id_competition) REFERENCES competition (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_checkpoint_id_treadmill
+        FOREIGN KEY (id_treadmill) REFERENCES treadmill (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_checkpoint_id_admin
+        FOREIGN KEY (id_admin) REFERENCES admin (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_corredor_id_foreign
-    FOREIGN KEY (corredor_id) REFERENCES corredor (id);
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_competicao_id_foreign
-    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_esteira_id_foreign
-    FOREIGN KEY (esteira_id) REFERENCES esteira (id);
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_administrador_id_foreign
-    FOREIGN KEY (administrador_id) REFERENCES administrador (id);
- 
-CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
-CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
-CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
-CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
-CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
+
+CREATE INDEX idx_checkpoint_id_runner      ON checkpoint (id_runner);
+CREATE INDEX idx_checkpoint_id_competition ON checkpoint (id_competition);
+CREATE INDEX idx_checkpoint_id_treadmill   ON checkpoint (id_treadmill);
+CREATE INDEX idx_checkpoint_id_admin       ON checkpoint (id_admin);
+CREATE INDEX idx_checkpoint_created_at     ON checkpoint (created_at);
 ```
- 
-A tabela **checkpoint** é a entidade central do sistema operacional e a última a ser criada, pois concentra quatro chaves estrangeiras: `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id`. O campo **km** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão, adequado para registros de distância como `42,195 km`. A restrição `CHECK (km >= 0)` assegura que nenhum valor negativo seja inserido. Os campos **pace** e **tempo** são armazenados como `VARCHAR`, pois seguem formatos textuais como `"5:30/km"` e `"01:23:45"`, sendo opcionais pois podem não estar disponíveis em todos os registros. O campo **imagem** é definido como `JSON` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **identificador** possui restrição `UNIQUE` para garantir unicidade entre os registros operacionais. O campo **administrador_id** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints — um administrador pode estar associado a múltiplos registros ao longo de uma competição. Cinco índices são criados: quatro sobre as chaves estrangeiras para otimizar junções e um sobre `criado_em` para acelerar relatórios cronológicos de desempenho.
+
+A tabela `checkpoint` é a entidade central do sistema operacional e concentra quatro chaves estrangeiras: `id_runner`, `id_competition`, `id_treadmill` e `id_admin`. O campo `distance_km` utiliza `NUMERIC(6, 3)`, adequado para registros de distância com precisão decimal, e o campo `image` usa `JSONB` para armazenar metadados da evidência capturada.
+
+#### Tabela `ocr_extraction`
+
+```sql
+CREATE TABLE ocr_extraction (
+    id              INTEGER     NOT NULL GENERATED ALWAYS AS IDENTITY,
+    image           JSONB       NOT NULL,
+    extracted_data  JSONB       NULL,
+    validation      JSONB       NULL,
+    status          VARCHAR(30) NOT NULL DEFAULT 'pending',
+    id_checkpoint   INTEGER     NULL,
+    created_at      TIMESTAMP   NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMP   NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_ocr_extraction PRIMARY KEY (id),
+    CONSTRAINT ck_ocr_extraction_status
+        CHECK (status IN ('pending', 'processed', 'validated', 'rejected')),
+    CONSTRAINT fk_ocr_extraction_id_checkpoint
+        FOREIGN KEY (id_checkpoint) REFERENCES checkpoint (id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+);
+```
+
+A tabela `ocr_extraction` registra o ciclo de extração OCR e permite vincular uma extração validada a um checkpoint.
+
+#### Tabela `competition_report`
+
+```sql
+CREATE TABLE competition_report (
+    id_competition  INTEGER    NOT NULL,
+    summary         JSONB      NOT NULL,
+    highlights      JSONB      NOT NULL,
+    generated_at    TIMESTAMP  NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_competition_report PRIMARY KEY (id_competition),
+    CONSTRAINT fk_competition_report_id_competition
+        FOREIGN KEY (id_competition) REFERENCES competition (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+```
+
+A tabela `competition_report` mantém o relatório consolidado de cada competição, com chave primária em `id_competition`.
 
 ##### Considerações gerais sobre a implementação
  
-A implementação física adota o padrão de separar a definição das colunas e restrições estruturais (`PRIMARY KEY`, `UNIQUE`, `CHECK`) dentro do bloco `CREATE TABLE`, enquanto os relacionamentos externos são adicionados via `ALTER TABLE ... ADD CONSTRAINT` logo após cada tabela. Essa abordagem favorece a legibilidade, facilita a manutenção incremental do esquema e permite que as instruções DDL sejam executadas de forma modular.
+A implementação física adota o padrão de definir colunas, chaves primárias, restrições (`UNIQUE`, `CHECK`) e chaves estrangeiras diretamente nos blocos `CREATE TABLE` das migrations. Essa abordagem favorece a legibilidade, facilita a manutenção incremental do esquema e mantém cada tabela versionada no arquivo correspondente.
  
-Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
+Todos os campos de identificação usam `INTEGER` com geração automática por `GENERATED ALWAYS AS IDENTITY`, exceto `competition_report`, cuja chave primária é o próprio `id_competition`. Adicionalmente, os campos temporais (`created_at`, `updated_at` e `generated_at`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se nas migrations versionadas do repositório.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
@@ -2505,10 +2584,10 @@ O código completo das consultas com suas respectivas análises proposicionais e
 **Expressão SQL:**
 
 ```sql
-SELECT id, identificador, km, criado_em
+SELECT id, identifier, distance_km, created_at
 FROM checkpoint
-WHERE competicao_id = 1
-  AND (km > 10 OR km < 2);
+WHERE id_competition = 1
+  AND (distance_km > 10 OR distance_km < 2);
 ```
 
 **Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
@@ -2518,13 +2597,13 @@ WHERE competicao_id = 1
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
 - **P:** o checkpoint pertence à competição de ID 1.  
-  `competicao_id = 1`
+  `id_competition = 1`
 
 - **Q:** o checkpoint possui quilometragem maior que 10 km.  
-  `km > 10`
+  `distance_km > 10`
 
 - **R:** o checkpoint possui quilometragem menor que 2 km.  
-  `km < 2`
+  `distance_km < 2`
 
 #### Expressão lógica proposicional
 
@@ -2572,7 +2651,7 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 | **Operadores lógicos** | `AND`, `NOT` |
 | **Operadores especiais** | `LIKE` |
 | **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
+| **Contexto de negócio** | Listar corredores comuns cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
 
 
 <div align="center">
@@ -2582,23 +2661,23 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 **Expressão SQL:**
 
 ```sql
-SELECT id, nome, status, equipe_id
-FROM corredor
-WHERE nome LIKE 'A%'
-  AND NOT status = 'Em descanso';
+SELECT id, name, status, id_team
+FROM runner
+WHERE name LIKE 'A%'
+  AND NOT status = 'captain';
 ```
 
-**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
+**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status `captain`. A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
 - **P:** o nome do corredor inicia com a letra “A”.  
-  `nome LIKE 'A%'`
+  `name LIKE 'A%'`
 
-- **Q:** o corredor está com status “Em descanso”.  
-  `status = 'Em descanso'`
+- **Q:** o corredor está com status `captain`.
+  `status = 'captain'`
 
 #### Expressão lógica proposicional
 
@@ -2609,7 +2688,7 @@ P ∧ ¬Q
 ```
 
 Em palavras:  
-o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver cadastrado como capitão.
 
 #### Identificação dos conectivos lógicos
 
@@ -2627,7 +2706,7 @@ o corredor será selecionado se o nome iniciar com a letra “A” e o corredor 
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjuntamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
+A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjuntamente, o corredor não está com status `captain`. Caso o nome não comece com “A” ou o corredor esteja cadastrado como capitão, o registro não será selecionado.
 
 #### Q03 — `UPDATE` com `AND` e `IN`
 
@@ -2642,7 +2721,7 @@ A tabela demonstra que a consulta retorna registros apenas quando o nome do corr
 | **Operadores lógicos** | `AND`, `OR` |
 | **Operadores especiais** | `IN` |
 | **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
+| **Contexto de negócio** | Encerrar uma competição que ainda está em estado inicial ou em andamento, bloqueando novos registros de checkpoint (RN14). |
 
 
 <div align="center">
@@ -2652,26 +2731,26 @@ A tabela demonstra que a consulta retorna registros apenas quando o nome do corr
 **Expressão SQL:**
 
 ```sql
-UPDATE corredor
-SET status = 'Em descanso'
-WHERE equipe_id = 1
-  AND status IN ('Em corrida', 'Próximo');
+UPDATE competition
+SET status = 'closed'
+WHERE id = 1
+  AND status IN ('not_started', 'in_progress');
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
+**Descrição em palavras:** atualiza o status da competição de identificador `1` para `closed` somente quando o status atual pertence ao conjunto permitido (`not_started` ou `in_progress`). A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o corredor pertence à equipe de identificador 1.  
-  `equipe_id = 1`
+- **P:** a competição possui identificador 1.
+  `id = 1`
 
-- **Q:** o corredor está com status “Em corrida”.  
-  `status = 'Em corrida'`
+- **Q:** a competição está com status `not_started`.
+  `status = 'not_started'`
 
-- **R:** o corredor está com status “Próximo”.  
-  `status = 'Próximo'`
+- **R:** a competição está com status `in_progress`.
+  `status = 'in_progress'`
 
 #### Expressão lógica proposicional
 
@@ -2682,12 +2761,12 @@ P ∧ (Q ∨ R)
 ```
 
 Em palavras:  
-o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+o status da competição será atualizado para `closed` se ela possuir identificador 1 e estiver com status `not_started` ou `in_progress`.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
-- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+- **∧ (AND):** exige que a competição possua o identificador especificado e satisfaça uma das condições de status;
+- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja `not_started` ou `in_progress`.
 
 #### Tabela-verdade
 
@@ -2704,7 +2783,7 @@ o status do corredor será atualizado para “Em descanso” se ele pertencer à
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
+A tabela demonstra que a atualização ocorrerá apenas quando a competição possuir identificador `1` e, simultaneamente, estiver com status `not_started` ou `in_progress`. Caso a competição possua outro identificador ou já esteja em status diferente dos especificados, o registro não será atualizado.
 
 #### Q04 — `DELETE` com `AND` e `NOT LIKE`
 
@@ -2730,21 +2809,21 @@ A tabela demonstra que a atualização ocorrerá apenas quando o corredor perten
 
 ```sql
 DELETE FROM checkpoint
-WHERE competicao_id = 1
-  AND identificador NOT LIKE 'CP-%';
+WHERE id_competition = 1
+  AND identifier NOT LIKE 'CP-%';
 ```
 
-**Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
+**Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identifier` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
 - **P:** o checkpoint pertence à competição de identificador 1.
-  `competicao_id = 1`
+  `id_competition = 1`
 
 - **Q:** o identificador do checkpoint segue o padrão esperado iniciado por `CP-`.
-  `identificador LIKE 'CP-%'`
+  `identifier LIKE 'CP-%'`
 
 #### Expressão lógica proposicional
 
@@ -2789,7 +2868,7 @@ A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à
 | **Tipo de operação** | `SELECT` |
 | **Operadores lógicos** | `AND` |
 | **Operadores especiais** | `BETWEEN`, `NOT IN` |
-| **Contexto de negócio** | Listar checkpoints com quilometragem dentro de uma faixa típica de desempenho, excluindo corredores específicos (por exemplo, atletas de equipes desclassificadas ou substituídos durante a competição). |
+| **Contexto de negócio** | Listar checkpoints com quilometragem dentro de uma faixa típica de desempenho, excluindo corredores específicos (por exemplo, corredores de equipes desclassificadas ou substituídos durante a competição). |
 
 
 <div align="center">
@@ -2799,10 +2878,10 @@ A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à
 **Expressão SQL:**
 
 ```sql
-SELECT id, identificador, km, pace, corredor_id
+SELECT id, identifier, distance_km, pace, id_runner
 FROM checkpoint
-WHERE km BETWEEN 4 AND 6
-  AND corredor_id NOT IN (1, 7);
+WHERE distance_km BETWEEN 4 AND 6
+  AND id_runner NOT IN (1, 7);
 ```
 
 **Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
@@ -2812,16 +2891,16 @@ WHERE km BETWEEN 4 AND 6
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
 - **P:** o checkpoint possui quilometragem maior ou igual a 4 km.
-  `km >= 4`
+  `distance_km >= 4`
 
 - **Q:** o checkpoint possui quilometragem menor ou igual a 6 km.
-  `km <= 6`
+  `distance_km <= 6`
 
 - **R:** o checkpoint pertence ao corredor de identificador 1.
-  `corredor_id = 1`
+  `id_runner = 1`
 
 - **S:** o checkpoint pertence ao corredor de identificador 7.
-  `corredor_id = 7`
+  `id_runner = 7`
 
 #### Expressão lógica proposicional
 
@@ -2837,7 +2916,7 @@ o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, incl
 #### Identificação dos conectivos lógicos
 
 - **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
+- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `id_runner NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
 
 #### Tabela-verdade
 
@@ -2862,13 +2941,13 @@ o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, incl
 
 #### Observação sobre dependências semânticas
 
-A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `distance_km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `distance_km < 4` e `distance_km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
 
-O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `id_runner`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
 
 ### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
+A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `distance_km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `distance_km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
@@ -2913,7 +2992,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa   | RF001 | RN03       | POST `/competitions`                                | Cadastro de Competição         | competition.e2e.spec.ts      | Competição criada com sucesso e persistida no banco           |
 | Marina Costa   | RF002 | RN18       | GET/POST `/competitions`                            | Dashboard Principal            | competitionService.spec.ts   | Dados da competição cadastrados e recuperados corretamente    |
 | Marina Costa   | RF003 | RN01, RN07 | POST `/competitions/:id/teams`                      | Cadastro de Equipes            | team.e2e.spec.ts             | Equipe criada e vinculada à competição                        |
-| Marina Costa   | RF003 | RN01       | POST `/competitions/:id/teams/:teamId/athletes`     | Cadastro de Equipes            | athlete.e2e.spec.ts          | Atleta vinculado corretamente à equipe                        |
+| Marina Costa   | RF003 | RN01       | POST `/competitions/:id/teams/:teamId/runners`      | Cadastro de Equipes            | runner.e2e.spec.ts           | Corredor vinculado corretamente à equipe                      |
 | Marina Costa   | RF004 | RN02, RN03 | POST `/auth/sessions`                               | Dashboard Principal            | authService.test.ts          | Sessão autenticada com sucesso                                |
 | Marina Costa   | RF005 | RN06       | POST `/ocr/extractions`                             | Captura da Foto da Esteira     | checkpointService.spec.ts    | Dados extraídos via OCR retornados para validação             |
 | Marina Costa   | RF006 | RN04, RN05 | POST `/ocr/extractions`                             | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados disponibilizados para conferência antes da persistência |
@@ -2922,15 +3001,15 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa   | RF008 | RN04, RN05 | GET `/checkpoints`                                  | Checkpoints Salvos             | checkpointService.spec.ts    | Histórico de checkpoints recuperado corretamente              |
 | Marina Costa   | RF009 | RN06       | GET `/competitions/:id/checkpoints/inconsistencies` | Dados Extraídos via OCR        | checkpointService.spec.ts    | Inconsistências identificadas e exibidas ao operador          |
 | Bruno Monteiro | RF010 | RN09, RN11 | GET `/competitions/:id/ranking/teams`               | Dashboard Principal            | rankingService.spec.ts       | Ranking administrativo atualizado automaticamente             |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET `/competitions/:id/teams/:teamId/athletes`      | Painel Operacional das Equipes | athleteService.spec.ts       | Exibição do atleta em corrida e próximo atleta previsto       |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET `/competitions/:id/teams/:teamId/runners`       | Painel Operacional das Equipes | runnerService.spec.ts        | Exibição do corredor em corrida e próximo corredor previsto   |
 | Bruno Monteiro | RF012 | RN14       | PATCH `/competitions/:id`                           | Dashboard Principal            | competitionService.spec.ts   | Competição encerrada e bloqueio de novos registros validado   |
 | Bruno Monteiro | RF013 | RN15       | GET `/competitions/:id/export`                      | Dashboard Principal            | export.e2e.spec.ts           | Arquivo de exportação gerado com sucesso                      |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET `/competitions/:id/reports`                     | Dashboard Principal            | exportService.spec.ts        | Relatórios e indicadores gerados corretamente                 |
-| Amanda Azevedo | RF015 | RN09, RN13 | GET `/competitions/:id/ranking/athletes`            | Painel Público da Equipe       | rankingService.spec.ts       | Ranking público atualizado e exibido corretamente             |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET `/administradores`                              | Dashboard Principal            | administratorService.spec.ts | Administradores recuperados corretamente                      |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST `/administradores`                             | Dashboard Principal            | administratorService.spec.ts | Administrador criado com sucesso                              |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT `/administradores/:id`                          | Dashboard Principal            | administratorService.spec.ts | Dados administrativos atualizados corretamente                |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE `/administradores/:id`                       | Dashboard Principal            | administratorService.spec.ts | Administrador removido corretamente                           |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET `/competitions/:id/ranking/runners`             | Painel Público da Equipe       | rankingService.spec.ts       | Ranking público atualizado e exibido corretamente             |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET `/admin`                                        | Dashboard Principal            | adminService.test.ts         | Admins recuperados corretamente                               |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST `/admin`                                       | Dashboard Principal            | adminService.test.ts         | Admin criado com sucesso                                      |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT `/admin/:id`                                    | Dashboard Principal            | adminService.test.ts         | Dados administrativos atualizados corretamente                |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE `/admin/:id`                                 | Dashboard Principal            | adminService.test.ts         | Admin removido corretamente                                   |
 
 <div align="center">
 
@@ -2960,7 +3039,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-**- Configuração do ambiente e gestão de dependências:** o arquivo `package.json` foi estruturado contendo as dependências de produção e de desenvolvimento, além de scripts padronizados de execução (`dev`, `build`, `start`, `test`, `test:e2e`, `test:unit`, `test:integration`), garantindo que qualquer membro da equipe consiga rodar o projeto e os testes de forma consistente. Foi configurado também o arquivo `.env` para gerenciamento seguro de variáveis sensíveis (URL e chave do Supabase, porta da aplicação, ambiente de execução), com um `.env.example` versionado no repositório para servir de referência, mantendo o arquivo real fora do controle de versão via `.gitignore`. Essa estrutura padroniza o setup local, evita o vazamento de credenciais e prepara o projeto para deploy em diferentes ambientes (desenvolvimento, teste e produção).
+**- Configuração do ambiente e gestão de dependências:** o arquivo `package.json` foi estruturado contendo as dependências de produção e de desenvolvimento, além de scripts padronizados de execução (`dev`, `build`, `start`, `test`), garantindo que qualquer membro da equipe consiga rodar o projeto e os testes de forma consistente. Foi configurado também o arquivo `.env` para gerenciamento seguro de variáveis sensíveis (URL e chave do Supabase, porta da aplicação, ambiente de execução), com um `.env.example` versionado no repositório para servir de referência, mantendo o arquivo real fora do controle de versão via `.gitignore`. Essa estrutura padroniza o setup local, evita o vazamento de credenciais e prepara o projeto para deploy em diferentes ambientes (desenvolvimento, teste e produção).
 
 <div align="center">
   <sub>Figura 1 - Pasta Package.json</sub><br>
@@ -2986,17 +3065,17 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 
 **- Módulo de Equipes (RF003):** CRUD completo com rotas aninhadas sob competição, refletindo a hierarquia do domínio.
 
-**- Módulo de Atletas (RF003):** CRUD completo com rotas aninhadas sob equipe, limite de 16 atletas por equipe (RN17), validação de CPF, unicidade de CPF e e-mail, controle de status (corredor/capitão) e proteção contra remoção de atletas com checkpoints vinculados.
+**- Módulo de Runners (RF003):** CRUD completo com rotas aninhadas sob equipe, limite de 16 corredores por equipe (RN17), validação de CPF, unicidade de CPF e e-mail, controle de status (`runner`/`captain`) e proteção contra remoção de corredores com checkpoints vinculados.
 
-**- Módulo de Checkpoints (RF005 a RF009):** CRUD completo sob rota aninhada de atleta, contemplando tanto o fluxo manual quanto o fluxo via OCR, com persistência dos campos obrigatórios definidos pela RN04 (distância, pace e tempo total) e log de auditoria registrando o método de entrada (OCR ou manual) conforme RN05.
+**- Módulo de Checkpoints (RF005 a RF009):** CRUD completo com vínculo a runner, competition, treadmill e admin, contemplando tanto o fluxo manual quanto o fluxo via OCR, com persistência do campo obrigatório definido pela RN04 (distância) e campos opcionais de pace e tempo total.
 
-**- Módulo de Rankings (RF010, RF011, RF015):** endpoints de leitura agregada para o painel administrativo e para o painel público, calculando distância total por equipe, pace médio, atleta em corrida e próximo atleta da escalação, com atualização periódica via polling.
+**- Módulo de Rankings (RF010, RF011, RF015):** endpoints de leitura agregada para o painel administrativo e para o painel público, calculando distância total por equipe, pace médio, corredor em corrida e próximo corredor da escalação, com atualização periódica via polling.
 
-**- Módulo de Reports (RF013, RF014):** endpoints de relatório consolidado da competição, relatório por equipe e exportação CSV contendo checkpoints, timestamps e logs de validação, incluindo o relatório de inconsistências derivado do log de auditoria.
+**- Módulo de Reports (RF013, RF014):** endpoint de relatório consolidado da competição e exportação contendo checkpoints, timestamps e dados de validação, incluindo relatório de inconsistências.
 
-**- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso por sala administrativa via senha definida na criação da sala, com escopo limitado à área administrativa e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
+**- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso à área administrativa por credenciais de admin, com escopo limitado às funcionalidades administrativas e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
 
-**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do frontend funcional na sprint 4.
+**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e corredores, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do frontend funcional na sprint 4.
 
 Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
@@ -3040,7 +3119,7 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 **- Tratamento manual de erros de constraint do PostgreSQL** via Supabase, especificamente os códigos `23505` (violação de UNIQUE) e `23503` (violação de FK), que exigiram interceptação e conversão para os erros customizados da aplicação em cada repository.
 
-**- Estruturação de rotas aninhadas respeitando o escopo do recurso pai**, garantindo que operações sobre atletas estejam sempre vinculadas a uma equipe válida, operações sobre equipes vinculadas a uma competição válida e operações sobre checkpoints vinculadas a um atleta válido.
+**- Estruturação de rotas aninhadas respeitando o escopo do recurso pai**, garantindo que operações sobre runners estejam sempre vinculadas a uma equipe válida, operações sobre equipes vinculadas a uma competição válida e operações sobre checkpoints vinculadas a um runner válido.
 
 **- Ambiente de testes E2E com banco real evitando colisão de dados únicos entre execuções** — mitigado parcialmente com geração de dados aleatórios por run; solução definitiva (uso de prefixos ou IDs descartáveis padronizados) prevista para a sprint 4.
 
@@ -3054,8 +3133,8 @@ Migração do protótipo de alta fidelidade para uma aplicação funcional consu
 **2. Refinamento do módulo de OCR**
 Aprimoramento da precisão de extração dos dados da imagem, tratamento de variações de iluminação e posicionamento do display da esteira, ajuste do limiar de discrepância para acionamento dos alertas visuais (RN06) e validação prática com imagens reais do ambiente operacional. O objetivo é elevar o OCR ao nível de MVP funcional, aderente aos critérios de aceite da US09.
 
-**3. Registro das rotas do módulo de Usuários**
-Conclusão do módulo já iniciado na sprint 3 (model, repository e service), registrando as rotas no Express e completando a cadeia da arquitetura em camadas.
+**3. Refinamento dos módulos de Admin e Auth**
+Conclusão dos ajustes de autenticação e proteção das rotas administrativas, mantendo `POST /auth/sessions` como contrato principal e `/admin/login` como compatibilidade de frontend.
 
 **4. Testes automatizados e Matriz de Rastreabilidade**
 Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o frontend conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
@@ -3162,9 +3241,18 @@ Comportamentalmente, operam sob pressão contínua, em turnos que se estendem po
 
 A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: durante 24 horas ininterruptas, operadores anotam à mão, em pranchetas, os horários de turno e os checkpoints de cada corredor. A fadiga ao longo da madrugada, a caligrafia e as distrações tornam esses registros pouco confiáveis, e não existe forma estruturada de auditar o que foi anotado. Como as esteiras do evento não se conectam a dispositivos externos, a apuração depende inteiramente desse trabalho manual.
 
-O público-alvo da solução se organiza em três perfis. Na área administrativa estão os operadores e a equipe de Field Marketing da Red Bull, representados pela coordenadora operacional, que registra checkpoints e trocas de atleta em campo, e pelo gerente de Field Marketing, que supervisiona a prova e analisa os relatórios. Na área pública estão os capitães e atletas das equipes, que acompanham o desempenho pelo painel acessível por link.
+O público-alvo da solução se organiza em três perfis. Na área administrativa estão os operadores e a equipe de Field Marketing da Red Bull, representados pela coordenadora operacional, que registra checkpoints e trocas de corredor em campo, e pelo gerente de Field Marketing, que supervisiona a prova e analisa os relatórios. Na área pública estão os capitães e corredores das equipes, que acompanham o desempenho pelo painel acessível por link.
 
-O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres, com conferência humana antes de salvar e alerta visual para valores que destoem da média do atleta.
+### b) Estratégia de Diferenciação
+Esta seção apresenta como a aplicação se posiciona no mercado frente às alternativas existentes, definindo o que a torna única e como pretende se destacar da concorrência. O posicionamento foi construído a partir das análises realizadas nas seções anteriores, considerando o perfil do público-alvo, o cenário competitivo e as lacunas identificadas nas soluções disponíveis atualmente.
+
+A aplicação se diferencia da concorrência, em primeiro lugar, por não competir com ferramentas genéricas no mesmo terreno. Soluções como Google Forms, Excel ou apps de coleta de dados até conseguem registrar informações, mas nenhuma delas foi pensada para funcionar durante 24 horas seguidas, com operadores se revezando, sob pressão de tempo e com a necessidade de registros rápidos e confiáveis. A lógica por trás do posicionamento é simples, em vez de adaptar uma ferramenta pronta a um contexto que ela não se adapta 100%, construímos uma solução que já nasce moldada à realidade operacional do Red Bull 24 Horas.
+
+Outro ponto que nos separa das alternativas é o uso de OCR como caminho intermediário entre o registro totalmente manual e uma automação completa que o evento ainda não comporta. O operador fotografa o visor da esteira e o sistema extrai os dados automaticamente, o que reduz o esforço de digitação e diminui o risco de erro, especialmente nas horas mais avançadas da competição, quando a fadiga já compromete a atenção. Além disso, temos a opção de alterar os dados extraídos pelo OCR (caso ocorra algum erro), e também o registro digital das informações manualmente como opção. Essa tecnologia não existe em nenhuma das ferramentas genéricas disponíveis hoje.
+
+Por fim, a separação entre uma interface privada para a organização e uma interface para as equipes participantes amplia o alcance e a diversidade da solução. Não estamos entregando valor apenas para quem opera o evento, mas também para quem compete nele, com acesso a ranking e calculadora de descanso de sua própria equipe via um link direto, sem fornecer acesso para a equipe adversária. Essa entrega simultânea para dois públicos distintos reforça o posicionamento da aplicação como uma solução completa, e não apenas uma substituição digital da prancheta.
+
+O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres, com conferência humana antes de salvar e alerta visual para valores que destoem da média do corredor.
 
 Frente a planilhas ou formulários genéricos, os diferenciais são claros: especialização para trocas rápidas sob pressão, validação híbrida entre OCR e operador, rastreabilidade do método de cada checkpoint e acesso público por URL com UUID, sem login. É essa combinação que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
@@ -3190,7 +3278,7 @@ Frente a planilhas ou formulários genéricos, os diferenciais são claros: espe
 
 A estratégia de marketing para o projeto da Redbull 24h foi estruturada com base no modelo dos 4Ps (Produto, Preço, Praça e Promoção), com o objetivo de definir como a solução gera valor para seus usuários e como pode ser posicionada no mercado de tecnologia aplicada a eventos esportivos. A proposta busca atender às necessidades de organizadores de competições que demandam maior confiabilidade, rastreabilidade e eficiência operacional na coleta e consolidação de resultados.
 
-Nesse contexto, serão apresentados os principais atributos da solução, seu modelo de monetização, os canais pelos quais poderá ser disponibilizada e as estratégias de divulgação que podem contribuir para sua adoção. A análise dos 4Ps permite compreender como se diferenciar das abordagens tradicionais de controle manual e como a plataforma pode se tornar uma alternativa competitiva para eventos que necessitam de monitoramento preciso e acompanhamento em tempo real.
+Nesse contexto, serão apresentados os principais atributos da solução, seu modelo de monetização, os canais pelos quais poderá ser disponibilizada e as estratégias de divulgação que podem contribuir para sua adoção. A análise dos 4Ps permite compreender como se diferenciar das abordagens tradicionais de controle manual e como a plataforma pode se tornar uma alternativa competitiva para eventos que necessitam de monitoramento preciso e acompanhamento com atualização periódica.
 
 ### 6.6.1 Produto/Serviço
 
