@@ -3212,11 +3212,11 @@ Nesse contexto, serão apresentados os principais atributos da solução, seu mo
 
 ### 6.6.4 Promoção
 
-*Até 200 palavras.*
+Por ser uma solução institucional voltada à equipe de Field Marketing da Red Bull, a divulgação precisa alcançar organizadores de eventos esportivos, e não consumidores finais. O marketing de conteúdo cumpre esse papel: estudos de caso e demonstrações do fluxo OCR mostram, em números, a queda de erros na apuração, argumento que convence quem decide pela adoção da ferramenta.
 
-*Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
+Para que esse conteúdo seja encontrado, o trabalho de SEO se apoia em termos que esse público realmente busca, como apuração de competições e automação de registro em eventos, atraindo tráfego qualificado sem custo por clique. No LinkedIn, publicações sobre digitalização de operações esportivas conversam diretamente com gestores e organizadores, perfil que concentra os tomadores de decisão.
 
-*Valor: até 0,5 ponto.*
+As campanhas pagas no Google Ads e no Meta Ads complementam o alcance orgânico, segmentando profissionais de eventos e gerando contatos comerciais em prazo curto. Por fim, as parcerias fazem sentido específico aqui: a associação à marca Red Bull dá credibilidade imediata, e o engajamento das running crews, público que cresce no Brasil segundo a análise SWOT, espalha a solução de forma natural pelo compartilhamento simplificado do ranking, transformando os próprios atletas em divulgadores da plataforma.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
