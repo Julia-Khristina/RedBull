@@ -24,6 +24,16 @@ export function createTeamService(
       return repository.findByCompetition(competitionId);
     },
 
+    async findByUuid(uuid: string): Promise<Team> {
+      const team = await repository.findByUuid(uuid);
+
+      if (!team) {
+        throw new NotFoundError("Equipe não encontrada");
+      }
+
+      return team;
+    },
+
     async findByCompetitionAndId(competitionId: number, id: number): Promise<Team> {
       const team = await repository.findByCompetitionAndId(competitionId, id);
 
