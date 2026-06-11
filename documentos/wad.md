@@ -3136,6 +3136,8 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### 6.3.1 Segmentação de Mercado
 
+A segmentação de mercado é o processo de dividir um público em grupos com características e necessidades semelhantes, permitindo o desenvolvimento de produtos e serviços mais adequados a cada perfil de usuário. Essa prática possibilita compreender melhor as demandas de cada segmento e direcionar soluções de forma mais eficiente (HUBSPOT, 2025). No contexto deste projeto, a segmentação é definida pelos diferentes perfis de usuários que utilizam a plataforma durante a organização e execução do evento.
+
 A aplicação foi desenvolvida para atender às equipes internas da Red Bull envolvidas na organização e na gestão operacional do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, a segmentação de mercado é definida pelos diferentes perfis de usuários que interagem com a plataforma ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
 
 -  **Equipes de Field Marketing:** responsáveis pelo planejamento e pela execução do evento, representam os principais usuários da aplicação. Sua necessidade central é dispor de uma ferramenta que permita gerenciar as inscrições das equipes, acompanhar o andamento da competição e garantir o controle operacional ao longo das 24 horas de duração do evento.
