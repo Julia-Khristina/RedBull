@@ -3256,7 +3256,11 @@ Comportamentalmente, operam sob pressão contínua, em turnos que se estendem po
 
 ## 6.4 Posicionamento e Branding
 
-*Até 500 palavras.*
+A seção 6.4 dedica-se ao posicionamento da aplicação no contexto do mercado de gestão de eventos esportivos e à definição da identidade de marca que orienta sua comunicação com o parceiro Red Bull e com os três públicos atendidos pela solução: operadores em campo, gerentes de Field Marketing e atletas (incluindo capitães de equipe). Embora a aplicação seja resultado de uma parceria acadêmica — e não de um produto comercial autônomo —, o exercício de posicionamento é relevante para alinhar a percepção esperada por esses públicos e fundamentar as decisões editoriais, visuais e de experiência adotadas ao longo do desenvolvimento.
+
+A subseção 6.4.1 (Proposta de Valor) consolida o valor central entregue pela aplicação para cada perfil de usuário, retomando os elementos identificados no Value Proposition Canvas (seção 2.1.4) e nas Personas (seção 2.2). A subseção 6.4.2 (Posicionamento e Diferenciação) define como a aplicação se distingue das alternativas existentes — de processos manuais a sistemas profissionais de cronometragem — e quais atributos sustentam essa diferenciação. Os pilares detalhados nessas subseções são três: (i) especialização técnica em corridas de revezamento de longa duração e fluxos operacionais desenhados para trocas rápidas sob pressão; (ii) validação híbrida entre captura assistida por OCR — em refinamento técnico desde a Sprint 3 — e operador humano, com auditabilidade ponta a ponta garantida pela WebAPI centralizada (seção 3.7); e (iii) abertura controlada via URL com UUID, permitindo acompanhamento público em tempo real sem comprometer a camada administrativa.
+
+O objetivo estratégico, alinhado às dores levantadas com o parceiro (seção 2.1.3) e às oportunidades identificadas na análise SWOT (seção 2.1.2), é estabelecer a solução como padrão operacional confiável para competições de ultra-resistência com múltiplas trocas de atletas, com meta declarada de manter o erro de apuração abaixo de 1%. Em conjunto, as duas subseções compõem a base estratégica que conecta a Análise de Mercado e o Público-Alvo (seções 6.2 e 6.3) à Estratégia de Marketing detalhada nos 4Ps (seção 6.6), garantindo coerência entre o que a aplicação entrega, como é percebida e como é comunicada.
 
 ### 6.4.1 Proposta de Valor
 
@@ -3304,11 +3308,13 @@ Nesse contexto, serão apresentados os principais atributos da solução, seu mo
 
 ### 6.6.1 Produto/Serviço
 
-*Até 200 palavras.*
+A aplicação web é um sistema de gestão operacional especializado em competições esportivas de longa duração, com foco no formato Red Bull 24 Horas. O produto integra três interfaces dedicadas — operação de campo (operadores), supervisão estratégica (Field Marketing) e acompanhamento público (atletas e capitães de equipe) — todas conectadas a uma WebAPI centralizada (seção 3.7) que padroniza o contrato de dados e concentra as regras de negócio em um único ponto de manutenção.
 
-*Descreva as principais funcionalidades, benefícios e diferenciais da aplicação.*
+As funcionalidades **já entregues até a Sprint 3** organizam-se em quatro blocos: (a) gestão administrativa — CRUD completo de competições, equipes, atletas e administradores; (b) registro operacional de checkpoints, com vínculo obrigatório a corredor, competição, esteira e administrador responsável; (c) identificação de cada equipe por UUID único para acesso público sem autenticação; e (d) ranking consolidado por competição e exportação de dados em formato JSON para auditoria pós-evento (seção 3.7).
 
-*Valor: até 0,5 ponto.*
+Para as **Sprints 4 e 5** estão planejadas as funcionalidades restantes: captura assistida por OCR a partir de fotografias dos visores das esteiras (atualmente em refinamento técnico); sinalização automática de inconsistências nos dados capturados; autenticação por token para rotas administrativas; e geração de relatórios analíticos com destaques de desempenho ao final da prova.
+
+Os principais benefícios para o parceiro Red Bull são a redução do erro de apuração (meta declarada abaixo de 1%), a eliminação do retrabalho manual de transcrição, a visibilidade periódica do desempenho das equipes durante o evento e o registro auditável do método (OCR ou manual) de cada checkpoint. Como diferenciais, a solução combina dedicação vertical ao formato de revezamento de ultra-resistência, validação híbrida entre OCR e operador, e acesso público controlado via UUID — atributos ausentes em alternativas genéricas como planilhas ou formulários e em sistemas profissionais de cronometragem voltados a outras modalidades.
 
 ### 6.6.2 Preço
 
