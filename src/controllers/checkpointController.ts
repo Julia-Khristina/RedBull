@@ -1,5 +1,7 @@
 import { Request, Response } from "express";
+import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
+import { treadmillService } from "../services/treadmillService";
 import { ValidationError } from "../errors/AppError";
 
 function parseIntegerParam(value: unknown, name: string): number {
@@ -12,7 +14,97 @@ function parseIntegerParam(value: unknown, name: string): number {
   return parsed;
 }
 
+function parsePaceToSeconds(pace: string | null): number | null {
+  if (!pace) return null;
+
+  const parts = pace.replace("/km", "").trim().split(":").map(Number);
+  if (parts.length !== 2 || parts.some((part) => Number.isNaN(part))) {
+    return null;
+  }
+
+  return parts[0] * 60 + parts[1];
+}
+
+function formatSecondsAsPace(totalSeconds: number): string {
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = Math.round(totalSeconds % 60);
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+function parseDurationToSeconds(time: string | null): number | null {
+  if (!time) return null;
+
+  const parts = time.trim().split(":").map(Number);
+  if (
+    parts.length < 2 ||
+    parts.length > 3 ||
+    parts.some((part) => Number.isNaN(part))
+  ) {
+    return null;
+  }
+
+  if (parts.length === 2) {
+    return parts[0] * 60 + parts[1];
+  }
+
+  return parts[0] * 3600 + parts[1] * 60 + parts[2];
+}
+
+function formatSecondsAsHoursMinutes(totalSeconds: number): string {
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.round((totalSeconds % 3600) / 60);
+  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
+}
+
+function buildSavedDataSummary(checkpoints: Checkpoint[]) {
+  const totalDistanceKm = checkpoints.reduce(
+    (sum, checkpoint) => sum + Number(checkpoint.distance_km || 0),
+    0
+  );
+
+  const paces = checkpoints
+    .map((checkpoint) => parsePaceToSeconds(checkpoint.pace))
+    .filter((pace): pace is number => pace !== null);
+
+  const durations = checkpoints
+    .map((checkpoint) => parseDurationToSeconds(checkpoint.time))
+    .filter((duration): duration is number => duration !== null);
+
+  return {
+    totalDistanceKm,
+    averagePace:
+      paces.length > 0
+        ? formatSecondsAsPace(
+            paces.reduce((sum, pace) => sum + pace, 0) / paces.length
+          )
+        : "0:00",
+    averageTime:
+      durations.length > 0
+        ? formatSecondsAsHoursMinutes(
+            durations.reduce((sum, duration) => sum + duration, 0) /
+              durations.length
+          )
+        : "0h 00m",
+  };
+}
+
 export const checkpointController = {
+  async renderSavedByTeam(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(req.params.id, "id");
+    const teamId = parseIntegerParam(req.params.teamId, "teamId");
+    const checkpoints = await checkpointService.findByCompetition(competitionId);
+    const teamCheckpoints = checkpoints.filter(
+      (checkpoint) => checkpoint.runner?.id_team === teamId
+    );
+
+    res.render("dadosSalvos/dadosSalvos", {
+      title: "Dados Salvos",
+      checkpoints: teamCheckpoints,
+      summary: buildSavedDataSummary(teamCheckpoints),
+      currentPage: "teams",
+    });
+  },
+
   async list(_req: Request, res: Response): Promise<void> {
     const checkpoints = await checkpointService.findAll();
     res.status(200).json(checkpoints);
