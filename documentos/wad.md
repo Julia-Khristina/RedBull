@@ -3286,6 +3286,15 @@ Frente a planilhas ou formulários genéricos, os diferenciais são claros: espe
 
 O Business Model Canvas é uma ferramenta de gestão estratégica que descreve, de forma visual e integrada, a lógica pela qual uma organização cria, entrega e captura valor, organizando o modelo de negócio em nove blocos interdependentes (Osterwalder; Pigneur, 2010). No contexto deste projeto, o canvas foi aplicado à solução desenvolvida para o Red Bull 24 Horas, evidenciando como a digitalização do registro de quilometragem se conecta às necessidades operacionais do time de Field Marketing da Red Bull e aos recursos, parcerias e custos necessários para viabilizá-la.
 
+<div align="center">
+  <sub>Figura X - Business Model Canvas</sub><br>
+    <img src="../assets/negocios/business-model-canvas.png" 
+    width="100%" alt="Template do business model canvas"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+
 ## 6.6 Estratégia de Marketing (4Ps)
 
 A estratégia de marketing para o projeto da Redbull 24h foi estruturada com base no modelo dos 4Ps (Produto, Preço, Praça e Promoção), com o objetivo de definir como a solução gera valor para seus usuários e como pode ser posicionada no mercado de tecnologia aplicada a eventos esportivos. A proposta busca atender às necessidades de organizadores de competições que demandam maior confiabilidade, rastreabilidade e eficiência operacional na coleta e consolidação de resultados.
