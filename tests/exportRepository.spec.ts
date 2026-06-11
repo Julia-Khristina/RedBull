@@ -1,5 +1,5 @@
 import { exportRepository } from "../src/repositories/exportRepository";
-import { athleteRepository } from "../src/repositories/athleteRepository";
+import { runnerRepository } from "../src/repositories/runnerRepository";
 import { competitionRepository } from "../src/repositories/competitionRepository";
 import { teamRepository } from "../src/repositories/teamRepository";
 
@@ -8,21 +8,21 @@ const RUN = Date.now().toString().slice(-7);
 describe("exportRepository", () => {
   it("deve buscar dados exportaveis de uma competicao no Supabase", async () => {
     const competition = await competitionRepository.create({
-      nome: `Competicao Export Repository ${RUN}`,
-      data: "2026-06-15",
-      endereco: "Sao Paulo - SP",
+      name: `Competicao Export Repository ${RUN}`,
+      date: "2026-06-15",
+      address: "Sao Paulo - SP",
     });
 
     const team = await teamRepository.create({
-      nome: `Equipe Export Repository ${RUN}`,
-      competicao_id: competition.id,
+      name: `Equipe Export Repository ${RUN}`,
+      id_competition: competition.id,
     });
 
-    const athlete = await athleteRepository.create({
-      nome: "Atleta Export Repository",
+    const runner = await runnerRepository.create({
+      name: "Atleta Export Repository",
       cpf: `${RUN.slice(0, 3)}.${RUN.slice(3, 6)}.100-01`,
       email: `export-repository-${RUN}@test.com`,
-      equipe_id: team.id,
+      id_team: team.id,
     });
 
     const data = await exportRepository.findCompetitionExportData(
@@ -32,23 +32,23 @@ describe("exportRepository", () => {
     expect(data).toBeDefined();
     expect(data?.competition).toMatchObject({
       id: competition.id,
-      nome: competition.nome,
+      name: competition.name,
     });
     expect(data?.teams).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
           id: team.id,
-          nome: team.nome,
-          competicao_id: competition.id,
+          name: team.name,
+          id_competition: competition.id,
         }),
       ])
     );
-    expect(data?.athletes).toEqual(
+    expect(data?.runners).toEqual(
       expect.arrayContaining([
         expect.objectContaining({
-          id: athlete.id,
-          nome: athlete.nome,
-          equipe_id: team.id,
+          id: runner.id,
+          name: runner.name,
+          id_team: team.id,
         }),
       ])
     );

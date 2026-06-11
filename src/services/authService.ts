@@ -2,8 +2,7 @@ import "dotenv/config";
 import jwt from "jsonwebtoken";
 import { AuthResponse, LoginInput } from "../models/auth";
 import { AppError, UnauthorizedError } from "../errors/AppError";
-import { administradorRepository } from "../repositories/administradorRepository";
-
+import { adminRepository } from "../repositories/adminRepository";
 
 function getJwtSecret(): string {
   const secret = process.env.JWT_SECRET;
@@ -21,40 +20,40 @@ function getAdminPassword(): string {
   return password;
 }
 
-export function createAuthService(repo = administradorRepository) {
+export function createAuthService(repo = adminRepository) {
   return {
-    async autenticar(input: LoginInput): Promise<AuthResponse> {
-      const administrador = await repo.findByEmail(input.email);
+    async createSession(input: LoginInput): Promise<AuthResponse> {
+      const admin = await repo.findByEmail(input.email);
       const adminPassword = getAdminPassword();
 
-      if (!administrador || input.password !== adminPassword) {
+      if (!admin || input.password !== adminPassword) {
         throw new UnauthorizedError("Email ou senha inválidos");
       }
 
-      const user = {
-        id: administrador.id,
-        email: administrador.email,
-        name: administrador.nome,
+      const authenticatedAdmin: AuthResponse["admin"] = {
+        id: admin.id,
+        email: admin.email,
+        name: admin.name,
         role: "admin" as const,
       };
 
-      const accessToken = this.gerarToken(user);
+      const access_token = this.generateToken(authenticatedAdmin);
 
       return {
-        accessToken,
-        refreshToken: accessToken,
-        user,
+        access_token,
+        refresh_token: access_token,
+        admin: authenticatedAdmin,
       };
     },
 
     async refreshToken(token: string): Promise<AuthResponse> {
-      const user = await this.getCurrentUser(token);
-      const accessToken = this.gerarToken(user);
+      const authenticatedAdmin = await this.validateToken(token);
+      const access_token = this.generateToken(authenticatedAdmin);
 
       return {
-        accessToken,
-        refreshToken: accessToken,
-        user,
+        access_token,
+        refresh_token: access_token,
+        admin: authenticatedAdmin,
       };
     },
 
@@ -62,36 +61,38 @@ export function createAuthService(repo = administradorRepository) {
       return;
     },
 
-    async getCurrentUser(token: string): Promise<AuthResponse["user"]> {
+    async validateToken(token: string): Promise<AuthResponse["admin"]> {
       const secret = getJwtSecret();
 
       try {
-        const decoded = jwt.verify(token, secret) as { user: AuthResponse["user"] };
+        const decoded = jwt.verify(token, secret) as {
+          admin: AuthResponse["admin"];
+        };
 
-        if (!decoded || typeof decoded !== "object" || !decoded.user) {
+        if (!decoded || typeof decoded !== "object" || !decoded.admin) {
           throw new UnauthorizedError("Token inválido");
         }
 
-        return decoded.user;
+        return decoded.admin;
       } catch {
         throw new UnauthorizedError("Token inválido ou expirado");
       }
     },
 
-    validarPermissao(token: string): boolean {
+    async validatePermission(token: string): Promise<boolean> {
       try {
-        const user = this.getCurrentUser(token);
-        if (!user) return false;
+        const admin = await this.validateToken(token);
+        if (!admin) return false;
         return true;
       } catch {
         return false;
       }
     },
 
-    gerarToken(user: AuthResponse["user"]): string {
+    generateToken(admin: AuthResponse["admin"]): string {
       const secret = getJwtSecret();
 
-      return jwt.sign({ user }, secret, {
+      return jwt.sign({ admin }, secret, {
         algorithm: "HS256",
         expiresIn: "8h",
       });
@@ -99,5 +100,4 @@ export function createAuthService(repo = administradorRepository) {
   };
 }
 
-// Export default instance for production use
 export const authService = createAuthService();

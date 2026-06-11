@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root{
+
+/* Cores */   
+--fundo: #f8f8fa;
+--fundo-cards: #ffffff;
+--texto: #000000;
+--bordas-separadores: #dadada;
+--azul-principal: #0f0069;
+--azul-secundario: #233972;
+--verde: #72b97f;
+--vermelho: #d2003c;
+--amarelo: #ffcc00;
+
+/* Tipografia */   
+--font-family:'Montserrat', sans-serif;
+
+/* Tamanhos de fonte */   
+--font-size-h1: 30px; /* H1 — títulos principais */
+--font-size-h2: 28px; /* H2 — títulos de páginas */
+--font-size-h3: 26px; /* H3 — seções importantes */
+--font-size-subtitulo: 20px; /* Subtítulo e destaques — cards */
+--font-size-texto-cabecalho: 12px; /* Cabeçalho quadro / Texto corpo */
+
+/* Peso da fonte */  
+--font-weight-bold: 700;
+--font-weight-extrabold: 800;
+--font-weight-medium: 500;
+
+/* Borda */
+--border-radius: 15px;
+
+/* Painel operacional manual */
+/* [A1][D2] Medidas derivadas do PNG assets/design/Equipes - Painel operacional-4.png. */
+--op-page-padding: 36px 34px 56px;
+--op-page-padding-mobile: 28px 18px 44px;
+--op-breadcrumb-margin-bottom: 22px;
+--op-title-margin-bottom: 26px;
+--op-warning-min-height: 82px;
+--op-warning-gap: 22px;
+--op-warning-padding: 18px 24px;
+--op-warning-margin-bottom: 30px;
+--op-warning-icon-width: 56px;
+--op-warning-icon-height: 50px;
+--op-warning-icon-padding-top: 8px;
+--op-manual-card-max-width: 1050px;
+--op-manual-card-padding: 30px 28px 36px;
+--op-form-gap: 24px;
+--op-form-row-gap: 20px;
+--op-field-gap: 12px;
+--op-field-height: 56px;
+--op-field-wide-min-width: 0;
+--op-field-metric-min-width: 0;
+--op-field-wide-padding: 0 22px;
+--op-field-metric-padding: 0 12px;
+--op-font-size-metric: 34px;
+--op-divider-width: 66%;
+--op-feedback-min-height: 18px;
+--op-action-button-height: 58px;
+--op-action-secondary-width: 220px;
+--op-action-primary-width: 300px;
+
+}
+
+

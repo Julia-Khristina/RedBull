@@ -1812,6 +1812,8 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 
 ## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade (sprint 3)
 
+**🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
+
 Esta seção apresenta a documentação do protótipo de alta fidelidade desenvolvido para a aplicação web. O objetivo do protótipo é representar, de forma visual e funcional, a experiência que o usuário final terá ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informações e alinhamento com os fluxos definidos nas User Stories.
 
 Através das telas prototipadas, é possível validar a arquitetura de navegação, os componentes-chave da interface e os elementos visuais que compõem o sistema. Cada tela foi construída com base nos requisitos levantados, considerando as funcionalidades essenciais da plataforma, como o painel de administrador e do atleta.
@@ -3092,60 +3094,127 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.1 Resumo Executivo
 
-*Preencher com até 300 palavras, sem necessidade de fonte*
+*Até 300 palavras, sem necessidade de fonte.*
 
-*Apresente de forma clara e objetiva os principais destaques do projeto: oportunidades de mercado, diferenciais competitivos da aplicação web e os objetivos estratégicos pretendidos.*
+*Apresente de forma clara e objetiva os principais destaques do projeto, incluindo: oportunidade identificada no mercado; problema atendido pela aplicação; diferenciais competitivos da aplicação web; e objetivos estratégicos pretendidos.*
+
+*Valor: até 1,0 ponto.*
 
 ## 6.2 Análise de Mercado
 
-*a) Visão Geral do Setor (até 250 palavras)*
-*Contextualize o setor no qual a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+*Até 800 palavras, com fontes obrigatórias.*
 
-*b) Tamanho e Crescimento do Mercado (até 250 palavras)*
-*Apresente dados quantitativos sobre o tamanho atual e projeções de crescimento do mercado. Utilize fontes confiáveis.*
+### 6.2.1 Visão Geral do Setor
 
-*c) Tendências de Mercado (até 300 palavras)*
-*Identifique e analise tendências relevantes (tecnológicas, comportamentais e mercadológicas) que influenciam o setor. Utilize fontes confiáveis.*
+*Até 250 palavras.*
 
-## 6.3 Análise da Concorrência
+*Contextualize o setor em que a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
 
-*a) Principais Concorrentes (até 250 palavras)*
-*Liste os concorrentes diretos e indiretos, destacando suas principais características e posicionamento no mercado.*
+*Valor: até 1,0 ponto.*
 
-*b) Vantagens Competitivas da Aplicação Web (até 250 palavras)*
-*Descreva os diferenciais da sua aplicação em relação aos concorrentes, sem necessidade de citação de fontes.*
+### 6.2.2 Tamanho e Crescimento do Mercado
+
+*Até 250 palavras.*
+
+*Até 300 palavras.*
+
+*Identifique tendências tecnológicas, comportamentais e mercadológicas que possam impactar a adoção da solução proposta. Utilize fontes confiáveis.*
+
+*Valor: até 1,0 ponto.*
+
+## 6.3 Público-Alvo
+
+       A definição do público-alvo é uma etapa fundamental do planejamento estratégico de qualquer produto digital, pois orienta decisões de design, funcionalidade e comunicação com base em quem de fato utilizará a solução.
+Identificar esse público com precisão permite que o desenvolvimento seja guiado por necessidades reais, evitando funcionalidades genéricas que não atendem às particularidades do contexto de uso. No caso do Red Bull 24 Horas, essa análise é especialmente relevante, uma vez que a aplicação será operada sob alta pressão, em turnos contínuos de 24 horas, por um grupo heterogêneo que inclui desde gerentes experientes até estagiários sem familiaridade prévia com sistemas operacionais de evento.
+Esta seção está dividida em dois subítens: a segmentação de mercado, que descreve os grupos atendidos pela aplicação, e o perfil do público-alvo, que caracteriza esses usuários em profundidade.
+
+### 6.3.1 Segmentação de Mercado
+
+*Até 250 palavras.*
+
+*Descreva os segmentos de mercado que poderão ser atendidos pela aplicação.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.3.2 Perfil do Público-Alvo
+
+       O público-alvo da aplicação é composto pelo time operacional de Field Marketing da Red Bull responsável pela condução do evento Red Bull 24 Horas. Esse grupo inclui gerentes e coordenadores experientes, além de estagiários que atuam diretamente ao lado das esteiras como responsáveis pelo registro dos dados.
+Demograficamente, trata-se de profissionais e jovens em formação na faixa dos 18 a 38 anos. Segundo levantamento da Serasa Experian divulgado pelo Mundo do Marketing (2026), quase metade dos profissionais de marketing no Brasil, 45,5%, têm entre 29 e 38 anos, enquanto 13,7% estão na faixa de 18 a 28 anos, com forte concentração geográfica no Sudeste, onde São Paulo reúne 36% dos profissionais mapeados. As personas mapeadas no projeto, Marina Costa, 29 anos, coordenadora operacional no Rio de Janeiro, e Bruno Monteiro, 32 anos, Gerente de Field Marketing em São Paulo refletem esse espectro.
+Psicograficamente, são usuários orientados a resultado e execução, que valorizam objetividade e clareza nas ferramentas que utilizam. Os estagiários, em particular, podem ter pouca familiaridade prévia com sistemas operacionais de eventos, o que reforça a necessidade de uma curva de aprendizado mínima. Além disso, por ainda estarem em fase de treinamento, contam com a pressão e motivação de garantir que a prova transcorra sem falhas de registro.
+Comportamentalmente, operam sob pressão contínua, em turnos que se estendem por 24 horas, realizando trocas rápidas de corredores com janelas de segundos para registrar dados. Nesse contexto, as necessidades específicas da solução estão diretamente ligadas à usabilidade: a interface deve ser intuitiva o suficiente para ser operada sem treinamento extenso, com fluxos curtos, ações nomeadas de forma clara e feedback imediato a cada interação. Isso é especialmente crítico para os estagiários, que precisam executar o registro corretamente mesmo sem experiência prévia com o sistema. Segundo Lets Events (2024), a adoção de ferramentas digitais em eventos melhora a eficiência operacional ao oferecer aos organizadores maior capacidade de gerenciamento e controle sobre cada etapa do processo, o que gera ganho diretamente dependente de quão simples e acessível a ferramenta se apresenta ao operador em campo.
 
 
-## 6.4 Público-Alvo
+*Valor: até 0,5 ponto.*
 
-*a) Segmentação de Mercado (até 250 palavras)*
-Descreva os principais segmentos de mercado a serem atendidos pela aplicação. Utilize bases de dados e fontes confiáveis.*
+## 6.4 Posicionamento e Branding
 
-*b) Perfil do Público-Alvo (até 250 palavras)*
-*Caracterize o público-alvo com dados demográficos, psicográficos e comportamentais, incluindo necessidades específicas. Utilize fontes obrigatórias.*
+*Até 500 palavras.*
 
+### 6.4.1 Proposta de Valor
 
-## 6.5 Posicionamento
+A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: durante 24 horas ininterruptas, operadores anotam à mão, em pranchetas, os horários de turno e os checkpoints de cada corredor. A fadiga ao longo da madrugada, a caligrafia e as distrações tornam esses registros pouco confiáveis, e não existe forma estruturada de auditar o que foi anotado. Como as esteiras do evento não se conectam a dispositivos externos, a apuração depende inteiramente desse trabalho manual.
 
-*a) Proposta de Valor Única (até 250 palavras)*
-*Defina de maneira clara o que torna a sua aplicação única e valiosa para o mercado.*
+O público-alvo da solução se organiza em três perfis. Na área administrativa estão os operadores e a equipe de Field Marketing da Red Bull, representados pela coordenadora operacional, que registra checkpoints e trocas de atleta em campo, e pelo gerente de Field Marketing, que supervisiona a prova e analisa os relatórios. Na área pública estão os capitães e atletas das equipes, que acompanham o desempenho pelo painel acessível por link.
 
-*b) Estratégia de Diferenciação (até 250 palavras)*
-*Explique como sua aplicação se destacará da concorrência, evidenciando a lógica por trás do posicionamento.*
+O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres, com conferência humana antes de salvar e alerta visual para valores que destoem da média do atleta.
 
-## 6.6 Estratégia de Marketing 
+Frente a planilhas ou formulários genéricos, os diferenciais são claros: especialização para trocas rápidas sob pressão, validação híbrida entre OCR e operador, rastreabilidade do método de cada checkpoint e acesso público por URL com UUID, sem login. É essa combinação que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
-*a) Produto/Serviço (até 200 palavras)*
-*Descreva as funcionalidades, benefícios e diferenciais da aplicação*
+### 6.4.2 Posicionamento e Diferenciação
 
-*b) Preço (até 200 palavras)*
-*Explique o modelo de precificação adotado e justifique com base nas análises anteriores.*
+*Até 250 palavras.*
 
-*c) Praça (Distribuição) (até 200 palavras)*
-*Apresente os canais digitais utilizados para distribuir e entregar a aplicação ao público.*
+*Explique como a aplicação pretende ser percebida pelo mercado e quais atributos a diferenciam de alternativas existentes.*
 
-*d) Promoção (até 200 palavras)*
-*Descreva as estratégias digitais planejadas, como SEO, redes sociais, marketing de conteúdo e campanhas pagas.*
+*A análise deve considerar: concorrentes diretos e indiretos; atributos da marca; identidade pretendida; e percepção de valor desejada.*
+
+*Valor: até 1,0 ponto.*
+
+## 6.5 Business Model Canvas
+
+*Utilizar template do curso.*
+
+*Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e Estrutura de custos, somente se couber neste momento da análise com o parceiro.*
+
+*Valor: até 2,0 pontos.*
+
+## 6.6 Estratégia de Marketing (4Ps)
+
+A estratégia de marketing para o projeto da Redbull 24h foi estruturada com base no modelo dos 4Ps (Produto, Preço, Praça e Promoção), com o objetivo de definir como a solução gera valor para seus usuários e como pode ser posicionada no mercado de tecnologia aplicada a eventos esportivos. A proposta busca atender às necessidades de organizadores de competições que demandam maior confiabilidade, rastreabilidade e eficiência operacional na coleta e consolidação de resultados.
+
+Nesse contexto, serão apresentados os principais atributos da solução, seu modelo de monetização, os canais pelos quais poderá ser disponibilizada e as estratégias de divulgação que podem contribuir para sua adoção. A análise dos 4Ps permite compreender como se diferenciar das abordagens tradicionais de controle manual e como a plataforma pode se tornar uma alternativa competitiva para eventos que necessitam de monitoramento preciso e acompanhamento em tempo real.
+
+### 6.6.1 Produto/Serviço
+
+*Até 200 palavras.*
+
+*Descreva as principais funcionalidades, benefícios e diferenciais da aplicação.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.2 Preço
+
+*Até 200 palavras.*
+
+*Apresente o modelo de monetização ou precificação proposto e sua justificativa.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.3 Praça (Distribuição)
+
+*Até 200 palavras.*
+
+*Explique como a aplicação será disponibilizada aos usuários e quais canais serão utilizados.*
+
+*Valor: até 0,5 ponto.*
+
+### 6.6.4 Promoção
+
+*Até 200 palavras.*
+
+*Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
+
+*Valor: até 0,5 ponto.*
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
@@ -3181,11 +3250,15 @@ GARRETT, Jesse James. The elements of user experience: user centered design for 
 
 Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
 
+LETS EVENTS. O papel da tecnologia na organização de eventos de sucesso. Disponível em: https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/. Acesso em: 2 jun. 2026.
+
 LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento?. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.  
 
 MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
 
 Microsoft. Best practices for RESTful web API design. 2023. Microsoft Azure Architecture Center. Disponível em: https://learn.microsoft.com. Acesso em: 1 maio 2026.
+
+MUNDO DO MARKETING. Os profissionais de Marketing no Brasil: dados mostram maioria feminina e faixa etária madura. Disponível em: https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura. Acesso em: 2 jun. 2026.
 
 Nielsen Norman Group. Personas and user-centered design. 2024. Disponível em: https://www.nngroup.com. Acesso em: 1 maio 2026.
 

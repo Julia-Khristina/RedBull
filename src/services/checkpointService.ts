@@ -1,98 +1,104 @@
 import {
-      Checkpoint,
-        CheckpointRepository,
-          CreateCheckpointInput,
-            UpdateCheckpointInput,
-            } from "../models/checkpoint";
-            import { checkpointRepository } from "../repositories/checkpointRepository";
-            import {
-              validateCreateCheckpoint,
-                validateUpdateCheckpoint,
-                } from "../validators/checkpointValidator";
-                import { NotFoundError, ConflictError } from "../errors/AppError";
+  Checkpoint,
+  CheckpointRepository,
+  CreateCheckpointInput,
+  UpdateCheckpointInput,
+} from "../models/checkpoint";
+import { checkpointRepository } from "../repositories/checkpointRepository";
+import {
+  validateCreateCheckpoint,
+  validateUpdateCheckpoint,
+} from "../validators/checkpointValidator";
+import { NotFoundError, ConflictError } from "../errors/AppError";
 
-                function isPgUniqueViolation(error: unknown): boolean {
-                  return (
-                      typeof error === "object" &&
-                          error !== null &&
-                              "code" in error &&
-                                  (error as Record<string, unknown>).code === "23505"
-                                    );
-                                    }
+function isPgUniqueViolation(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as Record<string, unknown>).code === "23505"
+  );
+}
 
-                                    function isPgFkViolation(error: unknown): boolean {
-                                      return (
-                                          typeof error === "object" &&
-                                              error !== null &&
-                                                  "code" in error &&
-                                                      (error as Record<string, unknown>).code === "23503"
-                                                        );
-                                                        }
+function isPgFkViolation(error: unknown): boolean {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    (error as Record<string, unknown>).code === "23503"
+  );
+}
 
-                                                        export function createCheckpointService(
-                                                          repository: CheckpointRepository = checkpointRepository
-                                                          ) {
-                                                            return {
-                                                                async findAll(): Promise<Checkpoint[]> {
-                                                                      return repository.findAll();
-                                                                          },
+export function createCheckpointService(
+  repository: CheckpointRepository = checkpointRepository
+) {
+  return {
+    async findAll(): Promise<Checkpoint[]> {
+      return repository.findAll();
+    },
 
-                                                                              async findById(id: number): Promise<Checkpoint> {
-                                                                                    const checkpoint = await repository.findById(id);
-                                                                                          if (!checkpoint) {
-                                                                                                  throw new NotFoundError(`Checkpoint ${id} não encontrado`);
-                                                                                                        }
-                                                                                                              return checkpoint;
-                                                                                                                  },
+    async findById(id: number): Promise<Checkpoint> {
+      const checkpoint = await repository.findById(id);
+      if (!checkpoint) {
+        throw new NotFoundError(`Checkpoint ${id} não encontrado`);
+      }
+      return checkpoint;
+    },
 
-                                                                                                                      async findByCorredor(corredor_id: number): Promise<Checkpoint[]> {
-                                                                                                                            return repository.findByCorredor(corredor_id);
-                                                                                                                                },
+    async findByRunner(runnerId: number): Promise<Checkpoint[]> {
+      return repository.findByRunner(runnerId);
+    },
 
-                                                                                                                                    async findByCompeticao(competicao_id: number): Promise<Checkpoint[]> {
-                                                                                                                                          return repository.findByCompeticao(competicao_id);
-                                                                                                                                              },
+    async findByCompetition(competitionId: number): Promise<Checkpoint[]> {
+      return repository.findByCompetition(competitionId);
+    },
 
-                                                                                                                                                  async create(payload: Partial<CreateCheckpointInput>): Promise<Checkpoint> {
-                                                                                                                                                        const input = validateCreateCheckpoint(payload);
+    async findInconsistenciesByCompetition(
+      competitionId: number
+    ): Promise<Checkpoint[]> {
+      return repository.findInconsistenciesByCompetition(competitionId);
+    },
 
-                                                                                                                                                              try {
-                                                                                                                                                                      return await repository.create(input);
-                                                                                                                                                                            } catch (error) {
-                                                                                                                                                                                    if (isPgUniqueViolation(error)) {
-                                                                                                                                                                                              throw new ConflictError(
-                                                                                                                                                                                                          `Já existe um checkpoint com o identificador '${input.identificador}'`
-                                                                                                                                                                                                                    );
-                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                    if (isPgFkViolation(error)) {
-                                                                                                                                                                                                                                              throw new NotFoundError(
-                                                                                                                                                                                                                                                          "Corredor, competição, esteira ou administrador não encontrado"
-                                                                                                                                                                                                                                                                    );
-                                                                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                                                                                    throw error;
-                                                                                                                                                                                                                                                                                          }
-                                                                                                                                                                                                                                                                                              },
+    async create(payload: Partial<CreateCheckpointInput>): Promise<Checkpoint> {
+      const input = validateCreateCheckpoint(payload);
 
-                                                                                                                                                                                                                                                                                                  async update(
-                                                                                                                                                                                                                                                                                                        id: number,
-                                                                                                                                                                                                                                                                                                              payload: Partial<UpdateCheckpointInput>
-                                                                                                                                                                                                                                                                                                                  ): Promise<Checkpoint> {
-                                                                                                                                                                                                                                                                                                                        const input = validateUpdateCheckpoint(payload);
+      try {
+        return await repository.create(input);
+      } catch (error) {
+        if (isPgUniqueViolation(error)) {
+          throw new ConflictError(
+            `Já existe um checkpoint com o identificador '${input.identifier}'`
+          );
+        }
+        if (isPgFkViolation(error)) {
+          throw new NotFoundError(
+            "Runner, competition, treadmill or admin not found"
+          );
+        }
+        throw error;
+      }
+    },
 
-                                                                                                                                                                                                                                                                                                                              const updated = await repository.update(id, input);
-                                                                                                                                                                                                                                                                                                                                    if (!updated) {
-                                                                                                                                                                                                                                                                                                                                            throw new NotFoundError(`Checkpoint ${id} não encontrado`);
-                                                                                                                                                                                                                                                                                                                                                  }
-                                                                                                                                                                                                                                                                                                                                                        return updated;
-                                                                                                                                                                                                                                                                                                                                                            },
+    async update(
+      id: number,
+      payload: Partial<UpdateCheckpointInput>
+    ): Promise<Checkpoint> {
+      const input = validateUpdateCheckpoint(payload);
 
-                                                                                                                                                                                                                                                                                                                                                                async delete(id: number): Promise<void> {
-                                                                                                                                                                                                                                                                                                                                                                      const deleted = await repository.delete(id);
-                                                                                                                                                                                                                                                                                                                                                                            if (!deleted) {
-                                                                                                                                                                                                                                                                                                                                                                                    throw new NotFoundError(`Checkpoint ${id} não encontrado`);
-                                                                                                                                                                                                                                                                                                                                                                                          }
-                                                                                                                                                                                                                                                                                                                                                                                              },
-                                                                                                                                                                                                                                                                                                                                                                                                };
-                                                                                                                                                                                                                                                                                                                                                                                                }
+      const updated = await repository.update(id, input);
+      if (!updated) {
+        throw new NotFoundError(`Checkpoint ${id} não encontrado`);
+      }
+      return updated;
+    },
 
-                                                                                                                                                                                                                                                                                                                                                                                                export const checkpointService = createCheckpointService();
+    async delete(id: number): Promise<void> {
+      const deleted = await repository.delete(id);
+      if (!deleted) {
+        throw new NotFoundError(`Checkpoint ${id} não encontrado`);
+      }
+    },
+  };
+}
+
+export const checkpointService = createCheckpointService();
