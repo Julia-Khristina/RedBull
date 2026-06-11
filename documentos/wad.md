@@ -3212,11 +3212,12 @@ Nesse contexto, serão apresentados os principais atributos da solução, seu mo
 
 ### 6.6.4 Promoção
 
-Por ser uma solução institucional voltada à equipe de Field Marketing da Red Bull, a divulgação precisa alcançar organizadores de eventos esportivos, e não consumidores finais. O marketing de conteúdo cumpre esse papel: estudos de caso e demonstrações do fluxo OCR mostram, em números, a queda de erros na apuração, argumento que convence quem decide pela adoção da ferramenta.
+Por ser uma solução desenvolvida no escopo da parceria acadêmica com a Red Bull, a promoção assume caráter institucional, voltada à comunicação interna do evento e ao público diretamente ligado a ele, e não à aquisição de clientes em mercado aberto. O marketing de conteúdo cumpre o papel central: uma vez aplicada em uma edição real, a solução poderá gerar estudos de caso e demonstrações do fluxo OCR que evidenciem quantitativamente a queda de erros na apuração, reforçando seu valor junto à organização.
 
-Para que esse conteúdo seja encontrado, o trabalho de SEO se apoia em termos que esse público realmente busca, como apuração de competições e automação de registro em eventos, atraindo tráfego qualificado sem custo por clique. No LinkedIn, publicações sobre digitalização de operações esportivas conversam diretamente com gestores e organizadores, perfil que concentra os tomadores de decisão.
+Para que esse material seja localizável, o trabalho de SEO se apoia em termos como apuração de competições e automação de registro em eventos. No LinkedIn, publicações sobre digitalização de operações esportivas dialogam com gestores e organizadores, perfis que concentram os tomadores de decisão. As campanhas pagas no Google Ads e no Meta Ads ampliam esse alcance de forma segmentada.
 
-As campanhas pagas no Google Ads e no Meta Ads complementam o alcance orgânico, segmentando profissionais de eventos e gerando contatos comerciais em prazo curto. Por fim, as parcerias fazem sentido específico aqui: a associação à marca Red Bull dá credibilidade imediata, e o engajamento das running crews, público que cresce no Brasil segundo a análise SWOT, espalha a solução de forma natural pelo compartilhamento simplificado do ranking, transformando os próprios atletas em divulgadores da plataforma.
+O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativações da solução na largada, na arena e no encerramento. As estratégias de relacionamento, por meio de CRM e comunicação pós-evento com organizadores e capitães, sustentam o vínculo ao longo do tempo.
+As parcerias completam o plano: a associação à marca Red Bull confere credibilidade imediata. O engajamento das running crews, público em crescimento no Brasil segundo a análise SWOT, dissemina a solução pelo compartilhamento simplificado do ranking.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
