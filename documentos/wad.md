@@ -3277,6 +3277,7 @@ O sistema substitui a prancheta por uma captura assistida. O operador fotografa 
 
 Frente a planilhas ou formulários genéricos, os diferenciais são claros: especialização para trocas rápidas sob pressão, validação híbrida entre OCR e operador, rastreabilidade do método de cada checkpoint e acesso público por URL com UUID, sem login. É essa combinação que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
+
 ### 6.4.2 Posicionamento e Diferenciação
 
 *Até 250 palavras.*
@@ -3319,11 +3320,11 @@ Nesse contexto, serão apresentados os principais atributos da solução, seu mo
 
 ### 6.6.3 Praça (Distribuição)
 
-*Até 200 palavras.*
+A distribuição da solução ocorre de forma digital, sem necessidade de instalação de software ou configuração por parte dos usuários finais. A aplicação web é acessada diretamente pelo navegador, sendo projetada para uso em iPads durante o evento Red Bull 24 Horas.
 
-*Explique como a aplicação será disponibilizada aos usuários e quais canais serão utilizados.*
+O acesso é segmentado conforme o perfil de cada usuário. A equipe operacional e os administradores do evento acessam a área privada da plataforma por meio de uma URL dedicada. Já os capitães de equipe e atletas têm acesso à área pública por meio de uma URL única gerada com UUID, permitindo o acompanhamento do ranking, do status dos corredores e das métricas de desempenho em tempo real a cada checkpoint.
 
-*Valor: até 0,5 ponto.*
+Essa escolha de distribuição é aderente às exigências do ambiente competitivo: a mobilidade dos iPads garante agilidade ao operador durante as trocas de turno, enquanto o acesso via link elimina fricções para perfis de usuário. Por ser uma aplicação web, a solução não depende de lojas de aplicativos nem de processos de atualização manual, o que simplifica a manutenção operacional. Além disso, essa abordagem viabiliza a reutilização da plataforma em edições futuras do Red Bull 24 Horas ou em outros eventos esportivos com dinâmica operacional semelhante.
 
 ### 6.6.4 Promoção
 
