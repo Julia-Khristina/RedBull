@@ -1,0 +1,144 @@
+/* === Formulário de Nova Competição — estilos de competitions/new.ejs === */
+/* Todas as cores e fontes via variáveis de public/css/variables.css [A1] */
+
+.cf-main {
+  padding: 28px 32px 48px;
+  max-width: 860px;
+}
+
+/* ── Voltar ── */
+.cf-back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--texto);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  margin-bottom: 20px;
+}
+
+.cf-back-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Título ── */
+.cf-page-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-bold);
+  color: var(--azul-principal);
+  margin: 0 0 28px 0;
+}
+
+/* ── Formulário ── */
+.cf-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cf-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cf-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+}
+
+.cf-input,
+.cf-textarea {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--texto);
+  background-color: var(--fundo-cards);
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+  padding: 14px 18px;
+  outline: none;
+  transition: border-color 0.15s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.cf-input:focus,
+.cf-textarea:focus {
+  border-color: var(--vermelho);
+}
+
+.cf-textarea {
+  resize: vertical;
+  min-height: 160px;
+}
+
+/* ── Alerta de erro ── */
+.cf-error {
+  display: none;
+  background-color: #fff0f3;
+  border: 1px solid var(--vermelho);
+  border-radius: var(--border-radius);
+  color: var(--vermelho);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  padding: 12px 16px;
+}
+
+.cf-error.visible {
+  display: block;
+}
+
+/* ── Botões ── */
+.cf-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.cf-btn-cancel {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--texto);
+  background-color: transparent;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+  padding: 14px 32px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: border-color 0.15s ease;
+}
+
+.cf-btn-cancel:hover {
+  border-color: var(--texto);
+}
+
+.cf-btn-submit {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  background-color: var(--amarelo);
+  border: none;
+  border-radius: var(--border-radius);
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+
+.cf-btn-submit:hover {
+  opacity: 0.88;
+}
+
+.cf-btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
