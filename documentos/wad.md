@@ -2246,7 +2246,6 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 | Diagrama de Classes                                         | DER                                   |
 | ----------------------------------------------------------- | ------------------------------------- |
-<<<<<<< HEAD
 | Classe `Competition`                                        | Tabela `competition`                  |
 | Classe `Team`                                               | Tabela `team`                         |
 | Classe `Runner`                                             | Tabela `runner`                       |
@@ -2259,7 +2258,6 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                | FK `id_competition` em `checkpoint`   |
 | Associação `Treadmill` é usada em `Checkpoint`              | FK `id_treadmill` em `checkpoint`     |
 | Associação `Admin` valida/supervisiona `Checkpoint`         | FK `id_admin` em `checkpoint`         |
-=======
 | Classe `Competition`                                         | Tabela `COMPETITION`                   |
 | Classe `Team`                                             | Tabela `TEAM`                       |
 | Classe `Runner`                                  | Tabela `RUNNER`                     |
@@ -2272,7 +2270,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
 | Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
 | Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
->>>>>>> cde49d5e95287fb3845f57198575132089f3fb88
+
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -3338,13 +3336,7 @@ Por ser uma solução desenvolvida no escopo da parceria acadêmica com a Red Bu
 
 Para que esse material seja localizável, o trabalho de SEO se apoia em termos como apuração de competições e automação de registro em eventos. No LinkedIn, publicações sobre digitalização de operações esportivas dialogam com gestores e organizadores, perfis que concentram os tomadores de decisão. As campanhas pagas no Google Ads e no Meta Ads ampliam esse alcance de forma segmentada.
 
-*Valor: até 0,5 ponto.*
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dev
-O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativações da solução na largada, na arena e no encerramento. As estratégias de relacionamento, por meio de CRM e comunicação pós-evento com organizadores e capitães, sustentam o vínculo ao longo do tempo.
-As parcerias completam o plano: a associação à marca Red Bull confere credibilidade imediata. O engajamento das running crews, público em crescimento no Brasil segundo a análise SWOT, dissemina a solução pelo compartilhamento simplificado do ranking.
+O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativações da solução na largada, na arena e no encerramento. As estratégias de relacionamento, por meio de CRM e comunicação pós-evento com organizadores e capitães, sustentam o vínculo ao longo do tempo. As parcerias completam o plano: a associação à marca Red Bull confere credibilidade imediata. O engajamento das running crews, público em crescimento no Brasil segundo a análise SWOT, dissemina a solução pelo compartilhamento simplificado do ranking.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
