@@ -716,7 +716,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Persona**              | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story**           | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a Matriz de Rastreabilidade do sistema, para verificar a cobertura entre requisitos funcionais, regras de negócio, endpoints e telas implementadas."|
-| **Critério de aceite 1** | CR1: A RTM deve estar acessível e atualizada no documento WAD, cobrindo todos os RFs implementados. **Teste:** Dado que o admin acessa a seção 3.9 do WAD, quando a página é exibida, então a matriz deve conter todas as linhas de rastreabilidade com persona, RF, RN, endpoint, tela, teste e evidência preenchidos. |
+| **Critério de aceite 1** | CR1: A RTM deve estar acessível e atualizada no documento WAD, cobrindo todos os RFs implementados. **Teste:** Dado que o administrador acessa a seção 3.9 do WAD, quando a página é exibida, então a matriz deve conter todas as linhas de rastreabilidade com persona, RF, RN, endpoint, tela, teste e evidência preenchidos. |
 | **Critério de aceite 2** | CR2: A RTM deve permitir identificar lacunas de cobertura entre requisitos e implementação. **Teste:** Dado que um RF foi implementado, quando a RTM é consultada, então deve existir ao menos uma linha correspondente conectando persona → RF → RN → endpoint → tela → teste → evidência. |
 | **Critérios INVEST**     | Independente: Esta US pode ser validada de forma isolada, pois depende apenas da documentação existente. <br> Negociável: As colunas da RTM podem ser expandidas conforme necessidades identificadas ao longo das sprints. <br> Valorosa: Garante rastreabilidade completa entre necessidades, implementação e validação, essencial para auditoria e controle de qualidade. <br> Estimável: O escopo é bem definido — preencher e manter a RTM atualizada. <br> Pequena: Limitada à criação e manutenção da matriz de rastreabilidade. <br> Testável: A presença e completude das linhas da RTM são verificáveis objetivamente. |
 
@@ -2226,7 +2226,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 <div align="center">
   <sub>Figura 27 - Diagrama Entidade Relacionamento</sub><br>
-    <img src="../assets/Diagrama entidade-relacionamento.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/programacao/diagrama-entidade-relacionamento.jpg" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -2238,7 +2238,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | 1 | COMPETITION | TEAM | 1 competição tem muitas equipes (1:N) | Muitas equipes pertencem a 1 única competição (N:1) |
 | 2 | TEAM | RUNNER | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
 | 3 | RUNNER | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
-| 4 | ADMIN | CHECKPOINT | 1 admin supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único admin (N:1) |
+| 4 | ADMIN | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
 | 5 | TREADMILL | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
 | 6 | COMPETITION | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
 
@@ -2246,6 +2246,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 | Diagrama de Classes                                         | DER                                   |
 | ----------------------------------------------------------- | ------------------------------------- |
+<<<<<<< HEAD
 | Classe `Competition`                                        | Tabela `competition`                  |
 | Classe `Team`                                               | Tabela `team`                         |
 | Classe `Runner`                                             | Tabela `runner`                       |
@@ -2258,6 +2259,20 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                | FK `id_competition` em `checkpoint`   |
 | Associação `Treadmill` é usada em `Checkpoint`              | FK `id_treadmill` em `checkpoint`     |
 | Associação `Admin` valida/supervisiona `Checkpoint`         | FK `id_admin` em `checkpoint`         |
+=======
+| Classe `Competition`                                         | Tabela `COMPETITION`                   |
+| Classe `Team`                                             | Tabela `TEAM`                       |
+| Classe `Runner`                                  | Tabela `RUNNER`                     |
+| Classe `Admin`                               | Tabela `ADMIN`                |
+| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
+| Classe `Treadmill`                                            | Tabela `TREADMILL`                      |
+| Associação `Competition` possui `Team`                     | FK `id_competition` em `TEAM`        |
+| Associação `Team` possui `Runner`                       | FK `id_team` em `RUNNER`          |
+| Associação `Runner` registra `Checkpoint`                 | FK `id_runner` em `CHECKPOINT`      |
+| Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
+| Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
+| Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
+>>>>>>> cde49d5e95287fb3845f57198575132089f3fb88
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -2657,6 +2672,7 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
+
 
 **Expressão SQL:**
 
