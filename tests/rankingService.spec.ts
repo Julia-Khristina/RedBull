@@ -98,6 +98,31 @@ describe("rankingService.generateRunnerRanking", () => {
       },
     ]);
   });
+
+  it("deve preencher o nome da equipe do corredor no ranking", async () => {
+    const service = createRankingService(
+      {
+        findByCompetition: jest.fn().mockResolvedValue([
+          makeCheckpoint({
+            id: 1,
+            id_runner: 1,
+            distance_km: 5,
+            time: "25:00",
+            runner: { id: 1, name: "Ana", id_team: 10 },
+          }),
+        ]),
+      },
+      { findByCompetition: jest.fn().mockResolvedValue(teams) }
+    );
+
+    const ranking = await service.generateRunnerRanking(1);
+
+    expect(ranking[0]).toMatchObject({
+      id_runner: 1,
+      runner_name: "Ana",
+      team_name: "Equipe Alpha",
+    });
+  });
 });
 
 describe("rankingService.generateTeamRanking", () => {
@@ -147,6 +172,42 @@ describe("rankingService.generateTeamRanking", () => {
         team_name: "Equipe Beta",
         total_distance_km: 5,
         runner_count: 1,
+      },
+    ]);
+  });
+
+  it("deve incluir as duas equipes mesmo quando apenas uma tiver checkpoints", async () => {
+    const service = createRankingService(
+      {
+        findByCompetition: jest.fn().mockResolvedValue([
+          makeCheckpoint({
+            id: 1,
+            id_runner: 1,
+            distance_km: 5,
+            time: "25:00",
+            runner: { id: 1, name: "Ana", id_team: 10 },
+          }),
+        ]),
+      },
+      { findByCompetition: jest.fn().mockResolvedValue(teams) }
+    );
+
+    const ranking = await service.generateTeamRanking(1);
+
+    expect(ranking).toMatchObject([
+      {
+        position: 1,
+        id_team: 10,
+        team_name: "Equipe Alpha",
+        total_distance_km: 5,
+        runner_count: 1,
+      },
+      {
+        position: 2,
+        id_team: 20,
+        team_name: "Equipe Beta",
+        total_distance_km: 0,
+        runner_count: 0,
       },
     ]);
   });
