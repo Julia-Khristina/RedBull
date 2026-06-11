@@ -4,6 +4,11 @@ import { asyncHandler } from "../helpers/asyncHandler";
 
 const router = Router();
 
+router.get(
+  "/operational-panel",
+  asyncHandler(checkpointController.renderOperationalPanel)
+);
+
 router.post("/checkpoints", asyncHandler(checkpointController.create));
 
 router.get("/checkpoints", asyncHandler(checkpointController.list));
