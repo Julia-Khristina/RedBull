@@ -52,6 +52,26 @@ describe("runnerService.create", () => {
     expect(repository.create).toHaveBeenCalled();
   });
 
+  it("deve normalizar CPF sem máscara antes de persistir", async () => {
+    const repository = makeRepositoryMock({
+      findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
+      countByTeam: jest.fn().mockResolvedValue(0),
+      create: jest.fn().mockResolvedValue(runnerFixture),
+    });
+    const service = createRunnerService(repository);
+
+    await service.create({
+      name: "João Silva",
+      cpf: "11122233344",
+      email: "joao@test.com",
+      id_team: 10,
+    });
+
+    expect(repository.create).toHaveBeenCalledWith(
+      expect.objectContaining({ cpf: "111.222.333-44" })
+    );
+  });
+
   it("deve lançar NotFoundError quando equipe não existe", async () => {
     const repository = makeRepositoryMock({
       findTeamById: jest.fn().mockResolvedValue(null),

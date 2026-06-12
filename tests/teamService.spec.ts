@@ -17,8 +17,11 @@ function makeRepositoryMock(
   return {
     create: jest.fn(),
     findByCompetition: jest.fn(),
+    findByUuid: jest.fn(),
     findByCompetitionAndId: jest.fn(),
+    findRunnerByTeamAndId: jest.fn(),
     updateByCompetitionAndId: jest.fn(),
+    setActiveRunnerByCompetitionAndId: jest.fn(),
     deleteByCompetitionAndId: jest.fn(),
     ...overrides,
   };

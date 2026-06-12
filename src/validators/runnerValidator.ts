@@ -2,6 +2,7 @@ import { CreateRunnerInput, UpdateRunnerInput } from "../models/runner";
 import { ValidationError } from "../errors/AppError";
 
 const CPF_REGEX = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
+const EMAIL_REGEX = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const VALID_STATUSES = ["runner", "captain"];
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -30,6 +31,18 @@ function readOptionalText(
   return value.trim();
 }
 
+function normalizeCpf(value: string): string {
+  const digits = value.replace(/\D/g, "");
+  if (digits.length !== 11) {
+    throw new ValidationError("cpf inválido");
+  }
+
+  return `${digits.slice(0, 3)}.${digits.slice(3, 6)}.${digits.slice(
+    6,
+    9
+  )}-${digits.slice(9)}`;
+}
+
 export function validateCreateRunner(payload: unknown): CreateRunnerInput {
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
@@ -41,9 +54,10 @@ export function validateCreateRunner(payload: unknown): CreateRunnerInput {
   if (!CPF_REGEX.test(cpfRaw)) {
     throw new ValidationError("cpf inválido");
   }
+  const cpf = normalizeCpf(cpfRaw);
 
   const email = readRequiredText(payload, "email");
-  if (!email.includes("@")) {
+  if (!EMAIL_REGEX.test(email)) {
     throw new ValidationError("email inválido");
   }
 
@@ -56,7 +70,7 @@ export function validateCreateRunner(payload: unknown): CreateRunnerInput {
 
   const result: CreateRunnerInput = {
     name,
-    cpf: cpfRaw,
+    cpf,
     email,
     id_team,
   };
@@ -95,7 +109,7 @@ export function validateUpdateRunner(payload: unknown): UpdateRunnerInput {
 
   if ("email" in payload) {
     const email = readOptionalText(payload, "email");
-    if (!email.includes("@")) {
+    if (!EMAIL_REGEX.test(email)) {
       throw new ValidationError("email inválido");
     }
     result.email = email;

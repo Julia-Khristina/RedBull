@@ -156,6 +156,32 @@ describe("Endpoints REST de equipes", () => {
       expect(check.status).toBe(404);
     });
 
+    it("deve deletar equipe com atletas cadastrados", async () => {
+      const created = await request(app)
+        .post(`/competitions/${competitionId}/teams`)
+        .send({ name: "Equipe Deletar Com Atleta" });
+
+      await request(app)
+        .post(`/competitions/${competitionId}/teams/${created.body.id}/runners`)
+        .send({
+          name: "Atleta Delete Team",
+          cpf: "987.654.321-09",
+          email: `delete-team-${Date.now()}@test.com`,
+        })
+        .expect(201);
+
+      const res = await request(app).delete(
+        `/competitions/${competitionId}/teams/${created.body.id}`
+      );
+
+      expect(res.status).toBe(204);
+
+      const check = await request(app).get(
+        `/competitions/${competitionId}/teams/${created.body.id}`
+      );
+      expect(check.status).toBe(404);
+    });
+
     it("deve retornar 404 ao tentar deletar equipe inexistente", async () => {
       const missingId = await getMissingTeamId();
       const res = await request(app).delete(

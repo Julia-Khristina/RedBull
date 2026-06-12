@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import { rankingService } from "../services/rankingService";
 import { competitionService } from "../services/competitionService";
 import { ValidationError } from "../errors/AppError";
+import { resolveSelectedCompetitionId } from "../helpers/selectedCompetition";
 
 function parseIntegerParam(value: unknown, name: string): number {
-  const parsed = typeof value === "string" ? Number(value) : NaN;
+  const parsed =
+    typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
 
   if (!Number.isInteger(parsed) || parsed <= 0) {
     throw new ValidationError(`${name} deve ser um numero inteiro positivo`);
@@ -13,7 +15,51 @@ function parseIntegerParam(value: unknown, name: string): number {
   return parsed;
 }
 
+function resolveCompetitionId(req: Request): number {
+  const rawId = resolveSelectedCompetitionId(req);
+  return rawId === null ? 0 : parseIntegerParam(rawId, "competitionId");
+}
+
+async function findCompetitionForView(req: Request) {
+  const requestedId = resolveCompetitionId(req);
+  if (requestedId > 0) {
+    return competitionService.findById(requestedId);
+  }
+
+  return null;
+}
+
+function renderCompetitionRequired(res: Response): void {
+  res.status(400).render("ranking/competition-required", {
+    title: "Selecione uma competição — Red Bull 24h",
+    currentPage: "ranking",
+    pageCSS: "/css/ranking.css",
+  });
+}
+
 export const rankingController = {
+  async renderActiveRanking(req: Request, res: Response): Promise<void> {
+    const competition = await findCompetitionForView(req);
+
+    if (!competition) {
+      renderCompetitionRequired(res);
+      return;
+    }
+
+    const teamRanking = await rankingService.generateTeamRanking(competition.id);
+    const runnerRanking = await rankingService.generateRunnerRanking(competition.id);
+
+    res.render("ranking/ranking", {
+      title: "Ranking — Red Bull 24h",
+      competition,
+      teamRanking,
+      runnerRanking,
+      isAdmin: true,
+      currentPage: "ranking",
+      pageCSS: "/css/ranking.css",
+    });
+  },
+
   async teamRanking(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(
       req.params.id,
@@ -56,6 +102,7 @@ export const rankingController = {
         runnerRanking,
         isAdmin: true,
         currentPage: "ranking",
+        pageCSS: "/css/ranking.css",
       });
     } catch (error) {
       res.status(500).render("errors/500", { title: "Erro interno" });
