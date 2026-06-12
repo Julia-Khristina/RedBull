@@ -3248,7 +3248,7 @@ Durante a execução, foram testadas diferentes camadas e funcionalidades do sis
 
 <div align="center">
   <sub>Figura X - Resultado da execução do comando `npm test`.</sub><br>
-    <img src="../assets/programacao/execucao-dos-testes.png" width="500" alt="Testes jest e supertest"><br>
+    <img src="../assets/programacao/execucao-dos-testes.png" width="700" alt="Testes jest e supertest"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -3290,6 +3290,32 @@ O relatório apresenta as métricas de cobertura de código organizadas por cama
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+### Rastreabilidade dos Casos de Teste
+
+Os testes automatizados implementados foram relacionados às respectivas regras de negócio e requisitos funcionais, garantindo consistência com a Matriz RF → RN → Endpoint (Seção 3.1.4) e com a Matriz de Rastreabilidade do Projeto (Seção 3.9).
+
+**Mapeamento CT → RN → RF**
+
+| Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) |
+|--------------------|------------------|------------------------|---------------------------|
+| CT01 | authService.test.ts | RN03 | RF004 |
+| CT02 | adminService.test.ts | RN02, RN03 | RF004 |
+| CT03 | competitionService.spec.ts | RN18, RN14 | RF002, RF012 |
+| CT04 | competition.e2e.spec.ts | RN18 | RF002 |
+| CT05 | teamService.spec.ts | RN01, RN07 | RF003 |
+| CT06 | teamRepository.spec.ts | RN01, RN07 | RF003 |
+| CT07 | team.e2e.spec.ts | RN01, RN07 | RF003 |
+| CT08 | runnerService.spec.ts | RN07 | RF003, RF011 |
+| CT09 | runnerRepository.spec.ts | RN07 | RF003 |
+| CT10 | runner.e2e.spec.ts | RN07 | RF003 |
+| CT11 | checkpointService.spec.ts | RN04, RN05, RN06 | RF005, RF006, RF007, RF008, RF009 |
+| CT12 | rankingService.spec.ts | RN09, RN11 | RF010, RF015 |
+| CT13 | exportService.spec.ts | RN15 | RF013 |
+| CT14 | exportRepository.spec.ts | RN15 | RF013 |
+| CT15 | export.e2e.spec.ts | RN15 | RF013 |
+| CT16 | competitionRepository.spec.ts | RN18 | RF002 |
+
+A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
