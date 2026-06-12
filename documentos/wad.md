@@ -1156,57 +1156,57 @@ O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados ex
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
-Os padrões de projeto foram adotados no backend com o objetivo de promover uma arquitetura mais organizada, modular e de fácil manutenção ao longo do desenvolvimento do sistema. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
+Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
 
-Além disso, a definição de estruturas padronizadas para acesso a dados, validações, regras de negócio e tratamento de requisições permite maior consistência no desenvolvimento do backend, tornando o código mais legível e simplificando futuras manutenções e evoluções da aplicação.
-
-A seguir, são apresentados os principais padrões identificados no sistema, bem como suas categorias, definições, os problemas que resolvem, justificativas de adoção e exemplos de aplicação no backend.
+Com a evolução do sistema e a integração de um frontend server-side renderizado — baseado no template engine EJS com suporte a layouts e parciais — novos padrões foram identificados e incorporados à arquitetura. A documentação a seguir descreve os padrões aplicados tanto na camada de backend quanto na camada de apresentação da aplicação, com base no código efetivamente implementado na branch de desenvolvimento.
 
 ---
 
 ### Repository Pattern
 
 #### Categoria
+
 Estrutural / Arquitetural
 
 #### Definição
+
 O Repository Pattern é um padrão responsável por centralizar e abstrair o acesso aos dados da aplicação em uma camada específica de repositório. Esse padrão atua como intermediário entre a aplicação e o banco de dados, encapsulando operações de persistência, como consultas, inserções, atualizações e remoções de registros.
 
 Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
 
 #### Problema resolvido
-Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados.
 
-Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura. Além disso, qualquer alteração relacionada às operações de persistência precisaria ser realizada em diferentes pontos da aplicação.
+Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados. Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura.
 
 #### Justificativa da adoção
-Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades de competição, equipes e atletas. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio da aplicação, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema.
 
-A centralização das operações de persistência em arquivos de repositório também contribui para:
-<ul>
-    <li>melhorar organização do backend;</li>
-    <li>reduzir repetição de consultas;</li>
-    <li>facilitar manutenção das operações de banco;</li>
-    <li>reutilizar métodos de acesso aos dados;</li>
-    <li>reduzir acoplamento entre as camadas da aplicação.
-</ul>
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do backend, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
 
 #### Aplicação no projeto
+
 O padrão foi aplicado nos seguintes arquivos:
--  `competitionRepository.ts`
--  `teamRepository.ts`
--  `athleteRepository.ts`
+
+- `src/repositories/competitionRepository.ts`
+- `src/repositories/teamRepository.ts`
+- `src/repositories/runnerRepository.ts`
+- `src/repositories/checkpointRepository.ts`
+- `src/repositories/adminRepository.ts`
+- `src/repositories/reportRepository.ts`
+- `src/repositories/exportRepository.ts`
+- `src/repositories/authRepository.ts`
+- `src/repositories/treadmillRepository.ts`
 
 Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
 
 #### Exemplo de código
+
 ```typescript
 async findById(id: number): Promise<Competition | null> {
   const supabase = getSupabaseClient();
 
   const { data, error } = await supabase
-    .from("competicao")
-    .select(competitionSelect)
+    .from("competition")
+    .select("id, name, address, date, status, created_at")
     .eq("id", id)
     .maybeSingle();
 
@@ -1214,51 +1214,52 @@ async findById(id: number): Promise<Competition | null> {
     throw error;
   }
 
-  return data as Competition | null;
+  return data as unknown as Competition | null;
 }
 ```
-No exemplo apresentado, o método findById encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
+
+No exemplo apresentado, o método `findById` encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
 
 ---
 
 ### Service Layer Pattern
 
 #### Categoria
+
 Arquitetural
 
 #### Definição
+
 O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
 
 #### Problema resolvido
+
 Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários. Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
 
 #### Justificativa da adoção
-Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend.
 
-No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo:
-<ul>
-    <li>validação de parâmetros;</li>
-    <li>verificação de existência de registros;</li>
-    <li>coordenação de operações;</li>
-    <li>lançamento de exceções;</li>
-    <li>controle de fluxos de execução.
-</ul>
-
-Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados. A utilização da camada de Service também contribui para maior organização do backend e reutilização das regras de negócio entre diferentes partes da aplicação.
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
 
 #### Aplicação no projeto
-O padrão foi aplicado nos seguintes arquivos:
-- `competitionService.ts`
--  `teamService.ts`
--  `athleteService.ts`
 
-Esses arquivos centralizam as regras de negócio relacionadas às entidades da aplicação antes da comunicação com os repositórios.
+O padrão foi aplicado nos seguintes arquivos:
+
+- `src/services/competitionService.ts`
+- `src/services/teamService.ts`
+- `src/services/runnerService.ts`
+- `src/services/checkpointService.ts`
+- `src/services/authService.ts`
+- `src/services/adminService.ts`
+- `src/services/rankingService.ts`
+- `src/services/exportService.ts`
+- `src/services/reportService.ts`
+- `src/services/treadmillService.ts`
 
 #### Exemplo de código
+
 ```typescript
 async findById(idParam: unknown): Promise<Competition> {
   const id = validateCompetitionId(idParam);
-
   const competition = await repository.findById(id);
 
   if (!competition) {
@@ -1267,7 +1268,8 @@ async findById(idParam: unknown): Promise<Competition> {
 
   return competition;
 }
-````
+```
+
 Nesse exemplo, o Service realiza validação do identificador recebido, consulta o repositório e verifica se o registro existe antes de retornar a informação. Dessa forma, a lógica de negócio permanece isolada da camada responsável pelas requisições HTTP.
 
 ---
@@ -1275,175 +1277,387 @@ Nesse exemplo, o Service realiza validação do identificador recebido, consulta
 ### Dependency Injection Pattern
 
 #### Categoria
+
 Criacional / Arquitetural
 
 #### Definição
-A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade na utilização de diferentes implementações, tanto durante a execução da aplicação quanto na realização de testes automatizados.
+
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. No projeto, o padrão é implementado por meio de factory functions que recebem repositórios — e, em alguns casos, outros services — como parâmetros com valores padrão, retornando um objeto com os métodos do service. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade, especialmente na realização de testes automatizados.
 
 #### Problema resolvido
+
 Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
 
 #### Justificativa da adoção
-Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes, possibilitando validar apenas o comportamento das regras de negócio implementadas nos Services.
 
-Além disso, esse padrão contribui para:
-<ul>
-    <li>reduzir acoplamento entre camadas;</li>
-    <li>facilitar manutenção;</li>
-    <li>melhorar testabilidade;</li>
-    <li>permitir maior flexibilidade na criação dos Services.
-</ul>
+Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes. Além disso, o padrão contribui para reduzir acoplamento entre camadas, facilitar manutenção, melhorar testabilidade e permitir maior flexibilidade na criação dos Services.
 
 #### Aplicação no projeto
-O padrão foi aplicado na criação dos Services, permitindo que os repositórios sejam recebidos como parâmetro durante sua inicialização. Dessa forma, durante a execução normal da aplicação utiliza-se o repositório real, enquanto nos testes podem ser utilizados mocks responsáveis por simular o comportamento esperado da camada de persistência.
+
+O padrão foi aplicado nos seguintes arquivos, todos seguindo a mesma convenção de factory function com parâmetro de dependência e valor padrão:
+
+- `src/services/competitionService.ts`
+- `src/services/checkpointService.ts`
+- `src/services/authService.ts`
+- `src/services/exportService.ts`
+- `src/services/rankingService.ts`
+- `src/services/reportService.ts`
 
 #### Exemplo de código
+
 ```typescript
+// Injeção simples: repositório como dependência
 export function createCompetitionService(
   repository: CompetitionRepository = competitionRepository
 ) {
   return {
-    async create(payload: Partial<CreateCompetitionInput>) {
+    async create(payload: Partial<CreateCompetitionInput>): Promise<Competition> {
       const input = validateCreateCompetition(payload);
-
       return repository.create(input);
-    }
+    },
+    // ...
   };
 }
+
+export const competitionService = createCompetitionService();
 ```
 
-```
-#### Exemplo de aplicação nos testes
 ```typescript
-const repository = createRepositoryMock();
+// Injeção múltipla: dois services como dependências
+export function createRankingService(
+  checkpoints: CheckpointServiceDependency = checkpointService,
+  teams: TeamServiceDependency = teamService
+) {
+  return { ... };
+}
 
-const competitionService = createCompetitionService(repository);
+export const rankingService = createRankingService();
 ```
-No exemplo apresentado, o Service recebe o repositório como dependência externa. Isso permite substituir facilmente a implementação real por um mock durante os testes automatizados.
+
+Em ambos os exemplos, as dependências são fornecidas como parâmetros com valores padrão. Durante a execução normal da aplicação, utiliza-se a implementação real; nos testes, podem ser fornecidos mocks para simular o comportamento esperado.
 
 ---
 
 ### Middleware Pattern
 
 #### Categoria
+
 Comportamental / Arquitetural
 
 #### Definição
-O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP.
 
-Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros, autenticação e manipulação de requisições.
+O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP. Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros e encapsulamento de handlers assíncronos.
 
 #### Problema resolvido
+
 Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
 
 #### Justificativa da adoção
-Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis.
 
-Além disso, o padrão contribui para:
-<ul>
-    <li>reduzir repetição de código;</li>
-    <li>melhorar organização estrutural;</li>
-    <li>centralizar tratamento de exceções;</li>
-    <li>simplificar implementação das rotas.
-</ul>
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
 
 #### Aplicação no projeto
-O padrão foi aplicado nos seguintes arquivos:
--  `asyncHandler.ts`
--  `errorHandler.ts`
 
-Esses arquivos são responsáveis por encapsular erros assíncronos e encaminhar exceções para o tratamento centralizado da aplicação.
+O padrão foi aplicado nos seguintes arquivos:
+
+- `src/helpers/asyncHandler.ts` — encapsula handlers assíncronos, redirecionando erros para o middleware de tratamento de exceções
+- `src/middlewares/errorHandler.ts` — responsável pelo tratamento centralizado de erros, inspecionando o tipo da exceção via `instanceof AppError`
 
 #### Exemplo de código
+
 ```typescript
+// src/helpers/asyncHandler.ts
 export function asyncHandler(
-  handler: (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ) => Promise<void>
+  handler: (req: Request, res: Response, next: NextFunction) => Promise<void>
 ) {
-  return (
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): void => {
-    Promise.resolve(handler(req, res, next))
-      .catch(next);
+  return (req: Request, res: Response, next: NextFunction): void => {
+    Promise.resolve(handler(req, res, next)).catch(next);
   };
 }
 ```
 
-#### Exemplo de uso
 ```typescript
-router.post(
-  "/competitions",
-  asyncHandler(competitionController.create)
-);
+// src/middlewares/errorHandler.ts
+export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+  if (error instanceof AppError) {
+    res.status(error.statusCode).json({ message: error.message });
+    return;
+  }
+  console.error("[errorHandler]", error);
+  res.status(500).json({ message: "Erro interno do servidor" });
+};
 ```
-Nesse exemplo, o middleware asyncHandler encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o middleware de tratamento de exceções.
+
+#### Exemplo de uso nas rotas
+
+```typescript
+// src/routes/competitionRoutes.ts
+router.post("/competitions", asyncHandler(competitionController.create));
+router.get("/competitions/:id", asyncHandler(competitionController.findById));
+```
+
+Nesse exemplo, o `asyncHandler` encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o `errorHandler`.
 
 ---
 
 ### Validation Layer Pattern
 
 #### Categoria
+
 Estrutural / Arquitetural
 
 #### Definição
-O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio.
 
-Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelas regras de negócio e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
+O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio. Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelos Services e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
 
 #### Problema resolvido
+
 Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
 
 #### Justificativa da adoção
-Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação.
 
-
-A centralização das validações em arquivos específicos permite:
-<ul>
-    <li>reduzir repetição de código;</li>
-    <li>organizar validações da aplicação;</li>
-    <li>padronizar verificações realizadas;</li>
-    <li>impedir envio de dados inválidos para os Services.
-</ul>
-
-Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
+Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação. A centralização das validações em arquivos específicos permite reduzir repetição de código, organizar validações da aplicação, padronizar verificações realizadas e impedir envio de dados inválidos para os Services. Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
 
 #### Aplicação no projeto
-O padrão foi aplicado nos arquivos responsáveis pela validação dos payloads utilizados nas operações de criação e atualização das entidades do sistema. Esses arquivos verificam obrigatoriedade de campos, tipos de dados e formatos esperados antes da continuidade do fluxo da aplicação.
+
+O padrão foi aplicado nos seguintes arquivos:
+
+- `src/validators/competitionValidator.ts`
+- `src/validators/teamValidator.ts`
+- `src/validators/runnerValidator.ts`
+- `src/validators/checkpointValidator.ts`
 
 #### Exemplo de código
+
 ```typescript
 export function validateCreateCompetition(
   payload: unknown
 ): CreateCompetitionInput {
-
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
   }
 
-  const nome = readRequiredText(payload, "nome");
-  const data = readRequiredText(payload, "data");
-  const endereco = readRequiredText(payload, "endereco");
+  const name = readRequiredText(payload, "name");
+  const date = readRequiredText(payload, "date");
+  const address = readRequiredText(payload, "address");
 
-  if (!isValidDate(data)) {
-    throw new ValidationError(
-      "data deve ser uma data válida"
-    );
+  if (name.length > 100) {
+    throw new ValidationError("name deve ter no máximo 100 caracteres");
   }
 
-  return {
-    nome,
-    data,
-    endereco,
-  };
+  if (address.length > 255) {
+    throw new ValidationError("address deve ter no máximo 255 caracteres");
+  }
+
+  if (!isValidDate(date)) {
+    throw new ValidationError("date deve ser uma data válida");
+  }
+
+  return { name, date, address };
 }
 ```
-Nesse exemplo, a função realiza validações relacionadas à estrutura e aos formatos esperados do payload antes que os dados sejam enviados para as regras de negócio da aplicação.
 
+Nesse exemplo, a função realiza validações relacionadas à estrutura, tipos, formatos e tamanhos dos campos esperados no payload antes que os dados sejam enviados para as regras de negócio da aplicação.
+
+---
+
+### MVC com Server-Side Rendering (SSR)
+
+#### Categoria
+
+Arquitetural
+
+#### Definição
+
+O padrão Model-View-Controller (MVC) com Server-Side Rendering representa a extensão da arquitetura backend para incluir uma camada de apresentação renderizada no servidor. As Views são templates EJS processados pelo Express antes de serem enviados ao cliente como HTML. O template engine `express-ejs-layouts` gerencia um layout base compartilhado, injetando o conteúdo específico de cada página no slot reservado do layout principal.
+
+#### Problema resolvido
+
+Com a necessidade de um frontend integrado à aplicação, a abordagem SSR permitiu adicionar a camada de apresentação sem a necessidade de manter um projeto SPA separado (como React ou Angular). Isso reduz a complexidade de infraestrutura e mantém a coerência da arquitetura já existente em Express e TypeScript.
+
+#### Justificativa da adoção
+
+A configuração em `app.ts` confirma a adoção do EJS como template engine com layout padrão. Controllers como `rankingController.ts` e `reportController.ts`, bem como rotas em `dashboardRoutes.ts` e `competitionRoutes.ts`, possuem handlers que chamam `res.render()` injetando dados das camadas de Service diretamente nas views, completando o ciclo MVC.
+
+#### Aplicação no projeto
+
+```typescript
+// src/app.ts
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+app.use(ejsLayouts);
+app.set('layout', 'layouts/main');
+```
+
+```typescript
+// src/routes/dashboardRoutes.ts
+const competitions = await competitionService.findAll();
+res.render("dashboard/dashboard", {
+  title: "Dashboard — Red Bull 24H",
+  competitions,
+  activeCompetition,
+  currentPage: "dashboard",
+  pageCSS: "/css/dashboard.css"
+});
+```
+
+#### Arquivos relacionados
+
+- `src/app.ts`
+- `src/views/layouts/main.ejs`
+- `src/views/dashboard/dashboard.ejs`
+- `src/views/ranking/` (diretório)
+- `src/views/reports/` (diretório)
+- `src/views/auth/login.ejs`
+- `src/views/competitions/new.ejs`
+- `src/routes/dashboardRoutes.ts`
+- `src/controllers/rankingController.ts`
+- `src/controllers/reportController.ts`
+
+---
+
+### Template View com Partial Views
+
+#### Categoria
+
+Estrutural / Apresentação
+
+#### Definição
+
+Padrão em que a interface da aplicação é construída a partir de um layout base reutilizável que define a estrutura HTML compartilhada entre todas as páginas, e de componentes parciais que encapsulam elementos visuais reutilizados em múltiplos templates. O layout principal (`main.ejs`) define os elementos comuns — scripts globais e folhas de estilo — enquanto o partial `menu.ejs` encapsula a barra de navegação lateral da aplicação.
+
+#### Problema resolvido
+
+Sem esse padrão, cada view EJS precisaria replicar a estrutura HTML completa, incluindo doctype, head, navegação e scripts, gerando duplicidade de código e dificultando manutenção da interface da aplicação.
+
+#### Justificativa da adoção
+
+O layout `main.ejs` inclui o partial `menu.ejs` e reserva o slot `<%- body %>` para o conteúdo específico de cada página. Cada rota renderizada injeta apenas o conteúdo relevante, enquanto estrutura, estilos globais e navegação permanecem centralizados. O menu adapta seus links dinamicamente com base no contexto da competição ativa.
+
+#### Aplicação no projeto
+
+```html
+<!-- src/views/layouts/main.ejs -->
+<head>
+  <link rel="stylesheet" href="/css/variables.css">
+  <% if (locals.pageCSS) { %>
+    <link rel="stylesheet" href="<%= locals.pageCSS %>">
+  <% } %>
+</head>
+<body>
+  <%- include('../partials/menu') %>
+  <div class="content-wrapper"><%- body %></div>
+  <script src="/js/app.js"></script>
+</body>
+```
+
+#### Arquivos relacionados
+
+- `src/views/layouts/main.ejs`
+- `src/views/partials/menu.ejs`
+- Todas as views em `src/views/`
+
+---
+
+### Hierarquia de Erros Customizados (Custom Error Hierarchy)
+
+#### Categoria
+
+Estrutural / Comportamental
+
+#### Definição
+
+Padrão em que uma classe base de erro customizado (`AppError`) é estendida por subclasses especializadas que representam categorias semânticas de falha da aplicação, cada uma carregando o código HTTP correspondente como atributo imutável. O middleware de tratamento de erros verifica o tipo da exceção via `instanceof AppError` para formatar a resposta HTTP adequada de forma centralizada e sem duplicação.
+
+#### Problema resolvido
+
+Sem esse padrão, a camada de middleware de erros precisaria inspecionar propriedades arbitrárias dos objetos de erro para determinar o código de status HTTP correto, ou cada Controller precisaria capturar e tratar manualmente cada tipo de exceção. O padrão centraliza a semântica de erros, torna o código mais expressivo e elimina lógica condicional dispersa pela aplicação.
+
+#### Justificativa da adoção
+
+O arquivo `errors/AppError.ts` define a hierarquia completa com seis classes: `AppError` (base), `ValidationError` (400), `UnauthorizedError` (401), `NotFoundError` (404), `ConflictError` (409) e `UnprocessableError` (422). Os Services lançam subclasses específicas de acordo com a natureza do erro, e o `errorHandler` responde automaticamente com o código HTTP correto sem necessidade de lógica adicional nos Controllers.
+
+#### Aplicação no projeto
+
+```typescript
+// src/errors/AppError.ts
+export class AppError extends Error {
+  constructor(message: string, public readonly statusCode: number) {
+    super(message);
+    this.name = "AppError";
+  }
+}
+
+export class ValidationError extends AppError {
+  constructor(message: string) { super(message, 400); }
+}
+
+export class NotFoundError extends AppError {
+  constructor(message: string) { super(message, 404); }
+}
+
+export class UnauthorizedError extends AppError {
+  constructor(message: string) { super(message, 401); }
+}
+
+export class ConflictError extends AppError {
+  constructor(message: string) { super(message, 409); }
+}
+```
+
+#### Arquivos relacionados
+
+- `src/errors/AppError.ts`
+- `src/middlewares/errorHandler.ts`
+- `src/services/competitionService.ts`
+- `src/services/checkpointService.ts`
+- `src/services/authService.ts`
+
+---
+
+### Cookie-Based State Pattern (Seleção de Competição Ativa)
+
+#### Categoria
+
+Comportamental / Gerenciamento de Estado
+
+#### Definição
+
+Padrão em que um estado de seleção do usuário — neste caso, o identificador da competição ativa gerenciada pelo administrador — é persistido em um cookie HTTP no cliente e resolvido no servidor a cada requisição, por meio de funções utilitárias centralizadas. A função `resolveSelectedCompetitionId` implementa uma estratégia de prioridade: o identificador explícito na URL ou na query string prevalece sobre o identificador armazenado no cookie.
+
+#### Problema resolvido
+
+Em uma aplicação server-side rendering sem gerenciamento de estado no cliente, é necessário manter contexto entre requisições para determinar qual competição está sendo gerenciada pelo administrador. O uso de cookie elimina a necessidade de repetir o identificador da competição em cada URL da interface e centraliza a lógica de resolução desse estado em um único módulo.
+
+#### Justificativa da adoção
+
+O arquivo `helpers/selectedCompetition.ts` implementa as funções `getSelectedCompetitionId`, `resolveSelectedCompetitionId` e `saveSelectedCompetitionId`. Essas funções são utilizadas em controllers como `rankingController.ts`, `reportController.ts`, `competitionController.ts` e na rota `dashboardRoutes.ts` para determinar qual competição exibir sem exigir que o identificador esteja presente em todos os parâmetros da requisição.
+
+#### Aplicação no projeto
+
+```typescript
+// src/helpers/selectedCompetition.ts
+export function resolveSelectedCompetitionId(req: Request): number | null {
+  const explicitId = parsePositiveInteger(req.params.id ?? req.query.competitionId);
+  return explicitId ?? getSelectedCompetitionId(req);
+}
+
+export function saveSelectedCompetitionId(res: Response, competitionId: number): void {
+  res.cookie(selectedCompetitionCookie, String(competitionId), {
+    maxAge: maxAgeMs,
+    sameSite: "lax",
+    path: "/",
+  });
+}
+```
+
+#### Arquivos relacionados
+
+- `src/helpers/selectedCompetition.ts`
+- `src/controllers/rankingController.ts`
+- `src/controllers/reportController.ts`
+- `src/controllers/competitionController.ts`
+- `src/routes/dashboardRoutes.ts`
 ## 3.3. Wireframes (sprint 2)
 
 Os wireframes apresentados nesta seção têm como objetivo representar visualmente os principais fluxos de navegação da solução proposta para o evento Red Bull 24 Horas, evidenciando a organização das funcionalidades priorizadas. Os artefatos foram desenvolvidos com foco na compreensão da experiência do usuário, permitindo validar rapidamente a estrutura da aplicação, os componentes principais das telas e a sequência de interação entre os módulos do sistema.
