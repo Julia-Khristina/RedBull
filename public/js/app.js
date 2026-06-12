@@ -116,8 +116,10 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error(payload.message || 'Erro ao criar competição.');
           }
 
-          // [A1] Redireciona para dashboard com flag de sucesso → exibe tela3
-          window.location.href = '/dashboard?created=1';
+          const competition = await res.json();
+
+          // [A1] Redireciona para dashboard com flag de sucesso e competição criada selecionada.
+          window.location.href = '/dashboard?created=1&competitionId=' + encodeURIComponent(competition.id);
 
         } catch (err) {
           errorEl.textContent = err.message;
@@ -377,6 +379,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const submitBtn = form.querySelector('[data-team-create-submit]');
       const errorEl = form.querySelector('[data-team-create-error]');
       const cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 
       function showCreateError(message) {
         if (!errorEl) return;
@@ -429,14 +432,15 @@ document.addEventListener('DOMContentLoaded', function () {
         const cpf = row.querySelector('[data-runner-cpf]').value.trim();
         const email = row.querySelector('[data-runner-email]').value.trim();
         const phone = row.querySelector('[data-runner-phone]').value.trim();
+        const cpfDigits = cpf.replace(/\D/g, '');
 
         if (!name) throw new Error('Nome do atleta é obrigatório.');
         if (!cpfRegex.test(cpf)) throw new Error('CPF inválido para ' + name + '.');
-        if (!email || !email.includes('@')) throw new Error('Email inválido para ' + name + '.');
+        if (!emailRegex.test(email)) throw new Error('Email inválido para ' + name + '.');
 
         const payload = {
           name: name,
-          cpf: cpf,
+          cpf: cpfDigits.slice(0, 3) + '.' + cpfDigits.slice(3, 6) + '.' + cpfDigits.slice(6, 9) + '-' + cpfDigits.slice(9),
           email: email,
           status: index === captainIndex ? 'captain' : 'runner',
         };
@@ -528,10 +532,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
           window.location.href = '/teams?competitionId=' + encodeURIComponent(competitionId);
         } catch (err) {
-          const partial = createdTeam
-            ? ' Equipe criada parcialmente; acesse a equipe para concluir o cadastro.'
-            : '';
-          showCreateError((err.message || 'Não foi possível criar a equipe.') + partial);
+          if (createdTeam) {
+            showCreateError((err.message || 'Não foi possível cadastrar os atletas.') + ' A equipe foi criada, mas os atletas não foram salvos.');
+          } else {
+            showCreateError(err.message || 'Não foi possível criar a equipe.');
+          }
+
           if (submitBtn) {
             submitBtn.disabled = false;
             submitBtn.textContent = originalLabel;
@@ -553,6 +559,208 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       form.addEventListener('submit', createTeamAndRunners);
       refreshRunnerRows();
+    }
+  }
+
+  // Edição completa de equipe com atletas (/teams/:teamId/edit)
+  if (/^\/teams\/\d+\/edit$/.test(path)) {
+    const container = document.querySelector('[data-team-edit]');
+    const form = document.querySelector('[data-team-edit-form]');
+
+    if (container && form) {
+      const competitionId = container.dataset.competitionId;
+      const teamId = container.dataset.teamId;
+      const runnersList = form.querySelector('[data-runners-list]');
+      const addRunnerBtn = form.querySelector('[data-add-runner]');
+      const submitBtn = form.querySelector('[data-team-edit-submit]');
+      const errorEl = form.querySelector('[data-team-edit-error]');
+      const cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
+      const emailRegex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      const removedRunnerIds = new Set();
+
+      function showEditError(message) {
+        if (!errorEl) return;
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+
+      function clearEditError() {
+        if (!errorEl) return;
+        errorEl.textContent = '';
+        errorEl.hidden = true;
+      }
+
+      function runnerRows() {
+        return Array.prototype.slice.call(
+          runnersList ? runnersList.querySelectorAll('[data-runner-row]') : []
+        );
+      }
+
+      function refreshEditRunnerRows() {
+        runnerRows().forEach(function (row, index) {
+          const radio = row.querySelector('[data-captain-radio]');
+          const remove = row.querySelector('[data-remove-runner]');
+          if (radio) radio.value = String(index);
+          if (remove) remove.hidden = runnerRows().length <= 1;
+        });
+      }
+
+      function normalizeCpf(cpf) {
+        const digits = String(cpf || '').replace(/\D/g, '');
+        return digits.slice(0, 3) + '.' + digits.slice(3, 6) + '.' + digits.slice(6, 9) + '-' + digits.slice(9);
+      }
+
+      function addEditRunnerRow() {
+        const rows = runnerRows();
+        if (!runnersList || rows.length >= 16) {
+          showEditError('Cada equipe pode ter no máximo 16 atletas.');
+          return;
+        }
+
+        const clone = rows[0].cloneNode(true);
+        clone.dataset.runnerId = '';
+        clone.querySelectorAll('input').forEach(function (input) {
+          if (input.type === 'radio') {
+            input.checked = false;
+          } else {
+            input.value = '';
+            input.removeAttribute('readonly');
+          }
+        });
+        runnersList.appendChild(clone);
+        refreshEditRunnerRows();
+      }
+
+      function readEditRunner(row, index, captainIndex) {
+        const id = row.dataset.runnerId ? Number(row.dataset.runnerId) : null;
+        const name = row.querySelector('[data-runner-name]').value.trim();
+        const cpf = row.querySelector('[data-runner-cpf]').value.trim();
+        const email = row.querySelector('[data-runner-email]').value.trim();
+        const phone = row.querySelector('[data-runner-phone]').value.trim();
+        const cpfDigits = cpf.replace(/\D/g, '');
+
+        if (!name) throw new Error('Nome do atleta é obrigatório.');
+        if (!id && !cpfRegex.test(cpf)) throw new Error('CPF inválido para ' + name + '.');
+        if (!emailRegex.test(email)) throw new Error('Email inválido para ' + name + '.');
+
+        const payload = {
+          name: name,
+          email: email,
+          status: index === captainIndex ? 'captain' : 'runner',
+        };
+
+        if (!id) payload.cpf = normalizeCpf(cpfDigits);
+        if (phone) payload.phone = phone;
+
+        return { id: id, payload: payload, cpfKey: cpfDigits, emailKey: email.toLowerCase() };
+      }
+
+      function validateAndBuildEditPayload() {
+        const teamNameInput = form.querySelector('[data-team-name]');
+        const teamName = teamNameInput ? teamNameInput.value.trim() : '';
+        if (!teamName) throw new Error('Nome da equipe é obrigatório.');
+
+        const selectedCaptain = form.querySelector('input[name="captain_index"]:checked');
+        if (!selectedCaptain) throw new Error('Selecione um capitão.');
+
+        const captainIndex = Number(selectedCaptain.value);
+        const cpfs = new Set();
+        const emails = new Set();
+        const runners = runnerRows().map(function (row, index) {
+          const runner = readEditRunner(row, index, captainIndex);
+          if (runner.cpfKey && cpfs.has(runner.cpfKey)) throw new Error('Há CPFs duplicados no formulário.');
+          if (emails.has(runner.emailKey)) throw new Error('Há emails duplicados no formulário.');
+          if (runner.cpfKey) cpfs.add(runner.cpfKey);
+          emails.add(runner.emailKey);
+          return runner;
+        });
+
+        if (runners.length === 0) throw new Error('Cadastre pelo menos um atleta.');
+
+        return { teamName: teamName, runners: runners };
+      }
+
+      async function requestJson(url, options) {
+        const res = await fetch(url, options);
+        if (!res.ok && res.status !== 204) {
+          const data = await res.json().catch(function () { return { message: 'Erro inesperado.' }; });
+          throw new Error(data.message || 'HTTP ' + res.status);
+        }
+        return res.status === 204 ? null : res.json();
+      }
+
+      async function submitEditTeam(event) {
+        event.preventDefault();
+        clearEditError();
+
+        let payload;
+        try {
+          payload = validateAndBuildEditPayload();
+        } catch (err) {
+          showEditError(err.message);
+          return;
+        }
+
+        const originalLabel = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Salvando...';
+        }
+
+        try {
+          await requestJson('/competitions/' + competitionId + '/teams/' + teamId, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: payload.teamName }),
+          });
+
+          for (const removedId of removedRunnerIds) {
+            await requestJson('/competitions/' + competitionId + '/teams/' + teamId + '/runners/' + removedId, {
+              method: 'DELETE',
+            });
+          }
+
+          for (const runner of payload.runners) {
+            if (runner.id) {
+              await requestJson('/competitions/' + competitionId + '/teams/' + teamId + '/runners/' + runner.id, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(runner.payload),
+              });
+            } else {
+              await requestJson('/competitions/' + competitionId + '/teams/' + teamId + '/runners', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(runner.payload),
+              });
+            }
+          }
+
+          window.location.href = '/teams/' + teamId + '?competitionId=' + encodeURIComponent(competitionId);
+        } catch (err) {
+          showEditError(err.message || 'Não foi possível salvar a equipe.');
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          }
+        }
+      }
+
+      if (addRunnerBtn) addRunnerBtn.addEventListener('click', addEditRunnerRow);
+      if (runnersList) {
+        runnersList.addEventListener('click', function (event) {
+          const remove = event.target.closest('[data-remove-runner]');
+          if (!remove) return;
+          const row = remove.closest('[data-runner-row]');
+          if (row && runnerRows().length > 1) {
+            if (row.dataset.runnerId) removedRunnerIds.add(row.dataset.runnerId);
+            row.remove();
+            refreshEditRunnerRows();
+          }
+        });
+      }
+      form.addEventListener('submit', submitEditTeam);
+      refreshEditRunnerRows();
     }
   }
 
@@ -845,6 +1053,61 @@ document.addEventListener('DOMContentLoaded', function () {
           window.history.back();
         });
       }
+    }
+  }
+
+  // Painel público da equipe (/public/team/:uuid)
+  if (path.startsWith('/public/team/')) {
+    const restOptions = Array.isArray(window.RUNNER_REST_OPTIONS)
+      ? window.RUNNER_REST_OPTIONS
+      : [];
+    const select = document.querySelector('[data-rest-runner-select]');
+    const percent = document.querySelector('[data-rest-percent]');
+    const progress = document.querySelector('[data-rest-circle-progress]');
+    const label = document.querySelector('[data-rest-circle-label]');
+    const status = document.querySelector('[data-rest-status]');
+    const statusText = document.querySelector('[data-rest-status-text]');
+    const description = document.querySelector('[data-rest-description]');
+    const lastCheckpoint = document.querySelector('[data-rest-last-checkpoint] strong');
+
+    function updateRestCalculator(runnerId) {
+      const selected = restOptions.find(function (option) {
+        return String(option.id) === String(runnerId);
+      });
+      if (!selected) return;
+
+      if (percent) percent.textContent = selected.restPct + '%';
+      if (progress) {
+        progress.setAttribute('stroke-dashoffset', String(selected.restOffset));
+        progress.setAttribute(
+          'stroke',
+          selected.restPct >= 100 ? 'var(--verde)' : 'var(--amarelo)'
+        );
+      }
+      if (label) {
+        label.setAttribute(
+          'aria-label',
+          selected.restPct + '% do tempo de descanso concluído'
+        );
+      }
+      if (status) {
+        status.classList.toggle('ready', selected.restPct >= 100);
+        status.classList.toggle('resting', selected.restPct < 100);
+      }
+      if (statusText) statusText.textContent = selected.statusLabel;
+      if (description) description.textContent = selected.description;
+      if (lastCheckpoint) {
+        lastCheckpoint.textContent = selected.hasCheckpoint
+          ? selected.lastCheckpointAt
+          : '—';
+      }
+    }
+
+    if (select) {
+      select.addEventListener('change', function () {
+        updateRestCalculator(select.value);
+      });
+      updateRestCalculator(select.value);
     }
   }
 

@@ -3,9 +3,11 @@ import { AppError } from "../errors/AppError";
 import { checkpointService } from "../services/checkpointService";
 import { competitionService } from "../services/competitionService";
 import { reportService } from "../services/reportService";
+import { resolveSelectedCompetitionId } from "../helpers/selectedCompetition";
 
 function parseCompetitionId(value: unknown): number {
-  const parsed = typeof value === "string" ? Number(value) : NaN;
+  const parsed =
+    typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
 
   if (!Number.isInteger(parsed) || parsed <= 0) {
     return 0;
@@ -15,19 +17,12 @@ function parseCompetitionId(value: unknown): number {
 }
 
 async function findCompetitionForView(req: Request) {
-  const requestedId = parseCompetitionId(req.params.id ?? req.query.competitionId);
+  const requestedId = parseCompetitionId(resolveSelectedCompetitionId(req));
   if (requestedId > 0) {
     return competitionService.findById(requestedId);
   }
 
-  const competitions = await competitionService.findAll();
-  return (
-    competitions.find((competition) => competition.status === "in_progress") ??
-    [...competitions].sort((a, b) => {
-      return new Date(b.date).getTime() - new Date(a.date).getTime();
-    })[0] ??
-    null
-  );
+  return null;
 }
 
 function emptyReport(competitionId: number) {
@@ -41,6 +36,14 @@ function emptyReport(competitionId: number) {
     runnerRanking: [],
     persisted: false,
   };
+}
+
+function renderCompetitionRequired(res: Response): void {
+  res.status(400).render("reports/competition-required", {
+    title: "Selecione uma competição — Red Bull 24h",
+    currentPage: "reports",
+    pageCSS: "/css/ranking.css",
+  });
 }
 
 async function renderReportByCompetitionId(
@@ -99,17 +102,7 @@ export const reportController = {
     const competition = await findCompetitionForView(req);
 
     if (!competition) {
-      res.status(404).render("reports/reports", {
-        title: "Relatórios - Red Bull 24H",
-        report: emptyReport(0),
-        inconsistencies: [],
-        competition: {
-          id: 0,
-          name: "Competição indisponível",
-        },
-        currentPage: "reports",
-        error: "Cadastre uma competição antes de acessar relatórios.",
-      });
+      renderCompetitionRequired(res);
       return;
     }
 

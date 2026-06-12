@@ -116,15 +116,12 @@
             >
               Acessar Equipe
             </a>
-            <button
-              type="button"
+            <a
+              href="/teams/<%= team.id %>/edit?competitionId=<%= competition.id %>"
               class="teams__edit-btn"
-              data-teams-action="open-edit"
-              data-team-id="<%= team.id %>"
-              data-team-name="<%= team.name %>"
             >
               Editar
-            </button>
+            </a>
             <button
               type="button"
               class="teams__delete-btn"

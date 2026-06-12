@@ -156,6 +156,15 @@ export const teamRepository: TeamRepository = {
   async deleteByCompetitionAndId(competitionId: number, id: number): Promise<boolean> {
     const supabase = getSupabaseClient();
 
+    const { error: runnersError } = await supabase
+      .from("runner")
+      .delete()
+      .eq("id_team", id);
+
+    if (runnersError) {
+      throw runnersError;
+    }
+
     const { data, error } = await supabase
       .from("team")
       .delete()

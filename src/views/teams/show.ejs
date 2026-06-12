@@ -26,7 +26,7 @@
   data-active-runner-id="<%= activeId %>"
 >
   <nav class="teams__breadcrumb" aria-label="Caminho atual">
-    <a href="/teams">Equipes</a>
+    <a href="/teams?competitionId=<%= competition.id %>">Equipes</a>
     <span>&gt;</span>
     <span><%= team.name %></span>
   </nav>
@@ -38,7 +38,7 @@
         <%= runners.length %> de 16 atletas cadastrados
       </p>
     </div>
-    <a class="team-panel__back" href="/teams">Voltar para equipes</a>
+    <a class="team-panel__back" href="/teams?competitionId=<%= competition.id %>">Voltar para equipes</a>
   </header>
 
   <section class="team-panel__summary" aria-label="Resumo da equipe">

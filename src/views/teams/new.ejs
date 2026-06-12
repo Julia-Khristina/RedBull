@@ -2,7 +2,7 @@
   VIEW: teams/new.ejs
   ESTADO: [C2 — Fluxo administrativo de criação completa]
   LACUNAS:
-    - ID da competição ativa segue vindo do controller com mock id=1 até existir origem real. [A3][D2]
+    - ID da competição ativa deve vir por ?competitionId=; /teams/new sem competição não é permitido. [A1][D2]
     - Criação de equipe e atletas ocorre em etapas porque o backend não possui endpoint transacional único. [A1][D2]
   ENDPOINTS CONSUMIDOS:
     - POST /competitions/:id/teams [A1][B1]
@@ -11,7 +11,7 @@
 
 <main class="teams teams--form" data-team-create data-competition-id="<%= competition.id %>">
   <nav class="teams__breadcrumb" aria-label="Caminho atual">
-    <a href="/teams">Equipes</a>
+    <a href="/teams?competitionId=<%= competition.id %>">Equipes</a>
     <span>&gt;</span>
     <span>Criar equipe</span>
   </nav>
@@ -91,7 +91,7 @@
     <p class="team-create__error" data-team-create-error role="alert" hidden></p>
 
     <div class="team-create__actions">
-      <a href="/teams" class="team-create__cancel">Cancelar</a>
+      <a href="/teams?competitionId=<%= competition.id %>" class="team-create__cancel">Cancelar</a>
       <button type="submit" class="team-create__submit" data-team-create-submit>
         Criar equipe
       </button>
