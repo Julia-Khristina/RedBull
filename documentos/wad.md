@@ -3091,7 +3091,62 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 4.2. Segunda versão da aplicação web (sprint 4)
 
-*Descreva e ilustre aqui o desenvolvimento da segunda versão do sistema web, com foco no que foi consolidado entre a primeira versão funcional e o sistema operacional integrado. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi implementado, (b) o que não foi concluído, (c) dificuldades técnicas enfrentadas e próximos passos.*
+### (a) O que foi implementado
+
+Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao backend já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework frontend separado.
+
+**- Estrutura de pastas do frontend:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
+
+<div align="center"> <sub>Figura X — Estrutura de views EJS</sub><br> <img src="../assets/programacao/view-estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas das views EJS"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**- Sistema de design modular (CSS):** As folhas de estilo foram organizadas em módulos independentes — variables.css (design tokens de cor, tipografia e espaçamento alinhados ao protótipo de alta fidelidade), garantindo consistência visual e facilitando a manutenção e expansão para as telas restantes.
+
+<div align="center"> <sub>Figura X — Estrutura de views EJS</sub><br> <img src="../assets/programacao/estrutura-css.png" width="100%" alt="Estrutura de pastas do public/css"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**- Tela de login funcional (RF004, RN02, RN03):** Foi criado o protótipo de alta fidelidade da tela de login dos auditores, que não havia sido desenvolvido na sprint 3. A view auth/login.ejs foi implementada com formulário completo de autenticação, integrado ao endpoint POST /admin/login. Ao submeter, o app.js consome a API via fetch, persiste o accessToken retornado no sessionStorage e redireciona para /dashboard. Erros de autenticação são exibidos inline, sem recarregamento de página. A tela inclui toggle de visibilidade da senha e não depende do layout base (renderizada sem sidebar).
+
+<div align="center"> <sub>Figura X — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo frontend, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
+
+**- Sidebar de navegação persistente:** O partial partials/menu.ejs, incluído no layout base, renderiza a barra lateral com os links para todas as telas. O app.js ativa dinamicamente o item correspondente à rota atual via comparação com window.location.pathname, seguindo o comportamento definido no protótipo de alta fidelidade.
+
+<div align="center"> <sub>Figura X — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura X — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**- Registro de checkpoint e atualização de ranking (RF008, RN04, RN05):** Foi implementado o fluxo de registro manual de checkpoint, conectado diretamente ao endpoint POST /checkpoints. O formulário coleta distância (km), pace e tempo total, valida os campos obrigatórios no cliente antes do envio e exibe feedback em tempo real (loading, sucesso e erro). Após um registro bem-sucedido, o painel dispara automaticamente uma consulta ao endpoint GET /competitions/:id/ranking/teams para atualizar o ranking sem recarregamento da página.
+
+<div align="center"> <sub>Figura X — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt1.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura X — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt2.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**Evolução do módulo de OCR:** além do protótipo inicial, foram implementadas melhorias significativas na robustez da extração. A principal entrega foi a detecção automática das regiões de interesse do display da esteira, permitindo que o sistema localize e segmente os campos de distância, pace e tempo total independentemente de variações de tamanho, ângulo ou iluminação da imagem capturada. Em paralelo, o banco de imagens de referência foi expandido para cobrir mais cenários reais do ambiente operacional, funcionando como base de testes e adaptação iterativa para aumentar a precisão da extração em condições adversas.
+
+### (b) O que não foi concluído
+
+**Integração do OCR com o frontend e o backend:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no frontend e a integração com o endpoint de checkpoints no backend — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+
+### (c) Dificuldades técnicas
+
+**- Padronização de nomenclatura entre modelagem, banco de dados e código:** Desde o início do módulo, a modelagem de dados foi desenvolvida com entidades e atributos em português (ex.: corredor, equipe, checkpoint), enquanto o código da aplicação utilizava entidades em inglês (runner, team) e atributos em português. Essa inconsistência acumulada ao longo das sprints anteriores exigiu, nesta sprint, uma decisão de padronização global e a refatoração coordenada de todos os artefatos afetados: modelos TypeScript, repositories, controllers, rotas, testes, banco de dados e as seções correspondentes do WAD. O volume de alterações simultâneas e o risco de regressão tornaram essa tarefa uma das mais custosas da sprint, exigindo atenção redobrada para garantir que nenhum contrato de API fosse quebrado durante a migração.
+
+**- Compatibilidade entre rotas SSR e rotas de API no mesmo servidor Express:** O registro da rota GET /admin/login precisou ser gerenciado com atenção à ordem de declaração em relação à rota genérica GET /admin/:id já existente — registrar as rotas específicas antes das parametrizadas evitou colisões de roteamento.
+
+**- Propagação de contexto operacional para o painel de checkpoint manual:** Os campos obrigatórios do payload (id_runner, id_competition, id_treadmill, id_admin) precisam chegar à view via locals do SSR ou query string, pois a tela não tem estado próprio para buscá-los. Sem esses dados, o formulário bloqueia o envio com erro de contexto faltante — o fluxo completo depende de uma tela anterior que selecione o atleta e passe o contexto, o que ainda não existe.
+
+### (d) Próximos passos
+
+**1. Refinamento do OCR:** Incorporação do módulo OCR (ocr-src/) à navegação principal, conectando a captura da foto da esteira ao endpoint POST /ocr/extractions e ao fluxo de conferência humana antes da persistência, finalizando o ciclo RF005–RF007.
+
+**2. Calculadora de descanso e gráfico de performance do atleta:** Revisão da lógica de cálculo do tempo estimado de descanso e da alimentação de dados do gráfico de evolução na tela do atleta. A complexidade dos cálculos de agregação sobre o histórico de checkpoints e a renderização do gráfico sugerem a adoção de uma biblioteca de visualização (como Chart.js ou similar) para garantir precisão, responsividade e manutenibilidade adequadas.
+
+**3. Painel de TV para acompanhamento ao vivo da competição:** Desenvolvimento de uma tela dedicada para exibição em monitores e TVs durante o evento, com atualização automática em tempo real. O painel consolidará as métricas agregadas da competição em andamento: pace médio geral, tempo total de prova decorrido, quilometragem total percorrida por todas as equipes e indicadores de destaque por equipe. A interface deve ser projetada para leitura a distância — fonte grande, alto contraste e layout limpo — dispensando qualquer interação do operador após o carregamento. O acesso deve ser público, sem autenticação, seguindo o mesmo padrão do painel da equipe via UUID (US12).
+
+**4. Exportação de resultados em CSV:** Implementação do endpoint de exportação e da interface de acionamento para geração do arquivo CSV consolidado ao encerramento da competição. O arquivo deverá conter o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints registrados, método de entrada de cada registro, tempo parcial e total). Essa entrega finaliza o fluxo de RF013 e RF014 e é crítica para a apuração oficial do evento, pois substitui definitivamente a planilha manual que a equipe da Red Bull utiliza hoje.
+
+**5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo backend desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
+
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
@@ -3145,11 +3200,11 @@ Os objetivos estratégicos abrangem substituir o fluxo manual de apuração por 
 
 ### 6.2.2 Tamanho e Crescimento do Mercado
 
-*Até 250 palavras.*
+O mercado brasileiro de corrida apresenta forte expansão, o que favorece a criação de eventos proprietários, experiências esportivas de marca e soluções de apoio à operação. Segundo levantamento da ABRACEO apresentado no 4º Summit ABRACEO/CBAt, o número de corridas de rua oficiais no Brasil saltou de 2.827 em 2024 para 5.241 em 2025, um crescimento de 85%, enquanto o estado de São Paulo registrou 1.311 corridas no período, liderando o volume nacional de provas. A própria ABRACEO caracteriza o setor de corridas de rua como responsável por quase 90% dos eventos esportivos realizados no país, em um mercado que já movimenta cerca de R$ 1,1 bilhão ao ano (ABRACEO, 2025; Ticket Sports, 2026).
 
-*Apresente dados quantitativos que demonstrem o tamanho atual e as perspectivas de crescimento do mercado. Utilize fontes confiáveis.*
+Esse ecossistema fortalece diretamente eventos experienciais como o Red Bull 24 Horas, cuja temporada 2025, em sua 4ª edição, percorreu cinco capitais brasileiras — Belo Horizonte, São Paulo, Recife, Porto Alegre e Rio de Janeiro — reunindo 20 running crews em etapas classificatórias antes da final nacional. A escala regional do evento evidencia a necessidade de soluções digitais que padronizem e garantam a confiabilidade da operação em múltiplas localidades.
 
-*Valor: até 1,0 ponto.*
+Esse cenário se insere em um movimento global de digitalização de eventos. Segundo a Grand View Research (2024), o mercado global de software de gestão de eventos foi estimado em USD 8,40 bilhões em 2024, com projeção de alcançar USD 17,33 bilhões até 2030, a uma taxa de crescimento anual composta de 13,2%. A convergência entre a expansão do running no Brasil e a crescente demanda por plataformas de gestão digital reforça a oportunidade para soluções como a proposta neste projeto.
 
 ### 6.2.3 Tendências de Mercado
 
@@ -3161,27 +3216,45 @@ Os objetivos estratégicos abrangem substituir o fluxo manual de apuração por 
 
 ## 6.3 Público-Alvo
 
-*Até 500 palavras.*
+A definição do público-alvo é uma etapa fundamental do planejamento estratégico de qualquer produto digital, pois orienta decisões de design, funcionalidade e comunicação com base em quem de fato utilizará a solução.
+
+Identificar esse público com precisão permite que o desenvolvimento seja guiado por necessidades reais, evitando funcionalidades genéricas que não atendem às particularidades do contexto de uso. No caso do Red Bull 24 Horas, essa análise é especialmente relevante, uma vez que a aplicação será operada sob alta pressão, em turnos contínuos de 24 horas, por um grupo heterogêneo que inclui desde gerentes experientes até estagiários sem familiaridade prévia com sistemas operacionais de evento.
+
+Esta seção está dividida em dois subitens: a segmentação de mercado, que descreve os grupos atendidos pela aplicação, e o perfil do público-alvo, que caracteriza esses usuários em profundidade.
 
 ### 6.3.1 Segmentação de Mercado
 
-*Até 250 palavras.*
+A segmentação de mercado é o processo de dividir um público em grupos com características e necessidades semelhantes, permitindo o desenvolvimento de produtos e serviços mais adequados a cada perfil de usuário. Essa prática possibilita compreender melhor as demandas de cada segmento e direcionar soluções de forma mais eficiente (HUBSPOT, 2025).
 
-*Descreva os segmentos de mercado que poderão ser atendidos pela aplicação.*
+Neste projeto, a segmentação está relacionada aos usuários que utilizam a plataforma durante a organização, operação e acompanhamento do evento Red Bull 24 Horas. Por tratar-se de uma solução de uso corporativo interno, os segmentos são definidos pelos diferentes grupos que interagem com o sistema ao longo do ciclo de vida do evento. Esses usuários podem ser agrupados nos seguintes segmentos:
 
-*Valor: até 0,5 ponto.*
+- **Equipes de Field Marketing:** responsáveis pelo planejamento e pela execução do evento. Sua necessidade central é dispor de uma ferramenta que permita gerenciar as inscrições das equipes, acompanhar o andamento da competição e garantir o controle operacional ao longo das 24 horas de duração do evento.
+
+- **Coordenadores e gestores de operações:** profissionais encarregados de supervisionar a execução das atividades em tempo real, coordenar equipes de apoio e assegurar que os registros do evento, como trocas de participantes e tempos percorridos, sejam capturados de forma confiável e precisa.
+
+- **Analistas de resultados e desempenho:** responsáveis pelo acompanhamento dos dados gerados durante o evento, incluindo o desempenho das equipes participantes e o cumprimento das metas estabelecidas. Para esse segmento, a aplicação deve oferecer visibilidade sobre os resultados registrados e facilitar a obtenção de informações para relatórios pós-evento.
+
+- **Participantes e Capitães de Equipe:** usuários que acessam a área pública da plataforma para acompanhar rankings, desempenho das equipes e informações atualizadas da competição.
+
+Esses segmentos compartilham a necessidade de uma solução centralizada que substitua processos manuais por um fluxo digital de registro, monitoramento e consulta de dados, reduzindo erros operacionais e aumentando a eficiência da gestão do evento.
 
 ### 6.3.2 Perfil do Público-Alvo
 
-*Até 250 palavras.*
+O público-alvo da aplicação é composto pelo time operacional de Field Marketing da Red Bull responsável pela condução do evento Red Bull 24 Horas. Esse grupo inclui gerentes e coordenadores experientes, além de estagiários que atuam diretamente ao lado das esteiras como responsáveis pelo registro dos dados.
 
-*Caracterize o público-alvo considerando aspectos demográficos e comportamentais, incluindo necessidades específicas, dores e expectativas relacionadas ao problema abordado.*
+Demograficamente, trata-se de profissionais e jovens em formação na faixa dos 18 a 38 anos. Segundo levantamento da Serasa Experian divulgado pelo Mundo do Marketing (2026), quase metade dos profissionais de marketing no Brasil, 45,5%, têm entre 29 e 38 anos, enquanto 13,7% estão na faixa de 18 a 28 anos, com forte concentração geográfica no Sudeste, onde São Paulo reúne 36% dos profissionais mapeados. As personas mapeadas no projeto, Marina Costa, 29 anos, coordenadora operacional no Rio de Janeiro, e Bruno Monteiro, 32 anos, Gerente de Field Marketing em São Paulo refletem esse espectro.
 
-*Valor: até 0,5 ponto.*
+Psicograficamente, são usuários orientados a resultado e execução, que valorizam objetividade e clareza nas ferramentas que utilizam. Os estagiários, em particular, podem ter pouca familiaridade prévia com sistemas operacionais de eventos, o que reforça a necessidade de uma curva de aprendizado mínima. Além disso, por ainda estarem em fase de treinamento, contam com a pressão e motivação de garantir que a prova transcorra sem falhas de registro.
+
+Comportamentalmente, operam sob pressão contínua, em turnos que se estendem por 24 horas, realizando trocas rápidas de corredores com janelas de segundos para registrar dados. Nesse contexto, as necessidades específicas da solução estão diretamente ligadas à usabilidade: a interface deve ser intuitiva o suficiente para ser operada sem treinamento extenso, com fluxos curtos, ações nomeadas de forma clara e feedback imediato a cada interação. Isso é especialmente crítico para os estagiários, que precisam executar o registro corretamente mesmo sem experiência prévia com o sistema. Segundo Lets Events (2024), a adoção de ferramentas digitais em eventos melhora a eficiência operacional ao oferecer aos organizadores maior capacidade de gerenciamento e controle sobre cada etapa do processo, o que gera ganho diretamente dependente de quão simples e acessível a ferramenta se apresenta ao operador em campo.
 
 ## 6.4 Posicionamento e Branding
 
-*Até 500 palavras.*
+A seção 6.4 dedica-se ao posicionamento da aplicação no contexto do mercado de gestão de eventos esportivos e à definição da identidade de marca que orienta sua comunicação com o parceiro Red Bull e com os três públicos atendidos pela solução: operadores em campo, gerentes de Field Marketing e atletas (incluindo capitães de equipe). Embora a aplicação seja resultado de uma parceria acadêmica — e não de um produto comercial autônomo —, o exercício de posicionamento é relevante para alinhar a percepção esperada por esses públicos e fundamentar as decisões editoriais, visuais e de experiência adotadas ao longo do desenvolvimento.
+
+A subseção 6.4.1 (Proposta de Valor) consolida o valor central entregue pela aplicação para cada perfil de usuário, retomando os elementos identificados no Value Proposition Canvas (seção 2.1.4) e nas Personas (seção 2.2). A subseção 6.4.2 (Posicionamento e Diferenciação) define como a aplicação se distingue das alternativas existentes — de processos manuais a sistemas profissionais de cronometragem — e quais atributos sustentam essa diferenciação. Os pilares detalhados nessas subseções são três: (i) especialização técnica em corridas de revezamento de longa duração e fluxos operacionais desenhados para trocas rápidas sob pressão; (ii) validação híbrida entre captura assistida por OCR — em refinamento técnico desde a Sprint 3 — e operador humano, com auditabilidade ponta a ponta garantida pela WebAPI centralizada (seção 3.7); e (iii) abertura controlada via URL com UUID, permitindo acompanhamento público em tempo real sem comprometer a camada administrativa.
+
+O objetivo estratégico, alinhado às dores levantadas com o parceiro (seção 2.1.3) e às oportunidades identificadas na análise SWOT (seção 2.1.2), é estabelecer a solução como padrão operacional confiável para competições de ultra-resistência com múltiplas trocas de atletas, com meta declarada de manter o erro de apuração abaixo de 1%. Em conjunto, as duas subseções compõem a base estratégica que conecta a Análise de Mercado e o Público-Alvo (seções 6.2 e 6.3) à Estratégia de Marketing detalhada nos 4Ps (seção 6.6), garantindo coerência entre o que a aplicação entrega, como é percebida e como é comunicada.
 
 ### 6.4.1 Proposta de Valor
 
@@ -3195,57 +3268,105 @@ Frente a planilhas ou formulários genéricos, os diferenciais são claros: espe
 
 ### 6.4.2 Posicionamento e Diferenciação
 
-*Até 250 palavras.*
+A aplicação pretende ser percebida como uma solução especializada e confiável para a gestão operacional de eventos esportivos de longa duração, alinhada à identidade de inovação e alta performance que a Red Bull projeta em todas as suas iniciativas. Mais do que uma ferramenta de registro de dados, o posicionamento desejado é o de uma plataforma que traduz a energia e a exigência do evento em uma experiência digital à altura, tanto para quem opera quanto para quem compete.
 
-*Explique como a aplicação pretende ser percebida pelo mercado e quais atributos a diferenciam de alternativas existentes.*
+Frente aos concorrentes diretos e indiretos, como Google Forms, Excel e aplicativos genéricos de coleta de dados, a diferenciação se dá pelo recorte contextual. Essas ferramentas funcionam bem para cenários comuns, mas não foram pensadas para operar durante 24 horas seguidas, com rotatividade de operadores, pressão de tempo e necessidade de registros rápidos sob fadiga. A aplicação nasce moldada a essa realidade, o que a posiciona em um espaço que as alternativas genéricas não conseguem ocupar com a mesma eficiência.
 
-*A análise deve considerar: concorrentes diretos e indiretos; atributos da marca; identidade pretendida; e percepção de valor desejada.*
+Os atributos que sustentam essa identidade são a automação assistida via OCR, que reduz o esforço manual sem eliminar o controle humano, a validação híbrida dos dados, que garante confiabilidade mesmo em condições adversas, e a dupla interface, privada para a organização e pública para os participantes. Essa última reforça um atributo importante da marca: a valorização da experiência do atleta, entregando ranking e calculadora de descanso via link direto, sem fricção de login.
 
-*Valor: até 1,0 ponto.*
+A percepção de valor desejada é a de uma solução que não apenas substitui a prancheta, mas eleva o padrão operacional do evento, transmitindo profissionalismo, agilidade e cuidado com todos os envolvidos.
 
 ## 6.5 Business Model Canvas
 
-*Utilizar template do curso.*
+O Business Model Canvas é uma ferramenta de gestão estratégica que descreve, de forma visual e integrada, a lógica pela qual uma organização cria, entrega e captura valor, organizando o modelo de negócio em nove blocos interdependentes (Osterwalder; Pigneur, 2010). No contexto deste projeto, o canvas foi aplicado à solução desenvolvida para o Red Bull 24 Horas, evidenciando como a digitalização do registro de quilometragem se conecta às necessidades operacionais do time de Field Marketing da Red Bull e aos recursos, parcerias e custos necessários para viabilizá-la.
 
-*Preencha os nove blocos do Business Model Canvas de forma coerente com as análises realizadas nas seções anteriores: Segmentos de clientes; Proposta de valor; Canais; Relacionamento com clientes; Fontes de receita; Recursos principais; Atividades principais; Parcerias principais; e Estrutura de custos, somente se couber neste momento da análise com o parceiro.*
+<div align="center">
+  <sub>Figura X - Business Model Canvas</sub><br>
+    <img src="../assets/negocios/business-model-canvas.jpg" 
+    width="100%" alt="Template do business model canvas"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-*Valor: até 2,0 pontos.*
+### Segmento de Cliente
+
+A solução cria valor sobretudo para a Red Bull e seu time de Field Marketing, especificamente os avaliadores e organizadores que hoje registram os dados da competição de forma manual, com pranchetas e planilhas. O cliente mais importante é o time operacional responsável por monitorar as equipes durante o evento, garantir a integridade dos registros e conduzir a apuração final; em uso secundário, a própria coordenação do evento utiliza a solução para a validação dos resultados. Há ainda os usuários da área pública — capitães e equipes participantes —, que consultam o ranking, o status individual dos atletas e a calculadora de descanso. O cliente típico é um profissional de operações de eventos esportivos, que lida com trocas rápidas de corredores e múltiplas equipes simultâneas e busca uma ferramenta ágil e confiável capaz de substituir o processo manual sem introduzir novas fricções.
+
+### Proposta de Valor
+
+A proposta de valor reúne os benefícios concretos entregues ao cliente. A solução substitui o registro manual em prancheta por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira e o sistema realiza a extração automática dos dados por OCR, reduzindo a sobrecarga e os erros humanos típicos de um processo manual de 24 horas. A validação híbrida, que combina leitura automática e conferência manual com alertas de inconsistência, aumenta a confiabilidade e torna os dados auditáveis e rastreáveis, atendendo diretamente à necessidade de maior integridade na apuração. A centralização das informações em uma única plataforma, com atualização periódica ao longo da competição — em acompanhamento próximo ao tempo real, conforme a dinâmica de checkpoints —, oferece visão consolidada e organizada do andamento do evento. Ao término da competição, o resultado já está consolidado, e a exportação em CSV, somada ao relatório pós-evento, viabiliza auditoria e análises estratégicas das edições futuras.
+
+### Canais
+
+Os canais descrevem como a solução chega ao cliente e aos usuários. O canal central é a própria aplicação web, acessada por navegador nos iPads já utilizados no ambiente do evento, o que dispensa instalação e aproveita dispositivos existentes. O acesso é simplificado e ocorre sem autenticação: os operadores utilizam o painel administrativo, enquanto cada equipe acessa sua área pública por meio de uma URL com UUID único entregue ao capitão. Um painel em "modo TV" permite exibir o placar de quilometragem em tela durante a competição, ampliando a visibilidade dos resultados. A integração à operação se dá, portanto, por dispositivos e fluxos já familiares ao time, e o alinhamento e a entrega evolutiva da solução acontecem por meio dos encontros realizados a cada sprint com o parceiro.
+
+### Relacionamento com o cliente
+
+O relacionamento com o cliente combina cocriação e autosserviço. Ao longo do projeto, a relação é construída de forma colaborativa nos encontros realizados a cada sprint, em que o parceiro valida entregas, ajusta requisitos e participa da evolução da solução. Em operação, o relacionamento é predominantemente autônomo: a plataforma foi concebida para ser simples, confiável e de baixa fricção, permitindo que o time operacional a utilize sem dependência constante da equipe técnica. Para reduzir a barreira de adoção — fator crítico, dado que o método manual já está consolidado na cultura do evento —, prevê-se um guia rápido de uso de uma página. A confiança é sustentada principalmente pela auditabilidade e pela rastreabilidade dos dados, e o valor percebido pelo cliente concentra-se na praticidade e na organização que a solução agrega ao processo de apuração.
+
+### Recursos Principais
+
+Os recursos principais são os ativos necessários para construir e operar a solução — e não a solução em si. O principal é o recurso humano: a equipe de oito integrantes, que atua de forma multidisciplinar nas frentes de desenvolvimento, negócios e UX/UI. Como recurso intelectual, destaca-se o conhecimento técnico e o entendimento do fluxo operacional do evento, levantado junto ao parceiro, incluindo a calibração do OCR às condições reais das esteiras — fator que a própria documentação aponta como dependente de validações práticas. Por fim, o recurso tecnológico é a infraestrutura de nuvem e o banco de dados gerenciado pela Supabase, que sustentam a aplicação durante as 24 horas. Os iPads e as esteiras, embora essenciais à operação, são recursos físicos do cliente, e não da equipe.
+
+### Atividades Chave
+
+As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo frontend e backend, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
+
+### Parcerias Principais
+
+A parceria principal do projeto é o Inteli, instituição que viabiliza toda a iniciativa. É o Inteli que disponibiliza a equipe multidisciplinar de oito integrantes, o arcabouço metodológico que orienta o desenvolvimento — Scrum, artefatos e mentorias — e a própria conexão com a Red Bull, sem a qual o projeto não existiria. Trata-se, portanto, de uma parceria estrutural: não apenas fornece o principal recurso humano, mas também o ambiente acadêmico e o vínculo institucional que sustentam a entrega da solução.
+
+### Fontes de receita
+
+Por se tratar de uma solução operacional desenvolvida para uso interno da Red Bull, e não de um produto comercializado, as fontes de receita são analisadas como formas de retorno e captura de valor obtidas pelo parceiro a partir do evento. A geração de conteúdo e de dados consolidados abre espaço para marketing e relatórios pós-evento, fortalecendo a comunicação da marca. A redução de erros e de conflitos operacionais representa um retorno indireto, ao diminuir retrabalho e disputas sobre a apuração, enquanto a maior confiabilidade e organização do evento contribuem para a valorização da marca Red Bull. Em uma perspectiva de continuidade, a reutilização da solução em outras edições e eventos e a sua personalização para novos contextos configuram oportunidades de extensão do valor gerado, podendo, no futuro, evoluir para modelos de receita mais diretos.
+
+### Estrutura de custos
+
+A estratégia de custos concentra-se na alocação de esforço humano e no uso de ferramentas digitais para acelerar a entrega, coerente com uma proposta de valor baseada na automação do registro, na redução de erros e no aumento da confiabilidade da apuração. A estrutura considera dez semanas de desenvolvimento, com quatro dias de trabalho por semana e duas horas de dedicação por dia, totalizando 80 horas por pessoa e 640 horas para a equipe de oito integrantes. A distribuição segue a lógica dos artefatos do projeto, com maior peso em desenvolvimento (50%), seguido por negócios (35%) e UX/UI (15%), equilibrando implementação técnica, alinhamento estratégico e experiência do usuário. O uso de quatro inteligências artificiais ao longo do período atua como apoio à produtividade, à documentação, à prototipação e ao desenvolvimento. Os custos de hospedagem e deploy ficam limitados até o mês do evento; a manutenção da plataforma em edições futuras seria custo direto do cliente. Por fim, os recursos físicos e de infraestrutura do evento, como iPads e esteiras, são considerados responsabilidade do cliente.
+
 
 ## 6.6 Estratégia de Marketing (4Ps)
 
-*Até 800 palavras.*
+## 6.6 Estratégia de Marketing (4Ps)
+
+A estratégia de marketing para o projeto da Redbull 24h foi estruturada com base no modelo dos 4Ps (Produto, Preço, Praça e Promoção), com o objetivo de definir como a solução gera valor para seus usuários e como pode ser posicionada no mercado de tecnologia aplicada a eventos esportivos. A proposta busca atender às necessidades de organizadores de competições que demandam maior confiabilidade, rastreabilidade e eficiência operacional na coleta e consolidação de resultados.
+
+Nesse contexto, serão apresentados os principais atributos da solução, seu modelo de monetização, os canais pelos quais poderá ser disponibilizada e as estratégias de divulgação que podem contribuir para sua adoção. A análise dos 4Ps permite compreender como se diferenciar das abordagens tradicionais de controle manual e como a plataforma pode se tornar uma alternativa competitiva para eventos que necessitam de monitoramento preciso e acompanhamento com atualização periódica.
 
 ### 6.6.1 Produto/Serviço
 
-*Até 200 palavras.*
+A aplicação web é um sistema de gestão operacional especializado em competições esportivas de longa duração, com foco no formato Red Bull 24 Horas. O produto integra três interfaces dedicadas — operação de campo (operadores), supervisão estratégica (Field Marketing) e acompanhamento público (atletas e capitães de equipe) — todas conectadas a uma WebAPI centralizada (seção 3.7) que padroniza o contrato de dados e concentra as regras de negócio em um único ponto de manutenção.
 
-*Descreva as principais funcionalidades, benefícios e diferenciais da aplicação.*
+As funcionalidades **já entregues até a Sprint 3** organizam-se em quatro blocos: (a) gestão administrativa — CRUD completo de competições, equipes, atletas e administradores; (b) registro operacional de checkpoints, com vínculo obrigatório a corredor, competição, esteira e administrador responsável; (c) identificação de cada equipe por UUID único para acesso público sem autenticação; e (d) ranking consolidado por competição e exportação de dados em formato JSON para auditoria pós-evento (seção 3.7).
 
-*Valor: até 0,5 ponto.*
+Para as **Sprints 4 e 5** estão planejadas as funcionalidades restantes: captura assistida por OCR a partir de fotografias dos visores das esteiras (atualmente em refinamento técnico); sinalização automática de inconsistências nos dados capturados; autenticação por token para rotas administrativas; e geração de relatórios analíticos com destaques de desempenho ao final da prova.
+
+Os principais benefícios para o parceiro Red Bull são a redução do erro de apuração (meta declarada abaixo de 1%), a eliminação do retrabalho manual de transcrição, a visibilidade periódica do desempenho das equipes durante o evento e o registro auditável do método (OCR ou manual) de cada checkpoint. Como diferenciais, a solução combina dedicação vertical ao formato de revezamento de ultra-resistência, validação híbrida entre OCR e operador, e acesso público controlado via UUID — atributos ausentes em alternativas genéricas como planilhas ou formulários e em sistemas profissionais de cronometragem voltados a outras modalidades.
 
 ### 6.6.2 Preço
 
-*Até 200 palavras.*
+O modelo de precificação da solução é estruturado a partir da combinação entre a estrutura de custos do projeto e as oportunidades de geração de valor identificadas para a Red Bull.
 
-*Apresente o modelo de monetização ou precificação proposto e sua justificativa.*
+Do lado dos custos, o principal insumo é o esforço humano da equipe de desenvolvimento: são 8 integrantes dedicando 80 horas cada ao longo de 10 semanas, totalizando 640 horas distribuídas entre desenvolvimento (50%), negócios (35%) e UX/UI (15%). Complementam essa base os custos com 4 ferramentas de inteligência artificial utilizadas como apoio à produtividade e documentação, além dos custos de hospedagem e deploy da plataforma até a data do evento. Infraestrutura física como iPads e esteiras é de responsabilidade do cliente.
 
-*Valor: até 0,5 ponto.*
+Do lado das oportunidades, a solução gera valor mensurável para a Red Bull por meio da redução de erros operacionais e conflitos de apuração, da geração de dados estruturados para conteúdo de marketing e relatórios pós-evento, da valorização da marca em contextos de inovação e precisão, e da possibilidade de reutilização e personalização da plataforma em edições futuras ou em outros eventos da marca.
+
+O preço final resulta da soma dos custos de produção com um percentual de lucro proporcional ao valor estratégico gerado, ponderando especialmente as oportunidades de reutilização e geração de conteúdo como multiplicadores do retorno esperado pelo cliente.
 
 ### 6.6.3 Praça (Distribuição)
 
-*Até 200 palavras.*
+A distribuição da solução ocorre de forma digital, sem necessidade de instalação de software ou configuração por parte dos usuários finais. A aplicação web é acessada diretamente pelo navegador, sendo projetada para uso em iPads durante o evento Red Bull 24 Horas.
 
-*Explique como a aplicação será disponibilizada aos usuários e quais canais serão utilizados.*
+O acesso é segmentado conforme o perfil de cada usuário. A equipe operacional e os administradores do evento acessam a área privada da plataforma por meio de uma URL dedicada. Já os capitães de equipe e atletas têm acesso à área pública por meio de uma URL única gerada com UUID, permitindo o acompanhamento do ranking, do status dos corredores e das métricas de desempenho em tempo real a cada checkpoint.
 
-*Valor: até 0,5 ponto.*
+Essa escolha de distribuição é aderente às exigências do ambiente competitivo: a mobilidade dos iPads garante agilidade ao operador durante as trocas de turno, enquanto o acesso via link elimina fricções para perfis de usuário. Por ser uma aplicação web, a solução não depende de lojas de aplicativos nem de processos de atualização manual, o que simplifica a manutenção operacional. Além disso, essa abordagem viabiliza a reutilização da plataforma em edições futuras do Red Bull 24 Horas ou em outros eventos esportivos com dinâmica operacional semelhante.
 
 ### 6.6.4 Promoção
 
-*Até 200 palavras.*
+Por ser uma solução desenvolvida no escopo da parceria acadêmica com a Red Bull, a promoção assume caráter institucional, voltada à comunicação interna do evento e ao público diretamente ligado a ele, e não à aquisição de clientes em mercado aberto. O marketing de conteúdo cumpre o papel central: uma vez aplicada em uma edição real, a solução poderá gerar estudos de caso e demonstrações do fluxo OCR que evidenciem quantitativamente a queda de erros na apuração, reforçando seu valor junto à organização.
 
-*Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
+Para que esse material seja localizável, o trabalho de SEO se apoia em termos como apuração de competições e automação de registro em eventos. No LinkedIn, publicações sobre digitalização de operações esportivas dialogam com gestores e organizadores, perfis que concentram os tomadores de decisão. As campanhas pagas no Google Ads e no Meta Ads ampliam esse alcance de forma segmentada.
 
-*Valor: até 0,5 ponto.*
+O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativações da solução na largada, na arena e no encerramento. As estratégias de relacionamento, por meio de CRM e comunicação pós-evento com organizadores e capitães, sustentam o vínculo ao longo do tempo. As parcerias completam o plano: a associação à marca Red Bull confere credibilidade imediata. O engajamento das running crews, público em crescimento no Brasil segundo a análise SWOT, dissemina a solução pelo compartilhamento simplificado do ranking.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
@@ -3279,6 +3400,10 @@ FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison
 
 GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
 
+HUBSPOT. Segmentação de mercado. HubSpot Brasil, 2025. Disponível em: <https://br.hubspot.com/marketing-statistics>. Acesso em: 11 jun. 2026.
+
+LETS EVENTS. O papel da tecnologia na organização de eventos de sucesso. Disponível em: <https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/>. Acesso em: 2 jun. 2026.
+
 Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
 
 LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento?. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.  
@@ -3287,7 +3412,11 @@ MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practice
 
 Microsoft. Best practices for RESTful web API design. 2023. Microsoft Azure Architecture Center. Disponível em: https://learn.microsoft.com. Acesso em: 1 maio 2026.
 
+MUNDO DO MARKETING. Os profissionais de Marketing no Brasil: dados mostram maioria feminina e faixa etária madura. Disponível em: https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura. Acesso em: 2 jun. 2026.
+
 Nielsen Norman Group. Personas and user-centered design. 2024. Disponível em: https://www.nngroup.com. Acesso em: 1 maio 2026.
+
+OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation: A Handbook for Visionaries, Game Changers, and Challengers. Hoboken: John Wiley & Sons, 2010. Disponível em: https://www.wiley.com/en-us/Business+Model+Generation:+A+Handbook+for+Visionaries,+Game+Changers,+and+Challengers-p-9780470876411. Acesso em: 11 jun. 2026.
 
 OSTERWALDER, Alexander; PIGNEUR, Yves. Value proposition design: how to create products and services customers want. Hoboken: John Wiley & Sons, 2011.
 
