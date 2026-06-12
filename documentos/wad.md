@@ -3252,6 +3252,45 @@ Durante a execução, foram testadas diferentes camadas e funcionalidades do sis
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+---
+
+### Relatório de Cobertura
+
+A cobertura dos testes foi avaliada por meio do seguinte comando:
+
+```bash
+npm test -- --coverage
+```
+
+O relatório gerado permitiu analisar o percentual de código exercitado pelos testes automatizados em cada camada da aplicação.
+
+**Cobertura por Camada**
+
+
+| Camada | Statements | Branches | Functions | Lines |
+|----------|----------|----------|----------|----------|
+| App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
+| Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
+| Database | 87.50% | 75.00% | 100.00% | 87.50% |
+| Errors | 100.00% | 100.00% | 100.00% | 100.00% |
+| Helpers | 36.00% | 0.00% | 37.50% | 39.13% |
+| Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
+| Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
+| Routes | 91.22% | 0.00% | 0.00% | 91.22% |
+| Services | 73.48% | 58.99% | 73.91% | 75.13% |
+| Validators | 70.61% | 64.42% | 92.59% | 71.80% |
+| **Cobertura Total** | **56.13%** | **37.79%** | **50.50%** | **58.39%** |
+
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **56.13% em statements** e **58.39% em lines**, refletindo o nível de execução do código pelos testes implementados.
+
+**Evidência**
+<div align="center">
+  <sub>Figura X - Relatório completo de cobertura gerado pelo Jest.</sub><br>
+    <img src="../assets/programacao/relatorio-cobertura-teste.png" width="100%" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
