@@ -3276,29 +3276,18 @@ A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: d
 
 O público-alvo da solução se organiza em três perfis. Na área administrativa estão os operadores e a equipe de Field Marketing da Red Bull, representados pela coordenadora operacional, que registra checkpoints e trocas de corredor em campo, e pelo gerente de Field Marketing, que supervisiona a prova e analisa os relatórios. Na área pública estão os capitães e corredores das equipes, que acompanham o desempenho pelo painel acessível por link.
 
-### b) Estratégia de Diferenciação
-Esta seção apresenta como a aplicação se posiciona no mercado frente às alternativas existentes, definindo o que a torna única e como pretende se destacar da concorrência. O posicionamento foi construído a partir das análises realizadas nas seções anteriores, considerando o perfil do público-alvo, o cenário competitivo e as lacunas identificadas nas soluções disponíveis atualmente.
-
-A aplicação se diferencia da concorrência, em primeiro lugar, por não competir com ferramentas genéricas no mesmo terreno. Soluções como Google Forms, Excel ou apps de coleta de dados até conseguem registrar informações, mas nenhuma delas foi pensada para funcionar durante 24 horas seguidas, com operadores se revezando, sob pressão de tempo e com a necessidade de registros rápidos e confiáveis. A lógica por trás do posicionamento é simples, em vez de adaptar uma ferramenta pronta a um contexto que ela não se adapta 100%, construímos uma solução que já nasce moldada à realidade operacional do Red Bull 24 Horas.
-
-Outro ponto que nos separa das alternativas é o uso de OCR como caminho intermediário entre o registro totalmente manual e uma automação completa que o evento ainda não comporta. O operador fotografa o visor da esteira e o sistema extrai os dados automaticamente, o que reduz o esforço de digitação e diminui o risco de erro, especialmente nas horas mais avançadas da competição, quando a fadiga já compromete a atenção. Além disso, temos a opção de alterar os dados extraídos pelo OCR (caso ocorra algum erro), e também o registro digital das informações manualmente como opção. Essa tecnologia não existe em nenhuma das ferramentas genéricas disponíveis hoje.
-
-Por fim, a separação entre uma interface privada para a organização e uma interface para as equipes participantes amplia o alcance e a diversidade da solução. Não estamos entregando valor apenas para quem opera o evento, mas também para quem compete nele, com acesso a ranking e calculadora de descanso de sua própria equipe via um link direto, sem fornecer acesso para a equipe adversária. Essa entrega simultânea para dois públicos distintos reforça o posicionamento da aplicação como uma solução completa, e não apenas uma substituição digital da prancheta.
-
-O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres, com conferência humana antes de salvar e alerta visual para valores que destoem da média do corredor.
-
-Frente a planilhas ou formulários genéricos, os diferenciais são claros: especialização para trocas rápidas sob pressão, validação híbrida entre OCR e operador, rastreabilidade do método de cada checkpoint e acesso público por URL com UUID, sem login. É essa combinação que sustenta a meta de manter o erro de apuração abaixo de 1%.
-
-
 ### 6.4.2 Posicionamento e Diferenciação
 
-*Até 250 palavras.*
+A aplicação pretende ser percebida como uma solução especializada e confiável para a gestão operacional de eventos esportivos de longa duração, alinhada à identidade de inovação e alta performance que a Red Bull projeta em todas as suas iniciativas. Mais do que uma ferramenta de registro de dados, o posicionamento desejado é o de uma plataforma que traduz a energia e a exigência do evento em uma experiência digital à altura, tanto para quem opera quanto para quem compete.
 
-*Explique como a aplicação pretende ser percebida pelo mercado e quais atributos a diferenciam de alternativas existentes.*
 
-*A análise deve considerar: concorrentes diretos e indiretos; atributos da marca; identidade pretendida; e percepção de valor desejada.*
+Frente aos concorrentes diretos e indiretos, como Google Forms, Excel e aplicativos genéricos de coleta de dados, a diferenciação se dá pelo recorte contextual. Essas ferramentas funcionam bem para cenários comuns, mas não foram pensadas para operar durante 24 horas seguidas, com rotatividade de operadores, pressão de tempo e necessidade de registros rápidos sob fadiga. A aplicação nasce moldada a essa realidade, o que a posiciona em um espaço que as alternativas genéricas não conseguem ocupar com a mesma eficiência.
 
-*Valor: até 1,0 ponto.*
+
+Os atributos que sustentam essa identidade são a automação assistida via OCR, que reduz o esforço manual sem eliminar o controle humano, a validação híbrida dos dados, que garante confiabilidade mesmo em condições adversas, e a dupla interface, privada para a organização e pública para os participantes. Essa última reforça um atributo importante da marca: a valorização da experiência do atleta, entregando ranking e calculadora de descanso via link direto, sem fricção de login.
+
+
+A percepção de valor desejada é a de uma solução que não apenas substitui a prancheta, mas eleva o padrão operacional do evento, transmitindo profissionalismo, agilidade e cuidado com todos os envolvidos.
 
 ## 6.5 Business Model Canvas
 
