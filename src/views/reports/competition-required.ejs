@@ -1,0 +1,29 @@
+<%#
+  VIEW: reports/competition-required.ejs
+  REGRA:
+    - /reports exige ?competitionId= válido ou rota com id explícito.
+%>
+<link rel="stylesheet" href="/css/ranking.css">
+
+<main class="ranking-page reports-page ranking-notice-page">
+  <div class="ranking-topbar reports-kicker">
+    <div class="ranking-topbar-left">
+      <span class="ranking-competition-label">Competição não informada</span>
+    </div>
+  </div>
+
+  <h1 class="ranking-main-title reports-title">Relatório - RedBull 24H</h1>
+
+  <section class="ranking-notice" aria-live="polite">
+    <div class="ranking-notice__icon" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2.5" opacity="0.25" />
+        <path d="M32 18v18" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        <circle cx="32" cy="45" r="2.5" fill="currentColor" />
+      </svg>
+    </div>
+    <h2>Selecione uma competição</h2>
+    <p>Não é possível visualizar relatórios sem uma competição determinada.</p>
+    <a href="/dashboard" class="ranking-notice__button">Voltar ao dashboard</a>
+  </section>
+</main>

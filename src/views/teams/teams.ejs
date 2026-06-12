@@ -1,0 +1,217 @@
+<%#
+  VIEW: teams/teams.ejs
+  ESTADO: [C2 — Parcial]
+  LACUNAS:
+    - ID da competição ativa segue como mock (id=1) até o fluxo administrativo definir a origem real (sessionStorage / query string / middleware). [A3][D2]
+    - Estilo visual segue tokens de variables.css; ajuste fino contra Figma fica para iteração posterior. [D2]
+  ENTREGA COMPLETA NAS TASKS:
+    - #327 — Estrutura visual (lista, cards, modal, empty state).
+    - #328 — CRUD via fetch (POST/PUT/DELETE) + leitura SSR via teamService.
+    - #329 — Cópia da URL pública (UUID) com feedback visual.
+  ENDPOINTS CONSUMIDOS:
+    - GET    /competitions/:id/teams              — listagem (SSR) [A1][B1]
+    - POST   /competitions/:id/teams              — cadastro       [A1][B1]
+    - PUT    /competitions/:id/teams/:teamId      — edição         [A1][B1]
+    - DELETE /competitions/:id/teams/:teamId      — exclusão       [A1][B1]
+  ÚLTIMA ATUALIZAÇÃO: 2026-06-10
+%>
+
+<%
+  // [A1] locals com defaults — padrão estabelecido pela operationalPanel.ejs (Eduardo)
+  const teamsList = locals.teams || [];
+  const competition = locals.competition || { id: 0, name: 'Competição não selecionada', status: 'inativa' };
+%>
+
+<main class="teams" data-teams data-competition-id="<%= competition.id %>">
+
+  <header class="teams__header">
+    <div class="teams__title-block">
+      <h1 class="teams__title">Equipes</h1>
+      <p class="teams__subtitle">
+        <%= competition.name %>
+      </p>
+    </div>
+    <a
+      href="/teams/new?competitionId=<%= competition.id %>"
+      class="teams__new-btn"
+    >
+      + Nova Equipe
+    </a>
+  </header>
+
+  <% if (teamsList.length === 0) { %>
+
+    <section class="teams__empty" aria-live="polite">
+      <div class="teams__empty-icon" aria-hidden="true">
+        <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2.5" opacity="0.25" />
+          <path d="M22 38c0-4 4-7 10-7s10 3 10 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+          <circle cx="32" cy="24" r="6" stroke="currentColor" stroke-width="2.5" />
+        </svg>
+      </div>
+      <p class="teams__empty-title">Nenhuma equipe cadastrada ainda</p>
+      <p class="teams__empty-text">
+        Cadastre a primeira equipe da competição para começar a operar.
+      </p>
+      <a
+        href="/teams/new?competitionId=<%= competition.id %>"
+        class="teams__empty-cta"
+      >
+        Criar primeira equipe
+      </a>
+    </section>
+
+  <% } else { %>
+
+    <% if (teamsList.length === 1) { %>
+      <section class="teams__second-team">
+        <div>
+          <strong>Primeira equipe cadastrada.</strong>
+          <span>Crie a segunda equipe para preparar a competição completa.</span>
+        </div>
+        <a href="/teams/new?competitionId=<%= competition.id %>" class="teams__second-team-link">Criar segunda equipe</a>
+      </section>
+    <% } %>
+
+    <section class="teams__list" aria-label="Equipes cadastradas">
+      <% teamsList.forEach(function(team) { %>
+        <article class="teams__card" data-team-id="<%= team.id %>">
+
+          <div class="teams__card-info">
+            <h2 class="teams__card-name"><%= team.name %></h2>
+            <p class="teams__card-meta">
+              <%= team.runner_count || 0 %> de 16 corredores
+            </p>
+          </div>
+
+          <div class="teams__card-uuid">
+            <label class="teams__uuid-label" for="uuid-<%= team.id %>">
+              URL Pública
+            </label>
+            <div class="teams__uuid-row">
+              <input
+                id="uuid-<%= team.id %>"
+                type="text"
+                class="teams__uuid-input"
+                value="<%= team.uuid %>"
+                readonly
+                aria-label="URL pública da equipe <%= team.name %>"
+              >
+              <button
+                type="button"
+                class="teams__copy-btn"
+                data-teams-action="copy-uuid"
+                data-uuid="<%= team.uuid %>"
+                title="Copiar URL pública"
+              >
+                Copiar
+              </button>
+            </div>
+          </div>
+
+          <div class="teams__card-actions">
+            <a
+              href="/teams/<%= team.id %>?competitionId=<%= competition.id %>"
+              class="teams__access-btn"
+            >
+              Acessar Equipe
+            </a>
+            <a
+              href="/teams/<%= team.id %>/edit?competitionId=<%= competition.id %>"
+              class="teams__edit-btn"
+            >
+              Editar
+            </a>
+            <button
+              type="button"
+              class="teams__delete-btn"
+              data-teams-action="open-delete"
+              data-team-id="<%= team.id %>"
+              data-team-name="<%= team.name %>"
+            >
+              Excluir
+            </button>
+          </div>
+
+        </article>
+      <% }); %>
+    </section>
+
+  <% } %>
+
+  <!-- Modal de cadastro / edição - oculto por padrão, controlado por JS na task #328 -->
+  <section
+    id="teams-modal"
+    class="teams__modal"
+    data-teams-modal
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="teams-modal-title"
+    hidden
+  >
+    <div class="teams__modal-backdrop" data-teams-action="close-modal"></div>
+
+    <div class="teams__modal-card">
+      <header class="teams__modal-header">
+        <h2 class="teams__modal-title" id="teams-modal-title" data-teams-modal-title>
+          Nova Equipe
+        </h2>
+        <button
+          type="button"
+          class="teams__modal-close"
+          data-teams-action="close-modal"
+          aria-label="Fechar"
+        >
+          ×
+        </button>
+      </header>
+
+      <form
+        class="teams__form"
+        data-teams-form
+        novalidate
+      >
+        <input
+          type="hidden"
+          name="team_id"
+          value=""
+          data-team-id-input
+        >
+
+        <div class="teams__form-group">
+          <label class="teams__form-label" for="team-name">
+            Nome da equipe
+          </label>
+          <input
+            id="team-name"
+            type="text"
+            name="name"
+            class="teams__form-input"
+            maxlength="100"
+            required
+            placeholder="Ex.: Equipe Alpha"
+            autocomplete="off"
+          >
+          <p class="teams__form-error" data-teams-form-error hidden></p>
+        </div>
+
+        <div class="teams__form-actions">
+          <button
+            type="button"
+            class="teams__form-cancel"
+            data-teams-action="close-modal"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="teams__form-submit"
+          >
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>
