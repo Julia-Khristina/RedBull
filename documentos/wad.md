@@ -2258,6 +2258,19 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                | FK `id_competition` em `checkpoint`   |
 | Associação `Treadmill` é usada em `Checkpoint`              | FK `id_treadmill` em `checkpoint`     |
 | Associação `Admin` valida/supervisiona `Checkpoint`         | FK `id_admin` em `checkpoint`         |
+| Classe `Competition`                                         | Tabela `COMPETITION`                   |
+| Classe `Team`                                             | Tabela `TEAM`                       |
+| Classe `Runner`                                  | Tabela `RUNNER`                     |
+| Classe `Admin`                               | Tabela `ADMIN`                |
+| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
+| Classe `Treadmill`                                            | Tabela `TREADMILL`                      |
+| Associação `Competition` possui `Team`                     | FK `id_competition` em `TEAM`        |
+| Associação `Team` possui `Runner`                       | FK `id_team` em `RUNNER`          |
+| Associação `Runner` registra `Checkpoint`                 | FK `id_runner` em `CHECKPOINT`      |
+| Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
+| Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
+| Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
+
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -3408,15 +3421,11 @@ Essa escolha de distribuição é aderente às exigências do ambiente competiti
 
 ### 6.6.4 Promoção
 
-*Até 200 palavras.*
+Por ser uma solução desenvolvida no escopo da parceria acadêmica com a Red Bull, a promoção assume caráter institucional, voltada à comunicação interna do evento e ao público diretamente ligado a ele, e não à aquisição de clientes em mercado aberto. O marketing de conteúdo cumpre o papel central: uma vez aplicada em uma edição real, a solução poderá gerar estudos de caso e demonstrações do fluxo OCR que evidenciem quantitativamente a queda de erros na apuração, reforçando seu valor junto à organização.
 
-*Descreva as estratégias de divulgação e aquisição de usuários. Podem ser considerados: redes sociais; SEO; marketing de conteúdo; campanhas pagas; parcerias; eventos; e estratégias de relacionamento.*
+Para que esse material seja localizável, o trabalho de SEO se apoia em termos como apuração de competições e automação de registro em eventos. No LinkedIn, publicações sobre digitalização de operações esportivas dialogam com gestores e organizadores, perfis que concentram os tomadores de decisão. As campanhas pagas no Google Ads e no Meta Ads ampliam esse alcance de forma segmentada.
 
-*Valor: até 0,5 ponto.*
-<<<<<<< HEAD
->>>>>>> dev
-=======
->>>>>>> dev
+O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativações da solução na largada, na arena e no encerramento. As estratégias de relacionamento, por meio de CRM e comunicação pós-evento com organizadores e capitães, sustentam o vínculo ao longo do tempo. As parcerias completam o plano: a associação à marca Red Bull confere credibilidade imediata. O engajamento das running crews, público em crescimento no Brasil segundo a análise SWOT, dissemina a solução pelo compartilhamento simplificado do ranking.
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
