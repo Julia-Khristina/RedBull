@@ -3208,11 +3208,15 @@ Esse cenário se insere em um movimento global de digitalização de eventos. Se
 
 ### 6.2.3 Tendências de Mercado
 
-*Até 300 palavras.*
+Entre as tecnologias utilizadas na solução proposta, destaca-se o Reconhecimento Óptico de Caracteres (OCR), recurso que acompanha uma tendência crescente de automação e digitalização de processos. A tecnologia permite a extração automática de informações a partir de imagens capturadas pelas esteiras, reduzindo a necessidade de inserção manual de dados e minimizando erros operacionais. Dessa forma, contribui para aumentar a confiabilidade, a rastreabilidade e a consistência das informações coletadas.
 
-*Identifique tendências tecnológicas, comportamentais e mercadológicas que possam impactar a adoção da solução proposta. Utilize fontes confiáveis.*
+Do ponto de vista tecnológico, observa-se um crescimento contínuo na adoção de soluções baseadas em OCR. O mercado brasileiro de OCR gerou receita de US$ 676,3 milhões em 2024 e possui previsão de atingir US$ 1,585 bilhão até 2030, com taxa composta de crescimento anual (CAGR) de 14,8% entre 2025 e 2030. O segmento de software foi responsável por 95,27% da receita gerada em 2024, evidenciando a predominância de soluções digitais escaláveis na composição desse mercado (GRAND VIEW RESEARCH, 2024).
 
-*Valor: até 1,0 ponto.*
+Sob a perspectiva comportamental, um movimento de digitalização vem remodelando a operação de eventos, com câmeras e sensores substituindo parte dos processos manuais, tornando o controle mais previsível para organizadores (CARTACAPITAL, 2026). Essa mudança reflete uma exigência crescente do mercado por processos baseados em captura automatizada de dados e validação em tempo real, especialmente em competições onde a precisão das informações é determinante para a integridade dos resultados.
+
+No aspecto mercadológico, o Red Bull 24 Horas encontra-se em trajetória de expansão no Brasil. Em sua 4ª edição, realizada em 2025, o evento reuniu 20 running crews em cinco etapas classificatórias realizadas em Belo Horizonte, São Paulo, Recife, Porto Alegre e Rio de Janeiro, consolidando-se como o maior desafio de revezamento em esteira do país (MANIA DE CORRIDA, 2025). A final nacional registrou mais de 678 km totais percorridos pelas equipes ao longo de 24 horas, evidenciando o volume de dados gerados e a necessidade de uma solução confiável para seu registro e rastreabilidade (WEBRUN, 2025).
+
+Diante desse cenário, a solução proposta está alinhada às principais tendências do mercado, utilizando tecnologias em expansão para aumentar a eficiência operacional, a qualidade dos dados coletados e a confiabilidade dos processos.
 
 ## 6.3 Público-Alvo
 
@@ -3435,6 +3439,14 @@ RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en
 RICHARDS, Mark. Software Architecture Patterns. Sebastopol: O'Reilly Media, 2015.
 
 TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
+
+CARTACAPITAL. Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano. jun. 2026. Disponível em: https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026. Acesso em: 11 jun. 2026.
+
+GRAND VIEW RESEARCH. Brazil Optical Character Recognition Market Size & Outlook, 2030. Disponível em: https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil. Acesso em: 11 jun. 2026.
+
+MANIA DE CORRIDA. Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro. set. 2025. Disponível em: https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html. Acesso em: 11 jun. 2026.
+
+WEBRUN. Red Bull 24 Horas: equipe paulista corre 343 km e se consagra campeã nacional. nov. 2025. Disponível em: https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro. Acesso em: 11 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
