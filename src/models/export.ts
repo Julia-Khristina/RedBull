@@ -1,4 +1,4 @@
-import { Athlete } from "./athlete";
+import { Runner } from "./runner";
 import { Checkpoint } from "./checkpoint";
 import { Competition } from "./competition";
 import { RankingRunner, RankingTeam } from "./ranking";
@@ -7,24 +7,24 @@ import { Team } from "./team";
 export interface CompetitionExportData {
   competition: Competition;
   teams: Team[];
-  athletes: Athlete[];
+  runners: Runner[];
   checkpoints: Checkpoint[];
 }
 
 export interface CompetitionExport {
-  exportedAt: string;
+  exported_at: string;
   competition: Competition;
   teams: Team[];
-  athletes: Athlete[];
+  runners: Runner[];
   checkpoints: Checkpoint[];
   rankings: {
     teams: RankingTeam[];
-    athletes: RankingRunner[];
+    runners: RankingRunner[];
   };
 }
 
 export interface ExportRepository {
   findCompetitionExportData(
-    competicaoId: number
+    competitionId: number
   ): Promise<CompetitionExportData | null>;
 }

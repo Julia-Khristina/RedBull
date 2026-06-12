@@ -1,0 +1,96 @@
+<%#
+  VIEW: competitions/new.ejs
+  ESTADO: [C1 — Completo]
+  ENDPOINTS CONSUMIDOS:
+    - POST /competitions    [A1][B2]
+      Campos enviados: name, date, address (description ignorado — campo não existe no model)
+      Response: { id, name, address, date, status, created_at } (201)
+      [B2] Shape inferido do model src/models/competition.ts — não lido no controller
+  LACUNAS:
+    - Campo "Descrição" exibido no Figma (tela2) não existe em Competition model [D2]
+      Incluído no form como UI mas não enviado na requisição. Aguarda backend.
+  ÚLTIMA ATUALIZAÇÃO: 2026-06-10
+%>
+
+<main class="cf-main">
+
+  <%# [A1] Link de retorno ao dashboard — rota GET /dashboard confirmada %>
+  <a href="/dashboard" class="cf-back-link">&lt; Voltar para Dashboard</a>
+
+  <h1 class="cf-page-title">Nova competição</h1>
+
+  <div id="competition-error" class="cf-error" role="alert"></div>
+
+  <%#
+    Formulário interceptado por fetch em public/js/app.js (path === '/competitions/new').
+    A action abaixo serve de fallback para browsers sem JS — não esperado em produção.
+    [A1] Endpoint: POST /competitions — confirmado em src/routes/competitionRoutes.ts
+  %>
+  <form id="competition-form" class="cf-form" action="/competitions" method="POST" novalidate>
+
+    <div class="cf-field">
+      <label class="cf-label" for="comp-name">Nome da Competição</label>
+      <%# [A1][B2] Campo 'name' confirmado em src/models/competition.ts %>
+      <input
+        class="cf-input"
+        type="text"
+        id="comp-name"
+        name="name"
+        required
+        maxlength="100"
+        placeholder="RedBull 24 Horas Edição São Paulo - Butantã"
+        autocomplete="off"
+      />
+    </div>
+
+    <div class="cf-field">
+      <label class="cf-label" for="comp-date">Data</label>
+      <%# [A1][B2] Campo 'date' confirmado em src/models/competition.ts %>
+      <input
+        class="cf-input"
+        type="date"
+        id="comp-date"
+        name="date"
+        required
+      />
+    </div>
+
+    <div class="cf-field">
+      <label class="cf-label" for="comp-address">Localização</label>
+      <%# [A1][B2] Campo 'address' confirmado em src/models/competition.ts %>
+      <input
+        class="cf-input"
+        type="text"
+        id="comp-address"
+        name="address"
+        required
+        maxlength="200"
+        placeholder="Rua MMDC 80, Butantã, São Paulo"
+        autocomplete="off"
+      />
+    </div>
+
+    <%#
+      [D2 🟠] Campo 'description' presente no Figma (tela2) mas ausente em
+      Competition model (src/models/competition.ts). Exibido como UI para
+      fidelidade ao design; não enviado no fetch body. Aguarda backend.
+    %>
+    <div class="cf-field">
+      <label class="cf-label" for="comp-description">Descrição (opcional)</label>
+      <textarea
+        class="cf-textarea"
+        id="comp-description"
+        name="description"
+      ></textarea>
+    </div>
+
+    <div class="cf-actions">
+      <a href="/dashboard" class="cf-btn-cancel">Cancelar</a>
+      <button type="submit" id="competition-submit" class="cf-btn-submit">
+        Criar nova Competição
+      </button>
+    </div>
+
+  </form>
+
+</main>

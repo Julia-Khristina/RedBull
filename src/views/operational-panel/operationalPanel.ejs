@@ -1,0 +1,145 @@
+<%#
+  VIEW: operational-panel/operationalPanel.ejs
+  ESTADO: [C2 - Parcial]
+  LACUNAS:
+    - A rota SSR GET /operational-panel renderiza a view, mas os IDs reais ainda dependem de query string ou controller de fluxo operacional. [A1][C2][D2]
+    - Os IDs obrigatorios de POST /checkpoints precisam chegar por locals/query; sem eles o JS bloqueia o envio e mostra erro local. [A1][B1][C2][D1]
+    - O identifier e gerado no cliente quando o SSR nao fornece valor, porque o PNG nao tem campo visual para ele. [A1][B1][D2]
+    - O backend nao possui campo dedicado para metodo de entrada/audit log; o JS envia image.input_method = "manual" como metadata permitida pelo contrato atual. [A1][B1][D2]
+    - Valores visuais default seguem o PNG informado quando o SSR nao fornecer dados reais. [A1][C2][D2]
+  ENDPOINTS CONSUMIDOS:
+    - POST /checkpoints [A1][B1]
+    - GET /competitions/:id/ranking/teams [A1][B1]
+  ULTIMA ATUALIZACAO: 2026-06-10
+%>
+
+<%
+  const checkpointContext = locals.checkpointContext || {};
+  const selectedRunner = locals.selectedRunner || locals.runner || {};
+  const manualCheckpoint = locals.manualCheckpoint || {};
+  const runnerName = selectedRunner.name || manualCheckpoint.runnerName || "João Silva";
+  const checkpointClock = manualCheckpoint.checkpointClock || manualCheckpoint.checkpoint_clock || "14:28:00";
+  const distanceValue = manualCheckpoint.distance_km ?? "0.00";
+  const paceValue = manualCheckpoint.pace || "";
+  const totalTimeValue = manualCheckpoint.time || "";
+  const runnerId = checkpointContext.id_runner || selectedRunner.id || "";
+  const checkpointEndpoint = runnerId ? `/runners/${runnerId}/checkpoints` : "/checkpoints";
+%>
+
+<main class="operational-panel" data-operational-panel>
+  <nav class="operational-panel__breadcrumb" aria-label="Caminho atual">
+    Operacional &gt; Registro manual
+  </nav>
+
+  <header class="operational-panel__header">
+    <h1>Registrar checkpoint manualmente</h1>
+  </header>
+
+  <section class="manual-warning" role="note" aria-label="Aviso sobre registro manual">
+    <span class="manual-warning__icon" aria-hidden="true">!</span>
+    <div class="manual-warning__copy">
+      <p>Use este modo apenas quando a câmera falhar ou a foto estiver ilegível.</p>
+      <p>O registro será marcado como "manual" no log de auditoria</p>
+    </div>
+  </section>
+
+  <section class="manual-card" aria-labelledby="manual-checkpoint-title">
+    <h2 id="manual-checkpoint-title" class="sr-only">Dados do checkpoint manual</h2>
+
+    <form
+      class="manual-form"
+      data-operational-manual-form
+      data-endpoint="<%= checkpointEndpoint %>"
+      data-ranking-endpoint-template="/competitions/:id/ranking/teams"
+      data-input-method="manual"
+      novalidate
+    >
+      <input type="hidden" name="identifier" value="<%= checkpointContext.identifier || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.identifier || '' %>">
+      <input type="hidden" name="id_runner" value="<%= runnerId %>" data-checkpoint-field data-initial-value="<%= runnerId %>">
+      <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_competition || '' %>">
+      <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_treadmill || '' %>">
+      <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_admin || '' %>">
+
+      <div class="manual-form__row manual-form__row--top">
+        <label class="manual-field manual-field--wide">
+          <span>Atleta selecionado:</span>
+          <input
+            type="text"
+            name="runner_name"
+            value="<%= runnerName %>"
+            readonly
+            data-initial-value="<%= runnerName %>"
+          >
+        </label>
+
+        <label class="manual-field manual-field--wide">
+          <span>Horário do checkpoint</span>
+          <input
+            type="text"
+            name="checkpoint_clock"
+            value="<%= checkpointClock %>"
+            readonly
+            data-initial-value="<%= checkpointClock %>"
+          >
+        </label>
+      </div>
+
+      <div class="manual-form__row manual-form__row--metrics">
+        <label class="manual-field manual-field--metric">
+          <span>Distância (km)</span>
+          <input
+            type="number"
+            name="distance_km"
+            min="0"
+            step="0.01"
+            inputmode="decimal"
+            required
+            value="<%= distanceValue %>"
+            data-checkpoint-field
+            data-initial-value="<%= distanceValue %>"
+          >
+        </label>
+
+        <label class="manual-field manual-field--metric">
+          <span>Pace (min/km)</span>
+          <input
+            type="text"
+            name="pace"
+            inputmode="numeric"
+            placeholder="0'00''"
+            value="<%= paceValue %>"
+            data-checkpoint-field
+            data-initial-value="<%= paceValue %>"
+          >
+        </label>
+
+        <label class="manual-field manual-field--metric">
+          <span>Tempo total</span>
+          <input
+            type="text"
+            name="time"
+            inputmode="numeric"
+            placeholder="00:00:00"
+            value="<%= totalTimeValue %>"
+            data-checkpoint-field
+            data-initial-value="<%= totalTimeValue %>"
+          >
+        </label>
+      </div>
+
+      <div class="manual-form__divider" aria-hidden="true"></div>
+
+      <div class="manual-form__feedback" data-manual-form-feedback aria-live="polite"></div>
+      <div class="manual-form__ranking-status" data-manual-ranking-status aria-live="polite"></div>
+
+      <div class="manual-form__actions">
+        <button class="manual-button manual-button--secondary" type="button" data-manual-cancel>
+          Cancelar
+        </button>
+        <button class="manual-button manual-button--primary" type="submit" data-manual-submit>
+          Salvar registro manual
+        </button>
+      </div>
+    </form>
+  </section>
+</main>
