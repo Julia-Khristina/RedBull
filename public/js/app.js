@@ -365,10 +365,508 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // Criação completa de equipe com atletas (/teams/new)
+  if (path === '/teams/new') {
+    const container = document.querySelector('[data-team-create]');
+    const form = document.querySelector('[data-team-create-form]');
+
+    if (container && form) {
+      const competitionId = container.dataset.competitionId;
+      const runnersList = form.querySelector('[data-runners-list]');
+      const addRunnerBtn = form.querySelector('[data-add-runner]');
+      const submitBtn = form.querySelector('[data-team-create-submit]');
+      const errorEl = form.querySelector('[data-team-create-error]');
+      const cpfRegex = /^\d{3}\.?\d{3}\.?\d{3}-?\d{2}$/;
+
+      function showCreateError(message) {
+        if (!errorEl) return;
+        errorEl.textContent = message;
+        errorEl.hidden = false;
+      }
+
+      function clearCreateError() {
+        if (!errorEl) return;
+        errorEl.textContent = '';
+        errorEl.hidden = true;
+      }
+
+      function runnerRows() {
+        return Array.prototype.slice.call(
+          runnersList ? runnersList.querySelectorAll('[data-runner-row]') : []
+        );
+      }
+
+      function refreshRunnerRows() {
+        runnerRows().forEach(function (row, index) {
+          const radio = row.querySelector('[data-captain-radio]');
+          const remove = row.querySelector('[data-remove-runner]');
+          if (radio) radio.value = String(index);
+          if (remove) remove.hidden = runnerRows().length <= 1;
+        });
+      }
+
+      function addRunnerRow() {
+        const rows = runnerRows();
+        if (!runnersList || rows.length >= 16) {
+          showCreateError('Cada equipe pode ter no máximo 16 atletas.');
+          return;
+        }
+
+        const clone = rows[0].cloneNode(true);
+        clone.querySelectorAll('input').forEach(function (input) {
+          if (input.type === 'radio') {
+            input.checked = false;
+          } else {
+            input.value = '';
+          }
+        });
+        runnersList.appendChild(clone);
+        refreshRunnerRows();
+      }
+
+      function readRunner(row, index, captainIndex) {
+        const name = row.querySelector('[data-runner-name]').value.trim();
+        const cpf = row.querySelector('[data-runner-cpf]').value.trim();
+        const email = row.querySelector('[data-runner-email]').value.trim();
+        const phone = row.querySelector('[data-runner-phone]').value.trim();
+
+        if (!name) throw new Error('Nome do atleta é obrigatório.');
+        if (!cpfRegex.test(cpf)) throw new Error('CPF inválido para ' + name + '.');
+        if (!email || !email.includes('@')) throw new Error('Email inválido para ' + name + '.');
+
+        const payload = {
+          name: name,
+          cpf: cpf,
+          email: email,
+          status: index === captainIndex ? 'captain' : 'runner',
+        };
+
+        if (phone) payload.phone = phone;
+
+        return payload;
+      }
+
+      function validateAndBuildPayload() {
+        const teamNameInput = form.querySelector('[data-team-name]');
+        const teamName = teamNameInput ? teamNameInput.value.trim() : '';
+        if (!teamName) throw new Error('Nome da equipe é obrigatório.');
+        if (!competitionId || competitionId === '0') {
+          throw new Error('Competição ativa não foi identificada.');
+        }
+
+        const selectedCaptain = form.querySelector('input[name="captain_index"]:checked');
+        if (!selectedCaptain) throw new Error('Selecione um capitão.');
+
+        const captainIndex = Number(selectedCaptain.value);
+        const cpfs = new Set();
+        const emails = new Set();
+        const runners = runnerRows().map(function (row, index) {
+          const runner = readRunner(row, index, captainIndex);
+          const cpfKey = runner.cpf.replace(/\D/g, '');
+          const emailKey = runner.email.toLowerCase();
+          if (cpfs.has(cpfKey)) throw new Error('Há CPFs duplicados no formulário.');
+          if (emails.has(emailKey)) throw new Error('Há emails duplicados no formulário.');
+          cpfs.add(cpfKey);
+          emails.add(emailKey);
+          return runner;
+        });
+
+        if (runners.length === 0) throw new Error('Cadastre pelo menos um atleta.');
+
+        return { teamName: teamName, runners: runners };
+      }
+
+      async function createTeamAndRunners(event) {
+        event.preventDefault();
+        clearCreateError();
+
+        let payload;
+        try {
+          payload = validateAndBuildPayload();
+        } catch (err) {
+          showCreateError(err.message);
+          return;
+        }
+
+        const originalLabel = submitBtn ? submitBtn.textContent : '';
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Salvando...';
+        }
+
+        let createdTeam = null;
+
+        try {
+          const teamRes = await fetch('/competitions/' + competitionId + '/teams', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name: payload.teamName }),
+          });
+
+          if (!teamRes.ok) {
+            const data = await teamRes.json().catch(function () { return { message: 'Erro ao criar equipe.' }; });
+            throw new Error(data.message || 'Erro ao criar equipe.');
+          }
+
+          createdTeam = await teamRes.json();
+
+          for (const runner of payload.runners) {
+            const runnerRes = await fetch(
+              '/competitions/' + competitionId + '/teams/' + createdTeam.id + '/runners',
+              {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(runner),
+              }
+            );
+
+            if (!runnerRes.ok) {
+              const data = await runnerRes.json().catch(function () { return { message: 'Erro ao cadastrar atleta.' }; });
+              throw new Error(data.message || 'Erro ao cadastrar atleta.');
+            }
+          }
+
+          window.location.href = '/teams?competitionId=' + encodeURIComponent(competitionId);
+        } catch (err) {
+          const partial = createdTeam
+            ? ' Equipe criada parcialmente; acesse a equipe para concluir o cadastro.'
+            : '';
+          showCreateError((err.message || 'Não foi possível criar a equipe.') + partial);
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          }
+        }
+      }
+
+      if (addRunnerBtn) addRunnerBtn.addEventListener('click', addRunnerRow);
+      if (runnersList) {
+        runnersList.addEventListener('click', function (event) {
+          const remove = event.target.closest('[data-remove-runner]');
+          if (!remove) return;
+          const row = remove.closest('[data-runner-row]');
+          if (row && runnerRows().length > 1) {
+            row.remove();
+            refreshRunnerRows();
+          }
+        });
+      }
+      form.addEventListener('submit', createTeamAndRunners);
+      refreshRunnerRows();
+    }
+  }
+
+  // Painel administrativo por equipe (/teams/:teamId)
+  if (/^\/teams\/\d+$/.test(path)) {
+    const panel = document.querySelector('[data-team-panel]');
+
+    if (panel) {
+      const competitionId = panel.dataset.competitionId;
+      const teamId = panel.dataset.teamId;
+      const switchPanel = panel.querySelector('[data-runner-switch]');
+      const feedback = panel.querySelector('[data-runner-switch-feedback]');
+      const toast = panel.querySelector('[data-team-toast]');
+      const openSwitchBtn = panel.querySelector('[data-open-runner-switch]');
+      const cancelSwitchBtn = panel.querySelector('[data-cancel-runner-switch]');
+      const confirmSwitchBtn = panel.querySelector('[data-confirm-runner-switch]');
+      const manualRegistrationLink = panel.querySelector('[data-manual-registration-link]');
+
+      function showTeamToast(message) {
+        if (!toast) {
+          window.alert(message);
+          return;
+        }
+        toast.textContent = message;
+        toast.hidden = false;
+        setTimeout(function () {
+          toast.hidden = true;
+        }, 2400);
+      }
+
+      function showSwitchError(message) {
+        if (!feedback) return;
+        feedback.textContent = message;
+        feedback.hidden = false;
+      }
+
+      function clearSwitchError() {
+        if (!feedback) return;
+        feedback.textContent = '';
+        feedback.hidden = true;
+      }
+
+      function selectedRunnerInput() {
+        return panel.querySelector('input[name="active_runner"]:checked');
+      }
+
+      function refreshSelectedHighlight() {
+        panel.querySelectorAll('[data-runner-option]').forEach(function (option) {
+          const input = option.querySelector('input[type="radio"]');
+          option.classList.toggle('is-selected', !!input && input.checked);
+          option.classList.toggle(
+            'is-active',
+            option.dataset.runnerId === panel.dataset.activeRunnerId
+          );
+        });
+      }
+
+      function updateManualRegistrationLink(runnerId) {
+        if (!manualRegistrationLink || !runnerId) return;
+
+        manualRegistrationLink.href = '/operational-panel/' + runnerId +
+          '?competitionId=' + encodeURIComponent(competitionId) +
+          '&teamId=' + encodeURIComponent(teamId);
+        manualRegistrationLink.classList.remove('is-disabled');
+        manualRegistrationLink.setAttribute('aria-disabled', 'false');
+      }
+
+      function closeSwitchPanel(reset) {
+        if (!switchPanel) return;
+        if (reset) {
+          const active = panel.querySelector(
+            'input[name="active_runner"][value="' + panel.dataset.activeRunnerId + '"]'
+          );
+          if (active) active.checked = true;
+        }
+        switchPanel.setAttribute('hidden', 'hidden');
+        clearSwitchError();
+        refreshSelectedHighlight();
+      }
+
+      function openSwitchPanel() {
+        if (!switchPanel) return;
+        switchPanel.removeAttribute('hidden');
+        clearSwitchError();
+        refreshSelectedHighlight();
+        if (switchPanel.scrollIntoView) {
+          switchPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+
+      if (openSwitchBtn) {
+        openSwitchBtn.addEventListener('click', openSwitchPanel);
+      }
+
+      if (cancelSwitchBtn) {
+        cancelSwitchBtn.addEventListener('click', function () {
+          closeSwitchPanel(true);
+        });
+      }
+
+      panel.addEventListener('change', function (event) {
+        if (event.target && event.target.name === 'active_runner') {
+          refreshSelectedHighlight();
+        }
+      });
+
+      panel.addEventListener('click', function (event) {
+        const openTarget = event.target.closest('[data-open-runner-switch]');
+        if (openTarget) {
+          event.preventDefault();
+          openSwitchPanel();
+        }
+      });
+
+      if (confirmSwitchBtn) {
+        confirmSwitchBtn.addEventListener('click', async function () {
+          const input = selectedRunnerInput();
+          if (!input) {
+            showSwitchError('Selecione um atleta.');
+            return;
+          }
+
+          const runnerId = input.value;
+          if (runnerId === panel.dataset.activeRunnerId) {
+            closeSwitchPanel(false);
+            return;
+          }
+
+          const originalLabel = confirmSwitchBtn.textContent;
+          confirmSwitchBtn.disabled = true;
+          confirmSwitchBtn.textContent = 'Confirmando...';
+          clearSwitchError();
+
+          try {
+            const res = await fetch(
+              '/competitions/' + competitionId + '/teams/' + teamId + '/active-runner',
+              {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ runnerId: Number(runnerId) }),
+              }
+            );
+
+            if (!res.ok) {
+              const data = await res.json().catch(function () { return { message: 'Erro ao trocar atleta.' }; });
+              throw new Error(data.message || 'Erro ao trocar atleta.');
+            }
+
+            const option = panel.querySelector('[data-runner-option][data-runner-id="' + runnerId + '"]');
+            panel.dataset.activeRunnerId = runnerId;
+
+            const activeName = panel.querySelector('[data-active-runner-name]');
+            const activeMeta = panel.querySelector('[data-active-runner-meta]');
+            if (activeName && option) activeName.textContent = option.dataset.runnerName || 'Atleta ativo';
+            if (activeMeta && option) {
+              activeMeta.textContent = option.dataset.runnerStatus === 'captain' ? 'Capitão' : 'Atleta';
+            }
+            updateManualRegistrationLink(runnerId);
+
+            refreshSelectedHighlight();
+            closeSwitchPanel(false);
+            showTeamToast('Atleta ativo atualizado.');
+          } catch (err) {
+            showSwitchError(err.message || 'Não foi possível trocar o atleta ativo.');
+          } finally {
+            confirmSwitchBtn.disabled = false;
+            confirmSwitchBtn.textContent = originalLabel;
+          }
+        });
+      }
+
+      const photoBtn = panel.querySelector('[data-photo-placeholder]');
+      if (photoBtn) {
+        photoBtn.addEventListener('click', function () {
+          showTeamToast('Captura por foto em breve.');
+        });
+      }
+
+      refreshSelectedHighlight();
+    }
+  }
+
+  // Registro manual (/operational-panel)
+  if (path === '/operational-panel' || path.startsWith('/operational-panel/')) {
+    const form = document.querySelector('[data-operational-manual-form]');
+
+    if (form) {
+      const feedback = form.querySelector('[data-manual-form-feedback]');
+      const submitBtn = form.querySelector('[data-manual-submit]');
+      const cancelBtn = form.querySelector('[data-manual-cancel]');
+
+      function showManualFeedback(message, isError) {
+        if (!feedback) return;
+        feedback.textContent = message;
+        feedback.dataset.state = isError ? 'error' : (message ? 'success' : '');
+      }
+
+      function normalizePace(value) {
+        const raw = String(value || '').trim();
+        if (!raw) return undefined;
+        if (/^[0-9]{1,2}:[0-9]{2}\/km$/.test(raw)) return raw;
+
+        const quoteMatch = raw.match(/^([0-9]{1,2})'?[:']([0-9]{2})/);
+        if (quoteMatch) return quoteMatch[1] + ':' + quoteMatch[2] + '/km';
+
+        return raw;
+      }
+
+      function buildCheckpointPayload() {
+        const data = new FormData(form);
+        const distance = Number(data.get('distance_km'));
+        const idRunner = Number(data.get('id_runner'));
+        const idCompetition = Number(data.get('id_competition'));
+        const idTreadmill = Number(data.get('id_treadmill'));
+        const idAdmin = Number(data.get('id_admin'));
+
+        if (!Number.isFinite(distance) || distance < 0) {
+          throw new Error('Distância deve ser um número não negativo.');
+        }
+        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
+          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+        }
+
+        const nowIso = new Date().toISOString();
+        const identifier = String(data.get('identifier') || '').trim() ||
+          'MANUAL-' + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner;
+        const payload = {
+          identifier: identifier,
+          distance_km: distance,
+          id_runner: idRunner,
+          id_competition: idCompetition,
+          id_treadmill: idTreadmill,
+          id_admin: idAdmin,
+          image: {
+            input_method: form.dataset.inputMethod || 'manual',
+            recorded_at: nowIso,
+          },
+        };
+        const pace = normalizePace(data.get('pace'));
+        const time = String(data.get('time') || '').trim();
+        if (pace) payload.pace = pace;
+        if (time) payload.time = time;
+
+        return payload;
+      }
+
+      form.addEventListener('submit', async function (event) {
+        event.preventDefault();
+        const originalLabel = submitBtn ? submitBtn.textContent : '';
+        let payload;
+
+        try {
+          payload = buildCheckpointPayload();
+        } catch (err) {
+          showManualFeedback(err.message, true);
+          return;
+        }
+
+        if (submitBtn) {
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Salvando...';
+        }
+        showManualFeedback('', false);
+
+        try {
+          const res = await fetch(form.dataset.endpoint || '/checkpoints', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload),
+          });
+
+          if (!res.ok) {
+            const data = await res.json().catch(function () { return { message: 'Erro ao salvar registro manual.' }; });
+            throw new Error(data.message || 'Erro ao salvar registro manual.');
+          }
+
+          showManualFeedback('Registro manual salvo com sucesso.', false);
+        } catch (err) {
+          showManualFeedback(err.message || 'Erro ao salvar registro manual.', true);
+        } finally {
+          if (submitBtn) {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          }
+        }
+      });
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', function () {
+          window.history.back();
+        });
+      }
+    }
+  }
+
   // Ativar item do menu correspondente à rota atual
   document.querySelectorAll('.nav-item').forEach(function (item) {
     const href = item.getAttribute('href');
-    if (href && path.startsWith(href)) {
+    if (!href) return;
+
+    var hrefPath = href;
+    try {
+      hrefPath = new URL(href, window.location.origin).pathname;
+    } catch (_err) {
+      hrefPath = href.split('?')[0];
+    }
+
+    var isActive =
+      path === hrefPath ||
+      path.startsWith(hrefPath + '/') ||
+      (hrefPath === '/ranking' && /\/competitions\/\d+\/ranking/.test(path)) ||
+      (hrefPath === '/reports' && path.startsWith('/view/competitions/'));
+
+    if (isActive) {
       item.classList.add('active');
       item.closest('.nav-item-wrapper').classList.add('active');
     }

@@ -1,4 +1,8 @@
-import { CreateTeamInput, UpdateTeamInput } from "../models/team";
+import {
+  CreateTeamInput,
+  SetActiveRunnerInput,
+  UpdateTeamInput,
+} from "../models/team";
 import { ValidationError } from "../errors/AppError";
 
 function isObject(value: unknown): value is Record<string, unknown> {
@@ -31,6 +35,19 @@ function readPositiveInteger(
   return value;
 }
 
+function readPositiveIntegerAlias(
+  payload: Record<string, unknown>,
+  fields: string[]
+): number {
+  for (const field of fields) {
+    if (field in payload) {
+      return readPositiveInteger(payload, field);
+    }
+  }
+
+  throw new ValidationError(`${fields[0]} é obrigatório`);
+}
+
 export function validateCreateTeam(payload: unknown): CreateTeamInput {
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
@@ -61,4 +78,14 @@ export function validateUpdateTeam(payload: unknown): UpdateTeamInput {
   }
 
   return result;
+}
+
+export function validateSetActiveRunner(payload: unknown): SetActiveRunnerInput {
+  if (!isObject(payload)) {
+    throw new ValidationError("Payload inválido");
+  }
+
+  return {
+    runnerId: readPositiveIntegerAlias(payload, ["runnerId", "runner_id", "athleteId"]),
+  };
 }
