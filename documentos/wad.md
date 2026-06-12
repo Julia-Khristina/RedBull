@@ -3105,8 +3105,6 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 **Integração do OCR com o frontend e o backend:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no frontend e a integração com o endpoint de checkpoints no backend — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
 
 
-**- Calculadora de descanso e gráfico de performance na tela do atleta:** A view do atleta (runner.ejs) possui os componentes visuais de calculadora de descanso e gráfico de evolução de performance previstos no protótipo, porém os cálculos e a alimentação dinâmica dos dados ainda não estão funcionando corretamente.  
-
 ### (c) Dificuldades técnicas
 **- Padronização de nomenclatura entre modelagem, banco de dados e código:** Desde o início do módulo, a modelagem de dados foi desenvolvida com entidades e atributos em português (ex.: corredor, equipe, checkpoint), enquanto o código da aplicação utilizava entidades em inglês (runner, team) e atributos em português. Essa inconsistência acumulada ao longo das sprints anteriores exigiu, nesta sprint, uma decisão de padronização global e a refatoração coordenada de todos os artefatos afetados: modelos TypeScript, repositories, controllers, rotas, testes, banco de dados e as seções correspondentes do WAD. O volume de alterações simultâneas e o risco de regressão tornaram essa tarefa uma das mais custosas da sprint, exigindo atenção redobrada para garantir que nenhum contrato de API fosse quebrado durante a migração. 
 
