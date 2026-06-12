@@ -1,0 +1,32 @@
+import { Router } from "express";
+import { athleteController } from "../controllers/athleteController";
+import { asyncHandler } from "../helpers/asyncHandler";
+
+const router = Router();
+
+router.post(
+  "/competitions/:competitionId/teams/:teamId/athletes",
+  asyncHandler(athleteController.create)
+);
+
+router.get(
+  "/competitions/:competitionId/teams/:teamId/athletes",
+  asyncHandler(athleteController.list)
+);
+
+router.get(
+  "/competitions/:competitionId/teams/:teamId/athletes/:athleteId",
+  asyncHandler(athleteController.findById)
+);
+
+router.put(
+  "/competitions/:competitionId/teams/:teamId/athletes/:athleteId",
+  asyncHandler(athleteController.update)
+);
+
+router.delete(
+  "/competitions/:competitionId/teams/:teamId/athletes/:athleteId",
+  asyncHandler(athleteController.delete)
+);
+
+export default router;
