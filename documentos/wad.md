@@ -1999,7 +1999,7 @@ O relacionamento entre entidades é feito por meio de uma linha que contém as c
 | -------- | --------- | --------- |  
 | 1:1 | Um para Um | Cada Team possui exatamente um UUID de acesso |
 | 1:N | Um para Muitos | Uma Competition possui vários Teams, mas cada Team pertence a uma única Competition |
-| N:N | Muitos para Muitos | Caso genérico em que instâncias de duas entidades se associam livremente entre si (não ocorre diretamente neste modelo) |
+| N:N | Muitos para Muitos | No modelo conceitual, `Runner` e `Treadmill` se relacionam N:N (cada corredor usa várias esteiras ao longo das 24h e cada esteira recebe vários corredores). No modelo lógico, essa relação é materializada na entidade associativa `Checkpoint`, com atributos próprios (`distance_km`, `pace`, `time`) |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2015,7 +2015,7 @@ A seguir, a Figura 26 ilustra o Modelo Entidade-Relacionamento desenvolvido para
 
 #### Descrição das entidades e relacionamentos
 
-A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema.
+A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema. A notação `1:N` adotada na coluna de relacionamentos corresponde à notação de Chen e equivale à forma `0..N` da notação UML; a participação obrigatória (mínimo 1) é indicada em texto quando aplicável.
 
 <div align="center">
   <sub>Quadro 26 - Descrição das entidades e relacionamentos</sub>
@@ -2023,12 +2023,12 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 
 | Entidade | Papel no sistema | Relacionamentos |
 | --------- | ---------------- | --------------- |
-| Competition | Representa o evento Red Bull 24h, raiz do modelo | Possui 0..N Teams (1:N); possui 0..N Checkpoints (1:N) |
-| Team | Agrupa corredores de uma mesma competição | Pertence a 1 Competition (obrigatório); possui 0..N Runners (1:N) |
-| Runner | Corredor participante vinculado a uma equipe | Pertence a 1 Team (obrigatório); possui 0..N Checkpoints (1:N) |
+| Competition | Representa o evento Red Bull 24h, raiz do modelo | Possui N Teams (1:N); possui N Checkpoints (1:N) |
+| Team | Agrupa corredores de uma mesma competição | Pertence a 1 Competition (obrigatório); possui N Runners (1:N) |
+| Runner | Corredor participante vinculado a uma equipe | Pertence a 1 Team (obrigatório); possui N Checkpoints (1:N) |
 | Checkpoint | Registro de desempenho do corredor na esteira | Pertence obrigatoriamente a 1 Runner, 1 Competition, 1 Treadmill e 1 Admin (todas as associações são obrigatórias) |
-| Admin | Operador responsável por registrar checkpoints | Possui 0..N Checkpoints (1:N) |
-| Treadmill | Esteira onde a corrida é realizada | Possui 0..N Checkpoints (1:N) |
+| Admin | Operador responsável por registrar checkpoints | Possui N Checkpoints (1:N) |
+| Treadmill | Esteira onde a corrida é realizada | Possui N Checkpoints (1:N) |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2044,10 +2044,10 @@ A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados n
 
 | Elemento |  Símbolo  | Aplicação ao MER |
 | -------- | --------- | ---------------- |
-| Atributo | Elipse    | `name` em `Competition`, `cpf` em `Runner` |
-| Atributo | Elipse    | `address` em `Competition`, `name` em `Runner` |
-| Cardinalidade | 1 e N nas arestas | Um Runner possui N Checkpoints |
-| Cardinalidade | 1, N nas arestas | Um runner possui N checkpoints |
+| Entidade | Retângulo | `Competition`, `Team`, `Runner`, `Checkpoint`, `Admin` e `Treadmill` |
+| Atributo | Elipse    | `address` em `Competition`, `cpf` em `Runner` |
+| Relacionamento | Losango | `Team` possui `Runner` |
+| Cardinalidade | 1, N nas arestas | Um `Runner` possui N `Checkpoints` |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2069,7 +2069,7 @@ O Quadro 28 apresenta a entidade e os atributos de `Competition`.
 | Competition | `name` | Texto | Sim | CHECK: não vazio | Nome da competição |
 | Competition | `address` | Texto | Sim | — | Local onde a competição ocorre |
 | Competition | `date` | Data | Sim | CHECK: data ≥ 01/01/2020 | Data de realização da competição |
-| Competition | `status` | Categórico | Sim  | CHECK: `not_started`, `in_progress` ou `closed`; padrão `not_started` | Estado atual da competição |
+| Competition | `status` | Categórico | Sim | CHECK: `not_started`, `in_progress` ou `closed`; padrão `not_started` | Estado atual da competição |
 | Competition | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
@@ -2105,7 +2105,7 @@ O Quadro 30 representa o dicionário de dados da entidade `Runner`.
 | -------- | --------- | -------------- | ----------- | ------------------ | --------- |
 | Runner | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada corredor |
 | Runner | `name` | Texto | Sim | CHECK: não vazio | Nome completo do corredor |
-| Runner | `status` | Categórico | Sim | CHECK: `runner` ou `captain`; padrão `runner`. Armazena o papel do corredor (não um estado de execução) | Papel do corredor na equipe |
+| Runner | `status` | Categórico | Sim | CHECK: `runner` ou `captain`; padrão `runner`. Conforme a migration, armazena o papel do corredor na equipe | Papel do corredor na equipe |
 | Runner | `email` | Texto | Sim | UNIQUE; CHECK: formato de e-mail | Endereço de e-mail do corredor |
 | Runner | `phone` | Texto | Não | — | Contato telefônico do corredor |
 | Runner | `cpf` | Texto | Sim | UNIQUE; CHECK: formato `000.000.000-00` | Documento de identificação civil |
@@ -2205,7 +2205,6 @@ A seguir, o Quadro 34 apresenta a rastreabilidade entre as entidades criadas com
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
-
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
