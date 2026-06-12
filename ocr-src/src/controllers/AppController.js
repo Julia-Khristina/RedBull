@@ -51,7 +51,8 @@ export class AppController {
     this.renderLoading("Carregando imagem...");
     const image = await this.uploadController.readImageFile(file);
     this.state.image = image;
-    this.state.regions = this.templateService.createRegions(image.naturalWidth, image.naturalHeight);
+    this.renderLoading("Detectando regioes...");
+    this.state.regions = await this.templateService.createRegionsFromImage(image);
     this.renderCrop();
   }
 
@@ -62,6 +63,7 @@ export class AppController {
     });
 
     this.cropView.bind(this.root, {
+      onRedetect: () => this.redetectRegions(),
       onProcess: () => this.processOcr()
     });
 
@@ -78,6 +80,14 @@ export class AppController {
       }
     );
     this.cropController.mount();
+  }
+
+  async redetectRegions() {
+    if (!this.state.image) return;
+
+    this.renderLoading("Reencontrando regioes...");
+    this.state.regions = await this.templateService.createRegionsFromImage(this.state.image);
+    this.renderCrop();
   }
 
   async processOcr() {

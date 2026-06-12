@@ -31,15 +31,12 @@
         <%= competition.name %>
       </p>
     </div>
-    <button
-      type="button"
+    <a
+      href="/teams/new?competitionId=<%= competition.id %>"
       class="teams__new-btn"
-      data-teams-action="open-new"
-      aria-haspopup="dialog"
-      aria-controls="teams-modal"
     >
       + Nova Equipe
-    </button>
+    </a>
   </header>
 
   <% if (teamsList.length === 0) { %>
@@ -56,16 +53,25 @@
       <p class="teams__empty-text">
         Cadastre a primeira equipe da competição para começar a operar.
       </p>
-      <button
-        type="button"
+      <a
+        href="/teams/new?competitionId=<%= competition.id %>"
         class="teams__empty-cta"
-        data-teams-action="open-new"
       >
-        + Nova Equipe
-      </button>
+        Criar primeira equipe
+      </a>
     </section>
 
   <% } else { %>
+
+    <% if (teamsList.length === 1) { %>
+      <section class="teams__second-team">
+        <div>
+          <strong>Primeira equipe cadastrada.</strong>
+          <span>Crie a segunda equipe para preparar a competição completa.</span>
+        </div>
+        <a href="/teams/new?competitionId=<%= competition.id %>" class="teams__second-team-link">Criar segunda equipe</a>
+      </section>
+    <% } %>
 
     <section class="teams__list" aria-label="Equipes cadastradas">
       <% teamsList.forEach(function(team) { %>
@@ -104,15 +110,18 @@
           </div>
 
           <div class="teams__card-actions">
-            <button
-              type="button"
+            <a
+              href="/teams/<%= team.id %>?competitionId=<%= competition.id %>"
+              class="teams__access-btn"
+            >
+              Acessar Equipe
+            </a>
+            <a
+              href="/teams/<%= team.id %>/edit?competitionId=<%= competition.id %>"
               class="teams__edit-btn"
-              data-teams-action="open-edit"
-              data-team-id="<%= team.id %>"
-              data-team-name="<%= team.name %>"
             >
               Editar
-            </button>
+            </a>
             <button
               type="button"
               class="teams__delete-btn"

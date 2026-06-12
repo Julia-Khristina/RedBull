@@ -1,0 +1,35 @@
+<%#
+  VIEW: teams/competition-required.ejs
+  ESTADO: [C2 — Bloqueio de acesso sem competição]
+  REGRA:
+    - /teams, /teams/new e /teams/:teamId exigem ?competitionId= válido.
+%>
+
+<main class="teams teams--notice">
+  <header class="teams__header">
+    <div class="teams__title-block">
+      <h1 class="teams__title">Equipes</h1>
+      <p class="teams__subtitle">Selecione uma competição para continuar</p>
+    </div>
+  </header>
+
+  <section class="teams__empty teams__notice" aria-live="polite">
+    <div class="teams__empty-icon teams__notice-icon" aria-hidden="true">
+      <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2.5" opacity="0.25" />
+        <path d="M32 18v18" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+        <circle cx="32" cy="45" r="2.5" fill="currentColor" />
+      </svg>
+    </div>
+
+    <p class="teams__empty-title">Competição não informada</p>
+    <p class="teams__empty-text">
+      Não é possível acessar a área de equipes sem uma competição determinada.
+      Volte ao dashboard e escolha a competição que deseja gerenciar.
+    </p>
+
+    <a href="/dashboard" class="teams__empty-cta">
+      Voltar ao dashboard
+    </a>
+  </section>
+</main>

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
 import { treadmillService } from "../services/treadmillService";
+import { runnerService } from "../services/runnerService";
 import { ValidationError } from "../errors/AppError";
 
 function parseIntegerParam(value: unknown, name: string): number {
@@ -12,6 +13,13 @@ function parseIntegerParam(value: unknown, name: string): number {
   }
 
   return parsed;
+}
+
+function parseOptionalIntegerParam(value: unknown): number | null {
+  if (typeof value !== "string" || value.trim() === "") return null;
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed > 0 ? parsed : null;
 }
 
 function parsePaceToSeconds(pace: string | null): number | null {
@@ -89,6 +97,37 @@ function buildSavedDataSummary(checkpoints: Checkpoint[]) {
 }
 
 export const checkpointController = {
+  async renderOperationalPanel(req: Request, res: Response): Promise<void> {
+    const runnerId =
+      parseOptionalIntegerParam(req.params.runnerId) ??
+      parseOptionalIntegerParam(req.query.runnerId);
+    const teamId = parseOptionalIntegerParam(req.query.teamId);
+    const competitionId = parseOptionalIntegerParam(req.query.competitionId) ?? 1;
+    const adminId = parseOptionalIntegerParam(req.query.adminId) ?? 1;
+    const treadmill = await treadmillService.getOrCreateDefault();
+    const selectedRunner =
+      runnerId && teamId
+        ? await runnerService.findByTeamAndId(teamId, runnerId)
+        : null;
+
+    res.render("operational-panel/operationalPanel", {
+      title: "Registro manual — Red Bull 24h",
+      pageCSS: "/css/operational-panel.css",
+      selectedRunner,
+      checkpointContext: {
+        identifier: `MANUAL-${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}-${runnerId ?? "runner"}`,
+        id_runner: runnerId ?? "",
+        id_competition: competitionId,
+        id_treadmill: treadmill.id,
+        id_admin: adminId,
+      },
+      manualCheckpoint: {
+        checkpointClock: new Date().toLocaleTimeString("pt-BR"),
+      },
+      currentPage: "teams",
+    });
+  },
+
   async renderSavedByTeam(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(req.params.id, "id");
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
@@ -143,6 +182,15 @@ export const checkpointController = {
 
   async create(req: Request, res: Response): Promise<void> {
     const checkpoint = await checkpointService.create(req.body);
+    res.status(201).json(checkpoint);
+  },
+
+  async createForRunner(req: Request, res: Response): Promise<void> {
+    const runnerId = parseIntegerParam(req.params.runnerId, "runnerId");
+    const checkpoint = await checkpointService.create({
+      ...req.body,
+      id_runner: runnerId,
+    });
     res.status(201).json(checkpoint);
   },
 

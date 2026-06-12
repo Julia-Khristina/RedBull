@@ -5,6 +5,16 @@ import { asyncHandler } from "../helpers/asyncHandler";
 const router = Router();
 
 router.get(
+  "/ranking",
+  asyncHandler(rankingController.renderActiveRanking)
+);
+
+router.get(
+  "/competitions/:id/ranking",
+  asyncHandler(rankingController.renderActiveRanking)
+);
+
+router.get(
   "/competitions/:id/ranking/teams",
   asyncHandler(rankingController.teamRanking)
 );

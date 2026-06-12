@@ -147,12 +147,29 @@
 
       <div class="rest-content">
 
+        <% if (runnerRestOptions && runnerRestOptions.length > 0) { %>
+          <label class="rest-runner-select">
+            <span>Atleta</span>
+            <select data-rest-runner-select>
+              <% runnerRestOptions.forEach(function(option) { %>
+                <option
+                  value="<%= option.id %>"
+                  <%= selectedRunnerRest && selectedRunnerRest.id === option.id ? 'selected' : '' %>
+                >
+                  <%= option.name %>
+                </option>
+              <% }); %>
+            </select>
+          </label>
+        <% } %>
+
         <%# [D2] Percentual: tempo decorrido desde último checkpoint / 50 min recomendados %>
-        <div class="circle-wrapper" aria-label="<%= restPct %>% do tempo de descanso concluído">
+        <div class="circle-wrapper" aria-label="<%= restPct %>% do tempo de descanso concluído" data-rest-circle-label>
           <svg class="circle-svg" viewBox="0 0 120 120" aria-hidden="true">
             <circle cx="60" cy="60" r="50" fill="none"
                     stroke="var(--bordas-separadores)" stroke-width="12"/>
             <circle cx="60" cy="60" r="50" fill="none"
+                    data-rest-circle-progress
                     stroke="<%= restPct >= 100 ? 'var(--verde)' : 'var(--amarelo)' %>"
                     stroke-width="12"
                     stroke-linecap="round"
@@ -160,25 +177,25 @@
                     stroke-dashoffset="<%= restOffset %>"
                     transform="rotate(-90 60 60)"/>
           </svg>
-          <span class="circle-text"><%= restPct %>%</span>
+          <span class="circle-text" data-rest-percent><%= restPct %>%</span>
         </div>
 
         <div class="rest-info">
 
           <% if (restPct >= 100) { %>
-            <div class="rest-status-badge ready">
+            <div class="rest-status-badge ready" data-rest-status>
               <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"
                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="3" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
               </svg>
-              Pronto para Voltar!
+              <span data-rest-status-text><%= selectedRunnerRest ? selectedRunnerRest.statusLabel : 'Pronto para Voltar!' %></span>
             </div>
-            <p class="rest-desc">Tempo de descanso atingido...</p>
+            <p class="rest-desc" data-rest-description><%= selectedRunnerRest ? selectedRunnerRest.description : 'Tempo de descanso atingido...' %></p>
           <% } else { %>
-            <div class="rest-status-badge resting">
-              Em descanso
+            <div class="rest-status-badge resting" data-rest-status>
+              <span data-rest-status-text><%= selectedRunnerRest ? selectedRunnerRest.statusLabel : 'Em descanso' %></span>
             </div>
-            <p class="rest-desc">Aguardando tempo de descanso...</p>
+            <p class="rest-desc" data-rest-description><%= selectedRunnerRest ? selectedRunnerRest.description : 'Aguardando tempo de descanso...' %></p>
           <% } %>
 
           <%#
@@ -189,6 +206,11 @@
           <div class="rest-recommended">
             Tempo recomendado de descanso: <strong>50 min</strong>
           </div>
+
+          <p class="rest-last-checkpoint" data-rest-last-checkpoint>
+            Último checkpoint:
+            <strong><%= selectedRunnerRest && selectedRunnerRest.hasCheckpoint ? selectedRunnerRest.lastCheckpointAt : '—' %></strong>
+          </p>
 
           <%#
             [D2] Próximo atleta: runner sem checkpoint registrado nesta competição.
@@ -257,3 +279,7 @@
 <div id="share-toast" class="share-toast hidden" role="status" aria-live="polite">
   Link copiado!
 </div>
+
+<script>
+  window.RUNNER_REST_OPTIONS = <%- JSON.stringify(runnerRestOptions || []) %>;
+</script>
