@@ -198,9 +198,15 @@ export const teamController = {
   },
 
   async create(req: Request, res: Response): Promise<void> {
+<<<<<<< HEAD
+    const competicao_id = parseIntegerParam(
+      req.params.competitionId,
+      "competitionId"
+=======
     const competitionId = parseIntegerParam(
       req.params.id,
       "id"
+>>>>>>> origin/dev
     );
 
     const team = await teamService.create({
@@ -212,9 +218,15 @@ export const teamController = {
   },
 
   async list(req: Request, res: Response): Promise<void> {
+<<<<<<< HEAD
+    const competicao_id = parseIntegerParam(
+      req.params.competitionId,
+      "competitionId"
+=======
     const competitionId = parseIntegerParam(
       req.params.id,
       "id"
+>>>>>>> origin/dev
     );
 
     const teams = await teamService.findByCompetition(competitionId);

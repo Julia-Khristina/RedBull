@@ -870,20 +870,20 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 | RF001 | RN03                | `/competitions`                                               | POST   |
 | RF002 | RN18                | `/competitions`                                               | POST   |
 | RF002 | RN18                | `/competitions`                                               | GET    |
-| RF002 | RN18                | `/competitions/:id`                                           | GET    |
-| RF002 | RN18                | `/competitions/:id`                                           | PUT    |
-| RF012 | RN14                | `/competitions/:id`                                           | PATCH  |
-| RF002 | RN18                | `/competitions/:id`                                           | DELETE |
-| RF003 | RN01, RN07          | `/competitions/:id/teams`                                     | POST   |
-| RF003 | RN01, RN07          | `/competitions/:id/teams`                                     | GET    |
-| RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | GET    |
-| RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | PUT    |
-| RF003 | RN01, RN07          | `/competitions/:id/teams/:teamId`                             | DELETE |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes`                    | POST   |
-| RF011 | RN07, RN10          | `/competitions/:id/teams/:teamId/athletes`                    | GET    |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | GET    |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | PUT    |
-| RF003 | RN01                | `/competitions/:id/teams/:teamId/athletes/:athleteId`         | DELETE |
+| RF002 | RN18                | `/competitions/:competitionId`                                           | GET    |
+| RF002 | RN18                | `/competitions/:competitionId`                                           | PUT    |
+| RF012 | RN14                | `/competitions/:competitionId`                                           | PATCH  |
+| RF002 | RN18                | `/competitions/:competitionId`                                           | DELETE |
+| RF003 | RN01, RN07          | `/competitions/:competitionId/teams`                                     | POST   |
+| RF003 | RN01, RN07          | `/competitions/:competitionId/teams`                                     | GET    |
+| RF003 | RN01, RN07          | `/competitions/:competitionId/teams/:teamId`                             | GET    |
+| RF003 | RN01, RN07          | `/competitions/:competitionId/teams/:teamId`                             | PUT    |
+| RF003 | RN01, RN07          | `/competitions/:competitionId/teams/:teamId`                             | DELETE |
+| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes`                    | POST   |
+| RF011 | RN07, RN10          | `/competitions/:competitionId/teams/:teamId/athletes`                    | GET    |
+| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes/:athleteId`         | GET    |
+| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes/:athleteId`         | PUT    |
+| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes/:athleteId`         | DELETE |
 | RF004 | RN02, RN03          | `/auth/sessions`                                              | POST   |
 | RF005 | RN06                | `/ocr/extractions`                                            | POST   |
 | RF006 | RN04, RN05          | `/ocr/extractions`                                            | POST   |
@@ -894,12 +894,12 @@ Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTfu
 | RF007 | RN06, RN12          | `/checkpoints/:id`                                            | PUT    |
 | RF008 | RN04, RN05          | `/checkpoints/:id`                                            | DELETE |
 | RF008 | RN04, RN05          | `/corredores/:corredorId/checkpoints`                         | GET    |
-| RF008 | RN04, RN05          | `/competitions/:id/checkpoints`                               | GET    |
-| RF009 | RN06                | `/competitions/:id/checkpoints/inconsistencies`               | GET    |
-| RF010 | RN09, RN11          | `/competitions/:id/ranking/teams`                             | GET    |
-| RF015 | RN09, RN11          | `/competitions/:id/ranking/athletes`                          | GET    |
-| RF013 | RN15                | `/competitions/:id/export`                                    | GET    |
-| RF014 | RN16, RN17          | `/competitions/:id/reports`                                   | GET    |
+| RF008 | RN04, RN05          | `/competitions/:competitionId/checkpoints`                               | GET    |
+| RF009 | RN06                | `/competitions/:competitionId/checkpoints/inconsistencies`               | GET    |
+| RF010 | RN09, RN11          | `/competitions/:competitionId/ranking/teams`                             | GET    |
+| RF015 | RN09, RN11          | `/competitions/:competitionId/ranking/athletes`                          | GET    |
+| RF013 | RN15                | `/competitions/:competitionId/export`                                    | GET    |
+| RF014 | RN16, RN17          | `/competitions/:competitionId/reports`                                   | GET    |
 | RF004 | RN02, RN03          | `/administradores`                                            | GET    |
 | RF004 | RN02, RN03          | `/administradores/:id`                                        | GET    |
 | RF004 | RN02, RN03          | `/administradores`                                            | POST   |
@@ -992,8 +992,8 @@ Esse desenho evita que a latência do motor OCR impacte a resposta percebida pel
 
 | Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
 | -------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
-| **Controller** | `CompetitionController` | Recebe `POST /competitions` e delega ao `CompetitionService` para criação de competição; recebe `GET /competitions/:id` e delega ao `CompetitionService` para consulta de estado.                                       | RF02, RF12                   |
-| **Controller** | `TeamController`        | Recebe `POST /competitions/:competicaoId/teams` e delega ao `TeamService` para criação de equipe com geração de UUID e QR Code; recebe `GET /competitions/:competicaoId/teams` e delega ao `TeamService` para listagem. | RF03, RF01, RN01             |
+| **Controller** | `CompetitionController` | Recebe `POST /competitions` e delega ao `CompetitionService` para criação de competição; recebe `GET /competitions/:competitionId` e delega ao `CompetitionService` para consulta de estado.                                       | RF02, RF12                   |
+| **Controller** | `TeamController`        | Recebe `POST /competitions/:competitionId/teams` e delega ao `TeamService` para criação de equipe com geração de UUID e QR Code; recebe `GET /competitions/:competitionId/teams` e delega ao `TeamService` para listagem. | RF03, RF01, RN01             |
 | **Controller** | `AthleteController`     | Recebe `POST /athletes` e delega ao `AthleteService` para cadastro de corredor; recebe `GET /athletes/:id` e delega ao `AthleteService` para recuperação de dados individuais.                                          | RF01                         |
 | **Controller** | `UserController`        | Recebe `POST /users` e delega ao `UserService` para criação de usuário administrativo; recebe `POST /users/login` e delega ao `UserService` para validação de acesso.                                                   | RF04                         |
 | **Controller** | `CheckpointController`  | Recebe `POST /checkpoints` e delega ao `CheckpointService` para registro manual de passagem; recebe `POST /ocr/extractions` e delega ao `OCRService` para processamento assíncrono de OCR.                              | RF05, RF07, RF08, RF09       |
@@ -2269,7 +2269,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Administrador` valida/supervisiona `Checkpoint` | FK `administrador_id` em `CHECKPOINT` |
 
 
-### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
+### . -b (sprints 2 e 4)
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
@@ -2926,7 +2926,7 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
 
-A rastreabilidade contribui para a manutenção da consistência entre os artefatos do projeto, reduzindo ambiguidades e facilitando processos de validação, testes e evolução da solução ao longo das sprints.
+A rastreabilidade contribui para a manutenção da consistência entre os artefatos do projeto, reduzindo ambiguidades, facilitando processos de validação e testes, além de permitir a identificação rápida de impactos causados por alterações nos requisitos ao longo das sprints.
 
 <div align="center">
 
@@ -2934,31 +2934,29 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 
 </div>
 
-### Quadro 35 – Matriz de Rastreabilidade (RTM)
-
-| Persona        | RF    | RN         | Endpoint                                            | Tela                           | Teste                        | Evidência                                                     |
-| -------------- | ----- | ---------- | --------------------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------- |
-| Marina Costa   | RF001 | RN03       | POST `/competitions`                                | Cadastro de Competição         | competition.e2e.spec.ts      | Competição criada com sucesso e persistida no banco           |
-| Marina Costa   | RF002 | RN18       | GET/POST `/competitions`                            | Dashboard Principal            | competitionService.spec.ts   | Dados da competição cadastrados e recuperados corretamente    |
-| Marina Costa   | RF003 | RN01, RN07 | POST `/competitions/:id/teams`                      | Cadastro de Equipes            | team.e2e.spec.ts             | Equipe criada e vinculada à competição                        |
-| Marina Costa   | RF003 | RN01       | POST `/competitions/:id/teams/:teamId/athletes`     | Cadastro de Equipes            | athlete.e2e.spec.ts          | Atleta vinculado corretamente à equipe                        |
-| Marina Costa   | RF004 | RN02, RN03 | POST `/auth/sessions`                               | Dashboard Principal            | authService.test.ts          | Sessão autenticada com sucesso                                |
-| Marina Costa   | RF005 | RN06       | POST `/ocr/extractions`                             | Captura da Foto da Esteira     | checkpointService.spec.ts    | Dados extraídos via OCR retornados para validação             |
-| Marina Costa   | RF006 | RN04, RN05 | POST `/ocr/extractions`                             | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados disponibilizados para conferência antes da persistência |
-| Marina Costa   | RF007 | RN06, RN12 | PATCH `/ocr/extractions/:extractionId`              | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados corrigidos e registrados em log                         |
-| Marina Costa   | RF008 | RN04, RN05 | POST `/checkpoints`                                 | Registro Manual                | checkpointService.spec.ts    | Checkpoint registrado com sucesso                             |
-| Marina Costa   | RF008 | RN04, RN05 | GET `/checkpoints`                                  | Checkpoints Salvos             | checkpointService.spec.ts    | Histórico de checkpoints recuperado corretamente              |
-| Marina Costa   | RF009 | RN06       | GET `/competitions/:id/checkpoints/inconsistencies` | Dados Extraídos via OCR        | checkpointService.spec.ts    | Inconsistências identificadas e exibidas ao operador          |
-| Bruno Monteiro | RF010 | RN09, RN11 | GET `/competitions/:id/ranking/teams`               | Dashboard Principal            | rankingService.spec.ts       | Ranking administrativo atualizado automaticamente             |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET `/competitions/:id/teams/:teamId/athletes`      | Painel Operacional das Equipes | athleteService.spec.ts       | Exibição do atleta em corrida e próximo atleta previsto       |
-| Bruno Monteiro | RF012 | RN14       | PATCH `/competitions/:id`                           | Dashboard Principal            | competitionService.spec.ts   | Competição encerrada e bloqueio de novos registros validado   |
-| Bruno Monteiro | RF013 | RN15       | GET `/competitions/:id/export`                      | Dashboard Principal            | export.e2e.spec.ts           | Arquivo de exportação gerado com sucesso                      |
-| Bruno Monteiro | RF014 | RN16, RN17 | GET `/competitions/:id/reports`                     | Dashboard Principal            | exportService.spec.ts        | Relatórios e indicadores gerados corretamente                 |
-| Amanda Azevedo | RF015 | RN09, RN13 | GET `/competitions/:id/ranking/athletes`            | Painel Público da Equipe       | rankingService.spec.ts       | Ranking público atualizado e exibido corretamente             |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET `/administradores`                              | Dashboard Principal            | administratorService.spec.ts | Administradores recuperados corretamente                      |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST `/administradores`                             | Dashboard Principal            | administratorService.spec.ts | Administrador criado com sucesso                              |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT `/administradores/:id`                          | Dashboard Principal            | administratorService.spec.ts | Dados administrativos atualizados corretamente                |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE `/administradores/:id`                       | Dashboard Principal            | administratorService.spec.ts | Administrador removido corretamente                           |
+| Persona | RF | RN | Endpoint | Tela | Arquivo de Teste (real) | Evidência |
+|---|---|---|---|---|---|---|
+| Marina Costa | RF001 | RN03 | POST /competitions | Cadastro de Competição | competitionService.spec.ts | Competição criada com sucesso e persistida no banco |
+| Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
+| Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts ⚠️ | Atleta vinculado corretamente à equipe |
+| Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
+| Marina Costa | RF005 | RN06 | POST /ocr/extractions | Captura da Foto da Esteira | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
+| Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
+| Marina Costa | RF007 | RN06, RN12 | PATCH /ocr/extractions/:extractionId | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados em log |
+| Marina Costa | RF008 | RN04, RN05 | POST /checkpoints | Registro Manual | checkpointService.spec.ts | Checkpoint registrado com sucesso |
+| Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
+| Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
+| Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts ⚠️ | Exibição do atleta em corrida e próximo atleta previsto |
+| Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
+| Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
+| Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/athletes | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Administrador removido corretamente |
 
 <div align="center">
 
@@ -2983,7 +2981,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 </div>
 
 <div align="center">
-  <sub>Figura 1 - Pasta supabaseClient.ts</sub><br>
+  <sub>Figura 1 - Arquivo supabaseClient.ts</sub><br>
     <img src="../assets/programacao/pasta-supabaseClient.ts.png" width="100%" alt="Representação da pasta supabaseClient.ts do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2991,7 +2989,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 **- Configuração do ambiente e gestão de dependências:** o arquivo `package.json` foi estruturado contendo as dependências de produção e de desenvolvimento, além de scripts padronizados de execução (`dev`, `build`, `start`, `test`, `test:e2e`, `test:unit`, `test:integration`), garantindo que qualquer membro da equipe consiga rodar o projeto e os testes de forma consistente. Foi configurado também o arquivo `.env` para gerenciamento seguro de variáveis sensíveis (URL e chave do Supabase, porta da aplicação, ambiente de execução), com um `.env.example` versionado no repositório para servir de referência, mantendo o arquivo real fora do controle de versão via `.gitignore`. Essa estrutura padroniza o setup local, evita o vazamento de credenciais e prepara o projeto para deploy em diferentes ambientes (desenvolvimento, teste e produção).
 
 <div align="center">
-  <sub>Figura 1 - Pasta Package.json</sub><br>
+  <sub>Figura 1 - Arquivo Package.json</sub><br>
     <img src="../assets/programacao/pasta-package.json.png" width="100%" alt="Representação do package.json do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -3005,7 +3003,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 **- Infraestrutura base:** servidor Express configurado, integração com Supabase, sistema de erros customizados (`ValidationError`, `NotFoundError`, `ConflictError`, `UnprocessableError`), middleware centralizado de tratamento de erros e helper `asyncHandler` para padronização do fluxo assíncrono.
 
 <div align="center">
-  <sub>Figura 1 - Pasta appError.ts</sub><br>
+  <sub>Figura 1 - Arquivo AppError.ts</sub><br>
     <img src="../assets/programacao/pasta-apperror.ts.png" width="100%" alt="Representação da pasta appError.ts do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -3029,7 +3027,7 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
 
-**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento → retorno dos campos extraídos → validação humana antes da persistência). A solução foi implementada com **OpenCV** em conjunto com **Tesseract.js**, rodando inteiramente no próprio navegador (client-side), o que elimina a dependência de serviços externos de OCR e mantém o processamento sob controle da aplicação. Nesta versão, o OCR opera de forma isolada e ainda não realiza detecção automática de campos — a segmentação das regiões do display correspondentes a distância, pace e tempo total será refinada na sprint 4. O comportamento atual está alinhado com os critérios de aceite da US09, restando apenas a aprovação final do parceiro e a integração refinada com o módulo de Checkpoints.
+**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento no backend → persistência dos campos extraídos → validação humana). A solução será integrada ao servidor para garantir a persistência de logs de extração e auditoria (RN05), permitindo que o administrador revise registros e trate discrepâncias (RN06) diretamente via API. O comportamento atual está alinhado com os critérios de aceite da US09, restando a implementação das rotas de extração no backend e a integração refinada com o módulo de Checkpoints na sprint 4.
 
 <div align="center">
   <sub>Figura 1 - Adicionar imagem</sub><br>
