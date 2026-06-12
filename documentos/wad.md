@@ -3203,12 +3203,13 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### 6.2.1 Visão Geral do Setor
 
-*Até 250 palavras.*
+O setor de gestão de eventos esportivos e corridas de rua no Brasil encontra-se em acelerada digitalização. Do ponto de vista **econômico**, o segmento movimenta aproximadamente R$ 1,1 bilhão por ano (ABRACEO, 2025), impulsionado pelo crescimento expressivo no número de provas: o Brasil registrou 5.241 corridas de rua em 2025, alta de 85% frente a 2024 (ABRACEO/CBAt, 4º Summit, 2025). Esse volume cria demanda por sistemas confiáveis de apuração de resultados em tempo real.
 
-*Contextualize o setor em que a aplicação está inserida, considerando aspectos econômicos, tecnológicos e regulatórios. Utilize fontes confiáveis.*
+Do ponto de vista **tecnológico**, a automação de processos operacionais por meio de visão computacional e OCR (Optical Character Recognition) tem substituído métodos manuais em contextos de alta pressão, reduzindo falhas humanas e permitindo rastreabilidade dos dados. Soluções baseadas em WebAPI REST, armazenamento em nuvem e captura de imagem por dispositivos móveis já são adotadas por plataformas líderes do setor, como a Ticket Sports e a All Chip.
 
-*Valor: até 1,0 ponto.*
+Do ponto de vista **regulatório**, a realização de eventos esportivos no Brasil está sujeita às normativas da Confederação Brasileira de Atletismo (CBAt) e às diretrizes da World Athletics para cronometragem e apuração de resultados, que exigem registro auditável de tempos e quilometragens. A Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018) também se aplica ao tratamento de dados pessoais de atletas, impondo requisitos de segurança e transparência no armazenamento de CPF, e-mail e informações de desempenho.
 
+*Fonte: ABRACEO (2025); CBAt (2024); LGPD — Lei nº 13.709/2018.*
 ### 6.2.2 Tamanho e Crescimento do Mercado
 
 O mercado brasileiro de corrida apresenta forte expansão, o que favorece a criação de eventos proprietários, experiências esportivas de marca e soluções de apoio à operação. Segundo levantamento da ABRACEO apresentado no 4º Summit ABRACEO/CBAt, o número de corridas de rua oficiais no Brasil saltou de 2.827 em 2024 para 5.241 em 2025, um crescimento de 85%, enquanto o estado de São Paulo registrou 1.311 corridas no período, liderando o volume nacional de provas. A própria ABRACEO caracteriza o setor de corridas de rua como responsável por quase 90% dos eventos esportivos realizados no país, em um mercado que já movimenta cerca de R$ 1,1 bilhão ao ano (ABRACEO, 2025; Ticket Sports, 2026).
