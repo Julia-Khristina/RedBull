@@ -2934,29 +2934,29 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 
 </div>
 
-| Persona        | RF    | RN         | Endpoint                                            | Tela                           | Teste                        | Evidência                                                     |
-| -------------- | ----- | ---------- | --------------------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------- |
-| Marina Costa   | RF001 | RN03       | POST `/competitions`                                | Cadastro de Competição         | competition.e2e.spec.ts      | Competição criada com sucesso e persistida no banco           |
-| Marina Costa   | RF002 | RN18       | GET/POST `/competitions`                            | Dashboard Principal            | competitionService.spec.ts   | Dados da competição cadastrados e recuperados corretamente    |
-| Marina Costa   | RF003 | RN01, RN07 | POST `/competitions/:competitionId/teams`                      | Cadastro de Equipes            | team.e2e.spec.ts             | Equipe criada e vinculada à competição                        |
-| Marina Costa   | RF003 | RN01       | POST `/competitions/:competitionId/teams/:teamId/athletes`     | Cadastro de Equipes            | athlete.e2e.spec.ts          | Atleta vinculado corretamente à equipe                        |
-| Marina Costa   | RF004 | RN02, RN03 | POST `/auth/sessions`                               | Dashboard Principal            | authService.test.ts          | Sessão autenticada com sucesso                                |
-| Marina Costa   | RF005 | RN06       | POST `/ocr/extractions`                             | Captura da Foto da Esteira     | checkpointService.spec.ts    | Dados extraídos via OCR retornados para validação             |
-| Marina Costa   | RF006 | RN04, RN05 | POST `/ocr/extractions`                             | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados disponibilizados para conferência antes da persistência |
-| Marina Costa   | RF007 | RN06, RN12 | PATCH `/ocr/extractions/:extractionId`              | Dados Extraídos via OCR        | checkpointService.spec.ts    | Dados corrigidos e registrados em log                         |
-| Marina Costa   | RF008 | RN04, RN05 | POST `/checkpoints`                                 | Registro Manual                | checkpointService.spec.ts    | Checkpoint registrado com sucesso                             |
-| Marina Costa   | RF008 | RN04, RN05 | GET `/checkpoints`                                  | Checkpoints Salvos             | checkpointService.spec.ts    | Histórico de checkpoints recuperado corretamente              |
-| Marina Costa   | RF009 | RN06       | GET `/competitions/:competitionId/checkpoints/inconsistencies` | Dados Extraídos via OCR        | checkpointService.spec.ts    | Inconsistências identificadas e exibidas ao operador          |
-| Bruno Monteiro | RF010 | RN09, RN11 | GET `/competitions/:competitionId/ranking/teams`               | Dashboard Principal            | rankingService.spec.ts       | Ranking administrativo atualizado automaticamente             |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET `/competitions/:competitionId/teams/:teamId/athletes`      | Painel Operacional das Equipes | athleteService.spec.ts       | Exibição do atleta em corrida e próximo atleta previsto       |
-| Bruno Monteiro | RF012 | RN14       | PATCH `/competitions/:competitionId`                           | Dashboard Principal            | competitionService.spec.ts   | Competição encerrada e bloqueio de novos registros validado   |
-| Bruno Monteiro | RF013 | RN15       | GET `/competitions/:competitionId/export`                      | Dashboard Principal            | export.e2e.spec.ts           | Arquivo de exportação gerado com sucesso                      |
-| Bruno Monteiro | RF014 | RN16, RN17 | GET `/competitions/:competitionId/reports`                     | Dashboard Principal            | exportService.spec.ts        | Relatórios e indicadores gerados corretamente                 |
-| Amanda Azevedo | RF015 | RN09, RN13 | GET `/competitions/:competitionId/ranking/athletes`            | Painel Público da Equipe       | rankingService.spec.ts       | Ranking público atualizado e exibido corretamente             |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET `/administradores`                              | Dashboard Principal            | administratorService.test.ts | Administradores recuperados corretamente                      |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST `/administradores`                             | Dashboard Principal            | administratorService.test.ts | Administrador criado com sucesso                              |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT `/administradores/:id`                          | Dashboard Principal            | administratorService.test.ts | Dados administrativos atualizados corretamente                |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE `/administradores/:id`                       | Dashboard Principal            | administratorService.test.ts | Administrador removido corretamente                           |
+| Persona | RF | RN | Endpoint | Tela | Arquivo de Teste (real) | Evidência |
+|---|---|---|---|---|---|---|
+| Marina Costa | RF001 | RN03 | POST /competitions | Cadastro de Competição | competitionService.spec.ts | Competição criada com sucesso e persistida no banco |
+| Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
+| Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts ⚠️ | Atleta vinculado corretamente à equipe |
+| Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
+| Marina Costa | RF005 | RN06 | POST /ocr/extractions | Captura da Foto da Esteira | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
+| Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
+| Marina Costa | RF007 | RN06, RN12 | PATCH /ocr/extractions/:extractionId | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados em log |
+| Marina Costa | RF008 | RN04, RN05 | POST /checkpoints | Registro Manual | checkpointService.spec.ts | Checkpoint registrado com sucesso |
+| Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
+| Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
+| Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts ⚠️ | Exibição do atleta em corrida e próximo atleta previsto |
+| Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
+| Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
+| Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/athletes | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Administrador removido corretamente |
 
 <div align="center">
 
