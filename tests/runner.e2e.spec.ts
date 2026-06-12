@@ -70,7 +70,7 @@ describe("Endpoints REST de runners", () => {
     ])("deve rejeitar payload inválido: %s → 400", async (_caso, payload) => {
       const res = await request(app).post(baseUrl()).send(payload);
       expect(res.status).toBe(400);
-    });
+    }, 1000);
 
     it("deve rejeitar CPF duplicado → 409", async () => {
       await request(app)

@@ -3284,12 +3284,153 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-*Liste e descreva os testes automatizados dos endpoints criados e planejados para sua solução, implementados com **Jest**. Cubra as duas abordagens:*
+### 5.1.1 Estratégia de Testes
 
-- ***White-box*** *— testes unitários de Service que exercitam ramos internos, exceções e regras de negócio (conhecimento da implementação).*
-- ***Black-box*** *— testes de integração dos endpoints via Jest + Supertest, verificando apenas o contrato HTTP (status, body, efeito observável), sem depender da implementação interna.*
+A estratégia de testes adotada no projeto foi estruturada de acordo com a arquitetura em camadas da aplicação, permitindo validar diferentes aspectos do sistema de forma organizada e independente. Para isso, os testes foram divididos conforme a responsabilidade de cada camada da aplicação.
 
-*Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
+A camada de **Service** é validada por meio de testes **white-box**, nos quais há conhecimento da implementação interna dos métodos testados. Essa abordagem permite verificar o comportamento da lógica de negócio e dos fluxos internos da aplicação de forma isolada.
+
+A camada de **Controller e Rotas** é validada por meio de testes **black-box**, realizados com o auxílio da biblioteca **Supertest**. Nessa abordagem, a aplicação é tratada como uma caixa-preta, sendo avaliados apenas os comportamentos observáveis por meio das requisições HTTP e respostas retornadas pelos endpoints.
+
+Quando necessário, a camada de **Repository** também pode ser validada separadamente, principalmente em situações que envolvam consultas ou operações de persistência com maior complexidade.
+
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**. Inicialmente são preparados os dados e condições necessárias para o cenário de teste (*Arrange*), em seguida a funcionalidade é executada (*Act*) e, por fim, os resultados obtidos são comparados com os resultados esperados (*Assert*).
+
+Além disso, os testes foram desenvolvidos de forma determinística, evitando dependências de ordem de execução, horário do sistema, serviços externos, acesso à rede ou dados residuais de execuções anteriores. Dessa forma, garante-se que uma mesma execução produza resultados consistentes independentemente do ambiente utilizado.
+
+
+## 5.1.2  Testes Unitários de Service
+- Cobertura mínima de 80% na camada Service, evidenciada pelo relatório
+  Jest gerado por "npm test -- --coverage".
+- Casos de teste vinculados explicitamente a uma RN (CT01 -> RN01,
+  CT02 -> RN02, ...), ordenados pela prioridade das RN do artefato 1.
+- Para os 5 casos de teste prioritários, explicação de como cada um
+  atende ao padrão AAA, ao determinismo, à RN coberta e ao caminho de
+  falha.
+
+
+## 5.1.3  Testes de Integração de Endpoints
+- Para cada endpoint principal, cobertura obrigatória dos quatro
+  cenários-chave: sucesso (200/201), falha de validação (400/422),
+  regra de negócio violada (409 ou equivalente) e recurso não
+  encontrado (404).
+
+
+## 5.1.4  Evidências de Execução
+### Execução dos Testes Automatizados
+
+Para validar o correto funcionamento da aplicação, foi realizada a execução dos testes automatizados utilizando o framework **Jest**, por meio do seguinte comando:
+
+```bash
+npm test
+```
+
+A execução foi concluída com sucesso, demonstrando que todos os testes implementados no sistema foram aprovados, sem ocorrência de falhas ou erros.
+
+**Resumo da Execução**
+
+| Métrica | Resultado |
+|----------|----------|
+| Test Suites | 16 passed |
+| Tests | 128 passed |
+| Failures | 0 |
+| Snapshots | 0 |
+| Tempo de Execução | 17.343 s |
+
+Durante a execução, foram testadas diferentes camadas e funcionalidades do sistema, incluindo serviços, repositórios, autenticação e testes end-to-end, garantindo a validação do comportamento esperado da aplicação.
+
+**Arquivos de teste executados**
+
+- authService.test.ts  
+- adminService.test.ts  
+- competitionService.spec.ts  
+- checkpointService.spec.ts  
+- teamService.spec.ts  
+- runnerService.spec.ts  
+- rankingService.spec.ts  
+- exportService.spec.ts  
+- teamRepository.spec.ts  
+- runnerRepository.spec.ts  
+- exportRepository.spec.ts  
+- competitionRepository.spec.ts  
+- competition.e2e.spec.ts  
+- team.e2e.spec.ts  
+- runner.e2e.spec.ts  
+- export.e2e.spec.ts  
+
+**Evidência**
+
+
+<div align="center">
+  <sub>Figura X - Resultado da execução do comando `npm test`.</sub><br>
+    <img src="../assets/programacao/execucao-dos-testes.png" width="700" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+---
+
+### Relatório de Cobertura
+
+A cobertura dos testes foi avaliada por meio do seguinte comando:
+
+```bash
+npm test -- --coverage
+```
+
+O relatório gerado permitiu analisar o percentual de código exercitado pelos testes automatizados em cada camada da aplicação.
+
+**Cobertura por Camada**
+
+
+| Camada | Statements | Branches | Functions | Lines |
+|----------|----------|----------|----------|----------|
+| App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
+| Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
+| Database | 87.50% | 75.00% | 100.00% | 87.50% |
+| Errors | 100.00% | 100.00% | 100.00% | 100.00% |
+| Helpers | 36.00% | 0.00% | 37.50% | 39.13% |
+| Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
+| Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
+| Routes | 91.22% | 0.00% | 0.00% | 91.22% |
+| Services | 73.48% | 58.99% | 73.91% | 75.13% |
+| Validators | 70.61% | 64.42% | 92.59% | 71.80% |
+| **Cobertura Total** | **56.13%** | **37.79%** | **50.50%** | **58.39%** |
+
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **56.13% em statements** e **58.39% em lines**, refletindo o nível de execução do código pelos testes implementados.
+
+**Evidência**
+<div align="center">
+  <sub>Figura X - Relatório completo de cobertura gerado pelo Jest.</sub><br>
+    <img src="../assets/programacao/relatorio-cobertura-teste.png" width="100%" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Rastreabilidade dos Casos de Teste
+
+Os testes automatizados implementados foram relacionados às respectivas regras de negócio e requisitos funcionais, garantindo consistência com a Matriz RF → RN → Endpoint (Seção 3.1.4) e com a Matriz de Rastreabilidade do Projeto (Seção 3.9).
+
+**Mapeamento CT → RN → RF**
+
+| Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) |
+|--------------------|------------------|------------------------|---------------------------|
+| CT01 | authService.test.ts | RN03 | RF004 |
+| CT02 | adminService.test.ts | RN02, RN03 | RF004 |
+| CT03 | competitionService.spec.ts | RN18, RN14 | RF002, RF012 |
+| CT04 | competition.e2e.spec.ts | RN18 | RF002 |
+| CT05 | teamService.spec.ts | RN01, RN07 | RF003 |
+| CT06 | teamRepository.spec.ts | RN01, RN07 | RF003 |
+| CT07 | team.e2e.spec.ts | RN01, RN07 | RF003 |
+| CT08 | runnerService.spec.ts | RN07 | RF003, RF011 |
+| CT09 | runnerRepository.spec.ts | RN07 | RF003 |
+| CT10 | runner.e2e.spec.ts | RN07 | RF003 |
+| CT11 | checkpointService.spec.ts | RN04, RN05, RN06 | RF005, RF006, RF007, RF008, RF009 |
+| CT12 | rankingService.spec.ts | RN09, RN11 | RF010, RF015 |
+| CT13 | exportService.spec.ts | RN15 | RF013 |
+| CT14 | exportRepository.spec.ts | RN15 | RF013 |
+| CT15 | export.e2e.spec.ts | RN15 | RF013 |
+| CT16 | competitionRepository.spec.ts | RN18 | RF002 |
+
+A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
