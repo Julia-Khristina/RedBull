@@ -1,0 +1,124 @@
+<%#
+  VIEW / ESTADO / LACUNAS / ENDPOINTS
+  Tela: Dados Salvos / Historico de checkpoints.
+  Visual: dados-salvos.png [A1].
+  View solicitada: src/views/dadosSalvos/dadosSalvos.ejs [A1].
+  Estado de entrega: C1 - view SSR conectada por checkpointController.renderSavedByTeam.
+  Rota SSR:
+    - GET /view/competitions/:id/teams/:teamId/checkpoints/saved [A1][B1][C1].
+  Endpoints de dados permitidos pela Secao 7:
+    - GET /competitions/:id/checkpoints [A1][B1: Checkpoint[] confirmado em controller/service/model/repository].
+  Decisoes:
+    - Integracao SSR sem fetch, pois nao ha componente interativo nesta tela [D1].
+    - Estado preenchido + vazio para array de checkpoints [D1].
+    - Sem validacao client-side, pois nao ha formulario [D1].
+    - Dados externos exibidos somente com tags EJS escapadas [D1].
+    - CSS usa apenas variaveis existentes em public/css/variables.css [A1][D1].
+    - Menu Equipes destacado por CSS nesta tela, sem JS e sem reload [D1].
+    - Metodo exibido por inferencia do identifier: prefixo manual- => Manual; demais identificadores => Automatico [A2][B2][D1].
+    - Cards de resumo calculados no controller a partir de checkpoints reais [A1][B1][D1].
+    - Historico limitado a equipe da URL via runner.id_team === :teamId [A1][B1][D1].
+  Campos esperados em checkpoints:
+    - id, identifier, distance_km, pace, time, created_at, runner.name, runner.id_team [B1].
+%>
+
+<link rel="stylesheet" href="/css/dadosSalvos.css">
+
+<%
+  const checkpoints = Array.isArray(locals.checkpoints) ? locals.checkpoints : [];
+  const summary = locals.summary || {};
+  const formatDistance = (value) => {
+    const normalizedValue = String(value ?? 0).replace(',', '.').replace(/[^\d.-]/g, '');
+    const numericValue = Number(normalizedValue);
+    const safeValue = Number.isFinite(numericValue) ? numericValue : 0;
+    return safeValue.toLocaleString('pt-BR', {
+      minimumFractionDigits: safeValue % 1 === 0 ? 0 : 1,
+      maximumFractionDigits: 1
+    });
+  };
+  const formatMethod = (identifier) => {
+    if (!identifier) return 'Nao informado';
+    return String(identifier).startsWith('manual-') ? 'Manual' : 'Automatico';
+  };
+  const totalDistance = summary.totalDistanceKm ?? checkpoints.reduce((sum, checkpoint) => {
+    return sum + Number(checkpoint.distance_km || 0);
+  }, 0);
+  const averagePace = summary.averagePace || '0:00';
+  const averageTime = summary.averageTime || '0h 00m';
+%>
+
+<main class="saved-data-page" aria-labelledby="saved-data-title">
+  <header class="saved-data-header">
+    <p class="saved-data-breadcrumb">Equipes &gt; Equipe &gt; Operacional &gt; Registros</p>
+    <h1 id="saved-data-title">Dados Salvos</h1>
+  </header>
+
+  <% if (locals.error) { %>
+    <div class="saved-data-alert" role="alert">
+      <%= error %>
+    </div>
+  <% } %>
+
+  <section class="saved-data-metrics" aria-label="Resumo dos checkpoints">
+    <article class="saved-data-metric">
+      <h2>Distancia acumulada</h2>
+      <strong><%= formatDistance(totalDistance) %> km</strong>
+      <p>Soma de todos os checkpoints</p>
+    </article>
+
+    <article class="saved-data-metric">
+      <h2>Pace medio</h2>
+      <strong><%= averagePace %> /km</strong>
+      <p>Recalculando a cada refresh</p>
+    </article>
+
+    <article class="saved-data-metric">
+      <h2>Tempo medio por atleta</h2>
+      <strong><%= averageTime %></strong>
+      <p>Soma dos turnos</p>
+    </article>
+  </section>
+
+  <section class="saved-data-history" aria-labelledby="checkpoint-history-title">
+    <h2 id="checkpoint-history-title">Historico de checkpoints</h2>
+
+    <% if (checkpoints.length === 0) { %>
+      <div class="saved-data-empty">
+        <p>Nenhum checkpoint salvo ainda.</p>
+      </div>
+    <% } else { %>
+      <div class="saved-data-table-wrap">
+        <table class="saved-data-table">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Horario</th>
+              <th scope="col">Atleta</th>
+              <th scope="col">Distancia</th>
+              <th scope="col">Pace</th>
+              <th scope="col">Tempo</th>
+              <th scope="col">Metodo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% checkpoints.forEach((checkpoint, index) => { %>
+              <tr>
+                <td><%= String(index + 1).padStart(2, '0') %></td>
+                <td>
+                  <%= checkpoint.created_at
+                    ? new Date(checkpoint.created_at).toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+                    : '--:--:--' %>
+                </td>
+                <td><%= checkpoint.runner?.name || 'Atleta nao informado' %></td>
+                <td><%= formatDistance(checkpoint.distance_km) %> km</td>
+                <td><%= checkpoint.pace || '--' %></td>
+                <td><%= checkpoint.time || '--' %></td>
+                <td><%= formatMethod(checkpoint.identifier) %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </section>
+</main>

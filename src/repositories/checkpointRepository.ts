@@ -1,147 +1,156 @@
 import {
-      Checkpoint,
-        CheckpointRepository,
-          CreateCheckpointInput,
-            UpdateCheckpointInput,
-            } from "../models/checkpoint";
-            import { getSupabaseClient } from "../database/supabaseClient";
+  Checkpoint,
+  CheckpointRepository,
+  CreateCheckpointInput,
+  UpdateCheckpointInput,
+} from "../models/checkpoint";
+import { getSupabaseClient } from "../database/supabaseClient";
 
 const SELECT_COLUMNS =
-              "id, identificador, km, pace, tempo, imagem, corredor_id, competicao_id, esteira_id, administrador_id, criado_em, corredor:corredor_id(id, nome, equipe_id)";
+  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team, team:id_team(id, name))";
 
-type SupabaseCheckpoint = Omit<Checkpoint, "corredor"> & {
-  corredor?: Checkpoint["corredor"] | Checkpoint["corredor"][];
-};
+type SupabaseCheckpoint = Record<string, unknown>;
 
 function normalizeCheckpoint(data: SupabaseCheckpoint): Checkpoint {
-  const corredor = Array.isArray(data.corredor)
-    ? data.corredor[0] ?? null
-    : data.corredor ?? null;
+  const runnerData = data.runner;
+  const runner = Array.isArray(runnerData)
+    ? (runnerData[0] as Checkpoint["runner"] ?? null)
+    : (runnerData as Checkpoint["runner"] ?? null);
 
-  return { ...data, corredor };
+  return { ...data as unknown as Checkpoint, runner };
 }
 
 function normalizeCheckpoints(data: SupabaseCheckpoint[] | null): Checkpoint[] {
   return (data ?? []).map(normalizeCheckpoint);
 }
 
-              export const checkpointRepository: CheckpointRepository = {
-                async create(input: CreateCheckpointInput): Promise<Checkpoint> {
-                    const supabase = getSupabaseClient();
+export const checkpointRepository: CheckpointRepository = {
+  async create(input: CreateCheckpointInput): Promise<Checkpoint> {
+    const supabase = getSupabaseClient();
 
-                        const payload: Record<string, unknown> = {
-                              identificador: input.identificador,
-                                    km: input.km,
-                                          corredor_id: input.corredor_id,
-                                                competicao_id: input.competicao_id,
-                                                      esteira_id: input.esteira_id,
-                                                            administrador_id: input.administrador_id,
-                                                                };
-                                                                    if (input.pace !== undefined) payload.pace = input.pace;
-                                                                        if (input.tempo !== undefined) payload.tempo = input.tempo;
-                                                                            if (input.imagem !== undefined) payload.imagem = input.imagem;
+    const payload: Record<string, unknown> = {
+      identifier: input.identifier,
+      distance_km: input.distance_km,
+      id_runner: input.id_runner,
+      id_competition: input.id_competition,
+      id_treadmill: input.id_treadmill,
+      id_admin: input.id_admin,
+    };
+    if (input.pace !== undefined) payload.pace = input.pace;
+    if (input.time !== undefined) payload.time = input.time;
+    if (input.image !== undefined) payload.image = input.image;
 
-                                                                                const { data, error } = await supabase
-                                                                                      .from("checkpoint")
-                                                                                            .insert(payload)
-                                                                                                  .select(SELECT_COLUMNS)
-                                                                                                        .single();
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .insert(payload)
+      .select(SELECT_COLUMNS)
+      .single();
 
-                                                                                                            if (error) throw error;
+    if (error) throw error;
 
-                                                                                                                return normalizeCheckpoint(data as unknown as SupabaseCheckpoint);
-                                                                                                                  },
+    return normalizeCheckpoint(data as unknown as SupabaseCheckpoint);
+  },
 
-                                                                                                                    async findAll(): Promise<Checkpoint[]> {
-                                                                                                                        const supabase = getSupabaseClient();
+  async findAll(): Promise<Checkpoint[]> {
+    const supabase = getSupabaseClient();
 
-                                                                                                                            const { data, error } = await supabase
-                                                                                                                                  .from("checkpoint")
-                                                                                                                                        .select(SELECT_COLUMNS)
-                                                                                                                                              .order("id", { ascending: true });
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .select(SELECT_COLUMNS)
+      .order("id", { ascending: true });
 
-                                                                                                                                                  if (error) throw error;
+    if (error) throw error;
 
-                                                                                                                                                      return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
-                                                                                                                                                        },
+    return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
+  },
 
-                                                                                                                                                          async findById(id: number): Promise<Checkpoint | null> {
-                                                                                                                                                              const supabase = getSupabaseClient();
+  async findById(id: number): Promise<Checkpoint | null> {
+    const supabase = getSupabaseClient();
 
-                                                                                                                                                                  const { data, error } = await supabase
-                                                                                                                                                                        .from("checkpoint")
-                                                                                                                                                                              .select(SELECT_COLUMNS)
-                                                                                                                                                                                    .eq("id", id)
-                                                                                                                                                                                          .maybeSingle();
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .select(SELECT_COLUMNS)
+      .eq("id", id)
+      .maybeSingle();
 
-                                                                                                                                                                                              if (error) throw error;
+    if (error) throw error;
 
-                                                                                                                                                                                                  return data ? normalizeCheckpoint(data as unknown as SupabaseCheckpoint) : null;
-                                                                                                                                                                                                    },
+    return data ? normalizeCheckpoint(data as unknown as SupabaseCheckpoint) : null;
+  },
 
-                                                                                                                                                                                                      async findByCorredor(corredor_id: number): Promise<Checkpoint[]> {
-                                                                                                                                                                                                          const supabase = getSupabaseClient();
+  async findByRunner(runnerId: number): Promise<Checkpoint[]> {
+    const supabase = getSupabaseClient();
 
-                                                                                                                                                                                                              const { data, error } = await supabase
-                                                                                                                                                                                                                    .from("checkpoint")
-                                                                                                                                                                                                                          .select(SELECT_COLUMNS)
-                                                                                                                                                                                                                                .eq("corredor_id", corredor_id)
-                                                                                                                                                                                                                                      .order("id", { ascending: true });
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .select(SELECT_COLUMNS)
+      .eq("id_runner", runnerId)
+      .order("id", { ascending: true });
 
-                                                                                                                                                                                                                                          if (error) throw error;
+    if (error) throw error;
 
-                                                                                                                                                                                                                                              return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
-                                                                                                                                                                                                                                                },
+    return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
+  },
 
-                                                                                                                                                                                                                                                  async findByCompeticao(competicao_id: number): Promise<Checkpoint[]> {
-                                                                                                                                                                                                                                                      const supabase = getSupabaseClient();
+  async findByCompetition(competitionId: number): Promise<Checkpoint[]> {
+    const supabase = getSupabaseClient();
 
-                                                                                                                                                                                                                                                          const { data, error } = await supabase
-                                                                                                                                                                                                                                                                .from("checkpoint")
-                                                                                                                                                                                                                                                                      .select(SELECT_COLUMNS)
-                                                                                                                                                                                                                                                                            .eq("competicao_id", competicao_id)
-                                                                                                                                                                                                                                                                                  .order("id", { ascending: true });
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .select(SELECT_COLUMNS)
+      .eq("id_competition", competitionId)
+      .order("id", { ascending: true });
 
-                                                                                                                                                                                                                                                                                      if (error) throw error;
+    if (error) throw error;
 
-                                                                                                                                                                                                                                                                                          return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
-                                                                                                                                                                                                                                                                                            },
+    return normalizeCheckpoints(data as unknown as SupabaseCheckpoint[]);
+  },
 
-                                                                                                                                                                                                                                                                                              async update(
-                                                                                                                                                                                                                                                                                                  id: number,
-                                                                                                                                                                                                                                                                                                      input: UpdateCheckpointInput
-                                                                                                                                                                                                                                                                                                        ): Promise<Checkpoint | null> {
-                                                                                                                                                                                                                                                                                                            const supabase = getSupabaseClient();
+  async findInconsistenciesByCompetition(
+    competitionId: number
+  ): Promise<Checkpoint[]> {
+    const checkpoints = await checkpointRepository.findByCompetition(
+      competitionId
+    );
 
-                                                                                                                                                                                                                                                                                                                const payload: Record<string, unknown> = {};
-                                                                                                                                                                                                                                                                                                                    if (input.km !== undefined) payload.km = input.km;
-                                                                                                                                                                                                                                                                                                                        if (input.pace !== undefined) payload.pace = input.pace;
-                                                                                                                                                                                                                                                                                                                            if (input.tempo !== undefined) payload.tempo = input.tempo;
-                                                                                                                                                                                                                                                                                                                                if (input.imagem !== undefined) payload.imagem = input.imagem;
+    return checkpoints.filter((checkpoint) => !checkpoint.runner);
+  },
 
-                                                                                                                                                                                                                                                                                                                                    const { data, error } = await supabase
-                                                                                                                                                                                                                                                                                                                                          .from("checkpoint")
-                                                                                                                                                                                                                                                                                                                                                .update(payload)
-                                                                                                                                                                                                                                                                                                                                                      .eq("id", id)
-                                                                                                                                                                                                                                                                                                                                                            .select(SELECT_COLUMNS)
-                                                                                                                                                                                                                                                                                                                                                                  .maybeSingle();
+  async update(
+    id: number,
+    input: UpdateCheckpointInput
+  ): Promise<Checkpoint | null> {
+    const supabase = getSupabaseClient();
 
-                                                                                                                                                                                                                                                                                                                                                                      if (error) throw error;
+    const payload: Record<string, unknown> = {};
+    if (input.distance_km !== undefined) payload.distance_km = input.distance_km;
+    if (input.pace !== undefined) payload.pace = input.pace;
+    if (input.time !== undefined) payload.time = input.time;
+    if (input.image !== undefined) payload.image = input.image;
 
-                                                                                                                                                                                                                                                                                                                                                                          return data ? normalizeCheckpoint(data as unknown as SupabaseCheckpoint) : null;
-                                                                                                                                                                                                                                                                                                                                                                            },
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .update(payload)
+      .eq("id", id)
+      .select(SELECT_COLUMNS)
+      .maybeSingle();
 
-                                                                                                                                                                                                                                                                                                                                                                              async delete(id: number): Promise<boolean> {
-                                                                                                                                                                                                                                                                                                                                                                                  const supabase = getSupabaseClient();
+    if (error) throw error;
 
-                                                                                                                                                                                                                                                                                                                                                                                      const { data, error } = await supabase
-                                                                                                                                                                                                                                                                                                                                                                                            .from("checkpoint")
-                                                                                                                                                                                                                                                                                                                                                                                                  .delete()
-                                                                                                                                                                                                                                                                                                                                                                                                        .eq("id", id)
-                                                                                                                                                                                                                                                                                                                                                                                                              .select("id");
+    return data ? normalizeCheckpoint(data as unknown as SupabaseCheckpoint) : null;
+  },
 
-                                                                                                                                                                                                                                                                                                                                                                                                                  if (error) throw error;
+  async delete(id: number): Promise<boolean> {
+    const supabase = getSupabaseClient();
 
-                                                                                                                                                                                                                                                                                                                                                                                                                      return (data ?? []).length > 0;
-                                                                                                                                                                                                                                                                                                                                                                                                                        },
-                                                                                                                                                                                                                                                                                                                                                                                                                        };
+    const { data, error } = await supabase
+      .from("checkpoint")
+      .delete()
+      .eq("id", id)
+      .select("id");
+
+    if (error) throw error;
+
+    return (data ?? []).length > 0;
+  },
+};
