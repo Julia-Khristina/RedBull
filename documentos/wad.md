@@ -2009,7 +2009,7 @@ A seguir, a Figura 26 ilustra o Modelo Entidade-Relacionamento desenvolvido para
 
 <div align="center">
   <sub>Figura 26 - Modelo Entidade-Relacionamento</sub><br>
-    <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
