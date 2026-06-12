@@ -25,6 +25,9 @@
     month: 'long',
     year: 'numeric'
   });
+  const rankingHref = locals.activeCompetition
+    ? `/competitions/${activeCompetition.id}/ranking`
+    : '/ranking';
 %>
 
 <main class="db-main">
@@ -89,7 +92,7 @@
       <a href="/competitions/new" class="db-action-btn">
         Nova<br>Competição
       </a>
-      <a href="/ranking" class="db-action-btn">
+      <a href="<%= rankingHref %>" class="db-action-btn">
         Ver<br>Ranking
       </a>
     </div>

@@ -1,4 +1,10 @@
 <%- /* partials/menu.ejs */ %>
+<%
+    const menuCompetitionId = locals.competition && locals.competition.id ? locals.competition.id : null;
+    const teamsHref = menuCompetitionId ? `/teams?competitionId=${menuCompetitionId}` : '/teams';
+    const rankingHref = menuCompetitionId ? `/competitions/${menuCompetitionId}/ranking` : '/ranking';
+    const reportsHref = menuCompetitionId ? `/reports?competitionId=${menuCompetitionId}` : '/reports';
+%>
 
 <nav class="sidebar">
 
@@ -34,7 +40,7 @@
         </div>
 
         <div class="nav-item-wrapper">
-            <a class="nav-item" href="/teams">
+            <a class="nav-item" href="<%= teamsHref %>">
                 <div class="icon-wrap">
                     <svg fill="none" preserveAspectRatio="none" viewBox="0 0 28.25 23.75">
                         <path
@@ -51,7 +57,7 @@
         </div>
 
         <div class="nav-item-wrapper">
-            <a class="nav-item" href="/ranking">
+            <a class="nav-item" href="<%= rankingHref %>">
                 <div class="icon-wrap">
                     <svg fill="none" preserveAspectRatio="none" viewBox="0 0 36.0262 39.0105">
                         <path
@@ -65,7 +71,7 @@
         </div>
 
         <div class="nav-item-wrapper">
-            <a class="nav-item" href="/reports">
+            <a class="nav-item" href="<%= reportsHref %>">
                 <div class="icon-wrap">
                     <svg fill="none" preserveAspectRatio="none" viewBox="0 0 38.2 40">
                         <path

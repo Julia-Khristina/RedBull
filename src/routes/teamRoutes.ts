@@ -8,6 +8,8 @@ const router = Router();
 // dashboardRoutes, conforme menu.ejs linha 37 (`href="/teams"`).
 // O ID da competição ativa é resolvido pelo controller (mock até a #328).
 router.get("/teams", asyncHandler(teamController.renderTeams));
+router.get("/teams/new", asyncHandler(teamController.renderNewTeam));
+router.get("/teams/:teamId", asyncHandler(teamController.renderTeamDetail));
 
 router.post(
   "/competitions/:id/teams",
@@ -27,6 +29,11 @@ router.get(
 router.put(
   "/competitions/:id/teams/:teamId",
   asyncHandler(teamController.update)
+);
+
+router.patch(
+  "/competitions/:id/teams/:teamId/active-runner",
+  asyncHandler(teamController.setActiveRunner)
 );
 
 router.delete(

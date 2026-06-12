@@ -154,7 +154,7 @@
                 <line class="report-chart-line" x1="<%= chartPadding %>" x2="<%= chartWidth - chartPadding %>" y1="<%= chartPadding + (chartPlotHeight * i / 4) %>" y2="<%= chartPadding + (chartPlotHeight * i / 4) %>"></line>
                 <line class="report-chart-line" y1="<%= chartPadding %>" y2="<%= chartHeight - chartPadding %>" x1="<%= chartPadding + (chartPlotWidth * i / 4) %>" x2="<%= chartPadding + (chartPlotWidth * i / 4) %>"></line>
               <% } %>
-              <% chartTeams.forEach(function(team) { 
+              <% chartTeams.forEach(function(team) {
                 const points = history.map((point, index) => pointFor(team.name, point, index)).filter(Boolean).join(' ');
               %>
                 <% if (points) { %>

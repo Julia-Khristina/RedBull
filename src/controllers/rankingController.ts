@@ -13,7 +13,52 @@ function parseIntegerParam(value: unknown, name: string): number {
   return parsed;
 }
 
+function resolveCompetitionId(req: Request): number {
+  const rawId = req.params.id ?? req.query.competitionId;
+  return rawId === undefined ? 0 : parseIntegerParam(rawId, "competitionId");
+}
+
+async function findCompetitionForView(req: Request) {
+  const requestedId = resolveCompetitionId(req);
+  if (requestedId > 0) {
+    return competitionService.findById(requestedId);
+  }
+
+  const competitions = await competitionService.findAll();
+  return competitions[0] ?? null;
+}
+
 export const rankingController = {
+  async renderActiveRanking(req: Request, res: Response): Promise<void> {
+    const competition = await findCompetitionForView(req);
+
+    if (!competition) {
+      res.render("ranking/ranking", {
+        title: "Ranking — Red Bull 24h",
+        competition: { id: 0, name: "Competição não selecionada", status: "not_started" },
+        teamRanking: [],
+        runnerRanking: [],
+        isAdmin: true,
+        currentPage: "ranking",
+        pageCSS: "/css/ranking.css",
+      });
+      return;
+    }
+
+    const teamRanking = await rankingService.generateTeamRanking(competition.id);
+    const runnerRanking = await rankingService.generateRunnerRanking(competition.id);
+
+    res.render("ranking/ranking", {
+      title: "Ranking — Red Bull 24h",
+      competition,
+      teamRanking,
+      runnerRanking,
+      isAdmin: true,
+      currentPage: "ranking",
+      pageCSS: "/css/ranking.css",
+    });
+  },
+
   async teamRanking(req: Request, res: Response): Promise<void> {
     const competitionId = parseIntegerParam(
       req.params.id,
@@ -56,6 +101,7 @@ export const rankingController = {
         runnerRanking,
         isAdmin: true,
         currentPage: "ranking",
+        pageCSS: "/css/ranking.css",
       });
     } catch (error) {
       res.status(500).render("errors/500", { title: "Erro interno" });
