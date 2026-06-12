@@ -1160,6 +1160,57 @@ Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo
 
 Com a evolução do sistema e a integração de um frontend renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no backend quanto no frontend, com base no código efetivamente implementado na versão atual do projeto.
 
+
+---
+### MVC (Model-View-Controller)
+
+#### Categoria
+
+Arquitetural
+
+#### Definição
+
+O padrão Model-View-Controller (MVC) organiza a aplicação em camadas com responsabilidades distintas. Os Models representam os dados da aplicação, as Views são responsáveis pela apresentação das informações ao usuário e os Controllers coordenam o fluxo das requisições entre as diferentes camadas do sistema. No projeto, as Views são implementadas por meio de templates EJS renderizados no servidor pelo Express.
+
+#### Problema resolvido
+
+Sem esse padrão, regras de negócio, acesso aos dados e elementos de interface poderiam ficar concentrados em uma única camada, aumentando o acoplamento e dificultando manutenção, testes e evolução da aplicação.
+
+#### Justificativa da adoção
+
+Com a implementação do frontend, tornou-se necessário estruturar a camada de apresentação de forma integrada ao backend existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
+
+#### Aplicação no projeto
+
+O padrão pode ser observado nos seguintes arquivos e diretórios:
+
+- `src/app.ts`
+- `src/controllers/`
+- `src/services/`
+- `src/repositories/`
+- `src/models/`
+- `src/views/`
+- `src/routes/dashboardRoutes.ts`
+- `src/controllers/rankingController.ts`
+- `src/controllers/reportController.ts`
+
+#### Exemplo de código
+
+```typescript
+const competitions = await competitionService.findAll();
+
+res.render("dashboard/dashboard", {
+  title: "Dashboard — Red Bull 24H",
+  competitions,
+  activeCompetition,
+  currentPage: "dashboard",
+  pageCSS: "/css/dashboard.css"
+});
+```
+
+Nesse exemplo, o Controller obtém os dados por meio da camada de Service e encaminha as informações para uma View EJS responsável pela renderização da interface.
+
+
 ---
 
 ### Repository Pattern
@@ -1461,7 +1512,60 @@ Nesse exemplo, a função realiza validações relacionadas à estrutura, tipos,
 
 ---
 
+### Template View com Partial Views
 
+#### Categoria
+
+Estrutural / Apresentação
+
+#### Definição
+
+O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo backend. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
+
+#### Problema resolvido
+
+Sem esse padrão, cada página precisaria replicar manualmente estruturas comuns da interface, como layout principal, navegação, estilos e scripts compartilhados, aumentando a duplicidade de código e dificultando manutenção.
+
+#### Justificativa da adoção
+
+Esse padrão foi adotado para permitir a renderização dinâmica das páginas utilizando EJS e reutilizar elementos compartilhados da interface por meio de layouts e parciais. Dessa forma, a estrutura visual da aplicação permanece centralizada e padronizada entre as diferentes telas do sistema.
+
+#### Aplicação no projeto
+
+O padrão pode ser observado nos seguintes arquivos:
+
+- `src/views/layouts/main.ejs`
+- `src/views/partials/menu.ejs`
+- `src/views/dashboard/`
+- `src/views/auth/`
+- `src/views/competitions/`
+- `src/views/ranking/`
+- `src/views/reports/`
+- `src/views/teams/`
+
+#### Exemplo de código
+
+```html
+<head>
+  <link rel="stylesheet" href="/css/variables.css">
+
+  <% if (locals.pageCSS) { %>
+    <link rel="stylesheet" href="<%= locals.pageCSS %>">
+  <% } %>
+</head>
+
+<body>
+  <%- include('../partials/menu') %>
+
+  <div class="content-wrapper">
+    <%- body %>
+  </div>
+
+  <script src="/js/app.js"></script>
+</body>
+```
+
+Nesse exemplo, o layout principal define a estrutura compartilhada da interface, enquanto o partial `menu.ejs` é reutilizado em diferentes páginas da aplicação, evitando duplicação de código e facilitando manutenção.
 
 ## 3.3. Wireframes (sprint 2)
 
