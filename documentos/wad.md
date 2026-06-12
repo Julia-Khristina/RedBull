@@ -3184,6 +3184,29 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**. Inicialmente s�
 
 Além disso, os testes foram desenvolvidos de forma determinística, evitando dependências de ordem de execução, horário do sistema, serviços externos, acesso à rede ou dados residuais de execuções anteriores. Dessa forma, garante-se que uma mesma execução produza resultados consistentes independentemente do ambiente utilizado.
 
+## 5.1.2  Testes Unitários de Service
+- Cobertura mínima de 80% na camada Service, evidenciada pelo relatório
+  Jest gerado por "npm test -- --coverage".
+- Casos de teste vinculados explicitamente a uma RN (CT01 -> RN01,
+  CT02 -> RN02, ...), ordenados pela prioridade das RN do artefato 1.
+- Para os 5 casos de teste prioritários, explicação de como cada um
+  atende ao padrão AAA, ao determinismo, à RN coberta e ao caminho de
+  falha.
+
+
+## 5.1.3  Testes de Integração de Endpoints
+- Para cada endpoint principal, cobertura obrigatória dos quatro
+  cenários-chave: sucesso (200/201), falha de validação (400/422),
+  regra de negócio violada (409 ou equivalente) e recurso não
+  encontrado (404).
+
+
+## 5.1.4  Evidências de Execução
+- Output de "npm test" com todos os casos passando.
+- Relatório de cobertura gerado por "npm test -- --coverage" com
+  percentual por camada.
+- Mapeamento CT -> RN -> RF coerente com a Matriz RF -> RN -> Endpoint
+  (seção 3.1.4) e com a RTM (seção 3.9).
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
