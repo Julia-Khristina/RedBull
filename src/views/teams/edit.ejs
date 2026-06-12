@@ -1,0 +1,118 @@
+<%#
+  VIEW: teams/edit.ejs
+  ESTADO: [C2 — Edição completa de equipe]
+  OBS:
+    - CPF de atleta existente fica bloqueado porque o backend não permite alteração de CPF.
+%>
+
+<main
+  class="teams teams--form"
+  data-team-edit
+  data-competition-id="<%= competition.id %>"
+  data-team-id="<%= team.id %>"
+>
+  <nav class="teams__breadcrumb" aria-label="Caminho atual">
+    <a href="/teams?competitionId=<%= competition.id %>">Equipes</a>
+    <span>&gt;</span>
+    <span>Editar equipe</span>
+  </nav>
+
+  <header class="teams__header">
+    <div class="teams__title-block">
+      <h1 class="teams__title">Editar equipe</h1>
+      <p class="teams__subtitle"><%= competition.name %></p>
+    </div>
+  </header>
+
+  <form class="team-create" data-team-edit-form novalidate>
+    <section class="team-create__panel">
+      <div class="team-create__section-header">
+        <h2>Dados da equipe</h2>
+        <p>Atualize o nome da equipe e os dados dos atletas participantes.</p>
+      </div>
+
+      <label class="team-create__field">
+        <span>Nome da equipe</span>
+        <input
+          type="text"
+          name="team_name"
+          maxlength="100"
+          value="<%= team.name %>"
+          required
+          data-team-name
+        >
+      </label>
+    </section>
+
+    <section class="team-create__panel">
+      <div class="team-create__section-header team-create__section-header--row">
+        <div>
+          <h2>Atletas</h2>
+          <p>Edite até 16 atletas e escolha exatamente um capitão.</p>
+        </div>
+        <button type="button" class="team-create__add" data-add-runner>
+          + Adicionar atleta
+        </button>
+      </div>
+
+      <div class="team-create__runners" data-runners-list>
+        <% const rows = runners.length > 0 ? runners : [{ id: '', name: '', cpf: '', email: '', phone: '', status: 'captain' }]; %>
+        <% rows.forEach(function(runner, index) { %>
+          <article class="team-create__runner" data-runner-row data-runner-id="<%= runner.id || '' %>">
+            <label class="team-create__captain">
+              <input
+                type="radio"
+                name="captain_index"
+                value="<%= index %>"
+                <%= runner.status === 'captain' || (index === 0 && !runners.some(function(item) { return item.status === 'captain'; })) ? 'checked' : '' %>
+                data-captain-radio
+              >
+              <span>Capitão</span>
+            </label>
+
+            <label class="team-create__field">
+              <span>Nome do atleta</span>
+              <input type="text" name="runner_name" value="<%= runner.name || '' %>" placeholder="Nome completo" required data-runner-name>
+            </label>
+
+            <label class="team-create__field">
+              <span>CPF</span>
+              <input
+                type="text"
+                name="runner_cpf"
+                value="<%= runner.cpf || '' %>"
+                placeholder="000.000.000-00"
+                required
+                <%= runner.id ? 'readonly' : '' %>
+                data-runner-cpf
+              >
+            </label>
+
+            <label class="team-create__field">
+              <span>Email</span>
+              <input type="email" name="runner_email" value="<%= runner.email || '' %>" placeholder="nome@email.com" required data-runner-email>
+            </label>
+
+            <label class="team-create__field">
+              <span>Telefone</span>
+              <input type="text" name="runner_phone" value="<%= runner.phone || '' %>" placeholder="Opcional" data-runner-phone>
+            </label>
+
+            <button type="button" class="team-create__remove" data-remove-runner <%= rows.length <= 1 ? 'hidden' : '' %>>
+              Remover
+            </button>
+          </article>
+        <% }); %>
+      </div>
+    </section>
+
+    <p class="team-create__error" data-team-edit-error role="alert" hidden></p>
+
+    <div class="team-create__actions">
+      <a href="/teams?competitionId=<%= competition.id %>" class="team-create__cancel">Cancelar</a>
+      <button type="submit" class="team-create__submit" data-team-edit-submit>
+        Salvar alterações
+      </button>
+    </div>
+  </form>
+</main>

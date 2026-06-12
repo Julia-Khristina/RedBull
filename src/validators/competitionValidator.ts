@@ -30,18 +30,26 @@ export function validateCreateCompetition(
     throw new ValidationError("Payload inválido");
   }
 
-  const nome = readRequiredText(payload, "nome");
-  const data = readRequiredText(payload, "data");
-  const endereco = readRequiredText(payload, "endereco");
+  const name = readRequiredText(payload, "name");
+  const date = readRequiredText(payload, "date");
+  const address = readRequiredText(payload, "address");
 
-  if (!isValidDate(data)) {
-    throw new ValidationError("data deve ser uma data válida");
+  if (name.length > 100) {
+    throw new ValidationError("name deve ter no máximo 100 caracteres");
+  }
+
+  if (address.length > 255) {
+    throw new ValidationError("address deve ter no máximo 255 caracteres");
+  }
+
+  if (!isValidDate(date)) {
+    throw new ValidationError("date deve ser uma data válida");
   }
 
   return {
-    nome,
-    data,
-    endereco,
+    name,
+    date,
+    address,
   };
 }
 

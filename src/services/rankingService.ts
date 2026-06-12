@@ -5,30 +5,30 @@ import { teamService } from "./teamService";
 
 type CheckpointServiceDependency = Pick<
   typeof checkpointService,
-  "findByCompeticao"
+  "findByCompetition"
 >;
 
 type TeamServiceDependency = Pick<typeof teamService, "findByCompetition">;
 
 interface RunnerAggregate {
-  corredor_id: number;
-  corredor_nome: string | null;
-  equipe_id: number | null;
-  km_total: number;
-  tempo_segundos: number | null;
-  pace_segundos: number | null;
-  pace_amostras: number;
+  id_runner: number;
+  runner_name: string | null;
+  id_team: number | null;
+  total_distance_km: number;
+  time_seconds: number | null;
+  pace_seconds: number | null;
+  pace_samples: number;
 }
 
 interface TeamAggregate {
-  equipe_id: number;
-  equipe_nome: string;
-  competicao_id: number;
-  km_total: number;
-  tempo_segundos: number | null;
-  pace_segundos_total: number;
-  pace_amostras: number;
-  corredores: Set<number>;
+  id_team: number;
+  team_name: string;
+  id_competition: number;
+  total_distance_km: number;
+  time_seconds: number | null;
+  pace_seconds_total: number;
+  pace_samples: number;
+  runners: Set<number>;
 }
 
 function parseTimeToSeconds(value: string | null): number | null {
@@ -64,92 +64,111 @@ function formatPace(seconds: number | null): string | null {
 }
 
 function getCheckpointPaceSeconds(checkpoint: Checkpoint): number | null {
-  const tempoSeconds = parseTimeToSeconds(checkpoint.tempo);
+  const timeSeconds = parseTimeToSeconds(checkpoint.time);
 
-  if (tempoSeconds !== null && checkpoint.km > 0) {
-    return tempoSeconds / checkpoint.km;
+  if (timeSeconds !== null && checkpoint.distance_km > 0) {
+    return timeSeconds / checkpoint.distance_km;
   }
 
   return parseTimeToSeconds(checkpoint.pace);
 }
 
 function compareRanking(
-  a: { km_total: number; pace_medio_segundos: number | null },
-  b: { km_total: number; pace_medio_segundos: number | null }
+  a: { total_distance_km: number; average_pace_seconds: number | null },
+  b: { total_distance_km: number; average_pace_seconds: number | null }
 ): number {
-  if (b.km_total !== a.km_total) return b.km_total - a.km_total;
+  if (b.total_distance_km !== a.total_distance_km) return b.total_distance_km - a.total_distance_km;
 
-  const aPace = a.pace_medio_segundos ?? Number.POSITIVE_INFINITY;
-  const bPace = b.pace_medio_segundos ?? Number.POSITIVE_INFINITY;
+  const aPace = a.average_pace_seconds ?? Number.POSITIVE_INFINITY;
+  const bPace = b.average_pace_seconds ?? Number.POSITIVE_INFINITY;
 
   return aPace - bPace;
 }
 
 function withPositions<
   T extends {
-    posicao: number;
-    km_total: number;
-    pace_medio_segundos: number | null;
+    position: number;
+    total_distance_km: number;
+    average_pace_seconds: number | null;
   },
 >(
-  ranking: Omit<T, "posicao">[]
+  ranking: Omit<T, "position">[]
 ): T[] {
   return ranking
     .sort(compareRanking)
-    .map((item, index) => ({ ...item, posicao: index + 1 }) as T);
+    .map((item, index) => ({ ...item, position: index + 1 }) as T);
 }
 
 export function createRankingService(
   checkpoints: CheckpointServiceDependency = checkpointService,
   teams: TeamServiceDependency = teamService
 ) {
-  async function gerarRankingCorredores(
-    competicaoId: number
+  async function generateRunnerRanking(
+    competitionId: number
   ): Promise<RankingRunner[]> {
-    const checkpointsDaCompeticao =
-      await checkpoints.findByCompeticao(competicaoId);
+    const [competitionCheckpoints, teamsData] = await Promise.all([
+      checkpoints.findByCompetition(competitionId),
+      teams.findByCompetition(competitionId),
+    ]);
+
+    const teamNameById = new Map<number, string>(
+      teamsData.map((team) => [team.id, team.name])
+    );
 
     const aggregates = new Map<number, RunnerAggregate>();
+    const latestCheckpointByRunner = new Map<number, Checkpoint>();
 
-    for (const checkpoint of checkpointsDaCompeticao) {
-      const current = aggregates.get(checkpoint.corredor_id);
+    for (const checkpoint of competitionCheckpoints) {
+      const current = aggregates.get(checkpoint.id_runner);
       const paceSeconds = getCheckpointPaceSeconds(checkpoint);
-      const tempoSeconds = parseTimeToSeconds(checkpoint.tempo);
+      const timeSeconds = parseTimeToSeconds(checkpoint.time);
+      const previousLatest = latestCheckpointByRunner.get(checkpoint.id_runner);
+      const checkpointTime = Date.parse(checkpoint.created_at) || 0;
+      const previousTime = previousLatest ? Date.parse(previousLatest.created_at) || 0 : 0;
 
-      if (!current || checkpoint.km > current.km_total) {
-        aggregates.set(checkpoint.corredor_id, {
-          corredor_id: checkpoint.corredor_id,
-          corredor_nome: checkpoint.corredor?.nome ?? null,
-          equipe_id: checkpoint.corredor?.equipe_id ?? null,
-          km_total: checkpoint.km,
-          tempo_segundos: tempoSeconds,
-          pace_segundos: paceSeconds,
-          pace_amostras: paceSeconds === null ? 0 : 1,
+      if (!previousLatest || checkpointTime > previousTime) {
+        latestCheckpointByRunner.set(checkpoint.id_runner, checkpoint);
+      }
+
+      if (!current || checkpoint.distance_km > current.total_distance_km) {
+        aggregates.set(checkpoint.id_runner, {
+          id_runner: checkpoint.id_runner,
+          runner_name: checkpoint.runner?.name ?? null,
+          id_team: checkpoint.runner?.id_team ?? null,
+          total_distance_km: checkpoint.distance_km,
+          time_seconds: timeSeconds,
+          pace_seconds: paceSeconds,
+          pace_samples: paceSeconds === null ? 0 : 1,
         });
         continue;
       }
 
       if (paceSeconds !== null) {
-        current.pace_segundos = (current.pace_segundos ?? 0) + paceSeconds;
-        current.pace_amostras += 1;
+        current.pace_seconds = (current.pace_seconds ?? 0) + paceSeconds;
+        current.pace_samples += 1;
       }
     }
 
     const ranking = Array.from(aggregates.values()).map((runner) => {
-      const paceMedioSegundos =
-        runner.tempo_segundos !== null && runner.km_total > 0
-          ? runner.tempo_segundos / runner.km_total
-          : runner.pace_amostras > 0 && runner.pace_segundos !== null
-            ? runner.pace_segundos / runner.pace_amostras
+      const averagePaceSeconds =
+        runner.time_seconds !== null && runner.total_distance_km > 0
+          ? runner.time_seconds / runner.total_distance_km
+          : runner.pace_samples > 0 && runner.pace_seconds !== null
+            ? runner.pace_seconds / runner.pace_samples
             : null;
 
+      const latestCheckpoint = latestCheckpointByRunner.get(runner.id_runner);
+
       return {
-        corredor_id: runner.corredor_id,
-        corredor_nome: runner.corredor_nome,
-        equipe_id: runner.equipe_id,
-        km_total: runner.km_total,
-        pace_medio: formatPace(paceMedioSegundos),
-        pace_medio_segundos: paceMedioSegundos,
+        id_runner: runner.id_runner,
+        runner_name: runner.runner_name,
+        id_team: runner.id_team,
+        team_name: runner.id_team ? teamNameById.get(runner.id_team) ?? null : null,
+        last_checkpoint: latestCheckpoint?.identifier ?? null,
+        treadmill_time: latestCheckpoint?.time ?? latestCheckpoint?.pace ?? null,
+        total_distance_km: runner.total_distance_km,
+        average_pace: formatPace(averagePaceSeconds),
+        average_pace_seconds: averagePaceSeconds,
       };
     });
 
@@ -157,82 +176,83 @@ export function createRankingService(
   }
 
   return {
-    gerarRankingCorredores,
+    generateRunnerRanking,
 
-    async gerarRankingEquipes(competicaoId: number): Promise<RankingTeam[]> {
-      const [equipes, rankingCorredores] = await Promise.all([
-        teams.findByCompetition(competicaoId),
-        gerarRankingCorredores(competicaoId),
+    async generateTeamRanking(competitionId: number): Promise<RankingTeam[]> {
+      const [teamsData, runnerRanking] = await Promise.all([
+        teams.findByCompetition(competitionId),
+        generateRunnerRanking(competitionId),
       ]);
 
-      const equipePorId = new Map(equipes.map((equipe) => [equipe.id, equipe]));
+      const teamById = new Map(teamsData.map((team) => [team.id, team]));
       const aggregates = new Map<number, TeamAggregate>();
 
-      for (const runner of rankingCorredores) {
-        if (runner.equipe_id === null) continue;
+      for (const team of teamsData) {
+        aggregates.set(team.id, {
+          id_team: team.id,
+          team_name: team.name,
+          id_competition: team.id_competition,
+          total_distance_km: 0,
+          time_seconds: null,
+          pace_seconds_total: 0,
+          pace_samples: 0,
+          runners: new Set<number>(),
+        });
+      }
 
-        const equipe = equipePorId.get(runner.equipe_id);
-        if (!equipe) continue;
+      for (const runner of runnerRanking) {
+        if (runner.id_team === null) continue;
 
-        const current =
-          aggregates.get(equipe.id) ??
-          ({
-            equipe_id: equipe.id,
-            equipe_nome: equipe.nome,
-            competicao_id: equipe.competicao_id,
-            km_total: 0,
-            tempo_segundos: null,
-            pace_segundos_total: 0,
-            pace_amostras: 0,
-            corredores: new Set<number>(),
-          } satisfies TeamAggregate);
+        const team = teamById.get(runner.id_team);
+        if (!team) continue;
 
-        current.km_total += runner.km_total;
-        current.corredores.add(runner.corredor_id);
+        const current = aggregates.get(team.id);
+        if (!current) continue;
 
-        if (runner.pace_medio_segundos !== null) {
-          current.pace_segundos_total += runner.pace_medio_segundos;
-          current.pace_amostras += 1;
+        current.total_distance_km += runner.total_distance_km;
+        current.runners.add(runner.id_runner);
+
+        if (runner.average_pace_seconds !== null) {
+          current.pace_seconds_total += runner.average_pace_seconds;
+          current.pace_samples += 1;
         }
-
-        aggregates.set(equipe.id, current);
       }
 
       const ranking = Array.from(aggregates.values()).map((team) => {
-        const paceMedioSegundos =
-          team.pace_amostras > 0
-            ? team.pace_segundos_total / team.pace_amostras
+        const averagePaceSeconds =
+          team.pace_samples > 0
+            ? team.pace_seconds_total / team.pace_samples
             : null;
 
         return {
-          equipe_id: team.equipe_id,
-          equipe_nome: team.equipe_nome,
-          competicao_id: team.competicao_id,
-          km_total: team.km_total,
-          pace_medio: formatPace(paceMedioSegundos),
-          pace_medio_segundos: paceMedioSegundos,
-          corredores: team.corredores.size,
+          id_team: team.id_team,
+          team_name: team.team_name,
+          id_competition: team.id_competition,
+          total_distance_km: team.total_distance_km,
+          average_pace: formatPace(averagePaceSeconds),
+          average_pace_seconds: averagePaceSeconds,
+          runner_count: team.runners.size,
         };
       });
 
       return withPositions<RankingTeam>(ranking);
     },
 
-    calcularPosicoes<
+    calculatePositions<
       T extends {
-        posicao: number;
-        km_total: number;
-        pace_medio_segundos: number | null;
+        position: number;
+        total_distance_km: number;
+        average_pace_seconds: number | null;
       },
     >(
-      ranking: Omit<T, "posicao">[]
+      ranking: Omit<T, "position">[]
     ): T[] {
       return withPositions<T>(ranking);
     },
 
-    calcularPaceMedio(tempo: string | null, km: number): number | null {
-      const tempoSeconds = parseTimeToSeconds(tempo);
-      return tempoSeconds !== null && km > 0 ? tempoSeconds / km : null;
+    calculateAveragePace(time: string | null, km: number): number | null {
+      const timeSeconds = parseTimeToSeconds(time);
+      return timeSeconds !== null && km > 0 ? timeSeconds / km : null;
     },
   };
 }

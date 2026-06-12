@@ -7,6 +7,7 @@ import {
 import { teamRepository } from "../repositories/teamRepository";
 import {
   validateCreateTeam,
+  validateSetActiveRunner,
   validateUpdateTeam,
 } from "../validators/teamValidator";
 import { NotFoundError } from "../errors/AppError";
@@ -20,8 +21,22 @@ export function createTeamService(
       return repository.create(input);
     },
 
-    async findById(id: number): Promise<Team> {
-      const team = await repository.findById(id);
+    async findByCompetition(competitionId: number): Promise<Team[]> {
+      return repository.findByCompetition(competitionId);
+    },
+
+    async findByUuid(uuid: string): Promise<Team> {
+      const team = await repository.findByUuid(uuid);
+
+      if (!team) {
+        throw new NotFoundError("Equipe não encontrada");
+      }
+
+      return team;
+    },
+
+    async findByCompetitionAndId(competitionId: number, id: number): Promise<Team> {
+      const team = await repository.findByCompetitionAndId(competitionId, id);
 
       if (!team) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);
@@ -30,16 +45,13 @@ export function createTeamService(
       return team;
     },
 
-    async findByCompetition(competicaoId: number): Promise<Team[]> {
-      return repository.findByCompetition(competicaoId);
-    },
-
-    async update(
+    async updateByCompetitionAndId(
+      competitionId: number,
       id: number,
       payload: Partial<UpdateTeamInput>
     ): Promise<Team> {
       const input = validateUpdateTeam(payload);
-      const updated = await repository.update(id, input);
+      const updated = await repository.updateByCompetitionAndId(competitionId, id, input);
 
       if (!updated) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);
@@ -48,8 +60,40 @@ export function createTeamService(
       return updated;
     },
 
-    async delete(id: number): Promise<void> {
-      const deleted = await repository.delete(id);
+    async setActiveRunnerByCompetitionAndId(
+      competitionId: number,
+      id: number,
+      payload: unknown
+    ): Promise<Team> {
+      const input = validateSetActiveRunner(payload);
+      const team = await repository.findByCompetitionAndId(competitionId, id);
+
+      if (!team) {
+        throw new NotFoundError(`Equipe ${id} não encontrada`);
+      }
+
+      const runner = await repository.findRunnerByTeamAndId(id, input.runnerId);
+      if (!runner) {
+        throw new NotFoundError(
+          `Runner ${input.runnerId} não encontrado nesta equipe`
+        );
+      }
+
+      const updated = await repository.setActiveRunnerByCompetitionAndId(
+        competitionId,
+        id,
+        input.runnerId
+      );
+
+      if (!updated) {
+        throw new NotFoundError(`Equipe ${id} não encontrada`);
+      }
+
+      return updated;
+    },
+
+    async deleteByCompetitionAndId(competitionId: number, id: number): Promise<void> {
+      const deleted = await repository.deleteByCompetitionAndId(competitionId, id);
 
       if (!deleted) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);

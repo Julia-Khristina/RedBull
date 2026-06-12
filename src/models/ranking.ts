@@ -1,20 +1,23 @@
 export interface RankingRunner {
-  posicao: number;
-  corredor_id: number;
-  corredor_nome: string | null;
-  equipe_id: number | null;
-  km_total: number;
-  pace_medio: string | null;
-  pace_medio_segundos: number | null;
+  position: number;
+  id_runner: number;
+  runner_name: string | null;
+  id_team: number | null;
+  team_name?: string | null;
+  last_checkpoint?: string | null;
+  treadmill_time?: string | null;
+  total_distance_km: number;
+  average_pace: string | null;
+  average_pace_seconds: number | null;
 }
 
 export interface RankingTeam {
-  posicao: number;
-  equipe_id: number;
-  equipe_nome: string;
-  competicao_id: number;
-  km_total: number;
-  pace_medio: string | null;
-  pace_medio_segundos: number | null;
-  corredores: number;
+  position: number;
+  id_team: number;
+  team_name: string;
+  id_competition: number;
+  total_distance_km: number;
+  average_pace: string | null;
+  average_pace_seconds: number | null;
+  runner_count: number;
 }

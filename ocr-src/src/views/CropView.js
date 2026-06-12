@@ -7,7 +7,7 @@ export class CropView {
         return `
           <li class="region-row" data-field="${region.field}">
             <strong>${FIELD_LABELS[region.field]}</strong>
-            <small>${FIELD_UNITS[region.field]} · ${region.source}</small>
+            <small>${FIELD_UNITS[region.field]} - ${region.source}</small>
           </li>
         `;
       })
@@ -19,6 +19,7 @@ export class CropView {
           <h2>Regioes</h2>
           <p class="muted">Ajuste manualmente as caixas verdes para selecionar apenas os numeros antes do OCR.</p>
           <ul class="region-list">${regionRows}</ul>
+          <button class="secondary" data-action="redetect">Reencontrar regioes</button>
           <button class="primary" data-action="process">Processar OCR</button>
         </aside>
         <main class="canvas-panel">
@@ -29,6 +30,7 @@ export class CropView {
   }
 
   bind(container, handlers) {
+    container.querySelector("[data-action='redetect']").addEventListener("click", handlers.onRedetect);
     container.querySelector("[data-action='process']").addEventListener("click", handlers.onProcess);
   }
 }
