@@ -186,9 +186,37 @@
 }
 
 .rest-content {
-  display: flex;
-  gap: 24px;
+  display: grid;
+  grid-template-columns: 1fr 110px minmax(0, 1fr);
+  gap: 20px;
   align-items: center;
+}
+
+.rest-runner-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rest-runner-select span {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rest-runner-select select {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  font-family: var(--font-family);
+  color: var(--texto);
+  background: var(--fundo);
+  border: 1px solid var(--bordas-separadores);
+  border-radius: 10px;
 }
 
 /* Círculo SVG */
@@ -271,6 +299,13 @@
   margin: 0;
 }
 
+.rest-last-checkpoint {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: var(--texto);
+  margin: 0;
+}
+
 /* ── Gráfico (placeholder D3) ─────────────────────────────── */
 
 .chart-section {
@@ -325,5 +360,13 @@
 
   .bottom-section {
     grid-template-columns: 1fr;
+  }
+
+  .rest-content {
+    grid-template-columns: 1fr;
+  }
+
+  .circle-wrapper {
+    justify-self: center;
   }
 }

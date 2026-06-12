@@ -2,9 +2,11 @@ import { Request, Response } from "express";
 import { rankingService } from "../services/rankingService";
 import { competitionService } from "../services/competitionService";
 import { ValidationError } from "../errors/AppError";
+import { resolveSelectedCompetitionId } from "../helpers/selectedCompetition";
 
 function parseIntegerParam(value: unknown, name: string): number {
-  const parsed = typeof value === "string" ? Number(value) : NaN;
+  const parsed =
+    typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
 
   if (!Number.isInteger(parsed) || parsed <= 0) {
     throw new ValidationError(`${name} deve ser um numero inteiro positivo`);
@@ -14,8 +16,8 @@ function parseIntegerParam(value: unknown, name: string): number {
 }
 
 function resolveCompetitionId(req: Request): number {
-  const rawId = req.params.id ?? req.query.competitionId;
-  return rawId === undefined ? 0 : parseIntegerParam(rawId, "competitionId");
+  const rawId = resolveSelectedCompetitionId(req);
+  return rawId === null ? 0 : parseIntegerParam(rawId, "competitionId");
 }
 
 async function findCompetitionForView(req: Request) {
@@ -24,8 +26,15 @@ async function findCompetitionForView(req: Request) {
     return competitionService.findById(requestedId);
   }
 
-  const competitions = await competitionService.findAll();
-  return competitions[0] ?? null;
+  return null;
+}
+
+function renderCompetitionRequired(res: Response): void {
+  res.status(400).render("ranking/competition-required", {
+    title: "Selecione uma competição — Red Bull 24h",
+    currentPage: "ranking",
+    pageCSS: "/css/ranking.css",
+  });
 }
 
 export const rankingController = {
@@ -33,15 +42,7 @@ export const rankingController = {
     const competition = await findCompetitionForView(req);
 
     if (!competition) {
-      res.render("ranking/ranking", {
-        title: "Ranking — Red Bull 24h",
-        competition: { id: 0, name: "Competição não selecionada", status: "not_started" },
-        teamRanking: [],
-        runnerRanking: [],
-        isAdmin: true,
-        currentPage: "ranking",
-        pageCSS: "/css/ranking.css",
-      });
+      renderCompetitionRequired(res);
       return;
     }
 

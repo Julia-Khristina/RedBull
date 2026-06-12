@@ -393,6 +393,19 @@
     max-width: 1180px;
 }
 
+.teams--notice {
+    max-width: 980px;
+}
+
+.teams__notice {
+    min-height: 360px;
+    border-style: solid;
+}
+
+.teams__notice-icon {
+    color: var(--vermelho);
+}
+
 .team-create {
     display: flex;
     flex-direction: column;
@@ -471,13 +484,38 @@
 
 .team-create__runner {
     display: grid;
-    grid-template-columns: 120px 1.3fr 1fr 1.2fr 1fr auto;
+    grid-template-columns: minmax(104px, 0.65fr) minmax(180px, 1.35fr) minmax(138px, 0.9fr) minmax(180px, 1.25fr) minmax(132px, 0.9fr) auto;
+    grid-template-areas: "captain name cpf email phone remove";
     gap: 14px;
     align-items: end;
     padding: 16px;
     background-color: var(--fundo);
     border: 1px solid var(--bordas-separadores);
     border-radius: 12px;
+}
+
+.team-create__runner .team-create__captain {
+    grid-area: captain;
+}
+
+.team-create__runner .team-create__field:nth-of-type(2) {
+    grid-area: name;
+}
+
+.team-create__runner .team-create__field:nth-of-type(3) {
+    grid-area: cpf;
+}
+
+.team-create__runner .team-create__field:nth-of-type(4) {
+    grid-area: email;
+}
+
+.team-create__runner .team-create__field:nth-of-type(5) {
+    grid-area: phone;
+}
+
+.team-create__runner .team-create__remove {
+    grid-area: remove;
 }
 
 .team-create__captain {
@@ -779,6 +817,40 @@
     display: none;
 }
 
+@media (max-width: 1120px) {
+    .teams--form {
+        max-width: none;
+    }
+
+    .team-create__runner {
+        grid-template-columns: minmax(112px, 0.8fr) minmax(220px, 1.4fr) minmax(160px, 1fr);
+        grid-template-areas:
+            "captain name cpf"
+            ". email phone"
+            ". remove remove";
+    }
+
+    .team-create__runner .team-create__remove {
+        justify-self: end;
+    }
+}
+
+@media (max-width: 900px) {
+    .team-create__runner {
+        grid-template-columns: minmax(112px, 0.8fr) minmax(0, 1fr);
+        grid-template-areas:
+            "captain name"
+            "cpf cpf"
+            "email email"
+            "phone phone"
+            "remove remove";
+    }
+
+    .team-create__runner .team-create__remove {
+        justify-self: stretch;
+    }
+}
+
 /* ---------------------------------------------------------------------------
  * Modal de cadastro / edição
  * ------------------------------------------------------------------------- */
@@ -988,6 +1060,13 @@
 
     .team-create__runner {
         grid-template-columns: 1fr;
+        grid-template-areas:
+            "captain"
+            "name"
+            "cpf"
+            "email"
+            "phone"
+            "remove";
     }
 
     .team-panel__summary {

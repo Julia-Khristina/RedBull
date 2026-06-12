@@ -28,6 +28,16 @@
   const rankingHref = locals.activeCompetition
     ? `/competitions/${activeCompetition.id}/ranking`
     : '/ranking';
+  const competitionsList = Array.isArray(locals.competitions) ? locals.competitions : [];
+
+  function formatCompetitionDate(value) {
+    if (!value) return '';
+    const parsed = /^\d{4}-\d{2}-\d{2}$/.test(String(value))
+      ? new Date(`${value}T00:00:00`)
+      : new Date(value);
+    if (Number.isNaN(parsed.getTime())) return '';
+    return parsed.toLocaleDateString('pt-BR');
+  }
 %>
 
 <main class="db-main">
@@ -96,6 +106,40 @@
         Ver<br>Ranking
       </a>
     </div>
+  </section>
+
+  <section class="db-section">
+    <h2 class="db-section-title">Selecionar competição</h2>
+    <% if (competitionsList.length === 0) { %>
+      <div class="db-card">
+        <h3 class="db-card-heading">Nenhuma competição cadastrada</h3>
+        <hr class="db-divider" />
+        <p class="db-card-body">
+          Crie uma competição antes de acessar equipes, ranking ou relatórios.
+        </p>
+      </div>
+    <% } else { %>
+      <div class="db-competition-list">
+        <% competitionsList.forEach(function(item) { %>
+          <article class="db-competition-card <%= activeCompetition && activeCompetition.id === item.id ? 'is-selected' : '' %>">
+            <div>
+              <h3><%= item.name %></h3>
+              <p>
+                ID <%= item.id %>
+                <% if (item.date) { %>
+                  · <%= formatCompetitionDate(item.date) %>
+                <% } %>
+                · <%= item.status %>
+              </p>
+            </div>
+            <div class="db-competition-actions">
+              <a href="/dashboard?competitionId=<%= item.id %>">Selecionar</a>
+              <a href="/teams?competitionId=<%= item.id %>">Equipes</a>
+            </div>
+          </article>
+        <% }); %>
+      </div>
+    <% } %>
   </section>
 
 </main>

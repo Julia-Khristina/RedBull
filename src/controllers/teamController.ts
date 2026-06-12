@@ -7,9 +7,11 @@ import { checkpointService } from "../services/checkpointService";
 import { ValidationError } from "../errors/AppError";
 import { Team } from "../models/team";
 import { Runner } from "../models/runner";
+import { resolveSelectedCompetitionId } from "../helpers/selectedCompetition";
 
 function parseIntegerParam(value: unknown, name: string): number {
-  const parsed = typeof value === "string" ? Number(value) : NaN;
+  const parsed =
+    typeof value === "number" ? value : typeof value === "string" ? Number(value) : NaN;
 
   if (!Number.isInteger(parsed) || parsed <= 0) {
     throw new ValidationError(
@@ -21,8 +23,24 @@ function parseIntegerParam(value: unknown, name: string): number {
 }
 
 function resolveCompetitionId(req: Request): number {
-  const rawId = req.params.id ?? req.query.competitionId ?? "1";
+  const rawId = resolveSelectedCompetitionId(req);
   return parseIntegerParam(rawId, "competitionId");
+}
+
+function resolveCompetitionIdForView(req: Request): number | null {
+  try {
+    return resolveCompetitionId(req);
+  } catch (_error) {
+    return null;
+  }
+}
+
+function renderCompetitionRequired(res: Response): void {
+  res.status(400).render("teams/competition-required", {
+    title: "Selecione uma competição — Red Bull 24h",
+    currentPage: "teams",
+    pageCSS: "/css/teams.css",
+  });
 }
 
 function pickActiveRunner(team: Team, runners: Runner[]): Runner | null {
@@ -37,12 +55,17 @@ function pickActiveRunner(team: Team, runners: Runner[]): Runner | null {
 
 export const teamController = {
   // [C2 — Parcial] Render SSR da tela de Equipes (Sprints 4, tasks #327/#328).
-  // [A3 ⚠] ID da competição ativa: continua como mock (id=1) até que o fluxo
-  //   administrativo defina a origem real (sessionStorage, query ou middleware).
+  // [A1] A competição deve ser informada por query string (?competitionId=)
+  //   ou por parametro de rota nas APIs REST; não há fallback implícito.
   // [A1][B1] Lista vinda de teamService.findByCompetition; falha de busca cai
   //   no empty state para não quebrar a tela.
   async renderTeams(req: Request, res: Response): Promise<void> {
-    const competitionId = resolveCompetitionId(req);
+    const competitionId = resolveCompetitionIdForView(req);
+    if (!competitionId) {
+      renderCompetitionRequired(res);
+      return;
+    }
+
     let teamsList: unknown[] = [];
 
     try {
@@ -80,7 +103,12 @@ export const teamController = {
   },
 
   async renderNewTeam(req: Request, res: Response): Promise<void> {
-    const competitionId = resolveCompetitionId(req);
+    const competitionId = resolveCompetitionIdForView(req);
+    if (!competitionId) {
+      renderCompetitionRequired(res);
+      return;
+    }
+
     const competition = await competitionService.findById(competitionId);
 
     res.render("teams/new", {
@@ -91,8 +119,37 @@ export const teamController = {
     });
   },
 
+  async renderEditTeam(req: Request, res: Response): Promise<void> {
+    const competitionId = resolveCompetitionIdForView(req);
+    if (!competitionId) {
+      renderCompetitionRequired(res);
+      return;
+    }
+
+    const teamId = parseIntegerParam(req.params.teamId, "teamId");
+    const [competition, team, runners] = await Promise.all([
+      competitionService.findById(competitionId),
+      teamService.findByCompetitionAndId(competitionId, teamId),
+      runnerService.findByTeam(teamId),
+    ]);
+
+    res.render("teams/edit", {
+      title: `Editar ${team.name} — Red Bull 24h`,
+      competition,
+      team,
+      runners,
+      currentPage: "teams",
+      pageCSS: "/css/teams.css",
+    });
+  },
+
   async renderTeamDetail(req: Request, res: Response): Promise<void> {
-    const competitionId = resolveCompetitionId(req);
+    const competitionId = resolveCompetitionIdForView(req);
+    if (!competitionId) {
+      renderCompetitionRequired(res);
+      return;
+    }
+
     const teamId = parseIntegerParam(req.params.teamId, "teamId");
 
     const [competition, team, runners, teamRanking, runnerRanking, checkpoints] =
