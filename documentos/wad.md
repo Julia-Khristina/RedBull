@@ -2246,7 +2246,6 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 | Diagrama de Classes                                         | DER                                   |
 | ----------------------------------------------------------- | ------------------------------------- |
-<<<<<<< HEAD
 | Classe `Competition`                                        | Tabela `competition`                  |
 | Classe `Team`                                               | Tabela `team`                         |
 | Classe `Runner`                                             | Tabela `runner`                       |
@@ -2259,20 +2258,6 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                | FK `id_competition` em `checkpoint`   |
 | Associação `Treadmill` é usada em `Checkpoint`              | FK `id_treadmill` em `checkpoint`     |
 | Associação `Admin` valida/supervisiona `Checkpoint`         | FK `id_admin` em `checkpoint`         |
-=======
-| Classe `Competition`                                         | Tabela `COMPETITION`                   |
-| Classe `Team`                                             | Tabela `TEAM`                       |
-| Classe `Runner`                                  | Tabela `RUNNER`                     |
-| Classe `Admin`                               | Tabela `ADMIN`                |
-| Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
-| Classe `Treadmill`                                            | Tabela `TREADMILL`                      |
-| Associação `Competition` possui `Team`                     | FK `id_competition` em `TEAM`        |
-| Associação `Team` possui `Runner`                       | FK `id_team` em `RUNNER`          |
-| Associação `Runner` registra `Checkpoint`                 | FK `id_runner` em `CHECKPOINT`      |
-| Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
-| Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
-| Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
->>>>>>> cde49d5e95287fb3845f57198575132089f3fb88
 
 
 ### 3.6.3. Modelo Relacional e Modelo Físico (sprints 2 e 4)
@@ -3405,11 +3390,13 @@ Os principais benefícios para o parceiro Red Bull são a redução do erro de a
 
 ### 6.6.2 Preço
 
-*Até 200 palavras.*
+O modelo de precificação da solução é estruturado a partir da combinação entre a estrutura de custos do projeto e as oportunidades de geração de valor identificadas para a Red Bull.
 
-*Apresente o modelo de monetização ou precificação proposto e sua justificativa.*
+Do lado dos custos, o principal insumo é o esforço humano da equipe de desenvolvimento: são 8 integrantes dedicando 80 horas cada ao longo de 10 semanas, totalizando 640 horas distribuídas entre desenvolvimento (50%), negócios (35%) e UX/UI (15%). Complementam essa base os custos com 4 ferramentas de inteligência artificial utilizadas como apoio à produtividade e documentação, além dos custos de hospedagem e deploy da plataforma até a data do evento. Infraestrutura física como iPads e esteiras é de responsabilidade do cliente.
 
-*Valor: até 0,5 ponto.*
+Do lado das oportunidades, a solução gera valor mensurável para a Red Bull por meio da redução de erros operacionais e conflitos de apuração, da geração de dados estruturados para conteúdo de marketing e relatórios pós-evento, da valorização da marca em contextos de inovação e precisão, e da possibilidade de reutilização e personalização da plataforma em edições futuras ou em outros eventos da marca.
+
+O preço final resulta da soma dos custos de produção com um percentual de lucro proporcional ao valor estratégico gerado, ponderando especialmente as oportunidades de reutilização e geração de conteúdo como multiplicadores do retorno esperado pelo cliente.
 
 ### 6.6.3 Praça (Distribuição)
 
