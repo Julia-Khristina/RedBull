@@ -1979,7 +1979,6 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-
 ## 3.6. Modelagem do banco de dados 
 
 
@@ -2340,11 +2339,11 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 #### 3.6.3.2 Modelo Físico
 Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
-O arquivo pode ser visto aqui: [Modelo Físico](outros/migration.sql).
+Os scripts SQL de migração podem ser vistos aqui: [Diretório de Migrações](outros/migrations/).
 
 A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. O arquivo migration.sql reúne todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
 
-#### Tabela Competição
+##### Tabela Competição
 
  
 ##### Tabela `competicao`
@@ -2402,7 +2401,9 @@ CREATE TABLE corredor (
     PRIMARY KEY (id),
     UNIQUE (cpf),
     UNIQUE (email),
-    CHECK (status IN ('corredor', 'capitao'))
+    CHECK (status IN ('corredor', 'capitao')),
+    CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
+    CHECK (cpf ~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$')
 );
  
 ALTER TABLE corredor
@@ -2464,7 +2465,9 @@ CREATE TABLE checkpoint (
  
     PRIMARY KEY (id),
     UNIQUE (identificador),
-    CHECK (km >= 0)
+    CHECK (km >= 0 AND km <= 1000),
+    CHECK (pace ~ '^[0-9]+:[0-9]{2}/km$'),
+    CHECK (tempo ~ '^[0-9]{2}:[0-9]{2}:[0-9]{2}$')
 );
  
 ALTER TABLE checkpoint
