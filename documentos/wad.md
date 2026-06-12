@@ -3102,11 +3102,14 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ## 6.1 Resumo Executivo
 
-*Até 300 palavras, sem necessidade de fonte.*
+O mercado de event-tech voltado a organizadores de eventos esportivos de grande porte apresenta oportunidade relevante no segmento B2B: a apuração de resultados em corridas de longa duração ainda é conduzida por métodos manuais — pranchetas, planilhas Excel e formulários genéricos como Google Forms — que não foram projetados para operações contínuas de 24 horas com troca frequente de operadores sob alta pressão. Nenhuma ferramenta genérica disponível no mercado atende com confiabilidade as especificidades desse contexto, o que configura uma lacuna real para organizadores de eventos esportivos desta escala.
 
-*Apresente de forma clara e objetiva os principais destaques do projeto, incluindo: oportunidade identificada no mercado; problema atendido pela aplicação; diferenciais competitivos da aplicação web; e objetivos estratégicos pretendidos.*
+O problema atendido diz respeito à ausência de uma ferramenta digital especializada para registro e validação de dados durante a competição. A coleta manual de quilometragem, pace, tempo e checkpoints impõe limitações à rastreabilidade dos resultados e à credibilidade da apuração final, impactando diretamente operadores de evento e equipes técnicas.
 
-*Valor: até 1,0 ponto.*
+A solução consiste em uma plataforma web com captura via OCR, validação humana assistida, registro de checkpoints, métricas em tempo real e exportação de relatórios. Em comparação com as alternativas existentes — planilhas, Google Forms e plataformas genéricas de gestão operacional —, os diferenciais competitivos são: especialização no fluxo real do evento (uso ininterrupto de 24 h com suporte a revezamento de operadores); combinação de automação com supervisão humana, garantindo precisão sem eliminar o controle operacional; rastreabilidade por log de validações; e dispensa de integração direta com as esteiras ou dispositivos acoplados aos atletas, eliminando dependência de hardware não prevista em soluções genéricas.
+
+Os objetivos estratégicos abrangem substituir o fluxo manual de apuração por um processo auditável e eficiente, e ampliar a confiabilidade dos resultados entregues ao parceiro. A possibilidade de reutilização em outros eventos é tratada como aspiração de longo prazo — não como objetivo do projeto atual —, em linha com a Matriz de Riscos (seção 2.1.5), que classifica essa expansão como oportunidade de baixa prioridade (10%).
+
 
 ## 6.2 Análise de Mercado
 
@@ -3162,11 +3165,13 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### 6.4.1 Proposta de Valor
 
-*Até 250 palavras.*
+A aplicação resolve um problema concreto da operação do Red Bull 24 Horas: durante 24 horas ininterruptas, operadores anotam à mão, em pranchetas, os horários de turno e os checkpoints de cada corredor. A fadiga ao longo da madrugada, a caligrafia e as distrações tornam esses registros pouco confiáveis, e não existe forma estruturada de auditar o que foi anotado. Como as esteiras do evento não se conectam a dispositivos externos, a apuração depende inteiramente desse trabalho manual.
 
-*Defina o principal valor entregue pela aplicação para os seus usuários.*
+O público-alvo da solução se organiza em três perfis. Na área administrativa estão os operadores e a equipe de Field Marketing da Red Bull, representados pela coordenadora operacional, que registra checkpoints e trocas de atleta em campo, e pelo gerente de Field Marketing, que supervisiona a prova e analisa os relatórios. Na área pública estão os capitães e atletas das equipes, que acompanham o desempenho pelo painel acessível por link.
 
-*Valor: até 0,5 ponto.*
+O sistema substitui a prancheta por uma captura assistida. O operador fotografa o visor da esteira e a aplicação extrai distância, pace e tempo por reconhecimento óptico de caracteres, com conferência humana antes de salvar e alerta visual para valores que destoem da média do atleta.
+
+Frente a planilhas ou formulários genéricos, os diferenciais são claros: especialização para trocas rápidas sob pressão, validação híbrida entre OCR e operador, rastreabilidade do método de cada checkpoint e acesso público por URL com UUID, sem login. É essa combinação que sustenta a meta de manter o erro de apuração abaixo de 1%.
 
 ### 6.4.2 Posicionamento e Diferenciação
 
