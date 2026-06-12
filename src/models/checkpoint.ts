@@ -14,6 +14,10 @@ export interface Checkpoint {
     id: number;
     name: string;
     id_team: number;
+    team?: {
+      id: number;
+      name: string;
+    } | null;
   } | null;
 }
 
