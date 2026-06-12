@@ -3094,7 +3094,14 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 **Evolução do módulo de OCR:** além do protótipo inicial, foram implementadas melhorias significativas na robustez da extração. A principal entrega foi a detecção automática das regiões de interesse do display da esteira, permitindo que o sistema localize e segmente os campos de distância, pace e tempo total independentemente de variações de tamanho, ângulo ou iluminação da imagem capturada. Em paralelo, o banco de imagens de referência foi expandido para cobrir mais cenários reais do ambiente operacional, funcionando como base de testes e adaptação iterativa para aumentar a precisão da extração em condições adversas.
 
-**- Estudo de Mercado e Plano de Marketing:** A seção 6 (Estudo de Mercado e Plano de Marketing) foi completamente preenchida e pode ser acessada aqui: [Seção 6 — Estudo de Mercado e Plano de Marketing](#c6)
+
+### (b) O que não foi concluído
+
+**Integração do OCR com o frontend e o backend:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no frontend e a integração com o endpoint de checkpoints no backend — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+
+
+**- Calculadora de descanso e gráfico de performance na tela do atleta:** A view do atleta (runner.ejs) possui os componentes visuais de calculadora de descanso e gráfico de evolução de performance previstos no protótipo, porém os cálculos e a alimentação dinâmica dos dados ainda não estão funcionando corretamente.  
+
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
