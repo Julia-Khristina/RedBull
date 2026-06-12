@@ -3202,11 +3202,55 @@ Além disso, os testes foram desenvolvidos de forma determinística, evitando de
 
 
 ## 5.1.4  Evidências de Execução
-- Output de "npm test" com todos os casos passando.
-- Relatório de cobertura gerado por "npm test -- --coverage" com
-  percentual por camada.
-- Mapeamento CT -> RN -> RF coerente com a Matriz RF -> RN -> Endpoint
-  (seção 3.1.4) e com a RTM (seção 3.9).
+### Execução dos Testes Automatizados
+
+Para validar o correto funcionamento da aplicação, foi realizada a execução dos testes automatizados utilizando o framework **Jest**, por meio do seguinte comando:
+
+```bash
+npm test
+```
+
+A execução foi concluída com sucesso, demonstrando que todos os testes implementados no sistema foram aprovados, sem ocorrência de falhas ou erros.
+
+**Resumo da Execução**
+
+| Métrica | Resultado |
+|----------|----------|
+| Test Suites | 16 passed |
+| Tests | 128 passed |
+| Failures | 0 |
+| Snapshots | 0 |
+| Tempo de Execução | 17.343 s |
+
+Durante a execução, foram testadas diferentes camadas e funcionalidades do sistema, incluindo serviços, repositórios, autenticação e testes end-to-end, garantindo a validação do comportamento esperado da aplicação.
+
+**Arquivos de teste executados**
+
+- authService.test.ts  
+- adminService.test.ts  
+- competitionService.spec.ts  
+- checkpointService.spec.ts  
+- teamService.spec.ts  
+- runnerService.spec.ts  
+- rankingService.spec.ts  
+- exportService.spec.ts  
+- teamRepository.spec.ts  
+- runnerRepository.spec.ts  
+- exportRepository.spec.ts  
+- competitionRepository.spec.ts  
+- competition.e2e.spec.ts  
+- team.e2e.spec.ts  
+- runner.e2e.spec.ts  
+- export.e2e.spec.ts  
+
+**Evidência**
+
+
+<div align="center">
+  <sub>Figura X - Resultado da execução do comando `npm test`.</sub><br>
+    <img src="../assets/programacao/execucao-dos-testes.png" width="500" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
