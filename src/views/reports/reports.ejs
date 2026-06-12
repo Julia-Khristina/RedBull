@@ -1,32 +1,14 @@
-<%#
-  VIEW: reports/reports.ejs
-  ESTADO: [C1 - Conectado]
-  ENDPOINTS CONSUMIDOS:
-    - GET /reports                                  [A1][B1] rota curta usada pelo menu
-    - GET /view/competitions/:id/reports            [A1][B1] rota SSR por competicao
-    - GET /competitions/:id/reports                 [A1][B1] JSON do relatorio
-    - GET /competitions/:id/export                  [A1][B1] exportacao
-  LACUNAS:
-    - Quando nao ha competition_report no banco, a tela renderiza estado vazio sem quebrar. [D1]
-%>
+<link rel="stylesheet" href="/css/ranking.css">
 
 <%
-  const safeHighlights = highlights && typeof highlights === 'object' ? highlights : null;
-  const summary = safeHighlights && safeHighlights.summary && typeof safeHighlights.summary === 'object'
-    ? safeHighlights.summary
-    : {};
-  const reportHighlights = safeHighlights && safeHighlights.highlights && typeof safeHighlights.highlights === 'object'
-    ? safeHighlights.highlights
-    : {};
+  const summary = report && report.summary && typeof report.summary === 'object' ? report.summary : {};
+  const highlights = report && report.highlights && typeof report.highlights === 'object' ? report.highlights : {};
+  const inconsistencyRows = Array.isArray(inconsistencies) ? inconsistencies : [];
+  const fallbackTeams = Array.isArray(report?.teamRanking) ? report.teamRanking : [];
 
   function pickValue(source, keys, fallback) {
     for (const key of keys) {
-      if (
-        Object.prototype.hasOwnProperty.call(source, key) &&
-        source[key] !== null &&
-        source[key] !== undefined &&
-        source[key] !== ''
-      ) {
+      if (Object.prototype.hasOwnProperty.call(source, key) && source[key] !== null && source[key] !== undefined && source[key] !== '') {
         return source[key];
       }
     }
@@ -36,132 +18,234 @@
   function formatDateTime(value) {
     if (!value) return '-';
     const parsed = new Date(value);
-    if (Number.isNaN(parsed.getTime())) return String(value);
+    if (Number.isNaN(parsed.getTime())) return value;
     return parsed.toLocaleString('pt-BR');
   }
 
-  const totalKm = pickValue(summary, ['total_km', 'km_total', 'totalKm'], null);
-  const avgPace = pickValue(summary, ['avg_pace', 'avgPace', 'pace_medio'], null);
-  const checkpointCount = pickValue(summary, ['checkpoint_count', 'checkpointCount', 'total_checkpoints'], null);
-  const teamCount = pickValue(summary, ['team_count', 'teamCount', 'total_equipes'], null);
-  const athleteCount = pickValue(summary, ['athlete_count', 'athleteCount', 'total_atletas'], null);
-  const generatedAt = safeHighlights ? safeHighlights.generated_at : null;
-  const topTeams = Array.isArray(reportHighlights.top_teams) ? reportHighlights.top_teams : [];
-  const topAthletes = Array.isArray(reportHighlights.top_athletes) ? reportHighlights.top_athletes : [];
-  const reportText = typeof reportHighlights.report_text === 'string' ? reportHighlights.report_text : '';
+  function formatDate(value) {
+    if (!value) return '';
+    const parsed = /^\d{4}-\d{2}-\d{2}$/.test(String(value))
+      ? new Date(`${value}T00:00:00`)
+      : new Date(value);
+    if (Number.isNaN(parsed.getTime())) return '';
+    return parsed.toLocaleDateString('pt-BR');
+  }
+
+  function formatKm(value) {
+    if (value === '-' || value === null || value === undefined) return '-';
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) return value;
+    return parsed.toFixed(1);
+  }
+
+  function getTeamName(row) {
+    return row.runner?.team?.name ?? row.runner?.team_name ?? row.team_name ?? row.team?.name ?? '-';
+  }
+
+  function getOcrValue(row) {
+    return row.ocr_original ?? row.original_value ?? row.image?.ocr_original ?? row.image?.distance_km ?? '-';
+  }
+
+  function getCorrectedValue(row) {
+    return row.corrected_value ?? row.validation_corrected ?? row.distance_km ?? '-';
+  }
+
+  function getDifference(row) {
+    const original = Number(getOcrValue(row));
+    const corrected = Number(getCorrectedValue(row));
+    if (!Number.isFinite(original) || !Number.isFinite(corrected)) return row.difference ?? '-';
+    const difference = corrected - original;
+    return `${difference > 0 ? '+' : ''}${difference.toFixed(2)}`;
+  }
+
+  function normalizeHistory(rawHistory, teamOptions) {
+    if (!Array.isArray(rawHistory) || rawHistory.length === 0) {
+      return [];
+    }
+
+    if (rawHistory[0] && Array.isArray(rawHistory[0].teams)) {
+      return rawHistory.map((point) => ({
+        label: point.label ?? point.time ?? '',
+        teams: point.teams.map((team) => ({
+          name: team.name ?? team.team_name ?? team.label ?? '-',
+          position: Number(team.position ?? team.value ?? 0),
+        })).filter((team) => Number.isFinite(team.position) && team.position > 0),
+      }));
+    }
+
+    const teamName = teamOptions[0]?.name ?? teamOptions[0]?.team_name ?? 'Equipe';
+    return rawHistory.map((point, index) => ({
+      label: point.label ?? point.time ?? `${index + 1}`,
+      teams: [{
+        name: point.team_name ?? point.name ?? teamName,
+        position: Number(point.position ?? point.value ?? 0),
+      }],
+    }));
+  }
+
+  const totalKm = pickValue(summary, ['total_distance_km', 'total_km', 'distance_total_km', 'km_total'], '-');
+  const avgPace = pickValue(summary, ['average_pace', 'avg_pace', 'pace_medio', 'global_average_pace'], '-');
+  const checkpointCount = pickValue(summary, ['checkpoint_count', 'checkpoints_count', 'total_checkpoints'], '-');
+  const reportText = pickValue(highlights, ['summary', 'description', 'text'], 'Veja como as equipes se movimentaram durante a competição ao longo do tempo.');
+  const teams = Array.isArray(highlights.teams) && highlights.teams.length > 0
+    ? highlights.teams
+    : fallbackTeams.map((team) => ({ name: team.team_name, position: team.position }));
+  const history = normalizeHistory(highlights.position_history, teams);
+  const chartTeams = teams.map((team, index) => ({
+    name: team.name ?? team.team_name ?? team,
+    colorClass: index % 3 === 1 ? 'accent' : index % 3 === 2 ? 'yellow' : 'primary',
+  }));
+  const maxPosition = Math.max(2, ...history.flatMap((point) => point.teams.map((team) => team.position)));
+  const chartWidth = 520;
+  const chartHeight = 260;
+  const chartPadding = 34;
+  const chartPlotWidth = chartWidth - chartPadding * 2;
+  const chartPlotHeight = chartHeight - chartPadding * 2;
+
+  function pointFor(teamName, point, index) {
+    const team = point.teams.find((item) => item.name === teamName);
+    if (!team || history.length <= 1) return null;
+    const x = chartPadding + (chartPlotWidth * index) / (history.length - 1);
+    const y = chartPadding + ((team.position - 1) * chartPlotHeight) / Math.max(maxPosition - 1, 1);
+    return `${x},${y}`;
+  }
 %>
 
 <main class="ranking-page reports-page">
-  <div class="ranking-topbar">
+  <div class="ranking-topbar reports-kicker">
     <div class="ranking-topbar-left">
-      <span class="ranking-competition-label"><%= competition.name %></span>
+      <span class="ranking-competition-label">
+        <%= competition.name %><%= competition.date ? ` ${formatDate(competition.date)}` : '' %>
+      </span>
     </div>
   </div>
 
-  <h1 class="ranking-main-title">Relatorios</h1>
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="fetch-error" role="alert"><%= error %></div>
+  <% } %>
 
-  <div class="stat-cards">
-    <div class="stat-card">
+  <h1 class="ranking-main-title reports-title">Relatório - RedBull 24H</h1>
+
+  <section class="stat-cards reports-stat-cards" aria-label="Resumo da competição">
+    <article class="stat-card report-stat-card">
       <span class="stat-label">Total de km percorridos</span>
-      <span class="stat-value"><%= totalKm !== null ? totalKm : '—' %></span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Pace medio geral</span>
-      <span class="stat-value"><%= avgPace !== null ? avgPace : '—' %></span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Checkpoints</span>
-      <span class="stat-value"><%= checkpointCount !== null ? checkpointCount : '—' %></span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Equipes</span>
-      <span class="stat-value"><%= teamCount !== null ? teamCount : '—' %></span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-label">Atletas</span>
-      <span class="stat-value"><%= athleteCount !== null ? athleteCount : '—' %></span>
-    </div>
-  </div>
+      <span class="stat-value"><%= formatKm(totalKm) %><%= totalKm === '-' ? '' : ' km' %></span>
+    </article>
+    <article class="stat-card report-stat-card">
+      <span class="stat-label">Média geral de pace</span>
+      <span class="stat-value"><%= avgPace %><%= avgPace === '-' ? '' : '/km' %></span>
+    </article>
+    <article class="stat-card report-stat-card">
+      <span class="stat-label">Número de checkpoints</span>
+      <span class="stat-value"><%= checkpointCount %></span>
+    </article>
+  </section>
 
-  <section class="live-section">
-    <h2 class="section-title">Dados do relatorio</h2>
+  <section class="reports-section">
+    <h2 class="section-title reports-section-title">Relatório por equipe</h2>
 
-    <% if (!safeHighlights) { %>
-      <div class="empty-state">
-        <p>Nenhum relatorio gerado para esta competicao ainda.</p>
-      </div>
-    <% } else { %>
-      <div class="team-card">
-        <div class="team-card-body">
-          <div class="team-name-row">
-            <span class="team-name">Relatorio da competicao</span>
-            <% if (generatedAt) { %>
-              <span class="leader-pill">Gerado em <%= formatDateTime(generatedAt) %></span>
-            <% } %>
-          </div>
-          <div class="team-stats-row">
-            <div class="team-stat">
-              <span class="team-stat-label">Competicao</span>
-              <span class="team-stat-value"><%= competition.name %></span>
-            </div>
-            <div class="team-stat">
-              <span class="team-stat-label">Status</span>
-              <span class="team-stat-value"><%= competition.status %></span>
-            </div>
-          </div>
+    <div class="report-panel report-team-panel">
+      <div class="report-chart-block">
+        <h3 class="report-panel-title report-panel-title--accent">Posição durante à competição</h3>
+        <div class="report-chart" aria-label="Gráfico de posição das equipes">
+          <% if (history.length > 1 && chartTeams.length > 0) { %>
+            <svg class="report-chart-svg" viewBox="0 0 <%= chartWidth %> <%= chartHeight %>" role="img" aria-label="Histórico de posições por equipe">
+              <% for (let i = 0; i <= 4; i++) { %>
+                <line class="report-chart-line" x1="<%= chartPadding %>" x2="<%= chartWidth - chartPadding %>" y1="<%= chartPadding + (chartPlotHeight * i / 4) %>" y2="<%= chartPadding + (chartPlotHeight * i / 4) %>"></line>
+                <line class="report-chart-line" y1="<%= chartPadding %>" y2="<%= chartHeight - chartPadding %>" x1="<%= chartPadding + (chartPlotWidth * i / 4) %>" x2="<%= chartPadding + (chartPlotWidth * i / 4) %>"></line>
+              <% } %>
+              <% chartTeams.forEach(function(team) {
+                const points = history.map((point, index) => pointFor(team.name, point, index)).filter(Boolean).join(' ');
+              %>
+                <% if (points) { %>
+                  <polyline class="report-chart-path report-chart-path--<%= team.colorClass %>" points="<%= points %>"></polyline>
+                  <% points.split(' ').forEach(function(point) { const parts = point.split(','); %>
+                    <circle class="report-chart-dot report-chart-dot--<%= team.colorClass %>" cx="<%= parts[0] %>" cy="<%= parts[1] %>" r="4"></circle>
+                  <% }) %>
+                <% } %>
+              <% }) %>
+              <% history.forEach(function(point, index) { %>
+                <text class="report-chart-axis" x="<%= chartPadding + (chartPlotWidth * index) / (history.length - 1) %>" y="<%= chartHeight - 8 %>"><%= point.label %></text>
+              <% }) %>
+              <% for (let pos = 1; pos <= maxPosition; pos++) { %>
+                <text class="report-chart-axis report-chart-axis--y" x="18" y="<%= chartPadding + ((pos - 1) * chartPlotHeight) / Math.max(maxPosition - 1, 1) + 4 %>"><%= pos === maxPosition ? '0' : String(pos).padStart(2, '0') %></text>
+              <% } %>
+            </svg>
+          <% } else { %>
+            <div class="report-chart-grid" aria-hidden="true"></div>
+            <p class="report-chart-empty">Histórico de posições indisponível no relatório.</p>
+          <% } %>
         </div>
       </div>
-    <% } %>
-  </section>
 
-  <% if (reportText) { %>
-    <section class="live-section">
-      <h2 class="section-title">Highlights</h2>
-      <div class="team-card">
+      <div class="report-about">
+        <h3 class="report-panel-title">Sobre o relatório</h3>
         <p><%= reportText %></p>
-      </div>
-    </section>
-  <% } %>
 
-  <% if (topTeams.length > 0 || topAthletes.length > 0) { %>
-    <section class="runners-section">
-      <h2 class="section-title">Destaques</h2>
-      <div class="runners-grid">
-        <% topTeams.forEach(function(team) { %>
-          <div class="runner-card">
-            <div class="runner-card-top">
-              <div class="runner-identity">
-                <span class="runner-name"><%= team.name || team.team_name || 'Equipe' %></span>
-                <span class="runner-team">Equipe destaque</span>
-              </div>
-            </div>
-          </div>
-        <% }); %>
-        <% topAthletes.forEach(function(athlete) { %>
-          <div class="runner-card">
-            <div class="runner-card-top">
-              <div class="runner-identity">
-                <span class="runner-name"><%= athlete.name || athlete.runner_name || 'Atleta' %></span>
-                <span class="runner-team">Atleta destaque</span>
-              </div>
-            </div>
-          </div>
-        <% }); %>
-      </div>
-    </section>
-  <% } %>
-
-  <section class="live-section">
-    <h2 class="section-title">Endpoints conectados</h2>
-    <div class="team-card">
-      <div class="teams__card-actions">
-        <a class="teams__access-btn" href="/competitions/<%= competition.id %>/export">
-          Exportar dados
-        </a>
-        <a class="teams__edit-btn" href="/competitions/<%= competition.id %>/reports">
-          Ver JSON do relatorio
-        </a>
+        <h4>Equipes:</h4>
+        <% if (chartTeams.length > 0) { %>
+          <ul class="report-team-list">
+            <% chartTeams.forEach(function(team) { %>
+              <li>
+                <span class="report-team-dot report-team-dot--<%= team.colorClass %>"></span>
+                <%= team.name %>
+              </li>
+            <% }) %>
+          </ul>
+        <% } else { %>
+          <p class="report-muted">Equipes indisponíveis no relatório.</p>
+        <% } %>
       </div>
     </div>
   </section>
+
+  <section class="reports-section">
+    <div class="reports-section-heading">
+      <h2 class="section-title reports-section-title">Relatório de inconsistências</h2>
+      <a class="report-action-button" href="/view/competitions/<%= competition.id %>/audit">Log de Auditoria</a>
+    </div>
+
+    <div class="report-panel report-table-panel">
+      <h3 class="report-table-title">Registros corrigidos manualmente</h3>
+
+      <% if (inconsistencyRows.length === 0) { %>
+        <div class="empty-state report-empty-state">
+          <p>Nenhuma inconsistência encontrada para esta competição.</p>
+        </div>
+      <% } else { %>
+        <div class="report-table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Data / Hora</th>
+                <th>Atleta</th>
+                <th>Equipe</th>
+                <th>Checkpoint</th>
+                <th>OCR (original)</th>
+                <th>Validade (corrigido)</th>
+                <th>Diferença</th>
+                <th>Usuário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% inconsistencyRows.forEach(function(checkpoint) { %>
+                <tr>
+                  <td><%= formatDateTime(checkpoint.created_at) %></td>
+                  <td><%= checkpoint.runner?.name ?? checkpoint.runner_name ?? 'Não vinculado' %></td>
+                  <td><%= getTeamName(checkpoint) %></td>
+                  <td>#<%= checkpoint.identifier %></td>
+                  <td><%= getOcrValue(checkpoint) %></td>
+                  <td><%= getCorrectedValue(checkpoint) %></td>
+                  <td><%= getDifference(checkpoint) %></td>
+                  <td><%= checkpoint.admin_name ?? checkpoint.id_admin ?? '-' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <a class="report-export-button" href="/competitions/<%= competition.id %>/export">Exportar dados</a>
 </main>

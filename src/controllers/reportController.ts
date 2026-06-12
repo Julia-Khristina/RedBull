@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { reportService } from "../services/reportService";
+import { AppError } from "../errors/AppError";
+import { checkpointService } from "../services/checkpointService";
 import { competitionService } from "../services/competitionService";
-import { NotFoundError } from "../errors/AppError";
+import { reportService } from "../services/reportService";
 
 function parseCompetitionId(value: unknown): number {
   const parsed = typeof value === "string" ? Number(value) : NaN;
@@ -20,61 +21,108 @@ async function findCompetitionForView(req: Request) {
   }
 
   const competitions = await competitionService.findAll();
-  return competitions[0] ?? null;
+  return (
+    competitions.find((competition) => competition.status === "in_progress") ??
+    [...competitions].sort((a, b) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    })[0] ??
+    null
+  );
+}
+
+function emptyReport(competitionId: number) {
+  return {
+    id_competition: competitionId,
+    summary: {},
+    highlights: {},
+    generated_at: "",
+    checkpoints: [],
+    teamRanking: [],
+    runnerRanking: [],
+    persisted: false,
+  };
+}
+
+async function renderReportByCompetitionId(
+  res: Response,
+  competitionId: number,
+  fallbackCompetition?: { id: number; name: string; date?: string }
+): Promise<void> {
+  try {
+    const report = await reportService.generateCompetitionReport(competitionId);
+    const inconsistencies = await checkpointService.findInconsistenciesByCompetition(
+      report.id_competition
+    );
+
+    res.render("reports/reports", {
+      title: "Relatórios - Red Bull 24H",
+      report,
+      inconsistencies,
+      competition: report.competition,
+      currentPage: "reports",
+    });
+  } catch (error) {
+    if (error instanceof AppError) {
+      res.status(error.statusCode).render("reports/reports", {
+        title: "Relatórios - Red Bull 24H",
+        report: emptyReport(competitionId),
+        inconsistencies: [],
+        competition: fallbackCompetition ?? {
+          id: competitionId,
+          name: competitionId ? `Competição #${competitionId}` : "Competição inválida",
+        },
+        currentPage: "reports",
+        error:
+          error.statusCode === 404
+            ? "Competição não encontrada para este relatório."
+            : "Não foi possível carregar os dados do relatório.",
+      });
+      return;
+    }
+
+    res.status(500).render("reports/reports", {
+      title: "Relatórios - Red Bull 24H",
+      report: emptyReport(0),
+      inconsistencies: [],
+      competition: {
+        id: 0,
+        name: "Competição indisponível",
+      },
+      currentPage: "reports",
+      error: "Não foi possível carregar os dados do relatório.",
+    });
+  }
 }
 
 export const reportController = {
   async renderActiveReports(req: Request, res: Response): Promise<void> {
     const competition = await findCompetitionForView(req);
-    let highlights = null;
 
     if (!competition) {
-      res.render("reports/reports", {
-        title: "Relatórios — Red Bull 24h",
-        competition: { id: 0, name: "Competição não selecionada", status: "not_started" },
-        highlights,
+      res.status(404).render("reports/reports", {
+        title: "Relatórios - Red Bull 24H",
+        report: emptyReport(0),
+        inconsistencies: [],
+        competition: {
+          id: 0,
+          name: "Competição indisponível",
+        },
         currentPage: "reports",
-        pageCSS: "/css/ranking.css",
+        error: "Cadastre uma competição antes de acessar relatórios.",
       });
       return;
     }
 
-    try {
-      highlights = await reportService.generateCompetitionReport(competition.id);
-    } catch (error) {
-      if (!(error instanceof NotFoundError)) {
-        throw error;
-      }
-    }
+    await renderReportByCompetitionId(res, competition.id, competition);
+  },
 
-    res.render("reports/reports", {
-      title: "Relatórios — Red Bull 24h",
-      competition,
-      highlights,
-      currentPage: "reports",
-      pageCSS: "/css/ranking.css",
-    });
+  async redirectToAvailableReport(req: Request, res: Response): Promise<void> {
+    await this.renderActiveReports(req, res);
   },
 
   async renderReports(req: Request, res: Response): Promise<void> {
-    const competition = await competitionService.findById(req.params.id);
-    let highlights = null;
-
-    try {
-      highlights = await reportService.generateCompetitionReport(req.params.id);
-    } catch (error) {
-      if (!(error instanceof NotFoundError)) {
-        throw error;
-      }
-    }
-
-    res.render("reports/reports", {
-      title: "Relatórios — Red Bull 24h",
-      competition,
-      highlights,
-      currentPage: "reports",
-      pageCSS: "/css/ranking.css",
-    });
+    const competitionId = parseCompetitionId(req.params.id);
+    await renderReportByCompetitionId(res, competitionId);
   },
 
   async generateCompetitionReport(
