@@ -22,6 +22,8 @@
   const distanceValue = manualCheckpoint.distance_km ?? "0.00";
   const paceValue = manualCheckpoint.pace || "";
   const totalTimeValue = manualCheckpoint.time || "";
+  const runnerId = checkpointContext.id_runner || selectedRunner.id || "";
+  const checkpointEndpoint = runnerId ? `/runners/${runnerId}/checkpoints` : "/checkpoints";
 %>
 
 <main class="operational-panel" data-operational-panel>
@@ -47,13 +49,13 @@
     <form
       class="manual-form"
       data-operational-manual-form
-      data-endpoint="/checkpoints"
+      data-endpoint="<%= checkpointEndpoint %>"
       data-ranking-endpoint-template="/competitions/:id/ranking/teams"
       data-input-method="manual"
       novalidate
     >
       <input type="hidden" name="identifier" value="<%= checkpointContext.identifier || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.identifier || '' %>">
-      <input type="hidden" name="id_runner" value="<%= checkpointContext.id_runner || selectedRunner.id || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_runner || selectedRunner.id || '' %>">
+      <input type="hidden" name="id_runner" value="<%= runnerId %>" data-checkpoint-field data-initial-value="<%= runnerId %>">
       <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_competition || '' %>">
       <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_treadmill || '' %>">
       <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_admin || '' %>">

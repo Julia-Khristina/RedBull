@@ -50,6 +50,18 @@ button:disabled {
   background: var(--primary-strong);
 }
 
+.secondary {
+  width: 100%;
+  border: 1px solid var(--line);
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.secondary:hover {
+  border-color: #9db1ab;
+  background: #e4ece9;
+}
+
 #app {
   min-height: 100vh;
 }

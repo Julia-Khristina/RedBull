@@ -9,7 +9,22 @@ router.get(
   asyncHandler(checkpointController.renderOperationalPanel)
 );
 
+router.get(
+  "/operational-panel/:runnerId",
+  asyncHandler(checkpointController.renderOperationalPanel)
+);
+
+router.get(
+  "/view/competitions/:id/teams/:teamId/checkpoints/saved",
+  asyncHandler(checkpointController.renderSavedByTeam)
+);
+
 router.post("/checkpoints", asyncHandler(checkpointController.create));
+
+router.post(
+  "/runners/:runnerId/checkpoints",
+  asyncHandler(checkpointController.createForRunner)
+);
 
 router.get("/checkpoints", asyncHandler(checkpointController.list));
 

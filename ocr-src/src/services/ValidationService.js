@@ -8,11 +8,45 @@ export class ValidationService {
       .trim();
 
     if (["distance", "speed"].includes(field)) {
-      return cleaned.replace(",", ".").replace(/[^0-9.]/g, "");
+      const numberText = cleaned.replace(",", ".").replace(/[^0-9.]/g, "");
+
+      if (!numberText.includes(".") && field === "distance" && /^\d{2}$/.test(numberText)) {
+        return `0.${numberText}`;
+      }
+
+      if (!numberText.includes(".") && field === "speed" && /^0\d$/.test(numberText)) {
+        return `0.${numberText.slice(1)}`;
+      }
+
+      if (!numberText.includes(".") && /^0\d{2,}$/.test(numberText)) {
+        return `0.${numberText.slice(1)}`;
+      }
+
+      if (!numberText.includes(".") && /^\d{3}$/.test(numberText)) {
+        return field === "speed"
+          ? `${numberText.slice(0, 2)}.${numberText.slice(2)}`
+          : `${numberText.slice(0, 1)}.${numberText.slice(1)}`;
+      }
+
+      if (!numberText.includes(".") && /^\d{4}$/.test(numberText)) {
+        return `${numberText.slice(0, 2)}.${numberText.slice(2)}`;
+      }
+
+      return numberText;
     }
 
     if (field === "time") {
-      return cleaned.replace(/[^0-9:]/g, "");
+      const timeText = cleaned.replace(/[^0-9:]/g, "");
+
+      if (!timeText.includes(":") && /^\d{3}$/.test(timeText)) {
+        return `${timeText.slice(0, 1)}:${timeText.slice(1)}`;
+      }
+
+      if (!timeText.includes(":") && /^\d{4}$/.test(timeText)) {
+        return `${timeText.slice(0, 2)}:${timeText.slice(2)}`;
+      }
+
+      return timeText;
     }
 
     return cleaned;

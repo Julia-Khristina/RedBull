@@ -43,7 +43,7 @@ export function createExportService(
         runners: data.runners,
         checkpoints: data.checkpoints,
         rankings: {
-          teams: rankingTeams,
+          teams: rankingTeams.filter((team) => team.total_distance_km > 0),
           runners: rankingRunners,
         },
       };
