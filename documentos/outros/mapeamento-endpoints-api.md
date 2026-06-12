@@ -29,7 +29,23 @@ A página HTML organiza os endpoints em **10 seções funcionais** (3.6.1 Compet
 
 ## 2. Endpoints reais implementados (31 endpoints em 7 arquivos de rota)
 
-Em `src/app.ts` os routers são montados nesta ordem: `competitionRoutes`, `teamRoutes`, `athleteRoutes`, `administradorRoutes` (com prefixo `/administradores`), `checkpointRoutes`, `rankingRoutes`, `exportRoutes`. Status codes derivados dos controllers + `errors/AppError.ts` (ValidationError→400, NotFoundError→404, ConflictError→409, UnprocessableError→422, fallback do `errorHandler`→500).
+Em `src/app.ts` os routers são montados nesta ordem: `competitionRoutes`, `teamRoutes`, `athleteRoutes`, `administradorRoutes` (com prefixo `/administradores`), `checkpointRoutes`, `rankingRoutes`, `exportRoutes`.
+
+**Status codes emitidos pelos controllers (auditoria de `src/controllers/*.ts`):**
+
+- **Caminhos de sucesso:**
+  - `201 Created` — `res.status(201).json(...)` em todos os métodos `create` (admin, competition, team, athlete/runner, checkpoint).
+  - `204 No Content` — `res.status(204).send()` em todos os métodos `delete` (admin, competition, team, athlete/runner, checkpoint) e em `auth.logout`.
+  - `200 OK` — `res.status(200).json(...)` (ou `res.json(...)` que tem `200` como default) em todos os demais GETs, PUTs e PATCHs.
+
+- **Caminhos de erro** (mapeados via `errors/AppError.ts` + middleware `errorHandler`):
+  - `400` — `ValidationError`
+  - `404` — `NotFoundError`
+  - `409` — `ConflictError`
+  - `422` — `UnprocessableError`
+  - `500` — *fallback* do `errorHandler` para exceções não tratadas.
+
+- **Planejados para a Sprint 5:** `401 Unauthorized` (autenticação) e `403 Forbidden` (autorização por perfil).
 
 ### 2.1. Competições — `competitionRoutes.ts` (6)
 
