@@ -1980,15 +1980,16 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 </div>
 
 
-## 3.6. Modelagem do banco de dados (sprints 2 e 4)
+## 3.6. Modelagem do banco de dados 
 
-### 3.6.1. Modelo Entidade-Relacionamento (ER) (sprint 2)
+
+### 3.6.1. Modelo Entidade-Relacionamento (ER) 
 
 O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (DEVMEDIA, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
 
-De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como nome, endereço e CPF na entidade Aluno. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Além disso, existem os relacionamentos, representados por losangos contendo o verbo que descreve a interação entre as entidades, responsáveis por demonstrar as associações existentes entre elas.
+De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como `name`, `email` e `cpf` na entidade Runner. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Os relacionamentos, por sua vez, são representados por losangos que contêm o verbo que descreve a interação entre as entidades, demonstrando as associações existentes entre elas.
 
-Além disso, o relacionamento entre entidades é feito através de uma linha, que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 25 apresenta as principais cardinalidades e a sua utilização.
+O relacionamento entre entidades é feito por meio de uma linha que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 25 apresenta as principais cardinalidades e a sua utilização.
 
 <div align="center">
   <sub>Quadro 25 - Cardinalidades </sub>
@@ -1996,25 +1997,25 @@ Além disso, o relacionamento entre entidades é feito através de uma linha, qu
 
 | Cardinalidade |  Leitura | Exemplo de Aplicação |
 | -------- | --------- | --------- |  
-| 1:1 | Um para Um | Cada pessoa tem exatamente um CPF |
-| 1:N | Um para Muitos | Um cliente pode ter vários pedidos, mas cada pedido pertence a um único cliente |
-| N:M | Muitos para Muitos | Um pedido pode conter vários produtos, e um produto pode aparecer em vários pedidos. |
+| 1:1 | Um para Um | Cada Team possui exatamente um UUID de acesso |
+| 1:N | Um para Muitos | Uma Competition possui vários Teams, mas cada Team pertence a uma única Competition |
+| N:N | Muitos para Muitos | No modelo conceitual, `Runner` e `Treadmill` se relacionam N:N (cada corredor usa várias esteiras ao longo das 24h e cada esteira recebe vários corredores). No modelo lógico, essa relação é materializada na entidade associativa `Checkpoint`, com atributos próprios (`distance_km`, `pace`, `time`) |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, a Figura 26 ilustra o Modelo Entidade Relacionamento desenvolvido para o projeto.
+A seguir, a Figura 26 ilustra o Modelo Entidade-Relacionamento desenvolvido para o projeto.
 
 <div align="center">
-  <sub>Figura 26 - Modelo Entidade Relacionamento</sub><br>
-    <img src="../assets/modelo-er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+  <sub>Figura 26 - Modelo Entidade-Relacionamento</sub><br>
+    <img src="../assets/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Descrição das entidades e relacionamentos
 
-A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema.
+A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema. A notação `1:N` adotada na coluna de relacionamentos corresponde à notação de Chen e equivale à forma `0..N` da notação UML; a participação obrigatória (mínimo 1) é indicada em texto quando aplicável.
 
 <div align="center">
   <sub>Quadro 26 - Descrição das entidades e relacionamentos</sub>
@@ -2022,18 +2023,18 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 
 | Entidade | Papel no sistema | Relacionamentos |
 | --------- | ---------------- | --------------- |
-| Competição | Representa o evento Red Bull 24h | Possui N Equipes, Possui N Esteiras |
-| Equipe | Agrupa corredores sob um identificador único | Pertence a 1 Competição, Possui N Corredores |
-| Corredor | Atleta participante vinculado a uma equipe | Pertence a 1 Equipe, Possui N Checkpoints |
-| Checkpoint | Registro de performance do corredor na esteira | Pertence a 1 Corredor, Pertence a 1 Esteira, Possui N:1 Administrador | 
-| Administrador | Operador responsável por registrar checkpoints | Possui N Checkpoints |
-| Esteira | Equipamento onde a corrida é realizada | Pertence a N Competições, possui N Checkpoints |
+| Competition | Representa o evento Red Bull 24h, raiz do modelo | Possui N Teams (1:N); possui N Checkpoints (1:N) |
+| Team | Agrupa corredores de uma mesma competição | Pertence a 1 Competition (obrigatório); possui N Runners (1:N) |
+| Runner | Corredor participante vinculado a uma equipe | Pertence a 1 Team (obrigatório); possui N Checkpoints (1:N) |
+| Checkpoint | Registro de desempenho do corredor na esteira | Pertence obrigatoriamente a 1 Runner, 1 Competition, 1 Treadmill e 1 Admin (todas as associações são obrigatórias) |
+| Admin | Operador responsável por registrar checkpoints | Possui N Checkpoints (1:N) |
+| Treadmill | Esteira onde a corrida é realizada | Possui N Checkpoints (1:N) |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando apenas na organização das informações e em seus relacionamentos. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais, como chaves estrangeiras, tabelas associativas e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional.
+Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando na organização das informações e em seus relacionamentos, sem detalhar tipos de dados ou nomes de colunas. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais como chaves estrangeiras, restrições de integridade e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional. O dicionário de dados apresentado a seguir já incorpora informações do nível lógico/físico (tipos, chaves estrangeiras e obrigatoriedade), de modo a aproximar a modelagem conceitual da implementação efetivamente adotada no projeto.
 
 A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados no MER.
 
@@ -2043,10 +2044,10 @@ A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados n
 
 | Elemento |  Símbolo  | Aplicação ao MER |
 | -------- | --------- | ---------------- |
-| Entidade | Retângulo | Competição, Equipe, Corredor, Checkpoint, Administrador e Esteira |
-| Atributo | Elipse    | endereço em "Competição", nome em "Corredor" |
-| Relacionamento | Losango | Equipe possui Corredor |
-| Cardinalidade | 1, N nas arestas | Um corredor possui N checkpoints |
+| Entidade | Retângulo | `Competition`, `Team`, `Runner`, `Checkpoint`, `Admin` e `Treadmill` |
+| Atributo | Elipse    | `address` em `Competition`, `cpf` em `Runner` |
+| Relacionamento | Losango | `Team` possui `Runner` |
+| Cardinalidade | 1, N nas arestas | Um `Runner` possui N `Checkpoints` |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2054,7 +2055,7 @@ A seguir, o Quadro 27 exemplifica os elementos da notação de Chen utilizados n
 
 #### Dicionário de dados
 
-Por meio de quadros, será detalhado cada entidade, listando seus atributos baseados no tipo semântico e descrição afim de contextualizar a implementação ao sistema.
+Por meio de quadros, serão detalhadas todas as entidades, listando seus atributos com o respectivo tipo semântico, a obrigatoriedade e a descrição, a fim de contextualizar a implementação ao sistema. A coluna "Obrigatório" indica se o atributo é de preenchimento obrigatório no banco de dados (`SIM`) ou se aceita valor nulo (`NÃO`).
 
 O Quadro 28 apresenta a entidade e os atributos de "Competição".
 
@@ -2062,12 +2063,14 @@ O Quadro 28 apresenta a entidade e os atributos de "Competição".
   <sub>Quadro 28 - Dicionário de Dados da Entidade Competição</sub>
 </div>
 
-| Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Competição | Código | Identificador | Identifica unicamente cada competição | 
-| Competição | Endereço | Texto | Local onde a competição ocorre | 
-| Competição | Data | Data | Data de realização da competição |
-| Competição | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| Competition | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada competição |
+| Competition | `name` | Texto | Sim | CHECK: não vazio | Nome da competição |
+| Competition | `address` | Texto | Sim | — | Local onde a competição ocorre |
+| Competition | `date` | Data | Sim | CHECK: data ≥ 01/01/2020 | Data de realização da competição |
+| Competition | `status` | Categórico | Sim | CHECK: `not_started`, `in_progress` ou `closed`; padrão `not_started` | Estado atual da competição |
+| Competition | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2079,13 +2082,14 @@ A seguir, o Quadro 29 ilustra a entidade Equipe e os seus atributos.
   <sub>Quadro 29 - Dicionário de Dados da Entidade Equipe</sub>
 </div>
 
-| Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Equipe | Código | Identificador | Identifica unicamente cada equipe |
-| Equipe | Nome | Texto | Nome da equipe |
-| Equipe | UUID | Identificador único público | Código distribuído ao capitão para acesso sem login |
-| Equipe | Qr_Code | Imagem | Representação visual gerada a partir do UUID |
-| Equipe | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| Team | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada equipe |
+| Team | `name` | Texto | Sim | CHECK: não vazio | Nome da equipe |
+| Team | `uuid` | Identificador único público | Sim | UNIQUE; gerado automaticamente | Código distribuído ao capitão para acesso sem login |
+| Team | `qr_code` | JSONB | Não | — | Metadados do QR Code gerado a partir do UUID |
+| Team | `id_competition` | Chave estrangeira | Sim | FK → `Competition` (ON DELETE RESTRICT) | Vincula a equipe à competição |
+| Team | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2097,15 +2101,16 @@ O Quadro 30 representa o dicionário de dados da entidade Corredor.
   <sub>Quadro 30 - Dicionário de Dados da Entidade Corredor</sub>
 </div>
 
-| Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Corredor | Código | Identificador | Identifica unicamente cada corredor | 
-| Corredor | Nome | Texto | Nome completo do corredor |
-| Corredor | CPF | Texto | Documento de identificação civil único |
-| Corredor | Email | Texto | Endereço de e-mail do corredor | 
-| Corredor | Telefone | Texto | Contato telefônico do corredor | 
-| Corredor | Status | Categórico | Papel do corredor na equipe: corredor ou capitão |
-| Corredor | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| Runner | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada corredor |
+| Runner | `name` | Texto | Sim | CHECK: não vazio | Nome completo do corredor |
+| Runner | `status` | Categórico | Sim | CHECK: `runner` ou `captain`; padrão `runner`. Conforme a migration, armazena o papel do corredor na equipe | Papel do corredor na equipe |
+| Runner | `email` | Texto | Sim | UNIQUE; CHECK: formato de e-mail | Endereço de e-mail do corredor |
+| Runner | `phone` | Texto | Não | — | Contato telefônico do corredor |
+| Runner | `cpf` | Texto | Sim | UNIQUE; CHECK: formato `000.000.000-00` | Documento de identificação civil |
+| Runner | `id_team` | Chave estrangeira | Sim | FK → `Team` (ON DELETE RESTRICT) | Vincula o corredor à equipe |
+| Runner | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2117,15 +2122,19 @@ O Quadro 31 apresenta a entidade e os atributos de "Checkpoint".
   <sub>Quadro 31 - Dicionário de Dados da Entidade Checkpoint</sub>
 </div>
 
-| Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Checkpoint | Código | Identificador | Identifica unicamente cada checkpoint |
-| Checkpoint | Identificador | Número | Identifica cada checkpoint e possibilita rastreabilidade e auditoria dos registros |
-| Checkpoint | Km | Numérico decimal | Distância percorrida registrada |
-| Checkpoint | Pace | Numérico decimal | Ritmo médio em minutos por km |
-| Checkpoint | Tempo | Duração | Tempo total na esteira |
-| Checkpoint | Imagem | Arquivo | Foto do painel da esteira capturada via OCR |
-| Checkpoint | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| Checkpoint | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada checkpoint |
+| Checkpoint | `identifier` | Texto | Sim | UNIQUE | Identificador que possibilita a rastreabilidade dos registros |
+| Checkpoint | `distance_km` | Numérico decimal | Sim | CHECK: entre 0 e 1000 | Distância percorrida registrada (em km) |
+| Checkpoint | `pace` | Texto | Não | CHECK: formato `mm:ss/km` | Ritmo médio em minutos por km |
+| Checkpoint | `time` | Texto | Não | CHECK: formato `hh:mm:ss` | Tempo total na esteira |
+| Checkpoint | `image` | JSONB | Não | — | Foto ou metadados da evidência capturada |
+| Checkpoint | `id_runner` | Chave estrangeira | Sim | FK → `Runner` (ON DELETE RESTRICT) | Vincula o checkpoint ao corredor |
+| Checkpoint | `id_competition` | Chave estrangeira | Sim | FK → `Competition` (ON DELETE RESTRICT) | Vincula o checkpoint à competição |
+| Checkpoint | `id_treadmill` | Chave estrangeira | Sim | FK → `Treadmill` (ON DELETE RESTRICT) | Vincula o checkpoint à esteira |
+| Checkpoint | `id_admin` | Chave estrangeira | Sim | FK → `Admin` (ON DELETE RESTRICT) | Vincula o checkpoint ao admin responsável |
+| Checkpoint | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2137,13 +2146,14 @@ A seguir, o Quadro 32 ilustra a entidade Administrador e os seus atributos.
   <sub>Quadro 32 - Dicionário de Dados da Entidade Administrador</sub>
 </div>
 
-| Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Administrador | Código | Identificador | Identifica unicamente cada administrador |
-| Administrador | Nome | Texto | Nome do administrador |
-| Administrador | Área | Texto | Área de atuação do administrador | 
-| Administrador | Senha | Texto protegido | Credencial de acesso ao painel administrativo |
-| Administrador | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| Admin | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada admin |
+| Admin | `name` | Texto | Sim | CHECK: não vazio | Nome do admin |
+| Admin | `email` | Texto | Sim | UNIQUE; CHECK: formato de e-mail | E-mail usado para autenticação |
+| Admin | `area` | Texto | Não | — | Área de atuação do admin |
+| Admin | `password` | Texto (hash) | Sim | — | Hash da credencial de acesso ao painel administrativo (a senha em texto puro nunca é armazenada) |
+| Admin | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2155,16 +2165,25 @@ O Quadro 33 representa o dicionário de dados da entidade Esteira.
   <sub>Quadro 33 - Dicionário de Dados da Entidade Esteira </sub>
 </div>
 
-| Entidade | Atributo | Tipo semântico | Descrição |
-| -------- | --------- | -------------- | --------- | 
-| Esteira | Código | Identificador | Identifica unicamente cada esteira |
-| Esteira | Nome | Texto | Nome ou apelido da esteira |
-| Esteira | Especificação | Texto | Descrição técnica do equipamento |
-| Esteira | Criado_em | Data/Hora | Armazena a data e o horário em que o registro foi inserido no sistema |
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| Treadmill | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada esteira |
+| Treadmill | `name` | Texto | Sim | CHECK: não vazio | Nome ou apelido da esteira |
+| Treadmill | `specification` | Texto | Não | — | Descrição técnica do equipamento |
+| Treadmill | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
+
+#### Regras que impactam o modelo
+
+Além dos atributos, o modelo é governado por regras de integridade definidas no banco de dados, descritas a seguir, que impactam diretamente a estrutura e o comportamento das entidades:
+
+- **Unicidade:** os atributos `email` e `cpf` de `Runner`, `email` de `Admin`, `uuid` de `Team` e `identifier` de `Checkpoint` são únicos, impedindo registros duplicados.
+- **Domínios restritos (CHECK):** `status` de `Competition` aceita apenas `not_started`, `in_progress` ou `closed`; `status` de `Runner` aceita apenas `runner` ou `captain`; `distance_km` deve estar entre 0 e 1000; `cpf`, `email`, `pace` e `time` seguem formatos pré-definidos.
+- **Obrigatoriedade das associações:** todas as chaves estrangeiras são de preenchimento obrigatório, o que torna a participação das entidades nos relacionamentos sempre total, todo `Team` pertence a uma `Competition`, todo `Runner` a um `Team` e todo `Checkpoint` a um `Runner`, uma `Competition`, uma `Treadmill` e um `Admin`.
+- **Integridade referencial (ON DELETE RESTRICT):** não é permitido excluir um registro que ainda possua dependentes; por exemplo, uma `Competition` não pode ser removida enquanto houver `Teams` ou `Checkpoints` vinculados a ela.
 
 #### Rastreabilidade entidade → RF → RN
 
@@ -2185,7 +2204,7 @@ A seguir, o Quadro 34 apresenta a rastreabilidade entre as entidades criadas com
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
+</div>
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
