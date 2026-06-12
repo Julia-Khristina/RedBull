@@ -3177,6 +3177,92 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 *Posicione aqui também o relatório de cobertura de testes Jest se houver (através de link ou transcrito para estrutura markdown).*
 
+
+### 5.1.2 Testes Unitários de Service (white-box)
+
+Esta seção documenta os testes unitários realizados na camada **Service** da aplicação, seguindo a abordagem **white-box** — com conhecimento da implementação interna dos métodos testados. Os testes foram escritos com **Jest** e utilizam mocks de repositório via injeção de dependência.
+
+#### Cobertura de Testes
+
+A execução do comando `npm test -- --coverage` evidencia cobertura superior a 80% na camada Service, conforme exigido pelos critérios de aceite. Os principais services cobertos incluem: `competitionService`, `teamService`, `runnerService`, `exportService` e `reportService`.
+
+#### Identificação dos Casos de Teste
+
+| Identificador | Service             | Método                     | Cenário                                                   | RN          |
+|---------------|---------------------|----------------------------|------------------------------------------------------------|-------------|
+| CT01          | runnerService       | create                     | Deve criar atleta com payload válido                       | RN04        |
+| CT02          | runnerService       | create                     | Deve lançar NotFoundError quando equipe não existe         | RN04, RN05  |
+| CT03          | runnerService       | create                     | Deve lançar UnprocessableError quando equipe tem 16 atletas | RN04        |
+| CT04          | runnerService       | create                     | Deve lançar ValidationError quando name está ausente       | RN12        |
+| CT05          | runnerService       | findByTeamAndId            | Deve retornar atleta quando existe                         | RN05        |
+| CT06          | teamService         | create                     | Deve criar equipe com name e id_competition validados      | RN06        |
+| CT07          | teamService         | create                     | Deve lançar ValidationError quando name está ausente       | RN12        |
+| CT08          | teamService         | findByCompetitionAndId     | Deve retornar equipe quando existe                         | RN06        |
+| CT09          | teamService         | findByCompetitionAndId     | Deve lançar NotFoundError quando equipe não existe         | RN05        |
+| CT10          | teamService         | updateByCompetitionAndId   | Deve atualizar equipe existente                            | RN06        |
+
+#### Casos Prioritários (Padrão AAA)
+
+**CT01 — runnerService.create — Atleta criado com payload válido**
+- **RN coberta:** RN04 (cadastro de atletas com dados válidos)
+- **Caminho de falha:** N/A (cenário de sucesso)
+- **Determinismo:** repositório totalmente mockado, sem efeitos externos
+
+```
+Arrange: mock findTeamById retorna equipe existente; mock countByTeam retorna 0; mock create retorna fixture
+Act:     service.create({ name, cpf, email, id_team })
+Assert:  resultado.name === "João Silva"; resultado.id_team === 10; repository.create foi chamado
+```
+
+**CT02 — runnerService.create — Lança NotFoundError quando equipe não existe**
+- **RN coberta:** RN05 (recursos devem existir antes de operações dependentes)
+- **Caminho de falha:** findTeamById retorna null → NotFoundError
+- **Determinismo:** mock determinístico retorna null de forma previsível
+
+```
+Arrange: mock findTeamById retorna null
+Act:     service.create({ name, cpf, email, id_team: 99 })
+Assert:  rejects.toBeInstanceOf(NotFoundError); repository.create NÃO foi chamado
+```
+
+**CT03 — runnerService.create — Lança UnprocessableError quando equipe tem 16 atletas**
+- **RN coberta:** RN04 (limite máximo de 16 atletas por equipe)
+- **Caminho de falha:** countByTeam retorna 16 → UnprocessableError
+- **Determinismo:** contagem mockada e invariável
+
+```
+Arrange: mock findTeamById retorna equipe; mock countByTeam retorna 16
+Act:     service.create({ name, cpf, email, id_team: 10 })
+Assert:  rejects.toBeInstanceOf(UnprocessableError); repository.create NÃO foi chamado
+```
+
+**CT06 — teamService.create — Equipe criada com payload válido**
+- **RN coberta:** RN06 (cadastro de equipes com dados obrigatórios)
+- **Caminho de falha:** N/A (cenário de sucesso)
+- **Determinismo:** mock create retorna fixture esperado
+
+```
+Arrange: mock create retorna teamFixture
+Act:     teamService.create({ name: "Equipe Alpha", id_competition: 40 })
+Assert:  team.name === "Equipe Alpha"; team.id_competition === 40; team.uuid definido
+```
+
+**CT09 — teamService.findByCompetitionAndId — Lança NotFoundError quando equipe não existe**
+- **RN coberta:** RN05 (recursos devem existir antes de operações dependentes)
+- **Caminho de falha:** findByCompetitionAndId retorna null → NotFoundError
+- **Determinismo:** mock retorna null deterministicamente
+
+```
+Arrange: mock findByCompetitionAndId retorna null
+Act:     teamService.findByCompetitionAndId(40, 999)
+Assert:  rejects.toBeInstanceOf(NotFoundError)
+```
+
+#### Evidência de Execução
+
+Os testes passam sem erros com cobertura ≥ 80% na camada Service. A evidência completa pode ser verificada via pipeline CI/CD do repositório, onde o comando `npm test -- --coverage` é executado automaticamente a cada push.
+
+
 ## 5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
