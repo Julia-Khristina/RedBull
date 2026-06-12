@@ -43,6 +43,27 @@ function computeElapsedTime(dateStr: string): string {
   return `${hh}:${mm}:${sec}`;
 }
 
+function calculateRestProgress(
+  checkpointCreatedAt: string | null,
+  recommendedMinutes: number,
+  circleCircumference: number
+): { restPct: number; restOffset: number } {
+  if (!checkpointCreatedAt) {
+    return { restPct: 100, restOffset: 0 };
+  }
+
+  const elapsedMin =
+    (Date.now() - new Date(checkpointCreatedAt).getTime()) / 60000;
+  const restPct = Math.max(
+    0,
+    Math.min(100, Math.round((elapsedMin / recommendedMinutes) * 100))
+  );
+  const restOffset =
+    Math.round(circleCircumference * (1 - restPct / 100) * 10) / 10;
+
+  return { restPct, restOffset };
+}
+
 function parseIntegerParam(value: unknown, name: string): number {
   const parsed = typeof value === "string" ? Number(value) : NaN;
 
@@ -143,6 +164,9 @@ export const runnerController = {
     // [A1][B1] Ranking filtrado para runners desta equipe
     const teamRunnerRanking = runnerRanking.filter((r) => r.id_team === teamId);
 
+    const REST_RECOMMENDED_MIN = 50;
+    const CIRCLE_CIRCUMFERENCE = 314.16;
+
     // Enriquece cada runner com dados de ranking e último checkpoint
     const runnersEnriched = runners.map((runner) => {
       const ranking = teamRunnerRanking.find((r) => r.id_runner === runner.id);
@@ -169,6 +193,7 @@ export const runnerController = {
         average_pace: ranking?.average_pace ?? null,
         total_distance_km: ranking?.total_distance_km ?? 0,
         max_speed_kmh: maxSpeedKmh,
+        last_checkpoint_raw: lastCp?.created_at ?? null,
         last_checkpoint_at: formatDateTimePtBR(lastCp?.created_at ?? null),
       };
     });
@@ -188,20 +213,48 @@ export const runnerController = {
 
     // [D2] Calculadora de descanso simplificada — 50 min recomendados (RN08)
     // Fórmula real requer parâmetros do evento não expostos na Seção 7
-    const REST_RECOMMENDED_MIN = 50;
-    const CIRCLE_CIRCUMFERENCE = 314.16;
+    const runnerRestOptions = runnersEnriched.map((runner) => {
+      const rest = calculateRestProgress(
+        runner.last_checkpoint_raw,
+        REST_RECOMMENDED_MIN,
+        CIRCLE_CIRCUMFERENCE
+      );
+      const hasCheckpoint = runner.last_checkpoint_raw !== null;
 
-    const lastCpOverall = [...checkpoints]
-      .filter((cp) => runners.some((r) => r.id === cp.id_runner))
-      .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())[0];
-
-    let restPct = 100;
-    if (lastCpOverall) {
-      const elapsedMin =
-        (Date.now() - new Date(lastCpOverall.created_at).getTime()) / 60000;
-      restPct = Math.min(100, Math.round((elapsedMin / REST_RECOMMENDED_MIN) * 100));
-    }
-    const restOffset = Math.round(CIRCLE_CIRCUMFERENCE * (1 - restPct / 100) * 10) / 10;
+      return {
+        id: runner.id,
+        name: runner.name,
+        hasCheckpoint,
+        lastCheckpointAt: runner.last_checkpoint_at,
+        restPct: rest.restPct,
+        restOffset: rest.restOffset,
+        statusLabel: !hasCheckpoint
+          ? "Atleta sem checkpoint registrado"
+          : rest.restPct >= 100
+            ? "Pronto para Voltar!"
+            : "Em descanso",
+        description: !hasCheckpoint
+          ? "Atleta ainda sem checkpoint registrado."
+          : rest.restPct >= 100
+            ? "Tempo de descanso atingido..."
+            : "Aguardando tempo de descanso...",
+      };
+    });
+    const latestRunnerRest =
+      [...runnerRestOptions].sort((a, b) => {
+        const runnerA = runnersEnriched.find((runner) => runner.id === a.id);
+        const runnerB = runnersEnriched.find((runner) => runner.id === b.id);
+        const timeA = runnerA?.last_checkpoint_raw
+          ? new Date(runnerA.last_checkpoint_raw).getTime()
+          : 0;
+        const timeB = runnerB?.last_checkpoint_raw
+          ? new Date(runnerB.last_checkpoint_raw).getTime()
+          : 0;
+        return timeB - timeA;
+      })[0] ?? null;
+    const selectedRunnerRest = latestRunnerRest ?? runnerRestOptions[0] ?? null;
+    const restPct = selectedRunnerRest?.restPct ?? 100;
+    const restOffset = selectedRunnerRest?.restOffset ?? 0;
 
     // [D2] Próximo atleta: primeiro runner sem checkpoint registrado nesta competição
     // Não há endpoint de scheduling na Seção 7 — inferido pela ausência de registros
@@ -216,6 +269,8 @@ export const runnerController = {
       runnersEnriched,
       teamStats,
       competitionTimeFormatted: computeElapsedTime(competition.date),
+      runnerRestOptions,
+      selectedRunnerRest,
       restPct,
       restOffset,
       nextRunner,

@@ -1,0 +1,62 @@
+{
+  "numericTolerance": 0.01,
+  "fields": ["distance", "time", "speed"],
+  "cases": [
+    {
+      "file": "imagem-ocr-alterada.png",
+      "expected": {
+        "distance": "15.25",
+        "time": "62:08",
+        "speed": "10.5"
+      }
+    },
+    {
+      "file": "imagem-ocr-angulada.png",
+      "expected": {
+        "distance": "10.00",
+        "time": "45:12",
+        "speed": "12.0"
+      }
+    },
+    {
+      "file": "Screenshot From 2026-05-24 11-51-15.png",
+      "expected": {
+        "distance": "0.08",
+        "time": "9:07",
+        "speed": "0.5"
+      }
+    },
+    {
+      "file": "Screenshot From 2026-05-24 14-07-17.png",
+      "expected": {
+        "distance": "0.04",
+        "time": "5:06",
+        "speed": "0.5"
+      }
+    },
+    {
+      "file": "Screenshot From 2026-05-24 14-30-21.png",
+      "expected": {
+        "distance": "0.08",
+        "time": "9:07",
+        "speed": "0.5"
+      }
+    },
+    {
+      "file": "Screenshot From 2026-05-24.png",
+      "expected": {
+        "distance": "5.20",
+        "time": "35:45",
+        "speed": "10.0"
+      }
+    },
+    {
+      "file": "Screenshot From 2026-05-25 00-22-50.png",
+      "expected": {
+        "distance": "0.08",
+        "time": "9:07",
+        "speed": "0.5"
+      }
+    }
+  ]
+}

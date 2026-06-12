@@ -7,6 +7,7 @@ import {
 import { teamRepository } from "../repositories/teamRepository";
 import {
   validateCreateTeam,
+  validateSetActiveRunner,
   validateUpdateTeam,
 } from "../validators/teamValidator";
 import { NotFoundError } from "../errors/AppError";
@@ -51,6 +52,38 @@ export function createTeamService(
     ): Promise<Team> {
       const input = validateUpdateTeam(payload);
       const updated = await repository.updateByCompetitionAndId(competitionId, id, input);
+
+      if (!updated) {
+        throw new NotFoundError(`Equipe ${id} não encontrada`);
+      }
+
+      return updated;
+    },
+
+    async setActiveRunnerByCompetitionAndId(
+      competitionId: number,
+      id: number,
+      payload: unknown
+    ): Promise<Team> {
+      const input = validateSetActiveRunner(payload);
+      const team = await repository.findByCompetitionAndId(competitionId, id);
+
+      if (!team) {
+        throw new NotFoundError(`Equipe ${id} não encontrada`);
+      }
+
+      const runner = await repository.findRunnerByTeamAndId(id, input.runnerId);
+      if (!runner) {
+        throw new NotFoundError(
+          `Runner ${input.runnerId} não encontrado nesta equipe`
+        );
+      }
+
+      const updated = await repository.setActiveRunnerByCompetitionAndId(
+        competitionId,
+        id,
+        input.runnerId
+      );
 
       if (!updated) {
         throw new NotFoundError(`Equipe ${id} não encontrada`);

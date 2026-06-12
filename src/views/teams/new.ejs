@@ -1,0 +1,100 @@
+<%#
+  VIEW: teams/new.ejs
+  ESTADO: [C2 — Fluxo administrativo de criação completa]
+  LACUNAS:
+    - ID da competição ativa deve vir por ?competitionId=; /teams/new sem competição não é permitido. [A1][D2]
+    - Criação de equipe e atletas ocorre em etapas porque o backend não possui endpoint transacional único. [A1][D2]
+  ENDPOINTS CONSUMIDOS:
+    - POST /competitions/:id/teams [A1][B1]
+    - POST /competitions/:id/teams/:teamId/runners [A1][B1]
+%>
+
+<main class="teams teams--form" data-team-create data-competition-id="<%= competition.id %>">
+  <nav class="teams__breadcrumb" aria-label="Caminho atual">
+    <a href="/teams?competitionId=<%= competition.id %>">Equipes</a>
+    <span>&gt;</span>
+    <span>Criar equipe</span>
+  </nav>
+
+  <header class="teams__header">
+    <div class="teams__title-block">
+      <h1 class="teams__title">Criar equipe</h1>
+      <p class="teams__subtitle"><%= competition.name %></p>
+    </div>
+  </header>
+
+  <form class="team-create" data-team-create-form novalidate>
+    <section class="team-create__panel">
+      <div class="team-create__section-header">
+        <h2>Dados da equipe</h2>
+        <p>Informe o nome da equipe e cadastre os atletas participantes.</p>
+      </div>
+
+      <label class="team-create__field">
+        <span>Nome da equipe</span>
+        <input
+          type="text"
+          name="team_name"
+          maxlength="100"
+          placeholder="Ex.: Equipe Alpha"
+          required
+          data-team-name
+        >
+      </label>
+    </section>
+
+    <section class="team-create__panel">
+      <div class="team-create__section-header team-create__section-header--row">
+        <div>
+          <h2>Atletas</h2>
+          <p>Cadastre até 16 atletas e escolha exatamente um capitão.</p>
+        </div>
+        <button type="button" class="team-create__add" data-add-runner>
+          + Adicionar atleta
+        </button>
+      </div>
+
+      <div class="team-create__runners" data-runners-list>
+        <article class="team-create__runner" data-runner-row>
+          <label class="team-create__captain">
+            <input type="radio" name="captain_index" value="0" checked data-captain-radio>
+            <span>Capitão</span>
+          </label>
+
+          <label class="team-create__field">
+            <span>Nome do atleta</span>
+            <input type="text" name="runner_name" placeholder="Nome completo" required data-runner-name>
+          </label>
+
+          <label class="team-create__field">
+            <span>CPF</span>
+            <input type="text" name="runner_cpf" placeholder="000.000.000-00" required data-runner-cpf>
+          </label>
+
+          <label class="team-create__field">
+            <span>Email</span>
+            <input type="email" name="runner_email" placeholder="nome@email.com" required data-runner-email>
+          </label>
+
+          <label class="team-create__field">
+            <span>Telefone</span>
+            <input type="text" name="runner_phone" placeholder="Opcional" data-runner-phone>
+          </label>
+
+          <button type="button" class="team-create__remove" data-remove-runner hidden>
+            Remover
+          </button>
+        </article>
+      </div>
+    </section>
+
+    <p class="team-create__error" data-team-create-error role="alert" hidden></p>
+
+    <div class="team-create__actions">
+      <a href="/teams?competitionId=<%= competition.id %>" class="team-create__cancel">Cancelar</a>
+      <button type="submit" class="team-create__submit" data-team-create-submit>
+        Criar equipe
+      </button>
+    </div>
+  </form>
+</main>
