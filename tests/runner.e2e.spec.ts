@@ -3,11 +3,11 @@ import app from "../src/app";
 import { competitionRepository } from "../src/repositories/competitionRepository";
 import { teamRepository } from "../src/repositories/teamRepository";
 
-const RUN = Date.now().toString().slice(-7);
+const RUN = `${Date.now()}${process.pid}`.slice(-9);
 
 function cpf(n: number): string {
   const tag = String(n).padStart(2, "0");
-  return `${RUN.slice(0, 3)}.${RUN.slice(3, 6)}.000-${tag}`;
+  return `${RUN.slice(0, 3)}.${RUN.slice(3, 6)}.${RUN.slice(6, 9)}-${tag}`;
 }
 
 function email(tag: string): string {
