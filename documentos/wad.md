@@ -1114,7 +1114,7 @@ O diagrama de classes de domínio é uma representação visual que modela todos
 </div>
 
 
-### 3.2.4. Diagrama de Sequência UML (sprints 3 e 4)
+### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no backend. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1137,24 +1137,6 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
   <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de atletas e geração de link público com UUID"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
-
-O terceiro diagrama mapeia o fluxo de autenticação de administrador (Fluxo 3). O administrador envia suas credenciais via `POST /auth/sessions`; o `authController` repassa ao `authService`, que consulta o `adminRepository` para localizar o registro por e-mail no Banco de Dados. Caso as credenciais sejam válidas, o Service gera um JWT com validade de 8 horas e o devolve ao cliente. Em caso de erro, um `UnauthorizedError` é lançado e propagado até o cliente como `401 Unauthorized`.
-
-<div align="center">
-  <sub>Figura 11 - Diagrama de sequência do fluxo de autenticação do administrador</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-3.svg" width="100%" alt="Diagrama de sequência UML do fluxo de autenticação de administrador via JWT, com validação de credenciais e retorno de token de acesso"><br>
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operador envia os dados via `POST /checkpoints`; o `checkpointController` invoca o `checkpointService`, que valida o payload com `validateCreateCheckpoint` antes de chamar o `checkpointRepository`. O Repository persiste o registro no Banco de Dados via Supabase e retorna a entidade criada. Violações de unicidade (código PostgreSQL `23505`) geram `ConflictError` e violações de chave estrangeira (`23503`) geram `NotFoundError`, ambas tratadas pelo Service antes de propagar ao Controller.
-
-<div align="center">
-  <sub>Figura 12 - Diagrama de sequência do fluxo de criação de checkpoint</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-4.svg" width="100%" alt="Diagrama de sequência UML do fluxo de criação de checkpoint, com validação de payload, persistência no banco e tratamento de erros"><br>
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
-
-
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
@@ -3393,102 +3375,125 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**. Inicialmente s�
 Além disso, os testes foram desenvolvidos de forma determinística, evitando dependências de ordem de execução, horário do sistema, serviços externos, acesso à rede ou dados residuais de execuções anteriores. Dessa forma, garante-se que uma mesma execução produza resultados consistentes independentemente do ambiente utilizado.
 
 
-## 5.1.2. Testes unitários de Service (white-box)
-
-As 8 suítes de testes white-box utilizam mocks das dependências de repositório com jest.fn(), injetados via factory function (createXxxService(repositoryMock)). Isso permite isolar completamente a camada de serviço e testar regras internas, validações e exceções sem depender de banco de dados.
-
-Cada teste segue o padrão AAA (Arrange — Act — Assert) e é totalmente determinístico, ou seja, trabalha com dados fixos e não utiliza aleatoriedade.
-
-#### Mapeamento Casos de Teste → Regras de Negócio
-
-| Prior. | RN | Descrição da RN | CT(s) correspondente(s) | Serviço |
-|---|---|---|---|---|
-| 1 | RN18 | Cadastro de competição exige nome, data e local | competitionService.create — deve criar com status not_started | competitionService.spec.ts:23 |
-| 2 | RN01 | Equipe deve gerar UUID único ao ser salva | teamService.create — deve criar equipe com uuid definido | teamService.spec.ts:31 |
-| 3 | RN07 | Suporte aos papéis corredor/capitão; limite de 16 atletas por equipe | runnerService.create — deve lançar UnprocessableError quando equipe já tem 16 atletas | runnerService.spec.ts:92 |
-| 4 | RN04 | Checkpoint exige obrigatoriamente distância (km) | checkpointService.create — deve lançar ValidationError quando distance_km é negativo | checkpointService.spec.ts:128 |
-| 5 | RN14 | Encerramento da competição bloqueia novos checkpoints | competitionService.close — deve atualizar status para "closed" | competitionService.spec.ts:130 |
-
-#### Detalhamento dos top-5 CTs
-
----
-
-**CT-01 — CompetitionService.create com payload válido**
-
-- **RN:** RN18
-- **Determinismo:** dados fixos ("Red Bull 24h São Paulo", "2026-06-15", "São Paulo - SP"), sem aleatoriedade ou data atual.
-- **Arrange:** repositório mockado que resolve com competição `{ id: 1, name: "Red Bull 24h São Paulo", date: "2026-06-15", address: "São Paulo - SP", status: "not_started" }`.
-- **Act:** `competitionService.create({ name, date, address })`.
-- **Assert:** objeto retornado contém `name`, `date`, `address` e `status: "not_started"`; `repository.create` foi chamado com os mesmos dados.
-- **Caminho de falha:** se `name`, `date` ou `address` estiverem ausentes, o validator (`competitionValidator.ts`) rejeita antes de chegar ao service — testado implicitamente nos e2e (400).
-
----
-
-**CT-02 — TeamService.create com name e id_competition válidos**
-
-- **RN:** RN01
-- **Determinismo:** teamFixture com valores literais ("Equipe Alpha", 40); UUID fixo na fixture, não gerado aleatoriamente no teste.
-- **Arrange:** repositório mockado que resolve com `teamFixture { id: 1, name: "Equipe Alpha", uuid: "<uuid>" }`.
-- **Act:** `teamService.create({ name: "Equipe Alpha", id_competition: 40 })`.
-- **Assert:** `team.uuid` é definido; `repository.create` foi chamado com os mesmos dados.
-- **Caminho de falha:** se `name` está ausente, `ValidationError` é lançado antes de chamar o repositório (validado em `teamService.spec.ts:53`).
-
----
-
-**CT-03 — RunnerService.create com equipe já no limite**
-
-- **RN:** RN07 (sub-regra: máximo de 16 atletas por equipe)
-- **Determinismo:** `countByTeam` retorna o valor fixo 16 — sem banco ou estado compartilhado.
-- **Arrange:** `findTeamById` retorna `{ id: 10 }`; `countByTeam` retorna `16`.
-- **Act:** `runnerService.create({ name: "X", cpf: "...", email: "...", id_team: 10 })`.
-- **Assert:** rejeita com `UnprocessableError`; `repository.create` não foi chamado.
-- **Caminho de falha:** se equipe não existe (`findTeamById` retorna `null`), lança `NotFoundError` em vez de `UnprocessableError` (validado em `runnerService.spec.ts:75`).
-
----
-
-**CT-04 — CheckpointService.create com distance_km negativo**
-
-- **RN:** RN04
-- **Determinismo:** `distance_km: -1` é um valor literal negativo — dispensa mock de data/hora ou estado externo.
-- **Arrange:** repositório mockado (sem overrides — `create` não será chamado).
-- **Act:** `checkpointService.create({ identifier: "CP-002", distance_km: -1, ... })`.
-- **Assert:** rejeita com `ValidationError`; `repository.create` não foi chamado.
-- **Caminho de falha:** se `identifier` está ausente, também lança `ValidationError` (validado em `checkpointService.spec.ts:112`); se viola unique constraint (code: "23505"), lança `ConflictError` (validado em `checkpointService.spec.ts:144`).
-
----
-
-**CT-05 — CompetitionService.close**
-
-- **RN:** RN14
-- **Determinismo:** id fixo ("1"); status "closed" é string literal no mock — sem temporizadores ou data real.
-- **Arrange:** repositório mockado cujo `close` retorna competição com `status: "closed"`.
-- **Act:** `competitionService.close("1")`.
-- **Assert:** `competition.status === "closed"`; `repository.close` foi chamado com `1`.
-- **Caminho de falha:** se a competição não existe, `findById` retorna `null` e o service (futuramente) lançará `NotFoundError` — atualmente `close` é delegado diretamente ao repositório sem verificação prévia, ponto de melhoria mapeado para a sprint 5.
-
----
-
-#### Demais CTs por serviço (sumário)
-
-| Serviço | Arquivo de teste | Testes | Cobertura (Stmts) | RNs exercitadas |
-|---|---|---|---|---|
-| adminService | adminService.test.ts | 15 | 100% | RN02, RN03 |
-| authService | authService.test.ts | 8 | 78% | RN03 |
-| checkpointService | checkpointService.spec.ts | 12 | 93,75% | RN04, RN05, RN12 |
-| competitionService | competitionService.spec.ts | 7 | 96,55% | RN18, RN14 |
-| exportService | exportService.spec.ts | 3 | 100% | RN15 |
-| rankingService | rankingService.spec.ts | 5 | 81,81% | RN09, RN11 |
-| runnerService | runnerService.spec.ts | 9 | 94,11% | RN07, RN01 |
-| teamService | teamService.spec.ts | 7 | 58,33% | RN01, RN07 |
-
-> **Observação:** a cobertura mais baixa do teamService (58,33%) indica ausência de testes para fluxos de atualização e remoção de times fora do contexto da competição, sendo um gap planejado para a sprint 5.
+## 5.1.2  Testes Unitários de Service
+- Cobertura mínima de 80% na camada Service, evidenciada pelo relatório
+  Jest gerado por "npm test -- --coverage".
+- Casos de teste vinculados explicitamente a uma RN (CT01 -> RN01,
+  CT02 -> RN02, ...), ordenados pela prioridade das RN do artefato 1.
+- Para os 5 casos de teste prioritários, explicação de como cada um
+  atende ao padrão AAA, ao determinismo, à RN coberta e ao caminho de
+  falha.
 
 
-## 5.1.3  Testes de Integração de Endpoints
-- Para cada endpoint principal, cobertura obrigatória dos quatro
-  cenários-chave: sucesso (200/201), falha de validação (400/422),
-  regra de negócio violada (409 ou equivalente) e recurso não
-  encontrado (404).
+## 5.1.3. Testes de integração dos endpoints (black-box)
+
+As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar a aplicação Express real (`request(app)`), exercitando o pipeline completo: roteador → validador → controller → service → repositório real (Supabase staging). Nenhum mock é aplicado — os testes verificam apenas o **contrato HTTP** (status code, estrutura do body, efeito observável). Todos os testes e2e passam nesta sprint.
+
+**Cobertura por endpoint (cenários: 200/201, 400/422, 409, 404):**
+
+| Endpoint | Método | 200/201 | 400/422 | 409 | 404 |
+|---|---|---|---|---|---|---|
+| `/competitions` | POST | ✅ 201 (criação) | ✅ 400 (6 casos) | — | — |
+| `/competitions` | GET | ✅ 200 (lista) | — | — | — |
+| `/competitions/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/competitions/:id` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio) | — | ✅ 404 |
+| `/competitions/:id` | PATCH (close) | ✅ 200 (status closed) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/competitions/:id` | DELETE | ✅ 204 (remoção) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/competitions/:id/teams` | POST | ✅ 201 (criação) | ✅ 400 (4 casos) | ❌ | ❌ |
+| `/competitions/:id/teams` | GET | ✅ 200 (lista) | ✅ 400 (id não numérico) | — | — |
+| `/competitions/:id/teams/:teamId` | GET | ✅ 200 (por id) | ✅ 400 (teamId não numérico) | — | ✅ 404 |
+| `/competitions/:id/teams/:teamId` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio + teamId não numérico) | — | ✅ 404 |
+| `/competitions/:id/teams/:teamId` | DELETE | ✅ 204 (remoção) | ✅ 400 (teamId não numérico) | — | ✅ 404 |
+| `/competitions/:id/teams/:teamId/active-runner` | PATCH | ✅ 200 (ativação) | ✅ 400 (teamId/runnerId não numérico) | — | ✅ 404 |
+| `/competitions/:id/teams/:teamId/runners` | POST | ✅ 201 (criação) | ✅ 400 (6 casos) | ✅ 409 (cpf/email dup) | ✅ 404 |
+| `/competitions/:id/teams/:teamId/runners` | GET | ✅ 200 (lista) | ✅ 400 (teamId não numérico) | — | — |
+| `/competitions/:id/teams/:teamId/runners/:runnerId` | GET | ✅ 200 (por id) | ✅ 400 (runnerId não numérico) | — | ✅ 404 |
+| `/competitions/:id/teams/:teamId/runners/:runnerId` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio + cpf no body + runnerId não numérico) | ✅ 409 (email dup) | ✅ 404 |
+| `/competitions/:id/teams/:teamId/runners/:runnerId` | DELETE | ✅ 204 (remoção) | ✅ 400 (runnerId não numérico) | ✅ 409 (com checkpoints) | ✅ 404 |
+| `/competitions/:competicaoId/export` | GET | ✅ 200 (exportação) | ✅ 400 (non-numeric id) | — | ✅ 404 |
+| `/checkpoints` | POST | ✅ 201 (criação) | ✅ 400 (3 casos) | ✅ 409 (id dup) | — |
+| `/checkpoints` | GET | ✅ 200 (lista) | — | — | — |
+| `/checkpoints/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/checkpoints/:id` | PUT | ✅ 200 (atualização) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/checkpoints/:id` | DELETE | ✅ 204 (remoção) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/runners/:runnerId/checkpoints` | POST | ✅ 201 (criação) | ✅ 400 (runnerId não numérico + 3 validações) | ✅ 409 (id dup) | — |
+| `/runners/:runnerId/checkpoints` | GET | ✅ 200 (lista) | ✅ 400 (runnerId não numérico) | — | — |
+| `/competitions/:id/checkpoints` | GET | ✅ 200 (lista) | ✅ 400 (id não numérico) | — | — |
+| `/competitions/:id/checkpoints/inconsistencies` | GET | ✅ 200 (lista) | ✅ 400 (id não numérico) | — | — |
+| `/competitions/:id/ranking/teams` | GET | ✅ 200 (ranking) | ✅ 400 (id não numérico) | — | — |
+| `/competitions/:id/ranking/runners` | GET | ✅ 200 (ranking) | ✅ 400 (id não numérico) | — | — |
+| `/competitions/:id/reports` | GET | ✅ 200 (relatório) | ✅ 400 (id não numérico) | — | — |
+| `/auth/sessions` | POST | ✅ 200 (login) | — | — | ✅ 401 (email/pwd inválidos) |
+| `/admin` | GET | ✅ 200 (lista) | — | — | — |
+| `/admin` | POST | ✅ 201 (criação) | ❌ (sem validação no controller) | — | — |
+| `/admin/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/admin/:id` | PUT | ✅ 200 (atualização) | ✅ 400 (id não numérico) | — | ✅ 404 |
+| `/admin/:id` | DELETE | ✅ 204 (remoção) | ✅ 400 (id não numérico) | — | ✅ 404 |
+
+**Arquivos de teste:** `admin.e2e.spec.ts`, `auth.e2e.spec.ts`, `checkpoint.e2e.spec.ts`, `competition.e2e.spec.ts`, `export.e2e.spec.ts`, `ranking.e2e.spec.ts`, `report.e2e.spec.ts`, `runner.e2e.spec.ts`, `team.e2e.spec.ts`.
+
+**Análise por endpoint da cobertura dos 4 cenários:**
+
+- **POST /competitions** — cobre 2/4 (sucesso ✅, validação ✅; 409 e 404 não se aplicam).
+- **GET /competitions** — cobre 1/4 (sucesso ✅; demais não se aplicam — retorna sempre array).
+- **GET /competitions/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **PUT /competitions/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **PATCH /competitions/:id (close)** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **DELETE /competitions/:id** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
+- **POST /competitions/:id/teams** — cobre 2/4. Gaps: 409 (nome duplicado) e 404 (competição inexistente) — bloqueados pelo service.
+- **GET /competitions/:id/teams** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET /competitions/:id/teams/:teamId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **PUT /competitions/:id/teams/:teamId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **DELETE /competitions/:id/teams/:teamId** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
+- **PATCH .../active-runner** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **POST .../runners** — cobre **4/4** (endpoint completo).
+- **GET .../runners** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET .../runners/:runnerId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **PUT .../runners/:runnerId** — cobre **4/4** (endpoint completo).
+- **DELETE .../runners/:runnerId** — cobre **4/4** (endpoint completo).
+- **GET .../export** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **POST /checkpoints** — cobre **3/4** (sucesso ✅, validação ✅, 409 ✅).
+- **GET /checkpoints** — cobre 1/4 (sucesso ✅; demais não se aplicam).
+- **GET /checkpoints/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **PUT /checkpoints/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **DELETE /checkpoints/:id** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
+- **POST /runners/:runnerId/checkpoints** — cobre **3/4** (sucesso ✅, validação ✅, 409 ✅).
+- **GET /runners/:runnerId/checkpoints** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET /competitions/:id/checkpoints** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET .../checkpoints/inconsistencies** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET .../ranking/teams** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET .../ranking/runners** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **GET .../reports** — cobre 2/4 (sucesso ✅, 400 ✅).
+- **POST /auth/sessions** — cobre **3/4** (sucesso ✅, 401 ✅; 400 não se aplica — sem validação de body no controller).
+- **GET /admin** — cobre 1/4 (sucesso ✅).
+- **POST /admin** — cobre 1/4 (sucesso ✅; validação 400 retorna 500 — controller não valida payload vazio).
+- **GET /admin/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **PUT /admin/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
+- **DELETE /admin/:id** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
+
+**Painel geral — 9 suítes e2e, 19 endpoints cobertos:**
+
+| Endpoint | Método | Suíte |
+|---|---|---|
+| `/competitions` | GET/POST | `competition.e2e.spec.ts` |
+| `/competitions/:id` | GET/PUT/PATCH/DELETE | `competition.e2e.spec.ts` |
+| `/competitions/:id/teams` | GET/POST | `team.e2e.spec.ts` |
+| `/competitions/:id/teams/:teamId` | GET/PUT/DELETE | `team.e2e.spec.ts` |
+| `/competitions/:id/teams/:teamId/active-runner` | PATCH | `team.e2e.spec.ts` |
+| `/competitions/:id/teams/:teamId/runners` | GET/POST | `runner.e2e.spec.ts` |
+| `/competitions/:id/teams/:teamId/runners/:runnerId` | GET/PUT/DELETE | `runner.e2e.spec.ts` |
+| `/competitions/:id/export` | GET | `export.e2e.spec.ts` |
+| `/checkpoints` | POST/GET | `checkpoint.e2e.spec.ts` |
+| `/checkpoints/:id` | GET/PUT/DELETE | `checkpoint.e2e.spec.ts` |
+| `/runners/:runnerId/checkpoints` | POST/GET | `checkpoint.e2e.spec.ts` |
+| `/competitions/:id/checkpoints` | GET | `checkpoint.e2e.spec.ts` |
+| `/competitions/:id/checkpoints/inconsistencies` | GET | `checkpoint.e2e.spec.ts` |
+| `/competitions/:id/ranking/teams` | GET | `ranking.e2e.spec.ts` |
+| `/competitions/:id/ranking/runners` | GET | `ranking.e2e.spec.ts` |
+| `/competitions/:id/reports` | GET | `report.e2e.spec.ts` |
+| `/auth/sessions` | POST | `auth.e2e.spec.ts` |
+| `/admin` | GET/POST | `admin.e2e.spec.ts` |
+| `/admin/:id` | GET/PUT/DELETE | `admin.e2e.spec.ts` |
 
 
 ## 5.1.4  Evidências de Execução
