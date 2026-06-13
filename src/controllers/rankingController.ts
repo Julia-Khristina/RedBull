@@ -67,7 +67,6 @@ export const rankingController = {
     );
 
     const ranking = await rankingService.generateTeamRanking(competitionId);
->>>>>>> origin/dev
 
     res.status(200).json(ranking);
   },
