@@ -2270,7 +2270,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 
 
-### . -b (sprints 2 e 4)
+## 3.6.3 Modelo Relacional e Modelo Físico (sprints 2 e 4)
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
