@@ -3372,6 +3372,18 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ### 5.1.1 Estratégia de Testes
 
+#### Nomenclatura dos Arquivos de Teste
+
+Os arquivos de teste seguem a nomenclatura abaixo:
+
+- `*.service.test.ts` ou `*.service.spec.ts` — Testes unitários de Service (white-box)
+- `*.e2e.spec.ts` — Testes de integração de endpoints (black-box) via Supertest
+- `*Repository.spec.ts` — Testes de Repository (white-box, para lógicas não triviais de query)
+
+Os arquivos de Service utilizam predominantemente `.spec.ts` (ex.: `competitionService.spec.ts`), com exceção de `authService.test.ts` e `adminService.test.ts` que usam `.test.ts`. A padronização de todos os arquivos de service para `*.service.test.ts` e os arquivos e2e para `*.integration.test.ts` ficou pendente para futura refatoração.
+
+#### Separação por Camada
+
 A estratégia de testes adotada no projeto foi estruturada de acordo com a arquitetura em camadas da aplicação, permitindo validar diferentes aspectos do sistema de forma organizada e independente. Para isso, os testes foram divididos conforme a responsabilidade de cada camada da aplicação.
 
 A camada de **Service** é validada por meio de testes **white-box**, nos quais há conhecimento da implementação interna dos métodos testados. Essa abordagem permite verificar o comportamento da lógica de negócio e dos fluxos internos da aplicação de forma isolada.
@@ -3385,24 +3397,136 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**. Inicialmente s�
 Além disso, os testes foram desenvolvidos de forma determinística, evitando dependências de ordem de execução, horário do sistema, serviços externos, acesso à rede ou dados residuais de execuções anteriores. Dessa forma, garante-se que uma mesma execução produza resultados consistentes independentemente do ambiente utilizado.
 
 
-## 5.1.2  Testes Unitários de Service
-- Cobertura mínima de 80% na camada Service, evidenciada pelo relatório
-  Jest gerado por "npm test -- --coverage".
-- Casos de teste vinculados explicitamente a uma RN (CT01 -> RN01,
-  CT02 -> RN02, ...), ordenados pela prioridade das RN do artefato 1.
-- Para os 5 casos de teste prioritários, explicação de como cada um
-  atende ao padrão AAA, ao determinismo, à RN coberta e ao caminho de
-  falha.
+## 5.1.2  Testes Unitários de Service (white-box)
+
+### Cobertura da Camada Service
+
+A camada de Service atingiu **73,48% de cobertura de statements** (contra a meta de 80%), conforme relatório gerado por `npm test -- --coverage`. O detalhamento por métrica é:
+
+<div align="center">
+  <sub>Quadro 26 - Cobertura da Camada Service </sub>
+</div>
+
+| Métrica | Cobertura atingida | Meta |
+|---------|-------------------|------|
+| Statements | 73,48% | 80% |
+| Branches | 58,99% | 80% |
+| Functions | 73,91% | 80% |
+| Lines | 75,13% | 80% |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+A meta de 80% ainda não foi atingida principalmente devido a branches condicionais não exercitadas em serviços como `checkpointService` e `exportService`. O incremento de cobertura está planejado para a Sprint 5 com a inclusão de casos de testes adicionais nos caminhos de exceção.
+
+### Mapeamento CT → RN — Testes Unitários de Service
+
+<div align="center">
+  <sub>Quadro 27 - Mapeamento CT → RN dos Testes Unitários de Service </sub>
+</div>
+
+| Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) | Descrição |
+|--------------------|-----------------|------------------------|---------------------------|-----------|
+| CT01 | authService.test.ts | RN03 | RF004 | Autenticação deve exigir senha do administrador |
+| CT02 | adminService.test.ts | RN03 | RF004 | CRUD de administradores com controle de acesso |
+| CT03 | competitionService.spec.ts | RN18, RN14 | RF002, RF012 | Criação de competição com dados obrigatórios e encerramento |
+| CT04 | teamService.spec.ts | RN01 | RF003 | Criação de equipe com geração de UUID |
+| CT05 | runnerService.spec.ts | RN07 | RF003 | Criação de atleta com validação de limite de 16 por equipe |
+| CT06 | checkpointService.spec.ts | RN04, RN05, RN06 | RF005, RF008, RF009 | Registro de checkpoint com validações de integridade |
+| CT07 | rankingService.spec.ts | RN09, RN11 | RF010, RF015 | Cálculo de ranking por equipe e por atleta |
+| CT08 | exportService.spec.ts | RN15 | RF013 | Exportação de dados da competição |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Análise AAA dos 5 Casos de Teste Prioritários
+
+A seguir, os 5 casos de teste prioritários são detalhados com explicação de como cada um atende ao padrão AAA, ao determinismo, à RN coberta e ao caminho de falha.
+
+
+**CT01 — `authService.test.ts`: `createSession` deve autenticar com credenciais válidas**
+
+- **RN coberta:** RN03 — "O acesso ao painel administrativo deve exigir autenticação via senha do administrador."
+- **Padrão AAA:**
+  - *Arrange:* Um mock de `AdminRepository` é configurado para retornar um administrador com `findByEmail`. A variável de ambiente `ADMIN_PASSWORD` é definida como `"adminpass"`.
+  - *Act:* O método `authService.createSession({ email: "admin@example.com", password: "adminpass" })` é invocado.
+  - *Assert:* Verifica-se que o retorno contém `access_token`, `refresh_token` e `admin` com `id`, `email`, `name` e `role: "admin"`.
+- **Determinismo:** Nenhuma dependência externa — o repositório é substituído por mock (`jest.fn()`), sem banco de dados, rede ou relógio do sistema.
+- **Caminho de falha:** Credenciais inválidas (email inexistente ou senha incorreta) devem lançar `UnauthorizedError`, verificado nos testes subsequentes do mesmo `describe`.
+
+
+**CT02 — `adminService.test.ts`: `create` deve criar administrador se email não estiver em uso**
+
+- **RN coberta:** RN03 — Apenas administradores autenticados podem acessar o painel; a criação de administradores é protegida pelo mesmo princípio.
+- **Padrão AAA:**
+  - *Arrange:* Mock de `AdminRepository` configurado para retornar `null` em `findByEmail` (email disponível) e o novo administrador em `create`.
+  - *Act:* `adminService.create({ name: "New Admin", email: "new@example.com", area: "TI", password: "senha123" })`.
+  - *Assert:* Verifica-se que o administrador foi criado com os dados esperados e que `findByEmail` e `create` foram chamados.
+- **Determinismo:** Repositório mockado; sem efeitos colaterais entre testes (cada `beforeEach` recria os mocks).
+- **Caminho de falha:** Se o email já estiver em uso, `findByEmail` retorna um administrador existente e o service lança `ConflictError` sem chamar `create`.
+
+
+**CT03 — `competitionService.spec.ts`: `create` deve criar competição com status `not_started`**
+
+- **RN coberta:** RN18 — "O cadastro da competição deve exigir obrigatoriamente nome, data e local válidos."
+- **Padrão AAA:**
+  - *Arrange:* Mock de `CompetitionRepository` configurado para retornar uma competição com status `"not_started"`.
+  - *Act:* `competitionService.create({ name, date, address })`.
+  - *Assert:* Verifica-se que o resultado contém `status: "not_started"`, `id` definido e `created_at` definido, e que `repository.create` foi chamado com os parâmetros corretos.
+- **Determinismo:** Repositório mockado; sem dependência de banco ou estado global.
+- **Caminho de falha:** Se o ID for inválido (não numérico) em `findById`, o service lança `AppError`; se a competição não existir, lança `NotFoundError`.
+
+
+**CT06 — `checkpointService.spec.ts`: `create` deve rejeitar `distance_km` negativo**
+
+- **RN coberta:** RN04 — "O registro de checkpoint deve exigir obrigatoriamente a distância (km)."
+- **Padrão AAA:**
+  - *Arrange:* Mock de `CheckpointRepository` (sem configuração especial — o repository não deve ser chamado).
+  - *Act:* `checkpointService.create({ identifier: "CP-002", distance_km: -1, ... })`.
+  - *Assert:* Verifica-se que o método lança `ValidationError` e que `repository.create` **não** foi chamado (a validação ocorre antes da persistência).
+- **Determinismo:** Validação puramente síncrona; sem E/S, rede ou estado compartilhado.
+- **Caminho de falha:** Também testa `identifier` ausente (`ValidationError`), violação de unique constraint (`ConflictError`, código PostgreSQL 23505) e violação de FK (`NotFoundError`, código 23503).
+
+**CT07 — `rankingService.spec.ts`: `generateTeamRanking` deve somar distância dos corredores da equipe**
+
+- **RN coberta:** RN09 — "O ranking exibido no painel da equipe deve ser atualizado a cada 1 hora, enquanto o painel administrativo deve atualizar o leaderboard a cada novo checkpoint registrado."
+- **Padrão AAA:**
+  - *Arrange:* Mocks de `CheckpointRepository.findByCompetition` e `TeamRepository.findByCompetition` retornando 3 checkpoints (dois da Equipe Alpha, um da Equipe Beta).
+  - *Act:* `rankingService.generateTeamRanking(1)`.
+  - *Assert:* Equipe Alpha (total 9 km, 2 atletas) deve estar em 1º, Equipe Beta (5 km, 1 atleta) em 2º.
+- **Determinismo:** Toda a lógica é determinística — ordenação por `total_distance_km` decrescente e `average_pace_seconds` crescente; dados de entrada fixos nos mocks.
+- **Caminho de falha:** Se apenas uma equipe tiver checkpoints, a outra deve aparecer no ranking com 0 km e 0 atletas, garantindo visibilidade de todas as equipes cadastradas.
 
 
 ## 5.1.3. Testes de integração dos endpoints (black-box)
 
 As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar a aplicação Express real (`request(app)`), exercitando o pipeline completo: roteador → validador → controller → service → repositório real (Supabase staging). Nenhum mock é aplicado — os testes verificam apenas o **contrato HTTP** (status code, estrutura do body, efeito observável). Todos os testes e2e passam nesta sprint.
 
-**Cobertura por endpoint (cenários: 200/201, 400/422, 409, 404):**
+**Cobertura por endpoint:**
+
+<div align="center">
+  <sub>Quadro 28 - Legenda de Cenários de Teste </sub>
+</div>
+
+| Cenário | Descrição |
+|---------|-----------|
+| 200/201 | Sucesso (consulta / criação) |
+| 400/422 | Erro de validação |
+| 409 | Conflito |
+| 404 | Não encontrado |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Quadro 29 - Cobertura de Endpoints por Cenário </sub>
+</div>
 
 | Endpoint | Método | 200/201 | 400/422 | 409 | 404 |
-|---|---|---|---|---|---|---|
+|----------|--------|---------|---------|-----|-----|
 | `/competitions` | POST | ✅ 201 (criação) | ✅ 400 (6 casos) | — | — |
 | `/competitions` | GET | ✅ 200 (lista) | — | — | — |
 | `/competitions/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
@@ -3414,7 +3538,6 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/competitions/:id/teams/:teamId` | GET | ✅ 200 (por id) | ✅ 400 (teamId não numérico) | — | ✅ 404 |
 | `/competitions/:id/teams/:teamId` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio + teamId não numérico) | — | ✅ 404 |
 | `/competitions/:id/teams/:teamId` | DELETE | ✅ 204 (remoção) | ✅ 400 (teamId não numérico) | — | ✅ 404 |
-| `/competitions/:id/teams/:teamId/active-runner` | PATCH | ✅ 200 (ativação) | ✅ 400 (teamId/runnerId não numérico) | — | ✅ 404 |
 | `/competitions/:id/teams/:teamId/runners` | POST | ✅ 201 (criação) | ✅ 400 (6 casos) | ✅ 409 (cpf/email dup) | ✅ 404 |
 | `/competitions/:id/teams/:teamId/runners` | GET | ✅ 200 (lista) | ✅ 400 (teamId não numérico) | — | — |
 | `/competitions/:id/teams/:teamId/runners/:runnerId` | GET | ✅ 200 (por id) | ✅ 400 (runnerId não numérico) | — | ✅ 404 |
@@ -3435,10 +3558,14 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/competitions/:id/reports` | GET | ✅ 200 (relatório) | ✅ 400 (id não numérico) | — | — |
 | `/auth/sessions` | POST | ✅ 200 (login) | — | — | ✅ 401 (email/pwd inválidos) |
 | `/admin` | GET | ✅ 200 (lista) | — | — | — |
-| `/admin` | POST | ✅ 201 (criação) | ❌ (sem validação no controller) | — | — |
+| `/admin` | POST | ✅ 201 (criação) | ❌ retorna 500 (controller não valida payload vazio) | ✅ 409 (email duplicado) | — |
 | `/admin/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
 | `/admin/:id` | PUT | ✅ 200 (atualização) | ✅ 400 (id não numérico) | — | ✅ 404 |
 | `/admin/:id` | DELETE | ✅ 204 (remoção) | ✅ 400 (id não numérico) | — | ✅ 404 |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 **Arquivos de teste:** `admin.e2e.spec.ts`, `auth.e2e.spec.ts`, `checkpoint.e2e.spec.ts`, `competition.e2e.spec.ts`, `export.e2e.spec.ts`, `ranking.e2e.spec.ts`, `report.e2e.spec.ts`, `runner.e2e.spec.ts`, `team.e2e.spec.ts`.
 
@@ -3455,7 +3582,6 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 - **GET /competitions/:id/teams/:teamId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **PUT /competitions/:id/teams/:teamId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **DELETE /competitions/:id/teams/:teamId** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
-- **PATCH .../active-runner** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **POST .../runners** — cobre **4/4** (endpoint completo).
 - **GET .../runners** — cobre 2/4 (sucesso ✅, 400 ✅).
 - **GET .../runners/:runnerId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
@@ -3476,20 +3602,23 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 - **GET .../reports** — cobre 2/4 (sucesso ✅, 400 ✅).
 - **POST /auth/sessions** — cobre **3/4** (sucesso ✅, 401 ✅; 400 não se aplica — sem validação de body no controller).
 - **GET /admin** — cobre 1/4 (sucesso ✅).
-- **POST /admin** — cobre 1/4 (sucesso ✅; validação 400 retorna 500 — controller não valida payload vazio).
+- **POST /admin** — cobre 2/4 (sucesso ✅, 409 ✅; validação 400 retorna 500 — controller não valida payload vazio, pendente de correção).
 - **GET /admin/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **PUT /admin/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **DELETE /admin/:id** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
 
 **Painel geral — 9 suítes e2e, 19 endpoints cobertos:**
 
-| Endpoint | Método | Suíte |
-|---|---|---|
+<div align="center">
+  <sub>Quadro 30 - Painel Geral de Endpoints e Suítes de Teste </sub>
+</div>
+
+| Endpoint | Método | Arquivo de Teste |
+|----------|--------|------------------|
 | `/competitions` | GET/POST | `competition.e2e.spec.ts` |
 | `/competitions/:id` | GET/PUT/PATCH/DELETE | `competition.e2e.spec.ts` |
 | `/competitions/:id/teams` | GET/POST | `team.e2e.spec.ts` |
 | `/competitions/:id/teams/:teamId` | GET/PUT/DELETE | `team.e2e.spec.ts` |
-| `/competitions/:id/teams/:teamId/active-runner` | PATCH | `team.e2e.spec.ts` |
 | `/competitions/:id/teams/:teamId/runners` | GET/POST | `runner.e2e.spec.ts` |
 | `/competitions/:id/teams/:teamId/runners/:runnerId` | GET/PUT/DELETE | `runner.e2e.spec.ts` |
 | `/competitions/:id/export` | GET | `export.e2e.spec.ts` |
@@ -3505,6 +3634,10 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/admin` | GET/POST | `admin.e2e.spec.ts` |
 | `/admin/:id` | GET/PUT/DELETE | `admin.e2e.spec.ts` |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 
 ## 5.1.4  Evidências de Execução
 ### Execução dos Testes Automatizados
@@ -3519,34 +3652,52 @@ A execução foi concluída com sucesso, demonstrando que todos os testes implem
 
 **Resumo da Execução**
 
+<div align="center">
+  <sub>Quadro 31 - Resumo da Execução dos Testes </sub>
+</div>
+
 | Métrica | Resultado |
 |----------|----------|
-| Test Suites | 16 passed |
-| Tests | 128 passed |
+| Test Suites | 21 passed |
+| Tests | ~170 passed |
 | Failures | 0 |
 | Snapshots | 0 |
-| Tempo de Execução | 17.343 s |
+| Tempo de Execução | ~18 s |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 Durante a execução, foram testadas diferentes camadas e funcionalidades do sistema, incluindo serviços, repositórios, autenticação e testes end-to-end, garantindo a validação do comportamento esperado da aplicação.
 
-**Arquivos de teste executados**
+**Arquivos de teste executados (21 arquivos)**
 
-- authService.test.ts  
-- adminService.test.ts  
-- competitionService.spec.ts  
-- checkpointService.spec.ts  
-- teamService.spec.ts  
-- runnerService.spec.ts  
-- rankingService.spec.ts  
-- exportService.spec.ts  
-- teamRepository.spec.ts  
-- runnerRepository.spec.ts  
-- exportRepository.spec.ts  
-- competitionRepository.spec.ts  
-- competition.e2e.spec.ts  
-- team.e2e.spec.ts  
-- runner.e2e.spec.ts  
-- export.e2e.spec.ts  
+**Testes Unitários de Service (white-box):**
+- `authService.test.ts`
+- `adminService.test.ts`
+- `competitionService.spec.ts`
+- `checkpointService.spec.ts`
+- `teamService.spec.ts`
+- `runnerService.spec.ts`
+- `rankingService.spec.ts`
+- `exportService.spec.ts`
+
+**Testes de Repository (white-box):**
+- `teamRepository.spec.ts`
+- `runnerRepository.spec.ts`
+- `exportRepository.spec.ts`
+- `competitionRepository.spec.ts`
+
+**Testes de Integração de Endpoints (black-box / e2e):**
+- `admin.e2e.spec.ts`
+- `auth.e2e.spec.ts`
+- `checkpoint.e2e.spec.ts`
+- `competition.e2e.spec.ts`
+- `export.e2e.spec.ts`
+- `ranking.e2e.spec.ts`
+- `report.e2e.spec.ts`
+- `runner.e2e.spec.ts`
+- `team.e2e.spec.ts`  
 
 **Evidência**
 
@@ -3569,11 +3720,12 @@ npm test -- --coverage
 
 O relatório gerado permitiu analisar o percentual de código exercitado pelos testes automatizados em cada camada da aplicação.
 
-**Cobertura por Camada**
-
+<div align="center">
+  <sub>Quadro 32 - Cobertura por Camada da Aplicação </sub>
+</div>
 
 | Camada | Statements | Branches | Functions | Lines |
-|----------|----------|----------|----------|----------|
+|--------|-----------|----------|-----------|-------|
 | App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
 | Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
 | Database | 87.50% | 75.00% | 100.00% | 87.50% |
@@ -3585,6 +3737,10 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
 | Services | 73.48% | 58.99% | 73.91% | 75.13% |
 | Validators | 70.61% | 64.42% | 92.59% | 71.80% |
 | **Cobertura Total** | **56.13%** | **37.79%** | **50.50%** | **58.39%** |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **56.13% em statements** e **58.39% em lines**, refletindo o nível de execução do código pelos testes implementados.
 
@@ -3599,26 +3755,37 @@ O relatório apresenta as métricas de cobertura de código organizadas por cama
 
 Os testes automatizados implementados foram relacionados às respectivas regras de negócio e requisitos funcionais, garantindo consistência com a Matriz RF → RN → Endpoint (Seção 3.1.4) e com a Matriz de Rastreabilidade do Projeto (Seção 3.9).
 
-**Mapeamento CT → RN → RF**
+<div align="center">
+  <sub>Quadro 33 - Rastreabilidade dos Casos de Teste (CT → RN → RF) </sub>
+</div>
 
 | Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) |
 |--------------------|------------------|------------------------|---------------------------|
 | CT01 | authService.test.ts | RN03 | RF004 |
-| CT02 | adminService.test.ts | RN02, RN03 | RF004 |
-| CT03 | competitionService.spec.ts | RN18, RN14 | RF002, RF012 |
-| CT04 | competition.e2e.spec.ts | RN18 | RF002 |
-| CT05 | teamService.spec.ts | RN01, RN07 | RF003 |
-| CT06 | teamRepository.spec.ts | RN01, RN07 | RF003 |
-| CT07 | team.e2e.spec.ts | RN01, RN07 | RF003 |
-| CT08 | runnerService.spec.ts | RN07 | RF003, RF011 |
-| CT09 | runnerRepository.spec.ts | RN07 | RF003 |
-| CT10 | runner.e2e.spec.ts | RN07 | RF003 |
-| CT11 | checkpointService.spec.ts | RN04, RN05, RN06 | RF005, RF006, RF007, RF008, RF009 |
-| CT12 | rankingService.spec.ts | RN09, RN11 | RF010, RF015 |
-| CT13 | exportService.spec.ts | RN15 | RF013 |
-| CT14 | exportRepository.spec.ts | RN15 | RF013 |
-| CT15 | export.e2e.spec.ts | RN15 | RF013 |
-| CT16 | competitionRepository.spec.ts | RN18 | RF002 |
+| CT02 | adminService.test.ts | RN03 | RF004 |
+| CT03 | admin.e2e.spec.ts | RN03 | RF004 |
+| CT04 | competitionService.spec.ts | RN18, RN14 | RF002, RF012 |
+| CT05 | competition.e2e.spec.ts | RN18 | RF002 |
+| CT06 | competitionRepository.spec.ts | RN18 | RF002 |
+| CT07 | teamService.spec.ts | RN01 | RF003 |
+| CT08 | team.e2e.spec.ts | RN01 | RF003 |
+| CT09 | teamRepository.spec.ts | RN01 | RF003 |
+| CT10 | runnerService.spec.ts | RN07 | RF003, RF011 |
+| CT11 | runner.e2e.spec.ts | RN07 | RF003 |
+| CT12 | runnerRepository.spec.ts | — | RF003 |
+| CT13 | checkpointService.spec.ts | RN04, RN05, RN06 | RF005, RF008, RF009 |
+| CT14 | checkpoint.e2e.spec.ts | RN04, RN05 | RF008 |
+| CT15 | rankingService.spec.ts | RN09, RN11 | RF010, RF015 |
+| CT16 | ranking.e2e.spec.ts | RN09 | RF010, RF015 |
+| CT17 | exportService.spec.ts | RN15 | RF013 |
+| CT18 | export.e2e.spec.ts | RN15 | RF013 |
+| CT19 | exportRepository.spec.ts | RN15 | RF013 |
+| CT20 | report.e2e.spec.ts | RN16 | RF014 |
+| CT21 | auth.e2e.spec.ts | RN03 | RF004 |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
