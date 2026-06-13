@@ -1152,7 +1152,82 @@ O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados ex
 
 ### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
-*Diagrama UML de deployment mostrando nós físicos, artefatos e canais de comunicação. Representa a visão Engineering + Technology do RM-ODP.*
+O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
+
+O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó — o GitLab Pages — hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre inteiramente no lado do cliente (*client-side*), por meio da biblioteca Tesseract.js em conjunto com OpenCV.js, o que elimina a dependência de serviços externos de reconhecimento de imagem e mantém o dado sensível da captura sob controle da aplicação.
+
+<div align="center">
+  <sub>Figura X - Diagrama de Implantação UML</sub><br>
+
+```plantuml
+@startuml diagrama-implantacao
+
+skinparam backgroundColor #FFFFFF
+skinparam node {
+  BackgroundColor #F5F5F5
+  BorderColor #333333
+  FontName Arial
+}
+skinparam artifact {
+  BackgroundColor #DAE8FC
+  BorderColor #6C8EBF
+}
+skinparam component {
+  BackgroundColor #D5E8D4
+  BorderColor #82B366
+}
+skinparam database {
+  BackgroundColor #FFF2CC
+  BorderColor #D6B656
+}
+
+node "Dispositivo do Operador / Capitão\n(Navegador Web)" as browser {
+  artifact "Aplicação Web (HTML/CSS/JS)\nServida pelo Express (EJS)" as webapp
+  component "OCR Client-side\n(Tesseract.js + OpenCV.js)" as ocr
+}
+
+node "Servidor de Aplicação\n(Node.js 18 + TypeScript)" as server {
+  artifact "Express App (app.ts)" as express
+  component "Routes" as routes
+  component "Controllers" as controllers
+  component "Services" as services
+  component "Repositories" as repositories
+  component "Validators / Middlewares" as validators
+}
+
+node "Banco de Dados Gerenciado\n(Supabase — PostgreSQL)" as db {
+  database "Schema público\n(competicao, equipe, corredor,\ncheckpoint, administrador, audit_log)" as schema
+}
+
+node "GitLab Pages\n(Infraestrutura estática)" as pages {
+  artifact "api-documentation.html\n(documentação da WebAPI)" as apidoc
+}
+
+browser --> server : "HTTP/REST\n(JSON — porta 3000)"
+repositories --> db : "Supabase JS SDK\n(HTTPS — porta 443)"
+browser ..> pages : "HTTPS (leitura apenas —\nacesso externo de revisores)"
+
+express --> routes
+routes --> controllers
+controllers --> services
+services --> repositories
+services --> validators
+
+@enduml
+```
+
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. O processamento OCR ocorre inteiramente neste nó: a imagem do display da esteira é capturada pela câmera do dispositivo, processada pelo módulo `ocr-src` (Tesseract.js + OpenCV.js) e os dados extraídos são enviados ao servidor via requisição `POST /ocr/extractions` para validação humana antes da persistência.
+
+O nó **Servidor de Aplicação** executa a aplicação Node.js 18 compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `athletes`, `checkpoints`, `auth`, `administradores`). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
+
+O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospedada pelo Supabase. O acesso é realizado exclusivamente pela camada Repository por meio do Supabase JS SDK, que encapsula as requisições HTTPS ao endpoint gerenciado. Nenhuma outra camada da aplicação detém acesso direto ao banco, garantindo o isolamento arquitetural descrito na seção 3.2.1. O esquema relacional é gerenciado pelos arquivos de migração DDL localizados em `documentos/outros/migrations/`, conforme detalhado na seção 3.6.3.
+
+O nó **GitLab Pages** hospeda a documentação estática da WebAPI (`documentos/outros/api-documentation.html`), publicada em `https://web-api-deploy-d81981.pages.git.inteli.edu.br/`. Este nó não integra o fluxo de dados operacional da aplicação; sua finalidade é exclusivamente facilitar a leitura e validação externa da documentação de endpoints sem necessidade de clonar o repositório.
+
+A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual da sprint 4: o módulo de autenticação JWT está em desenvolvimento e será plenamente documentado no diagrama atualizado da sprint 5, conforme previsto na seção 3.8.
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
@@ -3284,7 +3359,22 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
 
-### 5.1.2. Testes unitários de Service (white-box)
+### 5.1.1 Estratégia de Testes
+
+A estratégia de testes adotada no projeto foi estruturada de acordo com a arquitetura em camadas da aplicação, permitindo validar diferentes aspectos do sistema de forma organizada e independente. Para isso, os testes foram divididos conforme a responsabilidade de cada camada da aplicação.
+
+A camada de **Service** é validada por meio de testes **white-box**, nos quais há conhecimento da implementação interna dos métodos testados. Essa abordagem permite verificar o comportamento da lógica de negócio e dos fluxos internos da aplicação de forma isolada.
+
+A camada de **Controller e Rotas** é validada por meio de testes **black-box**, realizados com o auxílio da biblioteca **Supertest**. Nessa abordagem, a aplicação é tratada como uma caixa-preta, sendo avaliados apenas os comportamentos observáveis por meio das requisições HTTP e respostas retornadas pelos endpoints.
+
+Quando necessário, a camada de **Repository** também pode ser validada separadamente, principalmente em situações que envolvam consultas ou operações de persistência com maior complexidade.
+
+Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**. Inicialmente são preparados os dados e condições necessárias para o cenário de teste (*Arrange*), em seguida a funcionalidade é executada (*Act*) e, por fim, os resultados obtidos são comparados com os resultados esperados (*Assert*).
+
+Além disso, os testes foram desenvolvidos de forma determinística, evitando dependências de ordem de execução, horário do sistema, serviços externos, acesso à rede ou dados residuais de execuções anteriores. Dessa forma, garante-se que uma mesma execução produza resultados consistentes independentemente do ambiente utilizado.
+
+
+## 5.1.2. Testes unitários de Service (white-box)
 
 As 8 suítes de testes white-box utilizam mocks das dependências de repositório com jest.fn(), injetados via factory function (createXxxService(repositoryMock)). Isso permite isolar completamente a camada de serviço e testar regras internas, validações e exceções sem depender de banco de dados.
 
@@ -3374,6 +3464,129 @@ Cada teste segue o padrão AAA (Arrange — Act — Assert) e é totalmente dete
 
 > **Observação:** a cobertura mais baixa do teamService (58,33%) indica ausência de testes para fluxos de atualização e remoção de times fora do contexto da competição, sendo um gap planejado para a sprint 5.
 
+
+## 5.1.3  Testes de Integração de Endpoints
+- Para cada endpoint principal, cobertura obrigatória dos quatro
+  cenários-chave: sucesso (200/201), falha de validação (400/422),
+  regra de negócio violada (409 ou equivalente) e recurso não
+  encontrado (404).
+
+
+## 5.1.4  Evidências de Execução
+### Execução dos Testes Automatizados
+
+Para validar o correto funcionamento da aplicação, foi realizada a execução dos testes automatizados utilizando o framework **Jest**, por meio do seguinte comando:
+
+```bash
+npm test
+```
+
+A execução foi concluída com sucesso, demonstrando que todos os testes implementados no sistema foram aprovados, sem ocorrência de falhas ou erros.
+
+**Resumo da Execução**
+
+| Métrica | Resultado |
+|----------|----------|
+| Test Suites | 16 passed |
+| Tests | 128 passed |
+| Failures | 0 |
+| Snapshots | 0 |
+| Tempo de Execução | 17.343 s |
+
+Durante a execução, foram testadas diferentes camadas e funcionalidades do sistema, incluindo serviços, repositórios, autenticação e testes end-to-end, garantindo a validação do comportamento esperado da aplicação.
+
+**Arquivos de teste executados**
+
+- authService.test.ts  
+- adminService.test.ts  
+- competitionService.spec.ts  
+- checkpointService.spec.ts  
+- teamService.spec.ts  
+- runnerService.spec.ts  
+- rankingService.spec.ts  
+- exportService.spec.ts  
+- teamRepository.spec.ts  
+- runnerRepository.spec.ts  
+- exportRepository.spec.ts  
+- competitionRepository.spec.ts  
+- competition.e2e.spec.ts  
+- team.e2e.spec.ts  
+- runner.e2e.spec.ts  
+- export.e2e.spec.ts  
+
+**Evidência**
+
+
+<div align="center">
+  <sub>Figura X - Resultado da execução do comando `npm test`.</sub><br>
+    <img src="../assets/programacao/execucao-dos-testes.png" width="700" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+---
+
+### Relatório de Cobertura
+
+A cobertura dos testes foi avaliada por meio do seguinte comando:
+
+```bash
+npm test -- --coverage
+```
+
+O relatório gerado permitiu analisar o percentual de código exercitado pelos testes automatizados em cada camada da aplicação.
+
+**Cobertura por Camada**
+
+
+| Camada | Statements | Branches | Functions | Lines |
+|----------|----------|----------|----------|----------|
+| App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
+| Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
+| Database | 87.50% | 75.00% | 100.00% | 87.50% |
+| Errors | 100.00% | 100.00% | 100.00% | 100.00% |
+| Helpers | 36.00% | 0.00% | 37.50% | 39.13% |
+| Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
+| Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
+| Routes | 91.22% | 0.00% | 0.00% | 91.22% |
+| Services | 73.48% | 58.99% | 73.91% | 75.13% |
+| Validators | 70.61% | 64.42% | 92.59% | 71.80% |
+| **Cobertura Total** | **56.13%** | **37.79%** | **50.50%** | **58.39%** |
+
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **56.13% em statements** e **58.39% em lines**, refletindo o nível de execução do código pelos testes implementados.
+
+**Evidência**
+<div align="center">
+  <sub>Figura X - Relatório completo de cobertura gerado pelo Jest.</sub><br>
+    <img src="../assets/programacao/relatorio-cobertura-teste.png" width="100%" alt="Testes jest e supertest"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+### Rastreabilidade dos Casos de Teste
+
+Os testes automatizados implementados foram relacionados às respectivas regras de negócio e requisitos funcionais, garantindo consistência com a Matriz RF → RN → Endpoint (Seção 3.1.4) e com a Matriz de Rastreabilidade do Projeto (Seção 3.9).
+
+**Mapeamento CT → RN → RF**
+
+| Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) |
+|--------------------|------------------|------------------------|---------------------------|
+| CT01 | authService.test.ts | RN03 | RF004 |
+| CT02 | adminService.test.ts | RN02, RN03 | RF004 |
+| CT03 | competitionService.spec.ts | RN18, RN14 | RF002, RF012 |
+| CT04 | competition.e2e.spec.ts | RN18 | RF002 |
+| CT05 | teamService.spec.ts | RN01, RN07 | RF003 |
+| CT06 | teamRepository.spec.ts | RN01, RN07 | RF003 |
+| CT07 | team.e2e.spec.ts | RN01, RN07 | RF003 |
+| CT08 | runnerService.spec.ts | RN07 | RF003, RF011 |
+| CT09 | runnerRepository.spec.ts | RN07 | RF003 |
+| CT10 | runner.e2e.spec.ts | RN07 | RF003 |
+| CT11 | checkpointService.spec.ts | RN04, RN05, RN06 | RF005, RF006, RF007, RF008, RF009 |
+| CT12 | rankingService.spec.ts | RN09, RN11 | RF010, RF015 |
+| CT13 | exportService.spec.ts | RN15 | RF013 |
+| CT14 | exportRepository.spec.ts | RN15 | RF013 |
+| CT15 | export.e2e.spec.ts | RN15 | RF013 |
+| CT16 | competitionRepository.spec.ts | RN18 | RF002 |
+
+A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
 ## 5.2. Testes de usabilidade (sprint 5)
 
