@@ -1140,7 +1140,6 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
   <sub>Figura 13 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
   <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de atletas e geração de link público com UUID"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-<<<<<<< HEAD
 </div>
 
 O terceiro diagrama mapeia o fluxo de autenticação de administrador (Fluxo 3). O administrador envia suas credenciais via `POST /auth/sessions`; o `authController` repassa ao `authService`, que consulta o `adminRepository` para localizar o registro por e-mail no Banco de Dados. Caso as credenciais sejam válidas, o Service gera um JWT com validade de 8 horas e o devolve ao cliente. Em caso de erro, um `UnauthorizedError` é lançado e propagado até o cliente como `401 Unauthorized`.
@@ -1159,12 +1158,6 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-
-
-=======
-</div>
-
->>>>>>> dev
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
 O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da imagem do visor da esteira pelo fiscal, seguida pelo envio da imagem para processamento. Após a extração dos dados, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
@@ -1184,11 +1177,7 @@ O Diagrama de Implantação UML modela a distribuição física dos artefatos de
 O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó — o GitLab Pages — hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre inteiramente no lado do cliente (*client-side*), por meio da biblioteca Tesseract.js em conjunto com OpenCV.js, o que elimina a dependência de serviços externos de reconhecimento de imagem e mantém o dado sensível da captura sob controle da aplicação.
 
 <div align="center">
-<<<<<<< HEAD
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
-=======
-  <sub>Figura X - Diagrama de Implantação UML</sub><br>
->>>>>>> dev
 
 ```plantuml
 @startuml diagrama-implantacao
