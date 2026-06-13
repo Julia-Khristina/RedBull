@@ -3374,14 +3374,95 @@ Todos os testes seguem o padrão **AAA (Arrange, Act, Assert)**. Inicialmente s�
 Além disso, os testes foram desenvolvidos de forma determinística, evitando dependências de ordem de execução, horário do sistema, serviços externos, acesso à rede ou dados residuais de execuções anteriores. Dessa forma, garante-se que uma mesma execução produza resultados consistentes independentemente do ambiente utilizado.
 
 
-## 5.1.2  Testes Unitários de Service
-- Cobertura mínima de 80% na camada Service, evidenciada pelo relatório
-  Jest gerado por "npm test -- --coverage".
-- Casos de teste vinculados explicitamente a uma RN (CT01 -> RN01,
-  CT02 -> RN02, ...), ordenados pela prioridade das RN do artefato 1.
-- Para os 5 casos de teste prioritários, explicação de como cada um
-  atende ao padrão AAA, ao determinismo, à RN coberta e ao caminho de
-  falha.
+## 5.1.2. Testes unitários de Service (white-box)
+
+As 8 suítes de testes white-box utilizam mocks das dependências de repositório com jest.fn(), injetados via factory function (createXxxService(repositoryMock)). Isso permite isolar completamente a camada de serviço e testar regras internas, validações e exceções sem depender de banco de dados.
+
+Cada teste segue o padrão AAA (Arrange — Act — Assert) e é totalmente determinístico, ou seja, trabalha com dados fixos e não utiliza aleatoriedade.
+
+#### Mapeamento Casos de Teste → Regras de Negócio
+
+| Prior. | RN | Descrição da RN | CT(s) correspondente(s) | Serviço |
+|---|---|---|---|---|
+| 1 | RN18 | Cadastro de competição exige nome, data e local | competitionService.create — deve criar com status not_started | competitionService.spec.ts:23 |
+| 2 | RN01 | Equipe deve gerar UUID único ao ser salva | teamService.create — deve criar equipe com uuid definido | teamService.spec.ts:31 |
+| 3 | RN07 | Suporte aos papéis corredor/capitão; limite de 16 atletas por equipe | runnerService.create — deve lançar UnprocessableError quando equipe já tem 16 atletas | runnerService.spec.ts:92 |
+| 4 | RN04 | Checkpoint exige obrigatoriamente distância (km) | checkpointService.create — deve lançar ValidationError quando distance_km é negativo | checkpointService.spec.ts:128 |
+| 5 | RN14 | Encerramento da competição bloqueia novos checkpoints | competitionService.close — deve atualizar status para "closed" | competitionService.spec.ts:130 |
+
+#### Detalhamento dos top-5 CTs
+
+---
+
+**CT-01 — CompetitionService.create com payload válido**
+
+- **RN:** RN18
+- **Determinismo:** dados fixos ("Red Bull 24h São Paulo", "2026-06-15", "São Paulo - SP"), sem aleatoriedade ou data atual.
+- **Arrange:** repositório mockado que resolve com competição `{ id: 1, name: "Red Bull 24h São Paulo", date: "2026-06-15", address: "São Paulo - SP", status: "not_started" }`.
+- **Act:** `competitionService.create({ name, date, address })`.
+- **Assert:** objeto retornado contém `name`, `date`, `address` e `status: "not_started"`; `repository.create` foi chamado com os mesmos dados.
+- **Caminho de falha:** se `name`, `date` ou `address` estiverem ausentes, o validator (`competitionValidator.ts`) rejeita antes de chegar ao service — testado implicitamente nos e2e (400).
+
+---
+
+**CT-02 — TeamService.create com name e id_competition válidos**
+
+- **RN:** RN01
+- **Determinismo:** teamFixture com valores literais ("Equipe Alpha", 40); UUID fixo na fixture, não gerado aleatoriamente no teste.
+- **Arrange:** repositório mockado que resolve com `teamFixture { id: 1, name: "Equipe Alpha", uuid: "<uuid>" }`.
+- **Act:** `teamService.create({ name: "Equipe Alpha", id_competition: 40 })`.
+- **Assert:** `team.uuid` é definido; `repository.create` foi chamado com os mesmos dados.
+- **Caminho de falha:** se `name` está ausente, `ValidationError` é lançado antes de chamar o repositório (validado em `teamService.spec.ts:53`).
+
+---
+
+**CT-03 — RunnerService.create com equipe já no limite**
+
+- **RN:** RN07 (sub-regra: máximo de 16 atletas por equipe)
+- **Determinismo:** `countByTeam` retorna o valor fixo 16 — sem banco ou estado compartilhado.
+- **Arrange:** `findTeamById` retorna `{ id: 10 }`; `countByTeam` retorna `16`.
+- **Act:** `runnerService.create({ name: "X", cpf: "...", email: "...", id_team: 10 })`.
+- **Assert:** rejeita com `UnprocessableError`; `repository.create` não foi chamado.
+- **Caminho de falha:** se equipe não existe (`findTeamById` retorna `null`), lança `NotFoundError` em vez de `UnprocessableError` (validado em `runnerService.spec.ts:75`).
+
+---
+
+**CT-04 — CheckpointService.create com distance_km negativo**
+
+- **RN:** RN04
+- **Determinismo:** `distance_km: -1` é um valor literal negativo — dispensa mock de data/hora ou estado externo.
+- **Arrange:** repositório mockado (sem overrides — `create` não será chamado).
+- **Act:** `checkpointService.create({ identifier: "CP-002", distance_km: -1, ... })`.
+- **Assert:** rejeita com `ValidationError`; `repository.create` não foi chamado.
+- **Caminho de falha:** se `identifier` está ausente, também lança `ValidationError` (validado em `checkpointService.spec.ts:112`); se viola unique constraint (code: "23505"), lança `ConflictError` (validado em `checkpointService.spec.ts:144`).
+
+---
+
+**CT-05 — CompetitionService.close**
+
+- **RN:** RN14
+- **Determinismo:** id fixo ("1"); status "closed" é string literal no mock — sem temporizadores ou data real.
+- **Arrange:** repositório mockado cujo `close` retorna competição com `status: "closed"`.
+- **Act:** `competitionService.close("1")`.
+- **Assert:** `competition.status === "closed"`; `repository.close` foi chamado com `1`.
+- **Caminho de falha:** se a competição não existe, `findById` retorna `null` e o service (futuramente) lançará `NotFoundError` — atualmente `close` é delegado diretamente ao repositório sem verificação prévia, ponto de melhoria mapeado para a sprint 5.
+
+---
+
+#### Demais CTs por serviço (sumário)
+
+| Serviço | Arquivo de teste | Testes | Cobertura (Stmts) | RNs exercitadas |
+|---|---|---|---|---|
+| adminService | adminService.test.ts | 15 | 100% | RN02, RN03 |
+| authService | authService.test.ts | 8 | 78% | RN03 |
+| checkpointService | checkpointService.spec.ts | 12 | 93,75% | RN04, RN05, RN12 |
+| competitionService | competitionService.spec.ts | 7 | 96,55% | RN18, RN14 |
+| exportService | exportService.spec.ts | 3 | 100% | RN15 |
+| rankingService | rankingService.spec.ts | 5 | 81,81% | RN09, RN11 |
+| runnerService | runnerService.spec.ts | 9 | 94,11% | RN07, RN01 |
+| teamService | teamService.spec.ts | 7 | 58,33% | RN01, RN07 |
+
+> **Observação:** a cobertura mais baixa do teamService (58,33%) indica ausência de testes para fluxos de atualização e remoção de times fora do contexto da competição, sendo um gap planejado para a sprint 5.
 
 
 ## 5.1.3  Testes de Integração de Endpoints
