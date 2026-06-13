@@ -1,32 +1,32 @@
 import { Router } from "express";
-import { athleteController } from "../controllers/athleteController";
+import { runnerController } from "../controllers/runnerController";
 import { asyncHandler } from "../helpers/asyncHandler";
 
 const router = Router();
 
 router.post(
-  "/competitions/:competitionId/teams/:teamId/athletes",
-  asyncHandler(athleteController.create)
+  "/competitions/:id/teams/:teamId/athletes",
+  asyncHandler(runnerController.create)
 );
 
 router.get(
-  "/competitions/:competitionId/teams/:teamId/athletes",
-  asyncHandler(athleteController.list)
+  "/competitions/:id/teams/:teamId/athletes",
+  asyncHandler(runnerController.list)
 );
 
 router.get(
-  "/competitions/:competitionId/teams/:teamId/athletes/:athleteId",
-  asyncHandler(athleteController.findById)
+  "/competitions/:id/teams/:teamId/athletes/:runnerId",
+  asyncHandler(runnerController.findById)
 );
 
 router.put(
-  "/competitions/:competitionId/teams/:teamId/athletes/:athleteId",
-  asyncHandler(athleteController.update)
+  "/competitions/:id/teams/:teamId/athletes/:runnerId",
+  asyncHandler(runnerController.update)
 );
 
 router.delete(
-  "/competitions/:competitionId/teams/:teamId/athletes/:athleteId",
-  asyncHandler(athleteController.delete)
+  "/competitions/:id/teams/:teamId/athletes/:runnerId",
+  asyncHandler(runnerController.delete)
 );
 
 export default router;

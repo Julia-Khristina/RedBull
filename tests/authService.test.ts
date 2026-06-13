@@ -1,6 +1,6 @@
 import { createAuthService } from "../src/services/authService";
 import { AuthResponse, LoginInput } from "../src/models/auth";
-import { UnauthorizedError } from "../src/errors/AppError";
+import { AppError, UnauthorizedError } from "../src/errors/AppError";
 
 describe("authService", () => {
   let mockAdminRepository: any;
@@ -62,6 +62,31 @@ describe("authService", () => {
 
       await expect(authService.createSession(loginInput)).rejects.toThrow(UnauthorizedError);
     });
+
+    it("should throw AppError when ADMIN_PASSWORD is missing", async () => {
+      const originalPassword = process.env.ADMIN_PASSWORD;
+      delete process.env.ADMIN_PASSWORD;
+
+      mockAdminRepository.findByEmail.mockResolvedValue({
+        id: 1,
+        name: "Admin",
+        email: "admin@example.com",
+        area: "TI",
+        password: "ignored",
+        created_at: "",
+      });
+
+      try {
+        await expect(
+          authService.createSession({
+            email: "admin@example.com",
+            password: "adminpass",
+          })
+        ).rejects.toBeInstanceOf(AppError);
+      } finally {
+        process.env.ADMIN_PASSWORD = originalPassword;
+      }
+    });
   });
 
   describe("refresh", () => {
@@ -111,6 +136,53 @@ describe("authService", () => {
 
     it("should throw UnauthorizedError for invalid token", async () => {
       await expect(authService.validateToken("invalid-token")).rejects.toThrow(UnauthorizedError);
+    });
+
+    it("should throw AppError when JWT_SECRET is missing", async () => {
+      const originalSecret = process.env.JWT_SECRET;
+      delete process.env.JWT_SECRET;
+
+      try {
+        expect(() =>
+          authService.generateToken({
+            id: 1,
+            email: "admin@example.com",
+            name: "Admin",
+            role: "admin",
+          })
+        ).toThrow(AppError);
+      } finally {
+        process.env.JWT_SECRET = originalSecret;
+      }
+    });
+  });
+
+  describe("validatePermission", () => {
+    it("should return true for a valid token", async () => {
+      const loginInput: LoginInput = { email: "admin@example.com", password: "adminpass" };
+
+      mockAdminRepository.findByEmail.mockResolvedValue({
+        id: 1,
+        name: "Admin",
+        email: "admin@example.com",
+        area: "TI",
+        password: "ignored",
+        created_at: "",
+      });
+
+      const authResponse = await authService.createSession(loginInput);
+
+      await expect(authService.validatePermission(authResponse.access_token)).resolves.toBe(true);
+    });
+
+    it("should return false for an invalid token", async () => {
+      await expect(authService.validatePermission("invalid-token")).resolves.toBe(false);
+    });
+
+    it("should return false when token validation resolves no admin", async () => {
+      jest.spyOn(authService, "validateToken").mockResolvedValue(null as never);
+
+      await expect(authService.validatePermission("token")).resolves.toBe(false);
     });
   });
 

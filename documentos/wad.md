@@ -3401,7 +3401,7 @@ Além disso, os testes foram desenvolvidos de forma determinística, evitando de
 
 ### Cobertura da Camada Service
 
-A camada de Service atingiu **73,48% de cobertura de statements** (contra a meta de 80%), conforme relatório gerado por `npm test -- --coverage`. O detalhamento por métrica é:
+A camada de Service atingiu **96,05% de cobertura de statements** e superou a meta de 80% em todas as métricas acompanhadas, conforme relatório gerado por `npm test -- --coverage`. O detalhamento por métrica é:
 
 <div align="center">
   <sub>Quadro 26 - Cobertura da Camada Service </sub>
@@ -3409,16 +3409,16 @@ A camada de Service atingiu **73,48% de cobertura de statements** (contra a meta
 
 | Métrica | Cobertura atingida | Meta |
 |---------|-------------------|------|
-| Statements | 73,48% | 80% |
-| Branches | 58,99% | 80% |
-| Functions | 73,91% | 80% |
-| Lines | 75,13% | 80% |
+| Statements | 96,05% | 80% |
+| Branches | 88,78% | 80% |
+| Functions | 97,22% | 80% |
+| Lines | 96,21% | 80% |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-A meta de 80% ainda não foi atingida principalmente devido a branches condicionais não exercitadas em serviços como `checkpointService` e `exportService`. O incremento de cobertura está planejado para a Sprint 5 com a inclusão de casos de testes adicionais nos caminhos de exceção.
+A meta de 80% foi atingida após a inclusão de testes adicionais nos caminhos de exceção e branches condicionais de `authService`, `teamService`, `runnerService` e `rankingService`, além da estabilização das rotas usadas pelos testes de integração.
 
 ### Mapeamento CT → RN — Testes Unitários de Service
 
@@ -3648,7 +3648,20 @@ Para validar o correto funcionamento da aplicação, foi realizada a execução 
 npm test
 ```
 
-A execução foi concluída com sucesso, demonstrando que todos os testes implementados no sistema foram aprovados, sem ocorrência de falhas ou erros.
+A execução utiliza a configuração do Jest com `maxWorkers: 1` e `testTimeout: 30000`, garantindo execução serial e estável das suítes que acessam o Supabase.
+
+A execução foi concluída com sucesso, demonstrando que todos os testes implementados no sistema foram aprovados, sem ocorrência de falhas ou erros. O resumo retornado pelo comando foi:
+
+```text
+> g01@1.0.0 test
+> jest
+
+Test Suites: 21 passed, 21 total
+Tests:       203 passed, 203 total
+Snapshots:   0 total
+Time:        54.481 s, estimated 526 s
+Ran all test suites.
+```
 
 **Resumo da Execução**
 
@@ -3658,11 +3671,11 @@ A execução foi concluída com sucesso, demonstrando que todos os testes implem
 
 | Métrica | Resultado |
 |----------|----------|
-| Test Suites | 21 passed |
-| Tests | ~170 passed |
+| Test Suites | 21 passed, 21 total |
+| Tests | 203 passed, 203 total |
 | Failures | 0 |
 | Snapshots | 0 |
-| Tempo de Execução | ~18 s |
+| Tempo de Execução | 54.481 s |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3734,15 +3747,15 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
 | Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
 | Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
 | Routes | 91.22% | 0.00% | 0.00% | 91.22% |
-| Services | 73.48% | 58.99% | 73.91% | 75.13% |
+| Services | 96.05% | 88.78% | 97.22% | 96.21% |
 | Validators | 70.61% | 64.42% | 92.59% | 71.80% |
-| **Cobertura Total** | **56.13%** | **37.79%** | **50.50%** | **58.39%** |
+| **Cobertura Total** | **60.05%** | **51.89%** | **67.76%** | **62.48%** |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **56.13% em statements** e **58.39% em lines**, refletindo o nível de execução do código pelos testes implementados.
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **60.05% em statements** e **62.48% em lines**, enquanto a camada de Services atingiu **96.05% em statements**, **88.78% em branches**, **97.22% em functions** e **96.21% em lines**, superando a meta de 80% definida para a sprint.
 
 **Evidência**
 <div align="center">

@@ -85,6 +85,45 @@ describe("teamService.findByCompetitionAndId", () => {
   });
 });
 
+describe("teamService.findByCompetition", () => {
+  it("deve listar equipes da competicao", async () => {
+    const repository = makeRepositoryMock({
+      findByCompetition: jest.fn().mockResolvedValue([teamFixture]),
+    });
+    const teamService = createTeamService(repository);
+
+    await expect(teamService.findByCompetition(40)).resolves.toEqual([
+      teamFixture,
+    ]);
+    expect(repository.findByCompetition).toHaveBeenCalledWith(40);
+  });
+});
+
+describe("teamService.findByUuid", () => {
+  it("deve retornar equipe quando uuid existe", async () => {
+    const repository = makeRepositoryMock({
+      findByUuid: jest.fn().mockResolvedValue(teamFixture),
+    });
+    const teamService = createTeamService(repository);
+
+    await expect(teamService.findByUuid(teamFixture.uuid)).resolves.toEqual(
+      teamFixture
+    );
+    expect(repository.findByUuid).toHaveBeenCalledWith(teamFixture.uuid);
+  });
+
+  it("deve lancar NotFoundError quando uuid nao existe", async () => {
+    const repository = makeRepositoryMock({
+      findByUuid: jest.fn().mockResolvedValue(null),
+    });
+    const teamService = createTeamService(repository);
+
+    await expect(teamService.findByUuid("uuid-inexistente")).rejects.toBeInstanceOf(
+      NotFoundError
+    );
+  });
+});
+
 describe("teamService.updateByCompetitionAndId", () => {
   it("deve atualizar equipe existente", async () => {
     const updated = { ...teamFixture, name: "Renomeada" };
@@ -107,6 +146,84 @@ describe("teamService.updateByCompetitionAndId", () => {
 
     await expect(
       teamService.updateByCompetitionAndId(40, 999, { name: "Qualquer" })
+    ).rejects.toBeInstanceOf(NotFoundError);
+  });
+});
+
+describe("teamService.setActiveRunnerByCompetitionAndId", () => {
+  it("deve definir corredor ativo quando equipe e corredor existem", async () => {
+    const updated = { ...teamFixture, active_runner_id: 7 };
+    const repository = makeRepositoryMock({
+      findByCompetitionAndId: jest.fn().mockResolvedValue(teamFixture),
+      findRunnerByTeamAndId: jest.fn().mockResolvedValue({ id: 7 }),
+      setActiveRunnerByCompetitionAndId: jest.fn().mockResolvedValue(updated),
+    });
+    const teamService = createTeamService(repository);
+
+    const team = await teamService.setActiveRunnerByCompetitionAndId(40, 1, {
+      runnerId: 7,
+    });
+
+    expect(team.active_runner_id).toBe(7);
+    expect(repository.findRunnerByTeamAndId).toHaveBeenCalledWith(1, 7);
+    expect(repository.setActiveRunnerByCompetitionAndId).toHaveBeenCalledWith(
+      40,
+      1,
+      7
+    );
+  });
+
+  it("deve aceitar athleteId como alias de runnerId", async () => {
+    const updated = { ...teamFixture, active_runner_id: 8 };
+    const repository = makeRepositoryMock({
+      findByCompetitionAndId: jest.fn().mockResolvedValue(teamFixture),
+      findRunnerByTeamAndId: jest.fn().mockResolvedValue({ id: 8 }),
+      setActiveRunnerByCompetitionAndId: jest.fn().mockResolvedValue(updated),
+    });
+    const teamService = createTeamService(repository);
+
+    await teamService.setActiveRunnerByCompetitionAndId(40, 1, {
+      athleteId: 8,
+    });
+
+    expect(repository.findRunnerByTeamAndId).toHaveBeenCalledWith(1, 8);
+  });
+
+  it("deve lancar NotFoundError quando equipe nao existe", async () => {
+    const repository = makeRepositoryMock({
+      findByCompetitionAndId: jest.fn().mockResolvedValue(null),
+    });
+    const teamService = createTeamService(repository);
+
+    await expect(
+      teamService.setActiveRunnerByCompetitionAndId(40, 999, { runnerId: 7 })
+    ).rejects.toBeInstanceOf(NotFoundError);
+    expect(repository.findRunnerByTeamAndId).not.toHaveBeenCalled();
+  });
+
+  it("deve lancar NotFoundError quando corredor nao pertence a equipe", async () => {
+    const repository = makeRepositoryMock({
+      findByCompetitionAndId: jest.fn().mockResolvedValue(teamFixture),
+      findRunnerByTeamAndId: jest.fn().mockResolvedValue(null),
+    });
+    const teamService = createTeamService(repository);
+
+    await expect(
+      teamService.setActiveRunnerByCompetitionAndId(40, 1, { runnerId: 999 })
+    ).rejects.toBeInstanceOf(NotFoundError);
+    expect(repository.setActiveRunnerByCompetitionAndId).not.toHaveBeenCalled();
+  });
+
+  it("deve lancar NotFoundError quando atualizacao nao retorna equipe", async () => {
+    const repository = makeRepositoryMock({
+      findByCompetitionAndId: jest.fn().mockResolvedValue(teamFixture),
+      findRunnerByTeamAndId: jest.fn().mockResolvedValue({ id: 7 }),
+      setActiveRunnerByCompetitionAndId: jest.fn().mockResolvedValue(null),
+    });
+    const teamService = createTeamService(repository);
+
+    await expect(
+      teamService.setActiveRunnerByCompetitionAndId(40, 1, { runnerId: 7 })
     ).rejects.toBeInstanceOf(NotFoundError);
   });
 });

@@ -40,14 +40,13 @@ router.get(
 );
 
 router.get(
+  "/competitions/:id/checkpoints/inconsistencies",
+  asyncHandler(checkpointController.findInconsistenciesByCompetition)
+);
+
+router.get(
   "/competitions/:id/checkpoints",
   asyncHandler(checkpointController.findByCompetition)
 );
-
-    // RF06 — Listar checkpoints por competição
-    router.get(
-      "/competitions/:competicaoId/checkpoints",
-        asyncHandler(checkpointController.findByCompeticao)
-        );
 
 export default router;
