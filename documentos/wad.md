@@ -1118,7 +1118,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 </div>
 
 
-### 3.2.4. Diagrama de Sequência UML (sprints 3 e 4)
+### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no backend. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1140,6 +1140,7 @@ O segundo diagrama descreve o fluxo de cadastro de equipe e geração de UUID. O
   <sub>Figura 13 - Diagrama de sequência do cadastro de equipe e geração de UUID</sub><br>
   <img src="../assets/programacao/diagrama-sequencia-uml-2.svg" width="100%" alt="Diagrama de sequência UML do fluxo de cadastro de equipe, cadastro de atletas e geração de link público com UUID"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
+<<<<<<< HEAD
 </div>
 
 O terceiro diagrama mapeia o fluxo de autenticação de administrador (Fluxo 3). O administrador envia suas credenciais via `POST /auth/sessions`; o `authController` repassa ao `authService`, que consulta o `adminRepository` para localizar o registro por e-mail no Banco de Dados. Caso as credenciais sejam válidas, o Service gera um JWT com validade de 8 horas e o devolve ao cliente. Em caso de erro, um `UnauthorizedError` é lançado e propagado até o cliente como `401 Unauthorized`.
@@ -1160,6 +1161,10 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
 
 
 
+=======
+</div>
+
+>>>>>>> dev
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
 O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da imagem do visor da esteira pelo fiscal, seguida pelo envio da imagem para processamento. Após a extração dos dados, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
@@ -1179,7 +1184,11 @@ O Diagrama de Implantação UML modela a distribuição física dos artefatos de
 O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó — o GitLab Pages — hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre inteiramente no lado do cliente (*client-side*), por meio da biblioteca Tesseract.js em conjunto com OpenCV.js, o que elimina a dependência de serviços externos de reconhecimento de imagem e mantém o dado sensível da captura sob controle da aplicação.
 
 <div align="center">
+<<<<<<< HEAD
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
+=======
+  <sub>Figura X - Diagrama de Implantação UML</sub><br>
+>>>>>>> dev
 
 ```plantuml
 @startuml diagrama-implantacao
@@ -2041,6 +2050,16 @@ Através das telas prototipadas, é possível validar a arquitetura de navegaç�
 O protótipo também está servindo como referência para o desenvolvimento front-end e será utilizado durante as etapas de implementação, testes de usabilidade e iteração do produto.
 
 ### Persona 1 - Marina Costa
+#### Tela de Login
+&nbsp; &nbsp; &nbsp; &nbsp;Abaixo nota-se a Tela de Login, onde o background é uma foto real da competição 24hrs, essa tela pede, em um popup de fundo branco, email e senha para autorizar o acesso do administrador. Conta com uma frase da RedBull de encorajamento e botão em destaque "entrar"
+
+
+<div align="center">
+  <sub>Figura 1 - Dashboard Principal</sub><br>
+    <img src="../assets/design/protótipo/painel-login.jpg"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dashboard principal"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 #### Dashboard Principal
 &nbsp; &nbsp; &nbsp; &nbsp;Na figura abaixo encontra-se o Dashboard Principal do sistema WEB, exibindo uma mensagem de boas-vindas ao administrador e um tutorial com o passo a passo para configurar a competição (inserir dados da equipe, gerar UUID, criar equipes e iniciar a competição). Conta com dois atalhos de ação rápida: "Nova Competição" e "Ver Ranking", facilitando o acesso às funcionalidades centrais da plataforma.
 
@@ -3346,7 +3365,7 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 <div align="center"> <sub>Figura 68 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/estrutura-css.png" width="100%" alt="Estrutura de pastas do public/css"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-**- Tela de login funcional (RF004, RN02, RN03):** Foi criado o protótipo de alta fidelidade da tela de login dos auditores, que não havia sido desenvolvido na sprint 3. A view auth/login.ejs foi implementada com formulário completo de autenticação, integrado ao endpoint POST /admin/login. Ao submeter, o app.js consome a API via fetch, persiste o accessToken retornado no sessionStorage e redireciona para /dashboard. Erros de autenticação são exibidos inline, sem recarregamento de página. A tela inclui toggle de visibilidade da senha e não depende do layout base (renderizada sem sidebar).
+**- Tela de login funcional (RF004, RN02, RN03):** Nessa sprint, foi reconhecida a necessidade e, a paritr disso, criado o protótipo de alta fidelidade da tela de login dos auditores, que não havia sido desenvolvido na sprint 3. A view auth/login.ejs foi implementada com formulário completo de autenticação, integrado ao endpoint POST /admin/login. Ao submeter, o app.js consome a API via fetch, persiste o accessToken retornado no sessionStorage e redireciona para /dashboard. Erros de autenticação são exibidos inline, sem recarregamento de página. A tela inclui toggle de visibilidade da senha e não depende do layout base (renderizada sem sidebar).
 
 <div align="center"> <sub>Figura 69 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 

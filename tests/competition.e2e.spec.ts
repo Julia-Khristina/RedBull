@@ -147,3 +147,44 @@ describe("CRUD /competitions", () => {
     expect(getRes.status).toBe(404);
   });
 });
+
+describe("Validações de erro (400/404) — competition", () => {
+  it("deve retornar 400 ao buscar com id não numérico", async () => {
+    const res = await request(app).get("/competitions/abc");
+    expect(res.status).toBe(400);
+  });
+
+  it("deve retornar 400 ao deletar com id não numérico", async () => {
+    const res = await request(app).delete("/competitions/abc");
+    expect(res.status).toBe(400);
+  });
+
+  it("deve retornar 400 ao atualizar competição com payload vazio", async () => {
+    const comp = await createCompetition({
+      ...payloadValido,
+      name: "CompUpdateVazia",
+    });
+    const res = await request(app)
+      .put(`/competitions/${comp.id}`)
+      .send({});
+    expect(res.status).toBe(400);
+    await request(app).delete(`/competitions/${comp.id}`);
+  });
+
+  it("deve retornar 404 ao atualizar competição inexistente", async () => {
+    const res = await request(app)
+      .put("/competitions/32767")
+      .send({ name: "X", date: "2026-01-01", address: "X" });
+    expect(res.status).toBe(404);
+  });
+
+  it("deve retornar 404 ao encerrar competição inexistente", async () => {
+    const res = await request(app).patch("/competitions/32767");
+    expect(res.status).toBe(404);
+  });
+
+  it("deve retornar 400 ao encerrar com id não numérico", async () => {
+    const res = await request(app).patch("/competitions/abc");
+    expect(res.status).toBe(400);
+  });
+});
