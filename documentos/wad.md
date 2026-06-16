@@ -3774,19 +3774,20 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
   <sub>Quadro 32 - Cobertura por Camada da Aplicação </sub>
 </div>
 
-| Camada | Statements | Branches | Functions | Lines |
-|--------|-----------|----------|-----------|-------|
-| App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
-| Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
-| Database | 87.50% | 75.00% | 100.00% | 87.50% |
-| Errors | 100.00% | 100.00% | 100.00% | 100.00% |
-| Helpers | 36.00% | 0.00% | 37.50% | 39.13% |
-| Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
-| Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
-| Routes | 91.22% | 0.00% | 0.00% | 91.22% |
-| Services | 96.05% | 88.78% | 97.22% | 96.21% |
-| Validators | 70.61% | 64.42% | 92.59% | 71.80% |
-| **Cobertura Total** | **60.05%** | **51.89%** | **67.76%** | **62.48%** |
+| Camada              | Statements | Branches   | Functions  | Lines      |
+| ------------------- | ---------- | ---------- | ---------- | ---------- |
+| App (`src`)         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Controllers         | 39.22%     | 11.44%     | 37.96%     | 40.96%     |
+| Database            | 87.50%     | 75.00%     | 100.00%    | 87.50%     |
+| Errors              | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Helpers             | 36.00%     | 0.00%      | 37.50%     | 39.13%     |
+| Middlewares         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Repositories        | 75.42%     | 51.68%     | 89.79%     | 82.69%     |
+| Routes              | 91.22%     | 0.00%      | 0.00%      | 91.22%     |
+| Services            | 88.38%     | 83.68%     | 85.86%     | 89.41%     |
+| Validators          | 75.25%     | 68.45%     | 100.00%    | 76.59%     |
+| **Cobertura Total** | **70.03%** | **52.81%** | **68.01%** | **72.42%** |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
