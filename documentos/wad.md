@@ -3793,7 +3793,11 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **60.05% em statements** e **62.48% em lines**, enquanto a camada de Services atingiu **96.05% em statements**, **88.78% em branches**, **97.22% em functions** e **96.21% em lines**, superando a meta de 80% definida para a sprint.
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **70.03% em statements, 52.81% em branches, 68.01% em functions e 72.42% em lines.**
+
+Entre as camadas com melhor desempenho, destacam-se **App, Errors e Middlewares**, que atingiram **100% de cobertura em todas as métricas**, enquanto a camada de **Services** apresentou **88.38% em statements, 83.68% em branches, 85.86% em functions e 89.41% em lines**, superando a meta mínima de **80% estabelecida para a sprint**.
+
+Apesar disso, a camada de Controllers ainda apresentou menor cobertura, com 39.22% em statements e 40.96% em lines, indicando pontos que podem ser priorizados em futuras melhorias dos testes automatizados.
 
 **Evidência**
 <div align="center">
