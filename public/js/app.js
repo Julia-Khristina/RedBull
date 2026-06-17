@@ -935,7 +935,16 @@ document.addEventListener('DOMContentLoaded', function () {
       const photoBtn = panel.querySelector('[data-photo-placeholder]');
       if (photoBtn) {
         photoBtn.addEventListener('click', function () {
-          showTeamToast('Captura por foto em breve.');
+          const activeRunnerId = panel.dataset.activeRunnerId;
+          const competitionId = panel.dataset.competitionId;
+          const teamId = panel.dataset.teamId;
+          if (!activeRunnerId || !competitionId || !teamId) {
+            showTeamToast('Selecione um atleta ativo antes de capturar a foto.');
+            return;
+          }
+          window.location.href = '/operational-panel/' + activeRunnerId +
+            '?competitionId=' + encodeURIComponent(competitionId) +
+            '&teamId=' + encodeURIComponent(teamId);
         });
       }
 
@@ -945,6 +954,268 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Registro manual (/operational-panel)
   if (path === '/operational-panel' || path.startsWith('/operational-panel/')) {
+    const ocrPanel = document.querySelector('[data-ocr-panel]');
+    if (ocrPanel) {
+      const captureStep = ocrPanel.querySelector('[data-ocr-step="capture"]');
+      const reviewStep = ocrPanel.querySelector('[data-ocr-step="review"]');
+      const manualMode = ocrPanel.querySelector('[data-manual-mode]');
+      const fileInput = ocrPanel.querySelector('[data-ocr-image-input]');
+      const openFileBtn = ocrPanel.querySelector('[data-ocr-open-file]');
+      const capturePreview = ocrPanel.querySelector('[data-ocr-capture-preview]');
+      const reviewPreview = ocrPanel.querySelector('[data-ocr-review-preview]');
+      const emptyPreview = ocrPanel.querySelector('[data-ocr-empty-preview]');
+      const captureFeedback = ocrPanel.querySelector('[data-ocr-capture-feedback]');
+      const reviewFeedback = ocrPanel.querySelector('[data-ocr-review-feedback]');
+      const saveBtn = ocrPanel.querySelector('[data-ocr-save]');
+      const retakeBtn = ocrPanel.querySelector('[data-ocr-retake]');
+      const distanceInput = ocrPanel.querySelector('[data-ocr-distance]');
+      const paceInput = ocrPanel.querySelector('[data-ocr-pace]');
+      const timeInput = ocrPanel.querySelector('[data-ocr-time]');
+      const discrepancy = ocrPanel.querySelector('[data-ocr-discrepancy]');
+      const discrepancyText = ocrPanel.querySelector('[data-ocr-discrepancy-text]');
+      const capturedClock = ocrPanel.querySelector('[data-ocr-captured-clock]');
+      const contextInputs = ocrPanel.querySelectorAll('[data-ocr-context]');
+      const ocrState = {
+        extraction: null,
+        previewObjectUrl: null,
+        originalValues: null,
+      };
+      if (paceInput) paceInput.readOnly = true;
+
+      function readContextNumber(name) {
+        const input = Array.prototype.find.call(contextInputs, function (item) {
+          return item.name === name;
+        });
+        return Number(input ? input.value : '');
+      }
+
+      function setOcrFeedback(target, message, isError) {
+        if (!target) return;
+        target.textContent = message || '';
+        target.dataset.state = isError ? 'error' : (message ? 'success' : '');
+      }
+
+      function showStep(step) {
+        if (captureStep) captureStep.hidden = step !== 'capture';
+        if (reviewStep) reviewStep.hidden = step !== 'review';
+        if (manualMode) manualMode.hidden = step !== 'manual';
+      }
+
+      function normalizeDecimalForApi(value) {
+        return Number(String(value || '').trim().replace(',', '.'));
+      }
+
+      function normalizeOcrTime(value) {
+        const raw = String(value || '').trim();
+        if (/^\d{2}:\d{2}:\d{2}$/.test(raw)) return raw;
+        const parts = raw.split(':').map(function (part) { return Number(part); });
+        if (parts.length === 2 && parts.every(Number.isFinite)) {
+          return '00:' + String(parts[0]).padStart(2, '0') + ':' + String(parts[1]).padStart(2, '0');
+        }
+        if (parts.length === 3 && parts.every(Number.isFinite)) {
+          return String(parts[0]).padStart(2, '0') + ':' +
+            String(parts[1]).padStart(2, '0') + ':' +
+            String(parts[2]).padStart(2, '0');
+        }
+        return raw;
+      }
+
+      function durationToSeconds(value) {
+        const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
+        if (parts.length === 2 && parts.every(Number.isFinite)) {
+          return parts[0] * 60 + parts[1];
+        }
+        if (parts.length === 3 && parts.every(Number.isFinite)) {
+          return parts[0] * 3600 + parts[1] * 60 + parts[2];
+        }
+        return null;
+      }
+
+      function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
+        const distance = normalizeDecimalForApi(distanceValue);
+        const seconds = durationToSeconds(timeValue);
+        if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
+        const secondsPerKm = Math.round(seconds / distance);
+        const minutes = Math.floor(secondsPerKm / 60);
+        const remainingSeconds = String(secondsPerKm % 60).padStart(2, '0');
+        return minutes + ':' + remainingSeconds + '/km';
+      }
+
+      function updateOcrSourceNotice(result) {
+        const usedGroq = result && result.source === 'groq+tesseract';
+        if (discrepancy) discrepancy.hidden = !usedGroq;
+        if (!usedGroq) return;
+
+        const title = discrepancy ? discrepancy.querySelector('strong') : null;
+        if (title) title.textContent = 'Analise complementar utilizada';
+        if (discrepancyText) {
+          discrepancyText.textContent =
+            'O Tesseract nao conseguiu concluir a leitura sozinho, entao o Groq foi usado como apoio. Confira os campos e tente tirar a proxima foto mais centralizada no painel da esteira.';
+        }
+      }
+
+      function fillReview(result) {
+        const metrics = result.metrics || {};
+        const distance = String(metrics.distanceKm || '').replace(',', '.');
+        const time = normalizeOcrTime(metrics.time);
+        const pace = calculatePaceFromDistanceAndTime(distance, time);
+        if (distanceInput) distanceInput.value = distance;
+        if (paceInput) paceInput.value = pace;
+        if (timeInput) timeInput.value = time;
+        ocrState.originalValues = { distance: distance, pace: pace, time: time };
+        updateOcrSourceNotice(result);
+        if (saveBtn) saveBtn.disabled = false;
+      }
+
+      async function uploadAndExtract(file) {
+        if (!file) return;
+        const objectUrl = URL.createObjectURL(file);
+        if (ocrState.previewObjectUrl) URL.revokeObjectURL(ocrState.previewObjectUrl);
+        ocrState.previewObjectUrl = objectUrl;
+        if (capturePreview) {
+          capturePreview.src = objectUrl;
+          capturePreview.hidden = false;
+        }
+        if (emptyPreview) emptyPreview.hidden = true;
+
+        setOcrFeedback(captureFeedback, 'Executando OCR...', false);
+        if (openFileBtn) openFileBtn.disabled = true;
+
+        try {
+          const formData = new FormData();
+          formData.append('image', file);
+          const response = await fetch(ocrPanel.dataset.ocrEndpoint || '/ocr/extractions', {
+            method: 'POST',
+            body: formData,
+          });
+          const data = await response.json().catch(function () { return {}; });
+          if (!response.ok) throw new Error(data.message || data.error || 'OCR falhou.');
+
+          ocrState.extraction = data;
+          const previewUrl = data.previewUrl || objectUrl;
+          if (reviewPreview) reviewPreview.src = previewUrl;
+          if (capturedClock) capturedClock.textContent = new Date().toLocaleTimeString('pt-BR');
+          fillReview(data);
+          setOcrFeedback(captureFeedback, '', false);
+          setOcrFeedback(reviewFeedback, 'Dados extraidos. Revise antes de salvar.', false);
+          showStep('review');
+        } catch (err) {
+          setOcrFeedback(captureFeedback, err.message || 'OCR falhou.', true);
+        } finally {
+          if (openFileBtn) openFileBtn.disabled = false;
+        }
+      }
+
+      function buildOcrCheckpointPayload() {
+        const distance = normalizeDecimalForApi(distanceInput ? distanceInput.value : '');
+        const idRunner = readContextNumber('id_runner');
+        const idCompetition = readContextNumber('id_competition');
+        const idTreadmill = readContextNumber('id_treadmill');
+        const idAdmin = readContextNumber('id_admin');
+        if (!Number.isFinite(distance) || distance < 0) {
+          throw new Error('Distancia deve ser um numero nao negativo.');
+        }
+        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
+          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+        }
+
+        const nowIso = new Date().toISOString();
+        const time = normalizeOcrTime(timeInput ? timeInput.value : '');
+        const pace = calculatePaceFromDistanceAndTime(distanceInput ? distanceInput.value : '', time);
+        const edited = !ocrState.originalValues ||
+          String(distanceInput ? distanceInput.value : '') !== String(ocrState.originalValues.distance) ||
+          String(timeInput ? timeInput.value : '') !== String(ocrState.originalValues.time);
+
+        const payload = {
+          identifier: 'OCR-' + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
+          distance_km: distance,
+          id_runner: idRunner,
+          id_competition: idCompetition,
+          id_treadmill: idTreadmill,
+          id_admin: idAdmin,
+          image: {
+            input_method: 'ocr',
+            corrected_manually: edited,
+            recorded_at: nowIso,
+            preview_url: ocrState.extraction ? ocrState.extraction.previewUrl : null,
+            source: ocrState.extraction ? ocrState.extraction.source : null,
+            metrics: ocrState.extraction ? ocrState.extraction.metrics : null,
+            tesseract: ocrState.extraction ? ocrState.extraction.tesseract : null,
+          },
+        };
+        if (pace) payload.pace = pace;
+        if (time) payload.time = time;
+        return payload;
+      }
+
+      if (openFileBtn && fileInput) {
+        openFileBtn.addEventListener('click', function () { fileInput.click(); });
+      }
+      if (fileInput) {
+        fileInput.addEventListener('change', function () {
+          uploadAndExtract(fileInput.files && fileInput.files[0]);
+        });
+      }
+      ocrPanel.querySelectorAll('[data-open-manual]').forEach(function (button) {
+        button.addEventListener('click', function () { showStep('manual'); });
+      });
+      ocrPanel.querySelectorAll('[data-ocr-cancel]').forEach(function (button) {
+        button.addEventListener('click', function () { window.history.back(); });
+      });
+      if (retakeBtn) {
+        retakeBtn.addEventListener('click', function () {
+          if (fileInput) fileInput.value = '';
+          if (saveBtn) saveBtn.disabled = true;
+          setOcrFeedback(reviewFeedback, '', false);
+          showStep('capture');
+        });
+      }
+      [distanceInput, paceInput, timeInput].forEach(function (input) {
+        if (!input) return;
+        input.addEventListener('input', function () {
+          if (input !== paceInput && paceInput) {
+            const normalizedTime = normalizeOcrTime(timeInput ? timeInput.value : '');
+            paceInput.value = calculatePaceFromDistanceAndTime(
+              distanceInput ? distanceInput.value : '',
+              normalizedTime
+            );
+          }
+          updateOcrSourceNotice(ocrState.extraction);
+        });
+      });
+      if (saveBtn) {
+        saveBtn.addEventListener('click', async function () {
+          const originalLabel = saveBtn.textContent;
+          let payload;
+          try {
+            payload = buildOcrCheckpointPayload();
+          } catch (err) {
+            setOcrFeedback(reviewFeedback, err.message, true);
+            return;
+          }
+
+          saveBtn.disabled = true;
+          saveBtn.textContent = 'Salvando...';
+          setOcrFeedback(reviewFeedback, '', false);
+          try {
+            const response = await fetch(ocrPanel.dataset.endpoint || '/checkpoints', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify(payload),
+            });
+            const data = await response.json().catch(function () { return {}; });
+            if (!response.ok) throw new Error(data.message || 'Erro ao salvar checkpoint.');
+            setOcrFeedback(reviewFeedback, 'Checkpoint salvo com sucesso.', false);
+          } catch (err) {
+            setOcrFeedback(reviewFeedback, err.message || 'Erro ao salvar checkpoint.', true);
+            saveBtn.disabled = false;
+          } finally {
+            saveBtn.textContent = originalLabel;
+          }
+        });
+      }
+    }
+
     const form = document.querySelector('[data-operational-manual-form]');
 
     if (form) {
