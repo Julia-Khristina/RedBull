@@ -2207,6 +2207,10 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+### Telas de divulgação pós competição
+#### Tela de desempenho do atleta
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte dos atletas de seu desempenho na competição. Com informações como quilometragem total, tempo total, pace médio e velocidade máxima ajjjlcançada.
+
 ## 3.6. Modelagem do banco de dados 
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) 
