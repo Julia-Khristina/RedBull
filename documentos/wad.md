@@ -3847,7 +3847,28 @@ A rastreabilidade apresentada demonstra que os testes implementados validam requ
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-*Posicione aqui o relatório dos testes SUS realizados.*
+Introdução
+
+* Objetivo da aplicação do teste SUS;
+* Contextualização da metodologia;
+* Link para o formulário utilizado;
+* Quantidade de participantes.
+
+Questionário Aplicado
+
+* Escala de respostas utilizada;
+* Questões do questionário SUS.
+
+Resultados Obtidos
+
+* Link para a planilha de consolidação dos resultados;
+* Tabela com as pontuações SUS de cada participante;
+* Média geral obtida.
+
+Observações
+
+* A análise e interpretação dos resultados serão apresentadas em seção específica do documento.
+
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
