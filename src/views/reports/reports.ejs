@@ -90,6 +90,7 @@
   const teams = Array.isArray(highlights.teams) && highlights.teams.length > 0
     ? highlights.teams
     : fallbackTeams.map((team) => ({ name: team.team_name, position: team.position }));
+  const auditTeams = Array.isArray(report?.teamRanking) ? report.teamRanking : [];
   const history = normalizeHistory(highlights.position_history, teams);
   const chartTeams = teams.map((team, index) => ({
     name: team.name ?? team.team_name ?? team,
@@ -202,7 +203,16 @@
   <section class="reports-section">
     <div class="reports-section-heading">
       <h2 class="section-title reports-section-title">Relatório de inconsistências</h2>
-      <a class="report-action-button" href="/view/competitions/<%= competition.id %>/audit">Log de Auditoria</a>
+      <div class="report-action-group">
+        <label for="audit-team-select" class="report-action-label">Equipe</label>
+        <select id="audit-team-select" class="report-action-select" aria-label="Selecionar equipe para auditoria">
+          <option value="">Selecione uma equipe</option>
+          <% auditTeams.forEach(function(team) { %>
+            <option value="<%= team.id_team %>"><%= team.team_name %></option>
+          <% }) %>
+        </select>
+        <a id="audit-link" class="report-action-button report-action-button--disabled" href="#" aria-disabled="true">Ver dados salvos</a>
+      </div>
     </div>
 
     <div class="report-panel report-table-panel">
@@ -248,4 +258,8 @@
   </section>
 
   <a class="report-export-button" href="/competitions/<%= competition.id %>/export">Exportar dados</a>
+
+  <script>
+    window.COMPETITION_ID = '<%= competition.id %>';
+  </script>
 </main>

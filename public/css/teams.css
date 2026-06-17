@@ -598,7 +598,7 @@
     margin-bottom: 24px;
 }
 
-.team-panel__back {
+.team-panel__back, .team-panel__audit {
     padding: 11px 16px;
     color: var(--azul-principal);
     border: 1px solid var(--azul-principal);
