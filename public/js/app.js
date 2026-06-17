@@ -1398,13 +1398,44 @@ document.addEventListener('DOMContentLoaded', function () {
       path === hrefPath ||
       path.startsWith(hrefPath + '/') ||
       (hrefPath === '/ranking' && /\/competitions\/\d+\/ranking/.test(path)) ||
-      (hrefPath === '/reports' && path.startsWith('/view/competitions/'));
+      (hrefPath === '/reports' && (path === '/reports' || /\/view\/competitions\/\d+\/reports(?:\/|$)/.test(path))) ||
+      (hrefPath === '/teams' && (path === '/teams' || path.startsWith('/teams/') || /\/view\/competitions\/\d+\/teams(?:\/|$)/.test(path)));
 
     if (isActive) {
       item.classList.add('active');
       item.closest('.nav-item-wrapper').classList.add('active');
     }
   });
+
+  // Auditoria: dropdown de equipe em reports
+  var auditTeamSelect = document.getElementById('audit-team-select');
+  var auditLink = document.getElementById('audit-link');
+  if (auditTeamSelect && auditLink && window.COMPETITION_ID) {
+    function updateAuditLink() {
+      var teamId = auditTeamSelect.value;
+      if (teamId) {
+        auditLink.href =
+          '/view/competitions/' + encodeURIComponent(window.COMPETITION_ID) +
+          '/teams/' + encodeURIComponent(teamId) +
+          '/checkpoints/saved';
+        auditLink.classList.remove('report-action-button--disabled');
+        auditLink.setAttribute('aria-disabled', 'false');
+      } else {
+        auditLink.href = '#';
+        auditLink.classList.add('report-action-button--disabled');
+        auditLink.setAttribute('aria-disabled', 'true');
+      }
+    }
+
+    auditTeamSelect.addEventListener('change', updateAuditLink);
+    updateAuditLink();
+
+    auditLink.addEventListener('click', function (event) {
+      if (auditLink.getAttribute('aria-disabled') === 'true') {
+        event.preventDefault();
+      }
+    });
+  }
 
   // ============================================================
   // RANKING — Auto-polling (admin: 5 min, public: 1h)
