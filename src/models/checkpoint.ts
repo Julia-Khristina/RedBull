@@ -19,6 +19,10 @@ export interface Checkpoint {
       name: string;
     } | null;
   } | null;
+  admin?: {
+    id: number;
+    name: string;
+  } | null;
 }
 
 export interface CreateCheckpointInput {
@@ -31,12 +35,14 @@ export interface CreateCheckpointInput {
   id_competition: number;
   id_treadmill: number;
   id_admin: number;
+  created_at: Date;
 }
 
 export interface UpdateCheckpointInput {
   distance_km?: number;
   pace?: string;
   time?: string;
+  created_at?: Date;
   image?: Record<string, unknown>;
 }
 

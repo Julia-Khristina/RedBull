@@ -7,7 +7,7 @@ import {
 import { getSupabaseClient } from "../database/supabaseClient";
 
 const SELECT_COLUMNS =
-  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team, team:id_team(id, name))";
+  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team, team:id_team(id, name)), admin:id_admin(id, name)";
 
 type SupabaseCheckpoint = Record<string, unknown>;
 
@@ -35,7 +35,7 @@ export const checkpointRepository: CheckpointRepository = {
       id_competition: input.id_competition,
       id_treadmill: input.id_treadmill,
       id_admin: input.id_admin,
-    };
+      created_at: new Date().toISOString(),  };
     if (input.pace !== undefined) payload.pace = input.pace;
     if (input.time !== undefined) payload.time = input.time;
     if (input.image !== undefined) payload.image = input.image;
@@ -122,7 +122,9 @@ export const checkpointRepository: CheckpointRepository = {
   ): Promise<Checkpoint | null> {
     const supabase = getSupabaseClient();
 
-    const payload: Record<string, unknown> = {};
+    const payload: Record<string, unknown> = {
+      created_at: new Date().toISOString(),
+    };
     if (input.distance_km !== undefined) payload.distance_km = input.distance_km;
     if (input.pace !== undefined) payload.pace = input.pace;
     if (input.time !== undefined) payload.time = input.time;
