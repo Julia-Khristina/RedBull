@@ -1438,3 +1438,168 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;');
 }
+
+window.CHECKPOINTS = window.CHECKPOINTS || [];
+
+(function () {
+  const table = document.querySelector('.saved-data-table');
+  const tbody = table && table.querySelector('tbody');
+  const modal = document.getElementById('checkpoint-modal');
+  const form = document.getElementById('checkpoint-form');
+  const closeBtn = document.getElementById('modal-close');
+  const cancelBtn = document.getElementById('modal-cancel');
+
+  if (Array.isArray(window.CHECKPOINTS)) {
+    window.CHECKPOINTS.forEach(function (cp) {
+      if (cp && cp.created_at && cp.originalCreatedAt === undefined) {
+        cp.originalCreatedAt = cp.created_at;
+      }
+    });
+  }
+
+  function openModal() {
+    modal.style.display = 'flex';
+    modal.removeAttribute('inert');
+    modal.setAttribute('aria-hidden', 'false');
+    const firstField = document.getElementById('cp-distance');
+    if (firstField) firstField.focus();
+  }
+
+  function closeModal() {
+    const activeElement = document.activeElement;
+    if (modal.contains(activeElement) && activeElement && typeof activeElement.blur === 'function') {
+      activeElement.blur();
+    }
+
+    const fallback = document.querySelector('.saved-data-header') || document.body;
+    if (fallback && typeof fallback.focus === 'function') {
+      if (fallback === document.body && !document.body.hasAttribute('tabindex')) {
+        document.body.setAttribute('tabindex', '-1');
+      }
+      fallback.focus();
+    }
+
+    window.setTimeout(function () {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      modal.setAttribute('inert', '');
+    }, 0);
+  }
+
+  function formatDistance(value) {
+    if (value == null || value === '') return '--';
+    const numeric = Number(value);
+    if (!Number.isFinite(numeric)) return '--';
+    return numeric.toLocaleString('pt-BR', {
+      minimumFractionDigits: numeric % 1 === 0 ? 0 : 1,
+      maximumFractionDigits: 1
+    }) + ' km';
+  }
+
+  function updateCheckpointRow(row, checkpoint) {
+    if (!row) return;
+    const cells = row.querySelectorAll('td');
+    if (cells.length < 9) return;
+    const originalTime = checkpoint.originalCreatedAt || checkpoint.created_at;
+    cells[1].textContent = originalTime
+      ? new Date(originalTime).toLocaleTimeString('pt-BR', {
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit'
+        })
+      : '--:--:--';
+    cells[3].textContent = formatDistance(checkpoint.distance_km);
+    cells[4].textContent = checkpoint.pace || '--';
+    cells[5].textContent = checkpoint.time || '--';
+    cells[8].textContent = checkpoint.created_at
+      ? new Date(checkpoint.created_at).toLocaleString('pt-BR')
+      : 'Data nao informada';
+  }
+
+  function populateForm(cp) {
+    const originalTime = cp.originalCreatedAt || cp.created_at;
+    document.getElementById('cp-id').value = cp.id || '';
+    document.getElementById('cp-created_at').textContent = originalTime ? new Date(originalTime).toLocaleString('pt-BR') : '';
+    document.getElementById('cp-runner_name').textContent = (cp.runner && cp.runner.name) || '';
+    document.getElementById('cp-distance').value = cp.distance_km ?? '';
+    document.getElementById('cp-pace').value = cp.pace ?? '';
+    document.getElementById('cp-time').value = cp.time ?? '';
+    document.getElementById('cp-admin_name').textContent = (cp.admin && cp.admin.name) || '';
+  }
+
+  // Delegation: when any cell in tbody is clicked, open modal for that row
+  if (tbody) {
+    tbody.addEventListener('click', function (ev) {
+      const tr = ev.target.closest('tr');
+      if (!tr) return;
+      // determine row index (zero-based) by counting preceding sibling TRs
+      const rows = Array.from(tbody.querySelectorAll('tr'));
+      const rowIndex = rows.indexOf(tr);
+      const cp = window.CHECKPOINTS[rowIndex];
+      if (!cp) return;
+      populateForm(cp);
+      openModal();
+    });
+  }
+
+  // Close handlers
+  closeBtn && closeBtn.addEventListener('click', closeModal);
+  cancelBtn && cancelBtn.addEventListener('click', closeModal);
+  modal && modal.addEventListener('click', function (ev) {
+    // Fechar ao clicar fora do modal (no backdrop)
+    if (ev.target === modal) closeModal();
+  });
+
+  // Submit form -> PUT /checkpoints/:id
+  form && form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    const id = document.getElementById('cp-id').value;
+    const distanceValue = document.getElementById('cp-distance').value;
+    const paceValue = document.getElementById('cp-pace').value.trim();
+    const timeValue = document.getElementById('cp-time').value.trim();
+
+    const payload = {};
+    if (distanceValue !== '') {
+      payload.distance_km = parseFloat(distanceValue);
+    }
+    if (paceValue !== '') {
+      payload.pace = paceValue;
+    }
+    if (timeValue !== '') {
+      payload.time = timeValue;
+    }
+
+    fetch('/checkpoints/' + id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(function (res) {
+      if (!res.ok) throw new Error('Erro ao salvar');
+      return res.json();
+    }).then(function (updatedCheckpoint) {
+      if (!updatedCheckpoint) {
+        throw new Error('Resposta inválida do servidor');
+      }
+
+      const cp = window.CHECKPOINTS.find((c) => String(c.id) === String(id));
+      if (cp) {
+        cp.distance_km = updatedCheckpoint.distance_km;
+        cp.pace = updatedCheckpoint.pace;
+        cp.time = updatedCheckpoint.time;
+        if (updatedCheckpoint.created_at) {
+          cp.created_at = updatedCheckpoint.created_at;
+        }
+      }
+
+      const row = tbody.querySelector(`tr[data-id="${id}"]`);
+      const checkpointToRender = cp ? Object.assign({}, cp, updatedCheckpoint) : updatedCheckpoint;
+      updateCheckpointRow(row, checkpointToRender);
+
+      // Atualiza o formulário e fecha o modal somente após a linha ser atualizada.
+      populateForm(checkpointToRender);
+      closeModal();
+    }).catch(function (err) {
+      alert(err.message || 'Erro ao salvar checkpoint');
+    });
+  });
+})();
