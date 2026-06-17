@@ -28,6 +28,7 @@ export const checkpointRepository: CheckpointRepository = {
   async create(input: CreateCheckpointInput): Promise<Checkpoint> {
     const supabase = getSupabaseClient();
 
+    const nowIso = new Date().toISOString();
     const payload: Record<string, unknown> = {
       identifier: input.identifier,
       distance_km: input.distance_km,
@@ -35,7 +36,8 @@ export const checkpointRepository: CheckpointRepository = {
       id_competition: input.id_competition,
       id_treadmill: input.id_treadmill,
       id_admin: input.id_admin,
-      created_at: new Date().toISOString(),  };
+      created_at: input.created_at ? input.created_at.toISOString() : nowIso,
+    };
     if (input.pace !== undefined) payload.pace = input.pace;
     if (input.time !== undefined) payload.time = input.time;
     if (input.image !== undefined) payload.image = input.image;

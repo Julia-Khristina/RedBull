@@ -35,7 +35,7 @@ export interface CreateCheckpointInput {
   id_competition: number;
   id_treadmill: number;
   id_admin: number;
-  created_at: Date;
+  created_at?: Date;
 }
 
 export interface UpdateCheckpointInput {

@@ -151,6 +151,37 @@ body:has(.saved-data-page) .sidebar-nav .nav-item-wrapper:nth-child(2) .nav-item
   font-weight: var(--font-weight-bold);
 }
 
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;             /* ← centraliza com flex */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal[aria-hidden="true"] {
+  display: none !important;  /* ← garante que o display:none do JS funcione */
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.50);
+  cursor: pointer;
+}
+
+.modal-content {
+  position: relative;       /* ← fica acima do backdrop */
+  z-index: 1;
+  background: var(--fundo-cards, #fff);
+  border-radius: var(--border-radius, 15px);
+  width: 480px;
+  max-width: calc(100vw - 32px);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+}
+
 @media (max-width: 900px) {
   .saved-data-page {
     padding: 36px 24px;
