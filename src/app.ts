@@ -6,12 +6,14 @@ import teamRoutes from "./routes/teamRoutes";
 import runnerRoutes from "./routes/runnerRoutes";
 import adminRoutes from "./routes/adminRoutes";
 import checkpointRoutes from "./routes/checkpointRoutes";
+import ocrRoutes from "./routes/ocrRoutes";
 import rankingRoutes from "./routes/rankingRoutes";
 import exportRoutes from "./routes/exportRoutes";
 import authRoutes from "./routes/authRoutes";
 import reportRoutes from "./routes/reportRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
+import { ensureOcrUploadDir, getOcrUploadDir } from "./services/ocrService";
 import ejsLayouts from 'express-ejs-layouts';
 
 
@@ -25,6 +27,8 @@ app.set('layout', 'layouts/main');
 
 // Static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
+void ensureOcrUploadDir();
+app.use("/ocr/uploads", express.static(getOcrUploadDir()));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +39,7 @@ app.use(runnerRoutes);
 // Register auth routes before admin routes to avoid /admin/:id collisions
 app.use(authRoutes);
 app.use("/admin", adminRoutes);
+app.use(ocrRoutes);
 app.use(checkpointRoutes);
 app.use(rankingRoutes);
 app.use(exportRoutes);
