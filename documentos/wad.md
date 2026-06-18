@@ -3847,12 +3847,10 @@ A rastreabilidade apresentada demonstra que os testes implementados validam requ
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-Introdução
+Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado o método **System Usability Scale (SUS)**, uma das técnicas mais utilizadas para mensurar a percepção dos usuários sobre a facilidade de uso de sistemas interativos e obter uma avaliação quantitativa da experiência de utilização da aplicação (UX DESIGN BRASIL, 2022).
 
-* Objetivo da aplicação do teste SUS;
-* Contextualização da metodologia;
-* Link para o formulário utilizado;
-* Quantidade de participantes.
+A coleta das respostas foi realizada por meio de um formulário eletrônico elaborado no Google Forms **(link⁠)**, aplicado individualmente após a utilização da plataforma. Participaram da avaliação sete usuários, que responderam ao questionário de forma independente.
+
 
 Questionário Aplicado
 
