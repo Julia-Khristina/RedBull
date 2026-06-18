@@ -4083,6 +4083,8 @@ ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https:
 
 AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
+BRASIL UX DESIGN. O que é o SUS (System Usability Scale) e como usá-lo em seu site. Medium, [s.d.]. Disponível em: https://brasil.uxdesign.cc/o-que-%C3%A9-o-sus-system-usability-scale-e-como-us%C3%A1-lo-em-seu-site-6d63224481c8?utm_source=chatgpt.com. Acesso em: 17 jun. 2026.
+
 BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
 
 BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
