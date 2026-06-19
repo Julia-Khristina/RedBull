@@ -3852,10 +3852,20 @@ Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado
 A coleta das respostas foi realizada por meio de um formulário eletrônico elaborado no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)),aplicado individualmente após a utilização da plataforma. Participaram da avaliação sete usuários, que responderam ao questionário de forma independente.
 
 
-Questionário Aplicado
+#### Questionário Aplicado
 
-* Escala de respostas utilizada;
-* Questões do questionário SUS.
+O questionário SUS utiliza uma escala de concordância de **1 a 5**, em que:
+
+#### Escala de Respostas
+
+| Valor | Significado |
+|--------|------------|
+| 1 | Discordo totalmente |
+| 2 | Discordo parcialmente |
+| 3 | Neutro |
+| 4 | Concordo parcialmente |
+| 5 | Concordo totalmente |
+
 
 Resultados Obtidos
 
