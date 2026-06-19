@@ -3866,6 +3866,22 @@ O questionário SUS utiliza uma escala de concordância de **1 a 5**, em que:
 | 4 | Concordo parcialmente |
 | 5 | Concordo totalmente |
 
+As afirmações apresentadas aos participantes foram:
+
+#### Questões
+
+| Nº | Afirmação |
+|----|------------|
+| 1 | Eu acho que gostaria de usar este sistema com frequência. |
+| 2 | Eu achei o sistema desnecessariamente complexo. |
+| 3 | Eu achei o sistema fácil de usar. |
+| 4 | Eu acho que precisaria da ajuda de uma pessoa com conhecimentos técnicos para utilizar o sistema. |
+| 5 | Eu achei que as várias funções do sistema estão bem integradas. |
+| 6 | Eu achei que o sistema apresenta muita inconsistência. |
+| 7 | Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente. |
+| 8 | Eu achei o sistema complicado de usar. |
+| 9 | Eu me senti confiante utilizando o sistema. |
+| 10 | Eu precisei aprender muitas coisas antes de conseguir utilizar o sistema. |
 
 Resultados Obtidos
 
