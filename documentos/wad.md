@@ -48,11 +48,11 @@ A plataforma é dividida em duas interfaces principais: uma área privada de ope
 
 A criação de valor do sistema se concentra em quatro eixos principais: redução de erros no processo de apuração, aumento da confiabilidade e auditabilidade dos dados, ganho de eficiência operacional para a equipe organizadora da Red Bull e disponibilização de informações atualizadas a cada checkpoint operacional da competição.
 
-# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a name="c2"></a>2. Visão Geral da Aplicação Web 
 
-## 2.1. Escopo do Projeto (sprints 1 e 4)
+## 2.1. Escopo do Projeto 
 
-### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter 
 
 O modelo das Cinco Forças de Porter constitui um framework de análise estratégica utilizado para avaliar a atratividade e a intensidade competitiva de uma indústria. O posicionamento estratégico de uma organização não depende exclusivamente da concorrência direta, mas da interação entre cinco forças estruturais: a rivalidade entre concorrentes existentes, a ameaça de novos entrantes, a ameaça de produtos ou serviços substitutos, o poder de barganha dos fornecedores e o poder de barganha dos clientes. A aplicação desse modelo permite identificar oportunidades, vulnerabilidades competitivas e fatores críticos para a sustentabilidade de uma solução (Porter, 2008).
 
@@ -96,7 +96,7 @@ O poder de barganha dos clientes é considerada muito alta, a principal área de
 
 A aplicação do modelo das Cinco Forças de Porter evidencia que a solução proposta para o Red Bull 24 Horas está inserida em um contexto de elevada pressão competitiva, especialmente em relação à rivalidade entre soluções alternativas, à resistência comportamental associada aos métodos já consolidados e ao elevado poder de decisão da área demandante. Em contrapartida, a baixa dependência de fornecedores e a especialização operacional da ferramenta criam condições favoráveis para a construção de vantagem competitiva sustentável. Dessa forma, o sucesso da solução não depende exclusivamente de sua viabilidade técnica, mas principalmente de sua capacidade de entregar ganhos reais de usabilidade, confiabilidade e eficiência operacional no contexto específico da Red Bull.
 
-### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
+### 2.1.2. Análise SWOT da Instituição Parceira 
 
 A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Figura 2, considerando seu posicionamento no mercado e relação com concorrentes.
 
@@ -120,35 +120,39 @@ No ambiente externo, identificam-se oportunidades relacionadas ao uso estratégi
 
 #### Ameaças
 
-Entre as ameaças, destacam-se possíveis falhas operacionais ao longo das 24 horas do evento, que podem comprometer o registro correto dos checkpoints e a consolidação da quilometragem total das equipes. Instabilidades técnicas, falhas de conexão ou indisponibilidade momentânea do sistema podem gerar atrasos na sincronização dos dados e impactar diretamente a confiabilidade da apuração durante períodos críticos da competição. Além disso, a existência de processos alternativos já consolidados internamente pode reduzir a adesão à solução proposta, especialmente caso os operadores não percebam ganhos claros de agilidade, simplicidade e confiabilidade em relação ao método atual.
+Entre as ameaças, destacam-se o aumento da concorrência de outros eventos esportivos e experiências voltadas ao público corredor, que disputam a atenção dos participantes, patrocinadores e comunidades de running crews. Além disso, mudanças nas tendências de consumo de eventos esportivos podem reduzir o interesse por formatos específicos de competição ao longo do tempo. Fatores externos, como condições climáticas adversas, dificuldades logísticas, indisponibilidade de fornecedores e limitações de infraestrutura, também podem impactar a execução do evento e comprometer a experiência dos participantes. 
 
-### 2.1.3. Solução (sprints 1 a 5)
+#### Conclusão da análise SWOT
 
-#### a) Problema a ser resolvido
+A análise SWOT evidencia que o Red Bull 24 Horas possui uma estrutura operacional consolidada e elevado potencial de engajamento, fatores que favorecem a adoção de soluções digitais voltadas à gestão da competição. Ao mesmo tempo, as limitações relacionadas à coleta manual de dados e à baixa visibilidade em tempo real representam oportunidades claras de melhoria. Nesse contexto, a solução proposta busca potencializar as forças existentes, mitigar as fraquezas identificadas e aproveitar as oportunidades de expansão e uso estratégico de dados, contribuindo para uma operação mais eficiente, confiável e escalável. 
+
+### 2.1.3. Solução 
+
+#### Problema a ser resolvido
 
 Atualmente, o processo de registro de dados dos corredores durante a competição é predominantemente manual, exigindo que operadores realizem anotações periódicas ao longo de 24 horas ininterruptas. Esse modelo gera sobrecarga operacional significativa, além de alta suscetibilidade a erros humanos decorrentes de fadiga, falhas de interpretação e inconsistências de caligrafia. Como consequência, a confiabilidade dos dados é comprometida, impactando diretamente a precisão da apuração, a transparência do evento e a qualidade das análises estratégicas realizadas pela organização.
 
-#### b) Dados disponíveis 
+#### Dados disponíveis 
 
 Como base inicial, foi utilizado o site oficial do evento Red Bull 24 Hours, fornecido durante o onboarding, contendo informações institucionais, dinâmica da competição e contexto geral. Complementarmente, foram realizadas interações com o parceiro, nas quais foram identificados os principais fluxos operacionais, limitações do processo atual e requisitos implícitos, especialmente relacionados à necessidade de automatização do registro de checkpoints e à melhoria da confiabilidade dos dados coletados (Red Bull, 2025).
 
-#### c) Solução proposta
+#### Solução proposta
 
 Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de competições, equipes e atletas, atualização em tempo real dos dados, visualização de rankings globais e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
 
-#### d) Forma de utilização da solução
+#### Forma de utilização da solução
 
 A solução será estruturada em dois ambientes principais: um administrativo e outro para as equipes. No ambiente administrativo, acessado por meio do email e senha única previamente disponibilizada aos operadores, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente das equipes, acessado por meio de identificadores UUID únicos, os atletas terão acesso a um painel com ranking atualizado a cada uma hora, desempenho da equipe e métricas relevantes. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
 
-#### e) Benefícios esperados
+#### Benefícios esperados
 
 A implementação da solução proporcionará significativa redução de erros operacionais, aumento da eficiência no processo de coleta de dados e maior confiabilidade das informações registradas. A disponibilização de métricas em tempo real permitirá melhor acompanhamento do desempenho das equipes durante o evento. Além disso, os relatórios analíticos contribuirão para decisões mais assertivas, melhoria contínua das edições futuras e fortalecimento da experiência dos participantes e da gestão do evento.
 
-#### f) Critério de sucesso e como será avaliado
+#### Critério de sucesso e como será avaliado
 
 O sucesso da solução será mensurado por meio de indicadores objetivos, como a redução da taxa de erro nos registros (meta inferior a 1%), aumento da consistência e integridade dos dados e diminuição do tempo de processamento das informações. A avaliação será realizada em conjunto com o parceiro, considerando o impacto operacional durante a execução do evento, a aderência aos requisitos levantados e a qualidade das análises geradas para suporte à tomada de decisão.
 
-### 2.1.4. Value Proposition Canvas (sprint 1): 
+### 2.1.4. Value Proposition Canvas 
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
@@ -157,7 +161,7 @@ A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o pr
 <div align="center">
   <sub>Figura 3 - Value Proposition Canvas da Solução </sub><br>
   <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
-  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### A. Perfil do Cliente
@@ -165,6 +169,8 @@ A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o pr
 Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o perfil em que o cliente já se encontra. Aqui, é possível explorar quais são as dores do cliente, suas tarefas no contexto atual e o que eles buscam ganhar.
 
 **Tarefas do Cliente**
+
+As tarefas representam as atividades realizadas pelos usuários durante a competição.
 
 - Monitorar o desempenho das equipes durante a competição
 - Registrar e validar os dados coletados nos checkpoints
@@ -174,6 +180,9 @@ Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o per
 - Realizar a apuração final dos resultados de forma eficiente
 
 **Dores do Cliente**
+
+As dores representam as dificuldades enfrentadas pelos usuários no processo atual.
+
 - Processo repetitivo e cansativo
 - Risco de erros humanos durante a coleta e digitação dos dados
 - Dificuldade na revisão, validação e apuração das informações
@@ -181,6 +190,9 @@ Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o per
 - Falta de visão consolidada e organizada do evento
 
 **Ganhos**
+
+Os ganhos representam os benefícios esperados pelos usuários durante a operação do evento.
+
 - Menos demanda para os avaliadores
 - Automatização do processo de registro e processamento de dados
 - Redução de erros operacionais
@@ -196,38 +208,38 @@ Os elementos do mapa de valor foram estruturados para responder diretamente às 
 
 A solução proposta oferece os seguintes elementos:
 
-* Plataforma digital de gestão de performance com atualização periódica dos dados
-* Sistema de captura de imagens e extração automática de dados por OCR
-* Dashboard para visualização de métricas e desempenho por equipe
-* Sistema de validação híbrida dos dados (automática e manual)
+- Plataforma digital de gestão de performance com atualização em tempo real dos dados
+- Sistema de captura de imagens e extração automática de dados por OCR
+- Dashboard para visualização de métricas e desempenho por equipe
+- Sistema de validação híbrida dos dados (automática e manual)
 
 **Aliviadores de Dores**
 
 A solução atua diretamente na redução das dificuldades enfrentadas pelos usuários:
 
-* Eliminação do registro manual em papel e da digitação em planilhas
-* Redução de erros humanos na coleta, registro e processamento dos dados
-* Simplificação do processo de revisão, validação e apuração das informações
-* Centralização das informações em uma única plataforma
-* Aumento da confiabilidade dos dados por meio de validação híbrida
+- Eliminação do registro manual em papel e da digitação em planilhas
+- Redução de erros humanos na coleta, registro e processamento dos dados
+- Simplificação do processo de revisão, validação e apuração das informações
+- Centralização das informações em uma única plataforma
+- Aumento da confiabilidade dos dados por meio de validação híbrida
 
 **Criadores de Ganho**
 
 Além de resolver problemas, a solução potencializa ganhos relevantes:
 
-* Geração de informações atualizadas periodicamente para acompanhamento da competição
-* Geração de uma visão consolidada e organizada dos dados do evento
-* Aumento da produtividade da equipe organizadora
-* Apoio à gestão operacional por meio de dados confiáveis e consolidados
-* Melhoria da experiência operacional dos avaliadores durante o evento
+- Geração de informações atualizadas para acompanhamento da competição
+- Geração de uma visão consolidada e organizada dos dados do evento
+- Aumento da produtividade da equipe organizadora
+- Apoio à gestão operacional por meio de dados confiáveis e consolidados
+- Melhoria da experiência operacional dos avaliadores durante o evento
 
 A partir da análise do Value Proposition Canvas, observa-se que a solução proposta está diretamente alinhada às necessidades dos avaliadores e organizadores, ao automatizar o processo de coleta e registro de dados por meio de OCR, reduzindo erros humanos e esforço operacional. Além disso, a centralização e disponibilização periódica das informações caracterizam uma automação do fluxo de dados, proporcionando maior confiabilidade, eficiência e suporte à tomada de decisão, garantindo uma gestão mais precisa e organizada da competição.
 
-### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+### 2.1.5. Matriz de Riscos do Projeto
 
 A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto (PMI, 2021).
 
-No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento periódico de dados durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
+No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento dos dados durante eventos esportivos da Red Bull 24 Horas. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
 <div align="center">
   <sub>Figura 4 - Matriz de Risco </sub><br>
@@ -243,13 +255,13 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
-| Falha no Reconhecimento de Imagem  | O sistema pode não identificar corretamente os dados capturados nas imagens da esteira. | 70% (Alta)         | Muito Alto        | Crítico      | Treinar o modelo com imagens reais do ambiente de operação, realizar testes iterativos e disponibilizar validação manual para casos de inconsistência.          |
-| Baixa Qualidade das Imagens       | Iluminação inadequada, movimento ou posicionamento incorreto podem comprometer a captura dos dados.  | 60% (Média)  | Muito Alto        | Crítico      | Padronizar os pontos de captura, definir posicionamento fixo dos dispositivos e realizar testes em diferentes condições de iluminação.      |
-| Falha de Conexão com a Internet   | Instabilidade de rede pode interromper o envio ou sincronização dos dados.     | 60% (Média)        | Alto        | Crítico      | Utilizar rede dedicada para operação, implementar armazenamento temporário local e sincronização automática quando a conexão for restabelecida.                   |
-| Sobrecarga do Sistema             | Alto volume de acessos ou processamento simultâneo pode reduzir o desempenho da aplicação.  | 50% (Média)        | Alto        | Alto         | Realizar testes de carga, otimizar consultas e monitorar métricas de desempenho antes e durante o evento.                       |
+| Falha no Reconhecimento de Imagem  | O sistema pode não identificar corretamente os dados capturados nas imagens da esteira. | 70% (Alto)         | Muito Alto        | Crítico      | Treinar o modelo com imagens reais do ambiente de operação, realizar testes iterativos e disponibilizar validação manual para casos de inconsistência.          |
+| Baixa Qualidade das Imagens       | Iluminação inadequada, movimento ou posicionamento incorreto podem comprometer a captura dos dados.  | 80% (Muito Alto)  | Muito Alto        | Crítico      | Padronizar os pontos de captura, definir posicionamento fixo dos dispositivos e realizar testes em diferentes condições de iluminação.      |
+| Falha de Conexão com a Internet   | Instabilidade de rede pode interromper o envio ou sincronização dos dados.     | 60% (Alto)        | Alto        | Crítico      | Utilizar rede dedicada para operação, implementar armazenamento temporário local e sincronização automática quando a conexão for restabelecida.                   |
+| Sobrecarga do Sistema             | Alto volume de acessos ou processamento simultâneo pode reduzir o desempenho da aplicação.  | 50% (Médio)        | Alto        | Alto         | Realizar testes de carga, otimizar consultas e monitorar métricas de desempenho antes e durante o evento.                       |
 | Erro Humano                       | Operadores podem registrar dados incorretamente ou utilizar funcionalidades inadequadamente.           | 40% (Média)         | Médio  | Alto         | Desenvolver interface intuitiva, criar instruções operacionais e realizar treinamento prévio da equipe.                       |
 | Falta de Padronização operacional            | Diferenças nos procedimentos de coleta podem gerar inconsistências nos dados.   | 30% (Baixa)       | Médio       | Médio        | Definir protocolos de operação, validações automáticas e checklist de execução.             |
-| Bugs ou falhas de software                            | Erros de implementação podem comprometer funcionalidades específicas do sistema.        | 20% (Baixa)          | Baixo       | Baixo        | Executar testes funcionais, testes de integração e monitoramento contínuo com correções rápidas.                   |
+| Bugs ou falhas de software                            | Erros de implementação podem comprometer funcionalidades específicas do sistema.        | 20% (Baixo)          | Baixo       | Baixo        | Executar testes funcionais, testes de integração e monitoramento contínuo com correções rápidas.                   |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -265,11 +277,11 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 
 | Oportunidade | Descrição | Probabilidade | Impacto | Classificação | Plano de Resposta |
 |--------------|----------|--------------|--------|--------------|-------------------|
-| Maior precisão nos dados coletados | A substituição do input manual por OCR reduz erros de digitação identificados no risco de erro humano. | 90% (Alta) | Alto | Alta Prioridade | Garantir uma alternativa de entrada manual com validação para evitar inconsistências em casos de falhas do OCR. |
-| Melhor acompanhamento operacional do evento | Dados atualizados periodicamente permitem maior visibilidade do andamento da competição, facilitando o monitoramento das equipes e a organização operacional do evento. | 60% (Média) | Alto | Alta Prioridade | Desenvolver interfaces claras e dashboards de rápida interpretação. |
-| Aumento da eficiência operacional | A automação reduz atividades manuais e retrabalho da equipe operacional durante o evento. | 90% (Alta) | Muito Alto | Alta Prioridade | Automatizar fluxos operacionais e minimizar entradas manuais. |
-| Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% (Baixa) | Médio | Baixa Prioridade | Estruturar sistema modular e escalável. |
-| Menor perda de dados durante o evento | O uso de checkpoints digitais periódicamente permite maior precisão histórica e reduz perdas de dados. | 50% (Média) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
+| Maior precisão nos dados coletados | A substituição do input manual por OCR reduz erros de digitação identificados no risco de erro humano. | 90% ( Muito Alto) | Alto | Alta Prioridade | Garantir uma alternativa de entrada manual com validação para evitar inconsistências em casos de falhas do OCR. |
+| Melhor acompanhamento operacional do evento | Dados atualizados em tempo real permitem maior visibilidade do andamento da competição, facilitando o monitoramento das equipes e a organização operacional do evento. | 60% (Média) | Alto | Alta Prioridade | Desenvolver interfaces claras e dashboards de rápida interpretação. |
+| Aumento da eficiência operacional | A automação reduz atividades manuais e retrabalho da equipe operacional durante o evento. | 90% (Muito Alto) | Muito Alto | Alta Prioridade | Automatizar fluxos operacionais e minimizar entradas manuais. |
+| Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% (Muito Baixo) | Médio | Baixa Prioridade | Estruturar sistema modular e escalável. |
+| Menor perda de dados durante o evento | O uso de checkpoints digitais permite maior precisão histórica e reduz perdas de dados. | 50% (Médio) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
 | Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: CSV) para auditoria e materiais de marketing. |
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
