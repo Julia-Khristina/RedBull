@@ -3883,15 +3883,23 @@ As afirmações apresentadas aos participantes foram:
 | 9 | Eu me senti confiante utilizando o sistema. |
 | 10 | Eu precisei aprender muitas coisas antes de conseguir utilizar o sistema. |
 
-Resultados Obtidos
+#### Resultados Obtidos
 
-* Link para a planilha de consolidação dos resultados;
-* Tabela com as pontuações SUS de cada participante;
-* Média geral obtida.
+As respostas dos participantes foram consolidadas em uma planilha eletrônica elaborada no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)) para cálculo das pontuações SUS e da média geral dos resultados.  
 
-Observações
+A tabela abaixo apresenta as pontuações obtidas por cada participante.
 
-* A análise e interpretação dos resultados serão apresentadas em seção específica do documento.
+| Participante | Pontuação SUS |
+|-------------|---------------|
+| Participante 1 | 72,5 |
+| Participante 2 | 77,5 |
+| Participante 3 | 82,5 |
+| Participante 4 | 82,5 |
+| Participante 5 | 77,5 |
+| Participante 6 | 100 |
+| Participante 7 | 72,5 |
+
+A média geral obtida a partir das respostas dos participantes foi de **80,71 pontos**.
 
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
