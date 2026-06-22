@@ -2532,36 +2532,36 @@ Com base nos requisitos funcionais, nas regras de negócio e na modelagem concei
 
 ##### Descrição das entidades
 
-**Tabela `competicao`**  
-A tabela `competicao` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+**Tabela `competition`**  
+A tabela `competition` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
 
-**Tabela `equipe`**  
-A tabela `equipe` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
+**Tabela `team`**  
+A tabela `team` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
 
-**Tabela `corredor`**  
-A tabela `corredor` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF, além de um indicador de status operacional, utilizado para representar a situação atual do participante no sistema. Por meio da chave estrangeira `equipe_id`, cada corredor é associado à sua respectiva equipe.
+**Tabela `runner`**  
+A tabela `runner` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF, além de um indicador de status operacional, utilizado para representar a situação atual do participante no sistema. Por meio da chave estrangeira `id_team`, cada corredor é associado à sua respectiva equipe.
 
-**Tabela `esteira`**  
-A tabela `esteira` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
+**Tabela `treadmill`**  
+A tabela `treadmill` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
 
-**Tabela `administrador`**  
-A tabela `administrador` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de identificação, autenticação e rastreabilidade temporal.
+**Tabela `admin`**  
+A tabela `admin` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de identificação, autenticação e rastreabilidade temporal.
 
 **Tabela `checkpoint`**  
-A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `corredor`, `competicao`, `esteira` e `administrador`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
+A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `runner`, `competition`, `treadmill` e `admin`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
 
-Adicionalmente, todas as entidades contemplam atributos temporais, como `criado_em`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
+Adicionalmente, todas as entidades contemplam atributos temporais, como `created_at`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
 
 ##### Relacionamentos e integridade referencial
 
 Os relacionamentos entre as entidades foram definidos por meio de chaves primárias (*Primary Keys*) e chaves estrangeiras (*Foreign Keys*), respeitando as dependências identificadas durante a modelagem conceitual e garantindo integridade referencial entre as tabelas. Nesse contexto:
 
-- uma `competicao` pode possuir múltiplas `equipes` *(1:N)*;
-- uma `equipe` pode possuir múltiplos `corredores` *(1:N)*;
-- um `corredor` pode gerar múltiplos `checkpoints` *(1:N)*;
-- uma `competicao` pode possuir múltiplos `checkpoints` *(1:N)*;
-- uma `esteira` pode estar associada a múltiplos `checkpoints` *(1:N)*;
-- Um `administrador` pode validar múltiplos checkpoints (1:N).
+- uma `competition` pode possuir múltiplas `team` *(1:N)*;
+- uma `team` pode possuir múltiplos `runner` *(1:N)*;
+- um `runner` pode gerar múltiplos `checkpoint` *(1:N)*;
+- uma `competition` pode possuir múltiplos `checkpoint` *(1:N)*;
+- uma `treadmill` pode estar associada a múltiplos `checkpoint` *(1:N)*;
+- Um `admin` pode validar múltiplos checkpoints (1:N).
 
 ##### Constraints do modelo relacional
 
@@ -2573,14 +2573,14 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | Tabela | Constraint | Campo(s) | Finalidade |
 | :--- | :--- | :--- | :--- |
 | Todas as tabelas | `PRIMARY KEY` | `id` | Garante a identificação única dos registros principais do sistema. |
-| `equipe` | `FOREIGN KEY` | `competicao_id` | Indica que cada equipe pertence a uma competição. |
-| `corredor` | `FOREIGN KEY` | `equipe_id` | Indica que cada corredor pertence a uma equipe. |
-| `checkpoint` | `FOREIGN KEY` | `corredor_id`, `competicao_id`, `esteira_id`, `administrador_id` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um administrador. |
-| `equipe` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
-| `corredor` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
-| `checkpoint` | `UNIQUE` | `identificador` | Define que cada registro operacional possui um identificador próprio. |
-| `corredor` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
-| `checkpoint` | `CHECK` | `km` | Impede valores incompatíveis com a regra de distância percorrida. |
+| `team` | `FOREIGN KEY` | `id_competition` | Indica que cada equipe pertence a uma competição. |
+| `runner` | `FOREIGN KEY` | `id_team` | Indica que cada corredor pertence a uma equipe. |
+| `checkpoint` | `FOREIGN KEY` | `id_runner`, `id_competition`, `id_treadmill`, `id_admin` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um administrador. |
+| `team` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
+| `runner` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
+| `checkpoint` | `UNIQUE` | `identifier` | Define que cada registro operacional possui um identificador próprio. |
+| `runner` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
+| `checkpoint` | `CHECK` | `distance_km` | Impede valores incompatíveis com a regra de distância percorrida. |
 | Principais campos obrigatórios | `NOT NULL` | Campos de identificação, relacionamento e rastreabilidade | Define quais informações mínimas precisam existir para manter a consistência dos cadastros e registros operacionais. |
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3314,8 +3314,6 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 **- Frontend funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o backend será iniciada na sprint 4.
 
 ### (c) Dificuldades técnicas
-
-**- Tratamento manual de erros de constraint do PostgreSQL** via Supabase, especificamente os códigos `23505` (violação de UNIQUE) e `23503` (violação de FK), que exigiram interceptação e conversão para os erros customizados da aplicação em cada repository.
 
 **- Estruturação de rotas aninhadas respeitando o escopo do recurso pai**, garantindo que operações sobre atletas estejam sempre vinculadas a uma equipe válida, operações sobre equipes vinculadas a uma competição válida e operações sobre checkpoints vinculadas a um atleta válido.
 
