@@ -2207,6 +2207,17 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+
+### Painel TV
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela TV criada para ser projetada durante a competição para que o público possa acompanhar dados da competição em tempo real
+
+<div align="center">
+  <sub>Figura 56 - Painel TV</sub><br>
+    <img src="../assets/design/protótipo/painelTV.png"  width="100%" alt="Representação do protótipo de alta fidelidade do painel TV"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
 ### Telas de divulgação pós competição
 #### Tela de desempenho do atleta
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte dos atletas de seu desempenho na competição. Com informações como quilometragem total, pace mínimo e velocidade máxima alcançada. 
