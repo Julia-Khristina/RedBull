@@ -1488,6 +1488,151 @@ Content-Type: application/json</code></pre>
       </table>
     </section>
 
+    <section id="tv-panel-routes">
+      <h2>3.6.11 TV Panel Routes</h2>
+      <p>
+        A rota do Painel TV consolida em uma única chamada pública as métricas agregadas da
+        competição em andamento — pace médio geral, tempo decorrido, quilometragem total e
+        equipes em destaque — destinadas à exibição contínua em monitores durante o evento,
+        sem necessidade de autenticação ou interação do operador. Atende à US19 (#519).
+      </p>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Método</th>
+            <th>Endpoint</th>
+            <th>Status</th>
+            <th>Descrição</th>
+            <th>RF/RN</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="method">GET</td>
+            <td><code>/public/competitions/:competitionId/tv-panel/metrics</code></td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td>Retorna métricas consolidadas da competição para o Painel TV.</td>
+            <td>RF010, RN09, RN11</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="note">
+        Rota <strong>pública</strong>, sem autenticação, seguindo o mesmo padrão de acesso
+        adotado em <code>GET /public/team/:uuid</code> (US12).
+      </p>
+
+      <h3>Query parameters</h3>
+      <ul>
+        <li><code>topN</code> (number, opcional): quantidade de equipes retornadas em
+          <code>metrics.top_teams</code>. Inteiro entre <code>1</code> e <code>10</code>; o
+          valor padrão é <code>3</code>. Valores fora do intervalo resultam em
+          <code>400 Bad Request</code>.</li>
+      </ul>
+
+      <h3>Response - 200 OK</h3>
+      <pre><code>{
+  "id_competition": 5,
+  "competition_name": "Red Bull 24h Sao Paulo",
+  "competition_status": "in_progress",
+  "metrics": {
+    "average_pace_overall": "5:00",
+    "average_pace_overall_seconds": 300,
+    "elapsed_time": "03:42:15",
+    "elapsed_time_seconds": 13335,
+    "total_distance_km": 487.5,
+    "top_teams": [
+      {
+        "position": 1,
+        "id_team": 10,
+        "team_name": "Equipe Alpha",
+        "total_distance_km": 142.3,
+        "average_pace": "4:55",
+        "average_pace_seconds": 295
+      }
+    ]
+  },
+  "generated_at": "2026-06-22T11:00:00.000Z"
+}</code></pre>
+
+      <h3>Campos do response</h3>
+      <ul>
+        <li><code>id_competition</code> (number): identificador da competição consultada.</li>
+        <li><code>competition_name</code> (string): nome da competição.</li>
+        <li><code>competition_status</code> (string): valor entre <code>not_started</code>,
+          <code>in_progress</code> e <code>closed</code>.</li>
+        <li><code>metrics.average_pace_overall</code> (string <code>M:SS</code> ou
+          <code>null</code>): pace médio coletivo da competição, formatado em minutos e
+          segundos por quilômetro. Calculado como média ponderada do
+          <code>average_pace_seconds</code> de cada corredor pela respectiva
+          quilometragem acumulada, o que equivale a <code>Σ tempo / Σ km</code>. Retorna
+          <code>null</code> quando nenhum corredor da competição possui pace válido.</li>
+        <li><code>metrics.average_pace_overall_seconds</code> (number ou <code>null</code>): a
+          mesma métrica em segundos por quilômetro, sem arredondamento de formatação.</li>
+        <li><code>metrics.elapsed_time</code> (string <code>HH:MM:SS</code> ou
+          <code>null</code>): tempo decorrido da prova desde o seu início efetivo.</li>
+        <li><code>metrics.elapsed_time_seconds</code> (number ou <code>null</code>): o mesmo
+          valor expresso em segundos.</li>
+        <li><code>metrics.total_distance_km</code> (number): quilometragem total acumulada
+          por todas as equipes da competição.</li>
+        <li><code>metrics.top_teams</code> (array): equipes em destaque, ordenadas pelo
+          ranking geral de equipes (maior <code>total_distance_km</code>, com
+          <code>average_pace_seconds</code> como critério de desempate). O tamanho máximo do
+          array é controlado pelo parâmetro <code>topN</code>.</li>
+        <li><code>metrics.top_teams[].position</code> (number): posição da equipe no ranking
+          geral da competição.</li>
+        <li><code>metrics.top_teams[].id_team</code> (number): identificador da equipe.</li>
+        <li><code>metrics.top_teams[].team_name</code> (string): nome da equipe.</li>
+        <li><code>metrics.top_teams[].total_distance_km</code> (number): quilometragem
+          acumulada da equipe.</li>
+        <li><code>metrics.top_teams[].average_pace</code> (string <code>M:SS</code> ou
+          <code>null</code>): pace médio da equipe formatado.</li>
+        <li><code>metrics.top_teams[].average_pace_seconds</code> (number ou
+          <code>null</code>): pace médio da equipe em segundos por quilômetro.</li>
+        <li><code>generated_at</code> (string ISO 8601): timestamp de geração do
+          <em>payload</em>.</li>
+      </ul>
+
+      <p class="note">
+        <strong>Nota técnica sobre <code>elapsed_time</code>.</strong> O esquema atual da
+        tabela <code>competition</code> (vide migration
+        <code>0001_create_competition.sql</code>) não possui colunas formais para o instante
+        de início e término da prova. Enquanto a feature de iniciar e finalizar competição
+        não entra em produção, o serviço utiliza como <em>proxy</em> o <code>created_at</code>
+        do checkpoint mais antigo da competição como início efetivo da prova, e o
+        <code>created_at</code> do checkpoint mais recente como término quando
+        <code>competition_status</code> é <code>closed</code>. Quando ainda não há
+        checkpoints registrados, <code>elapsed_time</code> e
+        <code>elapsed_time_seconds</code> retornam <code>null</code>. A substituição desse
+        <em>proxy</em> pela leitura direta dos campos formais de início e término está
+        registrada como Trabalho Futuro (seção 7 do WAD) e é a única função do
+        <code>tvPanelService</code> afetada pela transição.
+      </p>
+
+      <h3>Saídas da requisição</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operação</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /public/competitions/:competitionId/tv-panel/metrics</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code>, <code>500</code></td>
+            <td><code>400</code> para <code>id</code> não numérico ou
+              <code>topN</code> fora do intervalo permitido; <code>404</code> quando a
+              competição não existe.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
     <section id="status-summary">
       <h2>Resumo de Implementação</h2>
       <table>
@@ -1533,6 +1678,11 @@ Content-Type: application/json</code></pre>
             <td>Export</td>
             <td><span class="tag implemented">Implemented</span></td>
             <td><code>GET /competitions/:competicaoId/export</code></td>
+          </tr>
+          <tr>
+            <td>TV Panel</td>
+            <td><span class="tag implemented">Implemented</span></td>
+            <td><code>GET /public/competitions/:competitionId/tv-panel/metrics</code> — métricas agregadas para exibição em monitores (US19).</td>
           </tr>
           <tr>
             <td>Authentication</td>

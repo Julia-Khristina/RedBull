@@ -12,6 +12,7 @@ import exportRoutes from "./routes/exportRoutes";
 import authRoutes from "./routes/authRoutes";
 import reportRoutes from "./routes/reportRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
+import tvPanelRoutes from "./routes/tvPanelRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { ensureOcrUploadDir, getOcrUploadDir } from "./services/ocrService";
 import ejsLayouts from 'express-ejs-layouts';
@@ -44,6 +45,7 @@ app.use(checkpointRoutes);
 app.use(rankingRoutes);
 app.use(exportRoutes);
 app.use(reportRoutes);
+app.use(tvPanelRoutes);
 app.use(errorHandler);
 
 export default app;
