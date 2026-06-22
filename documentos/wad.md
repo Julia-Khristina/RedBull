@@ -2211,12 +2211,53 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 #### Tela de desempenho do atleta
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte dos atletas de seu desempenho na competição. Com informações como quilometragem total, pace mínimo e velocidade máxima alcançada. 
 
+<div align="center">
+  <sub>Figura 56 - Stories de divulgação do atleta</sub><br>
+    <img src="../assets/design/protótipo/insta-atleta.png"  width="100%" alt="Representação da tela de desempnho do atleta divulgada pelos stories do instagram"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 #### Tela de desempenho por período 
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte da RedBull dos atletas destaque no período da manhã, tarde, noite e madrugada, considerando a maior quilometragem realizada por atleta em cada um. 
+
+<div align="center">
+  <sub>Figura 56 - Stories atleta destaque da manhã</sub><br>
+    <img src="../assets/design/protótipo/insta-manha.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da manhã"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 56 - Stries atleta destaque de tarde</sub><br>
+    <img src="../assets/design/protótipo/insta-tarde.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da tarde"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 56 - Stories atleta destaque de noite</sub><br>
+    <img src="../assets/design/protótipo/insta-noite.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da noite"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 56 - Stories atleta destque na madrugada</sub><br>
+    <img src="../assets/design/protótipo/insta-madrugada.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da madrugada"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Tela de atleta destaque 
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte da RedBull dos atletas destaques da competição, isso é, o atleta com a maior quilometragem e o atleta com o menor pace registrado da competição
 
+<div align="center">
+  <sub>Figura 56 - Stories atleta destaque com maior quilometragem</sub><br>
+    <img src="../assets/design/protótipo/insta-km.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque com a maior quilometragem realizada durante a competição"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center">
+  <sub>Figura 56 - Stories atleta destaque com menor pace</sub><br>
+    <img src="../assets/design/protótipo/insta-pace.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque com omenor pace realizado durante a competição"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 ## 3.6. Modelagem do banco de dados 
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) 
