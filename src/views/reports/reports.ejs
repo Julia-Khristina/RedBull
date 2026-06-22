@@ -86,7 +86,6 @@
   const totalKm = pickValue(summary, ['total_distance_km', 'total_km', 'distance_total_km', 'km_total'], '-');
   const avgPace = pickValue(summary, ['average_pace', 'avg_pace', 'pace_medio', 'global_average_pace'], '-');
   const checkpointCount = pickValue(summary, ['checkpoint_count', 'checkpoints_count', 'total_checkpoints'], '-');
-  const reportText = pickValue(highlights, ['summary', 'description', 'text'], 'Veja como as equipes se movimentaram durante a competição ao longo do tempo.');
   const teams = Array.isArray(highlights.teams) && highlights.teams.length > 0
     ? highlights.teams
     : fallbackTeams.map((team) => ({ name: team.team_name, position: team.position }));
@@ -147,55 +146,15 @@
 
     <div class="report-panel report-team-panel">
       <div class="report-chart-block">
-        <h3 class="report-panel-title report-panel-title--accent">Posição durante à competição</h3>
-        <div class="report-chart" aria-label="Gráfico de posição das equipes">
-          <% if (history.length > 1 && chartTeams.length > 0) { %>
-            <svg class="report-chart-svg" viewBox="0 0 <%= chartWidth %> <%= chartHeight %>" role="img" aria-label="Histórico de posições por equipe">
-              <% for (let i = 0; i <= 4; i++) { %>
-                <line class="report-chart-line" x1="<%= chartPadding %>" x2="<%= chartWidth - chartPadding %>" y1="<%= chartPadding + (chartPlotHeight * i / 4) %>" y2="<%= chartPadding + (chartPlotHeight * i / 4) %>"></line>
-                <line class="report-chart-line" y1="<%= chartPadding %>" y2="<%= chartHeight - chartPadding %>" x1="<%= chartPadding + (chartPlotWidth * i / 4) %>" x2="<%= chartPadding + (chartPlotWidth * i / 4) %>"></line>
-              <% } %>
-              <% chartTeams.forEach(function(team) {
-                const points = history.map((point, index) => pointFor(team.name, point, index)).filter(Boolean).join(' ');
-              %>
-                <% if (points) { %>
-                  <polyline class="report-chart-path report-chart-path--<%= team.colorClass %>" points="<%= points %>"></polyline>
-                  <% points.split(' ').forEach(function(point) { const parts = point.split(','); %>
-                    <circle class="report-chart-dot report-chart-dot--<%= team.colorClass %>" cx="<%= parts[0] %>" cy="<%= parts[1] %>" r="4"></circle>
-                  <% }) %>
-                <% } %>
-              <% }) %>
-              <% history.forEach(function(point, index) { %>
-                <text class="report-chart-axis" x="<%= chartPadding + (chartPlotWidth * index) / (history.length - 1) %>" y="<%= chartHeight - 8 %>"><%= point.label %></text>
-              <% }) %>
-              <% for (let pos = 1; pos <= maxPosition; pos++) { %>
-                <text class="report-chart-axis report-chart-axis--y" x="18" y="<%= chartPadding + ((pos - 1) * chartPlotHeight) / Math.max(maxPosition - 1, 1) + 4 %>"><%= pos === maxPosition ? '0' : String(pos).padStart(2, '0') %></text>
-              <% } %>
-            </svg>
+        <h3 class="report-panel-title report-panel-title--accent">Distância acumulada por equipe</h3>
+        <div class="report-chart" aria-label="Gráfico de quilometragem por equipe ao longo das horas">
+          <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
+            <canvas id="kmChart" width="500" height="280"></canvas>
           <% } else { %>
             <div class="report-chart-grid" aria-hidden="true"></div>
-            <p class="report-chart-empty">Histórico de posições indisponível no relatório.</p>
+            <p class="report-chart-empty">Histórico de quilometragem indisponível no relatório.</p>
           <% } %>
         </div>
-      </div>
-
-      <div class="report-about">
-        <h3 class="report-panel-title">Sobre o relatório</h3>
-        <p><%= reportText %></p>
-
-        <h4>Equipes:</h4>
-        <% if (chartTeams.length > 0) { %>
-          <ul class="report-team-list">
-            <% chartTeams.forEach(function(team) { %>
-              <li>
-                <span class="report-team-dot report-team-dot--<%= team.colorClass %>"></span>
-                <%= team.name %>
-              </li>
-            <% }) %>
-          </ul>
-        <% } else { %>
-          <p class="report-muted">Equipes indisponíveis no relatório.</p>
-        <% } %>
       </div>
     </div>
   </section>
@@ -259,7 +218,11 @@
 
   <a class="report-export-button" href="/competitions/<%= competition.id %>/export">Exportar dados</a>
 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
     window.COMPETITION_ID = '<%= competition.id %>';
+    <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
+    window.EQUIPE_HORÁRIO_KM = <%- JSON.stringify(highlights.hourly_team_km) %>;
+    <% } %>
   </script>
 </main>
