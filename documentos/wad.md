@@ -3165,7 +3165,41 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 ### 3.8.3. Autorização
 
-*Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
+A aplicação define dois tipos de acesso: o **ambiente administrativo**, restrito a operadores autenticados, e o **ambiente público por equipe**, acessível via URL com UUID único sem necessidade de login.
+
+A verificação de autorização é realizada inteiramente no backend. O frontend nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o backend valide a identidade do solicitante.
+
+**Perfil de acesso e estrutura de roles:**
+
+O sistema reconhece um único perfil privilegiado: `role: "admin"`, embutido no payload do JWT no momento da autenticação. Toda rota administrativa verifica a presença e a validade do token antes de processar a requisição.
+
+**Mecanismo de verificação:**
+
+O método `authService.validateToken(token)` é responsável por decodificar e verificar o JWT via `jwt.verify(token, JWT_SECRET)`. Em caso de token ausente, malformado ou expirado, o serviço lança um `UnauthorizedError` (HTTP 401). O método `authService.validatePermission(token)` é utilizado para verificações booleanas de acesso, retornando `false` em caso de qualquer falha de validação.
+
+**Mapeamento de rotas por nível de acesso:**
+
+| Rota | Método | Acesso | Descrição |
+|---|---|---|---|
+| `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
+| `POST /admin/login` | POST | Público | Alias de compatibilidade com frontend |
+| `GET /admin/login` | GET | Público | Renderiza tela de login |
+| `GET /logout` | GET | Público | Redireciona para login |
+| `GET /dashboard` | GET | Administrativo | Painel principal com competições |
+| `POST /competitions` | POST | Administrativo | Criar competição |
+| `PUT /competitions/:id` | PUT | Administrativo | Editar competição |
+| `PATCH /competitions/:id` | PATCH | Administrativo | Encerrar competição |
+| `DELETE /competitions/:id` | DELETE | Administrativo | Excluir competição |
+| `POST /checkpoints` | POST | Administrativo | Registrar checkpoint |
+| `PUT /checkpoints/:id` | PUT | Administrativo | Editar checkpoint |
+| `DELETE /checkpoints/:id` | DELETE | Administrativo | Remover checkpoint |
+| `GET /operational-panel` | GET | Administrativo | Painel operacional de corrida |
+| `GET /ranking` | GET | Público | Ranking geral por equipe |
+| `GET /view/competitions/:id/ranking` | GET | Público | Ranking público por competição (via UUID) |
+
+**Responsabilidade da camada de backend:**
+
+Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O frontend recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
