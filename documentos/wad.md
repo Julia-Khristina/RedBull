@@ -2214,6 +2214,9 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 #### Tela de desempenho por período 
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte da RedBull dos atletas destaque no período da manhã, tarde, noite e madrugada, considerando a maior quilometragem realizada por atleta em cada um. 
 
+#### Tela de atleta destaque 
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte da RedBull dos atletas destaques da competição, isso é, o atleta com a maior quilometragem e o atleta com o menor pace registrado da competição
+
 ## 3.6. Modelagem do banco de dados 
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) 
