@@ -1,8 +1,6 @@
 # WAD - Web Application Document - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
-
-## Nome do Grupo
+## Propositivos
 
 #### Ana Clara Tenório Pelegrini
 #### Beatriz Okubo Vieira Lima
@@ -42,7 +40,7 @@
 
 A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é realizado de forma manual por operadores, que anotam em pranchetas os momentos de início e término de cada turno, além de checkpoints periódicos. Esse processo é suscetível a erros de anotação, distrações humanas e inconsistências, o que compromete a confiabilidade e a rastreabilidade dos resultados finais. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como dispositivos vestíveis sincronizados se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente de registros humanos, sem mecanismos estruturados de auditabilidade dos dados.
 
-Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance com atualização periódica dos dados ao longo da competição, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Considerando as limitações de padronização visual das esteiras e as variáveis do ambiente operacional do evento, a viabilidade da solução ainda depende de validações práticas relacionadas à precisão e consistência da leitura automatizada. Os dados extraídos são submetidos à validação humana, com emissão de alertas em caso de inconsistências, garantindo maior confiabilidade e controle sobre o processo de apuração.
+Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance com atualização em tempo real dos dados ao longo da competição, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Considerando as limitações de padronização visual das esteiras e as variáveis do ambiente operacional do evento, a viabilidade da solução ainda depende de validações práticas relacionadas à precisão e consistência da leitura automatizada. Os dados extraídos são submetidos à validação humana, garantindo maior confiabilidade e controle sobre o processo de apuração.
 
 A plataforma é dividida em duas interfaces principais: uma área privada de operação, onde os administradores registram checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição; e uma área pública por equipe, acessada sem login por meio de uma URL com UUID único entregue ao capitão de cada equipe, responsável pela exibição do ranking, status individual dos atletas e calculadora de descanso durante a competição.
 
@@ -3146,7 +3144,41 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 ### 3.8.3. Autorização
 
-*Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
+A aplicação define dois tipos de acesso: o **ambiente administrativo**, restrito a operadores autenticados, e o **ambiente público por equipe**, acessível via URL com UUID único sem necessidade de login.
+
+A verificação de autorização é realizada inteiramente no backend. O frontend nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o backend valide a identidade do solicitante.
+
+**Perfil de acesso e estrutura de roles:**
+
+O sistema reconhece um único perfil privilegiado: `role: "admin"`, embutido no payload do JWT no momento da autenticação. Toda rota administrativa verifica a presença e a validade do token antes de processar a requisição.
+
+**Mecanismo de verificação:**
+
+O método `authService.validateToken(token)` é responsável por decodificar e verificar o JWT via `jwt.verify(token, JWT_SECRET)`. Em caso de token ausente, malformado ou expirado, o serviço lança um `UnauthorizedError` (HTTP 401). O método `authService.validatePermission(token)` é utilizado para verificações booleanas de acesso, retornando `false` em caso de qualquer falha de validação.
+
+**Mapeamento de rotas por nível de acesso:**
+
+| Rota | Método | Acesso | Descrição |
+|---|---|---|---|
+| `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
+| `POST /admin/login` | POST | Público | Alias de compatibilidade com frontend |
+| `GET /admin/login` | GET | Público | Renderiza tela de login |
+| `GET /logout` | GET | Público | Redireciona para login |
+| `GET /dashboard` | GET | Administrativo | Painel principal com competições |
+| `POST /competitions` | POST | Administrativo | Criar competição |
+| `PUT /competitions/:id` | PUT | Administrativo | Editar competição |
+| `PATCH /competitions/:id` | PATCH | Administrativo | Encerrar competição |
+| `DELETE /competitions/:id` | DELETE | Administrativo | Excluir competição |
+| `POST /checkpoints` | POST | Administrativo | Registrar checkpoint |
+| `PUT /checkpoints/:id` | PUT | Administrativo | Editar checkpoint |
+| `DELETE /checkpoints/:id` | DELETE | Administrativo | Remover checkpoint |
+| `GET /operational-panel` | GET | Administrativo | Painel operacional de corrida |
+| `GET /ranking` | GET | Público | Ranking geral por equipe |
+| `GET /view/competitions/:id/ranking` | GET | Público | Ranking público por competição (via UUID) |
+
+**Responsabilidade da camada de backend:**
+
+Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O frontend recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
@@ -3753,25 +3785,30 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
   <sub>Quadro 32 - Cobertura por Camada da Aplicação </sub>
 </div>
 
-| Camada | Statements | Branches | Functions | Lines |
-|--------|-----------|----------|-----------|-------|
-| App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
-| Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
-| Database | 87.50% | 75.00% | 100.00% | 87.50% |
-| Errors | 100.00% | 100.00% | 100.00% | 100.00% |
-| Helpers | 36.00% | 0.00% | 37.50% | 39.13% |
-| Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
-| Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
-| Routes | 91.22% | 0.00% | 0.00% | 91.22% |
-| Services | 96.05% | 88.78% | 97.22% | 96.21% |
-| Validators | 70.61% | 64.42% | 92.59% | 71.80% |
-| **Cobertura Total** | **60.05%** | **51.89%** | **67.76%** | **62.48%** |
+| Camada              | Statements | Branches   | Functions  | Lines      |
+| ------------------- | ---------- | ---------- | ---------- | ---------- |
+| App (`src`)         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Controllers         | 39.22%     | 11.44%     | 37.96%     | 40.96%     |
+| Database            | 87.50%     | 75.00%     | 100.00%    | 87.50%     |
+| Errors              | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Helpers             | 36.00%     | 0.00%      | 37.50%     | 39.13%     |
+| Middlewares         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Repositories        | 75.42%     | 51.68%     | 89.79%     | 82.69%     |
+| Routes              | 91.22%     | 0.00%      | 0.00%      | 91.22%     |
+| Services            | 88.38%     | 83.68%     | 85.86%     | 89.41%     |
+| Validators          | 75.25%     | 68.45%     | 100.00%    | 76.59%     |
+| **Cobertura Total** | **70.03%** | **52.81%** | **68.01%** | **72.42%** |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **60.05% em statements** e **62.48% em lines**, enquanto a camada de Services atingiu **96.05% em statements**, **88.78% em branches**, **97.22% em functions** e **96.21% em lines**, superando a meta de 80% definida para a sprint.
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **70.03% em statements, 52.81% em branches, 68.01% em functions e 72.42% em lines.**
+
+Entre as camadas com melhor desempenho, destacam-se **App, Errors e Middlewares**, que atingiram **100% de cobertura em todas as métricas**, enquanto a camada de **Services** apresentou **88.38% em statements, 83.68% em branches, 85.86% em functions e 89.41% em lines**, superando a meta mínima de **80% estabelecida para a sprint**.
+
+Apesar disso, a camada de Controllers ainda apresentou menor cobertura, com 39.22% em statements e 40.96% em lines, indicando pontos que podem ser priorizados em futuras melhorias dos testes automatizados.
 
 **Evidência**
 <div align="center">
