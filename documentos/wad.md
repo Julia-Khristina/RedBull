@@ -90,7 +90,7 @@ Esses recursos apresentam alta disponibilidade, baixa diferenciação e facilida
 
 #### 5. Poder de barganha dos clientes (MUITO ALTO)
 
-O poder de barganha dos clientes é considerada muito alta, a principal área demandante da solução corresponde ao time operacional de Field Marketing da Red Bull, responsável pelo registro dos dados durante o evento. Esse grupo exerce elevado poder de barganha, pois a adoção da ferramenta depende diretamente da sua aceitação em um ambiente caracterizado por alta pressão operacional, rapidez na tomada de decisão e necessidade de execução contínua. O custo de substituição é praticamente inexistente, uma vez que o método manual atualmente utilizado pode ser retomado a qualquer momento sem impactos financeiros ou contratuais. Além disso, qualquer aumento de complexidade, lentidão ou dificuldade de uso pode comprometer diretamente a aceitação da solução. Dessa forma, a área demandante exerce não apenas poder de escolha, mas também poder de veto, exigindo que a ferramenta seja comprovadamente mais simples, rápida e confiável do que o processo atual para garantir sua adoção efetiva.
+O poder de barganha dos clientes é considerada muito alto, a principal área demandante da solução corresponde ao time operacional de Field Marketing da Red Bull, responsável pelo registro dos dados durante o evento. Esse grupo exerce elevado poder de barganha, pois a adoção da ferramenta depende diretamente da sua aceitação em um ambiente caracterizado por alta pressão operacional, rapidez na tomada de decisão e necessidade de execução contínua. O custo de substituição é praticamente inexistente, uma vez que o método manual atualmente utilizado pode ser retomado a qualquer momento sem impactos financeiros ou contratuais. Além disso, qualquer aumento de complexidade, lentidão ou dificuldade de uso pode comprometer diretamente a aceitação da solução. Dessa forma, a área demandante exerce não apenas poder de escolha, mas também poder de veto, exigindo que a ferramenta seja comprovadamente mais simples, rápida e confiável do que o processo atual para garantir sua adoção efetiva.
 
 #### Conclusão da análise
 
@@ -138,11 +138,11 @@ Como base inicial, foi utilizado o site oficial do evento Red Bull 24 Hours, for
 
 #### Solução proposta
 
-Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de competições, equipes e atletas, atualização em tempo real dos dados, visualização de rankings globais e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
+Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de competições, equipes e atletas, atualização em tempo real dos dados no ambiente administrativo e disponibilização periódica das informações no painel público das equipes e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
 
 #### Forma de utilização da solução
 
-A solução será estruturada em dois ambientes principais: um administrativo e outro para as equipes. No ambiente administrativo, acessado por meio do email e senha única previamente disponibilizada aos operadores, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente das equipes, acessado por meio de identificadores UUID únicos, os atletas terão acesso a um painel com ranking atualizado a cada uma hora, desempenho da equipe e métricas relevantes. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
+A solução será estruturada em dois ambientes principais: um administrativo e outro para as equipes. No ambiente administrativo, acessado por meio do email e senha única previamente disponibilizada aos operadores, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente das equipes, acessado por meio de identificadores UUID únicos, os atletas terão acesso a um painel público com informações da equipe, métricas de desempenho e ranking da competição, atualizados periodicamente a cada uma hora. Já o ambiente administrativo opera com atualização em tempo real para suporte à operação do evento. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
 
 #### Benefícios esperados
 
@@ -196,7 +196,7 @@ Os ganhos representam os benefícios esperados pelos usuários durante a operaç
 - Menos demanda para os avaliadores
 - Automatização do processo de registro e processamento de dados
 - Redução de erros operacionais
-- Maior confiablidade e precisão das informações
+- Maior confiabilidade e precisão das informações
 - Maior eficiência operacional durante o evento
 - Visão consolidada e organizada do andamento da competição.
 
@@ -282,7 +282,7 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 | Aumento da eficiência operacional | A automação reduz atividades manuais e retrabalho da equipe operacional durante o evento. | 90% (Muito Alto) | Muito Alto | Alta Prioridade | Automatizar fluxos operacionais e minimizar entradas manuais. |
 | Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% (Muito Baixo) | Médio | Baixa Prioridade | Estruturar sistema modular e escalável. |
 | Menor perda de dados durante o evento | O uso de checkpoints digitais permite maior precisão histórica e reduz perdas de dados. | 50% (Médio) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
-| Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: CSV) para auditoria e materiais de marketing. |
+| Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: XLSX) para auditoria e materiais de marketing. |
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
@@ -295,7 +295,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 
 <div align="center">
   <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
-  <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento RedBull 24 horas"><br>
+  <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento Red Bull 24 horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -303,7 +303,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 <ul>
     <li>Idade: 29 anos;</li>
     <li>Localização: Rio de Janeiro - RJ</li>
-    <li>Cargo: Coordenadora operacional do evento RedBull 24 horas</li>
+    <li>Cargo: Coordenadora operacional do evento Red Bull 24 horas</li>
     <li>Gênero: Feminino</li>
 </ul>
 
@@ -350,7 +350,7 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 <ul>
     <li>Idade: 32 anos;</li>
     <li>Localização: São Paulo - SP </li>
-    <li>Cargo: Gerente de Field Marketing da RedBull</li>
+    <li>Cargo: Gerente de Field Marketing da Red Bull</li>
     <li>Gênero: Masculino</li>
 </ul>
 
@@ -392,8 +392,8 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 </ul> <br>
 
 <div align="center">
-  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
-  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
+  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da Red Bull 24 horas</sub><br>
+  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição Red Bull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -401,7 +401,7 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 <ul>
     <li>Idade: 20 anos;</li>
     <li>Localização: São Paulo - SP</li>
-    <li>Cargo: Atleta do RedBull 24 horas</li>
+    <li>Cargo: Atleta do Red Bull 24 horas</li>
     <li>Gênero: Feminino</li>
 </ul>
 
@@ -514,7 +514,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências." |
 | **Critério de aceite 1** | CR1: O sistema deve exibir relatórios da competição. **Teste**: Dado que o admin acessa a seção de relatórios, terá acesso à visão geral da competição, relatório por equipe ou relatório de inconsistências, então os dados correspondentes devem ser exibidos corretamente. |
 | **Critério de aceite 2** | CR2: O sistema deve identificar e listar inconsistências. **Teste**: Dado que existem divergências entre os dados registrados de distância e tempo, quando o relatório de inconsistências é gerado, então o sistema deve listar todas as ocorrências identificadas. |
-| **Critério de aceite 3** | CR3: O sistema deve permitir a exportação dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo CSV com os dados correspondentes. |
+| **Critério de aceite 3** | CR3: O sistema deve permitir a exportação em XLSX dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo  com os dados correspondentes. |
 | Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o administrador, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes, como exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
 
 <div align="center">
@@ -530,7 +530,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login." |
 | **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o administrador clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
-| **Critério de aceite 2** | CR2: O UUID e o botão "Copiar link" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar". Além disso, dado que o admin clica em "Copiar", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
+| **Critério de aceite 2** | CR2: O UUID e o botão "Copiar" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar". Além disso, dado que o admin clica em "Copiar", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
 | **Critério de aceite 3** | CR3: O UUID não deve expirar enquanto o evento estiver ativo. **Teste**: Dado que o evento está em andamento, quando o link gerado é acessado, então a página deve carregar corretamente. |
 | Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois a geração do UUID ocorre de forma isolada no momento do cadastro da equipe. <br> Negociável: A implementação pode ser simplificada ou refinada em conjunto com o parceiro e os demais envolvidos no projeto. <br> Valorosa: Elimina a necessidade de login para a equipe, facilitando o acesso ao painel sem barreiras de autenticação. <br> Estimável: O fluxo de geração do UUID no momento do cadastro é claro e bem delimitado. <br> Pequena: Escopo limitado à geração, exibição e cópia do link. <br> Testável: O comportamento é verificável via criação de equipes e acesso ao link gerado. |
 
@@ -579,7 +579,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Persona** | Marina Costa (Coordenadora Operacional) |
 | **User Story** | "Como Marina Costa, Coordenadora Operacional, posso selecionar o atleta ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
 | **Critério de aceite 1** | CR1: O dropdown deve exibir todos os atletas da equipe. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os atletas da equipe devem aparecer com seu respectivo cargo, capitão ou atleta, visível embaixo do nome. |
-| **Critério de aceite 2** | CR2: O card do atleta ativo deve ser atualizado automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ser substituido pelo atleta atual. |
+| **Critério de aceite 2** | CR2: O card do atleta ativo deve ser atualizado automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ser substituído pelo atleta atual. |
 | Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O fluxo de troca pode ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
 
 <div align="center">
@@ -595,7 +595,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Persona** | Marina Costa (Coordenadora Operacional) |
 | **User Story** | "Como Marina Costa, Coordenadora Operacional, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no histórico de checkpoint." |
 | **Critério de aceite 1** | CR1: O sistema deve capturar a imagem e extrair os dados via OCR. **Teste**: Dado que o admin clica em "Tirar foto da esteira", quando a câmera integrada é aberta e a foto é capturada, então o sistema deve exibir o preview da imagem ao lado dos dados extraídos — distância (km), pace (min/km) e tempo total. |
-| **Critério de aceite 2** | CR3: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
+| **Critério de aceite 2** | CR2: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
 | Critérios INVEST | Independente: O fluxo OCR é autossuficiente; o modo de entrada manual é tratado como US separada. <br> Negociável: A engine de OCR utilizada e o limiar de discrepância podem ser ajustados conforme os resultados obtidos em testes. <br> Valorosa: Elimina erros de digitação e agiliza o registro de checkpoints durante a competição. <br> Estimável: O fluxo de quatro etapas — captura, extração, revisão e confirmação — está bem especificado. <br> Pequena: Limitada à captura, extração e confirmação de um único checkpoint. <br> Testável: Os dados extraídos, e os logs de auditoria são verificáveis objetivamente. |
 
 <div align="center">
@@ -629,7 +629,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados referente a cada atleta, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
 | **Critério de aceite 2** | CR2: A tabela deve ser atualizada automaticamente sem ação do usuário. **Teste**: Dado que um novo checkpoint é registrado, então o novo registro deve aparecer na tabela sem que o admin recarregue a página. |
 | **Critério de aceite 3** | CR3: Os valores de pace médio e distância total devem ser recalculados corretamente a cada atualização. **Teste**: Dado que múltiplos checkpoints foram registrados, quando a tabela é atualizada, então o pace médio deve corresponder à média ponderada correta e a distância total deve ser a soma de todos os checkpoints da sessão. |
-| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: As atualizaçãos em tempo real podem ser reconfiguráveis em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
+| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: As atualizações em tempo real podem ser reconfiguráveis em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2019,7 +2019,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 ### Persona 1 - Marina Costa
 #### Tela de Login
-&nbsp; &nbsp; &nbsp; &nbsp;Abaixo nota-se a Tela de Login, onde o background é uma foto real da competição 24hrs, essa tela pede, em um popup de fundo branco, email e senha para autorizar o acesso do administrador. Conta com uma frase da RedBull de encorajamento e botão em destaque "entrar"
+&nbsp; &nbsp; &nbsp; &nbsp;Abaixo nota-se a Tela de Login, onde o background é uma foto real da competição 24hrs, essa tela pede, em um popup de fundo branco, email e senha para autorizar o acesso do administrador. Conta com uma frase da Red Bull de encorajamento e botão em destaque "entrar"
 
 
 <div align="center">
