@@ -503,9 +503,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return { teamName: teamName, runners: runners };
       }
 
-      async function createTeamAndRunners(event) {
-        event.preventDefault();
-        clearCreateError();
+        async function createTeamAndRunners(event) {
+          event.preventDefault();
+          if (submitBtn && submitBtn.disabled) return;
+
+          clearCreateError();
+
 
         let payload;
         try {
@@ -527,7 +530,10 @@ document.addEventListener('DOMContentLoaded', function () {
           const teamRes = await fetch('/competitions/' + competitionId + '/teams', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: payload.teamName }),
+            body: JSON.stringify({ 
+              name: payload.teamName, 
+              runners: payload.runners 
+            }),
           });
 
           if (!teamRes.ok) {
@@ -536,22 +542,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
 
           createdTeam = await teamRes.json();
-
-          for (const runner of payload.runners) {
-            const runnerRes = await fetch(
-              '/competitions/' + competitionId + '/teams/' + createdTeam.id + '/runners',
-              {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(runner),
-              }
-            );
-
-            if (!runnerRes.ok) {
-              const data = await runnerRes.json().catch(function () { return { message: 'Erro ao cadastrar atleta.' }; });
-              throw new Error(data.message || 'Erro ao cadastrar atleta.');
-            }
-          }
 
           window.location.href = '/teams?competitionId=' + encodeURIComponent(competitionId);
         } catch (err) {

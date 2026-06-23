@@ -69,7 +69,7 @@ function readOptionalPace(
 function normalizePace(pace: string): string | null {
   const match = pace
     .trim()
-    .match(/^([0-9]{1,2})(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
+    .match(/^([0-9]+)(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
 
   if (!match) return null;
 
