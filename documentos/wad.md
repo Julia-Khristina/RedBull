@@ -3161,7 +3161,43 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 ### 3.8.2. Controle de sessão
 
-*Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
+#### 3.8.2.1 Estratégia adotada
+
+O projeto adota **JSON Web Token (JWT)** como mecanismo de controle de sessão, em vez de um `session id` persistido em tabela própria no banco de dados. Trata-se de uma abordagem baseada em arquitetura *stateless*, na qual o servidor não armazena estado de sessão, delegando ao próprio token a responsabilidade de transportar as informações do usuário autenticado e seu prazo de expiração.
+
+#### 3.8.2.2 Funcionamento da sessão
+
+Após a validação das credenciais (descrita na seção 3.8.1), o serviço de autenticação gera um token JWT assinado utilizando o algoritmo **HS256**, com chave secreta armazenada em variável de ambiente (`JWT_SECRET`). O token possui expiração configurada para **8 horas**, registrada automaticamente por meio da claim padrão `exp` do JWT.
+
+O payload contém as informações do usuário autenticado, incluindo `id`, `email`, `name` e `role`. Essas informações são utilizadas pelo backend para identificação e controle de acesso nas requisições subsequentes.
+
+Atualmente, o sistema não implementa um fluxo separado de refresh token. Os campos `access_token` e `refresh_token` são retornados com o mesmo JWT, sendo o mecanismo de renovação baseado na revalidação das credenciais e na emissão de um novo token após autenticação.
+
+#### 3.8.2.3 Validação das requisições autenticadas
+
+A validação de requisições protegidas é realizada por meio da verificação do token enviado no cabeçalho `Authorization: Bearer <token>`. O serviço de autenticação valida a assinatura e a expiração do token em cada requisição.
+
+Caso o token esteja ausente, inválido ou expirado, a requisição é rejeitada com erro **401 Unauthorized**.
+
+A operação de logout não realiza invalidação do token no backend. Ao encerrar a sessão, o cliente é redirecionado para a tela de login e a remoção do token armazenado passa a ser responsabilidade do frontend.
+
+#### 3.8.2.4 Justificativa da escolha e trade-offs
+
+| Aspecto | JWT (implementado) | Session ID em tabela |
+|----------|-------------------|----------------------|
+| **Natureza** | Stateless — o servidor não armazena estado de sessão | Stateful — exige consulta ao banco a cada requisição |
+| **Escalabilidade** | Alta — qualquer instância valida o token sem coordenação | Requer compartilhamento de estado entre instâncias (ex: Redis ou mecanismo equivalente) |
+| **Revogação imediata** | Não suportada — um token emitido permanece válido até expirar (8h), mesmo após logout | Sessões podem ser invalidadas imediatamente via remoção do registro |
+| **Payload exposto** | O payload pode ser decodificado por qualquer cliente, pois o JWT utiliza codificação Base64URL, não sendo criptografia. Apenas a integridade dos dados é garantida pela assinatura digital | Opaco — o banco armazena os dados da sessão |
+| **Overhead de banco** | Nenhuma consulta necessária para validação | Uma consulta por requisição autenticada |
+
+A escolha por JWT é adequada ao contexto do sistema Red Bull 24H, que possui um único perfil de usuário autenticado (`role: "admin"`) e opera em janelas de tempo delimitadas correspondentes ao evento. A abordagem *stateless* reduz a complexidade da infraestrutura e elimina a necessidade de gerenciamento centralizado de sessões, mantendo um nível de segurança compatível com o escopo do projeto.
+
+#### 3.8.2.5 Limitações identificadas
+
+Como não há mecanismo de invalidação imediata de tokens, o logout atualmente não executa qualquer ação no backend. Dessa forma, o token permanece válido até sua expiração natural.
+
+Em um cenário de produção com requisitos de segurança mais rigorosos, seria necessário implementar um mecanismo de revogação, como uma *denylist* de tokens inválidos armazenada em Redis ou em uma tabela `revoked_tokens`, consultada durante o processo de validação de cada requisição autenticada.
 
 ### 3.8.3. Autorização
 
