@@ -3438,10 +3438,20 @@ Nesta sprint final, o foco esteve na entrega da camada de autenticação/autoriz
 ### (b) Pendências remanescentes
 Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e todas as pendências herdadas da sprint 4, como a calculadora de descanso e refinamento do OCR, foram concluídas nesta sprint. As pendências remanescentes restringem-se a itens fora do escopo do MVP e a melhorias incrementais:
 
-* **Refinamentos de UX apontados nos testes de usabilidade:** ajustes pontuais de interface identificados durante os testes com usuários, pouco intuitivas ou sem funcionalidade direta com o escopo do projeto, registrados como melhorias futuras na [Seção 7 — Conclusões e trabalhos futuros](#c7).
-* **Evolução contínua do OCR:** embora o módulo esteja integrado e funcional, a precisão da extração pode ser continuamente aprimorada com a expansão do banco de imagens de referência e novos cenários de teste do ambiente real do evento.
+**Refinamentos de UX apontados nos testes de usabilidade:** ajustes pontuais de interface identificados durante os testes com usuários, pouco intuitivas ou sem funcionalidade direta com o escopo do projeto, registrados como melhorias futuras na [Seção 7 — Conclusões e trabalhos futuros](#c7).
+
+
+**Evolução contínua do OCR:** embora o módulo esteja integrado e funcional, a precisão da extração pode ser continuamente aprimorada com a expansão do banco de imagens de referência e novos cenários de teste do ambiente real do evento.
 
 ### (c) Dificuldades técnicas
+
+**Persistência segura de credenciais e controle de sessão:** a implementação da autenticação exigiu atenção à escolha e parametrização do algoritmo de hash, ao armazenamento seguro da sessão e à garantia de que a verificação de autorização ocorresse sempre no backend, nunca confiando no frontend como fonte de verdade. O equilíbrio entre segurança e a restrição do TAP — que não previa autenticação de usuários no escopo original — exigiu manter o login restrito à área administrativa, preservando o acesso público por UUID.
+
+
+**Integração de uma camada externa (API do Grok) ao pipeline de OCR client-side:** combinar o processamento local existente (OpenCV + Tesseract.js) com uma chamada externa de reforço exigiu tratar latência, fluxo de fallback e consolidação dos resultados das duas fontes, garantindo que a extração permanecesse confiável mesmo diante de variações de imagem.
+
+
+**Estabilização da suíte de testes em ambiente com banco real:** a eliminação definitiva das colisões de dados únicos entre execuções, arrastada desde a sprint 3, demandou padronizar a geração de dados descartáveis por execução e isolar o estado entre os testes, assegurando que a suíte completa rodasse de forma determinística.
 
 # <a name="c5"></a>5. Testes
 
