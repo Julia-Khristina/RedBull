@@ -35,9 +35,10 @@ function parsePaceToSeconds(pace: string | null): number | null {
 }
 
 function formatSecondsAsPace(totalSeconds: number): string {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = Math.round(totalSeconds % 60);
-  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  const rounded = Math.round(totalSeconds);
+  const minutes = Math.floor(rounded / 60);
+  const seconds = rounded % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
 function parseDurationToSeconds(time: string | null): number | null {

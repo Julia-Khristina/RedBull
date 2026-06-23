@@ -101,12 +101,15 @@ export function createReportService(
       paceSamples.length > 0
         ? paceSamples.reduce((sum, pace) => sum + pace, 0) / paceSamples.length
         : null;
+    const averagePaceRounded =
+      averagePaceSeconds === null ? null : Math.round(averagePaceSeconds);
     const averagePace =
-      averagePaceSeconds === null
+      averagePaceRounded === null
         ? null
-        : `${Math.floor(averagePaceSeconds / 60)}:${String(
-            Math.round(averagePaceSeconds % 60)
-          ).padStart(2, "0")}`;
+        : `${String(Math.floor(averagePaceRounded / 60)).padStart(
+            2,
+            "0"
+          )}:${String(averagePaceRounded % 60).padStart(2, "0")}`;
 
     const generatedSummary = {
       total_km: Number(totalDistance.toFixed(1)),

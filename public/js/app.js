@@ -1,4 +1,27 @@
 // [D1] Padrão: verificação de autenticação + ativação de menu
+function formatPacePartsForApi(minutes, seconds) {
+  return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + '/km';
+}
+
+function formatPacePartsForDisplay(minutes, seconds) {
+  return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+}
+
+function normalizePaceForApi(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return undefined;
+
+  const match = raw.match(/^([0-9]{1,2})(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
+  if (!match) return raw;
+  if (Number(match[2]) > 59) return raw;
+
+  return formatPacePartsForApi(match[1], match[2]);
+}
+
+function stripPaceUnit(value) {
+  return String(value || '').trim().replace(/\s*\/\s*km$/i, '');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const path = window.location.pathname;
 
@@ -1037,8 +1060,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
         const secondsPerKm = Math.round(seconds / distance);
         const minutes = Math.floor(secondsPerKm / 60);
-        const remainingSeconds = String(secondsPerKm % 60).padStart(2, '0');
-        return minutes + ':' + remainingSeconds + '/km';
+        const remainingSeconds = secondsPerKm % 60;
+        return formatPacePartsForApi(minutes, remainingSeconds);
       }
 
       function updateOcrSourceNotice(result) {
@@ -1230,14 +1253,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       function normalizePace(value) {
-        const raw = String(value || '').trim();
-        if (!raw) return undefined;
-        if (/^[0-9]{1,2}:[0-9]{2}\/km$/.test(raw)) return raw;
-
-        const quoteMatch = raw.match(/^([0-9]{1,2})'?[:']([0-9]{2})/);
-        if (quoteMatch) return quoteMatch[1] + ':' + quoteMatch[2] + '/km';
-
-        return raw;
+        return normalizePaceForApi(value);
       }
 
       function buildCheckpointPayload() {
@@ -1682,12 +1698,12 @@ function formatPace(seconds) {
   if (seconds === null || seconds === undefined || !Number.isFinite(seconds)) return '—';
   var rounded = Math.round(seconds);
   var minutes = Math.floor(rounded / 60);
-  var remainingSeconds = String(rounded % 60).padStart(2, '0');
-  return minutes + ':' + remainingSeconds;
+  var remainingSeconds = rounded % 60;
+  return formatPacePartsForDisplay(minutes, remainingSeconds);
 }
 
 function formatCheckpointPace(checkpoint) {
-  if (checkpoint.pace) return checkpoint.pace;
+  if (checkpoint.pace) return stripPaceUnit(checkpoint.pace);
   if (!checkpoint.time || !checkpoint.distance_km) return null;
 
   var parts = checkpoint.time.split(':').map(function (part) {
@@ -1865,7 +1881,7 @@ window.CHECKPOINTS = window.CHECKPOINTS || [];
       payload.distance_km = parseFloat(distanceValue);
     }
     if (paceValue !== '') {
-      payload.pace = paceValue;
+      payload.pace = normalizePaceForApi(paceValue);
     }
     if (timeValue !== '') {
       payload.time = timeValue;
