@@ -1251,7 +1251,7 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
 
-Com a evolução do sistema e a integração de um frontend renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no back-end quanto no frontend, com base no código efetivamente implementado na versão atual do projeto.
+Com a evolução do sistema e a integração de um front-end renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no back-end quanto no front-end, com base no código efetivamente implementado na versão atual do projeto.
 
 
 ---
@@ -1271,7 +1271,7 @@ Sem esse padrão, regras de negócio, acesso aos dados e elementos de interface 
 
 #### Justificativa da adoção
 
-Com a implementação do frontend, tornou-se necessário estruturar a camada de apresentação de forma integrada ao back-end existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
+Com a implementação do front-end, tornou-se necessário estruturar a camada de apresentação de forma integrada ao back-end existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
 
 #### Aplicação no projeto
 
@@ -3143,7 +3143,7 @@ A tabela demonstra que a consulta seleciona registros apenas quando a quilometra
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *frontend* e o *back-end* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
+A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *front-end* e o *back-end* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
 
 A escolha por uma página HTML versionada, em vez de uma tabela embutida diretamente no WAD, foi deliberada: permite uma visualização navegável e formatada (*badges* de status, blocos de código com destaque, links internos entre seções), mantém o versionamento alinhado com cada sprint de desenvolvimento e facilita a validação externa por parte de revisores, sem necessidade de clonar o repositório ou abrir uma ferramenta auxiliar como Swagger ou Postman. As seções internas da página HTML adotam numeração própria (3.6.1 a 3.6.10) por domínio funcional; trata-se de uma numeração local ao artefato, não relacionada à numeração de capítulos do WAD — a normalização desse esquema (por exemplo, prefixo `API-`) está prevista para uma iteração posterior.
 
@@ -3167,7 +3167,7 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 A aplicação define dois tipos de acesso: o **ambiente administrativo**, restrito a operadores autenticados, e o **ambiente público por equipe**, acessível via URL com UUID único sem necessidade de login.
 
-A verificação de autorização é realizada inteiramente no back-end. O frontend nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o back-end valide a identidade do solicitante.
+A verificação de autorização é realizada inteiramente no back-end. O front-end nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o back-end valide a identidade do solicitante.
 
 **Perfil de acesso e estrutura de roles:**
 
@@ -3182,7 +3182,7 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 | Rota | Método | Acesso | Descrição |
 |---|---|---|---|
 | `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
-| `POST /admin/login` | POST | Público | Alias de compatibilidade com frontend |
+| `POST /admin/login` | POST | Público | Alias de compatibilidade com front-end |
 | `GET /admin/login` | GET | Público | Renderiza tela de login |
 | `GET /logout` | GET | Público | Redireciona para login |
 | `GET /dashboard` | GET | Administrativo | Painel principal com competições |
@@ -3199,7 +3199,7 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 
 **Responsabilidade da camada de back-end:**
 
-Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O frontend recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
+Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O front-end recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
@@ -3305,7 +3305,7 @@ Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em *
 
 **- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso por sala administrativa via senha definida na criação da sala, com escopo limitado à área administrativa e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
 
-**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do frontend funcional na sprint 4.
+**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do front-end funcional na sprint 4.
 
 Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
@@ -3343,7 +3343,7 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 **- Refinamento do OCR:** apesar do protótipo estar finalizado e do fluxo estar definido, ainda é necessário aprimorar a precisão da captura das informações da imagem (distância, pace e tempo total), tratar variações de iluminação e posicionamento do display da esteira, ajustar o limiar de discrepância para acionamento dos alertas visuais (RN06) e refinar detalhes de integração para entregar o módulo em nível de MVP funcional.
 
-**- Frontend funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o back-end será iniciada na sprint 4.
+**- Front-end funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o back-end será iniciada na sprint 4.
 
 ### (c) Dificuldades técnicas
 
@@ -3355,9 +3355,9 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 ### (d) Próximos passos
 
-Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o frontend ao back-end já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
+Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o front-end ao back-end já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
 
-**1. Frontend funcional integrado ao back-end**
+**1. Front-end funcional integrado ao back-end**
 Migração do protótipo de alta fidelidade para uma aplicação funcional consumindo a API já implementada, com foco nas telas críticas para a operação do evento: painel operacional administrativo, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe com auto-refresh, relatórios e painel público acessado via UUID sem autenticação (US12). A UX deve seguir os wireframes já validados na sprint 2, priorizando uso em iPad conforme escopo do TAP.
 
 **2. Refinamento do módulo de OCR**
@@ -3367,7 +3367,7 @@ Aprimoramento da precisão de extração dos dados da imagem, tratamento de vari
 Conclusão do módulo já iniciado na sprint 3 (model, repository e service), registrando as rotas no Express e completando a cadeia da arquitetura em camadas.
 
 **4. Testes automatizados e Matriz de Rastreabilidade**
-Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o frontend conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
+Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o front-end conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
 
 **5. Dívida técnica identificada na sprint 3**
 Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
@@ -3376,9 +3376,9 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### (a) O que foi implementado
 
-Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao back-end já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework frontend separado.
+Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao back-end já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework front-end separado.
 
-**- Estrutura de pastas do frontend:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
+**- Estrutura de pastas do front-end:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
 
 <div align="center"> <sub>Figura 67 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/view-estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas das views EJS"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
@@ -3390,13 +3390,13 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 <div align="center"> <sub>Figura 69 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo frontend, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
+**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo front-end, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
 
 **- Sidebar de navegação persistente:** O partial partials/menu.ejs, incluído no layout base, renderiza a barra lateral com os links para todas as telas. O app.js ativa dinamicamente o item correspondente à rota atual via comparação com window.location.pathname, seguindo o comportamento definido no protótipo de alta fidelidade.
 
-<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Registro de checkpoint e atualização de ranking (RF008, RN04, RN05):** Foi implementado o fluxo de registro manual de checkpoint, conectado diretamente ao endpoint POST /checkpoints. O formulário coleta distância (km), pace e tempo total, valida os campos obrigatórios no cliente antes do envio e exibe feedback em tempo real (loading, sucesso e erro). Após um registro bem-sucedido, o painel dispara automaticamente uma consulta ao endpoint GET /competitions/:id/ranking/teams para atualizar o ranking sem recarregamento da página.
 
@@ -3408,7 +3408,7 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ### (b) O que não foi concluído
 
-**Integração do OCR com o frontend e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no frontend e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
 
 ### (c) Dificuldades técnicas
 
@@ -4030,7 +4030,7 @@ Os recursos principais são os ativos necessários para construir e operar a sol
 
 ### Atividades Chave
 
-As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo frontend e back-end, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
+As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo front-end e back-end, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
 
 ### Parcerias Principais
 
