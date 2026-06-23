@@ -5,11 +5,12 @@ import {
   getSelectedCompetitionId,
   saveSelectedCompetitionId,
 } from "../helpers/selectedCompetition";
+import { garantirAutenticacao } from "../middlewares/authMiddleware";
 
 const router = Router();
 
 // [A1] Rota SSR — GET /dashboard — confirmada em src/routes/dashboardRoutes.ts
-router.get("/dashboard", asyncHandler(async (req: Request, res: Response) => {
+router.get("/dashboard", garantirAutenticacao, asyncHandler(async (req: Request, res: Response) => {
   const competitions = await competitionService.findAll();
   const requestedCompetitionId =
     typeof req.query.competitionId === "string"

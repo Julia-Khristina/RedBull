@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { runnerController } from "../controllers/runnerController";
 import { asyncHandler } from "../helpers/asyncHandler";
+import { garantirAutenticacao } from "../middlewares/authMiddleware";
 
 const router = Router();
 
@@ -13,26 +14,31 @@ router.get(
 
 router.post(
   "/competitions/:id/teams/:teamId/runners",
+  garantirAutenticacao,
   asyncHandler(runnerController.create)
 );
 
 router.get(
   "/competitions/:id/teams/:teamId/runners",
+  garantirAutenticacao,
   asyncHandler(runnerController.list)
 );
 
 router.get(
   "/competitions/:id/teams/:teamId/runners/:runnerId",
+  garantirAutenticacao,
   asyncHandler(runnerController.findById)
 );
 
 router.put(
   "/competitions/:id/teams/:teamId/runners/:runnerId",
+  garantirAutenticacao,
   asyncHandler(runnerController.update)
 );
 
 router.delete(
   "/competitions/:id/teams/:teamId/runners/:runnerId",
+  garantirAutenticacao,
   asyncHandler(runnerController.delete)
 );
 
