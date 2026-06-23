@@ -2780,12 +2780,58 @@ CREATE INDEX idx_checkpoint_created_at     ON checkpoint (created_at);
  
 A tabela **`checkpoint`** é a entidade central do sistema operacional, pois concentra quatro chaves estrangeiras: `id_runner`, `id_competition`, `id_treadmill` e `id_admin`, todas obrigatórias e definidas com `ON UPDATE CASCADE` / `ON DELETE RESTRICT`. Por depender de quatro tabelas, é a última das entidades principais a ser criada. O campo **`identifier`** possui restrição `UNIQUE` (`uq_checkpoint_identifier`), garantindo a rastreabilidade individual de cada registro operacional. O campo **`distance_km`** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão (adequado para distâncias como `42,195 km`), e é validado pela constraint `ck_checkpoint_distance_km`, que assegura valores entre 0 e 1000. Os campos **`pace`** e **`time`** são armazenados como `VARCHAR` e são opcionais; quando preenchidos, são validados por constraints de formato (`mm:ss/km` e `hh:mm:ss`, respectivamente), construídas com a condição `IS NULL OR ...` para permitir o valor nulo sem violar a regra. O campo **`image`** é definido como `JSONB` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **`id_admin`** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints. São criados cinco índices: quatro sobre as chaves estrangeiras, para otimizar junções, e um sobre `created_at`, para acelerar relatórios cronológicos de desempenho.
 
+##### Tabela `ocr_extraction` (`0007_create_ocr_extraction.sql`)
+
+```sql
+CREATE TABLE ocr_extraction (
+    id              INTEGER     NOT NULL GENERATED ALWAYS AS IDENTITY,
+    image           JSONB       NOT NULL,
+    extracted_data  JSONB       NULL,
+    validation      JSONB       NULL,
+    status          VARCHAR(30) NOT NULL DEFAULT 'pending',
+    id_checkpoint   INTEGER     NULL,
+    created_at      TIMESTAMP   NOT NULL DEFAULT NOW(),
+    updated_at      TIMESTAMP   NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_ocr_extraction PRIMARY KEY (id),
+    CONSTRAINT ck_ocr_extraction_status
+        CHECK (status IN ('pending', 'processed', 'validated', 'rejected')),
+    CONSTRAINT fk_ocr_extraction_id_checkpoint
+        FOREIGN KEY (id_checkpoint) REFERENCES checkpoint (id)
+        ON UPDATE CASCADE
+        ON DELETE SET NULL
+);
+
+CREATE INDEX idx_ocr_extraction_status        ON ocr_extraction (status);
+CREATE INDEX idx_ocr_extraction_id_checkpoint ON ocr_extraction (id_checkpoint);
+```
+
+A tabela **`ocr_extraction`** dá suporte ao processo de extração automática de dados a partir de imagens (OCR), armazenando o ciclo de vida de cada leitura realizada pelo sistema. O campo **`image`** (`JSONB`, obrigatório) guarda a referência ou os metadados da imagem submetida; **`extracted_data`** (`JSONB`, opcional) registra o resultado bruto da extração; e **`validation`** (`JSONB`, opcional) armazena o resultado da conferência dos dados extraídos. O campo **`status`** controla o estágio do processamento, recebendo `DEFAULT 'pending'` e sendo restringido pela constraint `ck_ocr_extraction_status` aos valores `pending`, `processed`, `validated` e `rejected`. A chave estrangeira **`id_checkpoint`** é **opcional** (`NULL`) e vincula a extração ao checkpoint eventualmente gerado a partir dela; diferentemente das demais FKs do modelo, utiliza `ON DELETE SET NULL`, de modo que, ao remover um checkpoint, o histórico da extração é preservado com o vínculo apenas anulado. A tabela mantém ainda dois carimbos temporais (`created_at` e `updated_at`) e dois índices, sobre `status` e sobre `id_checkpoint`, para otimizar a triagem das extrações e as junções com `checkpoint`.
+
+##### Tabela `competition_report` (`0008_create_competition_report.sql`)
+
+```sql
+CREATE TABLE competition_report (
+    id_competition  INTEGER    NOT NULL,
+    summary         JSONB      NOT NULL,
+    highlights      JSONB      NOT NULL,
+    generated_at    TIMESTAMP  NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_competition_report PRIMARY KEY (id_competition),
+    CONSTRAINT fk_competition_report_id_competition
+        FOREIGN KEY (id_competition) REFERENCES competition (id)
+        ON UPDATE CASCADE
+        ON DELETE CASCADE
+);
+```
+
+A tabela **`competition_report`** armazena o relatório consolidado de cada competição. Sua principal característica estrutural é o uso do campo **`id_competition`** simultaneamente como **chave primária e chave estrangeira**, o que materializa uma relação **1:1** com `competition` (cada competição possui, no máximo, um relatório). Os campos **`summary`** e **`highlights`** (ambos `JSONB` e obrigatórios) guardam, respectivamente, o resumo estatístico e os destaques do evento. O campo **`generated_at`** registra o momento de geração do relatório. A chave estrangeira utiliza `ON DELETE CASCADE`: ao excluir uma competição, o relatório associado é removido automaticamente, pois não faz sentido mantê-lo isolado de seu evento de origem.
 
 ##### Considerações gerais sobre a implementação
  
-A implementação física adota o padrão de separar a definição das colunas e restrições estruturais (`PRIMARY KEY`, `UNIQUE`, `CHECK`) dentro do bloco `CREATE TABLE`, enquanto os relacionamentos externos são adicionados via `ALTER TABLE ... ADD CONSTRAINT` logo após cada tabela. Essa abordagem favorece a legibilidade, facilita a manutenção incremental do esquema e permite que as instruções DDL sejam executadas de forma modular.
- 
-Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
+A implementação física foi organizada em **migrations sequenciais e versionadas** (`0000` a `0008`), executadas na ordem de dependência entre as tabelas: primeiro as extensões, depois as entidades independentes (`competition`, `treadmill`, `admin`) e, por fim, as entidades dependentes (`team`, `runner`, `checkpoint`, `ocr_extraction`, `competition_report`). Adotou-se a convenção de **nomear explicitamente todas as constraints** segundo seu tipo — `pk_` (*primary key*), `uq_` (*unique*), `ck_` (*check*) e `fk_` (*foreign key*) —, o que torna as mensagens de erro do banco autoexplicativas e facilita a manutenção e a evolução do esquema.
+
+Todos os campos de identificação seguem o tipo `INTEGER` com geração automática por `GENERATED ALWAYS AS IDENTITY`. As chaves estrangeiras, em regra, adotam `ON UPDATE CASCADE` e `ON DELETE RESTRICT`, preservando a integridade referencial ao bloquear a exclusão de registros que ainda possuam dependentes — com duas exceções intencionais: `ocr_extraction` usa `ON DELETE SET NULL` (para preservar o histórico de extração) e `competition_report` usa `ON DELETE CASCADE` (por ser dependente exclusivo da competição). Os campos de auditoria temporal (`created_at`, `updated_at`, `generated_at`) são preenchidos automaticamente via `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se nos arquivos de migração disponíveis no [diretório de migrações](outros/migrations/) do repositório.
 
 ### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
 
