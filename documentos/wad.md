@@ -2653,115 +2653,133 @@ CREATE INDEX idx_team_id_competition ON team (id_competition);
 ```
 A tabela **`team`** depende de **`competition`** por meio da chave estrangeira `id_competition`, definida com `ON UPDATE CASCADE` (propaga alterações de id) e `ON DELETE RESTRICT` (impede a exclusão de uma competição que ainda possua equipes). O campo **`uuid`** utiliza `gen_random_uuid()` como valor padrão — função disponibilizada pela extensão `pgcrypto` — e possui restrição `UNIQUE`, garantindo que cada equipe tenha um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **`qr_code`** é armazenado como `JSONB` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial; o uso de `JSONB` (em vez de `JSON`) permite indexação e consultas eficientes sobre o conteúdo. O campo **`name`** é protegido contra valores vazios pela constraint `ck_team_name_not_empty`. O índice sobre `id_competition` otimiza operações de junção entre as tabelas.
 
-#### Tabela corredor
- 
+##### Tabela `runner` (`0003_create_runner.sql`)
+
 ```sql
-CREATE TABLE corredor (
-    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome        VARCHAR(100)    NOT NULL,
-    status      VARCHAR(50)     NOT NULL DEFAULT 'corredor',
-    email       VARCHAR(150)    NOT NULL,
-    telefone    VARCHAR(20)     NULL,
-    cpf         VARCHAR(14)     NOT NULL,
-    equipe_id   SMALLINT        NOT NULL,
-    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id),
-    UNIQUE (cpf),
-    UNIQUE (email),
-    CHECK (status IN ('corredor', 'capitao')),
-    CHECK (email ~* '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$'),
-    CHECK (cpf ~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$')
+CREATE TABLE runner (
+    id          INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name        VARCHAR(100)  NOT NULL,
+    status      VARCHAR(50)   NOT NULL DEFAULT 'runner',
+    email       VARCHAR(150)  NOT NULL,
+    phone       VARCHAR(20)   NULL,
+    cpf         VARCHAR(14)   NOT NULL,
+    id_team     INTEGER       NOT NULL,
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_runner PRIMARY KEY (id),
+    CONSTRAINT uq_runner_cpf UNIQUE (cpf),
+    CONSTRAINT uq_runner_email UNIQUE (email),
+    CONSTRAINT ck_runner_status
+        CHECK (status IN ('runner', 'captain')),
+    CONSTRAINT ck_runner_name_not_empty
+        CHECK (length(trim(name)) > 0),
+    CONSTRAINT ck_runner_cpf_format
+        CHECK (cpf ~ '^[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}$'),
+    CONSTRAINT ck_runner_email_format
+        CHECK (email ~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$'),
+    CONSTRAINT fk_runner_id_team
+        FOREIGN KEY (id_team) REFERENCES team (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
- 
-ALTER TABLE corredor
-    ADD CONSTRAINT corredor_equipe_id_foreign
-    FOREIGN KEY (equipe_id) REFERENCES equipe (id);
- 
-CREATE INDEX idx_corredor_equipe_id ON corredor (equipe_id);
-CREATE INDEX idx_corredor_cpf       ON corredor (cpf);
+
+CREATE INDEX idx_runner_id_team ON runner (id_team);
+CREATE INDEX idx_runner_cpf     ON runner (cpf);
 ```
  
-A tabela **corredor** depende de **equipe** por meio da chave estrangeira `equipe_id`. Os campos **cpf** e **email** possuem restrição `UNIQUE` para garantir que não existam dois participantes cadastrados com os mesmos dados de identificação. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara (`000.000.000-00`). O campo **status** recebe `DEFAULT 'corredor'` no momento do cadastro e é validado pela restrição `CHECK`, que restringe os valores aceitos a `'corredor'` e `'capitao'`, diferenciando participantes comuns dos responsáveis pela equipe. O campo **telefone** é opcional e, por isso, definido como `NULL`. Dois índices são criados: um sobre `equipe_id` para otimizar junções e outro sobre `cpf` para acelerar buscas por identificação.
+ A tabela **`runner`** depende de **`team`** por meio da chave estrangeira `id_team` (`ON UPDATE CASCADE` / `ON DELETE RESTRICT`). Os campos **`cpf`** e **`email`** possuem restrição `UNIQUE`, impedindo o cadastro de dois participantes com os mesmos dados de identificação, e ambos são validados por constraints de formato: `ck_runner_cpf_format` exige a máscara `000.000.000-00` e `ck_runner_email_format` valida a estrutura de um endereço de e-mail. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara. O campo **`status`** recebe `DEFAULT 'runner'` e é restringido pela constraint `ck_runner_status` aos valores `runner` e `captain`, diferenciando participantes comuns dos responsáveis (capitães) pela equipe. O campo **`name`** é protegido contra valores vazios, e o campo **`phone`** é opcional (`NULL`). São criados dois índices: um sobre `id_team`, para otimizar junções, e outro sobre `cpf`, para acelerar buscas por identificação.
  
 
-#### Tabela esteira
- 
-```sql
-CREATE TABLE esteira (
-    id              SMALLINT    NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome            TEXT        NOT NULL,
-    especificacao   TEXT        NULL,
-    criado_em       TIMESTAMP   NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id)
-);
-```
- 
-A tabela **esteira** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **nome** e **especificacao** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido. O campo **especificacao** é opcional, pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+##### Tabela `treadmill` (`0004_create_treadmill.sql`)
 
-#### Tabela administrador
- 
 ```sql
-CREATE TABLE administrador (
-    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome        VARCHAR(100)    NOT NULL,
-    area        VARCHAR(100)    NULL,
-    senha       VARCHAR(255)    NOT NULL,
-    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id)
+CREATE TABLE treadmill (
+    id             INTEGER    NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name           TEXT       NOT NULL,
+    specification  TEXT       NULL,
+    created_at     TIMESTAMP  NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_treadmill PRIMARY KEY (id),
+    CONSTRAINT ck_treadmill_name_not_empty
+        CHECK (length(trim(name)) > 0)
 );
 ```
-A tabela **administrador** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela **checkpoint**, da qual é referenciada. O campo **senha** utiliza `VARCHAR(255)` para armazenar o hash gerado por algoritmos como bcrypt ou Argon2, que produzem saídas de até 100 caracteres — nunca a senha em texto puro. O campo **area** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro.
  
- #### Tabela checkpoint
+A tabela **`treadmill`** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **`name`** e **`specification`** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido; o `name` é protegido contra valores vazios pela constraint `ck_treadmill_name_not_empty`. O campo **`specification`** é opcional (`NULL`), pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
+
+##### Tabela `admin` (`0005_create_admin.sql`)
+
+```sql
+CREATE TABLE admin (
+    id          INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name        VARCHAR(100)  NOT NULL,
+    email       VARCHAR(150)  NOT NULL,
+    area        VARCHAR(100)  NULL,
+    password    VARCHAR(255)  NOT NULL,
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_admin PRIMARY KEY (id),
+    CONSTRAINT uq_admin_email UNIQUE (email),
+    CONSTRAINT ck_admin_name_not_empty
+        CHECK (length(trim(name)) > 0),
+    CONSTRAINT ck_admin_email_format
+        CHECK (email ~ '^[^@[:space:]]+@[^@[:space:]]+\.[^@[:space:]]+$')
+);
+```
+
+A tabela **`admin`** também não possui chaves estrangeiras, sendo criada de forma independente antes da tabela `checkpoint`, da qual é referenciada. O campo **`email`** é o identificador de autenticação do usuário administrativo: possui restrição `UNIQUE` (`uq_admin_email`) e validação de formato (`ck_admin_email_format`). O campo **`password`** utiliza `VARCHAR(255)` para armazenar o *hash* gerado por algoritmos como bcrypt ou Argon2 — nunca a senha em texto puro. O campo **`area`** é opcional e representa a área de atuação do usuário dentro da plataforma, podendo ser preenchido em etapa posterior ao cadastro. O campo **`name`** é protegido contra valores vazios.
  
+##### Tabela `checkpoint` (`0006_create_checkpoint.sql`)
+
 ```sql
 CREATE TABLE checkpoint (
-    id                  SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    identificador       VARCHAR(100)    NOT NULL,
-    km                  NUMERIC(6, 3)   NOT NULL,
-    pace                VARCHAR(20)     NULL,
-    tempo               VARCHAR(20)     NULL,
-    imagem              JSON            NULL,
-    corredor_id         SMALLINT        NOT NULL,
-    competicao_id       SMALLINT        NOT NULL,
-    esteira_id          SMALLINT        NOT NULL,
-    administrador_id    SMALLINT        NOT NULL,
-    criado_em           TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id),
-    UNIQUE (identificador),
-    CHECK (km >= 0 AND km <= 1000),
-    CHECK (pace ~ '^[0-9]+:[0-9]{2}/km$'),
-    CHECK (tempo ~ '^[0-9]{2}:[0-9]{2}:[0-9]{2}$')
+    id              INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    identifier      VARCHAR(100)  NOT NULL,
+    distance_km     NUMERIC(6, 3) NOT NULL,
+    pace            VARCHAR(20)   NULL,
+    time            VARCHAR(20)   NULL,
+    image           JSONB         NULL,
+    id_runner       INTEGER       NOT NULL,
+    id_competition  INTEGER       NOT NULL,
+    id_treadmill    INTEGER       NOT NULL,
+    id_admin        INTEGER       NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_checkpoint PRIMARY KEY (id),
+    CONSTRAINT uq_checkpoint_identifier UNIQUE (identifier),
+    CONSTRAINT ck_checkpoint_distance_km
+        CHECK (distance_km >= 0 AND distance_km <= 1000),
+    CONSTRAINT ck_checkpoint_pace_format
+        CHECK (pace IS NULL OR pace ~ '^[0-9]{1,2}:[0-9]{2}/km$'),
+    CONSTRAINT ck_checkpoint_time_format
+        CHECK (time IS NULL OR time ~ '^[0-9]{2}:[0-9]{2}:[0-9]{2}$'),
+    CONSTRAINT fk_checkpoint_id_runner
+        FOREIGN KEY (id_runner) REFERENCES runner (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_checkpoint_id_competition
+        FOREIGN KEY (id_competition) REFERENCES competition (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_checkpoint_id_treadmill
+        FOREIGN KEY (id_treadmill) REFERENCES treadmill (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT,
+    CONSTRAINT fk_checkpoint_id_admin
+        FOREIGN KEY (id_admin) REFERENCES admin (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
 );
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_corredor_id_foreign
-    FOREIGN KEY (corredor_id) REFERENCES corredor (id);
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_competicao_id_foreign
-    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_esteira_id_foreign
-    FOREIGN KEY (esteira_id) REFERENCES esteira (id);
- 
-ALTER TABLE checkpoint
-    ADD CONSTRAINT checkpoint_administrador_id_foreign
-    FOREIGN KEY (administrador_id) REFERENCES administrador (id);
- 
-CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
-CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
-CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
-CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
-CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
+
+CREATE INDEX idx_checkpoint_id_runner      ON checkpoint (id_runner);
+CREATE INDEX idx_checkpoint_id_competition ON checkpoint (id_competition);
+CREATE INDEX idx_checkpoint_id_treadmill   ON checkpoint (id_treadmill);
+CREATE INDEX idx_checkpoint_id_admin       ON checkpoint (id_admin);
+CREATE INDEX idx_checkpoint_created_at     ON checkpoint (created_at);
 ```
  
-A tabela **checkpoint** é a entidade central do sistema operacional e a última a ser criada, pois concentra quatro chaves estrangeiras: `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id`. O campo **km** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão, adequado para registros de distância como `42,195 km`. A restrição `CHECK (km >= 0)` assegura que nenhum valor negativo seja inserido. Os campos **pace** e **tempo** são armazenados como `VARCHAR`, pois seguem formatos textuais como `"5:30/km"` e `"01:23:45"`, sendo opcionais pois podem não estar disponíveis em todos os registros. O campo **imagem** é definido como `JSON` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **identificador** possui restrição `UNIQUE` para garantir unicidade entre os registros operacionais. O campo **administrador_id** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints — um administrador pode estar associado a múltiplos registros ao longo de uma competição. Cinco índices são criados: quatro sobre as chaves estrangeiras para otimizar junções e um sobre `criado_em` para acelerar relatórios cronológicos de desempenho.
+A tabela **`checkpoint`** é a entidade central do sistema operacional, pois concentra quatro chaves estrangeiras: `id_runner`, `id_competition`, `id_treadmill` e `id_admin`, todas obrigatórias e definidas com `ON UPDATE CASCADE` / `ON DELETE RESTRICT`. Por depender de quatro tabelas, é a última das entidades principais a ser criada. O campo **`identifier`** possui restrição `UNIQUE` (`uq_checkpoint_identifier`), garantindo a rastreabilidade individual de cada registro operacional. O campo **`distance_km`** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão (adequado para distâncias como `42,195 km`), e é validado pela constraint `ck_checkpoint_distance_km`, que assegura valores entre 0 e 1000. Os campos **`pace`** e **`time`** são armazenados como `VARCHAR` e são opcionais; quando preenchidos, são validados por constraints de formato (`mm:ss/km` e `hh:mm:ss`, respectivamente), construídas com a condição `IS NULL OR ...` para permitir o valor nulo sem violar a regra. O campo **`image`** é definido como `JSONB` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **`id_admin`** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints. São criados cinco índices: quatro sobre as chaves estrangeiras, para otimizar junções, e um sobre `created_at`, para acelerar relatórios cronológicos de desempenho.
+
 
 ##### Considerações gerais sobre a implementação
  
