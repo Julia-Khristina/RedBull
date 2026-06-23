@@ -788,7 +788,7 @@ O Quadro 20 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
   <sub>Quadro 22 - Regras de Negócio </sub>
@@ -2737,7 +2737,7 @@ ALTER TABLE checkpoint
 CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
 CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
 CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
-CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
+CREATE INDEX idx_checkpoint_administrador_id ON checkpoint (administrador_id);
 CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
 ```
  
