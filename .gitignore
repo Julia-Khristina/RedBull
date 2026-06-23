@@ -56,6 +56,10 @@ typings/
 # Optional eslint cache
 .eslintcache
 
+# OCR runtime uploads/cache
+.ocr-cache/
+*.traineddata
+
 # Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/

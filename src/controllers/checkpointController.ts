@@ -3,6 +3,7 @@ import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
 import { treadmillService } from "../services/treadmillService";
 import { runnerService } from "../services/runnerService";
+import { teamService } from "../services/teamService";
 import { ValidationError } from "../errors/AppError";
 
 function parseIntegerParam(value: unknown, name: string): number {
@@ -64,6 +65,21 @@ function formatSecondsAsHoursMinutes(totalSeconds: number): string {
   return `${hours}h ${String(minutes).padStart(2, "0")}m`;
 }
 
+function calculateAveragePaceSeconds(checkpoints: Checkpoint[]): number | null {
+  const paces = checkpoints
+    .map((checkpoint) => {
+      const timeSeconds = parseDurationToSeconds(checkpoint.time);
+      if (timeSeconds !== null && Number(checkpoint.distance_km) > 0) {
+        return timeSeconds / Number(checkpoint.distance_km);
+      }
+      return parsePaceToSeconds(checkpoint.pace);
+    })
+    .filter((pace): pace is number => pace !== null);
+
+  if (paces.length === 0) return null;
+  return paces.reduce((sum, pace) => sum + pace, 0) / paces.length;
+}
+
 function buildSavedDataSummary(checkpoints: Checkpoint[]) {
   const totalDistanceKm = checkpoints.reduce(
     (sum, checkpoint) => sum + Number(checkpoint.distance_km || 0),
@@ -109,17 +125,34 @@ export const checkpointController = {
       runnerId && teamId
         ? await runnerService.findByTeamAndId(teamId, runnerId)
         : null;
+    const [selectedTeam, runnerCheckpoints] = await Promise.all([
+      teamId
+        ? teamService
+            .findByCompetitionAndId(competitionId, teamId)
+            .catch(() => null)
+        : null,
+      runnerId ? checkpointService.findByRunner(runnerId).catch(() => []) : [],
+    ]);
+    const averagePaceSeconds = calculateAveragePaceSeconds(runnerCheckpoints);
 
     res.render("operational-panel/operationalPanel", {
-      title: "Registro manual — Red Bull 24h",
+      title: "Painel OCR — Red Bull 24h",
       pageCSS: "/css/operational-panel.css",
       selectedRunner,
+      selectedTeam,
       checkpointContext: {
         identifier: `MANUAL-${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}-${runnerId ?? "runner"}`,
         id_runner: runnerId ?? "",
         id_competition: competitionId,
         id_treadmill: treadmill.id,
         id_admin: adminId,
+        team_id: teamId ?? "",
+        average_pace_seconds: averagePaceSeconds,
+        average_pace_label:
+          averagePaceSeconds !== null
+            ? formatSecondsAsPace(averagePaceSeconds)
+            : "",
+        checkpoint_number: runnerCheckpoints.length + 1,
       },
       manualCheckpoint: {
         checkpointClock: new Date().toLocaleTimeString("pt-BR"),

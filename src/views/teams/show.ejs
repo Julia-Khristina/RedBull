@@ -38,7 +38,10 @@
         <%= runners.length %> de 16 atletas cadastrados
       </p>
     </div>
-    <a class="team-panel__back" href="/teams?competitionId=<%= competition.id %>">Voltar para equipes</a>
+    <div class="team-panel__actions">
+      <a class="team-panel__back" href="/teams?competitionId=<%= competition.id %>">Voltar para equipes</a>
+      <a class="team-panel__audit" href="/view/competitions/<%= competition.id %>/teams/<%= team.id %>/checkpoints/saved">Auditoria</a>
+    </div>
   </header>
 
   <section class="team-panel__summary" aria-label="Resumo da equipe">

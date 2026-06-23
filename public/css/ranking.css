@@ -747,6 +747,37 @@
   background: var(--azul-secundario);
 }
 
+.report-action-button--disabled {
+  background: rgba(15, 0, 105, 0.28);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.report-action-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.report-action-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+.report-action-select {
+  min-width: 240px;
+  padding: 14px 16px;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--bordas-separadores);
+  background: var(--fundo-cards);
+  color: var(--texto);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+}
+
 .report-table-panel {
   padding: 22px 20px 26px;
 }
