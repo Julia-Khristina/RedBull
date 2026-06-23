@@ -722,18 +722,18 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web 
 
-## 3.1. Requisitos do Sistema (sprints 1 a 5)
+## 3.1. Requisitos do Sistema 
 
 Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos não funcionais do sistema. Eles definem o comportamento esperado da aplicação, suas restrições e critérios de qualidade, servindo como base para implementação e validação ao longo das sprints.
 
-### 3.1.1. Requisitos Funcionais (sprint 1, refinar até sprint 5)
+### 3.1.1. Requisitos Funcionais
 
-O Quadro 20 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
 
 <div align="center">
-  <sub>Quadro 20 - Requisitos Funcionais </sub>
+  <sub>Quadro 18 - Requisitos Funcionais </sub>
 </div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
@@ -761,7 +761,7 @@ O Quadro 20 contempla os requisitos funcionais do sistema, evidenciando as açõ
 ### 3.1.1.1 Critérios de Aceite dos Requisitos Funcionais
 
 <div align="center">
-  <sub>Quadro 21 - Critérios de Aceite dos Requisitos Funcionais </sub>
+  <sub>Quadro 19 - Critérios de Aceite dos Requisitos Funcionais </sub>
 </div>
 
 | RF    | Critério de Aceite                                                                                                                                                                    |
@@ -786,12 +786,12 @@ O Quadro 20 contempla os requisitos funcionais do sistema, evidenciando as açõ
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
+### 3.1.2. Regras de Negócio 
 
-No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 20, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 22 - Regras de Negócio </sub>
+  <sub>Quadro 20 - Regras de Negócio </sub>
 </div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
@@ -819,24 +819,24 @@ No Quadro 22, são apresentadas as regras de negócio do sistema, as quais defin
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 (sprints 1 a 5)
+### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
-Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 23), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
+Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 21), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
 
 <div align="center">
-  <sub>Quadro 23 - Requisitos Não Funcionais </sub>
+  <sub>Quadro 21 - Requisitos Não Funcionais </sub>
 </div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Status                      | Como atendido                                      |
 | --------------------------- | -------------------------------------------------------------------------------------------------------- | ---------------------------------------------------- | --------------------------- | -------------------------------------------------- |
-| USAB — Usabilidade          | O sistema deve permitir execução das funções principais sem treinamento extensivo                        | ≥ 80% dos usuários concluem as tarefas principais em até 5 minutos (tempo aferido em testes de guerrilha cronometrados); SUS ≥ 70 (percepção aferida em questionario SUS) | Concluído | Protótipos de alta fidelidade validados com o parceiro (seção 3.5); fluxos do operador desenhados em poucas telas (seção 3.3.1); testes de usabilidade reais executados e tabulados (seção 5.2) |
-| CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação humana e persistência dos checkpoints | Taxa de inconsistência inferior a 1% entre dados capturados e dados persistidos durante a competição (métrica pós-validação humana, não acurácia bruta do OCR) | Concluído | Restrições `CHECK` em migrations (limites e formato de `distance_km`, `pace` e `time` na tabela `checkpoint`; check de status em `competition` e `runner` — seção 3.6.3); tipagem em TypeScript dos models; validators de payload; tratamento centralizado de erros via [errorHandler.ts] + [AppError.ts] (seção 3.7); endpoints de OCR [ocrRoutes.ts] e de inconsistências [checkpointRoutes.ts] já implementados |
-| DES — Desempenho | O sistema deve atualizar o painel administrativo em tempo real durante a competição | Atualização concluída automaticamente após novos checkpoints | Concluído | Endpoints `GET /competitions/:id/ranking/teams` e `GET /competitions/:id/ranking/runners` implementados [rankingRoutes.ts]; |
-| SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Concluído | Arquitetura em camadas Controller → Service → Repository → Model (seção 3.2.3); padrões de projeto aplicados (seção 3.2.7); middleware central de erros em [errorHandler.ts]; doze arquivos de rota isolados em [src/routes/] permitem manutenção de um domínio sem afetar os demais |
-| SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de credenciais válidas                | 100% das tentativas sem credenciais válidas devem ser bloqueadas com resposta HTTP 401 | Concluído | Estrutura de erros já contempla `401` na tabela de Códigos de Status HTTP da api-documentation.html (seção 3.7); interface `Admin` com campo `password` em [admin.ts]; autenticação com JWT e endpoint `POST /auth/sessions` (e `/admin/login`) já implementados em [authRoutes.ts] e [authService.ts] |
-| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Concluído | Backend Node.js/Express com Supabase (Postgres gerenciado), ambos com escalabilidade horizontal documentada; isolamento de rotas por domínio permite escalar seletivamente o que receber maior carga (ranking público) |
-| REST — Restrições de Design | O sistema deve operar com validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter vínculo com corredor, competição, esteira e administrador responsável | Concluído | Migrations em [documentos/outros/migrations/] com FKs obrigatórias para `id_runner`, `id_competition`, `id_treadmill` e `id_admin` na tabela `checkpoint` (seção 3.6.3); validators em [src/validators/] rejeitando payload incompleto com `400`/`422`; rota OCR ativa [ocrRoutes.ts] consolida o fluxo OCR → validação humana → API |
-| ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com rastreabilidade entre tarefas, commits e entregas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas | Concluído | Conventional Commits com referência à issue (`tipo (#NNN): mensagem`); branches versionadas por tema (`docs/sprint-XX/...`, `feat/...`, `fix/...`); Kanban no GitLab com cards de User Story, tasks com DoR/DoD/Critérios de Aceite, tamanhos (PP/P/M/G/GG) e *milestone* por sprint; merge requests estruturados com objetivo, mudanças, plano de testes e `Closes #NNN` |
+| USAB — Usabilidade          | O sistema deve permitir execução das funções principais sem treinamento extensivo                        | ≥ 80% dos usuários concluem as tarefas principais em até 5 minutos (tempo aferido em testes de guerrilha cronometrados); SUS ≥ 70 (percepção aferida em questionario SUS) | Concluído | Protótipos validados com o parceiro, fluxos simplificados e testes de usabilidade realizados. |
+| CONF — Confiabilidade       | O sistema deve manter consistência entre captura OCR, validação humana e persistência dos checkpoints | Taxa de inconsistência inferior a 1% entre dados capturados e dados persistidos durante a competição (métrica pós-validação humana, não acurácia bruta do OCR) | Concluído | Validações de entrada, restrições no banco de dados, tipagem TypeScript e tratamento centralizado de erros. |
+| DES — Desempenho | O sistema deve atualizar o painel administrativo em tempo real durante a competição | Atualização concluída automaticamente 100% das vezes após novos checkpoints | Concluído | Atualização automática dos rankings após a validação de novos checkpoints. |
+| SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Concluído | Arquitetura em camadas, separação de responsabilidades e manutenção isolada por domínio. |
+| SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de credenciais válidas                | 100% das tentativas sem credenciais válidas devem ser bloqueadas com resposta HTTP 401 | Concluído | Autenticação baseada em credenciais, controle de acesso e tratamento de tentativas não autorizadas. |
+| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Concluído | Infraestrutura baseada em Node.js, Express e Supabase, com suporte à escalabilidade da aplicação. |
+| REST — Restrições de Design | O sistema deve operar com validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter vínculo com corredor, competição e administrador responsável | Concluído | Persistência centralizada via API, validação obrigatória dos dados e integridade referencial no banco de dados. |
+| ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com rastreabilidade entre tarefas, commits e entregas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas | Concluído | Metodologia ágil, versionamento, Kanban, Conventional Commits e rastreabilidade das entregas. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -844,72 +844,51 @@ Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de 
 
 **3.1.3.1 Derivação dos RNFs a partir do contexto do parceiro**
 
-O eixo de Usabilidade (USAB) foi definido considerando que os operadores atuam sob alta pressão operacional durante 24 horas contínuas, exigindo que as principais funcionalidades do sistema sejam executadas rapidamente e sem necessidade de treinamento extensivo. Esse requisito se relaciona principalmente aos RFs de registro e validação de checkpoints (RF007, RF008, RF009, RF010) e é sustentado pelos protótipos de alta fidelidade validados com o parceiro (seção 3.5), pelo desenho de fluxos curtos nas telas de captura, validação e checkpoint (seção 3.3.1) e pelos testes de usabilidade reais executados. A verificação quantitativa da métrica combina dois instrumentos complementares aplicados na Sprint 5 (seção 5.2): testes de guerrilha cronometrados aferem o tempo de conclusão das tarefas principais, enquanto o questionário SUS afere a percepção subjetiva de usabilidade numa escala de 0 a 100. Os resultados das avaliações foram consolidados e tabulados no arquivo [testes-usabilidade-tabulacao.xlsx], demonstrando pleno atendimento dos critérios estipulados.
+O eixo de Usabilidade (USAB) foi estabelecido para garantir que operadores consigam executar as principais funcionalidades do sistema de forma intuitiva e eficiente, mesmo em situações de pressão operacional. Para atender esse requisito, foram desenvolvidos fluxos simplificados, protótipos validados com o parceiro e testes de usabilidade realizados com usuários representativos do contexto de uso.
 
-O eixo de Confiabilidade (CONF) foi derivado da necessidade de reduzir inconsistências presentes no processo manual atual. Como a apuração da competição depende diretamente da precisão dos checkpoints registrados, foi estabelecida uma taxa máxima de inconsistência inferior a 1% entre os dados capturados (via OCR ou registro manual) e os dados persistidos no banco — métrica que reflete o resultado pós-validação humana, e não a acurácia bruta do OCR isolado (a acurácia do OCR é atributo de fornecedor; a consistência captura-persistência é atributo do sistema). As bases técnicas já implementadas que sustentam esse eixo são: restrições `CHECK` nas migrations em [documentos/outros/migrations/] — limites e formato em `distance_km`, `pace` e `time` (tabela `checkpoint`), e verificação de status em `competition` e `runner` (seção 3.6.3); validação de payload em [src/validators/] rejeitando entradas inválidas com `400`/`422`; tipagem estática dos models em TypeScript [src/models/] e tratamento centralizado de erros pela classe [AppError.ts] e middleware [errorHandler.ts]. O fluxo OCR → validação humana → persistência é fechado com os endpoints `POST /ocr/extractions` em [ocrRoutes.ts] e `GET /competitions/:id/checkpoints/inconsistencies` em [checkpointRoutes.ts], ambos já plenamente implementados.
+O eixo de Confiabilidade (CONF) foi definido em função da necessidade de reduzir erros e inconsistências no processo de registro dos checkpoints. Para isso, a solução incorpora validações em diferentes camadas da aplicação, incluindo regras de negócio, validações de entrada, restrições no banco de dados e mecanismos de tratamento de erros, garantindo maior consistência entre os dados registrados e persistidos.
 
-O eixo de Desempenho (DES) está relacionado à necessidade de atualização frequente dos rankings administrativos durante a competição, permitindo acompanhamento contínuo da operação sem atrasos perceptíveis aos operadores. Os endpoints `GET /competitions/:id/ranking/teams` e `GET /competitions/:id/ranking/runners` já entregam o ranking consolidado no formato definido na seção 3.7 da WebAPI e em [rankingRoutes.ts];
+O eixo de Desempenho (DES) está relacionado à necessidade de disponibilizar informações atualizadas durante toda a competição. Dessa forma, o sistema foi projetado para atualizar automaticamente rankings e indicadores operacionais sempre que novos checkpoints forem registrados e validados.
 
-O eixo de Suportabilidade (SUP) foi definido considerando a necessidade de continuidade operacional durante o evento. Como a competição ocorre ininterruptamente por 24 horas, eventuais correções críticas não podem comprometer o registro dos checkpoints já realizados. A arquitetura em camadas adotada (Controller → Service → Repository → Model, seção 3.2.3) e os padrões de projeto aplicados (seção 3.2.7) isolam responsabilidades e permitem correções pontuais (*hotfixes*) sem necessidade de reimplantar a aplicação por completo. O middleware central de erros em [errorHandler.ts] garante que falhas isoladas não derrubem a aplicação como um todo, e os doze arquivos de rota em [src/routes/] permitem desligar ou substituir um domínio (por exemplo, ranking) sem afetar os demais.
+O eixo de Suportabilidade (SUP) considera a necessidade de manutenção da solução sem comprometer a continuidade da operação do evento. A arquitetura em camadas adotada favorece a separação de responsabilidades, simplificando correções, evoluções e atividades de manutenção ao longo do ciclo de vida do sistema.
 
-O eixo de Segurança (SEG) deriva da necessidade de restringir o acesso às áreas administrativas do sistema apenas aos operadores autorizados pelo evento, protegendo os dados operacionais e evitando alterações indevidas nos registros da competição. A autenticação por token JWT foi totalmente integrada na Sprint 5 com o endpoint `POST /auth/sessions` (e `POST /admin/login`) e implementada com a biblioteca `jsonwebtoken` em [authRoutes.ts] e [authService.ts], contemplando tratamento de credenciais inválidas com erro `401 Unauthorized` (e `403 Forbidden` sob restrição de permissão). O modelo `Admin` na interface [admin.ts] já suporta o campo `password` para fins de validação.
+O eixo de Segurança (SEG) foi definido para assegurar que apenas usuários autorizados possam acessar funcionalidades administrativas e realizar alterações nos dados da competição. Para isso, a solução utiliza autenticação baseada em credenciais e mecanismos de controle de acesso às áreas restritas do sistema.
 
-O eixo de Capacidade (CAP) foi estabelecido considerando o acesso simultâneo de operadores, organizadores e usuários acompanhando os rankings públicos durante períodos de pico da competição, exigindo estabilidade da aplicação mesmo sob múltiplas requisições concorrentes. A escolha por Node.js/Express no backend e Supabase (Postgres gerenciado) como banco oferece base reconhecida para escalabilidade horizontal, e o isolamento de rotas por domínio (`competition`, `team`, `runner` e `athlete`, `admin`, `checkpoint`, `ranking`, `export`, `ocr`, `report`, `auth`, `dashboard`) permite escalar seletivamente o que receber maior carga (tipicamente o ranking público).
+O eixo de Capacidade (CAP) busca garantir a estabilidade da aplicação diante do acesso simultâneo de operadores, organizadores e usuários que acompanham os resultados da competição. A utilização de tecnologias amplamente consolidadas e serviços gerenciados contribui para a escalabilidade e disponibilidade da solução.
 
-O eixo de Restrições de Design (REST) foi derivado diretamente da arquitetura definida para o projeto, baseada em captura via OCR, validação humana e processamento centralizado via API, garantindo padronização do fluxo de dados. Embora algumas das regras associadas — como a obrigatoriedade de vínculo entre `checkpoint` e seus quatro recursos relacionados — possam ser vistas como regras de integridade próximas de RFs/RNs, optou-se por classificá-las como Restrição de Design por refletirem uma decisão arquitetural deliberada (centralização do fluxo OCR → validação → API) que limita as opções de implementação subsequentes. As FKs obrigatórias na tabela `checkpoint` (`id_runner`, `id_competition`, `id_treadmill` e `id_admin` em [0006_create_checkpoint.sql]) garantem, no nível do banco, que nenhum registro operacional seja persistido sem vínculo completo com seus recursos responsáveis. Os validators em [src/validators/] aplicam essa mesma regra antes da chamada ao repository, e o endpoint `POST /ocr/extractions` (em [ocrRoutes.ts]) consolida o fluxo OCR → validação humana → persistência em uma única cadeia auditada.
+O eixo de Restrições de Design (REST) foi derivado das decisões arquiteturais adotadas no projeto, especialmente a centralização do processamento dos dados por meio da API e a obrigatoriedade de validação antes da persistência das informações. Essas definições garantem padronização, rastreabilidade e integridade dos registros realizados durante o evento.
 
-Por fim, o eixo Organizacional (ORG) está relacionado ao modelo de desenvolvimento adotado pelo grupo e às exigências acadêmicas do projeto, garantindo rastreabilidade, versionamento e controle das entregas realizadas ao longo das sprints. Na prática, o grupo adota Conventional Commits referenciando o número da issue (`tipo (#NNN): mensagem`), branches versionadas por tema (`docs/sprint-XX/...`, `feat/...`, `fix/...`) e gerencia o *backlog* em um Kanban no GitLab — cada card contém User Story associada, DoR, DoD, Critérios de Aceite, tamanho (PP/P/M/G/GG), *time estimate*/*spent* e *milestone* da sprint. Os merge requests são estruturados com objetivo, mudanças principais, plano de testes e referência `Closes #NNN`, fechando o ciclo de rastreabilidade da entrega.
+Por fim, o eixo Organizacional (ORG) está relacionado às práticas de gestão e desenvolvimento utilizadas pela equipe ao longo das sprints. A adoção de metodologia ágil, versionamento de código, controle de tarefas e rastreabilidade das entregas contribuiu para a organização do projeto e para a manutenção da consistência entre requisitos, implementação e documentação.
 
-### 3.1.4. Matriz RF → RN → Endpoint (sprints 3 a 5)
+### 3.1.4. Matriz RF → RN → Endpoint
 
-Os endpoints foram definidos seguindo as boas práticas de design de APIs RESTful descritas pela Microsoft Azure Architecture Center, que recomenda o uso de substantivos no plural para nomear recursos, hierarquia de URIs para expressar relações entre entidades e verbos HTTP como única forma de expressar a ação sobre o recurso (Microsoft, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio que o governam e ao contrato HTTP que o implementa.
+Os endpoints foram definidos seguindo boas práticas de design de APIs RESTful, com uso de substantivos no plural para nomear recursos, hierarquia de URIs para representar relações entre entidades e verbos HTTP como forma de expressar ações sobre os recursos (Microsoft, 2023). Dessa forma, cada linha da matriz conecta um requisito funcional às regras de negócio associadas, ao contrato HTTP correspondente, ao status de implementação e à evidência técnica de rastreabilidade no projeto.
+
+A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1 e 3.1.2 e conferida com as rotas efetivamente montadas em `src/app.ts` e implementadas em `src/routes`.
 
 <div align="center">
 
-  <sub>Quadro 24 - Matriz RF → RN → Endpoint</sub>
+  <sub>Quadro 22 - Matriz RF → RN → Endpoint</sub>
 
 </div>
 
-| RF    | RN associadas       | Endpoint                                                      | Método |
-| ----- | ------------------- | ------------------------------------------------------------- | ------ |
-| RF001 | RN03                | `/competitions`                                               | POST   |
-| RF002 | RN18                | `/competitions`                                               | POST   |
-| RF002 | RN18                | `/competitions`                                               | GET    |
-| RF002 | RN18                | `/competitions/:competitionId`                                           | GET    |
-| RF002 | RN18                | `/competitions/:competitionId`                                           | PUT    |
-| RF012 | RN14                | `/competitions/:competitionId`                                           | PATCH  |
-| RF002 | RN18                | `/competitions/:competitionId`                                           | DELETE |
-| RF003 | RN01, RN07          | `/competitions/:competitionId/teams`                                     | POST   |
-| RF003 | RN01, RN07          | `/competitions/:competitionId/teams`                                     | GET    |
-| RF003 | RN01, RN07          | `/competitions/:competitionId/teams/:teamId`                             | GET    |
-| RF003 | RN01, RN07          | `/competitions/:competitionId/teams/:teamId`                             | PUT    |
-| RF003 | RN01, RN07          | `/competitions/:competitionId/teams/:teamId`                             | DELETE |
-| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes`                    | POST   |
-| RF011 | RN07, RN10          | `/competitions/:competitionId/teams/:teamId/athletes`                    | GET    |
-| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes/:athleteId`         | GET    |
-| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes/:athleteId`         | PUT    |
-| RF003 | RN01                | `/competitions/:competitionId/teams/:teamId/athletes/:athleteId`         | DELETE |
-| RF004 | RN02, RN03          | `/auth/sessions`                                              | POST   |
-| RF005 | RN06                | `/ocr/extractions`                                            | POST   |
-| RF006 | RN04, RN05          | `/ocr/extractions`                                            | POST   |
-| RF007 | RN06, RN12          | `/ocr/extractions/:extractionId`                              | PATCH  |
-| RF008 | RN04, RN05          | `/checkpoints`                                                | POST   |
-| RF008 | RN04, RN05          | `/checkpoints`                                                | GET    |
-| RF008 | RN04, RN05          | `/checkpoints/:id`                                            | GET    |
-| RF007 | RN06, RN12          | `/checkpoints/:id`                                            | PUT    |
-| RF008 | RN04, RN05          | `/checkpoints/:id`                                            | DELETE |
-| RF008 | RN04, RN05          | `/corredores/:corredorId/checkpoints`                         | GET    |
-| RF008 | RN04, RN05          | `/competitions/:competitionId/checkpoints`                               | GET    |
-| RF009 | RN06                | `/competitions/:competitionId/checkpoints/inconsistencies`               | GET    |
-| RF010 | RN09, RN11          | `/competitions/:competitionId/ranking/teams`                             | GET    |
-| RF015 | RN09, RN11          | `/competitions/:competitionId/ranking/athletes`                          | GET    |
-| RF013 | RN15                | `/competitions/:competitionId/export`                                    | GET    |
-| RF014 | RN16, RN17          | `/competitions/:competitionId/reports`                                   | GET    |
-| RF004 | RN02, RN03          | `/administradores`                                            | GET    |
-| RF004 | RN02, RN03          | `/administradores/:id`                                        | GET    |
-| RF004 | RN02, RN03          | `/administradores`                                            | POST   |
-| RF004 | RN02, RN03          | `/administradores/:id`                                        | PUT    |
-| RF004 | RN02, RN03          | `/administradores/:id`                                        | DELETE |
+| RF | RN associadas | Endpoint(s) | Método(s) | Status | Evidência / Observação |
+|---|---|---|---|---|---|
+| RF001 | RN01, RN03, RN13 | `/competitions`; `/public/team/:uuid` | POST; GET | Implementado | Permite criar competição e disponibilizar acesso público por UUID da equipe. |
+| RF002 | RN18 | `/competitions`; `/competitions/:id` | POST; GET; PUT; DELETE | Implementado | Permite cadastrar, listar, consultar, atualizar e excluir competições. |
+| RF003 | RN01, RN07 | `/competitions/:id/teams`; `/competitions/:id/teams/:teamId`; `/competitions/:id/teams/:teamId/runners`; `/competitions/:id/teams/:teamId/runners/:runnerId` | POST; GET; PUT; DELETE | Implementado | Permite gerenciar equipes e atletas vinculados a uma competição. |
+| RF004 | RN03 | `/auth/sessions`; `/admin/login`; `/admin`; `/admin/:id` | POST; GET; PUT; DELETE | Implementado | Permite autenticação e gerenciamento de administradores do sistema. |
+| RF005 | RN06 | `/ocr/extractions` | POST | Planejado | Endpoint previsto para extração automática de dados por OCR, porém não implementado nesta versão. |
+| RF006 | RN06 | `/ocr/extractions` | POST | Planejado | Endpoint previsto para apoiar a validação dos dados extraídos por OCR. |
+| RF007 | RN06, RN12 | `/checkpoints/:id` | PUT | Implementado | Permite corrigir registros de checkpoints após identificação de inconsistências. |
+| RF008 | RN04, RN05 | `/checkpoints`; `/checkpoints/:id`; `/runners/:runnerId/checkpoints`; `/competitions/:id/checkpoints` | POST; GET; DELETE | Implementado | Permite registrar, consultar, listar e excluir checkpoints da competição ou de atletas específicos. |
+| RF009 | RN06 | `/competitions/:id/checkpoints/inconsistencies` | GET | Planejado | Endpoint previsto para listar inconsistências entre tempo, quilometragem e histórico de checkpoints. |
+| RF010 | RN09, RN11 | `/competitions/:id/ranking/teams` | GET | Implementado e validado | Retorna o ranking das equipes em tempo real com base nos checkpoints registrados. |
+| RF011 | RN07, RN08, RN10 | `/competitions/:id/teams/:teamId/active-runner`; `/public/team/:uuid` | PATCH; GET | Parcialmente implementado | A visualização pública da equipe está implementada; a alteração formal do atleta ativo permanece prevista. |
+| RF012 | RN14, RN16 | `/competitions/:id` | PATCH | Implementado | Permite atualização parcial de informações da competição, como status e configurações operacionais. |
+| RF013 | RN15 | `/competitions/:id/export` | GET | Implementado | Permite exportar dados consolidados da competição para análise posterior. |
+| RF014 | RN16, RN17 | `/competitions/:id/reports` | GET | Planejado | Endpoint previsto para geração de relatórios gerenciais e operacionais da competição. |
+| RF015 | RN09, RN13 | `/competitions/:id/ranking`; `/competitions/:id/ranking/teams`; `/competitions/:id/ranking/runners` | GET | Implementado e validado | Retorna rankings por equipe e por atleta, ordenados conforme desempenho registrado. |
 
 <div align="center">
 
