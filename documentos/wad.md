@@ -2237,7 +2237,10 @@ A seguir, a Figura 57 ilustra o Modelo Entidade-Relacionamento desenvolvido para
   <sub>Figura 57 - Modelo Entidade-Relacionamento</sub><br>
     <img src="../assets/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div>
+</div> 
+
+**Observação sobre o diagrama:** por limitação da ferramenta de origem, a figura acima reflete o núcleo conceitual com seis entidades. Em caso de divergência visual, prevalecem os nomes do dicionário de dados e da implementação física (Seção 3.6.3): `address` (grafia correta de "adress"), `phone` (em vez de "phone_number"), `Runner` e `Admin`. Além dessas seis entidades, o modelo contempla `OcrExtraction` e `CompetitionReport`, descritas no dicionário de dados a seguir (Quadros 38A e 38B) e representadas no Modelo Relacional (Seção 3.6.3.1).
+
 
 #### Descrição das entidades e relacionamentos
 
@@ -2255,6 +2258,9 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 | Checkpoint | Registro de desempenho do corredor na esteira | Pertence obrigatoriamente a 1 Runner, 1 Competition, 1 Treadmill e 1 Admin (todas as associações são obrigatórias) |
 | Admin | Operador responsável por registrar checkpoints | Possui N Checkpoints (1:N) |
 | Treadmill | Esteira onde a corrida é realizada | Possui N Checkpoints (1:N) |
+| OcrExtraction | Armazena imagens e dados extraídos por OCR para validação | Pertence opcionalmente a 1 Checkpoint (0..1) |
+| CompetitionReport | Relatório consolidado e highlights da competição | Pertence a 1 Competition (relação 1:1) |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2283,7 +2289,7 @@ A seguir, o Quadro 32 exemplifica os elementos da notação de Chen utilizados n
 
 Por meio de quadros, serão detalhadas todas as entidades, listando seus atributos com o respectivo tipo semântico, a obrigatoriedade e a descrição, a fim de contextualizar a implementação ao sistema. A coluna "Obrigatório" indica se o atributo é de preenchimento obrigatório no banco de dados (`SIM`) ou se aceita valor nulo (`NÃO`).
 
-O Quadro 33 apresenta a entidade e os atributos de "Competição".
+- O Quadro 33 apresenta a entidade e os atributos de "Competição".
 
 <div align="center">
   <sub>Quadro 33 - Dicionário de Dados da Entidade Competição</sub>
@@ -2302,7 +2308,7 @@ O Quadro 33 apresenta a entidade e os atributos de "Competição".
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, o Quadro 34 ilustra a entidade Equipe e os seus atributos.
+- A seguir, o Quadro 34 ilustra a entidade Equipe e os seus atributos.
 
 <div align="center">
   <sub>Quadro 34 - Dicionário de Dados da Entidade Equipe</sub>
@@ -2321,7 +2327,7 @@ A seguir, o Quadro 34 ilustra a entidade Equipe e os seus atributos.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 35 representa o dicionário de dados da entidade Corredor.
+- O Quadro 35 representa o dicionário de dados da entidade Corredor.
 
 <div align="center">
   <sub>Quadro 35 - Dicionário de Dados da Entidade Corredor</sub>
@@ -2342,7 +2348,7 @@ O Quadro 35 representa o dicionário de dados da entidade Corredor.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 36 apresenta a entidade e os atributos de "Checkpoint".
+- O Quadro 36 apresenta a entidade e os atributos de "Checkpoint".
 
 <div align="center">
   <sub>Quadro 36 - Dicionário de Dados da Entidade Checkpoint</sub>
@@ -2366,7 +2372,7 @@ O Quadro 36 apresenta a entidade e os atributos de "Checkpoint".
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, o Quadro 37 ilustra a entidade Administrador e os seus atributos.
+- A seguir, o Quadro 37 ilustra a entidade Administrador e os seus atributos.
 
 <div align="center">
   <sub>Quadro 37 - Dicionário de Dados da Entidade Administrador</sub>
@@ -2385,7 +2391,7 @@ A seguir, o Quadro 37 ilustra a entidade Administrador e os seus atributos.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-O Quadro 38 representa o dicionário de dados da entidade Esteira.
+- O Quadro 38 representa o dicionário de dados da entidade Esteira.
 
 <div align="center">
   <sub>Quadro 38 - Dicionário de Dados da Entidade Esteira </sub>
@@ -2402,14 +2408,55 @@ O Quadro 38 representa o dicionário de dados da entidade Esteira.
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
+
+- O Quadro 39 apresenta a entidade e os atributos de "Extração OCR".
+
+<div align="center">
+  <sub>Quadro 39 - Dicionário de Dados da Entidade Extração OCR</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| OcrExtraction | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada extração |
+| OcrExtraction | `image` | JSONB | Sim | — | Imagem submetida ao processamento OCR |
+| OcrExtraction | `extracted_data` | JSONB | Não | — | Dados extraídos automaticamente da imagem |
+| OcrExtraction | `validation` | JSONB | Não | — | Resultado da validação dos dados extraídos |
+| OcrExtraction | `status` | Categórico | Sim | CHECK: `pending`, `processed`, `validated` ou `rejected`; padrão `pending` | Estágio do processamento da extração |
+| OcrExtraction | `id_checkpoint` | Chave estrangeira | Não | FK → `Checkpoint` (ON DELETE SET NULL) | Vincula a extração ao checkpoint gerado (opcional) |
+| OcrExtraction | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário de criação do registro |
+| OcrExtraction | `updated_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário da última atualização |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+- O Quadro 40 representa o dicionário de dados da entidade Relatório da Competição.
+
+<div align="center">
+  <sub>Quadro 40 - Dicionário de Dados da Entidade Relatório da Competição</sub>
+</div>
+
+| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
+| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
+| CompetitionReport | `id_competition` | Identificador / FK | Sim | PK e FK → `Competition` (ON DELETE CASCADE) | Identifica o relatório e o vincula 1:1 à competição |
+| CompetitionReport | `summary` | JSONB | Sim | — | Resumo estatístico da competição |
+| CompetitionReport | `highlights` | JSONB | Sim | — | Destaques de desempenho do evento |
+| CompetitionReport | `generated_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário de geração do relatório |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 #### Regras que impactam o modelo
 
 Além dos atributos, o modelo é governado por regras de integridade definidas no banco de dados, descritas a seguir, que impactam diretamente a estrutura e o comportamento das entidades:
 
 - **Unicidade:** os atributos `email` e `cpf` de `Runner`, `email` de `Admin`, `uuid` de `Team` e `identifier` de `Checkpoint` são únicos, impedindo registros duplicados.
-- **Domínios restritos (CHECK):** `status` de `Competition` aceita apenas `not_started`, `in_progress` ou `closed`; `status` de `Runner` aceita apenas `runner` ou `captain`; `distance_km` deve estar entre 0 e 1000; `cpf`, `email`, `pace` e `time` seguem formatos pré-definidos.
-- **Obrigatoriedade das associações:** todas as chaves estrangeiras são de preenchimento obrigatório, o que torna a participação das entidades nos relacionamentos sempre total, todo `Team` pertence a uma `Competition`, todo `Runner` a um `Team` e todo `Checkpoint` a um `Runner`, uma `Competition`, uma `Treadmill` e um `Admin`.
-- **Integridade referencial (ON DELETE RESTRICT):** não é permitido excluir um registro que ainda possua dependentes; por exemplo, uma `Competition` não pode ser removida enquanto houver `Teams` ou `Checkpoints` vinculados a ela.
+- **Domínios restritos (CHECK):** `status` de `Competition` aceita apenas `not_started`, `in_progress` ou `closed`; `status` de `Runner` aceita apenas `runner` ou `captain`; `status` de `OcrExtraction` aceita apenas `pending`, `processed`, `validated` ou `rejected`; `distance_km` deve estar entre 0 e 1000; `cpf`, `email`, `pace` e `time` seguem formatos pré-definidos.
+- **Obrigatoriedade das associações:** as chaves estrangeiras são, em regra, de preenchimento obrigatório, o que torna total a participação das entidades nos relacionamentos — todo `Team` pertence a uma `Competition`, todo `Runner` a um `Team` e todo `Checkpoint` a um `Runner`, uma `Competition`, uma `Treadmill` e um `Admin`. A única exceção é a associação de `OcrExtraction` com `Checkpoint`, opcional, pois `id_checkpoint` aceita valor nulo.
+- **Integridade referencial:** em regra, não é permitido excluir um registro que ainda possua dependentes (ON DELETE RESTRICT) — por exemplo, uma `Competition` não pode ser removida enquanto houver `Teams` ou `Checkpoints` vinculados a ela. Há duas exceções intencionais: um `CompetitionReport` é removido em cascata junto com sua `Competition` (ON DELETE CASCADE) e a exclusão de um `Checkpoint` apenas anula o vínculo da extração OCR, sem removê-la (ON DELETE SET NULL).
+
 
 #### Rastreabilidade entidade → RF → RN
 
@@ -2421,12 +2468,15 @@ A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com
 
 | Entidade | RF que origina | RN que governa |
 | --------- | -------------- | -------------|
-| Competição | RF001, RF002 | RN14 |
-| Equipe | RF003 | RN01, RN02, RN07 | 
-| Corredor | RF003 | RN07 | 
+| Competition | RF001, RF002 | RN14 |
+| Team | RF003 | RN01, RN02, RN07 | 
+| Runner | RF003 | RN07 | 
 | Checkpoint | RF005, RF008 | RN04, RN05, RN12 |
-| Administrador | RF004 | RN03 |
-| Esteira | RF005 | — |
+| Admin | RF004 | RN03 |
+| Treadmill | RF005 | — |
+| OcrExtraction | RF005, RF006, RF007, RF009 | RN05, RN06 |
+| CompetitionReport | RF014 | — |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
