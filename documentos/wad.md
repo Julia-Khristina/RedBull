@@ -3436,6 +3436,10 @@ Nesta sprint final, o foco esteve na entrega da camada de autenticação/autoriz
 
 
 ### (b) Pendências remanescentes
+Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e todas as pendências herdadas da sprint 4, como a calculadora de descanso e refinamento do OCR, foram concluídas nesta sprint. As pendências remanescentes restringem-se a itens fora do escopo do MVP e a melhorias incrementais:
+
+* **Refinamentos de UX apontados nos testes de usabilidade:** ajustes pontuais de interface identificados durante os testes com usuários, pouco intuitivas ou sem funcionalidade direta com o escopo do projeto, registrados como melhorias futuras na [Seção 7 — Conclusões e trabalhos futuros](#c7).
+* **Evolução contínua do OCR:** embora o módulo esteja integrado e funcional, a precisão da extração pode ser continuamente aprimorada com a expansão do banco de imagens de referência e novos cenários de teste do ambiente real do evento.
 
 ### (c) Dificuldades técnicas
 
