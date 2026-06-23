@@ -2593,47 +2593,65 @@ Os scripts SQL de migração podem ser vistos aqui: Diretório de Migrações.
 
 A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. Em vez de um único arquivo, o esquema foi organizado em migrations sequenciais e versionadas (de 0000 a 0008), cada uma responsável por uma etapa da construção do banco. Essa abordagem respeita a ordem de dependências entre as tabelas, aplica as restrições de integridade identificadas durante a modelagem conceitual e relacional, e permite que a evolução do esquema seja rastreável e reproduzível em qualquer ambiente.
 
-##### Tabela Competição
+##### Introdução 
+##### Extensões (`0000_extensions.sql`)
 
- 
-##### Tabela `competicao`
- 
 ```sql
-CREATE TABLE competicao (
-    id          SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    endereco    VARCHAR(255)    NOT NULL,
-    data        DATE            NOT NULL,
-    criado_em   TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id)
-);
- 
-CREATE INDEX idx_competicao_data ON competicao (data);
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
 ```
 
-A tabela **competição** não possui dependências externas e, portanto, é criada em primeiro lugar. O campo **id** é do tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **endereço** é definido como `NOT NULL`, pois toda competição deve possuir um local de realização. O campo **data** armazena exclusivamente a data do evento, sem componente horária. O atributo `criado_em` recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro sem exigir intervenção da aplicação. Um **índice** é criado sobre `data` para otimizar consultas por período de realização.
+Antes da criação das tabelas, é habilitada a extensão **`pgcrypto`**, que disponibiliza a função `gen_random_uuid()` utilizada posteriormente pela tabela `team` para gerar identificadores públicos no formato UUID. O uso de `IF NOT EXISTS` torna a operação idempotente, evitando erros caso a extensão já esteja instalada no banco.
 
-#### Tabela equipe
+
+ ##### Tabela `competition` (`0001_create_competition.sql`)
+ 
 ```sql
-CREATE TABLE equipe (
-    id              SMALLINT        NOT NULL GENERATED ALWAYS AS IDENTITY,
-    nome            VARCHAR(100)    NOT NULL,
-    uuid            UUID            NOT NULL DEFAULT gen_random_uuid(),
-    qr_code         JSON            NULL,
-    competicao_id   SMALLINT        NOT NULL,
-    criado_em       TIMESTAMP       NOT NULL DEFAULT NOW(),
- 
-    PRIMARY KEY (id),
-    UNIQUE (uuid)
+CREATE TABLE competition (
+    id          INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name        VARCHAR(100)  NOT NULL,
+    address     VARCHAR(255)  NOT NULL,
+    date        DATE          NOT NULL,
+    status      VARCHAR(30)   NOT NULL DEFAULT 'not_started',
+    created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_competition PRIMARY KEY (id),
+    CONSTRAINT ck_competition_status
+        CHECK (status IN ('not_started', 'in_progress', 'closed')),
+    CONSTRAINT ck_competition_name_not_empty
+        CHECK (length(trim(name)) > 0),
+    CONSTRAINT ck_competition_date_min
+        CHECK (date >= DATE '2020-01-01')
 );
- 
-ALTER TABLE equipe
-    ADD CONSTRAINT equipe_competicao_id_foreign
-    FOREIGN KEY (competicao_id) REFERENCES competicao (id);
- 
-CREATE INDEX idx_equipe_competicao_id ON equipe (competicao_id);
+
+CREATE INDEX idx_competition_date ON competition (date);
 ```
-A tabela **equipe** depende de **competição** por meio da chave estrangeira `competicao_id`. O campo **uuid** utiliza `gen_random_uuid()` como valor padrão e possui restrição `UNIQUE`, garantindo que cada equipe possua um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **qr_code** é armazenado como `JSON` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial. O índice sobre `competicao_id` otimiza operações de junção entre as tabelas.
+
+A tabela **`competition`** é a raiz do modelo e, por não possuir dependências externas, é criada em primeiro lugar. O campo **`id`** é do tipo `INTEGER` e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **`name`** armazena o nome do evento e é protegido pela constraint `ck_competition_name_not_empty`, que impede a inserção de nomes em branco. O campo **`address`** é obrigatório, pois toda competição deve possuir um local de realização. O campo **`date`** armazena exclusivamente a data do evento (sem componente horária) e a constraint `ck_competition_date_min` impede o cadastro de datas anteriores a 01/01/2020. O campo **`status`** recebe `DEFAULT 'not_started'` e é restringido pela constraint `ck_competition_status` aos valores `not_started`, `in_progress` e `closed`, representando o ciclo de vida da competição. O atributo **`created_at`** recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro. Por fim, um **índice** é criado sobre `date` para otimizar consultas por período de realização.
+
+##### Tabela `team` (`0002_create_team.sql`)
+
+```sql
+CREATE TABLE team (
+    id              INTEGER       NOT NULL GENERATED ALWAYS AS IDENTITY,
+    name            VARCHAR(100)  NOT NULL,
+    uuid            UUID          NOT NULL DEFAULT gen_random_uuid(),
+    qr_code         JSONB         NULL,
+    id_competition  INTEGER       NOT NULL,
+    created_at      TIMESTAMP     NOT NULL DEFAULT NOW(),
+
+    CONSTRAINT pk_team PRIMARY KEY (id),
+    CONSTRAINT uq_team_uuid UNIQUE (uuid),
+    CONSTRAINT ck_team_name_not_empty
+        CHECK (length(trim(name)) > 0),
+    CONSTRAINT fk_team_id_competition
+        FOREIGN KEY (id_competition) REFERENCES competition (id)
+        ON UPDATE CASCADE
+        ON DELETE RESTRICT
+);
+
+CREATE INDEX idx_team_id_competition ON team (id_competition);
+```
+A tabela **`team`** depende de **`competition`** por meio da chave estrangeira `id_competition`, definida com `ON UPDATE CASCADE` (propaga alterações de id) e `ON DELETE RESTRICT` (impede a exclusão de uma competição que ainda possua equipes). O campo **`uuid`** utiliza `gen_random_uuid()` como valor padrão — função disponibilizada pela extensão `pgcrypto` — e possui restrição `UNIQUE`, garantindo que cada equipe tenha um identificador público único e não sequencial, adequado para exposição em QR Codes sem revelar o `id` interno numérico. O campo **`qr_code`** é armazenado como `JSONB` e definido como `NULL`, pois pode ser gerado em etapa posterior ao cadastro inicial; o uso de `JSONB` (em vez de `JSON`) permite indexação e consultas eficientes sobre o conteúdo. O campo **`name`** é protegido contra valores vazios pela constraint `ck_team_name_not_empty`. O índice sobre `id_competition` otimiza operações de junção entre as tabelas.
 
 #### Tabela corredor
  
