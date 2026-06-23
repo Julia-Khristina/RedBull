@@ -3153,7 +3153,7 @@ Trabalhos de normalização ainda em curso são reconhecidos explicitamente nest
 
 A versão versionada no repositório pode ser consultada em [documentos/outros/api-documentation.html](outros/api-documentation.html). Para facilitar a leitura externa e a validação do artefato sem necessidade de clonar o projeto, a mesma documentação também foi publicada em ambiente web no link [https://web-api-deploy-d81981.pages.git.inteli.edu.br/](https://web-api-deploy-d81981.pages.git.inteli.edu.br/) (a sincronização automática do *deploy* com cada *merge* está mapeada como pendência operacional).
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
 ### 3.8.1. Autenticação
 
@@ -3399,7 +3399,11 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
+### (a) O que foi refinado ou adicionado desde a sprint 4
+
+### (b) Pendências remanescentes
+
+### (c) Dificuldades técnicas
 
 # <a name="c5"></a>5. Testes
 
@@ -3837,7 +3841,7 @@ Os testes automatizados implementados foram relacionados às respectivas regras 
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
-## 5.2. Testes de usabilidade (sprint 5)
+## <a name="52"></a>5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
 
