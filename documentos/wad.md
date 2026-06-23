@@ -741,18 +741,18 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF001 | O sistema deve permitir a criação de uma sala administrativa vinculada a uma competição                                                  | Alta       | Concluído |
 | RF002 | O sistema deve permitir o cadastro de uma competição contendo nome, data e local                                                                           | Alta       | Concluído |
 | RF003 | O sistema deve permitir o cadastro, edição e exclusão de equipes, com suporte para até 16 atletas por equipe                                                          | Alta       | Concluído |
-| RF004 | O sistema deve permitir acesso à área administrativa por meio de autenticação com credenciais de administrador                                    | Alta       | Em progresso |
-| RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Em progresso |
-| RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes de serem persistidos.                                | Alta       | Em progresso |
-| RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Em progresso |
-| RF008 | O sistema deve registrar checkpoints contendo ao menos a distância (km) somente após validação do usuário                                                             | Alta       | Concluído |
-| RF009 | O sistema deve identificar inconsistências nos dados capturados via OCR e sinalizar ao usuário antes da validação                                                     | Média      | Em progresso |
-| RF010 | O sistema deve atualizar automaticamente o ranking das equipes no painel administrativo em intervalos máximos de 5 minutos durante a competição                                                        | Média      | Concluído |
-| RF011 | O sistema deve exibir o atleta em execução e o próximo atleta escalado por equipe no painel administrativo                                                            | Baixa      | Em progresso |
+| RF004 | O sistema deve permitir acesso à área administrativa por meio de autenticação com credenciais de administrador                                    | Alta       | Concluído |
+| RF005 | O sistema deve capturar automaticamente dados do painel da esteira a partir de imagens fotografadas utilizando OCR. | Alta       | Concluído |
+| RF006 | O sistema deve disponibilizar os dados capturados via API para validação antes de serem persistidos.                                | Alta       | Concluído |
+| RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Concluído |
+| RF008 | O sistema deve registrar checkpoints, contendo a distância (km) e o tempo, somente após validação do usuário                                                             | Alta       | Concluído |
+| RF009 | O sistema deve identificar inconsistências nos valores preenchidos de distância em relação ao tempo e sinalizar ao usuário antes da validação                                                     | Média      | Concluído |
+| RF010 | O sistema deve atualizar o ranking das equipes no painel administrativo em tempo real durante a competição                          | Média      | Concluído |
+| RF011 | O sistema deve exibir o atleta em execução por equipe no painel administrativo                                                            | Baixa      | Concluído |
 | RF012 | O sistema deve permitir o encerramento da competição pelo usuário, bloqueando novos registros de checkpoints                                                          | Alta       | Concluído |
-| RF013 | O sistema deve exportar os dados da competição em formato CSV, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
-| RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Planejado |
-| RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora                                                   | Média      | Concluído |
+| RF013 | O sistema deve exportar os dados da competição em formato XLSX, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
+| RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Concluído |
+| RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel das equipes em intervalos máximos de 1 hora                                                   | Média      | Concluído |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -773,12 +773,12 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF005 | Dado que o operador envie uma imagem válida da esteira, quando o OCR for executado, então o sistema deve retornar distância, pace, velocidade e tempo em até 3 segundos.              |
 | RF006 | Dado que os dados sejam extraídos via OCR, quando o processamento for concluído, então o sistema deve disponibilizar os dados para validação antes da persistência. |
 | RF007 | Dado que os dados extraídos via OCR sejam exibidos, quando o operador editar os campos e confirmar, então o sistema deve registrar os dados corrigidos no checkpoint.                 |
-| RF008 | Dado que os dados do checkpoint estejam validados, quando o usuário confirmar o registro, então o sistema deve persistir ao menos a distância (km) no banco de dados. |
-| RF009 | Dado que o sistema identifique inconsistências nos dados extraídos, quando o OCR finalizar o processamento, então o sistema deve sinalizar os campos divergentes ao usuário. |
-| RF010 | Dado que existam novos checkpoints validados, quando o intervalo máximo de atualização do painel administrativo for atingido, então o sistema deve atualizar automaticamente o ranking das equipes.                                          |
-| RF011 | Dado que exista escalação cadastrada para a equipe, quando o painel administrativo for atualizado, então o sistema deve exibir o atleta em corrida e o próximo atleta previsto. |
+| RF008 | Dado que os dados do checkpoint estejam validados, quando o usuário confirmar o registro, então o sistema deve persistir ao menos a distância (km) e o tempo no banco de dados. |
+| RF009 | Dado que o sistema identifique inconsistências nos dados preenchidos nos campos de distância e pace, então o sistema deve sinalizar os campos divergentes ao usuário. |
+| RF010 | Dado que existam novos checkpoints validados, o sistema deve atualizar o painel administrativoautomaticamente com o novo ranking das equipes.                                          |
+| RF011 | Dado que o atleta ativo seja trocado, então o sistema deve atualizar automaticamente o painel administrativo para o novo atleta esclado. |
 | RF012 | Dado que a competição seja encerrada, quando o usuário confirmar a operação, então o sistema deve bloquear novos registros de checkpoints.                                            |
-| RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo CSV contendo checkpoints, timestamps e logs de validação.                 |
+| RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo XLSX contendo checkpoints, timestamps e logs de validação.                 |
 | RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
 | RF015	| Dado que existam novos checkpoints consolidados, quando o intervalo máximo de atualização do painel público for atingido, então o sistema deve atualizar o ranking exibido às equipes.  |
 
