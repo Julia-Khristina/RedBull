@@ -2509,6 +2509,9 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | `\|———\|` | 1:1 (Um para Um) | Uma entidade se relaciona obrigatoriamente com exatamente uma ocorrência da outra |
 | `\|———\|<` | 1:N obrigatório | Uma entidade se relaciona com uma ou mais ocorrências obrigatórias da outra entidade |
 | `>\|———\|` | N:1 obrigatório | Várias entidades se relacionam obrigatoriamente com uma única ocorrência da outra entidade |
+| `O\|` | Zero ou um (opcional) | Representa no máximo uma ocorrência, podendo não haver nenhuma |
+| `O<` | Zero ou muitos (opcional) | Representa zero ou várias ocorrências relacionadas |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2536,6 +2539,9 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | 4 | ADMIN | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
 | 5 | TREADMILL | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
 | 6 | COMPETITION | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
+| 7 | CHECKPOINT | OCR_EXTRACTION | 1 checkpoint pode originar muitas extrações OCR (1:N, opcional) | Cada extração referencia no máximo 1 checkpoint (N:0..1) |
+| 8 | COMPETITION | COMPETITION_REPORT | 1 competição possui no máximo 1 relatório (1:0..1) | Cada relatório pertence a exatamente 1 competição (1:1) |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2559,6 +2565,11 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
 | Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
 | Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
+| Classe/serviço `OCR` (OCRService / `Validação`)              | Tabela `OCR_EXTRACTION`               |
+| Associação `Checkpoint` origina `OcrExtraction`              | FK `id_checkpoint` em `OCR_EXTRACTION` |
+| Entidade de relatório (`Ranking`/relatório consolidado)      | Tabela `COMPETITION_REPORT`           |
+| Associação `Competition` gera `CompetitionReport`            | FK/PK `id_competition` em `COMPETITION_REPORT` |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
