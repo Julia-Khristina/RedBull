@@ -2533,35 +2533,43 @@ Com base nos requisitos funcionais, nas regras de negócio e na modelagem concei
 ##### Descrição das entidades
 
 **Tabela `competition`**  
-A tabela `competition` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo dados relacionados ao endereço e à data de realização de cada competição. Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+A tabela `competition` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo nome, endereço, data de realização e o status do evento (`not_started`, `in_progress` ou `closed`). Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
 
 **Tabela `team`**  
-A tabela `team` registra os grupos participantes vinculados a uma competição específica. Além de sua chave primária, contempla atributos de identificação que permitem individualizar cada equipe dentro da plataforma e associá-la ao respectivo evento esportivo.
+A tabela `team` registra os grupos participantes vinculados a uma competição específica por meio da chave estrangeira `id_competition`. Além de sua chave primária, contempla um identificador público único (`uuid`) e os metadados do QR Code (`qr_code`), que permitem individualizar cada equipe e associá-la ao respectivo evento esportivo.
 
 **Tabela `runner`**  
-A tabela `runner` armazena os dados cadastrais dos participantes, incluindo informações de identificação e contato, como nome, email, telefone e CPF, além de um indicador de status operacional, utilizado para representar a situação atual do participante no sistema. Por meio da chave estrangeira `id_team`, cada corredor é associado à sua respectiva equipe.
+A tabela `runner` armazena os dados cadastrais dos participantes, incluindo nome, email, telefone e CPF, além de um campo `status` que representa o papel do corredor na equipe (`runner` para corredor comum ou `captain` para capitão). Por meio da chave estrangeira `id_team`, cada corredor é associado à sua respectiva equipe.
 
 **Tabela `treadmill`**  
 A tabela `treadmill` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
 
 **Tabela `admin`**  
-A tabela `admin` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo informações de identificação, autenticação e rastreabilidade temporal.
+A tabela `admin` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo nome, email (único, utilizado na autenticação), área de atuação e o hash da senha de acesso, garantindo identificação, autenticação e rastreabilidade temporal.
 
 **Tabela `checkpoint`**  
 A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `runner`, `competition`, `treadmill` e `admin`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
 
-Adicionalmente, todas as entidades contemplam atributos temporais, como `created_at`, permitindo rastreabilidade histórica das operações realizadas na plataforma.
+**Tabela `ocr_extraction`**  
+A tabela `ocr_extraction` dá suporte ao processo de extração automática de dados a partir de imagens (OCR), armazenando a imagem submetida, os dados extraídos, o resultado da validação e o status do processamento (`pending`, `processed`, `validated` ou `rejected`). Vincula-se opcionalmente a um `checkpoint` por meio da chave estrangeira `id_checkpoint`.
+
+**Tabela `competition_report`**  
+A tabela `competition_report` armazena o relatório consolidado de cada competição, contendo o resumo estatístico (`summary`) e os destaques (`highlights`) do evento. Mantém relação 1:1 com `competition`, utilizando `id_competition` simultaneamente como chave primária e estrangeira.
+
+Adicionalmente, as entidades contemplam atributos temporais de rastreabilidade: `created_at` na maioria das tabelas — com `updated_at` adicional em `ocr_extraction` e `generated_at` em `competition_report` —, permitindo o acompanhamento histórico das operações realizadas na plataforma.
 
 ##### Relacionamentos e integridade referencial
 
 Os relacionamentos entre as entidades foram definidos por meio de chaves primárias (*Primary Keys*) e chaves estrangeiras (*Foreign Keys*), respeitando as dependências identificadas durante a modelagem conceitual e garantindo integridade referencial entre as tabelas. Nesse contexto:
 
-- uma `competition` pode possuir múltiplas `team` *(1:N)*;
-- uma `team` pode possuir múltiplos `runner` *(1:N)*;
-- um `runner` pode gerar múltiplos `checkpoint` *(1:N)*;
-- uma `competition` pode possuir múltiplos `checkpoint` *(1:N)*;
-- uma `treadmill` pode estar associada a múltiplos `checkpoint` *(1:N)*;
-- Um `admin` pode validar múltiplos checkpoints (1:N).
+- uma `competition` pode possuir múltiplas `teams` *(1:N)*;
+- uma `team` pode possuir múltiplos `runners` *(1:N)*;
+- um `runner` pode gerar múltiplos `checkpoints` *(1:N)*;
+- uma `competition` pode possuir múltiplos `checkpoints` *(1:N)*;
+- uma `treadmill` pode estar associada a múltiplos `checkpoints` *(1:N)*;
+- um `admin` pode validar múltiplos `checkpoints` *(1:N)*;
+- um `checkpoint` pode originar múltiplas `ocr_extractions` *(1:N, opcional)* — a associação é opcional, pois `id_checkpoint` aceita valor nulo;
+- uma `competition` possui no máximo um `competition_report` *(1:1)*.
 
 ##### Constraints do modelo relacional
 
@@ -2572,16 +2580,26 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 
 | Tabela | Constraint | Campo(s) | Finalidade |
 | :--- | :--- | :--- | :--- |
-| Todas as tabelas | `PRIMARY KEY` | `id` | Garante a identificação única dos registros principais do sistema. |
+| Todas as tabelas (exceto `competition_report`) | `PRIMARY KEY` | `id` | Garante a identificação única dos registros principais do sistema. |
+| `competition_report` | `PRIMARY KEY` | `id_competition` | Usa a própria chave estrangeira como chave primária, materializando a relação 1:1 com `competition`. |
 | `team` | `FOREIGN KEY` | `id_competition` | Indica que cada equipe pertence a uma competição. |
 | `runner` | `FOREIGN KEY` | `id_team` | Indica que cada corredor pertence a uma equipe. |
 | `checkpoint` | `FOREIGN KEY` | `id_runner`, `id_competition`, `id_treadmill`, `id_admin` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um administrador. |
+| `ocr_extraction` | `FOREIGN KEY` | `id_checkpoint` | Vincula a extração a um checkpoint (associação opcional, `ON DELETE SET NULL`). |
+| `competition_report` | `FOREIGN KEY` | `id_competition` | Vincula o relatório a uma competição (`ON DELETE CASCADE`). |
 | `team` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
 | `runner` | `UNIQUE` | `cpf`, `email` | Define que CPF e email devem ser exclusivos para cada corredor. |
+| `admin` | `UNIQUE` | `email` | Define que o e-mail de autenticação do administrador é único. |
 | `checkpoint` | `UNIQUE` | `identifier` | Define que cada registro operacional possui um identificador próprio. |
-| `runner` | `CHECK` | `status` | Limita o status do participante aos papéis previstos no sistema. |
-| `checkpoint` | `CHECK` | `distance_km` | Impede valores incompatíveis com a regra de distância percorrida. |
+| `competition` | `CHECK` | `status`, `name`, `date` | Restringe o status aos valores previstos, impede nome vazio e exige data ≥ 01/01/2020. |
+| `runner` | `CHECK` | `status`, `name`, `cpf`, `email` | Limita o papel do participante, impede nome vazio e valida os formatos de CPF e e-mail. |
+| `team` | `CHECK` | `name` | Impede o cadastro de equipe com nome vazio. |
+| `treadmill` | `CHECK` | `name` | Impede o cadastro de esteira com nome vazio. |
+| `admin` | `CHECK` | `name`, `email` | Impede nome vazio e valida o formato do e-mail. |
+| `checkpoint` | `CHECK` | `distance_km`, `pace`, `time` | Impede valores de distância fora da faixa (0 a 1000) e valida os formatos de ritmo e tempo. |
+| `ocr_extraction` | `CHECK` | `status` | Limita o status do processamento aos valores `pending`, `processed`, `validated` e `rejected`. |
 | Principais campos obrigatórios | `NOT NULL` | Campos de identificação, relacionamento e rastreabilidade | Define quais informações mínimas precisam existir para manter a consistência dos cadastros e registros operacionais. |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2593,7 +2611,7 @@ Os scripts SQL de migração podem ser vistos aqui: Diretório de Migrações.
 
 A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. Em vez de um único arquivo, o esquema foi organizado em migrations sequenciais e versionadas (de 0000 a 0008), cada uma responsável por uma etapa da construção do banco. Essa abordagem respeita a ordem de dependências entre as tabelas, aplica as restrições de integridade identificadas durante a modelagem conceitual e relacional, e permite que a evolução do esquema seja rastreável e reproduzível em qualquer ambiente.
 
-##### Introdução 
+
 ##### Extensões (`0000_extensions.sql`)
 
 ```sql
