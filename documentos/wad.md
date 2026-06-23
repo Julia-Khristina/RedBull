@@ -2589,9 +2589,9 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 #### 3.6.3.2 Modelo Físico
 Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
-Os scripts SQL de migração podem ser vistos aqui: [Diretório de Migrações](outros/migrations/).
+Os scripts SQL de migração podem ser vistos aqui: Diretório de Migrações.
 
-A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. O arquivo migration.sql reúne todas as instruções necessárias para a criação do esquema, respeitando a ordem de dependências entre as tabelas e aplicando as restrições de integridade identificadas durante a modelagem conceitual e relacional.
+A implementação física do banco de dados foi elaborada com base na estrutura relacional definida na subseção anterior, contemplando a tradução das entidades, atributos e relacionamentos em instruções DDL (Data Definition Language) executáveis no PostgreSQL. Em vez de um único arquivo, o esquema foi organizado em migrations sequenciais e versionadas (de 0000 a 0008), cada uma responsável por uma etapa da construção do banco. Essa abordagem respeita a ordem de dependências entre as tabelas, aplica as restrições de integridade identificadas durante a modelagem conceitual e relacional, e permite que a evolução do esquema seja rastreável e reproduzível em qualquer ambiente.
 
 ##### Tabela Competição
 
