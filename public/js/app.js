@@ -1451,6 +1451,114 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchRanking(competitionId, isAdmin);
     setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);
   }
+
+  // ============================================================
+  // DASHBOARD — Filtro e paginação de competições
+  // ============================================================
+  if (path === '/dashboard') {
+    (function () {
+      var ITEMS_PER_PAGE = 5;
+      var cards = Array.from(document.querySelectorAll('#competition-list .db-competition-card'));
+      var listEl = document.getElementById('competition-list');
+      var paginationEl = document.getElementById('pagination');
+      var infoEl = document.getElementById('pagination-info');
+      var prevBtn = document.getElementById('prev-page');
+      var nextBtn = document.getElementById('next-page');
+      var statusFilter = document.getElementById('filter-status');
+      var dateFilter = document.getElementById('filter-date');
+      var locationFilter = document.getElementById('filter-location');
+
+      if (!cards.length) return;
+
+      var noResults = document.createElement('div');
+      noResults.className = 'db-card';
+      noResults.id = 'no-results-msg';
+      noResults.style.display = 'none';
+      noResults.innerHTML = '<h3 class="db-card-heading">Nenhuma competição encontrada</h3><hr class="db-divider" /><p class="db-card-body">Nenhuma competição corresponde aos filtros aplicados.</p>';
+      listEl.appendChild(noResults);
+
+      var currentPage = 1;
+
+      function getFilteredCards() {
+        var status = statusFilter.value;
+        var date = dateFilter.value;
+        var location = locationFilter.value.toLowerCase().trim();
+
+        return cards.filter(function (card) {
+          var cardStatus = card.getAttribute('data-status');
+          var cardDate = card.getAttribute('data-date');
+          var cardLocation = card.getAttribute('data-location');
+
+          if (status === 'ativas' && cardStatus !== 'in_progress') return false;
+          if (status !== 'all' && status !== 'ativas' && cardStatus !== status) return false;
+          if (date && cardDate !== date) return false;
+          if (location && !cardLocation.includes(location)) return false;
+
+          return true;
+        });
+      }
+
+      function render() {
+        var filtered = getFilteredCards();
+        var totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        var start = (currentPage - 1) * ITEMS_PER_PAGE;
+        var end = start + ITEMS_PER_PAGE;
+        var pageItems = filtered.slice(start, end);
+
+        cards.forEach(function (card) { card.style.display = 'none'; });
+        noResults.style.display = 'none';
+
+        if (filtered.length === 0) {
+          noResults.style.display = 'block';
+          paginationEl.style.display = 'none';
+        } else {
+          pageItems.forEach(function (card) { card.style.display = 'flex'; });
+          paginationEl.style.display = 'flex';
+        }
+
+        infoEl.textContent = (filtered.length > 0 ? (start + 1) + '-' + Math.min(end, filtered.length) : '0') + ' de ' + filtered.length;
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+      }
+
+      function handleAction(btnSelector, urlSuffix, confirmMsg, errorMsg) {
+        document.querySelectorAll(btnSelector).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            if (!confirm(confirmMsg)) return;
+            fetch('/competitions/' + id + urlSuffix, { method: 'PATCH' })
+              .then(function (r) {
+                if (!r.ok) throw new Error('Erro');
+                location.reload();
+              })
+              .catch(function () { alert(errorMsg); });
+          });
+        });
+      }
+
+      handleAction('.db-activate-btn', '/activate', 'Ativar esta competição?', 'Erro ao ativar competição');
+      handleAction('.db-close-btn', '', 'Encerrar esta competição?', 'Erro ao encerrar competição');
+
+      prevBtn.addEventListener('click', function () {
+        if (currentPage > 1) { currentPage--; render(); }
+      });
+
+      nextBtn.addEventListener('click', function () {
+        var totalPages = Math.max(1, Math.ceil(getFilteredCards().length / ITEMS_PER_PAGE));
+        if (currentPage < totalPages) { currentPage++; render(); }
+      });
+
+      statusFilter.addEventListener('change', function () { currentPage = 1; render(); });
+      dateFilter.addEventListener('change', function () { currentPage = 1; render(); });
+      locationFilter.addEventListener('input', function () { currentPage = 1; render(); });
+
+      render();
+    })();
+  }
 });
 
 // [A1][B1] Endpoint: GET /competitions/:id/ranking/teams — retorna RankingTeam[]
