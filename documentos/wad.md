@@ -3136,7 +3136,19 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 ### 3.8.1. Autenticação
 
-*Descreva o fluxo de autenticação implementado: persistência de senha com hash bcrypt/argon2 (parâmetros de custo explícitos e justificados), validação de credenciais e criação de sessão. Senhas em texto plano no banco não são aceitas.*
+A autenticação da aplicação é implementada por meio de comparação direta de credenciais com variáveis de ambiente, sem persistência de senha com hash no banco de dados. A senha do administrador é armazenada exclusivamente como variável de ambiente (`ADMIN_PASSWORD`), e a validação ocorre no backend por comparação em memória (`input.password !== adminPassword`). Senhas em texto plano não são persistidas no banco de dados.
+
+**Fluxo de autenticação:**
+
+O fluxo de autenticação é iniciado quando o operador submete suas credenciais (e-mail e senha) via `POST /auth/sessions`. O `authService.createSession` consulta o `adminRepository.findByEmail` no banco Supabase para localizar o registro do administrador. Após recuperar o registro, a senha informada é comparada diretamente com a variável de ambiente `ADMIN_PASSWORD`. Caso as credenciais sejam inválidas ou o administrador não seja encontrado, um `UnauthorizedError` (HTTP 401) é lançado. Em caso de sucesso, o serviço gera um token JWT assinado com o algoritmo `HS256`, com expiração de `8h`, contendo o payload `{ admin: { id, email, name, role: "admin" } }`. O token é retornado como `access_token` e `refresh_token` (com valor idêntico, dado que o mecanismo de refresh é stateless).
+
+**Mecanismo de segurança de senha:**
+
+A aplicação não utiliza algoritmo de hash (bcrypt/argon2) para persistência de senhas no banco de dados. A credencial de acesso (`ADMIN_PASSWORD`) é mantida exclusivamente como variável de ambiente no servidor, nunca armazenada na tabela `admin` do Supabase. A coluna `password` presente no schema do `adminRepository` refere-se a dados de administradores secundários, cujo gerenciamento não compõe o fluxo de login principal. A validação ocorre por comparação direta em memória no backend, sem exposição da credencial ao cliente. Essa abordagem elimina o risco de vazamento de hash de senhas por ataques ao banco de dados, ao custo de centralizar a segurança na proteção da variável de ambiente.
+
+**Token JWT e criação de sessão:**
+
+O token JWT é gerado pelo método `authService.generateToken` utilizando `jwt.sign({ admin }, JWT_SECRET, { algorithm: "HS256", expiresIn: "8h" })`. O segredo de assinatura (`JWT_SECRET`) é lido exclusivamente de variável de ambiente, lançando `AppError` caso não esteja configurado. A sessão é stateless: não há tabela de sessões no banco de dados. A validação do token em cada requisição autenticada é realizada por `authService.validateToken`, que decodifica e verifica o JWT via `jwt.verify(token, JWT_SECRET)`. Em caso de token ausente, malformado ou expirado, um `UnauthorizedError` (HTTP 401) é retornado antes de qualquer processamento da requisição.
 
 ### 3.8.2. Controle de sessão
 
