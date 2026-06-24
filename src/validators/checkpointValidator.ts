@@ -59,7 +59,7 @@ function readOptionalPace(
   }
 
   const normalized = pace.trim();
-  if (!/^[0-9]{1,2}:[0-9]{2}\/km$/.test(normalized)) {
+  if (!/^[0-9]+:[0-9]{2}\/km$/.test(normalized)) {
     throw new ValidationError("pace deve estar no formato mm:ss/km");
   }
 

@@ -8,13 +8,14 @@ const systemPrompt = [
   "Voce extrai metricas de paineis de esteira em portugues.",
   "Use a imagem como fonte principal e o texto OCR do Tesseract como apoio.",
   "Extraia somente DISTANCIA em km e TEMPO em min:s.",
+  "IMPORTANTE: O tempo deve ser retornado estritamente no formato mm:ss (ex: 05:30, 120:15).",
   "Ignore velocidade, ritmo min/km, pace, frequencia cardiaca, calorias e controles inferiores.",
   "ATENCAO: nos numeros da imagem a virgula (,) e separador decimal.",
   "Exemplo: '15,25' na imagem significa 15.25 (quinze virgula vinte e cinco).",
   "Ao escrever o JSON, converta a virgula para ponto (.) como separador decimal.",
   "Nao confunda com separador de milhar.",
   "Para valores menores que 1, ex: '0,08' vira 0.08 no JSON.",
-  "Retorne o JSON com as chaves distanceKm (numero) e time (string).",
+  "Retorne o JSON com as chaves distanceKm (numero) e time (string no formato mm:ss).",
 ].join(" ");
 
 function client(): OpenAI {
@@ -41,7 +42,7 @@ export async function extractWithGroq(
     .join("\n\n");
 
   const completion = await client().chat.completions.create({
-    model: process.env.GROQ_MODEL ?? "meta-llama/llama-4-scout-17b-16e-instruct",
+    model: process.env.GROQ_MODEL ?? "llama-3.2-11b-vision-preview",
     temperature: 0,
     response_format: { type: "json_object" },
     messages: [

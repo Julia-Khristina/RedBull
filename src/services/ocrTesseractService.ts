@@ -78,7 +78,7 @@ export async function runTesseract(
     const variants: Variant[] =
       region.name === "top" || region.name === "time"
         ? ["gray", "threshold", "linear"]
-        : ["gray", "threshold"];
+        : ["gray", "threshold", "linear"];
 
     for (const variant of variants) {
       const buffer = await preprocessRegion(imagePath, region, variant);
@@ -225,8 +225,23 @@ export function parseTesseractFallback(
     if (distance && time) {
       return { distanceKm: distance, time, speedKmh: calculateSpeedKmh(distance, time) };
     }
+
+    // HEURÍSTICA GLOBAL: Busca padrão (decimal, decimal, tempo)
+    const allText = regionsText.map(r => r.text).join(" ");
+    const decimals = findDecimals(allText);
+    const times = allText.match(/\d{1,3}\s*:\s*\d{2}/g) ?? [];
+    
+    if (decimals.length >= 2 && times.length >= 1) {
+      const dist = decimals[0];
+      const t = normalizeTime(times[0]);
+      return { 
+        distanceKm: dist, 
+        time: t, 
+        speedKmh: calculateSpeedKmh(dist, t) 
+      };
+    }
   } catch {
-    // Falls through to the global heuristic below.
+    // Falls through
   }
 
   return undefined;
