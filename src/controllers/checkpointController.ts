@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
-import { treadmillService } from "../services/treadmillService";
 import { runnerService } from "../services/runnerService";
 import { teamService } from "../services/teamService";
 import { ValidationError } from "../errors/AppError";
@@ -10,7 +9,7 @@ function parseIntegerParam(value: unknown, name: string): number {
   const parsed = typeof value === "string" ? Number(value) : NaN;
 
   if (!Number.isInteger(parsed) || parsed <= 0) {
-    throw new ValidationError(`${name} deve ser um número inteiro positivo`);
+    throw new ValidationError(name + " deve ser um numero inteiro positivo");
   }
 
   return parsed;
@@ -38,7 +37,7 @@ function formatSecondsAsPace(totalSeconds: number): string {
   const rounded = Math.round(totalSeconds);
   const minutes = Math.floor(rounded / 60);
   const seconds = rounded % 60;
-  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
 }
 
 function parseDurationToSeconds(time: string | null): number | null {
@@ -63,7 +62,7 @@ function parseDurationToSeconds(time: string | null): number | null {
 function formatSecondsAsHoursMinutes(totalSeconds: number): string {
   const hours = Math.floor(totalSeconds / 3600);
   const minutes = Math.round((totalSeconds % 3600) / 60);
-  return `${hours}h ${String(minutes).padStart(2, "0")}m`;
+  return hours + "h " + String(minutes).padStart(2, "0") + "m";
 }
 
 function calculateAveragePaceSeconds(checkpoints: Checkpoint[]): number | null {
@@ -121,7 +120,6 @@ export const checkpointController = {
     const teamId = parseOptionalIntegerParam(req.query.teamId);
     const competitionId = parseOptionalIntegerParam(req.query.competitionId) ?? 1;
     const adminId = parseOptionalIntegerParam(req.query.adminId) ?? 1;
-    const treadmill = await treadmillService.getOrCreateDefault();
     const selectedRunner =
       runnerId && teamId
         ? await runnerService.findByTeamAndId(teamId, runnerId)
@@ -142,10 +140,9 @@ export const checkpointController = {
       selectedRunner,
       selectedTeam,
       checkpointContext: {
-        identifier: `MANUAL-${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}-${runnerId ?? "runner"}`,
+        identifier: "MANUAL-" + new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15) + "-" + (runnerId ?? "runner"),
         id_runner: runnerId ?? "",
         id_competition: competitionId,
-        id_treadmill: treadmill.id,
         id_admin: adminId,
         team_id: teamId ?? "",
         average_pace_seconds: averagePaceSeconds,
