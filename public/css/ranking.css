@@ -731,8 +731,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 66px;
-  padding: 0 48px;
+  min-height: 60px;
+  padding: 0 45px;
   border-radius: var(--border-radius);
   background: var(--azul-principal);
   color: var(--fundo-cards);
@@ -827,7 +827,7 @@
 
 .report-export-button {
   margin-left: 10px;
-  min-width: 250px;
+  min-width: 50px;
 }
 
 @media (max-width: 900px) {
@@ -856,7 +856,7 @@
 
   .report-action-button,
   .report-export-button {
-    width: 100%;
+    width: 50%;
     min-width: 0;
   }
 
