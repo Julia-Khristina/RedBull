@@ -368,17 +368,10 @@ const layers = [
         {vis:"+", text:"image: Record<string, unknown> | null"},
         {vis:"+", text:"id_runner: number"},
         {vis:"+", text:"id_competition: number"},
-        {vis:"+", text:"id_treadmill: number"},
         {vis:"+", text:"id_admin: number"},
         {vis:"+", text:"created_at: string"},
       ]},
-      { id:"TreadmillModel", stereotype:"«interface»", name:"Treadmill", planned:false, members:[
-        {vis:"+", text:"id: number"},
-        {vis:"+", text:"name: string"},
-        {vis:"+", text:"specification: string | null"},
-        {vis:"+", text:"created_at: string"},
-      ]},
-      { id:"RankModel", stereotype:"«interface»", name:"Ranking", planned:false, members:[
+            { id:"RankModel", stereotype:"«interface»", name:"Ranking", planned:false, members:[
         {vis:"+", text:"RankingTeam {"},
         {vis:"", text:"  position, id_team, team_name", note:true},
         {vis:"", text:"  id_competition, total_distance_km", note:true},
