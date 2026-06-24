@@ -33,4 +33,9 @@ export const competitionController = {
     const competition = await competitionService.close(req.params.id);
     res.status(200).json(competition);
   },
+
+  async activate(req: Request, res: Response): Promise<void> {
+    const competition = await competitionService.activate(req.params.id);
+    res.status(200).json(competition);
+  },
 };

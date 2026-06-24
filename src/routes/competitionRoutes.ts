@@ -19,6 +19,7 @@ router.get("/competitions", garantirAutenticacao, asyncHandler(competitionContro
 router.get("/competitions/:id", garantirAutenticacao, asyncHandler(competitionController.findById));
 router.put("/competitions/:id", garantirAutenticacao, asyncHandler(competitionController.update));
 router.patch("/competitions/:id", garantirAutenticacao, asyncHandler(competitionController.close));
+router.patch("/competitions/:id/activate", garantirAutenticacao, asyncHandler(competitionController.activate));
 router.delete("/competitions/:id", garantirAutenticacao, asyncHandler(competitionController.delete));
 
 export default router;
