@@ -767,7 +767,7 @@ O Quadro 20 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
   <sub>Quadro 22 - Regras de Negócio </sub>
@@ -813,7 +813,7 @@ Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de 
 | DES — Desempenho | O sistema deve atualizar o painel administrativo periodicamente durante a competição | Atualização concluída em até 5 minutos após novos checkpoints | Parcial | Endpoints `GET /competitions/:competicaoId/ranking/teams` e `GET /competitions/:competicaoId/ranking/athletes` implementados (Ranking Routes da api-documentation.html); *polling* de 5 minutos previsto no front-end (Painéis da Sprint 4) |
 | SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Implementado | Arquitetura em camadas Controller → Service → Repository → Model (seção 3.2.3); padrões de projeto aplicados (seção 3.2.7); middleware central de erros em `src/middlewares/errorHandler.ts`; sete arquivos de rota isolados em `src/routes` permitem manutenção de um domínio sem afetar os demais |
 | SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de credenciais válidas                | 100% das tentativas sem credenciais válidas devem ser bloqueadas com resposta HTTP 401 | Planejado (Sprint 5) | Estrutura de erros já contempla `401` na tabela de Códigos de Status HTTP da api-documentation.html (seção 3.7); model `Administrador` com campo `senha` (`src/models/administrador.ts`) preparado para hash bcrypt/argon2; rota `POST /auth/sessions` definida para a Sprint 5 (seção 3.8) |
-| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Planejado (Sprint 5) | Backend Node.js/Express com Supabase (Postgres gerenciado), ambos com escalabilidade horizontal documentada; isolamento de rotas por domínio permite escalar seletivamente o que receber maior carga (ranking público) |
+| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Planejado (Sprint 5) | Back-end Node.js/Express com Supabase (Postgres gerenciado), ambos com escalabilidade horizontal documentada; isolamento de rotas por domínio permite escalar seletivamente o que receber maior carga (ranking público) |
 | REST — Restrições de Design | O sistema deve operar com validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter vínculo com corredor, competição, esteira e administrador responsável | Implementado | Migrations em `src/database` com FKs obrigatórias para `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id` na tabela `checkpoint` (seção 3.6.3); validators em `src/validators` rejeitando payload incompleto com `400`/`422`; rota OCR prevista (`POST /ocr/extractions`) consolidará o fluxo OCR → validação humana → API |
 | ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com rastreabilidade entre tarefas, commits e entregas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas | Implementado | Conventional Commits com referência à issue (`tipo (#NNN): mensagem`); branches versionadas por tema (`docs/sprint-XX/...`, `feat/...`, `fix/...`); Kanban no GitLab com cards de User Story, tasks com DoR/DoD/Critérios de Aceite, tamanhos (PP/P/M/G/GG) e *milestone* por sprint; merge requests estruturados com objetivo, mudanças, plano de testes e `Closes #NNN` |
 
@@ -833,7 +833,7 @@ O eixo de Suportabilidade (SUP) foi definido considerando a necessidade de conti
 
 O eixo de Segurança (SEG) deriva da necessidade de restringir o acesso às áreas administrativas do sistema apenas aos operadores autorizados pelo evento, protegendo os dados operacionais e evitando alterações indevidas nos registros da competição. A camada de autenticação por token está planejada para a Sprint 5 (`POST /auth/sessions`, com hash de senha bcrypt/argon2 e controle de sessão por `session id` ou JWT, conforme detalhado na seção 3.8). Até essa entrega, a documentação da WebAPI já contempla o código `401 Unauthorized` na tabela de Códigos de Status HTTP da api-documentation.html (seção 3.7); o código `403 Forbidden` será adicionado junto à camada de autorização por perfil na Sprint 5, e o model `Administrador` em `src/models/administrador.ts` já prevê o campo `senha` para receber o hash. *Observação sobre alinhamento interno do WAD:* as User Stories US01–US05 e a RN03 descrevem o acesso por **senha da sala** (vinculada à criação da competição), enquanto a implementação atual aponta para autenticação por **administrador individual** (model `Administrador` + `POST /auth/sessions`). Os dois modelos coexistem em seções diferentes do documento; a definição final do modelo de autenticação está prevista para alinhamento na Sprint 5.
 
-O eixo de Capacidade (CAP) foi estabelecido considerando o acesso simultâneo de operadores, organizadores e usuários acompanhando os rankings públicos durante períodos de pico da competição, exigindo estabilidade da aplicação mesmo sob múltiplas requisições concorrentes. A escolha por Node.js/Express no backend e Supabase (Postgres gerenciado) como banco oferece base reconhecida para escalabilidade horizontal, e o isolamento de rotas por domínio (`competition`, `team`, `athlete`, `administrador` — único mantido em português por razões históricas —, `checkpoint`, `ranking`, `export`) permite escalar seletivamente o que receber maior carga (tipicamente o ranking público). A medição objetiva da métrica será feita em testes de carga durante a Sprint 5.
+O eixo de Capacidade (CAP) foi estabelecido considerando o acesso simultâneo de operadores, organizadores e usuários acompanhando os rankings públicos durante períodos de pico da competição, exigindo estabilidade da aplicação mesmo sob múltiplas requisições concorrentes. A escolha por Node.js/Express no back-end e Supabase (Postgres gerenciado) como banco oferece base reconhecida para escalabilidade horizontal, e o isolamento de rotas por domínio (`competition`, `team`, `athlete`, `administrador` — único mantido em português por razões históricas —, `checkpoint`, `ranking`, `export`) permite escalar seletivamente o que receber maior carga (tipicamente o ranking público). A medição objetiva da métrica será feita em testes de carga durante a Sprint 5.
 
 O eixo de Restrições de Design (REST) foi derivado diretamente da arquitetura definida para o projeto, baseada em captura via OCR, validação humana e processamento centralizado via API, garantindo padronização do fluxo de dados. Embora algumas das regras associadas — como a obrigatoriedade de vínculo entre `checkpoint` e seus quatro recursos relacionados — possam ser vistas como regras de integridade próximas de RFs/RNs, optou-se por classificá-las como Restrição de Design por refletirem uma decisão arquitetural deliberada (centralização do fluxo OCR → validação → API) que limita as opções de implementação subsequentes. As FKs obrigatórias na tabela `checkpoint` (`corredor_id`, `competicao_id`, `esteira_id`, `administrador_id`) garantem, no nível do banco, que nenhum registro operacional seja persistido sem vínculo completo com seus recursos responsáveis. Os validators em `src/validators` aplicam essa mesma regra antes da chamada ao repository, e o endpoint planejado `POST /ocr/extractions` consolida o fluxo OCR → validação humana → persistência em uma única cadeia auditada.
 
@@ -1097,7 +1097,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no backend. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
+Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
 O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PLANTUML, 2025).
 
@@ -1230,7 +1230,7 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
 
-Com a evolução do sistema e a integração de um frontend renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no backend quanto no frontend, com base no código efetivamente implementado na versão atual do projeto.
+Com a evolução do sistema e a integração de um front-end renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no back-end quanto no front-end, com base no código efetivamente implementado na versão atual do projeto.
 
 
 ---
@@ -1250,7 +1250,7 @@ Sem esse padrão, regras de negócio, acesso aos dados e elementos de interface 
 
 #### Justificativa da adoção
 
-Com a implementação do frontend, tornou-se necessário estruturar a camada de apresentação de forma integrada ao backend existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
+Com a implementação do front-end, tornou-se necessário estruturar a camada de apresentação de forma integrada ao back-end existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
 
 #### Aplicação no projeto
 
@@ -1303,7 +1303,7 @@ Sem a utilização desse padrão, operações relacionadas ao banco de dados fic
 
 #### Justificativa da adoção
 
-Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do backend, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
+Esse padrão foi adotado porque o back-end possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do back-end, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
 
 #### Aplicação no projeto
 
@@ -1353,7 +1353,7 @@ Arquitetural
 
 #### Definição
 
-O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do back-end, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
 
 #### Problema resolvido
 
@@ -1361,7 +1361,7 @@ Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo receb
 
 #### Justificativa da adoção
 
-Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do back-end. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
 
 #### Aplicação no projeto
 
@@ -1477,7 +1477,7 @@ Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle
 
 #### Justificativa da adoção
 
-Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no back-end e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
 
 #### Aplicação no projeto
 
@@ -1592,7 +1592,7 @@ Estrutural / Apresentação
 
 #### Definição
 
-O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo backend. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
+O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo back-end. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
 
 #### Problema resolvido
 
@@ -2716,7 +2716,7 @@ ALTER TABLE checkpoint
 CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
 CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
 CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
-CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
+CREATE INDEX idx_checkpoint_administrador_id ON checkpoint (administrador_id);
 CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
 ```
  
@@ -3122,11 +3122,11 @@ A tabela demonstra que a consulta seleciona registros apenas quando a quilometra
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *frontend* e o *backend* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
+A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *front-end* e o *back-end* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
 
 A escolha por uma página HTML versionada, em vez de uma tabela embutida diretamente no WAD, foi deliberada: permite uma visualização navegável e formatada (*badges* de status, blocos de código com destaque, links internos entre seções), mantém o versionamento alinhado com cada sprint de desenvolvimento e facilita a validação externa por parte de revisores, sem necessidade de clonar o repositório ou abrir uma ferramenta auxiliar como Swagger ou Postman. As seções internas da página HTML adotam numeração própria (3.6.1 a 3.6.10) por domínio funcional; trata-se de uma numeração local ao artefato, não relacionada à numeração de capítulos do WAD — a normalização desse esquema (por exemplo, prefixo `API-`) está prevista para uma iteração posterior.
 
-A API segue convenções RESTful: recursos são organizados de forma hierárquica (por exemplo, `/competitions/:competicaoId/teams/:teamId/athletes`) e os métodos HTTP são aplicados conforme sua semântica padrão (POST cria, GET consulta, PUT/PATCH atualizam, DELETE remove; PUT e DELETE são operados como idempotentes, em conformidade com a estratégia de resiliência da seção 3.8.4). Os códigos HTTP devolvidos pelo *backend* na Sprint 3 derivam diretamente das classes em `src/errors/AppError.ts` por meio do middleware `errorHandler`: `200` em consultas e atualizações bem-sucedidas, `201` em criações, `204` em remoções, `400` para `ValidationError`, `404` para `NotFoundError`, `409` para `ConflictError`, `422` para `UnprocessableError` e `500` como *fallback*. Os códigos `401 Unauthorized` e `403 Forbidden` estão documentados como contrato mas só serão emitidos a partir da Sprint 5, quando as camadas de autenticação e autorização entrarem em vigor (seção 3.8). A semântica e os códigos de status seguem a RFC 9110 (HTTP Semantics, IETF, 2022), que consolida e torna obsoletas as RFCs anteriores da família HTTP/1.1. Cada endpoint listado na documentação está rastreado a um ou mais Requisitos Funcionais (RF) e Regras de Negócio (RN) por meio da coluna RF/RN nas tabelas, servindo como ponte com as seções 3.1.1, 3.1.2 e 3.1.4 e contribuindo para a rastreabilidade a ser consolidada na seção 3.9 (atualização da RTM com os endpoints da Sprint 3 prevista em paralelo a esta entrega). Além dos endpoints implementados, a página HTML também descreve como planejados para as Sprints 4 e 5 os fluxos de autenticação (`POST /auth/sessions`), captura via OCR (`POST /ocr/extractions`, `PATCH /ocr/extractions/:extractionId`), identificação de inconsistências (`GET /competitions/:id/checkpoints/inconsistencies`) e relatórios analíticos (`GET /competitions/:id/reports`).
+A API segue convenções RESTful: recursos são organizados de forma hierárquica (por exemplo, `/competitions/:competicaoId/teams/:teamId/athletes`) e os métodos HTTP são aplicados conforme sua semântica padrão (POST cria, GET consulta, PUT/PATCH atualizam, DELETE remove; PUT e DELETE são operados como idempotentes, em conformidade com a estratégia de resiliência da seção 3.8.4). Os códigos HTTP devolvidos pelo *back-end* na Sprint 3 derivam diretamente das classes em `src/errors/AppError.ts` por meio do middleware `errorHandler`: `200` em consultas e atualizações bem-sucedidas, `201` em criações, `204` em remoções, `400` para `ValidationError`, `404` para `NotFoundError`, `409` para `ConflictError`, `422` para `UnprocessableError` e `500` como *fallback*. Os códigos `401 Unauthorized` e `403 Forbidden` estão documentados como contrato mas só serão emitidos a partir da Sprint 5, quando as camadas de autenticação e autorização entrarem em vigor (seção 3.8). A semântica e os códigos de status seguem a RFC 9110 (HTTP Semantics, IETF, 2022), que consolida e torna obsoletas as RFCs anteriores da família HTTP/1.1. Cada endpoint listado na documentação está rastreado a um ou mais Requisitos Funcionais (RF) e Regras de Negócio (RN) por meio da coluna RF/RN nas tabelas, servindo como ponte com as seções 3.1.1, 3.1.2 e 3.1.4 e contribuindo para a rastreabilidade a ser consolidada na seção 3.9 (atualização da RTM com os endpoints da Sprint 3 prevista em paralelo a esta entrega). Além dos endpoints implementados, a página HTML também descreve como planejados para as Sprints 4 e 5 os fluxos de autenticação (`POST /auth/sessions`), captura via OCR (`POST /ocr/extractions`, `PATCH /ocr/extractions/:extractionId`), identificação de inconsistências (`GET /competitions/:id/checkpoints/inconsistencies`) e relatórios analíticos (`GET /competitions/:id/reports`).
 
 Trabalhos de normalização ainda em curso são reconhecidos explicitamente nesta versão: (a) os parâmetros de rota oscilam entre `:id` (genérico), `:competicaoId` (português) e `:teamId`/`:athleteId` (inglês), refletindo a dívida de idioma já reconhecida na seção 3.2.1; (b) coexistem rotas com recursos em inglês (`/competitions/...`) e em português (`/corredores/:corredorId/checkpoints`); (c) os termos *athlete* e *runner* aparecem em diferentes pontos da API HTML para o mesmo conceito. A padronização desses três pontos está mapeada como pendência editorial e será endereçada em conjunto com a atualização da matriz da seção 3.1.4 e da RTM da seção 3.9.
 
@@ -3146,7 +3146,7 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 A aplicação define dois tipos de acesso: o **ambiente administrativo**, restrito a operadores autenticados, e o **ambiente público por equipe**, acessível via URL com UUID único sem necessidade de login.
 
-A verificação de autorização é realizada inteiramente no backend. O frontend nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o backend valide a identidade do solicitante.
+A verificação de autorização é realizada inteiramente no back-end. O front-end nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o back-end valide a identidade do solicitante.
 
 **Perfil de acesso e estrutura de roles:**
 
@@ -3161,7 +3161,7 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 | Rota | Método | Acesso | Descrição |
 |---|---|---|---|
 | `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
-| `POST /admin/login` | POST | Público | Alias de compatibilidade com frontend |
+| `POST /admin/login` | POST | Público | Alias de compatibilidade com front-end |
 | `GET /admin/login` | GET | Público | Renderiza tela de login |
 | `GET /logout` | GET | Público | Redireciona para login |
 | `GET /dashboard` | GET | Administrativo | Painel principal com competições |
@@ -3176,9 +3176,9 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 | `GET /ranking` | GET | Público | Ranking geral por equipe |
 | `GET /view/competitions/:id/ranking` | GET | Público | Ranking público por competição (via UUID) |
 
-**Responsabilidade da camada de backend:**
+**Responsabilidade da camada de back-end:**
 
-Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O frontend recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
+Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O front-end recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
@@ -3234,7 +3234,7 @@ A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem r
 
 ### (a) O que foi implementado
 
-Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002).
+Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002).
 
 <div align="center">
   <sub>Figura 58 - Estrutura de pastas</sub><br>
@@ -3284,12 +3284,12 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 
 **- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso por sala administrativa via senha definida na criação da sala, com escopo limitado à área administrativa e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
 
-**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do frontend funcional na sprint 4.
+**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do front-end funcional na sprint 4.
 
 Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
 
-**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento no backend → persistência dos campos extraídos → validação humana). A solução será integrada ao servidor para garantir a persistência de logs de extração e auditoria (RN05), permitindo que o administrador revise registros e trate discrepâncias (RN06) diretamente via API. O comportamento atual está alinhado com os critérios de aceite da US09, restando a implementação das rotas de extração no backend e a integração refinada com o módulo de Checkpoints na sprint 4.
+**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento no back-end → persistência dos campos extraídos → validação humana). A solução será integrada ao servidor para garantir a persistência de logs de extração e auditoria (RN05), permitindo que o administrador revise registros e trate discrepâncias (RN06) diretamente via API. O comportamento atual está alinhado com os critérios de aceite da US09, restando a implementação das rotas de extração no back-end e a integração refinada com o módulo de Checkpoints na sprint 4.
 
 <div align="center">
   <sub>Figura 63 - Adicionar imagem</sub><br>
@@ -3322,7 +3322,7 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 **- Refinamento do OCR:** apesar do protótipo estar finalizado e do fluxo estar definido, ainda é necessário aprimorar a precisão da captura das informações da imagem (distância, pace e tempo total), tratar variações de iluminação e posicionamento do display da esteira, ajustar o limiar de discrepância para acionamento dos alertas visuais (RN06) e refinar detalhes de integração para entregar o módulo em nível de MVP funcional.
 
-**- Frontend funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o backend será iniciada na sprint 4.
+**- Front-end funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o back-end será iniciada na sprint 4.
 
 ### (c) Dificuldades técnicas
 
@@ -3334,9 +3334,9 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 ### (d) Próximos passos
 
-Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o frontend ao backend já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
+Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o front-end ao back-end já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
 
-**1. Frontend funcional integrado ao backend**
+**1. Front-end funcional integrado ao back-end**
 Migração do protótipo de alta fidelidade para uma aplicação funcional consumindo a API já implementada, com foco nas telas críticas para a operação do evento: painel operacional administrativo, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe com auto-refresh, relatórios e painel público acessado via UUID sem autenticação (US12). A UX deve seguir os wireframes já validados na sprint 2, priorizando uso em iPad conforme escopo do TAP.
 
 **2. Refinamento do módulo de OCR**
@@ -3346,7 +3346,7 @@ Aprimoramento da precisão de extração dos dados da imagem, tratamento de vari
 Conclusão do módulo já iniciado na sprint 3 (model, repository e service), registrando as rotas no Express e completando a cadeia da arquitetura em camadas.
 
 **4. Testes automatizados e Matriz de Rastreabilidade**
-Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o frontend conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
+Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o front-end conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
 
 **5. Dívida técnica identificada na sprint 3**
 Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
@@ -3355,9 +3355,9 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### (a) O que foi implementado
 
-Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao backend já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework frontend separado.
+Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao back-end já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework front-end separado.
 
-**- Estrutura de pastas do frontend:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
+**- Estrutura de pastas do front-end:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
 
 <div align="center"> <sub>Figura 67 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/view-estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas das views EJS"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
@@ -3369,13 +3369,13 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 <div align="center"> <sub>Figura 69 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo frontend, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
+**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo front-end, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
 
 **- Sidebar de navegação persistente:** O partial partials/menu.ejs, incluído no layout base, renderiza a barra lateral com os links para todas as telas. O app.js ativa dinamicamente o item correspondente à rota atual via comparação com window.location.pathname, seguindo o comportamento definido no protótipo de alta fidelidade.
 
-<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Registro de checkpoint e atualização de ranking (RF008, RN04, RN05):** Foi implementado o fluxo de registro manual de checkpoint, conectado diretamente ao endpoint POST /checkpoints. O formulário coleta distância (km), pace e tempo total, valida os campos obrigatórios no cliente antes do envio e exibe feedback em tempo real (loading, sucesso e erro). Após um registro bem-sucedido, o painel dispara automaticamente uma consulta ao endpoint GET /competitions/:id/ranking/teams para atualizar o ranking sem recarregamento da página.
 
@@ -3387,7 +3387,7 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ### (b) O que não foi concluído
 
-**Integração do OCR com o frontend e o backend:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no frontend e a integração com o endpoint de checkpoints no backend — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
 
 ### (c) Dificuldades técnicas
 
@@ -3407,7 +3407,7 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 **4. Exportação de resultados em CSV:** Implementação do endpoint de exportação e da interface de acionamento para geração do arquivo CSV consolidado ao encerramento da competição. O arquivo deverá conter o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints registrados, método de entrada de cada registro, tempo parcial e total). Essa entrega finaliza o fluxo de RF013 e RF014 e é crítica para a apuração oficial do evento, pois substitui definitivamente a planilha manual que a equipe da Red Bull utiliza hoje.
 
-**5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo backend desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
+**5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo back-end desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
 
 
 ## 4.3. Versão final da aplicação web (sprint 5)
@@ -4084,7 +4084,7 @@ Os recursos principais são os ativos necessários para construir e operar a sol
 
 ### Atividades Chave
 
-As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo frontend e backend, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
+As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo front-end e back-end, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
 
 ### Parcerias Principais
 
