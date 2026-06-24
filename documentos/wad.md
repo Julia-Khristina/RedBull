@@ -2769,11 +2769,11 @@ A implementação física adota o padrão de separar a definição das colunas e
  
 Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.4. Consultas SQL e lógica proposicional
 
-A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
+A presente subseção apresenta um conjunto de consultas SQL relacionadas às funcionalidades previstas para o sistema, com o objetivo de demonstrar a aplicação de lógica proposicional em operações de banco de dados. As consultas foram selecionadas considerando os requisitos funcionais atualizados do projeto, especialmente aqueles relacionados ao cadastro de equipes e atletas, captura e validação de checkpoints, identificação de inconsistências, atualização de ranking, encerramento da competição e exportação de dados.
 
-O código completo das consultas com suas respectivas análises proposicionais encontra-se também documentado no arquivo [`documentos/outros/mapeamento-consultas-sql.md`](../outros/mapeamento-consultas-sql.md), disponível no repositório para consulta e rastreabilidade.
+Além de exemplificar diferentes tipos de operações SQL, como `SELECT`, `UPDATE` e `DELETE`, as consultas também evidenciam o uso de operadores lógicos e relacionais, como `AND`, `OR`, `NOT`, `LIKE`, `IN`, `BETWEEN`, além de consultas com junções e agregações. Cada consulta é acompanhada de sua descrição, proposições lógicas, expressão proposicional correspondente, identificação dos conectivos e tabela-verdade.
 
 #### Q01 — `SELECT` com `AND` e `OR`
 
@@ -2781,12 +2781,12 @@ O código completo das consultas com suas respectivas análises proposicionais e
   <sub>Quadro 44 - Consulta Q01</sub>
 </div>
 
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `SELECT` |
-| **Operadores lógicos** | `AND`, `OR` |
-| **Operadores relacionais** | `=`, `>`, `<` |
-| **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+| Atributo                   | Conteúdo                                                                                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo de operação**       | `SELECT`                                                                                                                                                                                  |
+| **Operadores lógicos**     | `AND`, `OR`                                                                                                                                                                               |
+| **Operadores relacionais** | `=`, `>`, `<`                                                                                                                                                                             |
+| **Contexto de negócio**    | Identificar checkpoints com possíveis inconsistências nos valores de distância em relação ao tempo registrado, apoiando a sinalização de dados suspeitos antes da validação pelo usuário. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2795,26 +2795,26 @@ O código completo das consultas com suas respectivas análises proposicionais e
 **Expressão SQL:**
 
 ```sql
-SELECT id, identificador, km, criado_em
+SELECT id, corredor_id, competicao_id, km, tempo
 FROM checkpoint
 WHERE competicao_id = 1
-  AND (km > 10 OR km < 2);
+  AND (km > 10 OR km < 1);
 ```
 
-**Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
+**Descrição em palavras:** seleciona os checkpoints pertencentes à competição de identificador `1` cuja distância registrada esteja fora de uma faixa esperada, considerando valores muito altos ou muito baixos para um checkpoint. A cláusula `WHERE` combina o filtro obrigatório por competição com uma condição composta sobre a distância, utilizando `AND` para exigir simultaneidade e `OR` para indicar que basta uma das situações de inconsistência ser verdadeira.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint pertence à competição de ID 1.  
+* **P:** o checkpoint pertence à competição de ID 1.
   `competicao_id = 1`
 
-- **Q:** o checkpoint possui quilometragem maior que 10 km.  
+* **Q:** o checkpoint possui distância maior que 10 km.
   `km > 10`
 
-- **R:** o checkpoint possui quilometragem menor que 2 km.  
-  `km < 2`
+* **R:** o checkpoint possui distância menor que 1 km.
+  `km < 1`
 
 #### Expressão lógica proposicional
 
@@ -2824,31 +2824,29 @@ A expressão lógica correspondente à consulta é:
 P ∧ (Q ∨ R)
 ```
 
-Em palavras:  
-o checkpoint será selecionado se pertencer à competição 1 e possuir quilometragem maior que 10 km ou menor que 2 km.
+Em palavras: o checkpoint será selecionado se pertencer à competição 1 e possuir distância maior que 10 km ou menor que 1 km.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras em conjunto;
-- **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
+* **∧ (AND):** exige que o checkpoint pertença à competição informada e também satisfaça a condição de distância;
+* **∨ (OR):** permite que a inconsistência seja identificada tanto por distância acima do limite quanto por distância abaixo do limite.
 
 #### Tabela-verdade
 
-| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
-|---|---|---|---|---|---|
-| V | V | V | V | V | Seleciona |
-| V | V | F | V | V | Seleciona |
-| V | F | V | V | V | Seleciona |
-| V | F | F | F | F | Não seleciona |
-| F | V | V | V | F | Não seleciona |
-| F | V | F | V | F | Não seleciona |
-| F | F | V | V | F | Não seleciona |
-| F | F | F | F | F | Não seleciona |
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado     |
+| - | - | - | ----- | ----------- | ------------- |
+| V | V | V | V     | V           | Seleciona     |
+| V | V | F | V     | V           | Seleciona     |
+| V | F | V | V     | V           | Seleciona     |
+| V | F | F | F     | F           | Não seleciona |
+| F | V | V | V     | F           | Não seleciona |
+| F | V | F | V     | F           | Não seleciona |
+| F | F | V | V     | F           | Não seleciona |
+| F | F | F | F     | F           | Não seleciona |
 
+#### Interpretação da tabela-verdade
 
-### Interpretação da tabela-verdade
-
-A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, ao mesmo tempo, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição analisada e apresenta distância fora da faixa esperada. Caso o checkpoint pertença a outra competição ou esteja dentro do intervalo considerado aceitável, ele não será selecionado.
 
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
@@ -2856,15 +2854,13 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
   <sub>Quadro 45 - Consulta Q02</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `SELECT` |
-| **Operadores lógicos** | `AND`, `NOT` |
-| **Operadores especiais** | `LIKE` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
-
+| Atributo                   | Conteúdo                                                                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Tipo de operação**       | `SELECT`                                                                                                                                                     |
+| **Operadores lógicos**     | `AND`, `NOT`                                                                                                                                                 |
+| **Operadores especiais**   | `LIKE`                                                                                                                                                       |
+| **Operadores relacionais** | `=`                                                                                                                                                          |
+| **Contexto de negócio**    | Buscar atletas cadastrados em uma equipe, permitindo localizar rapidamente corredores pelo nome e desconsiderar registros inativos ou removidos da operação. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2873,23 +2869,23 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 **Expressão SQL:**
 
 ```sql
-SELECT id, nome, status, equipe_id
+SELECT id, nome, equipe_id, status
 FROM corredor
 WHERE nome LIKE 'A%'
-  AND NOT status = 'Em descanso';
+  AND NOT status = 'Inativo';
 ```
 
-**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
+**Descrição em palavras:** seleciona os corredores cujo nome começa com a letra “A” e que não estão marcados como inativos. A consulta utiliza o operador `LIKE` para buscar nomes por padrão textual, o operador `AND` para exigir que as duas condições sejam verdadeiras ao mesmo tempo e o operador `NOT` para negar a condição de status inativo.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o nome do corredor inicia com a letra “A”.  
+* **P:** o nome do corredor inicia com a letra “A”.
   `nome LIKE 'A%'`
 
-- **Q:** o corredor está com status “Em descanso”.  
-  `status = 'Em descanso'`
+* **Q:** o corredor está com status “Inativo”.
+  `status = 'Inativo'`
 
 #### Expressão lógica proposicional
 
@@ -2899,42 +2895,39 @@ A expressão lógica correspondente à consulta é:
 P ∧ ¬Q
 ```
 
-Em palavras:  
-o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+Em palavras: o corredor será selecionado se seu nome começar com a letra “A” e ele não estiver inativo.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+* **∧ (AND):** exige que as duas condições sejam satisfeitas simultaneamente;
+* **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
 
 #### Tabela-verdade
 
-| P | Q | ¬Q | P ∧ ¬Q | Resultado |
-|---|---|---|---|---|
-| V | V | F | F | Não seleciona |
-| V | F | V | V | Seleciona |
-| F | V | F | F | Não seleciona |
-| F | F | V | F | Não seleciona |
+| P | Q | ¬Q | P ∧ ¬Q | Resultado     |
+| - | - | -- | ------ | ------------- |
+| V | V | F  | F      | Não seleciona |
+| V | F | V  | V      | Seleciona     |
+| F | V | F  | F      | Não seleciona |
+| F | F | V  | F      | Não seleciona |
 
-### Interpretação da tabela-verdade
+#### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjuntamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
+A consulta retorna somente corredores cujo nome começa com “A” e cujo status não é “Inativo”. Caso o nome não atenda ao padrão definido ou o corredor esteja inativo, o registro não será selecionado.
 
-#### Q03 — `UPDATE` com `AND` e `IN`
+#### Q03 — `UPDATE` com `AND` e `BETWEEN`
 
 <div align="center">
   <sub>Quadro 46 - Consulta Q03</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND`, `OR` |
-| **Operadores especiais** | `IN` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
-
+| Atributo                   | Conteúdo                                                                                                                                                                      |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo de operação**       | `UPDATE`                                                                                                                                                                      |
+| **Operadores lógicos**     | `AND`                                                                                                                                                                         |
+| **Operadores especiais**   | `BETWEEN`                                                                                                                                                                     |
+| **Operadores relacionais** | `=`, `>=`, `<=`                                                                                                                                                               |
+| **Contexto de negócio**    | Atualizar manualmente dados capturados por OCR antes da confirmação definitiva do checkpoint, permitindo a correção de valores inconsistentes antes da persistência validada. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2943,75 +2936,71 @@ A tabela demonstra que a consulta retorna registros apenas quando o nome do corr
 **Expressão SQL:**
 
 ```sql
-UPDATE corredor
-SET status = 'Em descanso'
-WHERE equipe_id = 1
-  AND status IN ('Em corrida', 'Próximo');
+UPDATE checkpoint
+SET km = 5.42
+WHERE validado = FALSE
+  AND km BETWEEN 20 AND 100;
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
+**Descrição em palavras:** atualiza a distância de checkpoints ainda não validados quando o valor capturado se encontra em uma faixa considerada inconsistente para o contexto da competição. A cláusula `WHERE` garante que apenas registros pendentes de validação sejam alterados e que a atualização ocorra somente quando a distância estiver entre 20 e 100 km. O operador `BETWEEN` equivale logicamente à combinação `km >= 20 AND km <= 100`.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o corredor pertence à equipe de identificador 1.  
-  `equipe_id = 1`
+* **P:** o checkpoint ainda não foi validado.
+  `validado = FALSE`
 
-- **Q:** o corredor está com status “Em corrida”.  
-  `status = 'Em corrida'`
+* **Q:** o checkpoint possui distância maior ou igual a 20 km.
+  `km >= 20`
 
-- **R:** o corredor está com status “Próximo”.  
-  `status = 'Próximo'`
+* **R:** o checkpoint possui distância menor ou igual a 100 km.
+  `km <= 100`
 
 #### Expressão lógica proposicional
 
 A expressão lógica correspondente à consulta é:
 
 ```text
-P ∧ (Q ∨ R)
+P ∧ Q ∧ R
 ```
 
-Em palavras:  
-o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+Em palavras: o checkpoint será atualizado se ainda não tiver sido validado e se sua distância estiver entre 20 e 100 km.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
-- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+* **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
+* **BETWEEN:** representa uma condição composta por limite inferior e limite superior, equivalente a `Q ∧ R`.
 
 #### Tabela-verdade
 
-| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
-|---|---|---|---|---|---|
-| V | V | V | V | V | Atualiza |
-| V | V | F | V | V | Atualiza |
-| V | F | V | V | V | Atualiza |
-| V | F | F | F | F | Não atualiza |
-| F | V | V | V | F | Não atualiza |
-| F | V | F | V | F | Não atualiza |
-| F | F | V | V | F | Não atualiza |
-| F | F | F | F | F | Não atualiza |
+| P | Q | R | Q ∧ R | P ∧ Q ∧ R | Resultado    |
+| - | - | - | ----- | --------- | ------------ |
+| V | V | V | V     | V         | Atualiza     |
+| V | V | F | F     | F         | Não atualiza |
+| V | F | V | F     | F         | Não atualiza |
+| V | F | F | F     | F         | Não atualiza |
+| F | V | V | V     | F         | Não atualiza |
+| F | V | F | F     | F         | Não atualiza |
+| F | F | V | F     | F         | Não atualiza |
+| F | F | F | F     | F         | Não atualiza |
 
-### Interpretação da tabela-verdade
+#### Interpretação da tabela-verdade
 
-A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
+A tabela demonstra que a atualização ocorre apenas quando o checkpoint ainda não foi validado e sua distância está dentro do intervalo definido como suspeito. Caso o checkpoint já tenha sido validado ou a distância esteja fora desse intervalo, o registro não será alterado.
 
-#### Q04 — `DELETE` com `AND` e `NOT LIKE`
+#### Q04 — `DELETE` com `AND` e `NOT`
 
 <div align="center">
   <sub>Quadro 47 - Consulta Q04</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `DELETE` |
-| **Operadores lógicos** | `AND` |
-| **Operadores especiais** | `NOT LIKE` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Remover registros de checkpoint criados fora do padrão esperado de identificador (por exemplo, registros provenientes de testes ou inserções manuais inválidas), para uma competição específica. |
-
+| Atributo                   | Conteúdo                                                                                                                                                                           |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo de operação**       | `DELETE`                                                                                                                                                                           |
+| **Operadores lógicos**     | `AND`, `NOT`                                                                                                                                                                       |
+| **Operadores relacionais** | `=`, `<`                                                                                                                                                                           |
+| **Contexto de negócio**    | Remover registros temporários de checkpoints não validados após o encerramento da competição, evitando que dados incompletos permaneçam disponíveis para relatórios e exportações. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3022,20 +3011,20 @@ A tabela demonstra que a atualização ocorrerá apenas quando o corredor perten
 ```sql
 DELETE FROM checkpoint
 WHERE competicao_id = 1
-  AND identificador NOT LIKE 'CP-%';
+  AND NOT validado = TRUE;
 ```
 
-**Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
+**Descrição em palavras:** remove os checkpoints da competição de identificador `1` que não foram validados pelo usuário. Essa consulta é útil em um cenário de limpeza de registros temporários após o encerramento da competição, impedindo que checkpoints incompletos ou não confirmados sejam considerados nos relatórios finais. O operador `NOT` nega a condição de validação, enquanto o `AND` garante que a remoção esteja limitada à competição informada.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint pertence à competição de identificador 1.
+* **P:** o checkpoint pertence à competição de ID 1.
   `competicao_id = 1`
 
-- **Q:** o identificador do checkpoint segue o padrão esperado iniciado por `CP-`.
-  `identificador LIKE 'CP-%'`
+* **Q:** o checkpoint foi validado.
+  `validado = TRUE`
 
 #### Expressão lógica proposicional
 
@@ -3045,43 +3034,39 @@ A expressão lógica correspondente à consulta é:
 P ∧ ¬Q
 ```
 
-Em palavras:
-o checkpoint será removido se pertencer à competição 1 e seu identificador não seguir o padrão esperado iniciado por `CP-`.
+Em palavras: o checkpoint será removido se pertencer à competição 1 e não tiver sido validado.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que o checkpoint pertença à competição especificada e, ao mesmo tempo, não siga o padrão de identificador esperado;
-- **¬ (NOT):** representa a negação do padrão textual `LIKE 'CP-%'`, expressa na consulta pelo operador `NOT LIKE`.
+* **∧ (AND):** exige que o checkpoint pertença à competição especificada e satisfaça a condição de não validação;
+* **¬ (NOT):** representa a negação da proposição que indica se o checkpoint foi validado.
 
 #### Tabela-verdade
 
-| P | Q | ¬Q | P ∧ ¬Q | Resultado |
-|---|---|---|---|---|
-| V | V | F | F | Não remove |
-| V | F | V | V | Remove |
-| F | V | F | F | Não remove |
-| F | F | V | F | Não remove |
+| P | Q | ¬Q | P ∧ ¬Q | Resultado  |
+| - | - | -- | ------ | ---------- |
+| V | V | F  | F      | Não remove |
+| V | F | V  | V      | Remove     |
+| F | V | F  | F      | Não remove |
+| F | F | V  | F      | Não remove |
 
-### Interpretação da tabela-verdade
+#### Interpretação da tabela-verdade
 
-A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à competição de identificador `1` e, simultaneamente, seu identificador não segue o padrão `CP-`. Caso o checkpoint pertença a outra competição ou possua identificador válido, o registro não será removido.
+A exclusão ocorre somente quando o checkpoint pertence à competição analisada e não foi validado. Checkpoints de outras competições ou já validados não são removidos.
 
----
-
-#### Q05 — `SELECT` com `BETWEEN`, `AND` e `NOT IN`
+#### Q05 — `SELECT` com `JOIN`, `IN`, `BETWEEN` e agregação
 
 <div align="center">
   <sub>Quadro 48 - Consulta Q05</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `SELECT` |
-| **Operadores lógicos** | `AND` |
-| **Operadores especiais** | `BETWEEN`, `NOT IN` |
-| **Contexto de negócio** | Listar checkpoints com quilometragem dentro de uma faixa típica de desempenho, excluindo corredores específicos (por exemplo, atletas de equipes desclassificadas ou substituídos durante a competição). |
-
+| Atributo                    | Conteúdo                                                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Tipo de operação**        | `SELECT`                                                                                                           |
+| **Operadores lógicos**      | `AND`                                                                                                              |
+| **Operadores especiais**    | `IN`, `BETWEEN`                                                                                                    |
+| **Recursos SQL adicionais** | `INNER JOIN`, `GROUP BY`, `SUM`                                                                                    |
+| **Contexto de negócio**     | Gerar dados consolidados por equipe para apoiar o ranking, os relatórios finais e a exportação XLSX da competição. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3090,76 +3075,103 @@ A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à
 **Expressão SQL:**
 
 ```sql
-SELECT id, identificador, km, pace, corredor_id
-FROM checkpoint
-WHERE km BETWEEN 4 AND 6
-  AND corredor_id NOT IN (1, 7);
+SELECT
+    e.nome AS equipe,
+    SUM(c.km) AS km_total
+FROM equipe e
+INNER JOIN corredor r
+    ON e.id = r.equipe_id
+INNER JOIN checkpoint c
+    ON r.id = c.corredor_id
+WHERE e.id IN (1, 2)
+  AND c.criado_em BETWEEN '2026-06-01' AND '2026-06-30'
+GROUP BY e.nome;
 ```
 
-**Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
+**Descrição em palavras:** seleciona o total de quilômetros registrados por equipe, considerando apenas as equipes de identificador `1` e `2` e os checkpoints criados dentro do intervalo de datas definido. A consulta utiliza `INNER JOIN` para relacionar equipes, corredores e checkpoints, `IN` para restringir o conjunto de equipes analisadas, `BETWEEN` para delimitar o período da consulta, `SUM` para somar a quilometragem e `GROUP BY` para consolidar os resultados por equipe.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint possui quilometragem maior ou igual a 4 km.
-  `km >= 4`
+* **P:** a equipe possui identificador 1.
+  `e.id = 1`
 
-- **Q:** o checkpoint possui quilometragem menor ou igual a 6 km.
-  `km <= 6`
+* **Q:** a equipe possui identificador 2.
+  `e.id = 2`
 
-- **R:** o checkpoint pertence ao corredor de identificador 1.
-  `corredor_id = 1`
+* **R:** o checkpoint foi criado em data igual ou posterior a 01/06/2026.
+  `c.criado_em >= '2026-06-01'`
 
-- **S:** o checkpoint pertence ao corredor de identificador 7.
-  `corredor_id = 7`
+* **S:** o checkpoint foi criado em data igual ou anterior a 30/06/2026.
+  `c.criado_em <= '2026-06-30'`
 
 #### Expressão lógica proposicional
 
 A expressão lógica correspondente à consulta é:
 
 ```text
-P ∧ Q ∧ ¬R ∧ ¬S
+(P ∨ Q) ∧ R ∧ S
 ```
 
-Em palavras:
-o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, inclusive, e se o corredor associado não for o de identificador 1 nem o de identificador 7.
+Em palavras: o registro será considerado se pertencer à equipe 1 ou à equipe 2 e se o checkpoint tiver sido criado dentro do intervalo de datas definido.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
+* **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que a equipe seja a de ID 1 ou a de ID 2;
+* **∧ (AND):** exige que a equipe esteja no conjunto selecionado e que a data esteja dentro do intervalo especificado;
+* **BETWEEN:** representa uma condição composta por limite inferior e limite superior, equivalente a `R ∧ S`.
 
 #### Tabela-verdade
 
-| P | Q | R | S | ¬R | ¬S | P ∧ Q ∧ ¬R ∧ ¬S | Resultado |
-|---|---|---|---|---|---|---|---|
-| V | V | V | V | F | F | F | Não seleciona |
-| V | V | V | F | F | V | F | Não seleciona |
-| V | V | F | V | V | F | F | Não seleciona |
-| V | V | F | F | V | V | V | Seleciona |
-| V | F | V | V | F | F | F | Não seleciona |
-| V | F | V | F | F | V | F | Não seleciona |
-| V | F | F | V | V | F | F | Não seleciona |
-| V | F | F | F | V | V | F | Não seleciona |
-| F | V | V | V | F | F | F | Não seleciona |
-| F | V | V | F | F | V | F | Não seleciona |
-| F | V | F | V | V | F | F | Não seleciona |
-| F | V | F | F | V | V | F | Não seleciona |
-| F | F | V | V | F | F | F | Não seleciona |
-| F | F | V | F | F | V | F | Não seleciona |
-| F | F | F | V | V | F | F | Não seleciona |
-| F | F | F | F | V | V | F | Não seleciona |
+| P | Q | R | S | P ∨ Q | R ∧ S | (P ∨ Q) ∧ R ∧ S | Resultado     |
+| - | - | - | - | ----- | ----- | --------------- | ------------- |
+| V | V | V | V | V     | V     | V               | Seleciona     |
+| V | V | V | F | V     | F     | F               | Não seleciona |
+| V | V | F | V | V     | F     | F               | Não seleciona |
+| V | V | F | F | V     | F     | F               | Não seleciona |
+| V | F | V | V | V     | V     | V               | Seleciona     |
+| V | F | V | F | V     | F     | F               | Não seleciona |
+| V | F | F | V | V     | F     | F               | Não seleciona |
+| V | F | F | F | V     | F     | F               | Não seleciona |
+| F | V | V | V | V     | V     | V               | Seleciona     |
+| F | V | V | F | V     | F     | F               | Não seleciona |
+| F | V | F | V | V     | F     | F               | Não seleciona |
+| F | V | F | F | V     | F     | F               | Não seleciona |
+| F | F | V | V | F     | V     | F               | Não seleciona |
+| F | F | V | F | F     | F     | F               | Não seleciona |
+| F | F | F | V | F     | F     | F               | Não seleciona |
+| F | F | F | F | F     | F     | F               | Não seleciona |
 
 #### Observação sobre dependências semânticas
 
-A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+A tabela-verdade apresenta todas as combinações proposicionais possíveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `e.id`, portanto uma equipe não pode possuir simultaneamente o identificador 1 e o identificador 2. Assim, linhas em que **P = V** e **Q = V** são válidas do ponto de vista lógico abstrato, mas não ocorrem na prática para um único registro.
 
-O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+O mesmo raciocínio se aplica às proposições **R** e **S**, pois ambas dependem do mesmo atributo de data. Em termos práticos, a consulta seleciona somente checkpoints criados dentro do intervalo definido e vinculados a uma das equipes analisadas.
 
-### Interpretação da tabela-verdade
+#### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
+A consulta considera registros apenas quando a equipe pertence ao conjunto de equipes selecionadas e o checkpoint foi criado dentro do intervalo definido. Assim, o resultado consolidado por equipe será utilizado para apoiar a atualização do ranking, a geração de relatórios finais e a exportação dos dados da competição em formato XLSX.
+
+#### Síntese da relação entre consultas e requisitos funcionais
+
+<div align="center">
+  <sub>Quadro 49 - Relação entre consultas SQL e requisitos funcionais</sub>
+</div>
+
+| Consulta | Objetivo da consulta                                                       | Requisitos relacionados    |
+| -------- | -------------------------------------------------------------------------- | -------------------------- |
+| **Q01**  | Identificar checkpoints com possíveis inconsistências de distância         | RF008, RF009               |
+| **Q02**  | Buscar atletas cadastrados por padrão de nome e status                     | RF003                      |
+| **Q03**  | Atualizar manualmente valores capturados antes da validação definitiva     | RF005, RF006, RF007, RF008 |
+| **Q04**  | Remover checkpoints não validados após encerramento ou limpeza operacional | RF012                      |
+| **Q05**  | Consolidar quilômetros por equipe para ranking, relatórios e exportação    | RF010, RF013, RF014, RF015 |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização e remoção de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
