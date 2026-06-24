@@ -86,6 +86,67 @@ export function createReportService(
     });
   }
 
+function DadosKmPorHora(
+    checkpoints: Checkpoint[],
+    teams: RankingTeam[]
+  ): { labels: string[]; datasets: Array<{ team_name: string; id_team: number; data: (number | null)[] }> } {
+    const labels: string[] = [];
+    for (let h = 0; h <= 24; h += 2) {
+      labels.push(`${h}h`);
+    }
+
+    if (teams.length === 0) {
+      return { labels, datasets: [] };
+    }
+
+    const sorted = [...checkpoints].sort((a, b) => {
+      return new Date(a.created_at).getTime() - new Date(b.created_at).getTime();
+    });
+
+    if (sorted.length === 0) {
+      return {
+        labels,
+        datasets: teams.map((team) => ({
+          team_name: team.team_name,
+          id_team: team.id_team,
+          data: labels.map(() => null),
+        })),
+      };
+    }
+
+    const firstTime = new Date(sorted[0].created_at).getTime();
+    const lastTime = new Date(sorted[sorted.length - 1].created_at).getTime();
+
+    const datasets = teams.map((team) => {
+      const distancesByInterval = labels.map((label, index) => {
+        const hours = index * 2;
+        const sampleTime = firstTime + hours * 3600000;
+
+        if (sampleTime > lastTime) return null;
+
+        let maxDistance = 0;
+        for (const checkpoint of sorted) {
+          const checkpointTime = new Date(checkpoint.created_at).getTime();
+          if (checkpointTime > sampleTime) break;
+
+          if (checkpoint.runner?.id_team === team.id_team) {
+            maxDistance = Math.max(maxDistance, checkpoint.distance_km);
+          }
+        }
+
+        return Math.round(maxDistance * 100) / 100;
+      });
+
+      return {
+        team_name: team.team_name,
+        id_team: team.id_team,
+        data: distancesByInterval,
+      };
+    });
+
+    return { labels, datasets };
+  }
+
   function mergeReportData(
     savedReport: CompetitionReport | null,
     data: Omit<CompetitionReportView, keyof CompetitionReport | "persisted">
@@ -101,12 +162,15 @@ export function createReportService(
       paceSamples.length > 0
         ? paceSamples.reduce((sum, pace) => sum + pace, 0) / paceSamples.length
         : null;
+    const averagePaceRounded =
+      averagePaceSeconds === null ? null : Math.round(averagePaceSeconds);
     const averagePace =
-      averagePaceSeconds === null
+      averagePaceRounded === null
         ? null
-        : `${Math.floor(averagePaceSeconds / 60)}:${String(
-            Math.round(averagePaceSeconds % 60)
-          ).padStart(2, "0")}`;
+        : `${String(Math.floor(averagePaceRounded / 60)).padStart(
+            2,
+            "0"
+          )}:${String(averagePaceRounded % 60).padStart(2, "0")}`;
 
     const generatedSummary = {
       total_km: Number(totalDistance.toFixed(1)),
@@ -122,6 +186,7 @@ export function createReportService(
         position: team.position,
       })),
       position_history: buildPositionHistory(data.checkpoints, data.teamRanking),
+      hourly_team_km: DadosKmPorHora(data.checkpoints, data.teamRanking),
     };
 
     return {

@@ -5,19 +5,25 @@ import {
   getSelectedCompetitionId,
   saveSelectedCompetitionId,
 } from "../helpers/selectedCompetition";
+import { garantirAutenticacao } from "../middlewares/authMiddleware";
 
 const router = Router();
 
 // [A1] Rota SSR — GET /dashboard — confirmada em src/routes/dashboardRoutes.ts
-router.get("/dashboard", asyncHandler(async (req: Request, res: Response) => {
-  const competitions = await competitionService.findAll();
+router.get("/dashboard", garantirAutenticacao, asyncHandler(async (req: Request, res: Response) => {
+  const competitionsFull = await competitionService.findAll();
   const requestedCompetitionId =
     typeof req.query.competitionId === "string"
       ? Number(req.query.competitionId)
       : getSelectedCompetitionId(req) ?? NaN;
   const activeCompetition = Number.isInteger(requestedCompetitionId)
-    ? competitions.find((competition) => competition.id === requestedCompetitionId) ?? null
+    ? competitionsFull.find((competition) => competition.id === requestedCompetitionId) ?? null
     : null;
+
+  // Ordenar por data de criação (mais recentes primeiro)
+  const competitions = competitionsFull
+    .slice()
+    .sort((a, b) => (new Date(b.created_at).getTime() ?? 0) - (new Date(a.created_at).getTime() ?? 0));
 
   if (activeCompetition) {
     saveSelectedCompetitionId(res, activeCompetition.id);
