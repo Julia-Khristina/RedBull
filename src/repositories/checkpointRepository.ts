@@ -7,7 +7,7 @@ import {
 import { getSupabaseClient } from "../database/supabaseClient";
 
 const SELECT_COLUMNS =
-  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team, team:id_team(id, name)), admin:id_admin(id, name)";
+  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_admin, created_at, runner:id_runner(id, name, id_team, team:id_team(id, name))";
 
 type SupabaseCheckpoint = Record<string, unknown>;
 
@@ -28,15 +28,12 @@ export const checkpointRepository: CheckpointRepository = {
   async create(input: CreateCheckpointInput): Promise<Checkpoint> {
     const supabase = getSupabaseClient();
 
-    const nowIso = new Date().toISOString();
     const payload: Record<string, unknown> = {
       identifier: input.identifier,
       distance_km: input.distance_km,
       id_runner: input.id_runner,
       id_competition: input.id_competition,
-      id_treadmill: input.id_treadmill,
       id_admin: input.id_admin,
-      created_at: input.created_at ? input.created_at.toISOString() : nowIso,
     };
     if (input.pace !== undefined) payload.pace = input.pace;
     if (input.time !== undefined) payload.time = input.time;
@@ -124,9 +121,7 @@ export const checkpointRepository: CheckpointRepository = {
   ): Promise<Checkpoint | null> {
     const supabase = getSupabaseClient();
 
-    const payload: Record<string, unknown> = {
-      created_at: new Date().toISOString(),
-    };
+    const payload: Record<string, unknown> = {};
     if (input.distance_km !== undefined) payload.distance_km = input.distance_km;
     if (input.pace !== undefined) payload.pace = input.pace;
     if (input.time !== undefined) payload.time = input.time;
