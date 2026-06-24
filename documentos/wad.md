@@ -726,12 +726,12 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF007 | O sistema deve permitir a edição manual dos dados capturados via OCR antes da confirmação do checkpoint                                                               | Alta       | Concluído |
 | RF008 | O sistema deve registrar checkpoints, contendo a distância (km) e o tempo, somente após validação do usuário                                                             | Alta       | Concluído |
 | RF009 | O sistema deve identificar inconsistências nos valores preenchidos de distância em relação ao tempo e sinalizar ao usuário antes da validação                                                     | Média      | Concluído |
-| RF010 | O sistema deve atualizar o ranking das equipes no painel administrativo em tempo real durante a competição                          | Média      | Concluído |
+| RF010 | O sistema deve atualizar o ranking das equipes no painel administrativo imediatamente após a validação de novos checkpoints durante a competição.                         | Média      | Concluído |
 | RF011 | O sistema deve exibir o atleta em execução por equipe no painel administrativo                                                            | Baixa      | Concluído |
 | RF012 | O sistema deve permitir o encerramento da competição pelo usuário, bloqueando novos registros de checkpoints                                                          | Alta       | Concluído |
 | RF013 | O sistema deve exportar os dados da competição em formato XLSX, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Concluído |
-| RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel das equipes em intervalos máximos de 1 hora                                                   | Média      | Concluído |
+| RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora.                                                  | Média      | Concluído |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -745,7 +745,7 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 | RF    | Critério de Aceite                                                                                                                                                                    |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| RF001 | Dado que o usuário informe os dados da competição, quando a operação for confirmada, então a competição deve ser criada e persistida no banco de dados.                                |
+| RF001 | Dado que uma competição tenha sido criada, quando o administrador acessar a área administrativa vinculada a essa competição, então o sistema deve disponibilizar a sala administrativa correspondente.                                |
 | RF002 | Dado que o usuário informe nome, data e local válidos, quando a operação for confirmada, então a competição deve ser registrada no sistema. |
 | RF003 | Dado que o usuário realize o cadastro de uma equipe, quando os dados forem confirmados, então o sistema deve permitir registrar até 16 atletas vinculados à equipe. |
 | RF004 | Dado que o operador possua credenciais de administrador válidas, quando acessar a área administrativa, então o sistema deve permitir acesso às funcionalidades operacionais. |
@@ -753,9 +753,9 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF006 | Dado que os dados sejam extraídos via OCR, quando o processamento for concluído, então o sistema deve disponibilizar os dados para validação antes da persistência. |
 | RF007 | Dado que os dados extraídos via OCR sejam exibidos, quando o operador editar os campos e confirmar, então o sistema deve registrar os dados corrigidos no checkpoint.                 |
 | RF008 | Dado que os dados do checkpoint estejam validados, quando o usuário confirmar o registro, então o sistema deve persistir ao menos a distância (km) e o tempo no banco de dados. |
-| RF009 | Dado que o sistema identifique inconsistências nos dados preenchidos nos campos de distância e pace, então o sistema deve sinalizar os campos divergentes ao usuário. |
-| RF010 | Dado que existam novos checkpoints validados, o sistema deve atualizar o painel administrativoautomaticamente com o novo ranking das equipes.                                          |
-| RF011 | Dado que o atleta ativo seja trocado, então o sistema deve atualizar automaticamente o painel administrativo para o novo atleta esclado. |
+| RF009 | Dado que o sistema identifique inconsistências entre os valores de distância, tempo ou pace, então o sistema deve sinalizar os campos divergentes ao usuário antes da validação do checkpoint. |
+| RF010 | Dado que existam novos checkpoints validados, quando a validação for concluída, então o sistema deve atualizar automaticamente o ranking exibido no painel administrativo.                                          |
+| RF011 | Dado que o atleta ativo seja alterado, quando a alteração for confirmada, então o sistema deve atualizar automaticamente o painel administrativo exibindo o novo atleta escalado. |
 | RF012 | Dado que a competição seja encerrada, quando o usuário confirmar a operação, então o sistema deve bloquear novos registros de checkpoints.                                            |
 | RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo XLSX contendo checkpoints, timestamps e logs de validação.                 |
 | RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
@@ -780,16 +780,16 @@ No Quadro 20, são apresentadas as regras de negócio do sistema, as quais defin
 | RN03 | O acesso ao painel administrativo deve exigir autenticação via senha do administrador.                                                                                                 | RF004       |
 | RN04 | O registro de checkpoint deve exigir obrigatoriamente a distância (km) e o tempo, enquanto o campo do pace é calculado automaticamente.                                                                             | RF008              |
 | RN05 | Todo checkpoint registrado deve incluir no log de auditoria o método de entrada utilizado (OCR ou manual).                                                                                                                        | RF005, RF007, RF008|
-| RN06 | Valores de distância e tempo que divergirem deve ser realizada correção manual antes do salvamento.       | RF009, RF007       |
+| RN06 | Valores de distância e tempo que apresentarem divergências devem ser corrigidos manualmente antes do salvamento do checkpoint.     | RF009, RF007       |
 | RN07 | O sistema deve suportar os papéis de "atleta" e "capitão" para os corredores, garantindo que a estrutura da equipe seja respeitada conforme o cadastro.                               | RF003, RF011       |
-| RN08 | A calculadora de descanso deve utilizar uma contagem regressiva de tempo de 50 minutos a partir da última corrida, classificando esse intervalo em categorias (verde, amarelo ou vermelho).                                      | RF011              |
-| RN09 | O ranking exibido no painel da equipe deve ser atualizado a cada 1 hora, enquanto o painel administrativo deve atualizar o leaderboard a cada novo checkpoint registrado.                                                         | RF010, RF015       |
+| RN08 | A calculadora de descanso deve utilizar uma contagem regressiva de tempo de 50 minutos a partir da última corrida, classificando esse intervalo em categorias (verde, amarelo ou vermelho).                                      |              |
+| RN09 | O painel administrativo deve recalcular automaticamente métricas operacionais, incluindo pace médio e distância acumulada.                                                      | RF010, RF015       |
 | RN10 | O painel administrativo deve exibir o atleta atualmente em corrida em "atleta ativo".                                                            | RF011              |
 | RN11 |  O painel administrativo deve recalcular automaticamente métricas operacionais, incluindo pace médio e distância acumulada automaticamente. | RF010 |
 | RN12 | Edições retroativas em checkpoints devem registrar obrigatoriamente no log de auditoria o usuário responsável pela alteração.                                                                                | RF007, RF008       |
 | RN13 | O link de compartilhamento gerado pela equipe deve conter apenas o leaderboard simplificado do geral das equipes, sem expor dados individuais que ofereçam vantagens aos concorrentes. | RF001, RF015      |
 | RN14 | O encerramento do evento deve ser permitido apenas a um administrador e deve bloquear novos registros de checkpoint após sua execução.                                                                                      | RF012              |
-| RN15 | A exportação em XLSX deve incluir todos os checkpoints com timestamps e logs de validação para auditoria.                                                                                         | RF013              |
+| RN15 | A exportação em XLSX deve preservar a ordem cronológica dos checkpoints e incluir timestamps e logs de validação para fins de auditoria.                             | RF013              |
 | RN16 | Os highlights pós-evento devem ser gerados automaticamente ao encerrar a competição, sem necessidade de configuração manual.                                                                                                      | RF012, RF014       |
 | RN17 | Os highlights devem incluir recordes nas categorias: individual (médias de troca de turno, km, pace e total de checkpoint), por equipe (total de km e trocas de turno; média de pace e tempo por turno) e por operador (total de checkpoints registrados de forma manual e por ocr)                       | RF014              |
 | RN18 | O cadastro da competição deve exigir obrigatoriamente nome, data e local válidos. | RF002 |
@@ -857,17 +857,17 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 | RF002 | RN18 | `/competitions`; `/competitions/:id` | POST; GET; PUT; DELETE | Implementado | Permite cadastrar, listar, consultar, atualizar e excluir competições. |
 | RF003 | RN01, RN07 | `/competitions/:id/teams`; `/competitions/:id/teams/:teamId`; `/competitions/:id/teams/:teamId/runners`; `/competitions/:id/teams/:teamId/runners/:runnerId` | POST; GET; PUT; DELETE | Implementado | Permite gerenciar equipes e atletas vinculados a uma competição. |
 | RF004 | RN03 | `/auth/sessions`; `/admin/login`; `/admin`; `/admin/:id` | POST; GET; PUT; DELETE | Implementado | Permite autenticação e gerenciamento de administradores do sistema. |
-| RF005 | RN06 | `/ocr/extractions` | POST | Planejado | Endpoint previsto para extração automática de dados por OCR, porém não implementado nesta versão. |
-| RF006 | RN06 | `/ocr/extractions` | POST | Planejado | Endpoint previsto para apoiar a validação dos dados extraídos por OCR. |
+| RF005 | RN06 | `/ocr/extractions` | POST | Implementado | Permite a extração automática de dados por OCR. |
+| RF006 | RN06 | `/ocr/extractions` | POST | Implementado | Permite apoiar a validação dos dados extraídos por OCR. |
 | RF007 | RN06, RN12 | `/checkpoints/:id` | PUT | Implementado | Permite corrigir registros de checkpoints após identificação de inconsistências. |
 | RF008 | RN04, RN05 | `/checkpoints`; `/checkpoints/:id`; `/runners/:runnerId/checkpoints`; `/competitions/:id/checkpoints` | POST; GET; DELETE | Implementado | Permite registrar, consultar, listar e excluir checkpoints da competição ou de atletas específicos. |
-| RF009 | RN06 | `/competitions/:id/checkpoints/inconsistencies` | GET | Planejado | Endpoint previsto para listar inconsistências entre tempo, quilometragem e histórico de checkpoints. |
-| RF010 | RN09, RN11 | `/competitions/:id/ranking/teams` | GET | Implementado e validado | Retorna o ranking das equipes em tempo real com base nos checkpoints registrados. |
-| RF011 | RN07, RN08, RN10 | `/competitions/:id/teams/:teamId/active-runner`; `/public/team/:uuid` | PATCH; GET | Parcialmente implementado | A visualização pública da equipe está implementada; a alteração formal do atleta ativo permanece prevista. |
+| RF009 | RN06 | `/competitions/:id/checkpoints/inconsistencies` | GET | Implementado | Permite listar inconsistências entre tempo, quilometragem e histórico de checkpoints. |
+| RF010 | RN09, RN11 | `/competitions/:id/ranking/teams` | GET | Implementado | Retorna o ranking das equipes em tempo real com base nos checkpoints registrados. |
+| RF011 | RN07, RN08, RN10 | `/competitions/:id/teams/:teamId/active-runner`; `/public/team/:uuid` | PATCH; GET | Implementado | Permite a visualização pública da equipe e a alteração formal do atleta ativo. |
 | RF012 | RN14, RN16 | `/competitions/:id` | PATCH | Implementado | Permite atualização parcial de informações da competição, como status e configurações operacionais. |
 | RF013 | RN15 | `/competitions/:id/export` | GET | Implementado | Permite exportar dados consolidados da competição para análise posterior. |
-| RF014 | RN16, RN17 | `/competitions/:id/reports` | GET | Planejado | Endpoint previsto para geração de relatórios gerenciais e operacionais da competição. |
-| RF015 | RN09, RN13 | `/competitions/:id/ranking`; `/competitions/:id/ranking/teams`; `/competitions/:id/ranking/runners` | GET | Implementado e validado | Retorna rankings por equipe e por atleta, ordenados conforme desempenho registrado. |
+| RF014 | RN16, RN17 | `/competitions/:id/reports` | GET | Implementado | Permite a geração de relatórios gerenciais e operacionais da competição. |
+| RF015 | RN09, RN13 | `/competitions/:id/ranking`; `/competitions/:id/ranking/teams`; `/competitions/:id/ranking/runners` | GET | Implementado | Retorna rankings por equipe e por atleta, ordenados conforme desempenho registrado. |
 
 <div align="center">
 
