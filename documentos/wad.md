@@ -1,8 +1,6 @@
 # WAD - Web Application Document - Módulo 2 - Inteli
 
-**_Os trechos em itálico servem apenas como guia para o preenchimento da seção. Por esse motivo, não devem fazer parte da documentação final_**
-
-## Nome do Grupo
+## Propositivos
 
 #### Ana Clara Tenório Pelegrini
 #### Beatriz Okubo Vieira Lima
@@ -42,17 +40,17 @@
 
 A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é realizado de forma manual por operadores, que anotam em pranchetas os momentos de início e término de cada turno, além de checkpoints periódicos. Esse processo é suscetível a erros de anotação, distrações humanas e inconsistências, o que compromete a confiabilidade e a rastreabilidade dos resultados finais. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como dispositivos vestíveis sincronizados se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente de registros humanos, sem mecanismos estruturados de auditabilidade dos dados.
 
-Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance com atualização periódica dos dados ao longo da competição, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Considerando as limitações de padronização visual das esteiras e as variáveis do ambiente operacional do evento, a viabilidade da solução ainda depende de validações práticas relacionadas à precisão e consistência da leitura automatizada. Os dados extraídos são submetidos à validação humana, com emissão de alertas em caso de inconsistências, garantindo maior confiabilidade e controle sobre o processo de apuração.
+Diante desse cenário, o projeto propõe o desenvolvimento de uma plataforma web de gestão de performance com atualização em tempo real dos dados ao longo da competição, projetada para uso em iPads posicionados ao lado das esteiras pelos operadores do evento. A solução substitui o registro manual por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira por meio de fotografia, e o sistema realiza a extração automática dos dados por meio de reconhecimento óptico de caracteres (OCR). Considerando as limitações de padronização visual das esteiras e as variáveis do ambiente operacional do evento, a viabilidade da solução ainda depende de validações práticas relacionadas à precisão e consistência da leitura automatizada. Os dados extraídos são submetidos à validação humana, garantindo maior confiabilidade e controle sobre o processo de apuração.
 
 A plataforma é dividida em duas interfaces principais: uma área privada de operação, onde os administradores registram checkpoints, corrigem dados extraídos via OCR, acompanham informações detalhadas de cada equipe e gerenciam a dinâmica da competição; e uma área pública por equipe, acessada sem login por meio de uma URL com UUID único entregue ao capitão de cada equipe, responsável pela exibição do ranking, status individual dos atletas e calculadora de descanso durante a competição.
 
 A criação de valor do sistema se concentra em quatro eixos principais: redução de erros no processo de apuração, aumento da confiabilidade e auditabilidade dos dados, ganho de eficiência operacional para a equipe organizadora da Red Bull e disponibilização de informações atualizadas a cada checkpoint operacional da competição.
 
-# <a name="c2"></a>2. Visão Geral da Aplicação Web (sprint 1)
+# <a name="c2"></a>2. Visão Geral da Aplicação Web 
 
-## 2.1. Escopo do Projeto (sprints 1 e 4)
+## 2.1. Escopo do Projeto 
 
-### 2.1.1. Modelo de 5 Forças de Porter (sprint 1)
+### 2.1.1. Modelo de 5 Forças de Porter 
 
 O modelo das Cinco Forças de Porter constitui um framework de análise estratégica utilizado para avaliar a atratividade e a intensidade competitiva de uma indústria. O posicionamento estratégico de uma organização não depende exclusivamente da concorrência direta, mas da interação entre cinco forças estruturais: a rivalidade entre concorrentes existentes, a ameaça de novos entrantes, a ameaça de produtos ou serviços substitutos, o poder de barganha dos fornecedores e o poder de barganha dos clientes. A aplicação desse modelo permite identificar oportunidades, vulnerabilidades competitivas e fatores críticos para a sustentabilidade de uma solução (Porter, 2008).
 
@@ -72,13 +70,13 @@ O diferencial competitivo da solução proposta reside na sua especialização f
 
 #### 2. Ameaça de novos entrantes (MÉDIA)
 
-A entrada de novos desenvolvedores de soluções digitais neste mercado é relativamente acessível do ponto de vista técnico, uma vez que as ferramentas de desenvolvimento web são amplamente disponíveis. No entanto, a principal barreira competitiva não está na tecnologia em si, mas na capacidade de adaptação ao contexto operacional específico do evento.
+A ameaça de novos entrantes é considerada média, pois a entrada de novos desenvolvedores de soluções digitais neste mercado é relativamente acessível do ponto de vista técnico, uma vez que as ferramentas de desenvolvimento web são amplamente disponíveis. No entanto, a principal barreira competitiva não está na tecnologia em si, mas na capacidade de adaptação ao contexto operacional específico do evento.
 
 O Red Bull 24 Horas apresenta características próprias, tal qual operações contínuas por 24 horas, rotatividade de usuários, pressão por rapidez e necessidade de confiabilidade no registro dos dados, nesse cenário, é possível verificar que esses fatores dificultam a criação de soluções verdadeiramente aderentes sem conhecimento aprofundado da dinâmica operacional. Dessa forma, embora novos entrantes possam desenvolver sistemas similares, a replicação de uma solução efetivamente integrada à realidade do evento representa uma barreira prática relevante.
 
 #### 3. Ameaça de produtos ou serviços substitutos (MUITO ALTA)
 
-A ameaça de substitutos é considerada alta, pois o principal substituto da solução proposta é o próprio método atualmente utilizado pela operação, baseado em registros manuais realizados em pranchetas pelos operadores do evento. Apesar de apresentar limitações relacionadas a erros de preenchimento, retrabalho e ausência de auditabilidade estruturada, esse processo possui vantagens operacionais relevantes, como baixo custo de implementação, independência tecnológica e elevada familiaridade por parte da equipe responsável pela apuração.
+A ameaça de substitutos é considerada muito alta, pois o principal substituto da solução proposta é o próprio método atualmente utilizado pela operação, baseado em registros manuais realizados em pranchetas pelos operadores do evento. Apesar de apresentar limitações relacionadas a erros de preenchimento, retrabalho e ausência de auditabilidade estruturada, esse processo possui vantagens operacionais relevantes, como baixo custo de implementação, independência tecnológica e elevada familiaridade por parte da equipe responsável pela apuração.
 
 Diferentemente de soluções digitais concorrentes, que disputam espaço tecnológico no mercado, o registro manual representa um substituto diretamente integrado à cultura operacional do evento, já consolidado na dinâmica da competição. Nesse contexto, a principal ameaça não é necessariamente tecnológica, mas comportamental, uma vez que a adoção da nova solução depende da percepção clara de ganhos em rapidez, simplicidade, confiabilidade e redução de esforço operacional.
 
@@ -90,13 +88,13 @@ Esses recursos apresentam alta disponibilidade, baixa diferenciação e facilida
 
 #### 5. Poder de barganha dos clientes (MUITO ALTO)
 
-A principal área demandante da solução corresponde ao time operacional de Field Marketing da Red Bull, responsável pelo registro dos dados durante o evento. Esse grupo exerce elevado poder de barganha, pois a adoção da ferramenta depende diretamente da sua aceitação em um ambiente caracterizado por alta pressão operacional, rapidez na tomada de decisão e necessidade de execução contínua. O custo de substituição é praticamente inexistente, uma vez que o método manual atualmente utilizado pode ser retomado a qualquer momento sem impactos financeiros ou contratuais. Além disso, qualquer aumento de complexidade, lentidão ou dificuldade de uso pode comprometer diretamente a aceitação da solução. Dessa forma, a área demandante exerce não apenas poder de escolha, mas também poder de veto, exigindo que a ferramenta seja comprovadamente mais simples, rápida e confiável do que o processo atual para garantir sua adoção efetiva.
+O poder de barganha dos clientes é considerada muito alto, a principal área demandante da solução corresponde ao time operacional de Field Marketing da Red Bull, responsável pelo registro dos dados durante o evento. Esse grupo exerce elevado poder de barganha, pois a adoção da ferramenta depende diretamente da sua aceitação em um ambiente caracterizado por alta pressão operacional, rapidez na tomada de decisão e necessidade de execução contínua. O custo de substituição é praticamente inexistente, uma vez que o método manual atualmente utilizado pode ser retomado a qualquer momento sem impactos financeiros ou contratuais. Além disso, qualquer aumento de complexidade, lentidão ou dificuldade de uso pode comprometer diretamente a aceitação da solução. Dessa forma, a área demandante exerce não apenas poder de escolha, mas também poder de veto, exigindo que a ferramenta seja comprovadamente mais simples, rápida e confiável do que o processo atual para garantir sua adoção efetiva.
 
 #### Conclusão da análise
 
 A aplicação do modelo das Cinco Forças de Porter evidencia que a solução proposta para o Red Bull 24 Horas está inserida em um contexto de elevada pressão competitiva, especialmente em relação à rivalidade entre soluções alternativas, à resistência comportamental associada aos métodos já consolidados e ao elevado poder de decisão da área demandante. Em contrapartida, a baixa dependência de fornecedores e a especialização operacional da ferramenta criam condições favoráveis para a construção de vantagem competitiva sustentável. Dessa forma, o sucesso da solução não depende exclusivamente de sua viabilidade técnica, mas principalmente de sua capacidade de entregar ganhos reais de usabilidade, confiabilidade e eficiência operacional no contexto específico da Red Bull.
 
-### 2.1.2. Análise SWOT da Instituição Parceira (sprint 1)
+### 2.1.2. Análise SWOT da Instituição Parceira 
 
 A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que permite avaliar fatores internos (forças e fraquezas) e externos (oportunidades e ameaças) que impactam o desempenho de uma organização (Casarotto, 2019). Com base nisso, foi realizada a análise do evento Red Bull 24 Horas, conforme apresentado na Figura 2, considerando seu posicionamento no mercado e relação com concorrentes.
 
@@ -108,46 +106,51 @@ A análise SWOT (ou FOFA) é uma ferramenta de planejamento estratégico que per
 
 #### Forças
 
-  No contexto do evento Red Bull 24 Horas, destacam-se como principais forças a existência de uma dinâmica operacional já consolidada, com regras bem definidas de revezamento, checkpoints periódicos e acompanhamento contínuo das equipes ao longo das 24 horas. Além disso, o evento possui alta capacidade de engajamento entre corredores e running crews, favorecendo a participação ativa do público e a valorização de dados de desempenho durante a competição. A estrutura operacional já estabelecida também favorece a implementação de soluções digitais voltadas à padronização e rastreabilidade do processo de apuração.
+No contexto do evento Red Bull 24 Horas, destacam-se como principais forças a existência de uma dinâmica operacional já consolidada, com regras bem definidas de revezamento, checkpoints periódicos e acompanhamento contínuo das equipes ao longo das 24 horas. Além disso, o evento possui alta capacidade de engajamento entre corredores e running crews, favorecendo a participação ativa do público e a valorização de dados de desempenho durante a competição. A estrutura operacional já estabelecida também favorece a implementação de soluções digitais voltadas à padronização e rastreabilidade do processo de apuração.
 
 #### Fraquezas
-
-   Entre as fraquezas, observa-se a ausência de integração com as esteiras, o que limita a automação da coleta de dados e mantém a dependência de processos manuais. Adicionalmente, a baixa consolidação de dados em tempo real compromete a visibilidade geral da competição e pode impactar a confiabilidade das informações durante o evento, reduzindo a qualidade da experiência em comparação a soluções mais automatizadas adotadas por concorrentes.
+  
+Entre as fraquezas, observa-se a ausência de integração com as esteiras, o que limita a automação da coleta de dados e mantém a dependência de processos manuais. Adicionalmente, a baixa consolidação de dados em tempo real compromete a visibilidade geral da competição e pode impactar a confiabilidade das informações durante o evento, reduzindo a qualidade da experiência em comparação a soluções mais automatizadas adotadas por concorrentes.
 
 #### Oportunidades
+
 No ambiente externo, identificam-se oportunidades relacionadas ao uso estratégico de dados para geração de valor em marketing, mídia e engajamento do público, por meio de dashboards e indicadores relevantes. Há potencial de escalabilidade da solução para outros eventos da Red Bull, fortalecendo sua vantagem competitiva. Além disso, a crescente tendência de eventos esportivos orientados a dados e o crescimento das running crews no Brasil ampliam o público-alvo e favorecem a adoção da solução proposta.
 
 #### Ameaças
 
-Entre as ameaças, destacam-se possíveis falhas operacionais ao longo das 24 horas do evento, que podem comprometer o registro correto dos checkpoints e a consolidação da quilometragem total das equipes. Instabilidades técnicas, falhas de conexão ou indisponibilidade momentânea do sistema podem gerar atrasos na sincronização dos dados e impactar diretamente a confiabilidade da apuração durante períodos críticos da competição. Além disso, a existência de processos alternativos já consolidados internamente pode reduzir a adesão à solução proposta, especialmente caso os operadores não percebam ganhos claros de agilidade, simplicidade e confiabilidade em relação ao método atual.
+Entre as ameaças, destacam-se o aumento da concorrência de outros eventos esportivos e experiências voltadas ao público corredor, que disputam a atenção dos participantes, patrocinadores e comunidades de running crews. Além disso, mudanças nas tendências de consumo de eventos esportivos podem reduzir o interesse por formatos específicos de competição ao longo do tempo. Fatores externos, como condições climáticas adversas, dificuldades logísticas, indisponibilidade de fornecedores e limitações de infraestrutura, também podem impactar a execução do evento e comprometer a experiência dos participantes. 
 
-### 2.1.3. Solução (sprints 1 a 5)
+#### Conclusão da análise SWOT
 
-#### a) Problema a ser resolvido
+A análise SWOT evidencia que o Red Bull 24 Horas possui uma estrutura operacional consolidada e elevado potencial de engajamento, fatores que favorecem a adoção de soluções digitais voltadas à gestão da competição. Ao mesmo tempo, as limitações relacionadas à coleta manual de dados e à baixa visibilidade em tempo real representam oportunidades claras de melhoria. Nesse contexto, a solução proposta busca potencializar as forças existentes, mitigar as fraquezas identificadas e aproveitar as oportunidades de expansão e uso estratégico de dados, contribuindo para uma operação mais eficiente, confiável e escalável. 
+
+### 2.1.3. Solução 
+
+#### Problema a ser resolvido
 
 Atualmente, o processo de registro de dados dos corredores durante a competição é predominantemente manual, exigindo que operadores realizem anotações periódicas ao longo de 24 horas ininterruptas. Esse modelo gera sobrecarga operacional significativa, além de alta suscetibilidade a erros humanos decorrentes de fadiga, falhas de interpretação e inconsistências de caligrafia. Como consequência, a confiabilidade dos dados é comprometida, impactando diretamente a precisão da apuração, a transparência do evento e a qualidade das análises estratégicas realizadas pela organização.
 
-#### b) Dados disponíveis 
+#### Dados disponíveis 
 
 Como base inicial, foi utilizado o site oficial do evento Red Bull 24 Hours, fornecido durante o onboarding, contendo informações institucionais, dinâmica da competição e contexto geral. Complementarmente, foram realizadas interações com o parceiro, nas quais foram identificados os principais fluxos operacionais, limitações do processo atual e requisitos implícitos, especialmente relacionados à necessidade de automatização do registro de checkpoints e à melhoria da confiabilidade dos dados coletados (Red Bull, 2025).
 
-#### c) Solução proposta
+#### Solução proposta
 
-Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de equipes e atletas, atualização periódica dos dados, visualização de rankings globais e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
+Propõe-se o desenvolvimento de uma aplicação web integrada, com foco na automatização da coleta e processamento de dados por meio de tecnologia de Reconhecimento Óptico de Caracteres (OCR). A solução permitirá que operadores capturem imagens dos displays das esteiras, realizando a extração automática das informações relevantes. Além disso, a plataforma contemplará módulos de cadastro de competições, equipes e atletas, atualização em tempo real dos dados no ambiente administrativo e disponibilização periódica das informações no painel público das equipes e geração de relatórios analíticos com indicadores de desempenho, garantindo escalabilidade, padronização e maior robustez no processo.
 
-#### d) Forma de utilização da solução
+#### Forma de utilização da solução
 
-A solução será estruturada em dois ambientes principais: um administrativo e outro público. No ambiente administrativo, acessado por meio de identificadores UUID únicos previamente disponibilizados aos operadores, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente público, usuários terão acesso a um painel com ranking atualizado periodicamente, desempenho das equipes e métricas relevantes. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
+A solução será estruturada em dois ambientes principais: um administrativo e outro para as equipes. No ambiente administrativo, acessado por meio do email e senha única previamente disponibilizada aos operadores, será possível cadastrar competições, gerenciar equipes e registrar checkpoints por OCR ou entrada manual. No ambiente das equipes, acessado por meio de identificadores UUID únicos, os atletas terão acesso a um painel público com informações da equipe, métricas de desempenho e ranking da competição, atualizados periodicamente a cada uma hora. Já o ambiente administrativo opera com atualização em tempo real para suporte à operação do evento. Ao final da competição, administradores poderão exportar relatórios detalhados para análise estratégica e tomada de decisão.
 
-#### e) Benefícios esperados
+#### Benefícios esperados
 
-A implementação da solução proporcionará significativa redução de erros operacionais, aumento da eficiência no processo de coleta de dados e maior confiabilidade das informações registradas. A disponibilização de métricas periódicamente permitirá melhor acompanhamento do desempenho das equipes durante o evento. Além disso, os relatórios analíticos contribuirão para decisões mais assertivas, melhoria contínua das edições futuras e fortalecimento da experiência dos participantes e da gestão do evento.
+A implementação da solução proporcionará significativa redução de erros operacionais, aumento da eficiência no processo de coleta de dados e maior confiabilidade das informações registradas. A disponibilização de métricas em tempo real permitirá melhor acompanhamento do desempenho das equipes durante o evento. Além disso, os relatórios analíticos contribuirão para decisões mais assertivas, melhoria contínua das edições futuras e fortalecimento da experiência dos participantes e da gestão do evento.
 
-#### f) Critério de sucesso e como será avaliado
+#### Critério de sucesso e como será avaliado
 
 O sucesso da solução será mensurado por meio de indicadores objetivos, como a redução da taxa de erro nos registros (meta inferior a 1%), aumento da consistência e integridade dos dados e diminuição do tempo de processamento das informações. A avaliação será realizada em conjunto com o parceiro, considerando o impacto operacional durante a execução do evento, a aderência aos requisitos levantados e a qualidade das análises geradas para suporte à tomada de decisão.
 
-### 2.1.4. Value Proposition Canvas (sprint 1): 
+### 2.1.4. Value Proposition Canvas 
 
 O Canvas da Proposta de Valor permite analisar o alinhamento entre as necessidades do cliente e a solução proposta (Osterwalder; Pigneur, 2011). No contexto deste projeto, evidencia-se o encaixe entre as dificuldades enfrentadas por avaliadores e organizadores no processo de coleta, registro e apuração de dados em competições e a solução proposta, baseada na automatização por meio de reconhecimento óptico de caracteres (OCR) e disponibilização de informações em tempo real. Essa abordagem está alinhada ao uso de tecnologias digitais para aumento de eficiência operacional e redução de erros em processos manuais, amplamente discutido na literatura de transformação digital (Vial, 2019).
 
@@ -156,7 +159,7 @@ A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o pr
 <div align="center">
   <sub>Figura 3 - Value Proposition Canvas da Solução </sub><br>
   <img src="../assets/negocios/canvas.png" width="100%" alt="Representação da proposta de valor, com foco na automação do registro de dados e melhoria da eficiência operacional"><br>
-  <sup>Fonte: Elaborado pelo próprio grupo (2026).</sup>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### A. Perfil do Cliente
@@ -164,6 +167,8 @@ A seguir, a Figura 3 ilustra o Canva de Proposta de Valor desenvolvido para o pr
 Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o perfil em que o cliente já se encontra. Aqui, é possível explorar quais são as dores do cliente, suas tarefas no contexto atual e o que eles buscam ganhar.
 
 **Tarefas do Cliente**
+
+As tarefas representam as atividades realizadas pelos usuários durante a competição.
 
 - Monitorar o desempenho das equipes durante a competição
 - Registrar e validar os dados coletados nos checkpoints
@@ -173,6 +178,9 @@ Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o per
 - Realizar a apuração final dos resultados de forma eficiente
 
 **Dores do Cliente**
+
+As dores representam as dificuldades enfrentadas pelos usuários no processo atual.
+
 - Processo repetitivo e cansativo
 - Risco de erros humanos durante a coleta e digitação dos dados
 - Dificuldade na revisão, validação e apuração das informações
@@ -180,10 +188,13 @@ Na primeira parte do Canvas da Proposta de Valor é analisado o cenário e o per
 - Falta de visão consolidada e organizada do evento
 
 **Ganhos**
+
+Os ganhos representam os benefícios esperados pelos usuários durante a operação do evento.
+
 - Menos demanda para os avaliadores
 - Automatização do processo de registro e processamento de dados
 - Redução de erros operacionais
-- Maior confiablidade e precisão das informações
+- Maior confiabilidade e precisão das informações
 - Maior eficiência operacional durante o evento
 - Visão consolidada e organizada do andamento da competição.
 
@@ -195,38 +206,38 @@ Os elementos do mapa de valor foram estruturados para responder diretamente às 
 
 A solução proposta oferece os seguintes elementos:
 
-* Plataforma digital de gestão de performance com atualização periódica dos dados
-* Sistema de captura de imagens e extração automática de dados por OCR
-* Dashboard para visualização de métricas e desempenho por equipe
-* Sistema de validação híbrida dos dados (automática e manual)
+- Plataforma digital de gestão de performance com atualização em tempo real dos dados
+- Sistema de captura de imagens e extração automática de dados por OCR
+- Dashboard para visualização de métricas e desempenho por equipe
+- Sistema de validação híbrida dos dados (automática e manual)
 
 **Aliviadores de Dores**
 
 A solução atua diretamente na redução das dificuldades enfrentadas pelos usuários:
 
-* Eliminação do registro manual em papel e da digitação em planilhas
-* Redução de erros humanos na coleta, registro e processamento dos dados
-* Simplificação do processo de revisão, validação e apuração das informações
-* Centralização das informações em uma única plataforma
-* Aumento da confiabilidade dos dados por meio de validação híbrida
+- Eliminação do registro manual em papel e da digitação em planilhas
+- Redução de erros humanos na coleta, registro e processamento dos dados
+- Simplificação do processo de revisão, validação e apuração das informações
+- Centralização das informações em uma única plataforma
+- Aumento da confiabilidade dos dados por meio de validação híbrida
 
 **Criadores de Ganho**
 
 Além de resolver problemas, a solução potencializa ganhos relevantes:
 
-* Geração de informações atualizadas periodicamente para acompanhamento da competição
-* Geração de uma visão consolidada e organizada dos dados do evento
-* Aumento da produtividade da equipe organizadora
-* Apoio à gestão operacional por meio de dados confiáveis e consolidados
-* Melhoria da experiência operacional dos avaliadores durante o evento
+- Geração de informações atualizadas para acompanhamento da competição
+- Geração de uma visão consolidada e organizada dos dados do evento
+- Aumento da produtividade da equipe organizadora
+- Apoio à gestão operacional por meio de dados confiáveis e consolidados
+- Melhoria da experiência operacional dos avaliadores durante o evento
 
 A partir da análise do Value Proposition Canvas, observa-se que a solução proposta está diretamente alinhada às necessidades dos avaliadores e organizadores, ao automatizar o processo de coleta e registro de dados por meio de OCR, reduzindo erros humanos e esforço operacional. Além disso, a centralização e disponibilização periódica das informações caracterizam uma automação do fluxo de dados, proporcionando maior confiabilidade, eficiência e suporte à tomada de decisão, garantindo uma gestão mais precisa e organizada da competição.
 
-### 2.1.5. Matriz de Riscos do Projeto (sprint 1)
+### 2.1.5. Matriz de Riscos do Projeto
 
 A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto (PMI, 2021).
 
-No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento periódico de dados durante eventos esportivos da Red Bull GmbH. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
+No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento dos dados durante eventos esportivos da Red Bull 24 Horas. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
 <div align="center">
   <sub>Figura 4 - Matriz de Risco </sub><br>
@@ -242,13 +253,13 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
-| Falha no Reconhecimento de Imagem  | O sistema pode não identificar corretamente os dados capturados nas imagens da esteira. | 70% (Alta)         | Muito Alto        | Crítico      | Treinar o modelo com imagens reais do ambiente de operação, realizar testes iterativos e disponibilizar validação manual para casos de inconsistência.          |
-| Baixa Qualidade das Imagens       | Iluminação inadequada, movimento ou posicionamento incorreto podem comprometer a captura dos dados.  | 60% (Média)  | Muito Alto        | Crítico      | Padronizar os pontos de captura, definir posicionamento fixo dos dispositivos e realizar testes em diferentes condições de iluminação.      |
-| Falha de Conexão com a Internet   | Instabilidade de rede pode interromper o envio ou sincronização dos dados.     | 60% (Média)        | Alto        | Crítico      | Utilizar rede dedicada para operação, implementar armazenamento temporário local e sincronização automática quando a conexão for restabelecida.                   |
-| Sobrecarga do Sistema             | Alto volume de acessos ou processamento simultâneo pode reduzir o desempenho da aplicação.  | 50% (Média)        | Alto        | Alto         | Realizar testes de carga, otimizar consultas e monitorar métricas de desempenho antes e durante o evento.                       |
+| Falha no Reconhecimento de Imagem  | O sistema pode não identificar corretamente os dados capturados nas imagens da esteira. | 70% (Alto)         | Muito Alto        | Crítico      | Treinar o modelo com imagens reais do ambiente de operação, realizar testes iterativos e disponibilizar validação manual para casos de inconsistência.          |
+| Baixa Qualidade das Imagens       | Iluminação inadequada, movimento ou posicionamento incorreto podem comprometer a captura dos dados.  | 80% (Muito Alto)  | Muito Alto        | Crítico      | Padronizar os pontos de captura, definir posicionamento fixo dos dispositivos e realizar testes em diferentes condições de iluminação.      |
+| Falha de Conexão com a Internet   | Instabilidade de rede pode interromper o envio ou sincronização dos dados.     | 60% (Alto)        | Alto        | Crítico      | Utilizar rede dedicada para operação, implementar armazenamento temporário local e sincronização automática quando a conexão for restabelecida.                   |
+| Sobrecarga do Sistema             | Alto volume de acessos ou processamento simultâneo pode reduzir o desempenho da aplicação.  | 50% (Médio)        | Alto        | Alto         | Realizar testes de carga, otimizar consultas e monitorar métricas de desempenho antes e durante o evento.                       |
 | Erro Humano                       | Operadores podem registrar dados incorretamente ou utilizar funcionalidades inadequadamente.           | 40% (Média)         | Médio  | Alto         | Desenvolver interface intuitiva, criar instruções operacionais e realizar treinamento prévio da equipe.                       |
 | Falta de Padronização operacional            | Diferenças nos procedimentos de coleta podem gerar inconsistências nos dados.   | 30% (Baixa)       | Médio       | Médio        | Definir protocolos de operação, validações automáticas e checklist de execução.             |
-| Bugs ou falhas de software                            | Erros de implementação podem comprometer funcionalidades específicas do sistema.        | 20% (Baixa)          | Baixo       | Baixo        | Executar testes funcionais, testes de integração e monitoramento contínuo com correções rápidas.                   |
+| Bugs ou falhas de software                            | Erros de implementação podem comprometer funcionalidades específicas do sistema.        | 20% (Baixo)          | Baixo       | Baixo        | Executar testes funcionais, testes de integração e monitoramento contínuo com correções rápidas.                   |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -264,12 +275,12 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 
 | Oportunidade | Descrição | Probabilidade | Impacto | Classificação | Plano de Resposta |
 |--------------|----------|--------------|--------|--------------|-------------------|
-| Maior precisão nos dados coletados | A substituição do input manual por OCR reduz erros de digitação identificados no risco de erro humano. | 90% (Alta) | Alto | Alta Prioridade | Garantir uma alternativa de entrada manual com validação para evitar inconsistências em casos de falhas do OCR. |
-| Melhor acompanhamento operacional do evento | Dados atualizados periodicamente permitem maior visibilidade do andamento da competição, facilitando o monitoramento das equipes e a organização operacional do evento. | 60% (Média) | Alto | Alta Prioridade | Desenvolver interfaces claras e dashboards de rápida interpretação. |
-| Aumento da eficiência operacional | A automação reduz atividades manuais e retrabalho da equipe operacional durante o evento. | 90% (Alta) | Muito Alto | Alta Prioridade | Automatizar fluxos operacionais e minimizar entradas manuais. |
-| Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% (Baixa) | Médio | Baixa Prioridade | Estruturar sistema modular e escalável. |
-| Menor perda de dados durante o evento | O uso de checkpoints digitais periódicamente permite maior precisão histórica e reduz perdas de dados. | 50% (Média) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
-| Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: CSV) para auditoria e materiais de marketing. |
+| Maior precisão nos dados coletados | A substituição do input manual por OCR reduz erros de digitação identificados no risco de erro humano. | 90% ( Muito Alto) | Alto | Alta Prioridade | Garantir uma alternativa de entrada manual com validação para evitar inconsistências em casos de falhas do OCR. |
+| Melhor acompanhamento operacional do evento | Dados atualizados em tempo real permitem maior visibilidade do andamento da competição, facilitando o monitoramento das equipes e a organização operacional do evento. | 60% (Média) | Muito Alto | Alta Prioridade | Desenvolver interfaces claras e dashboards de rápida interpretação. |
+| Aumento da eficiência operacional | A automação reduz atividades manuais e retrabalho da equipe operacional durante o evento. | 90% (Muito Alto) | Muito Alto | Alta Prioridade | Automatizar fluxos operacionais e minimizar entradas manuais. |
+| Possível reutilização do sistema | Projeto pode ser reutilizado em outros eventos esportivos da Red Bull. | 10% (Muito Baixo) | Médio | Baixa Prioridade | Estruturar sistema modular e escalável. |
+| Menor perda de dados durante o evento | O uso de checkpoints digitais permite maior precisão histórica e reduz perdas de dados. | 50% (Médio) | Alto | Alta Prioridade | Otimizar o processamento das capturas sem comprometer a estabilidade do sistema. |
+| Geração de insights de dados | O armazenamento estruturado permite análises de desempenho, ritmo e comportamento para relatórios pós-evento. | 70% (Alta) | Muito Alto | Média Prioridade | Garantir exportação facilitada de dados (ex: XLSX) para auditoria e materiais de marketing. |
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
@@ -282,7 +293,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 
 <div align="center">
   <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
-  <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento RedBull 24 horas"><br>
+  <img src="../assets/design/persona1.png" width="100%" alt="Persona representando a cordenadora operacional responsável pela apuração de dados da esteira no evento Red Bull 24 horas"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -290,7 +301,7 @@ Personas são personagens fictícios criados com base em dados plausíveis que r
 <ul>
     <li>Idade: 29 anos;</li>
     <li>Localização: Rio de Janeiro - RJ</li>
-    <li>Cargo: Coordenadora operacional do evento RedBull 24 horas</li>
+    <li>Cargo: Coordenadora operacional do evento Red Bull 24 horas</li>
     <li>Gênero: Feminino</li>
 </ul>
 
@@ -337,7 +348,7 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 <ul>
     <li>Idade: 32 anos;</li>
     <li>Localização: São Paulo - SP </li>
-    <li>Cargo: Gerente de Field Marketing da RedBull</li>
+    <li>Cargo: Gerente de Field Marketing da Red Bull</li>
     <li>Gênero: Masculino</li>
 </ul>
 
@@ -379,8 +390,8 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 </ul> <br>
 
 <div align="center">
-  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da RedBull 24 horas</sub><br>
-  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição RedBull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
+  <sub>Figura 7 - Persona 3: Amanda Azevedo, Atleta da Red Bull 24 horas</sub><br>
+  <img src="../assets/design/persona3.png" width="100%" alt="Persona representando uma atleta da competição Red Bull 24 horas que tem preocupações relacionadas à apuração adequada das métricas da esteira"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -388,7 +399,7 @@ Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo respons
 <ul>
     <li>Idade: 20 anos;</li>
     <li>Localização: São Paulo - SP</li>
-    <li>Cargo: Atleta do RedBull 24 horas</li>
+    <li>Cargo: Atleta do Red Bull 24 horas</li>
     <li>Gênero: Feminino</li>
 </ul>
 
@@ -421,11 +432,11 @@ Amanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando um
 #### Interesses
 <ul>
     <li>Que sua quilometragem seja registrada corretamente</li>
-    <li>Acompanhar o desempenho da equipe em tempo real </li>
+    <li>Acompanhar o desempenho da equipe </li>
     <li>Ganhar a competição </li>
 </ul> <br>
 
-## 2.3. User Stories (sprints 1 a 5)
+## 2.3. User Stories
 
 User stories são descrições curtas e objetivas de funcionalidades escritas sob a perspectiva do usuário final. Elas seguem geralmente o formato: “Como (papel/perfil), posso (ação/meta), para (benefício/razão)”, com foco no valor entregue e não em detalhes técnicos (Interaction Design Foundation, 2024). Esse modelo é amplamente utilizado em metodologias ágeis, como o Scrum, pois facilita a comunicação entre equipe de desenvolvimento e stakeholders, além de permitir a divisão dos requisitos em partes menores e testáveis.
 
@@ -481,7 +492,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso cadastrar e editar equipes com seus atletas, para garantir que todos os participantes estejam registrados corretamente." |
-| **Critério de aceite 1** | CR1: O sistema deve permitir criar uma equipe. **Teste**: Dado que o admin insere nome e líder, quando salva, então a equipe deve aparecer na lista. |
+| **Critério de aceite 1** | CR1: O sistema deve permitir criar uma equipe. **Teste**: Dado que o admin insere nome e capitão, quando salva, então a equipe deve aparecer na lista. |
 | **Critério de aceite 2** | CR2: O sistema deve permitir adicionar atletas. **Teste**: Dado que o admin adiciona atletas à equipe, quando salva, então os atletas devem estar corretamente vinculados à equipe. |
 | **Critério de aceite 3** | CR3: O sistema deve permitir edição e remoção de atletas. **Teste**: Dado que o admin altera ou remove dados de um atleta, quando salva, então as mudanças devem ser refletidas corretamente na equipe. |
 | **Critério de aceite 4** | CR4: Quando não há equipes cadastradas, a tela deve exibir um botão de adição com instrução visual. **Teste**: Dado que o admin acessa /admin/equipes sem nenhuma equipe cadastrada, quando a página carrega, então deve exibir o botão "+ Adicionar equipe" acompanhado de instrução visual, sem exibir uma lista vazia. |
@@ -499,10 +510,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar relatórios detalhados da competição, para analisar desempenho e inconsistências." |
-| **Critério de aceite 1** | CR1: O sistema deve exibir relatórios da competição. **Teste**: Dado que o admin acessa a seção de relatórios, quando seleciona um tipo — visão geral da competição, relatório por equipe ou relatório de inconsistências —, então os dados correspondentes devem ser exibidos corretamente. |
-| **Critério de aceite 2** | CR2: O sistema deve identificar e listar inconsistências. **Teste**: Dado que existem divergências entre os dados capturados via OCR e os inseridos manualmente, quando o relatório de inconsistências é gerado, então o sistema deve listar todas as ocorrências identificadas. |
-| **Critério de aceite 3** | CR3: O sistema deve permitir a exportação dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo CSV com os dados correspondentes. |
-| Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o administrador, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes — exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
+| **Critério de aceite 1** | CR1: O sistema deve exibir relatórios da competição. **Teste**: Dado que o admin acessa a seção de relatórios, terá acesso à visão geral da competição, relatório por equipe ou relatório de inconsistências, então os dados correspondentes devem ser exibidos corretamente. |
+| **Critério de aceite 2** | CR2: O sistema deve identificar e listar inconsistências. **Teste**: Dado que existem divergências entre os dados registrados de distância e tempo, quando o relatório de inconsistências é gerado, então o sistema deve listar todas as ocorrências identificadas. |
+| **Critério de aceite 3** | CR3: O sistema deve permitir a exportação em XLSX dos dados. **Teste**: Dado que o admin solicita a exportação de um relatório, quando executa a ação, então o sistema deve gerar e disponibilizar um arquivo  com os dados correspondentes. |
+| Critérios INVEST | Independente: Esta US pode ser desenvolvida de forma isolada, pois a geração de relatórios não depende de outras funcionalidades estarem finalizadas. <br> Negociável: Os tipos de relatório, filtros disponíveis e formatos de exportação podem evoluir conforme as necessidades identificadas durante o projeto. <br> Valorosa: Gera insights estratégicos para o administrador, permitindo análise de desempenho e identificação de problemas durante a competição. <br> Estimável: Possui complexidade média, com escopo definido em exibição, identificação de inconsistências e exportação de dados. <br> Pequena: É modular e pode ser dividida em partes, como exibição de relatórios, detecção de inconsistências e funcionalidade de exportação. <br> Testável: Cada critério possui resultados verificáveis e comportamentos esperados claramente definidos. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -516,8 +527,8 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso gerar uma URL única (UUID) automaticamente ao cadastrar uma equipe, para que o link possa ser distribuído ao capitão da equipe sem necessidade de login." |
-| **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o administrador clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar link". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
-| **Critério de aceite 2** | CR2: O UUID e o botão "Copiar link" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar link". Além disso, dado que o admin clica em "Copiar link", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
+| **Critério de aceite 1** | CR1: O sistema deve gerar automaticamente um UUID ao salvar uma equipe. **Teste**: Dado que o administrador clica em "Salvar equipe" no modal de criação, quando a equipe é salva, então o sistema deve gerar um UUID único e exibi-lo na tela com um botão "Copiar". Além disso, dado que dois cadastros distintos são realizados, quando comparados, então os UUIDs gerados devem ser diferentes. |
+| **Critério de aceite 2** | CR2: O UUID e o botão "Copiar" devem estar visíveis no card da equipe na listagem. **Teste**: Dado que o admin navega para a tela de equipes, quando a página carrega, então cada card deve exibir seu UUID e o botão "Copiar". Além disso, dado que o admin clica em "Copiar", quando a ação é executada, então o link deve ser copiado corretamente para a área de transferência. |
 | **Critério de aceite 3** | CR3: O UUID não deve expirar enquanto o evento estiver ativo. **Teste**: Dado que o evento está em andamento, quando o link gerado é acessado, então a página deve carregar corretamente. |
 | Critérios INVEST | Independente: Esta US não depende de outras para ser desenvolvida, pois a geração do UUID ocorre de forma isolada no momento do cadastro da equipe. <br> Negociável: A implementação pode ser simplificada ou refinada em conjunto com o parceiro e os demais envolvidos no projeto. <br> Valorosa: Elimina a necessidade de login para a equipe, facilitando o acesso ao painel sem barreiras de autenticação. <br> Estimável: O fluxo de geração do UUID no momento do cadastro é claro e bem delimitado. <br> Pequena: Escopo limitado à geração, exibição e cópia do link. <br> Testável: O comportamento é verificável via criação de equipes e acesso ao link gerado. |
 
@@ -534,7 +545,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Persona** | Bruno Monteiro (Gerente de Field Marketing) |
 | **User Story** | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a aba de equipes pelo menu de navegação ou pelo card de atalho na Home, para gerenciar o cadastro de equipes e atletas da competição." |
 | **Critério de aceite 1** | CR1: O menu fixo deve exibir o item "Equipes" em todas as telas do admin e redirecionar corretamente. **Teste**: Dado que o admin está em qualquer tela do sistema, quando clica em "Equipes" no menu fixo, então deve ser redirecionado para /admin/equipes e o item deve ficar destacado como ativo no menu. |
-| **Critério de aceite 2** | CR2: O card "Gerenciar equipes" na Home deve redirecionar para a tela de gestão de equipes. **Teste**: Dado que o admin está na Home, quando clica no card "Gerenciar equipes", então deve ser redirecionado para /admin/equipes. |
+| **Critério de aceite 2** | CR2: Em selecionar competição, no card da competição basta selecionar "equipes" para ser redirecionado para a tela de gestão de equipes. **Teste**: Dado que o admin está na Home, quando clica no botão "equipes", então deve ser redirecionado para /admin/equipes. |
 | Critérios INVEST | Independente: Esta US não depende de outros fluxos, pois a navegação até a tela de equipes pode ser desenvolvida de forma isolada. <br> Negociável: Os atalhos, ícones e rótulos do menu podem ser ajustados conforme necessidade do projeto. <br> Valorosa: Centraliza o gerenciamento de equipes e oferece acesso rápido por dois pontos de entrada distintos. <br> Estimável: O padrão de navegação é bem definido e de complexidade baixa. <br> Pequena: Escopo limitado à navegação entre telas por dois pontos de entrada distintos, sem envolver lógica de exibição de conteúdo ou estado da listagem. <br> Testável: As rotas e os estados de tela são verificáveis objetivamente. |
 
 <div align="center">
@@ -548,8 +559,8 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US07 |
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
-| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso clicar no botão 'Acessar competição' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros em tempo real." |
-| **Critério de aceite 1** | CR1: O sistema deve navegar para o painel operacional da equipe selecionada ao clicar em "Acessar competição". **Teste**: Dado que o admin clica em "Acessar competição" no card de uma equipe, quando a navegação ocorre, então o sistema deve exibir o painel em /admin/equipes/operacional com os dados da equipe correta. |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso clicar no botão 'Acessar Equipe' no card de uma equipe, para abrir o painel operacional completo da equipe e gerenciar os registros em tempo real." |
+| **Critério de aceite 1** | CR1: O sistema deve navegar para o painel operacional da equipe selecionada ao clicar em "Acessar Equipe". **Teste**: Dado que o admin clica em "Acessar Equipe" no card de uma equipe, quando a navegação ocorre, então o sistema deve exibir o painel em /admin/equipes/operacional com os dados da equipe correta. |
 | **Critério de aceite 2** | CR2: O painel operacional deve conter os três blocos definidos na especificação. **Teste**: Dado que o admin abre o painel operacional, quando a página carrega, então devem estar presentes a área de controle do juiz, o fluxo de registro de checkpoint e a tabela de dados da equipe. Além disso, o dropdown de atletas deve listar todos os membros da equipe selecionada. |
 | Critérios INVEST | Independente: Esta US depende apenas do cadastro prévio da equipe, sendo desenvolvível de forma isolada após essa etapa. <br> Negociável: O layout e a organização dos blocos do painel podem ser reorganizados conforme feedback do parceiro. <br> Valorosa: É a tela operacional principal da competição, centralizando o controle em tempo real. <br> Estimável: Escopo bem delimitado pela especificação, com dois critérios de aceite claros. <br> Pequena: Limitada ao acesso e ao carregamento correto do painel operacional. <br> Testável: A navegação e a presença dos componentes são verificáveis objetivamente. |
 
@@ -565,9 +576,9 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
 | **User Story** | "Como Marina Costa, Coordenadora Operacional, posso selecionar o atleta ativo na tela de checkpoint, para controlar com precisão quem está em corrida." |
-| **Critério de aceite 1** | CR1: O dropdown deve exibir todos os atletas da equipe com seu status atual. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os atletas da equipe devem aparecer com seu respectivo status — Em corrida, Em descanso ou Pronto para entrar — visível ao lado do nome. |
-| **Critério de aceite 2** | CR2: Os botões de status devem ser atualizados automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ter seu status alterado para "Em descanso" e o atleta atual para "Em corrida". |
-| Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O número de status possíveis e o fluxo de troca podem ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
+| **Critério de aceite 1** | CR1: O dropdown deve exibir todos os atletas da equipe. **Teste**: Dado que o juiz abre o dropdown na tela de checkpoint, quando a lista é exibida, então todos os atletas da equipe devem aparecer com seu respectivo cargo, capitão ou atleta, visível embaixo do nome. |
+| **Critério de aceite 2** | CR2: O card do atleta ativo deve ser atualizado automaticamente após a troca de atleta. **Teste**: Dado que o juiz clica em "Trocar atleta" e confirma a entrada do próximo atleta, quando a ação é concluída, então o atleta anterior deve ser substituído pelo atleta atual. |
+| Critérios INVEST | Independente: Esta US funciona de forma independente do fluxo OCR e pode ser desenvolvida separadamente. <br> Negociável: O fluxo de troca pode ser expandidos ou ajustados conforme necessidade. <br> Valorosa: Garante controle preciso da operação durante a prova, evitando inconsistências no registro de atletas. <br> Estimável: O fluxo de seleção e troca de atletas é bem definido e de complexidade controlada. <br> Pequena: Limitada ao controle de atleta ativo, sem envolver o registro de performance. <br> Testável: Os estados dos atletas após cada ação são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -580,11 +591,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US09 |
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
-| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no checkpoint do atleta." |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso fotografar a tela da esteira durante a corrida, para que o sistema extraia automaticamente os dados de performance via OCR e os registre no histórico de checkpoint." |
 | **Critério de aceite 1** | CR1: O sistema deve capturar a imagem e extrair os dados via OCR. **Teste**: Dado que o admin clica em "Tirar foto da esteira", quando a câmera integrada é aberta e a foto é capturada, então o sistema deve exibir o preview da imagem ao lado dos dados extraídos — distância (km), pace (min/km) e tempo total. |
-| **Critério de aceite 2** | CR2: O sistema deve alertar visualmente quando o valor extraído apresentar discrepância. **Teste**: Dado que o OCR extrai um valor que diverge da média histórica do atleta ou da meta da prova, quando o dado é exibido, então o campo deve ser marcado em vermelho com mensagem de alerta. Além disso, dado que o valor está dentro do esperado, quando exibido, então nenhum alerta deve ser apresentado. |
-| **Critério de aceite 3** | CR3: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
-| Critérios INVEST | Independente: O fluxo OCR é autossuficiente; o modo de entrada manual é tratado como US separada. <br> Negociável: A engine de OCR utilizada e o limiar de discrepância podem ser ajustados conforme os resultados obtidos em testes. <br> Valorosa: Elimina erros de digitação e agiliza o registro de checkpoints durante a competição. <br> Estimável: O fluxo de cinco etapas — captura, extração, alerta, revisão e confirmação — está bem especificado. <br> Pequena: Limitada à captura, extração e confirmação de um único checkpoint. <br> Testável: Os dados extraídos, os alertas de discrepância e os logs de auditoria são verificáveis objetivamente. |
+| **Critério de aceite 2** | CR2: O sistema deve registrar se o dado foi confirmado via OCR ou corrigido manualmente. **Teste**: Dado que o juiz confirma o dado extraído pelo OCR, quando salvo, então o log de auditoria deve registrar o método como "OCR". Além disso, dado que o juiz corrige o dado manualmente, quando salvo, então o log deve registrar o método como "manual". |
+| Critérios INVEST | Independente: O fluxo OCR é autossuficiente; o modo de entrada manual é tratado como US separada. <br> Negociável: A engine de OCR utilizada e o limiar de discrepância podem ser ajustados conforme os resultados obtidos em testes. <br> Valorosa: Elimina erros de digitação e agiliza o registro de checkpoints durante a competição. <br> Estimável: O fluxo de quatro etapas — captura, extração, revisão e confirmação — está bem especificado. <br> Pequena: Limitada à captura, extração e confirmação de um único checkpoint. <br> Testável: Os dados extraídos, e os logs de auditoria são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -598,7 +608,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
 | **User Story** | "Como Marina Costa, Coordenadora Operacional, posso registrar um checkpoint manualmente digitando os dados quando a câmera falhar ou a foto estiver ilegível, para que nenhum registro seja perdido por falha técnica." |
-| **Critério de aceite 1** | CR1: O modo manual deve disponibilizar um formulário com os campos de distância, pace e tempo total. **Teste**: Dado que o admin acessa o modo de entrada manual, quando preenche os campos de distância (km), pace (min/km) e tempo total e clica em "Salvar registro manual", então os dados devem ser salvos corretamente no checkpoint da equipe e do atleta. |
+| **Critério de aceite 1** | CR1: O modo manual deve disponibilizar um formulário com os campos de distância, pace e tempo total. **Teste**: Dado que o admin acessa o modo de entrada manual, quando preenche os campos de distância (km) e tempo total, o pace (min/km) é calculado automaticamente. Ao clica em "Salvar registro manual", então os dados devem ser salvos corretamente no checkpoint da equipe e do atleta. |
 | **Critério de aceite 2** | CR2: O sistema deve registrar automaticamente que o checkpoint foi inserido em modo manual. **Teste**: Dado que o admin salva um registro pelo modo manual, quando o dado é persistido, então o log de auditoria deve exibir a flag "manual" para distingui-lo dos registros inseridos via OCR. |
 | Critérios INVEST | Independente: É o caminho de contingência do sistema e pode ser desenvolvido de forma independente do fluxo OCR. <br> Negociável: Os campos disponíveis no modo manual podem ser expandidos conforme necessidade identificada durante o projeto. <br> Valorosa: Garante continuidade operacional em situações de falha técnica, evitando perda de registros durante a competição. <br> Estimável: Trata-se de um formulário simples com campos bem definidos e comportamento claro. <br> Pequena: Escopo limitado à entrada e ao salvamento manual de um único checkpoint. <br> Testável: Os dados salvos e a flag de método no log de auditoria são verificáveis objetivamente. |
 
@@ -613,11 +623,11 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US11 |
 ---| ---
 | **Persona** | Marina Costa (Coordenadora Operacional) |
-| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza automaticamente a cada 5 minutos, para acompanhar a evolução da performance sem precisar recarregar a página." |
-| **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados com timestamp e atleta, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
-| **Critério de aceite 2** | CR2: A tabela deve ser atualizada automaticamente a cada 5 minutos sem ação do usuário. **Teste**: Dado que um novo checkpoint é registrado, quando o intervalo de 5 minutos é atingido, então o novo registro deve aparecer na tabela sem que o admin recarregue a página. Além disso, deve ser exibido um indicador visual ou timestamp da última atualização. |
+| **User Story** | "Como Marina Costa, Coordenadora Operacional, posso visualizar uma tabela com os dados consolidados da equipe que se atualiza em tempo real, para acompanhar a evolução da performance sem precisar recarregar a página." |
+| **Critério de aceite 1** | CR1: A tabela deve exibir os dados consolidados da equipe com todos os campos definidos. **Teste**: Dado que o admin registra um checkpoint, quando a tabela é exibida, então devem estar presentes os últimos checkpoints registrados referente a cada atleta, o pace médio atualizado, a distância total acumulada e o tempo total ativo, todos com valores coerentes. |
+| **Critério de aceite 2** | CR2: A tabela deve ser atualizada automaticamente sem ação do usuário. **Teste**: Dado que um novo checkpoint é registrado, então o novo registro deve aparecer na tabela sem que o admin recarregue a página. |
 | **Critério de aceite 3** | CR3: Os valores de pace médio e distância total devem ser recalculados corretamente a cada atualização. **Teste**: Dado que múltiplos checkpoints foram registrados, quando a tabela é atualizada, então o pace médio deve corresponder à média ponderada correta e a distância total deve ser a soma de todos os checkpoints da sessão. |
-| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: O intervalo de atualização de 5 minutos pode ser tornado configurável em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
+| Critérios INVEST | Independente: Esta US depende apenas dos checkpoints já registrados, podendo ser desenvolvida de forma isolada. <br> Negociável: As atualizações em tempo real podem ser reconfiguráveis em versões futuras. <br> Valorosa: Oferece ao juiz uma visão consolidada e atualizada da performance da equipe em tempo real. <br> Estimável: A lógica de auto-refresh e os cálculos de métricas estão bem definidos. <br> Pequena: Limitada à exibição e à atualização automática da tabela de dados. <br> Testável: Os dados exibidos, o timing do refresh e os cálculos de métricas são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -630,10 +640,10 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Identificação | US12 |
 ---| ---
 | **Persona** | Amanda Azevedo (Atleta) |
-| **User Story** | "Como Amanda Azevedo, atleta da competição, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe em tempo real diretamente pelo link recebido do administrador." |
-| **Critério de aceite 1** | CR1: O painel deve ser acessível publicamente sem exigir autenticação. **Teste**: Dado que qualquer pessoa acessa o link em modo anônimo ou aba privada, quando a URL é carregada, então a tela deve ser exibida corretamente sem campos de login ou solicitação de senha. Além disso, dado que um UUID inválido é acessado, quando a requisição é feita, então o sistema deve exibir uma mensagem de erro. |
+| **User Story** | "Como Amanda Azevedo, atleta da competição, posso acessar a URL única da minha equipe (UUID) sem necessidade de login, para visualizar as informações da equipe atualizadas de 1h em 1h, diretamente pelo link recebido do administrador." |
+| **Critério de aceite 1** | CR1: O painel deve ser acessível publicamente sem exigir autenticação. **Teste**: Dado que qualquer pessoa acessa o link, quando a URL é carregada, então a tela deve ser exibida corretamente sem campos de login ou solicitação de senha. Além disso, dado que um UUID inválido é acessado, quando a requisição é feita, então o sistema deve exibir uma mensagem de erro. |
 | **Critério de aceite 2** | CR2: A tela deve exibir apenas os dados correspondentes à equipe vinculada ao UUID acessado. **Teste**: Dado que dois links de equipes diferentes são acessados, quando cada um é carregado, então cada painel deve exibir exclusivamente os dados da equipe correta, sem expor informações de outras equipes. |
-| Critérios INVEST | Independente: Esta US depende apenas do UUID gerado pelo administrador, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores e torcida, permitindo acompanhamento em tempo real sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
+| Critérios INVEST | Independente: Esta US depende apenas do UUID gerado pelo administrador, sendo desenvolvível de forma isolada. <br> Negociável: O tempo de expiração do link pode ser configurável em versões futuras do sistema. <br> Valorosa: Elimina barreiras de acesso para corredores, permitindo acompanhamento em tempo real sem cadastro. <br> Estimável: O comportamento de rota pública está bem definido e é de complexidade baixa. <br> Pequena: Limitada ao acesso e ao carregamento inicial da tela pública da equipe. <br> Testável: O acesso sem autenticação e a exibição correta dos dados são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -647,7 +657,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Persona**              | Amanda Azevedo (Atleta)   |
 | **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar o ranking global da competição no painel da equipe, para acompanhar a posição da minha equipe durante o evento."  |
-| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem ser exibidos a posição atual da equipe, a distância para o líder e a diferença para a equipe na posição anterior.  |
+| **Critério de aceite 1** | CR1: O painel deve exibir o ranking global com atualização automática a cada 1 hora. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem ser exibidos o total de quilometragem percorridos pela equipe, distância para o líder, pace médio da equipe, status por atleta e calculadora de descanso.  |
 | **Critério de aceite 2** | CR2: O ranking não deve ser atualizado antes do intervalo definido. **Teste**: Dado que menos de 1 hora se passou desde a última atualização, quando o painel é acessado novamente, então o ranking exibido deve permanecer inalterado. |
 | Critérios INVEST         | Independente: O ranking pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: As métricas exibidas no ranking podem ser alteradas conforme feedback dos usuários. <br> Valorosa: Permite que a atleta acompanhe o desempenho geral da equipe durante a competição. <br> Estimável: O comportamento de atualização e exibição do ranking é claro e bem delimitado. <br> Pequena: Escopo limitado à exibição do ranking global. <br> Testável: Os dados exibidos e o intervalo de atualização são verificáveis objetivamente. |
 
@@ -665,7 +675,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | **Persona**              | Amanda Azevedo (Atleta) |
 | **User Story**           | "Como Amanda Azevedo, atleta da competição, posso visualizar o status individual e as métricas dos atletas da minha equipe, para acompanhar o desempenho coletivo durante a prova." |
-| **Critério de aceite 1** | CR1: O painel deve exibir os dados individuais dos atletas da equipe. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem estar presentes pace médio geral, velocidade máxima, distância acumulada, timestamp do último checkpoint, tempo parado desde o último turno e status atual de cada atleta. |
+| **Critério de aceite 1** | CR1: O painel deve exibir os dados individuais dos atletas da equipe. **Teste**: Dado que a atleta acessa o painel, quando a página carrega, então devem estar presentes pace médio geral, velocidade máxima, distância acumulada e timestamp do último checkpoint. |
 | **Critério de aceite 2** | CR2: Os dados devem refletir novos checkpoints registrados. **Teste**: Dado que um checkpoint é registrado pelo administrador, quando o painel é atualizado, então os dados do atleta correspondente devem refletir as novas informações.|
 | Critérios INVEST         | Independente: A exibição das métricas dos atletas pode ser desenvolvida independentemente do ranking e da calculadora de descanso. <br> Negociável: As métricas exibidas podem ser ajustadas conforme necessidade do parceiro. <br> Valorosa: Permite acompanhamento detalhado do desempenho da equipe durante a competição. <br> Estimável: Os campos e comportamentos esperados estão claramente definidos. <br> Pequena: Escopo limitado à visualização de métricas dos atletas. <br> Testável: Todos os campos exibidos podem ser verificados objetivamente. |
 
@@ -686,39 +696,6 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | **Critério de aceite 2** | CR2: A calculadora deve exibir o tempo recomendado de descanso e a contagem regressiva. **Teste**: Dado que um atleta realizou uma corrida recente e intensa, quando o cálculo é executado, então o sistema deve exibir o tempo recomendado de descanso acompanhado de contagem regressiva. |
 | Critérios INVEST         | Independente: A calculadora pode ser implementada sem dependência das demais funcionalidades do painel público. <br> Negociável: As regras de cálculo e os indicadores podem ser ajustados conforme testes futuros. <br> Valorosa: Auxilia atletas no gerenciamento de descanso durante a competição. <br> Estimável: A lógica de cálculo e exibição possui escopo claro. <br> Pequena: Escopo limitado à recomendação de descanso. <br> Testável: Os indicadores e tempos exibidos podem ser verificados objetivamente. |
 
-
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
-
-<div align="center">
-  <sub>Quadro 18 - User Story 16 </sub>
-</div>
-
-| Identificação            | US16 |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**              | Amanda Azevedo (Atleta) |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso compartilhar o ranking simplificado da equipe, para divulgar o desempenho da competição sem expor dados sensíveis dos atletas."|
-| **Critério de aceite 1** | CR1: O sistema deve gerar um link simplificado de compartilhamento. **Teste**: Dado que a atleta clica em "Compartilhar ranking", quando o link é gerado, então deve ser criado um link contendo apenas o leaderboard simplificado da competição. |
-| **Critério de aceite 2** | CR2: O link compartilhado não deve expor dados individuais sensíveis. **Teste**: Dado que o link é acessado por terceiros, quando a página carrega, então apenas informações gerais do ranking devem ser exibidas, sem métricas individuais dos atletas. |
-| Critérios INVEST         | Independente: O compartilhamento pode ser desenvolvido separadamente das demais funcionalidades do painel público. <br> Negociável: Os formatos de compartilhamento podem evoluir conforme necessidade do projeto. <br> Valorosa: Facilita divulgação da competição e engajamento das equipes. <br> Estimável: O comportamento do link e dos dados exibidos é bem definido. <br> Pequena: Escopo limitado à geração e exibição do link compartilhável. <br> Testável: O conteúdo exibido no link pode ser validado objetivamente. |
-
-
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
-
-<div align="center">
-  <sub>Quadro 19 - User Story 17 </sub>
-</div>
-
-| Identificação            | US17 |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Persona**              | Bruno Monteiro (Gerente de Field Marketing) |
-| **User Story**           | "Como Bruno Monteiro, Gerente de Field Marketing, posso acessar a Matriz de Rastreabilidade do sistema, para verificar a cobertura entre requisitos funcionais, regras de negócio, endpoints e telas implementadas."|
-| **Critério de aceite 1** | CR1: A RTM deve estar acessível e atualizada no documento WAD, cobrindo todos os RFs implementados. **Teste:** Dado que o administrador acessa a seção 3.9 do WAD, quando a página é exibida, então a matriz deve conter todas as linhas de rastreabilidade com persona, RF, RN, endpoint, tela, teste e evidência preenchidos. |
-| **Critério de aceite 2** | CR2: A RTM deve permitir identificar lacunas de cobertura entre requisitos e implementação. **Teste:** Dado que um RF foi implementado, quando a RTM é consultada, então deve existir ao menos uma linha correspondente conectando persona → RF → RN → endpoint → tela → teste → evidência. |
-| **Critérios INVEST**     | Independente: Esta US pode ser validada de forma isolada, pois depende apenas da documentação existente. <br> Negociável: As colunas da RTM podem ser expandidas conforme necessidades identificadas ao longo das sprints. <br> Valorosa: Garante rastreabilidade completa entre necessidades, implementação e validação, essencial para auditoria e controle de qualidade. <br> Estimável: O escopo é bem definido — preencher e manter a RTM atualizada. <br> Pequena: Limitada à criação e manutenção da matriz de rastreabilidade. <br> Testável: A presença e completude das linhas da RTM são verificáveis objetivamente. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -790,7 +767,7 @@ O Quadro 20 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio (sprint 1, refinar até sprint 5)
 
-No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 22, são apresentadas as regras de negócio do sistema, as quais definem as restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
   <sub>Quadro 22 - Regras de Negócio </sub>
@@ -836,7 +813,7 @@ Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de 
 | DES — Desempenho | O sistema deve atualizar o painel administrativo periodicamente durante a competição | Atualização concluída em até 5 minutos após novos checkpoints | Parcial | Endpoints `GET /competitions/:competicaoId/ranking/teams` e `GET /competitions/:competicaoId/ranking/athletes` implementados (Ranking Routes da api-documentation.html); *polling* de 5 minutos previsto no front-end (Painéis da Sprint 4) |
 | SUP — Suportabilidade | O sistema deve permitir manutenção sem interromper competições | Correções críticas aplicadas em até 15 minutos sem perda de checkpoints | Implementado | Arquitetura em camadas Controller → Service → Repository → Model (seção 3.2.3); padrões de projeto aplicados (seção 3.2.7); middleware central de erros em `src/middlewares/errorHandler.ts`; sete arquivos de rota isolados em `src/routes` permitem manutenção de um domínio sem afetar os demais |
 | SEG — Segurança             | O sistema deve restringir o acesso administrativo por meio de credenciais válidas                | 100% das tentativas sem credenciais válidas devem ser bloqueadas com resposta HTTP 401 | Planejado (Sprint 5) | Estrutura de erros já contempla `401` na tabela de Códigos de Status HTTP da api-documentation.html (seção 3.7); model `Administrador` com campo `senha` (`src/models/administrador.ts`) preparado para hash bcrypt/argon2; rota `POST /auth/sessions` definida para a Sprint 5 (seção 3.8) |
-| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Planejado (Sprint 5) | Backend Node.js/Express com Supabase (Postgres gerenciado), ambos com escalabilidade horizontal documentada; isolamento de rotas por domínio permite escalar seletivamente o que receber maior carga (ranking público) |
+| CAP — Capacidade            | O sistema deve suportar múltiplos usuários simultâneos durante a competição                              | ≥ 100 usuários simultâneos estáveis                  | Planejado (Sprint 5) | Back-end Node.js/Express com Supabase (Postgres gerenciado), ambos com escalabilidade horizontal documentada; isolamento de rotas por domínio permite escalar seletivamente o que receber maior carga (ranking público) |
 | REST — Restrições de Design | O sistema deve operar com validação humana e processamento via API centralizada         | 100% dos checkpoints persistidos devem conter vínculo com corredor, competição, esteira e administrador responsável | Implementado | Migrations em `src/database` com FKs obrigatórias para `corredor_id`, `competicao_id`, `esteira_id` e `administrador_id` na tabela `checkpoint` (seção 3.6.3); validators em `src/validators` rejeitando payload incompleto com `400`/`422`; rota OCR prevista (`POST /ocr/extractions`) consolidará o fluxo OCR → validação humana → API |
 | ORG — Organizacionais | O desenvolvimento deve seguir metodologia ágil com rastreabilidade entre tarefas, commits e entregas | 100% das entregas devem possuir registro em commits, branches e tarefas versionadas | Implementado | Conventional Commits com referência à issue (`tipo (#NNN): mensagem`); branches versionadas por tema (`docs/sprint-XX/...`, `feat/...`, `fix/...`); Kanban no GitLab com cards de User Story, tasks com DoR/DoD/Critérios de Aceite, tamanhos (PP/P/M/G/GG) e *milestone* por sprint; merge requests estruturados com objetivo, mudanças, plano de testes e `Closes #NNN` |
 
@@ -856,7 +833,7 @@ O eixo de Suportabilidade (SUP) foi definido considerando a necessidade de conti
 
 O eixo de Segurança (SEG) deriva da necessidade de restringir o acesso às áreas administrativas do sistema apenas aos operadores autorizados pelo evento, protegendo os dados operacionais e evitando alterações indevidas nos registros da competição. A camada de autenticação por token está planejada para a Sprint 5 (`POST /auth/sessions`, com hash de senha bcrypt/argon2 e controle de sessão por `session id` ou JWT, conforme detalhado na seção 3.8). Até essa entrega, a documentação da WebAPI já contempla o código `401 Unauthorized` na tabela de Códigos de Status HTTP da api-documentation.html (seção 3.7); o código `403 Forbidden` será adicionado junto à camada de autorização por perfil na Sprint 5, e o model `Administrador` em `src/models/administrador.ts` já prevê o campo `senha` para receber o hash. *Observação sobre alinhamento interno do WAD:* as User Stories US01–US05 e a RN03 descrevem o acesso por **senha da sala** (vinculada à criação da competição), enquanto a implementação atual aponta para autenticação por **administrador individual** (model `Administrador` + `POST /auth/sessions`). Os dois modelos coexistem em seções diferentes do documento; a definição final do modelo de autenticação está prevista para alinhamento na Sprint 5.
 
-O eixo de Capacidade (CAP) foi estabelecido considerando o acesso simultâneo de operadores, organizadores e usuários acompanhando os rankings públicos durante períodos de pico da competição, exigindo estabilidade da aplicação mesmo sob múltiplas requisições concorrentes. A escolha por Node.js/Express no backend e Supabase (Postgres gerenciado) como banco oferece base reconhecida para escalabilidade horizontal, e o isolamento de rotas por domínio (`competition`, `team`, `athlete`, `administrador` — único mantido em português por razões históricas —, `checkpoint`, `ranking`, `export`) permite escalar seletivamente o que receber maior carga (tipicamente o ranking público). A medição objetiva da métrica será feita em testes de carga durante a Sprint 5.
+O eixo de Capacidade (CAP) foi estabelecido considerando o acesso simultâneo de operadores, organizadores e usuários acompanhando os rankings públicos durante períodos de pico da competição, exigindo estabilidade da aplicação mesmo sob múltiplas requisições concorrentes. A escolha por Node.js/Express no back-end e Supabase (Postgres gerenciado) como banco oferece base reconhecida para escalabilidade horizontal, e o isolamento de rotas por domínio (`competition`, `team`, `athlete`, `administrador` — único mantido em português por razões históricas —, `checkpoint`, `ranking`, `export`) permite escalar seletivamente o que receber maior carga (tipicamente o ranking público). A medição objetiva da métrica será feita em testes de carga durante a Sprint 5.
 
 O eixo de Restrições de Design (REST) foi derivado diretamente da arquitetura definida para o projeto, baseada em captura via OCR, validação humana e processamento centralizado via API, garantindo padronização do fluxo de dados. Embora algumas das regras associadas — como a obrigatoriedade de vínculo entre `checkpoint` e seus quatro recursos relacionados — possam ser vistas como regras de integridade próximas de RFs/RNs, optou-se por classificá-las como Restrição de Design por refletirem uma decisão arquitetural deliberada (centralização do fluxo OCR → validação → API) que limita as opções de implementação subsequentes. As FKs obrigatórias na tabela `checkpoint` (`corredor_id`, `competicao_id`, `esteira_id`, `administrador_id`) garantem, no nível do banco, que nenhum registro operacional seja persistido sem vínculo completo com seus recursos responsáveis. Os validators em `src/validators` aplicam essa mesma regra antes da chamada ao repository, e o endpoint planejado `POST /ocr/extractions` consolida o fluxo OCR → validação humana → persistência em uma única cadeia auditada.
 
@@ -1120,7 +1097,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 
 ### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
-Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no backend. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
+Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
 O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PLANTUML, 2025).
 
@@ -1253,7 +1230,7 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
 
-Com a evolução do sistema e a integração de um frontend renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no backend quanto no frontend, com base no código efetivamente implementado na versão atual do projeto.
+Com a evolução do sistema e a integração de um front-end renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no back-end quanto no front-end, com base no código efetivamente implementado na versão atual do projeto.
 
 
 ---
@@ -1273,7 +1250,7 @@ Sem esse padrão, regras de negócio, acesso aos dados e elementos de interface 
 
 #### Justificativa da adoção
 
-Com a implementação do frontend, tornou-se necessário estruturar a camada de apresentação de forma integrada ao backend existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
+Com a implementação do front-end, tornou-se necessário estruturar a camada de apresentação de forma integrada ao back-end existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
 
 #### Aplicação no projeto
 
@@ -1326,7 +1303,7 @@ Sem a utilização desse padrão, operações relacionadas ao banco de dados fic
 
 #### Justificativa da adoção
 
-Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do backend, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
+Esse padrão foi adotado porque o back-end possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do back-end, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
 
 #### Aplicação no projeto
 
@@ -1376,7 +1353,7 @@ Arquitetural
 
 #### Definição
 
-O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do back-end, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
 
 #### Problema resolvido
 
@@ -1384,7 +1361,7 @@ Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo receb
 
 #### Justificativa da adoção
 
-Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do back-end. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
 
 #### Aplicação no projeto
 
@@ -1500,7 +1477,7 @@ Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle
 
 #### Justificativa da adoção
 
-Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no back-end e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
 
 #### Aplicação no projeto
 
@@ -1615,7 +1592,7 @@ Estrutural / Apresentação
 
 #### Definição
 
-O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo backend. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
+O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo back-end. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
 
 #### Problema resolvido
 
@@ -2040,7 +2017,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 ### Persona 1 - Marina Costa
 #### Tela de Login
-&nbsp; &nbsp; &nbsp; &nbsp;Abaixo nota-se a Tela de Login, onde o background é uma foto real da competição 24hrs, essa tela pede, em um popup de fundo branco, email e senha para autorizar o acesso do administrador. Conta com uma frase da RedBull de encorajamento e botão em destaque "entrar"
+&nbsp; &nbsp; &nbsp; &nbsp;Abaixo nota-se a Tela de Login, onde o background é uma foto real da competição 24hrs, essa tela pede, em um popup de fundo branco, email e senha para autorizar o acesso do administrador. Conta com uma frase da Red Bull de encorajamento e botão em destaque "entrar"
 
 
 <div align="center">
@@ -2801,7 +2778,7 @@ ALTER TABLE checkpoint
 CREATE INDEX idx_checkpoint_corredor_id       ON checkpoint (corredor_id);
 CREATE INDEX idx_checkpoint_competicao_id     ON checkpoint (competicao_id);
 CREATE INDEX idx_checkpoint_esteira_id        ON checkpoint (esteira_id);
-CREATE INDEX idx_checkpoint_administrador_id  ON checkpoint (administrador_id);
+CREATE INDEX idx_checkpoint_administrador_id ON checkpoint (administrador_id);
 CREATE INDEX idx_checkpoint_criado_em         ON checkpoint (criado_em);
 ```
  
@@ -3207,11 +3184,11 @@ A tabela demonstra que a consulta seleciona registros apenas quando a quilometra
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *frontend* e o *backend* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
+A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *front-end* e o *back-end* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
 
 A escolha por uma página HTML versionada, em vez de uma tabela embutida diretamente no WAD, foi deliberada: permite uma visualização navegável e formatada (*badges* de status, blocos de código com destaque, links internos entre seções), mantém o versionamento alinhado com cada sprint de desenvolvimento e facilita a validação externa por parte de revisores, sem necessidade de clonar o repositório ou abrir uma ferramenta auxiliar como Swagger ou Postman. As seções internas da página HTML adotam numeração própria (3.6.1 a 3.6.10) por domínio funcional; trata-se de uma numeração local ao artefato, não relacionada à numeração de capítulos do WAD — a normalização desse esquema (por exemplo, prefixo `API-`) está prevista para uma iteração posterior.
 
-A API segue convenções RESTful: recursos são organizados de forma hierárquica (por exemplo, `/competitions/:competicaoId/teams/:teamId/athletes`) e os métodos HTTP são aplicados conforme sua semântica padrão (POST cria, GET consulta, PUT/PATCH atualizam, DELETE remove; PUT e DELETE são operados como idempotentes, em conformidade com a estratégia de resiliência da seção 3.8.4). Os códigos HTTP devolvidos pelo *backend* na Sprint 3 derivam diretamente das classes em `src/errors/AppError.ts` por meio do middleware `errorHandler`: `200` em consultas e atualizações bem-sucedidas, `201` em criações, `204` em remoções, `400` para `ValidationError`, `404` para `NotFoundError`, `409` para `ConflictError`, `422` para `UnprocessableError` e `500` como *fallback*. Os códigos `401 Unauthorized` e `403 Forbidden` estão documentados como contrato mas só serão emitidos a partir da Sprint 5, quando as camadas de autenticação e autorização entrarem em vigor (seção 3.8). A semântica e os códigos de status seguem a RFC 9110 (HTTP Semantics, IETF, 2022), que consolida e torna obsoletas as RFCs anteriores da família HTTP/1.1. Cada endpoint listado na documentação está rastreado a um ou mais Requisitos Funcionais (RF) e Regras de Negócio (RN) por meio da coluna RF/RN nas tabelas, servindo como ponte com as seções 3.1.1, 3.1.2 e 3.1.4 e contribuindo para a rastreabilidade a ser consolidada na seção 3.9 (atualização da RTM com os endpoints da Sprint 3 prevista em paralelo a esta entrega). Além dos endpoints implementados, a página HTML também descreve como planejados para as Sprints 4 e 5 os fluxos de autenticação (`POST /auth/sessions`), captura via OCR (`POST /ocr/extractions`, `PATCH /ocr/extractions/:extractionId`), identificação de inconsistências (`GET /competitions/:id/checkpoints/inconsistencies`) e relatórios analíticos (`GET /competitions/:id/reports`).
+A API segue convenções RESTful: recursos são organizados de forma hierárquica (por exemplo, `/competitions/:competicaoId/teams/:teamId/athletes`) e os métodos HTTP são aplicados conforme sua semântica padrão (POST cria, GET consulta, PUT/PATCH atualizam, DELETE remove; PUT e DELETE são operados como idempotentes, em conformidade com a estratégia de resiliência da seção 3.8.4). Os códigos HTTP devolvidos pelo *back-end* na Sprint 3 derivam diretamente das classes em `src/errors/AppError.ts` por meio do middleware `errorHandler`: `200` em consultas e atualizações bem-sucedidas, `201` em criações, `204` em remoções, `400` para `ValidationError`, `404` para `NotFoundError`, `409` para `ConflictError`, `422` para `UnprocessableError` e `500` como *fallback*. Os códigos `401 Unauthorized` e `403 Forbidden` estão documentados como contrato mas só serão emitidos a partir da Sprint 5, quando as camadas de autenticação e autorização entrarem em vigor (seção 3.8). A semântica e os códigos de status seguem a RFC 9110 (HTTP Semantics, IETF, 2022), que consolida e torna obsoletas as RFCs anteriores da família HTTP/1.1. Cada endpoint listado na documentação está rastreado a um ou mais Requisitos Funcionais (RF) e Regras de Negócio (RN) por meio da coluna RF/RN nas tabelas, servindo como ponte com as seções 3.1.1, 3.1.2 e 3.1.4 e contribuindo para a rastreabilidade a ser consolidada na seção 3.9 (atualização da RTM com os endpoints da Sprint 3 prevista em paralelo a esta entrega). Além dos endpoints implementados, a página HTML também descreve como planejados para as Sprints 4 e 5 os fluxos de autenticação (`POST /auth/sessions`), captura via OCR (`POST /ocr/extractions`, `PATCH /ocr/extractions/:extractionId`), identificação de inconsistências (`GET /competitions/:id/checkpoints/inconsistencies`) e relatórios analíticos (`GET /competitions/:id/reports`).
 
 Trabalhos de normalização ainda em curso são reconhecidos explicitamente nesta versão: (a) os parâmetros de rota oscilam entre `:id` (genérico), `:competicaoId` (português) e `:teamId`/`:athleteId` (inglês), refletindo a dívida de idioma já reconhecida na seção 3.2.1; (b) coexistem rotas com recursos em inglês (`/competitions/...`) e em português (`/corredores/:corredorId/checkpoints`); (c) os termos *athlete* e *runner* aparecem em diferentes pontos da API HTML para o mesmo conceito. A padronização desses três pontos está mapeada como pendência editorial e será endereçada em conjunto com a atualização da matriz da seção 3.1.4 e da RTM da seção 3.9.
 
@@ -3229,7 +3206,41 @@ A versão versionada no repositório pode ser consultada em [documentos/outros/a
 
 ### 3.8.3. Autorização
 
-*Descreva as regras de autorização por rota e por operação, baseadas no perfil do usuário autenticado. A verificação deve ocorrer no backend — o frontend nunca é fonte de verdade para autorização.*
+A aplicação define dois tipos de acesso: o **ambiente administrativo**, restrito a operadores autenticados, e o **ambiente público por equipe**, acessível via URL com UUID único sem necessidade de login.
+
+A verificação de autorização é realizada inteiramente no back-end. O front-end nunca é fonte de verdade para controle de acesso — ele apenas exibe ou oculta elementos de interface com base no estado local, mas nenhuma operação sensível é executada sem que o back-end valide a identidade do solicitante.
+
+**Perfil de acesso e estrutura de roles:**
+
+O sistema reconhece um único perfil privilegiado: `role: "admin"`, embutido no payload do JWT no momento da autenticação. Toda rota administrativa verifica a presença e a validade do token antes de processar a requisição.
+
+**Mecanismo de verificação:**
+
+O método `authService.validateToken(token)` é responsável por decodificar e verificar o JWT via `jwt.verify(token, JWT_SECRET)`. Em caso de token ausente, malformado ou expirado, o serviço lança um `UnauthorizedError` (HTTP 401). O método `authService.validatePermission(token)` é utilizado para verificações booleanas de acesso, retornando `false` em caso de qualquer falha de validação.
+
+**Mapeamento de rotas por nível de acesso:**
+
+| Rota | Método | Acesso | Descrição |
+|---|---|---|---|
+| `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
+| `POST /admin/login` | POST | Público | Alias de compatibilidade com front-end |
+| `GET /admin/login` | GET | Público | Renderiza tela de login |
+| `GET /logout` | GET | Público | Redireciona para login |
+| `GET /dashboard` | GET | Administrativo | Painel principal com competições |
+| `POST /competitions` | POST | Administrativo | Criar competição |
+| `PUT /competitions/:id` | PUT | Administrativo | Editar competição |
+| `PATCH /competitions/:id` | PATCH | Administrativo | Encerrar competição |
+| `DELETE /competitions/:id` | DELETE | Administrativo | Excluir competição |
+| `POST /checkpoints` | POST | Administrativo | Registrar checkpoint |
+| `PUT /checkpoints/:id` | PUT | Administrativo | Editar checkpoint |
+| `DELETE /checkpoints/:id` | DELETE | Administrativo | Remover checkpoint |
+| `GET /operational-panel` | GET | Administrativo | Painel operacional de corrida |
+| `GET /ranking` | GET | Público | Ranking geral por equipe |
+| `GET /view/competitions/:id/ranking` | GET | Público | Ranking público por competição (via UUID) |
+
+**Responsabilidade da camada de back-end:**
+
+Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O front-end recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
@@ -3285,7 +3296,7 @@ A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem r
 
 ### (a) O que foi implementado
 
-Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002).
+Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002).
 
 <div align="center">
   <sub>Figura 58 - Estrutura de pastas</sub><br>
@@ -3335,12 +3346,12 @@ Nesta sprint foi consolidada a base do backend da aplicação, estruturada em **
 
 **- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso por sala administrativa via senha definida na criação da sala, com escopo limitado à área administrativa e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
 
-**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do frontend funcional na sprint 4.
+**- Protótipo de alta fidelidade de todas as telas finalizado:** o design system, os fluxos de navegação e o layout completo das interfaces administrativas e públicas estão concluídos no Figma, contemplando todas as telas previstas no escopo (painel administrativo, gestão de equipes e atletas, painel operacional da competição, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe, relatórios e painel público acessado via UUID). Essa entrega serve de base direta para a implementação do front-end funcional na sprint 4.
 
 Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
 
-**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento no backend → persistência dos campos extraídos → validação humana). A solução será integrada ao servidor para garantir a persistência de logs de extração e auditoria (RN05), permitindo que o administrador revise registros e trate discrepâncias (RN06) diretamente via API. O comportamento atual está alinhado com os critérios de aceite da US09, restando a implementação das rotas de extração no backend e a integração refinada com o módulo de Checkpoints na sprint 4.
+**- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento no back-end → persistência dos campos extraídos → validação humana). A solução será integrada ao servidor para garantir a persistência de logs de extração e auditoria (RN05), permitindo que o administrador revise registros e trate discrepâncias (RN06) diretamente via API. O comportamento atual está alinhado com os critérios de aceite da US09, restando a implementação das rotas de extração no back-end e a integração refinada com o módulo de Checkpoints na sprint 4.
 
 <div align="center">
   <sub>Figura 63 - Adicionar imagem</sub><br>
@@ -3373,7 +3384,7 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 **- Refinamento do OCR:** apesar do protótipo estar finalizado e do fluxo estar definido, ainda é necessário aprimorar a precisão da captura das informações da imagem (distância, pace e tempo total), tratar variações de iluminação e posicionamento do display da esteira, ajustar o limiar de discrepância para acionamento dos alertas visuais (RN06) e refinar detalhes de integração para entregar o módulo em nível de MVP funcional.
 
-**- Frontend funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o backend será iniciada na sprint 4.
+**- Front-end funcional integrado:** entregue até o momento apenas o protótipo de alta fidelidade; a integração com o back-end será iniciada na sprint 4.
 
 ### (c) Dificuldades técnicas
 
@@ -3385,9 +3396,9 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 
 ### (d) Próximos passos
 
-Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o frontend ao backend já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
+Com base no que já foi entregue na sprint 3 e considerando o que o TAP estabelece como prioritário para o MVP, o foco da sprint 4 será **integrar o front-end ao back-end já existente e refinar os fluxos críticos da operação** durante as 24 horas do evento. As frentes de trabalho previstas são:
 
-**1. Frontend funcional integrado ao backend**
+**1. Front-end funcional integrado ao back-end**
 Migração do protótipo de alta fidelidade para uma aplicação funcional consumindo a API já implementada, com foco nas telas críticas para a operação do evento: painel operacional administrativo, captura e validação OCR, registro manual de checkpoint, tabela consolidada da equipe com auto-refresh, relatórios e painel público acessado via UUID sem autenticação (US12). A UX deve seguir os wireframes já validados na sprint 2, priorizando uso em iPad conforme escopo do TAP.
 
 **2. Refinamento do módulo de OCR**
@@ -3397,7 +3408,7 @@ Aprimoramento da precisão de extração dos dados da imagem, tratamento de vari
 Conclusão do módulo já iniciado na sprint 3 (model, repository e service), registrando as rotas no Express e completando a cadeia da arquitetura em camadas.
 
 **4. Testes automatizados e Matriz de Rastreabilidade**
-Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o frontend conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
+Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo a cobertura para o front-end conforme aplicável e reforçando os testes dos módulos consolidados na sprint 3. Em paralelo, preenchimento da RTM (seção 3.9), conectando persona → RF → RN → endpoint → tela → teste → evidência, sem lacunas nos fluxos centrais a partir desta sprint, conforme exigido pelo template.
 
 **5. Dívida técnica identificada na sprint 3**
 Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
@@ -3406,9 +3417,9 @@ Avaliação da centralização do tratamento de erros de constraint do PostgreSQ
 
 ### (a) O que foi implementado
 
-Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao backend já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework frontend separado.
+Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do protótipo de alta fidelidade para interfaces funcionais integradas ao back-end já existente. A stack adotada foi EJS + Express + express-ejs-layouts, mantendo o servidor Node.js como único processo e servindo as views por SSR (Server-Side Rendering), sem a necessidade de um framework front-end separado.
 
-**- Estrutura de pastas do frontend:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
+**- Estrutura de pastas do front-end:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
 
 <div align="center"> <sub>Figura 67 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/view-estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas das views EJS"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
@@ -3420,13 +3431,13 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 <div align="center"> <sub>Figura 69 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo frontend, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
+**- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo front-end, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
 
 **- Sidebar de navegação persistente:** O partial partials/menu.ejs, incluído no layout base, renderiza a barra lateral com os links para todas as telas. O app.js ativa dinamicamente o item correspondente à rota atual via comparação com window.location.pathname, seguindo o comportamento definido no protótipo de alta fidelidade.
 
-<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código frontend da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Registro de checkpoint e atualização de ranking (RF008, RN04, RN05):** Foi implementado o fluxo de registro manual de checkpoint, conectado diretamente ao endpoint POST /checkpoints. O formulário coleta distância (km), pace e tempo total, valida os campos obrigatórios no cliente antes do envio e exibe feedback em tempo real (loading, sucesso e erro). Após um registro bem-sucedido, o painel dispara automaticamente uma consulta ao endpoint GET /competitions/:id/ranking/teams para atualizar o ranking sem recarregamento da página.
 
@@ -3438,7 +3449,7 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 ### (b) O que não foi concluído
 
-**Integração do OCR com o frontend e o backend:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no frontend e a integração com o endpoint de checkpoints no backend — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
 
 ### (c) Dificuldades técnicas
 
@@ -3458,7 +3469,7 @@ Nesta sprint foi iniciada a camada de frontend da aplicação, migrando do prot�
 
 **4. Exportação de resultados em CSV:** Implementação do endpoint de exportação e da interface de acionamento para geração do arquivo CSV consolidado ao encerramento da competição. O arquivo deverá conter o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints registrados, método de entrada de cada registro, tempo parcial e total). Essa entrega finaliza o fluxo de RF013 e RF014 e é crítica para a apuração oficial do evento, pois substitui definitivamente a planilha manual que a equipe da Red Bull utiliza hoje.
 
-**5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo backend desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
+**5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo back-end desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
 
 
 ## 4.3. Versão final da aplicação web (sprint 5)
@@ -3836,25 +3847,30 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
   <sub>Quadro 32 - Cobertura por Camada da Aplicação </sub>
 </div>
 
-| Camada | Statements | Branches | Functions | Lines |
-|--------|-----------|----------|-----------|-------|
-| App (`src`) | 100.00% | 100.00% | 100.00% | 100.00% |
-| Controllers | 24.77% | 5.47% | 17.59% | 26.02% |
-| Database | 87.50% | 75.00% | 100.00% | 87.50% |
-| Errors | 100.00% | 100.00% | 100.00% | 100.00% |
-| Helpers | 36.00% | 0.00% | 37.50% | 39.13% |
-| Middlewares | 75.00% | 50.00% | 100.00% | 71.42% |
-| Repositories | 48.48% | 28.08% | 55.10% | 53.46% |
-| Routes | 91.22% | 0.00% | 0.00% | 91.22% |
-| Services | 96.05% | 88.78% | 97.22% | 96.21% |
-| Validators | 70.61% | 64.42% | 92.59% | 71.80% |
-| **Cobertura Total** | **60.05%** | **51.89%** | **67.76%** | **62.48%** |
+| Camada              | Statements | Branches   | Functions  | Lines      |
+| ------------------- | ---------- | ---------- | ---------- | ---------- |
+| App (`src`)         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Controllers         | 39.22%     | 11.44%     | 37.96%     | 40.96%     |
+| Database            | 87.50%     | 75.00%     | 100.00%    | 87.50%     |
+| Errors              | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Helpers             | 36.00%     | 0.00%      | 37.50%     | 39.13%     |
+| Middlewares         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
+| Repositories        | 75.42%     | 51.68%     | 89.79%     | 82.69%     |
+| Routes              | 91.22%     | 0.00%      | 0.00%      | 91.22%     |
+| Services            | 88.38%     | 83.68%     | 85.86%     | 89.41%     |
+| Validators          | 75.25%     | 68.45%     | 100.00%    | 76.59%     |
+| **Cobertura Total** | **70.03%** | **52.81%** | **68.01%** | **72.42%** |
+
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **60.05% em statements** e **62.48% em lines**, enquanto a camada de Services atingiu **96.05% em statements**, **88.78% em branches**, **97.22% em functions** e **96.21% em lines**, superando a meta de 80% definida para a sprint.
+O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **70.03% em statements, 52.81% em branches, 68.01% em functions e 72.42% em lines.**
+
+Entre as camadas com melhor desempenho, destacam-se **App, Errors e Middlewares**, que atingiram **100% de cobertura em todas as métricas**, enquanto a camada de **Services** apresentou **88.38% em statements, 83.68% em branches, 85.86% em functions e 89.41% em lines**, superando a meta mínima de **80% estabelecida para a sprint**.
+
+Apesar disso, a camada de Controllers ainda apresentou menor cobertura, com 39.22% em statements e 40.96% em lines, indicando pontos que podem ser priorizados em futuras melhorias dos testes automatizados.
 
 **Evidência**
 <div align="center">
@@ -3909,7 +3925,82 @@ A rastreabilidade apresentada demonstra que os testes implementados validam requ
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-*Posicione aqui o relatório dos testes SUS realizados.*
+Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado o método **System Usability Scale (SUS)**, um dos instrumentos mais utilizados para mensurar a percepção dos usuários quanto à facilidade de uso de sistemas interativos. O SUS permite obter uma avaliação quantitativa da usabilidade percebida por meio de um questionário padronizado composto por dez afirmações avaliadas em escala Likert de cinco pontos (Brooke, 1996).
+
+A coleta das respostas foi realizada por meio de um formulário eletrônico desenvolvido no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)), aplicado individualmente após a utilização da plataforma pelos participantes. Ao todo, sete usuários participaram da avaliação, respondendo ao questionário de forma independente após executarem as tarefas propostas durante os testes de usabilidade.
+
+O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro XX.
+
+<div align="center">
+
+  <sub>Quadro XX – Escala de respostas do questionário SUS</sub>
+
+</div>
+
+| Valor | Significado |
+|--------|-------------|
+| 1 | Discordo totalmente |
+| 2 | Discordo parcialmente |
+| 3 | Neutro |
+| 4 | Concordo parcialmente |
+| 5 | Concordo totalmente |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+As afirmações apresentadas aos participantes estão descritas no Quadro XX.
+
+<div align="center">
+
+  <sub>Quadro XX – Questões do questionário SUS</sub>
+
+</div>
+
+| Nº | Afirmação |
+|----|-----------|
+| 1 | Eu acho que gostaria de usar este sistema com frequência. |
+| 2 | Eu achei o sistema desnecessariamente complexo. |
+| 3 | Eu achei o sistema fácil de usar. |
+| 4 | Eu acho que precisaria da ajuda de uma pessoa com conhecimentos técnicos para utilizar o sistema. |
+| 5 | Eu achei que as várias funções do sistema estão bem integradas. |
+| 6 | Eu achei que o sistema apresenta muita inconsistência. |
+| 7 | Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente. |
+| 8 | Eu achei o sistema complicado de usar. |
+| 9 | Eu me senti confiante utilizando o sistema. |
+| 10 | Eu precisei aprender muitas coisas antes de conseguir utilizar o sistema. |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+
+Após a coleta das respostas, os dados foram consolidados em uma planilha eletrônica desenvolvida no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)). As pontuações individuais foram calculadas conforme a metodologia oficial do SUS, resultando em uma nota final entre 0 e 100 pontos para cada participante.
+
+A Tabela XX apresenta as pontuações obtidas pelos participantes.
+
+<div align="center">
+
+  <sub>Tabela XX – Pontuação SUS por participante</sub>
+
+</div>
+
+| Participante | Pontuação SUS |
+|-------------|---------------|
+| Participante 1 | 72,5 |
+| Participante 2 | 77,5 |
+| Participante 3 | 82,5 |
+| Participante 4 | 82,5 |
+| Participante 5 | 77,5 |
+| Participante 6 | 100,0 |
+| Participante 7 | 72,5 |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+
+A partir das respostas coletadas, foi obtida uma pontuação média de **80,71 pontos**. A interpretação desse resultado e sua classificação segundo os critérios do método SUS são apresentadas na subseção seguinte.
+
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
 
@@ -4055,7 +4146,7 @@ Os recursos principais são os ativos necessários para construir e operar a sol
 
 ### Atividades Chave
 
-As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo frontend e backend, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
+As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo front-end e back-end, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
 
 ### Parcerias Principais
 
@@ -4125,6 +4216,9 @@ O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativaç�
 ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
 
 AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
+
+BROOKE, J. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). Usability evaluation in industry. London: Taylor & Francis, 1996. p. 189-194. Disponível em: <https://hell.meiert.org/core/pdf/sus.pdf>. Acesso em: 17 jun. 2026.
+
 
 BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
 

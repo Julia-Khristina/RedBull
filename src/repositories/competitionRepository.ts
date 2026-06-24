@@ -118,4 +118,21 @@ export const competitionRepository: CompetitionRepository = {
 
     return data as unknown as Competition | null;
   },
+
+  async activate(id: number): Promise<Competition | null> {
+    const supabase = getSupabaseClient();
+
+    const { data, error } = await supabase
+      .from("competition")
+      .update({ status: "in_progress" })
+      .eq("id", id)
+      .select(competitionSelect)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    return data as unknown as Competition | null;
+  },
 };

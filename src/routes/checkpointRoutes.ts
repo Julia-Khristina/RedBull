@@ -1,16 +1,19 @@
 import { Router } from "express";
 import { checkpointController } from "../controllers/checkpointController";
 import { asyncHandler } from "../helpers/asyncHandler";
+import { garantirAutenticacao } from "../middlewares/authMiddleware";
 
 const router = Router();
 
 router.get(
   "/operational-panel",
+  garantirAutenticacao,
   asyncHandler(checkpointController.renderOperationalPanel)
 );
 
 router.get(
   "/operational-panel/:runnerId",
+  garantirAutenticacao,
   asyncHandler(checkpointController.renderOperationalPanel)
 );
 
@@ -19,33 +22,37 @@ router.get(
   asyncHandler(checkpointController.renderSavedByTeam)
 );
 
-router.post("/checkpoints", asyncHandler(checkpointController.create));
+router.post("/checkpoints", garantirAutenticacao, asyncHandler(checkpointController.create));
 
 router.post(
   "/runners/:runnerId/checkpoints",
+  garantirAutenticacao,
   asyncHandler(checkpointController.createForRunner)
 );
 
-router.get("/checkpoints", asyncHandler(checkpointController.list));
+router.get("/checkpoints", garantirAutenticacao, asyncHandler(checkpointController.list));
 
-router.get("/checkpoints/:id", asyncHandler(checkpointController.findById));
+router.get("/checkpoints/:id", garantirAutenticacao, asyncHandler(checkpointController.findById));
 
-router.put("/checkpoints/:id", asyncHandler(checkpointController.update));
+router.put("/checkpoints/:id", garantirAutenticacao, asyncHandler(checkpointController.update));
 
-router.delete("/checkpoints/:id", asyncHandler(checkpointController.remove));
+router.delete("/checkpoints/:id", garantirAutenticacao, asyncHandler(checkpointController.remove));
 
 router.get(
   "/runners/:runnerId/checkpoints",
+  garantirAutenticacao,
   asyncHandler(checkpointController.findByRunner)
 );
 
 router.get(
   "/competitions/:id/checkpoints/inconsistencies",
+  garantirAutenticacao,
   asyncHandler(checkpointController.findInconsistenciesByCompetition)
 );
 
 router.get(
   "/competitions/:id/checkpoints",
+  garantirAutenticacao,
   asyncHandler(checkpointController.findByCompetition)
 );
 

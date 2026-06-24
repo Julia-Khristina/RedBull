@@ -41,10 +41,13 @@
 
 /* ── Cards ── */
 .db-card {
-  background-color: var(--fundo-cards);
-  border-radius: var(--border-radius);
   padding: 20px 24px;
   margin-bottom: 24px;
+  background: var(--fundo-cards);
+  border: 1px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+
 }
 
 .db-card-heading {
@@ -186,11 +189,172 @@
   background-color: var(--azul-principal);
 }
 
+.db-activate-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  color: var(--fundo-cards);
+  background-color: var(--azul-principal);
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+
+.db-activate-btn:hover {
+  background-color: var(--azul-secundario);
+}
+
+.db-close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  color: var(--vermelho);
+  background: transparent;
+  border: 2px solid var(--vermelho);
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+}
+
+.db-close-btn:hover {
+  background: var(--vermelho);
+  color: var(--fundo-cards);
+}
+
+/* ── Filter bar ── */
+.db-filter-bar {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+  padding: 16px 20px;
+  background: var(--fundo-cards);
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+}
+
+.db-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  min-width: 160px;
+}
+
+.db-filter-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  color: var(--azul-principal);
+}
+
+.db-filter-select,
+.db-filter-input {
+  padding: 10px 12px;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  color: var(--texto);
+  background: var(--fundo-cards);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.db-filter-reset-btn {
+  padding: 10px 18px;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--azul-secundario);
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.db-filter-reset-btn:hover {
+  border-color: var(--vermelho);
+  color: var(--vermelho);
+}
+
+.db-filter-select:focus,
+.db-filter-input:focus {
+  border-color: var(--azul-principal);
+}
+
+/* ── Pagination ── */
+.db-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.db-page-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: 2px solid var(--azul-principal);
+  border-radius: 24px;
+  background: transparent;
+  color: var(--azul-principal);
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: var(--font-weight-bold);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.db-page-btn:hover:not(:disabled) {
+  background: var(--azul-principal);
+  color: var(--fundo-cards);
+}
+
+.db-page-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.db-pagination-info {
+  font-family: var(--font-family);
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  color: var(--azul-principal);
+  white-space: nowrap;
+}
+
 @media (max-width: 720px) {
   .db-actions,
   .db-competition-card,
   .db-competition-actions {
     flex-direction: column;
     align-items: stretch;
+  }
+
+  .db-filter-bar {
+    flex-direction: column;
+  }
+
+  .db-filter-group {
+    min-width: 100%;
+  }
+
+  .db-pagination {
+    flex-wrap: wrap;
   }
 }
