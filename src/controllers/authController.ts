@@ -20,8 +20,13 @@ function getAuthenticationToken(req: Request): string {
 
 export const authController = {
   async createSession(req: Request, res: Response): Promise<void> {
-    const token = await authService.createSession(req.body);
-    res.status(200).json(token);
+    const result = await authService.createSession(req.body);
+    res.cookie("rb24_token", result.access_token, {
+      httpOnly: true,
+      sameSite: "lax",
+      maxAge: 8 * 60 * 60 * 1000,
+    });
+    res.status(200).json(result);
   },
 
   async refreshToken(req: Request, res: Response): Promise<void> {

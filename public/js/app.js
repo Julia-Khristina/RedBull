@@ -1451,6 +1451,85 @@ document.addEventListener('DOMContentLoaded', function () {
     fetchRanking(competitionId, isAdmin);
     setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);
   }
+
+  // ============================================================
+  // REPORTS — Chart.js gráfico de km acumulado por equipe
+  // ============================================================
+  if (window.EQUIPE_HORÁRIO_KM) {
+    var kmCanvas = document.getElementById('kmChart');
+    if (kmCanvas && typeof Chart !== 'undefined') {
+      var hourlyData = window.EQUIPE_HORÁRIO_KM;
+      var colors = ['#d2003c', '#0f0069', '#ffcc00', '#233972'];
+      var datasets = hourlyData.datasets.map(function (ds, index) {
+        return {
+          label: ds.team_name,
+          data: ds.data,
+          borderColor: colors[index % colors.length],
+          backgroundColor: colors[index % colors.length] + '33',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: colors[index % colors.length],
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          tension: 0.3,
+          fill: false,
+        };
+      });
+
+      new Chart(kmCanvas, {
+        type: 'line',
+        data: {
+          labels: hourlyData.labels,
+          datasets: datasets,
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+                usePointStyle: true,
+                padding: 16,
+              },
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Horas',
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+              },
+              ticks: {
+                font: { family: 'Montserrat', size: 11 },
+                color: '#0f0069',
+              },
+              grid: { color: '#dadada' },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Distância (km)',
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+              },
+              ticks: {
+                font: { family: 'Montserrat', size: 11 },
+                color: '#0f0069',
+              },
+              grid: { color: '#dadada' },
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }
 });
 
 // [A1][B1] Endpoint: GET /competitions/:id/ranking/teams — retorna RankingTeam[]
