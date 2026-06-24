@@ -14,7 +14,7 @@ function readRequiredText(
 ): string {
   const value = payload[field];
   if (typeof value !== "string" || value.trim().length === 0) {
-    throw new ValidationError(`${field} é obrigatório`);
+    throw new ValidationError(`${field} e obrigatorio`);
   }
   return value.trim();
 }
@@ -25,7 +25,7 @@ function readRequiredPositiveNumber(
 ): number {
   const value = payload[field];
   if (typeof value !== "number" || isNaN(value) || value < 0) {
-    throw new ValidationError(`${field} deve ser um número não negativo`);
+    throw new ValidationError(`${field} deve ser um numero nao negativo`);
   }
   return value;
 }
@@ -41,7 +41,7 @@ function readRequiredPositiveInteger(
     value <= 0
   ) {
     throw new ValidationError(
-      `${field} deve ser um número inteiro positivo`
+      `${field} deve ser um numero inteiro positivo`
     );
   }
   return value;
@@ -58,25 +58,12 @@ function readOptionalPace(
     throw new ValidationError("pace nao pode ser vazio");
   }
 
-  const normalized = normalizePace(pace);
-  if (!normalized) {
+  const normalized = pace.trim();
+  if (!/^[0-9]{1,2}:[0-9]{2}\/km$/.test(normalized)) {
     throw new ValidationError("pace deve estar no formato mm:ss/km");
   }
 
   return normalized;
-}
-
-function normalizePace(pace: string): string | null {
-  const match = pace
-    .trim()
-    .match(/^([0-9]+)(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
-
-  if (!match) return null;
-
-  const seconds = Number(match[2]);
-  if (!Number.isInteger(seconds) || seconds > 59) return null;
-
-  return `${match[1].padStart(2, "0")}:${match[2].padStart(2, "0")}/km`;
 }
 
 function readOptionalTime(
@@ -102,14 +89,13 @@ export function validateCreateCheckpoint(
   payload: unknown
 ): CreateCheckpointInput {
   if (!isObject(payload)) {
-    throw new ValidationError("Payload inválido");
+    throw new ValidationError("Payload invalido");
   }
 
   const identifier = readRequiredText(payload, "identifier");
   const distance_km = readRequiredPositiveNumber(payload, "distance_km");
   const id_runner = readRequiredPositiveInteger(payload, "id_runner");
   const id_competition = readRequiredPositiveInteger(payload, "id_competition");
-  const id_treadmill = readRequiredPositiveInteger(payload, "id_treadmill");
   const id_admin = readRequiredPositiveInteger(payload, "id_admin");
 
   const result: CreateCheckpointInput = {
@@ -117,7 +103,6 @@ export function validateCreateCheckpoint(
     distance_km,
     id_runner,
     id_competition,
-    id_treadmill,
     id_admin,
   };
 
@@ -141,7 +126,7 @@ export function validateUpdateCheckpoint(
   payload: unknown
 ): UpdateCheckpointInput {
   if (!isObject(payload)) {
-    throw new ValidationError("Payload inválido");
+    throw new ValidationError("Payload invalido");
   }
 
   const result: UpdateCheckpointInput = {};
@@ -164,7 +149,7 @@ export function validateUpdateCheckpoint(
   }
 
   if (Object.keys(result).length === 0) {
-    throw new ValidationError("Nenhum campo informado para atualização");
+    throw new ValidationError("Nenhum campo informado para atualizacao");
   }
 
   return result;
