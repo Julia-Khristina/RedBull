@@ -3193,7 +3193,67 @@ O token JWT é gerado pelo método `authService.generateToken` utilizando `jwt.s
 
 ### 3.8.2. Controle de sessão
 
-*Descreva o controle de sessão baseado em `session id` persistido em tabela própria, com expiração. Se optar por JWT, justifique a escolha explicando os trade-offs (stateless, não revogável, payload exposto).*
+#### 3.8.2.1 Estratégia adotada
+
+O projeto adota **JSON Web Token (JWT)** como mecanismo de controle de sessão, em vez da utilização de um identificador de sessão (*session ID*) persistido em uma tabela específica no banco de dados. Trata-se de uma abordagem baseada em arquitetura **stateless**, na qual o servidor não mantém o estado da sessão entre as requisições. Assim, as informações necessárias para autenticação e autorização são transportadas pelo próprio token, juntamente com seu período de validade.
+
+#### 3.8.2.2 Funcionamento da sessão
+
+Após a validação das credenciais (descrita na Seção 3.8.1), o serviço de autenticação gera um JWT assinado utilizando o algoritmo **HS256**, com uma chave secreta armazenada na variável de ambiente **JWT_SECRET**.
+
+O token possui tempo de expiração de **8 horas**, definido automaticamente por meio da *claim* padrão **exp** do JWT.
+
+O *payload* contém as informações necessárias para identificação do usuário autenticado, incluindo:
+
+* `id`
+* `email`
+* `name`
+* `role`
+
+Esses dados são utilizados pelo backend para identificar o usuário e aplicar as regras de autorização durante o processamento das requisições autenticadas.
+
+Atualmente, o sistema não implementa um fluxo independente de *refresh token*. Embora a API retorne os campos `access_token` e `refresh_token`, ambos contêm o mesmo JWT. Dessa forma, a renovação da sessão ocorre mediante uma nova autenticação do usuário, com a emissão de um novo token.
+
+#### 3.8.2.3 Validação das requisições autenticadas
+
+As requisições protegidas devem enviar o token por meio do cabeçalho HTTP:
+
+```http
+Authorization: Bearer <token>
+```
+
+Em cada requisição autenticada, o backend valida:
+
+* a assinatura digital do token;
+* sua integridade;
+* sua data de expiração.
+
+Caso o token esteja ausente, inválido ou expirado, a requisição é rejeitada com o código **401 Unauthorized**.
+
+A operação de logout não realiza a invalidação do token no servidor. Ao encerrar a sessão, o frontend remove o token armazenado e redireciona o usuário para a tela de login. Enquanto o token não expirar, ele permanece tecnicamente válido caso ainda esteja em posse do cliente.
+
+#### 3.8.2.4 Justificativa da escolha e trade-offs
+
+| Aspecto                | JWT (implementado)                                                                                                                                | Session ID em tabela                                                                 |
+| ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
+| Natureza               | **Stateless** — o servidor não mantém estado da sessão                                                                                            | **Stateful** — exige armazenamento e gerenciamento das sessões                       |
+| Escalabilidade         | Alta — qualquer instância da aplicação pode validar o token sem consultar o banco de dados                                                        | Requer compartilhamento do estado das sessões entre instâncias (por exemplo, Redis)  |
+| Revogação imediata     | Não suportada nativamente — um token permanece válido até sua expiração                                                                           | Sessões podem ser invalidadas imediatamente pela remoção do registro correspondente  |
+| Informações do usuário | O payload pode ser decodificado por qualquer cliente, pois utiliza codificação Base64URL, mas sua integridade é garantida pela assinatura digital | Os dados permanecem armazenados exclusivamente no servidor                           |
+| Overhead de banco      | Não há necessidade de consulta ao banco para validar o token                                                                                      | Geralmente exige consulta ao mecanismo de armazenamento da sessão em cada requisição |
+
+A utilização de JWT é adequada ao contexto do sistema **Red Bull 24H**, que possui apenas um perfil autenticado (**admin**) e é utilizado durante períodos específicos de operação correspondentes ao evento. A arquitetura **stateless** reduz a complexidade da infraestrutura, melhora a escalabilidade da aplicação e elimina a necessidade de gerenciamento centralizado de sessões, mantendo um nível de segurança compatível com o escopo do projeto.
+
+#### 3.8.2.5 Limitações identificadas
+
+Como não há mecanismo de revogação de tokens, a operação de logout apenas remove o token do lado do cliente, sem invalidá-lo no backend. Consequentemente, caso o token seja obtido por terceiros antes de sua expiração, ele continuará sendo aceito até o término de sua validade.
+
+Em um ambiente de produção com requisitos de segurança mais rigorosos, seria recomendável implementar um mecanismo de revogação, como:
+
+* uma **denylist** (*blacklist*) de tokens inválidos armazenada em Redis;
+* uma tabela de tokens revogados consultada durante a validação das requisições;
+* ou um fluxo completo de **access token** de curta duração combinado com **refresh token** independente, permitindo renovação segura da sessão e revogação do acesso quando necessário.
+
 
 ### 3.8.3. Autorização
 
