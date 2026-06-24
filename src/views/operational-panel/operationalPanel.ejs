@@ -1,16 +1,16 @@
 <%
-  const checkpointContext = locals.checkpointContext || {};
-  const selectedRunner = locals.selectedRunner || locals.runner || {};
-  const selectedTeam = locals.selectedTeam || {};
-  const manualCheckpoint = locals.manualCheckpoint || {};
-  const runnerName = selectedRunner.name || manualCheckpoint.runnerName || "Atleta nao selecionado";
-  const teamName = selectedTeam.name || manualCheckpoint.teamName || "Equipe nao informada";
-  const checkpointClock = manualCheckpoint.checkpointClock || manualCheckpoint.checkpoint_clock || "14:28:00";
-  const runnerId = checkpointContext.id_runner || selectedRunner.id || "";
-  const checkpointEndpoint = runnerId ? `/runners/${runnerId}/checkpoints` : "/checkpoints";
-  const checkpointNumber = checkpointContext.checkpoint_number || 1;
-  const averagePaceSeconds = checkpointContext.average_pace_seconds ?? "";
-  const averagePaceLabel = checkpointContext.average_pace_label || "";
+const checkpointContext = locals.checkpointContext || {};
+const selectedRunner = locals.selectedRunner || locals.runner || {};
+const selectedTeam = locals.selectedTeam || {};
+const manualCheckpoint = locals.manualCheckpoint || {};
+const runnerName = selectedRunner.name || manualCheckpoint.runnerName || "Atleta nao selecionado";
+const teamName = selectedTeam.name || manualCheckpoint.teamName || "Equipe nao informada";
+const checkpointClock = manualCheckpoint.checkpointClock || manualCheckpoint.checkpoint_clock || "14:28:00";
+const runnerId = checkpointContext.id_runner || selectedRunner.id || "";
+const checkpointEndpoint = runnerId ? `/runners/${runnerId}/checkpoints` : "/checkpoints";
+const checkpointNumber = checkpointContext.checkpoint_number || 1;
+const averagePaceSeconds = checkpointContext.average_pace_seconds ?? "";
+const averagePaceLabel = checkpointContext.average_pace_label || "";
 %>
 
 <main
@@ -25,7 +25,6 @@
 >
   <input type="hidden" name="id_runner" value="<%= runnerId %>" data-ocr-context>
   <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>" data-ocr-context>
-  <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>" data-ocr-context>
   <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>" data-ocr-context>
 
   <section class="ocr-capture" data-ocr-step="capture">
@@ -149,7 +148,6 @@
         <input type="hidden" name="identifier" value="<%= checkpointContext.identifier || '' %>">
         <input type="hidden" name="id_runner" value="<%= runnerId %>">
         <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>">
-        <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>">
         <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>">
 
         <div class="manual-form__row manual-form__row--top">
