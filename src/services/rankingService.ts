@@ -34,7 +34,8 @@ interface TeamAggregate {
 function parseTimeToSeconds(value: string | null): number | null {
   if (!value) return null;
 
-  const parts = value.split(":").map((part) => Number(part));
+  const normalized = value.trim().replace(/\s*\/\s*km$/i, "");
+  const parts = normalized.split(":").map((part) => Number(part));
 
   if (parts.some((part) => !Number.isFinite(part) || part < 0)) {
     return null;
@@ -60,7 +61,7 @@ function formatPace(seconds: number | null): string | null {
   const minutes = Math.floor(rounded / 60);
   const remainingSeconds = String(rounded % 60).padStart(2, "0");
 
-  return `${minutes}:${remainingSeconds}`;
+  return `${String(minutes).padStart(2, "0")}:${remainingSeconds}`;
 }
 
 function getCheckpointPaceSeconds(checkpoint: Checkpoint): number | null {

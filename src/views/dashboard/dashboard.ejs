@@ -110,6 +110,32 @@
 
   <section class="db-section">
     <h2 class="db-section-title">Selecionar competição</h2>
+
+    <!-- ── Filtros ── -->
+    <div class="db-filter-bar">
+      <div class="db-filter-group">
+        <label for="filter-status" class="db-filter-label">Status</label>
+        <select id="filter-status" class="db-filter-select">
+          <option value="all">Todas</option>
+          <option value="ativas">Em andamento</option>
+          <option value="not_started">Não iniciadas</option>
+          <option value="closed">Encerradas</option>
+        </select>
+      </div>
+      <div class="db-filter-group">
+        <label for="filter-date" class="db-filter-label">Data</label>
+        <input type="date" id="filter-date" class="db-filter-input">
+      </div>
+      <div class="db-filter-group">
+        <label for="filter-location" class="db-filter-label">Localização</label>
+        <input type="text" id="filter-location" class="db-filter-input" placeholder="Filtrar por local...">
+      </div>
+      <div class="db-filter-group db-filter-group--action">
+        <label class="db-filter-label">&nbsp;</label>
+        <button type="button" id="filter-reset" class="db-filter-reset-btn">Limpar</button>
+      </div>
+    </div>
+
     <% if (competitionsList.length === 0) { %>
       <div class="db-card">
         <h3 class="db-card-heading">Nenhuma competição cadastrada</h3>
@@ -119,27 +145,56 @@
         </p>
       </div>
     <% } else { %>
-      <div class="db-competition-list">
-        <% competitionsList.forEach(function(item) { %>
-          <article class="db-competition-card <%= activeCompetition && activeCompetition.id === item.id ? 'is-selected' : '' %>">
-            <div>
-              <h3><%= item.name %></h3>
-              <p>
-                ID <%= item.id %>
-                <% if (item.date) { %>
-                  · <%= formatCompetitionDate(item.date) %>
+      <div id="competition-container">
+        <div class="db-competition-list" id="competition-list">
+          <% competitionsList.forEach(function(item) { %>
+            <article class="db-competition-card <%= activeCompetition && activeCompetition.id === item.id ? 'is-selected' : '' %>"
+              data-status="<%= item.status %>"
+              data-date="<%= item.date || '' %>"
+              data-location="<%= (item.address || '').toLowerCase() %>">
+              <div>
+                <h3><%= item.name %></h3>
+                <p>
+                  ID <%= item.id %>
+                  <% if (item.date) { %>
+                    · <%= formatCompetitionDate(item.date) %>
+                  <% } %>
+                  · <%= item.status === 'in_progress' ? 'Em andamento' : item.status === 'not_started' ? 'Não iniciada' : 'Encerrada' %>
+                </p>
+              </div>
+              <div class="db-competition-actions">
+                <a href="/dashboard?competitionId=<%= item.id %>">Selecionar</a>
+                <a href="/teams?competitionId=<%= item.id %>">Equipes</a>
+                <% if (item.status !== 'in_progress') { %>
+                  <button class="db-activate-btn" data-id="<%= item.id %>">Ativar</button>
+                <% } else { %>
+                  <button class="db-close-btn" data-id="<%= item.id %>">Encerrar</button>
                 <% } %>
-                · <%= item.status %>
-              </p>
-            </div>
-            <div class="db-competition-actions">
-              <a href="/dashboard?competitionId=<%= item.id %>">Selecionar</a>
-              <a href="/teams?competitionId=<%= item.id %>">Equipes</a>
-            </div>
-          </article>
-        <% }); %>
+              </div>
+            </article>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- ── Paginação ── -->
+      <div class="db-pagination" id="pagination">
+        <button class="db-page-btn" id="prev-page" aria-label="Anterior">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Anterior
+        </button>
+        <span class="db-pagination-info" id="pagination-info"></span>
+        <button class="db-page-btn" id="next-page" aria-label="Próximo">
+          Próximo
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       </div>
     <% } %>
   </section>
+
+
 
 </main>
