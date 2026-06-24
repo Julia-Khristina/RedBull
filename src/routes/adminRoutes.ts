@@ -1,7 +1,10 @@
 import { Router } from "express";
 import { adminController } from "../controllers/adminController";
+import { garantirAutenticacao } from "../middlewares/authMiddleware";
 
 const router = Router();
+
+router.use(garantirAutenticacao);
 
 router.get("/", adminController.findAll);
 router.get("/:id", adminController.findById);

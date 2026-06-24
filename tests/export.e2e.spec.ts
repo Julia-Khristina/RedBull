@@ -3,6 +3,7 @@ import app from "../src/app";
 import { runnerRepository } from "../src/repositories/runnerRepository";
 import { competitionRepository } from "../src/repositories/competitionRepository";
 import { teamRepository } from "../src/repositories/teamRepository";
+import { getAuthToken, bearer } from "./helpers/auth";
 
 const RUN = Date.now().toString().slice(-7);
 
@@ -10,8 +11,11 @@ describe("GET /competitions/:id/export", () => {
   let competitionId: number;
   let teamId: number;
   let runnerId: number;
+  let token: string;
 
   beforeAll(async () => {
+    token = await getAuthToken();
+
     const competition = await competitionRepository.create({
       name: `Competicao Export E2E ${RUN}`,
       date: "2026-06-15",
@@ -35,7 +39,9 @@ describe("GET /competitions/:id/export", () => {
   });
 
   it("deve retornar dados exportaveis da competicao", async () => {
-    const res = await request(app).get(`/competitions/${competitionId}/export`);
+    const res = await request(app)
+      .get(`/competitions/${competitionId}/export`)
+      .set(bearer(token));
 
     expect(res.status).toBe(200);
     expect(res.body).toMatchObject({
@@ -71,19 +77,25 @@ describe("GET /competitions/:id/export", () => {
   });
 
   it("deve retornar 400 quando competitionId nao e numerico", async () => {
-    const res = await request(app).get("/competitions/abc/export");
+    const res = await request(app)
+      .get("/competitions/abc/export")
+      .set(bearer(token));
 
     expect(res.status).toBe(400);
   });
 
   it("deve retornar 404 quando competicao nao existe", async () => {
-    const res = await request(app).get("/competitions/32767/export");
+    const res = await request(app)
+      .get("/competitions/32767/export")
+      .set(bearer(token));
 
     expect(res.status).toBe(404);
   });
 
   it("deve retornar 404 para rota de export invalida", async () => {
-    const res = await request(app).get(`/exports/${competitionId}`);
+    const res = await request(app)
+      .get(`/exports/${competitionId}`)
+      .set(bearer(token));
 
     expect(res.status).toBe(404);
   });
