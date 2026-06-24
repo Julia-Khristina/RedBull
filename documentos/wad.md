@@ -4143,11 +4143,28 @@ O próprio Red Bull 24 Horas funciona como canal de eventos, permitindo ativaç�
 
 # <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
 
-*Escreva de que formas a solução da aplicação web atingiu os objetivos descritos na seção 2 deste documento. Indique pontos fortes e pontos a melhorar de maneira geral.*
+### Atingimento dos objetivos
+A solução desenvolvida para o Red Bull 24 Horas foi concebida para responder aos benefícios esperados e aos critérios de sucesso estabelecidos na Seção 2. A avaliação a seguir considera cada objetivo de forma individualizada.
 
-*Relacione os pontos de melhorias evidenciados nos testes com planos de ações para serem implementadas. O grupo não precisa implementá-las, pode deixar registrado aqui o plano para ações futuras*
+**Redução de erros operacionais:** O objetivo foi endereçado pela substituição do registro manual em pranchetas por um fluxo de captura assistida, no qual o operador fotografa o visor da esteira e o sistema extrai os dados por meio de OCR. A introdução de uma etapa de validação humana antes da confirmação dos registros, somada aos alertas automáticos em caso de inconsistência, mitiga diretamente os erros decorrentes de fadiga, caligrafia e divergências entre turnos identificados no processo original. Cabe registrar, contudo, que a verificação plena do critério de taxa de erro inferior a 1% depende de aferição conjunta com o parceiro em condições reais de evento.
 
-*Relacione também quaisquer outras ideias que o grupo tenha para melhorias futuras*
+**Maior eficiência na coleta de dados:** A entrada de checkpoints por OCR, com alternativa de inserção manual, reduz o esforço de transcrição a cada intervalo de cinco minutos ao longo das 24 horas, atendendo ao objetivo de tornar a coleta mais ágil e menos suscetível à sobrecarga operacional.
+
+**Maior confiabilidade e integridade das informações:** A persistência estruturada em banco relacional PostgreSQL, organizada em arquitetura em camadas, e a etapa de validação prévia à confirmação contribuem para a consistência e a rastreabilidade dos dados — lacunas centrais do processo manual, que não oferecia qualquer histórico ao término do evento.
+
+**Métricas em tempo real e relatórios analíticos para decisão:** O objetivo foi contemplado pelo ambiente público por equipe, acessível via URL com UUID único e sem necessidade de login, que disponibiliza ranking, status dos corredores e calculadora de descanso com atualização periódica, bem como pela funcionalidade de exportação de relatórios no ambiente administrativo, voltada ao apoio à tomada de decisão.
+
+
+De modo geral, a aplicação atingiu os objetivos funcionais definidos no escopo da seção 2.
+
+
+### Pontos fortes
+
+O principal diferencial da solução reside na captura de dados por meio de OCR, que transforma uma fotografia do visor da esteira em um registro estruturado e rastreável, substituindo integralmente a anotação manual em pranchetas. Esse mecanismo não apenas elimina a transcrição humana a cada intervalo de cinco minutos ao longo das 24 horas de competição, como também introduz uma camada de validação automática com alertas de inconsistência, conferindo ao processo um nível de confiabilidade inatingível pelo método anterior. A combinação entre captura assistida por OCR e confirmação humana representa, portanto, o núcleo tecnológico que viabiliza a proposta de valor do projeto.
+
+Complementam esse diferencial: a separação clara entre os ambientes administrativo e público, que confere segurança ao primeiro, por meio de autenticação JWT, e acessibilidade ao segundo, por meio de acesso via UUID sem necessidade de login; a adoção de uma arquitetura em camadas que favorece a manutenibilidade e a evolução do sistema; e o resultado dos testes de usabilidade, com média de 80,71 pontos na escala SUS, valor acima do benchmark de 68 pontos e correspondente a uma classificação entre "boa" e "excelente", evidenciando que o diferencial técnico foi entregue sem comprometer a experiência de uso.
+
+
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
