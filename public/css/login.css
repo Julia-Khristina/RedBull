@@ -32,8 +32,10 @@ body::before {
 .login-container {
   position: relative;
   z-index: 2;
-  width: 100%;
-  max-width: 560px;
+  width: 60%;
+  max-width: 500px;
+  max-height: 100%;
+  overflow: hidden;
 }
 
 .login-card {
@@ -41,7 +43,7 @@ body::before {
   backdrop-filter: blur(20px) saturate(1.4);
   -webkit-backdrop-filter: blur(20px) saturate(1.4);
   border-radius: 20px;
-  padding: 40px 48px 40px;
+  padding: 24px 32px;
   box-shadow:
     0 0 0 1px rgba(255, 255, 255, 0.55),
     0 8px 16px rgba(0, 0, 0, 0.18),
@@ -52,11 +54,11 @@ body::before {
 /* ── Logo ── */
 .login-logo {
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 10px;
 }
 
 .login-logo img {
-  max-width: 300px;
+  max-width: 250px;
   height: auto;
 }
 
@@ -217,11 +219,16 @@ body::before {
   font-size: 13px;
   margin-bottom: 16px;
   text-align: center;
-  display: none;
+  min-height: 42px;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
 }
 
 .alert-error.visible {
-  display: block;
+  visibility: visible;
+  opacity: 1;
 }
 
 /* ── Footer externo ao card ── */

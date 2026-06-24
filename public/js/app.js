@@ -1,4 +1,27 @@
 // [D1] Padrão: verificação de autenticação + ativação de menu
+function formatPacePartsForApi(minutes, seconds) {
+  return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + '/km';
+}
+
+function formatPacePartsForDisplay(minutes, seconds) {
+  return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+}
+
+function normalizePaceForApi(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return undefined;
+
+  const match = raw.match(/^([0-9]{1,2})(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
+  if (!match) return raw;
+  if (Number(match[2]) > 59) return raw;
+
+  return formatPacePartsForApi(match[1], match[2]);
+}
+
+function stripPaceUnit(value) {
+  return String(value || '').trim().replace(/\s*\/\s*km$/i, '');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const path = window.location.pathname;
 
@@ -480,9 +503,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return { teamName: teamName, runners: runners };
       }
 
-      async function createTeamAndRunners(event) {
-        event.preventDefault();
-        clearCreateError();
+        async function createTeamAndRunners(event) {
+          event.preventDefault();
+          if (submitBtn && submitBtn.disabled) return;
+
+          clearCreateError();
+
 
         let payload;
         try {
@@ -504,7 +530,10 @@ document.addEventListener('DOMContentLoaded', function () {
           const teamRes = await fetch('/competitions/' + competitionId + '/teams', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: payload.teamName }),
+            body: JSON.stringify({ 
+              name: payload.teamName, 
+              runners: payload.runners 
+            }),
           });
 
           if (!teamRes.ok) {
@@ -513,22 +542,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
 
           createdTeam = await teamRes.json();
-
-          for (const runner of payload.runners) {
-            const runnerRes = await fetch(
-              '/competitions/' + competitionId + '/teams/' + createdTeam.id + '/runners',
-              {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(runner),
-              }
-            );
-
-            if (!runnerRes.ok) {
-              const data = await runnerRes.json().catch(function () { return { message: 'Erro ao cadastrar atleta.' }; });
-              throw new Error(data.message || 'Erro ao cadastrar atleta.');
-            }
-          }
 
           window.location.href = '/teams?competitionId=' + encodeURIComponent(competitionId);
         } catch (err) {
@@ -1037,8 +1050,8 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
         const secondsPerKm = Math.round(seconds / distance);
         const minutes = Math.floor(secondsPerKm / 60);
-        const remainingSeconds = String(secondsPerKm % 60).padStart(2, '0');
-        return minutes + ':' + remainingSeconds + '/km';
+        const remainingSeconds = secondsPerKm % 60;
+        return formatPacePartsForApi(minutes, remainingSeconds);
       }
 
       function updateOcrSourceNotice(result) {
@@ -1230,14 +1243,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
 
       function normalizePace(value) {
-        const raw = String(value || '').trim();
-        if (!raw) return undefined;
-        if (/^[0-9]{1,2}:[0-9]{2}\/km$/.test(raw)) return raw;
-
-        const quoteMatch = raw.match(/^([0-9]{1,2})'?[:']([0-9]{2})/);
-        if (quoteMatch) return quoteMatch[1] + ':' + quoteMatch[2] + '/km';
-
-        return raw;
+        return normalizePaceForApi(value);
       }
 
       function buildCheckpointPayload() {
@@ -1450,6 +1456,202 @@ document.addEventListener('DOMContentLoaded', function () {
 
     fetchRanking(competitionId, isAdmin);
     setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);
+  }
+
+  // ============================================================
+  // REPORTS — Chart.js gráfico de km acumulado por equipe
+  // ============================================================
+  if (window.EQUIPE_HORÁRIO_KM) {
+    var kmCanvas = document.getElementById('kmChart');
+    if (kmCanvas && typeof Chart !== 'undefined') {
+      var hourlyData = window.EQUIPE_HORÁRIO_KM;
+      var colors = ['#d2003c', '#0f0069', '#ffcc00', '#233972'];
+      var datasets = hourlyData.datasets.map(function (ds, index) {
+        return {
+          label: ds.team_name,
+          data: ds.data,
+          borderColor: colors[index % colors.length],
+          backgroundColor: colors[index % colors.length] + '33',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: colors[index % colors.length],
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          tension: 0.3,
+          fill: false,
+        };
+      });
+
+      new Chart(kmCanvas, {
+        type: 'line',
+        data: {
+          labels: hourlyData.labels,
+          datasets: datasets,
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+                usePointStyle: true,
+                padding: 16,
+              },
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Horas',
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+              },
+              ticks: {
+                font: { family: 'Montserrat', size: 11 },
+                color: '#0f0069',
+              },
+              grid: { color: '#dadada' },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Distância (km)',
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+              },
+              ticks: {
+                font: { family: 'Montserrat', size: 11 },
+                color: '#0f0069',
+              },
+              grid: { color: '#dadada' },
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }
+
+  // ============================================================
+  // DASHBOARD — Filtro e paginação de competições
+  // ============================================================
+  if (path === '/dashboard') {
+    (function () {
+      var ITEMS_PER_PAGE = 5;
+      var cards = Array.from(document.querySelectorAll('#competition-list .db-competition-card'));
+      var listEl = document.getElementById('competition-list');
+      var paginationEl = document.getElementById('pagination');
+      var infoEl = document.getElementById('pagination-info');
+      var prevBtn = document.getElementById('prev-page');
+      var nextBtn = document.getElementById('next-page');
+      var statusFilter = document.getElementById('filter-status');
+      var dateFilter = document.getElementById('filter-date');
+      var locationFilter = document.getElementById('filter-location');
+      var resetBtn = document.getElementById('filter-reset');
+
+      if (!cards.length) return;
+
+      var noResults = document.createElement('div');
+      noResults.className = 'db-card';
+      noResults.id = 'no-results-msg';
+      noResults.style.display = 'none';
+      noResults.innerHTML = '<h3 class="db-card-heading">Nenhuma competição encontrada</h3><hr class="db-divider" /><p class="db-card-body">Nenhuma competição corresponde aos filtros aplicados.</p>';
+      listEl.appendChild(noResults);
+
+      var currentPage = 1;
+
+      function getFilteredCards() {
+        var status = statusFilter.value;
+        var date = dateFilter.value;
+        var location = locationFilter.value.toLowerCase().trim();
+
+        return cards.filter(function (card) {
+          var cardStatus = card.getAttribute('data-status');
+          var cardDate = card.getAttribute('data-date');
+          var cardLocation = card.getAttribute('data-location');
+
+          if (status === 'ativas' && cardStatus !== 'in_progress') return false;
+          if (status !== 'all' && status !== 'ativas' && cardStatus !== status) return false;
+          if (date && cardDate !== date) return false;
+          if (location && !cardLocation.includes(location)) return false;
+
+          return true;
+        });
+      }
+
+      function render() {
+        var filtered = getFilteredCards();
+        var totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        var start = (currentPage - 1) * ITEMS_PER_PAGE;
+        var end = start + ITEMS_PER_PAGE;
+        var pageItems = filtered.slice(start, end);
+
+        cards.forEach(function (card) { card.style.display = 'none'; });
+        noResults.style.display = 'none';
+
+        if (filtered.length === 0) {
+          noResults.style.display = 'block';
+          paginationEl.style.display = 'none';
+        } else {
+          pageItems.forEach(function (card) { card.style.display = 'flex'; });
+          paginationEl.style.display = 'flex';
+        }
+
+        infoEl.textContent = (filtered.length > 0 ? (start + 1) + '-' + Math.min(end, filtered.length) : '0') + ' de ' + filtered.length;
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+      }
+
+      function handleAction(btnSelector, urlSuffix, confirmMsg, errorMsg) {
+        document.querySelectorAll(btnSelector).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            if (!confirm(confirmMsg)) return;
+            fetch('/competitions/' + id + urlSuffix, { method: 'PATCH' })
+              .then(function (r) {
+                if (!r.ok) throw new Error('Erro');
+                location.reload();
+              })
+              .catch(function () { alert(errorMsg); });
+          });
+        });
+      }
+
+      handleAction('.db-activate-btn', '/activate', 'Ativar esta competição?', 'Erro ao ativar competição');
+      handleAction('.db-close-btn', '', 'Encerrar esta competição?', 'Erro ao encerrar competição');
+
+      prevBtn.addEventListener('click', function () {
+        if (currentPage > 1) { currentPage--; render(); }
+      });
+
+      nextBtn.addEventListener('click', function () {
+        var totalPages = Math.max(1, Math.ceil(getFilteredCards().length / ITEMS_PER_PAGE));
+        if (currentPage < totalPages) { currentPage++; render(); }
+      });
+
+      statusFilter.addEventListener('change', function () { currentPage = 1; render(); });
+      dateFilter.addEventListener('change', function () { currentPage = 1; render(); });
+      locationFilter.addEventListener('input', function () { currentPage = 1; render(); });
+
+      resetBtn.addEventListener('click', function () {
+        statusFilter.value = 'all';
+        dateFilter.value = '';
+        locationFilter.value = '';
+        currentPage = 1;
+        render();
+      });
+
+      render();
+    })();
   }
 });
 
@@ -1682,12 +1884,12 @@ function formatPace(seconds) {
   if (seconds === null || seconds === undefined || !Number.isFinite(seconds)) return '—';
   var rounded = Math.round(seconds);
   var minutes = Math.floor(rounded / 60);
-  var remainingSeconds = String(rounded % 60).padStart(2, '0');
-  return minutes + ':' + remainingSeconds;
+  var remainingSeconds = rounded % 60;
+  return formatPacePartsForDisplay(minutes, remainingSeconds);
 }
 
 function formatCheckpointPace(checkpoint) {
-  if (checkpoint.pace) return checkpoint.pace;
+  if (checkpoint.pace) return stripPaceUnit(checkpoint.pace);
   if (!checkpoint.time || !checkpoint.distance_km) return null;
 
   var parts = checkpoint.time.split(':').map(function (part) {
@@ -1865,7 +2067,7 @@ window.CHECKPOINTS = window.CHECKPOINTS || [];
       payload.distance_km = parseFloat(distanceValue);
     }
     if (paceValue !== '') {
-      payload.pace = paceValue;
+      payload.pace = normalizePaceForApi(paceValue);
     }
     if (timeValue !== '') {
       payload.time = timeValue;

@@ -1,5 +1,6 @@
 import "dotenv/config";
 import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 import { AuthResponse, LoginInput } from "../models/auth";
 import { AppError, UnauthorizedError } from "../errors/AppError";
 import { adminRepository } from "../repositories/adminRepository";
@@ -12,21 +13,22 @@ function getJwtSecret(): string {
   return secret;
 }
 
-function getAdminPassword(): string {
-  const password = process.env.ADMIN_PASSWORD;
-  if (!password) {
-    throw new AppError("ADMIN_PASSWORD não configurado", 500);
+function getAdminPasswordHash(): string {
+  const hash = process.env.ADMIN_PASSWORD_HASH;
+  if (!hash) {
+    throw new AppError("ADMIN_PASSWORD_HASH não configurado", 500);
   }
-  return password;
+  return hash;
 }
 
 export function createAuthService(repo = adminRepository) {
   return {
     async createSession(input: LoginInput): Promise<AuthResponse> {
       const admin = await repo.findByEmail(input.email);
-      const adminPassword = getAdminPassword();
+      const adminPasswordHash = getAdminPasswordHash();
+      const passwordMatch = await bcrypt.compare(input.password, adminPasswordHash);
 
-      if (!admin || input.password !== adminPassword) {
+      if (!admin || !passwordMatch) {
         throw new UnauthorizedError("Email ou senha inválidos");
       }
 
