@@ -3847,31 +3847,40 @@ A rastreabilidade apresentada demonstra que os testes implementados validam requ
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
-Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado o método **System Usability Scale (SUS)**, uma das técnicas mais utilizadas para mensurar a percepção dos usuários sobre a facilidade de uso de sistemas interativos e obter uma avaliação quantitativa da experiência de utilização da aplicação (UX DESIGN BRASIL, 2022).
+Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado o método **System Usability Scale (SUS)**, um dos instrumentos mais utilizados para mensurar a percepção dos usuários quanto à facilidade de uso de sistemas interativos. O SUS permite obter uma avaliação quantitativa da usabilidade percebida por meio de um questionário padronizado composto por dez afirmações avaliadas em escala Likert de cinco pontos (Brooke, 1996).
 
-A coleta das respostas foi realizada por meio de um formulário eletrônico elaborado no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)),aplicado individualmente após a utilização da plataforma. Participaram da avaliação sete usuários, que responderam ao questionário de forma independente.
+A coleta das respostas foi realizada por meio de um formulário eletrônico desenvolvido no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)), aplicado individualmente após a utilização da plataforma pelos participantes. Ao todo, sete usuários participaram da avaliação, respondendo ao questionário de forma independente após executarem as tarefas propostas durante os testes de usabilidade.
 
+O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro XX.
 
-#### Questionário Aplicado
+<div align="center">
 
-O questionário SUS utiliza uma escala de concordância de **1 a 5**, em que:
+  <sub>Quadro XX – Escala de respostas do questionário SUS</sub>
 
-#### Escala de Respostas
+</div>
 
 | Valor | Significado |
-|--------|------------|
+|--------|-------------|
 | 1 | Discordo totalmente |
 | 2 | Discordo parcialmente |
 | 3 | Neutro |
 | 4 | Concordo parcialmente |
 | 5 | Concordo totalmente |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-As afirmações apresentadas aos participantes foram:
 
-#### Questões
+As afirmações apresentadas aos participantes estão descritas no Quadro XX.
+
+<div align="center">
+
+  <sub>Quadro XX – Questões do questionário SUS</sub>
+
+</div>
 
 | Nº | Afirmação |
-|----|------------|
+|----|-----------|
 | 1 | Eu acho que gostaria de usar este sistema com frequência. |
 | 2 | Eu achei o sistema desnecessariamente complexo. |
 | 3 | Eu achei o sistema fácil de usar. |
@@ -3882,12 +3891,21 @@ As afirmações apresentadas aos participantes foram:
 | 8 | Eu achei o sistema complicado de usar. |
 | 9 | Eu me senti confiante utilizando o sistema. |
 | 10 | Eu precisei aprender muitas coisas antes de conseguir utilizar o sistema. |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-#### Resultados Obtidos
 
-As respostas dos participantes foram consolidadas em uma planilha eletrônica elaborada no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)) para cálculo das pontuações SUS e da média geral dos resultados.  
 
-A tabela abaixo apresenta as pontuações obtidas por cada participante.
+Após a coleta das respostas, os dados foram consolidados em uma planilha eletrônica desenvolvida no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)). As pontuações individuais foram calculadas conforme a metodologia oficial do SUS, resultando em uma nota final entre 0 e 100 pontos para cada participante.
+
+A Tabela XX apresenta as pontuações obtidas pelos participantes.
+
+<div align="center">
+
+  <sub>Tabela XX – Pontuação SUS por participante</sub>
+
+</div>
 
 | Participante | Pontuação SUS |
 |-------------|---------------|
@@ -3896,10 +3914,14 @@ A tabela abaixo apresenta as pontuações obtidas por cada participante.
 | Participante 3 | 82,5 |
 | Participante 4 | 82,5 |
 | Participante 5 | 77,5 |
-| Participante 6 | 100 |
+| Participante 6 | 100,0 |
 | Participante 7 | 72,5 |
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-A média geral obtida a partir das respostas dos participantes foi de **80,71 pontos**.
+
+A partir das respostas coletadas, foi obtida uma pontuação média de **80,71 pontos**. A interpretação desse resultado e sua classificação segundo os critérios do método SUS são apresentadas na subseção seguinte.
 
 
 # <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
@@ -4117,7 +4139,8 @@ ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https:
 
 AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
-BRASIL UX DESIGN. O que é o SUS (System Usability Scale) e como usá-lo em seu site. Medium, [s.d.]. Disponível em: https://brasil.uxdesign.cc/o-que-%C3%A9-o-sus-system-usability-scale-e-como-us%C3%A1-lo-em-seu-site-6d63224481c8?utm_source=chatgpt.com. Acesso em: 17 jun. 2026.
+BROOKE, J. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). Usability evaluation in industry. London: Taylor & Francis, 1996. p. 189-194. Disponível em: <https://hell.meiert.org/core/pdf/sus.pdf>. Acesso em: 17 jun. 2026.
+
 
 BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
 
