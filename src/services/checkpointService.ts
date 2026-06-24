@@ -40,7 +40,7 @@ export function createCheckpointService(
     async findById(id: number): Promise<Checkpoint> {
       const checkpoint = await repository.findById(id);
       if (!checkpoint) {
-        throw new NotFoundError(`Checkpoint ${id} não encontrado`);
+        throw new NotFoundError("Checkpoint " + id + " nao encontrado");
       }
       return checkpoint;
     },
@@ -67,12 +67,12 @@ export function createCheckpointService(
       } catch (error) {
         if (isPgUniqueViolation(error)) {
           throw new ConflictError(
-            `Já existe um checkpoint com o identificador '${input.identifier}'`
+            "Ja existe um checkpoint com o identificador '" + input.identifier + "'"
           );
         }
         if (isPgFkViolation(error)) {
           throw new NotFoundError(
-            "Runner, competition, treadmill or admin not found"
+            "Runner, competition or admin not found"
           );
         }
         throw error;
@@ -87,7 +87,7 @@ export function createCheckpointService(
 
       const updated = await repository.update(id, input);
       if (!updated) {
-        throw new NotFoundError(`Checkpoint ${id} não encontrado`);
+        throw new NotFoundError("Checkpoint " + id + " nao encontrado");
       }
       return updated;
     },
@@ -95,7 +95,7 @@ export function createCheckpointService(
     async delete(id: number): Promise<void> {
       const deleted = await repository.delete(id);
       if (!deleted) {
-        throw new NotFoundError(`Checkpoint ${id} não encontrado`);
+        throw new NotFoundError("Checkpoint " + id + " nao encontrado");
       }
     },
   };
