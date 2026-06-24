@@ -47,29 +47,36 @@ function formatPace(seconds: number | null): string | null {
   return `${minutes}:${remainingSeconds}`;
 }
 
-// TODO(US19 #519): substituir por leitura direta de competition.started_at
-// e competition.ended_at quando a feature de iniciar/finalizar competição
-// do grupo entrar. Esta é a ÚNICA função do tvPanelService afetada por
-// essa mudança; o restante do service permanece intacto.
+/* Marco zero = competition.started_at (gravado por competitionRepository
+   .activate() — feature #557). Antes essa função usava o primeiro
+   checkpoint como proxy do início; agora a contagem regressiva começa
+   exatamente quando o admin aperta "ativar competição".
+
+   endedAt continua usando o último checkpoint quando a competição está
+   closed — não temos campo competition.closed_at e o último registro é
+   o melhor proxy do término real. */
 function resolveCompetitionTimeWindow(
   status: CompetitionStatus,
+  startedAtIso: string | null,
   checkpoints: Checkpoint[]
 ): CompetitionTimeWindow {
-  if (checkpoints.length === 0) {
+  if (!startedAtIso) {
     return { startedAt: null, endedAt: null };
   }
 
-  const orderedAsc = [...checkpoints].sort(
-    (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
+  const startedAt = new Date(startedAtIso);
+
+  if (status !== "closed" || checkpoints.length === 0) {
+    return { startedAt, endedAt: null };
+  }
+
+  const lastCheckpoint = checkpoints.reduce((latest, current) =>
+    Date.parse(current.created_at) > Date.parse(latest.created_at)
+      ? current
+      : latest
   );
 
-  const startedAt = new Date(orderedAsc[0].created_at);
-  const endedAt =
-    status === "closed"
-      ? new Date(orderedAsc[orderedAsc.length - 1].created_at)
-      : null;
-
-  return { startedAt, endedAt };
+  return { startedAt, endedAt: new Date(lastCheckpoint.created_at) };
 }
 
 function calculateElapsedSeconds(
@@ -106,6 +113,7 @@ export function createTvPanelService(
 
       const window = resolveCompetitionTimeWindow(
         competition.status,
+        competition.started_at,
         competitionCheckpoints
       );
       const elapsedSeconds = calculateElapsedSeconds(window, new Date());
