@@ -4066,7 +4066,7 @@ O Business Model Canvas é uma ferramenta de gestão estratégica que descreve, 
 
 <div align="center">
   <sub>Figura X - Business Model Canvas</sub><br>
-    <img src="../assets/negocios/business-model-canvas.jpg" 
+    <img src="../assets/negocios/business-model-canvas.jpeg" 
     width="100%" alt="Template do business model canvas"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4097,16 +4097,23 @@ As atividades-chave correspondem às ações essenciais para entregar a proposta
 
 ### Parcerias Principais
 
-A parceria principal do projeto é o Inteli, instituição que viabiliza toda a iniciativa. É o Inteli que disponibiliza a equipe multidisciplinar de oito integrantes, o arcabouço metodológico que orienta o desenvolvimento — Scrum, artefatos e mentorias — e a própria conexão com a Red Bull, sem a qual o projeto não existiria. Trata-se, portanto, de uma parceria estrutural: não apenas fornece o principal recurso humano, mas também o ambiente acadêmico e o vínculo institucional que sustentam a entrega da solução.
+As parcerias principais do projeto envolvem tanto o Inteli quanto a Red Bull. O Inteli viabiliza a iniciativa ao disponibilizar a equipe multidisciplinar de desenvolvimento, a estrutura metodológica baseada em Scrum, as mentorias e o ambiente acadêmico necessário para a condução do projeto. Já a Red Bull atua como parceira estratégica e principal validadora da solução, fornecendo acesso ao contexto operacional do evento, definindo requisitos, participando das revisões de sprint e validando continuamente as entregas realizadas pela equipe.
+
+Além dessas organizações, a infraestrutura tecnológica utilizada durante o desenvolvimento, especialmente os serviços de banco de dados e hospedagem fornecidos pela Supabase, contribui para a viabilização técnica da solução. Em conjunto, essas parcerias garantem acesso ao conhecimento do domínio, suporte metodológico e recursos tecnológicos necessários para a construção e validação da plataforma.
+
 
 ### Fontes de receita
 
-Por se tratar de uma solução operacional desenvolvida para uso interno da Red Bull, e não de um produto comercializado, as fontes de receita são analisadas como formas de retorno e captura de valor obtidas pelo parceiro a partir do evento. A geração de conteúdo e de dados consolidados abre espaço para marketing e relatórios pós-evento, fortalecendo a comunicação da marca. A redução de erros e de conflitos operacionais representa um retorno indireto, ao diminuir retrabalho e disputas sobre a apuração, enquanto a maior confiabilidade e organização do evento contribuem para a valorização da marca Red Bull. Em uma perspectiva de continuidade, a reutilização da solução em outras edições e eventos e a sua personalização para novos contextos configuram oportunidades de extensão do valor gerado, podendo, no futuro, evoluir para modelos de receita mais diretos.
+Embora a solução tenha sido desenvolvida para uso interno da Red Bull e não possua geração direta de receita no contexto atual do projeto, é possível identificar potenciais mecanismos de captura de valor caso a plataforma fosse evoluída para um produto comercial.
+
+Entre as possibilidades estão o licenciamento da plataforma para organizadores de eventos esportivos, a cobrança por evento realizado, planos de assinatura para utilização recorrente da solução e serviços adicionais de personalização, treinamento e suporte operacional. Também seria possível oferecer módulos complementares de relatórios avançados, auditoria de resultados e acompanhamento de desempenho em tempo real.
+
+No contexto do projeto atual, a captura de valor ocorre principalmente por meio da redução de erros operacionais, diminuição do retrabalho, maior confiabilidade da apuração e melhoria da experiência proporcionada aos participantes e à equipe organizadora. Esses benefícios representam ganhos indiretos para a Red Bull, enquanto os modelos descritos anteriormente ilustram possíveis fontes de receita em um cenário futuro de comercialização da solução.
+
 
 ### Estrutura de custos
 
 A estratégia de custos concentra-se na alocação de esforço humano e no uso de ferramentas digitais para acelerar a entrega, coerente com uma proposta de valor baseada na automação do registro, na redução de erros e no aumento da confiabilidade da apuração. A estrutura considera dez semanas de desenvolvimento, com quatro dias de trabalho por semana e duas horas de dedicação por dia, totalizando 80 horas por pessoa e 640 horas para a equipe de oito integrantes. A distribuição segue a lógica dos artefatos do projeto, com maior peso em desenvolvimento (50%), seguido por negócios (35%) e UX/UI (15%), equilibrando implementação técnica, alinhamento estratégico e experiência do usuário. O uso de quatro inteligências artificiais ao longo do período atua como apoio à produtividade, à documentação, à prototipação e ao desenvolvimento. Os custos de hospedagem e deploy ficam limitados até o mês do evento; a manutenção da plataforma em edições futuras seria custo direto do cliente. Por fim, os recursos físicos e de infraestrutura do evento, como iPads e esteiras, são considerados responsabilidade do cliente.
-
 
 ## 6.6 Estratégia de Marketing (4Ps)
 
