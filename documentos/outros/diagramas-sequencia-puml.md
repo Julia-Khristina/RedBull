@@ -155,7 +155,7 @@ participant checkpointService
 participant checkpointRepository
 database Banco
 
-Operador -> checkpointController : POST /checkpoints\n{ identifier, distance_km, id_runner, id_competition, id_treadmill, id_admin }
+Operador -> checkpointController : POST /checkpoints\n{ identifier, distance_km, id_runner, id_competition, id_admin }
 checkpointController -> checkpointService : create(req.body)
 checkpointService -> checkpointService : validateCreateCheckpoint(payload)
 
