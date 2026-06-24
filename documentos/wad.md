@@ -2225,7 +2225,7 @@ O relacionamento entre entidades é feito por meio de uma linha que contém as c
 | -------- | --------- | --------- |  
 | 1:1 | Um para Um | Cada Team possui exatamente um UUID de acesso |
 | 1:N | Um para Muitos | Uma Competition possui vários Teams, mas cada Team pertence a uma única Competition |
-| N:N | Muitos para Muitos | No modelo conceitual, `Runner` e `Treadmill` se relacionam N:N (cada corredor usa várias esteiras ao longo das 24h e cada esteira recebe vários corredores). No modelo lógico, essa relação é materializada na entidade associativa `Checkpoint`, com atributos próprios (`distance_km`, `pace`, `time`) |
+| N:N | Muitos para Muitos | No modelo conceitual, Admin e Runner se relacionam N:N (um administrador registra checkpoints de vários corredores e cada corredor pode ter registros de vários administradores). No modelo lógico, essa relação é materializada na entidade associativa Checkpoint, com atributos próprios (distance_km, pace, time) |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2238,8 +2238,6 @@ A seguir, a Figura 57 ilustra o Modelo Entidade-Relacionamento desenvolvido para
     <img src="../assets/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
-
-**Observação sobre o diagrama:** por limitação da ferramenta de origem, a figura acima reflete o núcleo conceitual com seis entidades. Em caso de divergência visual, prevalecem os nomes do dicionário de dados e da implementação física (Seção 3.6.3): `address` (grafia correta de "adress"), `phone` (em vez de "phone_number"), `Runner` e `Admin`. Além dessas seis entidades, o modelo contempla `OcrExtraction` e `CompetitionReport`, descritas no dicionário de dados a seguir (Quadros 38A e 38B) e representadas no Modelo Relacional (Seção 3.6.3.1).
 
 
 #### Descrição das entidades e relacionamentos
@@ -2255,9 +2253,8 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 | Competition | Representa o evento Red Bull 24h, raiz do modelo | Possui N Teams (1:N); possui N Checkpoints (1:N) |
 | Team | Agrupa corredores de uma mesma competição | Pertence a 1 Competition (obrigatório); possui N Runners (1:N) |
 | Runner | Corredor participante vinculado a uma equipe | Pertence a 1 Team (obrigatório); possui N Checkpoints (1:N) |
-| Checkpoint | Registro de desempenho do corredor na esteira | Pertence obrigatoriamente a 1 Runner, 1 Competition, 1 Treadmill e 1 Admin (todas as associações são obrigatórias) |
+| Checkpoint | Registro de desempenho do corredor durante a prova | Pertence obrigatoriamente a 1 Runner, 1 Competition e 1 Admin (todas as associações são obrigatórias) |
 | Admin | Operador responsável por registrar checkpoints | Possui N Checkpoints (1:N) |
-| Treadmill | Esteira onde a corrida é realizada | Possui N Checkpoints (1:N) |
 | OcrExtraction | Armazena imagens e dados extraídos por OCR para validação | Pertence opcionalmente a 1 Checkpoint (0..1) |
 | CompetitionReport | Relatório consolidado e highlights da competição | Pertence a 1 Competition (relação 1:1) |
 
@@ -2276,7 +2273,7 @@ A seguir, o Quadro 32 exemplifica os elementos da notação de Chen utilizados n
 
 | Elemento |  Símbolo  | Aplicação ao MER |
 | -------- | --------- | ---------------- |
-| Entidade | Retângulo | `Competition`, `Team`, `Runner`, `Checkpoint`, `Admin` e `Treadmill` |
+| Entidade | Retângulo | `Competition`, `Team`, `Runner`, `Checkpoint` e `Admin` |
 | Atributo | Elipse    | `address` em `Competition`, `cpf` em `Runner` |
 | Relacionamento | Losango | `Team` possui `Runner` |
 | Cardinalidade | 1, N nas arestas | Um `Runner` possui N `Checkpoints` |
@@ -2364,7 +2361,6 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 | Checkpoint | `image` | JSONB | Não | — | Foto ou metadados da evidência capturada |
 | Checkpoint | `id_runner` | Chave estrangeira | Sim | FK → `Runner` (ON DELETE RESTRICT) | Vincula o checkpoint ao corredor |
 | Checkpoint | `id_competition` | Chave estrangeira | Sim | FK → `Competition` (ON DELETE RESTRICT) | Vincula o checkpoint à competição |
-| Checkpoint | `id_treadmill` | Chave estrangeira | Sim | FK → `Treadmill` (ON DELETE RESTRICT) | Vincula o checkpoint à esteira |
 | Checkpoint | `id_admin` | Chave estrangeira | Sim | FK → `Admin` (ON DELETE RESTRICT) | Vincula o checkpoint ao admin responsável |
 | Checkpoint | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
@@ -2386,23 +2382,6 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 | Admin | `area` | Texto | Não | — | Área de atuação do admin |
 | Admin | `password` | Texto (hash) | Sim | — | Hash da credencial de acesso ao painel administrativo (a senha em texto puro nunca é armazenada) |
 | Admin | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
-
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
-
-- O Quadro 38 representa o dicionário de dados da entidade Esteira.
-
-<div align="center">
-  <sub>Quadro 38 - Dicionário de Dados da Entidade Esteira </sub>
-</div>
-
-| Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
-| -------- | --------- | -------------- | ----------- | ------------------ | --------- |
-| Treadmill | `id` | Identificador | Sim | Chave primária (PK) | Identifica unicamente cada esteira |
-| Treadmill | `name` | Texto | Sim | CHECK: não vazio | Nome ou apelido da esteira |
-| Treadmill | `specification` | Texto | Não | — | Descrição técnica do equipamento |
-| Treadmill | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2454,7 +2433,7 @@ Além dos atributos, o modelo é governado por regras de integridade definidas n
 
 - **Unicidade:** os atributos `email` e `cpf` de `Runner`, `email` de `Admin`, `uuid` de `Team` e `identifier` de `Checkpoint` são únicos, impedindo registros duplicados.
 - **Domínios restritos (CHECK):** `status` de `Competition` aceita apenas `not_started`, `in_progress` ou `closed`; `status` de `Runner` aceita apenas `runner` ou `captain`; `status` de `OcrExtraction` aceita apenas `pending`, `processed`, `validated` ou `rejected`; `distance_km` deve estar entre 0 e 1000; `cpf`, `email`, `pace` e `time` seguem formatos pré-definidos.
-- **Obrigatoriedade das associações:** as chaves estrangeiras são, em regra, de preenchimento obrigatório, o que torna total a participação das entidades nos relacionamentos — todo `Team` pertence a uma `Competition`, todo `Runner` a um `Team` e todo `Checkpoint` a um `Runner`, uma `Competition`, uma `Treadmill` e um `Admin`. A única exceção é a associação de `OcrExtraction` com `Checkpoint`, opcional, pois `id_checkpoint` aceita valor nulo.
+- **Obrigatoriedade das associações:** as chaves estrangeiras são, em regra, de preenchimento obrigatório, o que torna total a participação das entidades nos relacionamentos — todo `Team` pertence a uma `Competition`, todo `Runner` a um `Team` e todo `Checkpoint` a um `Runner`, uma `Competition` e um `Admin`. A única exceção é a associação de `OcrExtraction` com `Checkpoint`, opcional, pois `id_checkpoint` aceita valor nulo.
 - **Integridade referencial:** em regra, não é permitido excluir um registro que ainda possua dependentes (ON DELETE RESTRICT) — por exemplo, uma `Competition` não pode ser removida enquanto houver `Teams` ou `Checkpoints` vinculados a ela. Há duas exceções intencionais: um `CompetitionReport` é removido em cascata junto com sua `Competition` (ON DELETE CASCADE) e a exclusão de um `Checkpoint` apenas anula o vínculo da extração OCR, sem removê-la (ON DELETE SET NULL).
 
 
@@ -2473,7 +2452,6 @@ A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com
 | Runner | RF003 | RN07 | 
 | Checkpoint | RF005, RF008 | RN04, RN05, RN12 |
 | Admin | RF004 | RN03 |
-| Treadmill | RF005 | — |
 | OcrExtraction | RF005, RF006, RF007, RF009 | RN05, RN06 |
 | CompetitionReport | RF014 | — |
 
@@ -2537,10 +2515,9 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | 2 | TEAM | RUNNER | 1 equipe tem muitos corredores (1:N) | Muitos corredores pertencem a 1 única equipe (N:1) |
 | 3 | RUNNER | CHECKPOINT | 1 corredor possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 único corredor (N:1) |
 | 4 | ADMIN | CHECKPOINT | 1 administrador supervisiona muitos checkpoints (1:N) | Muitos checkpoints são supervisionados por 1 único administrador (N:1) |
-| 5 | TREADMILL | CHECKPOINT | 1 esteira é usada em muitos checkpoints (1:N) | Muitos checkpoints usam 1 única esteira (N:1) |
-| 6 | COMPETITION | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
-| 7 | CHECKPOINT | OCR_EXTRACTION | 1 checkpoint pode originar muitas extrações OCR (1:N, opcional) | Cada extração referencia no máximo 1 checkpoint (N:0..1) |
-| 8 | COMPETITION | COMPETITION_REPORT | 1 competição possui no máximo 1 relatório (1:0..1) | Cada relatório pertence a exatamente 1 competição (1:1) |
+| 5 | COMPETITION | CHECKPOINT | 1 competição possui muitos checkpoints (1:N) | Muitos checkpoints pertencem a 1 única competição (N:1) |
+| 6 | CHECKPOINT | OCR_EXTRACTION | 1 checkpoint pode originar muitas extrações OCR (1:N, opcional) | Cada extração referencia no máximo 1 checkpoint (N:0..1) |
+| 7 | COMPETITION | COMPETITION_REPORT | 1 competição possui no máximo 1 relatório (1:0..1) | Cada relatório pertence a exatamente 1 competição (1:1) |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -2558,12 +2535,10 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 | Classe `Runner`                                  | Tabela `RUNNER`                     |
 | Classe `Admin`                               | Tabela `ADMIN`                |
 | Classe `Checkpoint`                                         | Tabela `CHECKPOINT`                   |
-| Classe `Treadmill`                                            | Tabela `TREADMILL`                      |
 | Associação `Competition` possui `Team`                     | FK `id_competition` em `TEAM`        |
 | Associação `Team` possui `Runner`                       | FK `id_team` em `RUNNER`          |
 | Associação `Runner` registra `Checkpoint`                 | FK `id_runner` em `CHECKPOINT`      |
 | Associação `Competition` possui `Checkpoint`                 | FK `id_competition` em `CHECKPOINT`    |
-| Associação `Treadmill` é usada em `Checkpoint`                | FK `id_treadmill` em `CHECKPOINT`       |
 | Associação `Admin` valida/supervisiona `Checkpoint` | FK `id_admin` em `CHECKPOINT` |
 | Classe/serviço `OCR` (OCRService / `Validação`)              | Tabela `OCR_EXTRACTION`               |
 | Associação `Checkpoint` origina `OcrExtraction`              | FK `id_checkpoint` em `OCR_EXTRACTION` |
@@ -2579,7 +2554,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
-No contexto deste projeto, o modelo relacional foi desenvolvido a partir dos requisitos funcionais e das regras de negócio levantadas nas etapas anteriores, com o objetivo de estruturar o armazenamento das informações referentes às competições, equipes, corredores, esteiras, registros de desempenho e processos de auditoria. A modelagem proposta busca garantir integridade referencial, rastreabilidade das operações e escalabilidade para futuras evoluções do sistema.
+No contexto deste projeto, o modelo relacional foi desenvolvido a partir dos requisitos funcionais e das regras de negócio levantadas nas etapas anteriores, com o objetivo de estruturar o armazenamento das informações referentes às competições, equipes, corredores, registros de desempenho e processos de auditoria. A modelagem proposta busca garantir integridade referencial, rastreabilidade das operações e escalabilidade para futuras evoluções do sistema.
 
 #### 3.6.3.1 Modelo Relacional
 
@@ -2602,14 +2577,12 @@ A tabela `team` registra os grupos participantes vinculados a uma competição e
 **Tabela `runner`**  
 A tabela `runner` armazena os dados cadastrais dos participantes, incluindo nome, email, telefone e CPF, além de um campo `status` que representa o papel do corredor na equipe (`runner` para corredor comum ou `captain` para capitão). Por meio da chave estrangeira `id_team`, cada corredor é associado à sua respectiva equipe.
 
-**Tabela `treadmill`**  
-A tabela `treadmill` representa os equipamentos utilizados durante a coleta das métricas de desempenho dos participantes, armazenando informações que permitem identificar individualmente cada dispositivo utilizado durante a competição.
 
 **Tabela `admin`**  
 A tabela `admin` armazena os dados dos usuários responsáveis pela gestão operacional da plataforma, incluindo nome, email (único, utilizado na autenticação), área de atuação e o hash da senha de acesso, garantindo identificação, autenticação e rastreabilidade temporal.
 
 **Tabela `checkpoint`**  
-A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `runner`, `competition`, `treadmill` e `admin`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
+A tabela `checkpoint` centraliza os registros operacionais das corridas, armazenando um identificador único de registro, métricas de desempenho e evidências capturadas pelo sistema. Além disso, essa entidade mantém relacionamento com as tabelas `runner`, `competition` e `admin`, permitindo rastrear a origem, o contexto e a validação administrativa associada a cada registro.
 
 **Tabela `ocr_extraction`**  
 A tabela `ocr_extraction` dá suporte ao processo de extração automática de dados a partir de imagens (OCR), armazenando a imagem submetida, os dados extraídos, o resultado da validação e o status do processamento (`pending`, `processed`, `validated` ou `rejected`). Vincula-se opcionalmente a um `checkpoint` por meio da chave estrangeira `id_checkpoint`.
@@ -2627,7 +2600,6 @@ Os relacionamentos entre as entidades foram definidos por meio de chaves primár
 - uma `team` pode possuir múltiplos `runners` *(1:N)*;
 - um `runner` pode gerar múltiplos `checkpoints` *(1:N)*;
 - uma `competition` pode possuir múltiplos `checkpoints` *(1:N)*;
-- uma `treadmill` pode estar associada a múltiplos `checkpoints` *(1:N)*;
 - um `admin` pode validar múltiplos `checkpoints` *(1:N)*;
 - um `checkpoint` pode originar múltiplas `ocr_extractions` *(1:N, opcional)* — a associação é opcional, pois `id_checkpoint` aceita valor nulo;
 - uma `competition` possui no máximo um `competition_report` *(1:1)*.
@@ -2645,7 +2617,7 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | `competition_report` | `PRIMARY KEY` | `id_competition` | Usa a própria chave estrangeira como chave primária, materializando a relação 1:1 com `competition`. |
 | `team` | `FOREIGN KEY` | `id_competition` | Indica que cada equipe pertence a uma competição. |
 | `runner` | `FOREIGN KEY` | `id_team` | Indica que cada corredor pertence a uma equipe. |
-| `checkpoint` | `FOREIGN KEY` | `id_runner`, `id_competition`, `id_treadmill`, `id_admin` | Indica que cada checkpoint deve estar associado a um corredor, uma competição, uma esteira e um administrador. |
+| `checkpoint` | `FOREIGN KEY` | `id_runner`, `id_competition` e `id_admin` | Indica que cada checkpoint deve estar associado a um corredor, uma competição e um administrador. |
 | `ocr_extraction` | `FOREIGN KEY` | `id_checkpoint` | Vincula a extração a um checkpoint (associação opcional, `ON DELETE SET NULL`). |
 | `competition_report` | `FOREIGN KEY` | `id_competition` | Vincula o relatório a uma competição (`ON DELETE CASCADE`). |
 | `team` | `UNIQUE` | `uuid` | Define que o identificador público da equipe não pode se repetir. |
@@ -2655,7 +2627,6 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 | `competition` | `CHECK` | `status`, `name`, `date` | Restringe o status aos valores previstos, impede nome vazio e exige data ≥ 01/01/2020. |
 | `runner` | `CHECK` | `status`, `name`, `cpf`, `email` | Limita o papel do participante, impede nome vazio e valida os formatos de CPF e e-mail. |
 | `team` | `CHECK` | `name` | Impede o cadastro de equipe com nome vazio. |
-| `treadmill` | `CHECK` | `name` | Impede o cadastro de esteira com nome vazio. |
 | `admin` | `CHECK` | `name`, `email` | Impede nome vazio e valida o formato do e-mail. |
 | `checkpoint` | `CHECK` | `distance_km`, `pace`, `time` | Impede valores de distância fora da faixa (0 a 1000) e valida os formatos de ritmo e tempo. |
 | `ocr_extraction` | `CHECK` | `status` | Limita o status do processamento aos valores `pending`, `processed`, `validated` e `rejected`. |
@@ -2769,22 +2740,6 @@ CREATE INDEX idx_runner_cpf     ON runner (cpf);
  A tabela **`runner`** depende de **`team`** por meio da chave estrangeira `id_team` (`ON UPDATE CASCADE` / `ON DELETE RESTRICT`). Os campos **`cpf`** e **`email`** possuem restrição `UNIQUE`, impedindo o cadastro de dois participantes com os mesmos dados de identificação, e ambos são validados por constraints de formato: `ck_runner_cpf_format` exige a máscara `000.000.000-00` e `ck_runner_email_format` valida a estrutura de um endereço de e-mail. O `cpf` é armazenado como `VARCHAR(14)` para comportar o formato com máscara. O campo **`status`** recebe `DEFAULT 'runner'` e é restringido pela constraint `ck_runner_status` aos valores `runner` e `captain`, diferenciando participantes comuns dos responsáveis (capitães) pela equipe. O campo **`name`** é protegido contra valores vazios, e o campo **`phone`** é opcional (`NULL`). São criados dois índices: um sobre `id_team`, para otimizar junções, e outro sobre `cpf`, para acelerar buscas por identificação.
  
 
-##### Tabela `treadmill` (`0004_create_treadmill.sql`)
-
-```sql
-CREATE TABLE treadmill (
-    id             INTEGER    NOT NULL GENERATED ALWAYS AS IDENTITY,
-    name           TEXT       NOT NULL,
-    specification  TEXT       NULL,
-    created_at     TIMESTAMP  NOT NULL DEFAULT NOW(),
-
-    CONSTRAINT pk_treadmill PRIMARY KEY (id),
-    CONSTRAINT ck_treadmill_name_not_empty
-        CHECK (length(trim(name)) > 0)
-);
-```
- 
-A tabela **`treadmill`** não possui chaves estrangeiras e pode ser criada de forma independente. Os campos **`name`** e **`specification`** utilizam o tipo `TEXT`, adequado para descrições sem limite de comprimento predefinido; o `name` é protegido contra valores vazios pela constraint `ck_treadmill_name_not_empty`. O campo **`specification`** é opcional (`NULL`), pois nem todos os equipamentos exigem detalhamento técnico no momento do cadastro.
 
 ##### Tabela `admin` (`0005_create_admin.sql`)
 
@@ -2820,7 +2775,6 @@ CREATE TABLE checkpoint (
     image           JSONB         NULL,
     id_runner       INTEGER       NOT NULL,
     id_competition  INTEGER       NOT NULL,
-    id_treadmill    INTEGER       NOT NULL,
     id_admin        INTEGER       NOT NULL,
     created_at      TIMESTAMP     NOT NULL DEFAULT NOW(),
 
@@ -2840,10 +2794,6 @@ CREATE TABLE checkpoint (
         FOREIGN KEY (id_competition) REFERENCES competition (id)
         ON UPDATE CASCADE
         ON DELETE RESTRICT,
-    CONSTRAINT fk_checkpoint_id_treadmill
-        FOREIGN KEY (id_treadmill) REFERENCES treadmill (id)
-        ON UPDATE CASCADE
-        ON DELETE RESTRICT,
     CONSTRAINT fk_checkpoint_id_admin
         FOREIGN KEY (id_admin) REFERENCES admin (id)
         ON UPDATE CASCADE
@@ -2852,12 +2802,11 @@ CREATE TABLE checkpoint (
 
 CREATE INDEX idx_checkpoint_id_runner      ON checkpoint (id_runner);
 CREATE INDEX idx_checkpoint_id_competition ON checkpoint (id_competition);
-CREATE INDEX idx_checkpoint_id_treadmill   ON checkpoint (id_treadmill);
 CREATE INDEX idx_checkpoint_id_admin       ON checkpoint (id_admin);
 CREATE INDEX idx_checkpoint_created_at     ON checkpoint (created_at);
 ```
  
-A tabela **`checkpoint`** é a entidade central do sistema operacional, pois concentra quatro chaves estrangeiras: `id_runner`, `id_competition`, `id_treadmill` e `id_admin`, todas obrigatórias e definidas com `ON UPDATE CASCADE` / `ON DELETE RESTRICT`. Por depender de quatro tabelas, é a última das entidades principais a ser criada. O campo **`identifier`** possui restrição `UNIQUE` (`uq_checkpoint_identifier`), garantindo a rastreabilidade individual de cada registro operacional. O campo **`distance_km`** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão (adequado para distâncias como `42,195 km`), e é validado pela constraint `ck_checkpoint_distance_km`, que assegura valores entre 0 e 1000. Os campos **`pace`** e **`time`** são armazenados como `VARCHAR` e são opcionais; quando preenchidos, são validados por constraints de formato (`mm:ss/km` e `hh:mm:ss`, respectivamente), construídas com a condição `IS NULL OR ...` para permitir o valor nulo sem violar a regra. O campo **`image`** é definido como `JSONB` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **`id_admin`** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints. São criados cinco índices: quatro sobre as chaves estrangeiras, para otimizar junções, e um sobre `created_at`, para acelerar relatórios cronológicos de desempenho.
+A tabela **`checkpoint`** é a entidade central do sistema operacional, pois concentra três chaves estrangeiras: `id_runner`, `id_competition` e `id_admin`, todas obrigatórias e definidas com `ON UPDATE CASCADE` / `ON DELETE RESTRICT`. Por depender de três tabelas, é a última das entidades principais a ser criada. O campo **`identifier`** possui restrição `UNIQUE` (`uq_checkpoint_identifier`), garantindo a rastreabilidade individual de cada registro operacional. O campo **`distance_km`** utiliza o tipo `NUMERIC(6, 3)`, que suporta até três casas decimais de precisão (adequado para distâncias como `42,195 km`), e é validado pela constraint `ck_checkpoint_distance_km`, que assegura valores entre 0 e 1000. Os campos **`pace`** e **`time`** são armazenados como `VARCHAR` e são opcionais; quando preenchidos, são validados por constraints de formato (`mm:ss/km` e `hh:mm:ss`, respectivamente), construídas com a condição `IS NULL OR ...` para permitir o valor nulo sem violar a regra. O campo **`image`** é definido como `JSONB` para armazenar metadados ou referências das evidências capturadas no ponto de controle. O campo **`id_admin`** registra qual usuário administrativo foi responsável pelo checkpoint, refletindo a relação *1:N* entre administrador e checkpoints. São criados quatro índices: três sobre as chaves estrangeiras, para otimizar junções, e um sobre `created_at`, para acelerar relatórios cronológicos de desempenho.
 
 ##### Tabela `ocr_extraction` (`0007_create_ocr_extraction.sql`)
 
@@ -2908,7 +2857,7 @@ A tabela **`competition_report`** armazena o relatório consolidado de cada comp
 
 ##### Considerações gerais sobre a implementação
  
-A implementação física foi organizada em **migrations sequenciais e versionadas** (`0000` a `0008`), executadas na ordem de dependência entre as tabelas: primeiro as extensões, depois as entidades independentes (`competition`, `treadmill`, `admin`) e, por fim, as entidades dependentes (`team`, `runner`, `checkpoint`, `ocr_extraction`, `competition_report`). Adotou-se a convenção de **nomear explicitamente todas as constraints** segundo seu tipo — `pk_` (*primary key*), `uq_` (*unique*), `ck_` (*check*) e `fk_` (*foreign key*) —, o que torna as mensagens de erro do banco autoexplicativas e facilita a manutenção e a evolução do esquema.
+A implementação física foi organizada em **migrations sequenciais e versionadas** (`0000` a `0008`), executadas na ordem de dependência entre as tabelas: primeiro as extensões, depois as entidades independentes (`competition` e `admin`) e, por fim, as entidades dependentes (`team`, `runner`, `checkpoint`, `ocr_extraction`, `competition_report`). Adotou-se a convenção de **nomear explicitamente todas as constraints** segundo seu tipo — `pk_` (*primary key*), `uq_` (*unique*), `ck_` (*check*) e `fk_` (*foreign key*) —, o que torna as mensagens de erro do banco autoexplicativas e facilita a manutenção e a evolução do esquema.
 
 Todos os campos de identificação seguem o tipo `INTEGER` com geração automática por `GENERATED ALWAYS AS IDENTITY`. As chaves estrangeiras, em regra, adotam `ON UPDATE CASCADE` e `ON DELETE RESTRICT`, preservando a integridade referencial ao bloquear a exclusão de registros que ainda possuam dependentes — com duas exceções intencionais: `ocr_extraction` usa `ON DELETE SET NULL` (para preservar o histórico de extração) e `competition_report` usa `ON DELETE CASCADE` (por ser dependente exclusivo da competição). Os campos de auditoria temporal (`created_at`, `updated_at`, `generated_at`) são preenchidos automaticamente via `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se nos arquivos de migração disponíveis no [diretório de migrações](outros/migrations/) do repositório.
 
