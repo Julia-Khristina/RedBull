@@ -346,7 +346,7 @@
                   <td><%= getOcrValue(checkpoint) %></td>
                   <td><%= getCorrectedValue(checkpoint) %></td>
                   <td><%= getDifference(checkpoint) %></td>
-                  <td><%= checkpoint.admin_name ?? checkpoint.id_admin ?? '-' %></td>
+                  <td><%= checkpoint.admin?.name ?? checkpoint.id_admin ?? '-' %></td>
                 </tr>
               <% }) %>
             </tbody>

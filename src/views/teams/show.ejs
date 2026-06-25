@@ -173,8 +173,6 @@
             <tr>
               <th>Atleta</th>
               <th>Status</th>
-              <th>Email</th>
-              <th>Telefone</th>
             </tr>
           </thead>
           <tbody>
@@ -182,8 +180,6 @@
               <tr class="<%= runner.id === activeId ? 'is-active-row' : '' %>">
                 <td><%= runner.name %></td>
                 <td><%= runner.status === 'captain' ? 'Capitão' : 'Atleta' %></td>
-                <td><%= runner.email %></td>
-                <td><%= runner.phone || '—' %></td>
               </tr>
             <% }); %>
           </tbody>
