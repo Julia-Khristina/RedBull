@@ -3654,7 +3654,7 @@ Além disso, a correspondência entre os endpoints implementados e os requisitos
 
 Dessa forma, a WebAPI constitui um dos principais elementos estruturais da solução desenvolvida, estabelecendo uma interface consistente entre a camada de apresentação e a persistência dos dados, garantindo segurança no acesso às funcionalidades administrativas, padronização das operações realizadas pela aplicação e suporte aos fluxos operacionais críticos do sistema. Sua implementação permite que as informações registradas durante o evento sejam processadas de maneira confiável, auditável e alinhada aos objetivos de negócio definidos para o projeto.
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
 ### 3.8.1. Autenticação
 
@@ -4054,7 +4054,90 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
+### (a) O que foi refinado ou adicionado desde a sprint 4
+
+Nesta sprint final, o foco esteve na entrega da camada de autenticação/autorização, no fechamento dos fluxos operacionais críticos para o evento e na estabilização geral do sistema, como a captura por OCR, o desenvolvimento de templates para a divulgação do evento após a competição e, por fim, de testes com pessoas reais para validar o fluxo do sistema, consolidando a versão final da aplicação.
+
+
+**Camada de Autenticação e Autorização (RF001, RF004, RN03):** Implementação completa do controle de acesso à área administrativa, com login de administrador, persistência de senha por meio de hash (sem armazenamento em texto plano), criação e controle de sessão e verificação de autorização por rota no backend. O acesso público ao painel da equipe via UUID foi preservado sem autenticação (US12), mantendo a separação entre área privada de operação e área pública de acompanhamento. O detalhamento técnico do fluxo está descrito na [Seção 3.8 — Autenticação, Autorização e Resiliência](#38-autenticação-autorização-e-resiliência-sprint-5).
+
+<div align="center"> <sub>Figura 73 — Frontend da tela login negando acesso</sub><br> <img src="../assets/login-negado.png" width="100%" alt="Representação do frontend da tela login negando acesso ao colocar um email ou senha inválidos"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service de autenticação</sub><br> <img src="../assets/programacao/service-auth.png" width="100%" alt="Código da camada service referente à autenticação (geração/verificação do hash de senha) e o middleware de autorização por rota."><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Integração final do módulo de OCR:** conclusão do ciclo completo de captura → extração → conferência humana → persistência (RF005–RF007). O frontend de captura foi desenvolvido e integrado ao backend, e a precisão da extração dos campos foi reforçada com o apoio da API da Groq como camada de validação inteligente. Diferentemente de um OCR puramente textual, o modelo multimodal utilizado (Llama 4 Scout) recebe a própria imagem da esteira como fonte principal e o texto extraído pelo Tesseract.js apenas como apoio, retornando os campos de distância (km) e tempo de forma estruturada. Essa camada complementa o pipeline OpenCV + Tesseract.js já existente e aumenta a confiabilidade da leitura em condições adversas de imagem (variações de iluminação, ângulo e foco do display).
+
+<div align="center"> <sub>Figura 73 — Frontend OCR parte 1</sub><br> <img src="../assets/programacao/view-ocr.png" width="100%" alt="Frontend da OCR para tirar a foto"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Frontend OCR parte 2</sub><br> <img src="../assets/programacao/view-ocr2.png" width="100%" alt="Frontend da OCR após a foto ser tirada"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada srvice referente à API do groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada srvice referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Painel de TV para acompanhamento ao vivo (US12):** entrega de protótipo, backend e frontend da tela dedicada à exibição em monitores durante o evento, com atualização automática e consolidação das métricas agregadas da competição (pace médio geral, tempo de prova decorrido, quilometragem total e destaques por equipe). A interface foi projetada para leitura a distância, com fonte ampliada e alto contraste, e acesso público sem autenticação.
+
+Para visualizar o protótipo da Tela TV acesse [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
+
+<div align="center"> <sub>Figura 73 — Camada routes referente ao Painel TV</sub><br> <img src="../assets/programacao/routes-painelTV.png" width="100%" alt="Código da camada routes referente ao painel TV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Telas para Instagram:** entrega de protótipo, backend e frontend das telas voltadas à geração de conteúdo para divulgação nas redes sociais do evento, permititindo o compartilhamento de resultados e destaques da competição em formato adequado à plataforma.
+
+Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
+
+
+**Tela de auditoria (RN05):** finalização da interface de log de auditoria, exibindo o histórico detalhado de cada checkpoint — administrador ou operador responsável pelo registro, método utilizado (manual ou OCR), timestamp exato e valores capturados. A rastreabilidade por método de entrada, já persistida pelo backend desde a sprint 3, passou a ser exposta em uma interface navegável e filtrável para auditoria durante e após a competição.
+
+<div align="center"> <sub>Figura 73 — Frontend da tela com log de auditoria</sub><br> <img src="../assets/programacao/view-log-auditoria.jpg" width="100%" alt="Representação da interface que apresenta o log de auditoria dos registros de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Exportação de resultados em XLSX (RF013, RF014):** implementação do endpoint e da interface de acionamento para geração do arquivo XLSX consolidado ao encerramento da competição, contendo o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints, método de entrada, tempos parcial e total). Essa entrega substitui definitivamente a planilha manual utilizada hoje pela equipe da Red Bull na apuração oficial.
+
+
+
+<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em XSLX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente à exportação em XSLX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Aviso de inconsistência (RN06):** implementação do alerta visual acionado quando há divergência entre os dados capturados via OCR e os valores esperados/corrigidos manualmente, reforçando a confiabilidade do processo de validação humana antes da persistência.
+
+<div align="center"> <sub>Figura 73 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Calculadora de descanso e gráfico de performance do atleta:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
+
+<div align="center"> <sub>Figura 73 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**Estabilização da suíte de testes:** consolidação e estabilização da suíte automatizada (E2E, unitário e integração), eliminando as colisões de dados únicos entre execuções identificadas como dívida técnica nas sprints anteriores e garantindo execução consistente e repetível.
+
+
+**Testes de usabilidade:** realização dos testes de usabilidade com usuários, cujos relatórios e resultados estão documentados na [Seção 5.2 — Testes de usabilidade](#52-testes-de-usabilidade-sprint-5), fornecendo evidências para os ajustes finais de interface.
+
+
+
+### (b) Pendências remanescentes
+Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e todas as pendências herdadas da sprint 4, como a calculadora de descanso e refinamento do OCR, foram concluídas nesta sprint. As pendências remanescentes restringem-se a itens fora do escopo do MVP e a melhorias incrementais:
+
+**Refinamentos de UX apontados nos testes de usabilidade:** ajustes pontuais de interface identificados durante os testes com usuários, pouco intuitivas ou sem funcionalidade direta com o escopo do projeto, registrados como melhorias futuras na [Seção 7 — Conclusões e trabalhos futuros](#c7).
+
+
+**Evolução contínua do OCR:** embora o módulo esteja integrado e funcional, a precisão da extração pode ser continuamente aprimorada com a expansão do banco de imagens de referência e novos cenários de teste do ambiente real do evento.
+
+### (c) Dificuldades técnicas
+
+**Persistência segura de credenciais e controle de sessão:** a implementação da autenticação exigiu atenção à escolha e parametrização do algoritmo de hash, ao armazenamento seguro da sessão e à garantia de que a verificação de autorização ocorresse sempre no backend, nunca confiando no frontend como fonte de verdade. O equilíbrio entre segurança e a restrição do TAP — que não previa autenticação de usuários no escopo original — exigiu manter o login restrito à área administrativa, preservando o acesso público por UUID.
+
+**Integração de uma camada externa multimodal (API da Groq) ao pipeline de OCR:** combinar o processamento local existente (OpenCV + Tesseract.js) com uma chamada externa a um modelo de visão exigiu tratar latência de rede, fluxo de fallback (garantindo que a extração não dependesse exclusivamente do serviço externo), normalização das respostas, incluindo a conversão do separador decimal de vírgula para ponto, e a consolidação dos resultados das duas fontes, assegurando que a extração permanecesse confiável mesmo diante de variações de imagem.
+
+**Estabilização da suíte de testes em ambiente com banco real:** a eliminação definitiva das colisões de dados únicos entre execuções, arrastada desde a sprint 3, demandou padronizar a geração de dados descartáveis por execução e isolar o estado entre os testes, assegurando que a suíte completa rodasse de forma determinística.
 
 # <a name="c5"></a>5. Testes
 
@@ -4497,7 +4580,7 @@ Os testes automatizados implementados foram relacionados às respectivas regras 
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
-## 5.2. Testes de usabilidade (sprint 5)
+## <a name="52"></a>5.2. Testes de usabilidade (sprint 5)
 
 ### 5.2.1. Relatório de testes de guerrilha
 
