@@ -1,5 +1,6 @@
 import request from "supertest";
 import app from "../src/app";
+import { getAuthToken, bearer } from "./helpers/auth";
 
 const RUN = Date.now().toString().slice(-7);
 
@@ -9,6 +10,11 @@ function email(tag: string): string {
 
 describe("Admin CRUD", () => {
   let adminId: number;
+  let token: string;
+
+  beforeAll(async () => {
+    token = await getAuthToken();
+  });
 
   const adminPayload = {
     name: "Admin E2E",
@@ -19,7 +25,10 @@ describe("Admin CRUD", () => {
 
   describe("POST /admin", () => {
     it("deve criar administrador com payload valido → 201 (password omitido)", async () => {
-      const res = await request(app).post("/admin").send(adminPayload);
+      const res = await request(app)
+        .post("/admin")
+        .set(bearer(token))
+        .send(adminPayload);
 
       expect(res.status).toBe(201);
       expect(res.body).toMatchObject({
@@ -34,19 +43,27 @@ describe("Admin CRUD", () => {
     });
 
     it("deve rejeitar payload sem campos obrigatorios → 500", async () => {
-      const res = await request(app).post("/admin").send({});
+      const res = await request(app)
+        .post("/admin")
+        .set(bearer(token))
+        .send({});
       expect(res.status).toBe(500);
     });
 
     it("deve rejeitar email duplicado → 409", async () => {
-      const res = await request(app).post("/admin").send(adminPayload);
+      const res = await request(app)
+        .post("/admin")
+        .set(bearer(token))
+        .send(adminPayload);
       expect(res.status).toBe(409);
     });
   });
 
   describe("GET /admin", () => {
     it("deve listar administradores → 200", async () => {
-      const res = await request(app).get("/admin");
+      const res = await request(app)
+        .get("/admin")
+        .set(bearer(token));
 
       expect(res.status).toBe(200);
       expect(Array.isArray(res.body)).toBe(true);
@@ -59,7 +76,9 @@ describe("Admin CRUD", () => {
 
   describe("GET /admin/:id", () => {
     it("deve retornar administrador por id → 200", async () => {
-      const res = await request(app).get(`/admin/${adminId}`);
+      const res = await request(app)
+        .get(`/admin/${adminId}`)
+        .set(bearer(token));
 
       expect(res.status).toBe(200);
       expect(res.body).toMatchObject({
@@ -72,7 +91,9 @@ describe("Admin CRUD", () => {
     });
 
     it("deve retornar 404 para administrador inexistente", async () => {
-      const res = await request(app).get("/admin/999999");
+      const res = await request(app)
+        .get("/admin/999999")
+        .set(bearer(token));
       expect(res.status).toBe(404);
     });
   });
@@ -81,6 +102,7 @@ describe("Admin CRUD", () => {
     it("deve atualizar administrador → 200", async () => {
       const res = await request(app)
         .put(`/admin/${adminId}`)
+        .set(bearer(token))
         .send({ name: "Admin Atualizado E2E" });
 
       expect(res.status).toBe(200);
@@ -91,6 +113,7 @@ describe("Admin CRUD", () => {
     it("deve retornar 404 para administrador inexistente", async () => {
       const res = await request(app)
         .put("/admin/999999")
+        .set(bearer(token))
         .send({ name: "X" });
       expect(res.status).toBe(404);
     });
@@ -98,15 +121,21 @@ describe("Admin CRUD", () => {
 
   describe("DELETE /admin/:id", () => {
     it("deve deletar administrador → 204; GET posterior → 404", async () => {
-      const res = await request(app).delete(`/admin/${adminId}`);
+      const res = await request(app)
+        .delete(`/admin/${adminId}`)
+        .set(bearer(token));
       expect(res.status).toBe(204);
 
-      const check = await request(app).get(`/admin/${adminId}`);
+      const check = await request(app)
+        .get(`/admin/${adminId}`)
+        .set(bearer(token));
       expect(check.status).toBe(404);
     });
 
     it("deve retornar 404 para administrador inexistente", async () => {
-      const res = await request(app).delete("/admin/999999");
+      const res = await request(app)
+        .delete("/admin/999999")
+        .set(bearer(token));
       expect(res.status).toBe(404);
     });
   });

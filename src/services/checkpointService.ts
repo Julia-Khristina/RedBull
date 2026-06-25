@@ -72,7 +72,7 @@ export function createCheckpointService(
         }
         if (isPgFkViolation(error)) {
           throw new NotFoundError(
-            "Runner, competition, treadmill or admin not found"
+            "Runner, competition or admin not found"
           );
         }
         throw error;

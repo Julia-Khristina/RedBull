@@ -58,12 +58,25 @@ function readOptionalPace(
     throw new ValidationError("pace nao pode ser vazio");
   }
 
-  const normalized = pace.trim();
-  if (!/^[0-9]{1,2}:[0-9]{2}\/km$/.test(normalized)) {
+  const normalized = normalizePace(pace);
+  if (!normalized) {
     throw new ValidationError("pace deve estar no formato mm:ss/km");
   }
 
   return normalized;
+}
+
+function normalizePace(pace: string): string | null {
+  const match = pace
+    .trim()
+    .match(/^([0-9]+)(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
+
+  if (!match) return null;
+
+  const seconds = Number(match[2]);
+  if (!Number.isInteger(seconds) || seconds > 59) return null;
+
+  return `${match[1].padStart(2, "0")}:${match[2].padStart(2, "0")}/km`;
 }
 
 function readOptionalTime(
@@ -96,7 +109,6 @@ export function validateCreateCheckpoint(
   const distance_km = readRequiredPositiveNumber(payload, "distance_km");
   const id_runner = readRequiredPositiveInteger(payload, "id_runner");
   const id_competition = readRequiredPositiveInteger(payload, "id_competition");
-  const id_treadmill = readRequiredPositiveInteger(payload, "id_treadmill");
   const id_admin = readRequiredPositiveInteger(payload, "id_admin");
 
   const result: CreateCheckpointInput = {
@@ -104,7 +116,6 @@ export function validateCreateCheckpoint(
     distance_km,
     id_runner,
     id_competition,
-    id_treadmill,
     id_admin,
   };
 

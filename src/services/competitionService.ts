@@ -70,6 +70,17 @@ export function createCompetitionService(
 
       return competition;
     },
+
+    async activate(idParam: unknown): Promise<Competition> {
+      const id = validateCompetitionId(idParam);
+      const competition = await repository.activate(id);
+
+      if (!competition) {
+        throw new NotFoundError("Competição não encontrada");
+      }
+
+      return competition;
+    },
   };
 }
 

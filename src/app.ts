@@ -16,6 +16,7 @@ import tvPanelRoutes from "./routes/tvPanelRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { ensureOcrUploadDir, getOcrUploadDir } from "./services/ocrService";
 import ejsLayouts from 'express-ejs-layouts';
+import cookieParser from "cookie-parser";
 
 
 const app = express();
@@ -33,6 +34,7 @@ app.use("/ocr/uploads", express.static(getOcrUploadDir()));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use(dashboardRoutes);
 app.use(competitionRoutes);
 app.use(teamRoutes);
@@ -46,6 +48,12 @@ app.use(rankingRoutes);
 app.use(exportRoutes);
 app.use(reportRoutes);
 app.use(tvPanelRoutes);
+
+// Catch-all 404 — unmatched routes
+app.use((_req, res) => {
+  res.status(404).render("errors/404", { title: "Página não encontrada" });
+});
+
 app.use(errorHandler);
 
 export default app;

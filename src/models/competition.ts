@@ -28,4 +28,5 @@ export interface CompetitionRepository {
   update(id: number, input: UpdateCompetitionInput): Promise<Competition | null>;
   delete(id: number): Promise<boolean>;
   close(id: number): Promise<Competition | null>;
+  activate(id: number): Promise<Competition | null>;
 }

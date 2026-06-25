@@ -80,21 +80,21 @@ describe("rankingService.generateRunnerRanking", () => {
         id_runner: 2,
         runner_name: "Bia",
         total_distance_km: 5,
-        average_pace: "4:48",
+        average_pace: "04:48",
       },
       {
         position: 2,
         id_runner: 1,
         runner_name: "Ana",
         total_distance_km: 5,
-        average_pace: "5:00",
+        average_pace: "05:00",
       },
       {
         position: 3,
         id_runner: 3,
         runner_name: "Caio",
         total_distance_km: 4,
-        average_pace: "4:30",
+        average_pace: "04:30",
       },
     ]);
   });
@@ -147,7 +147,7 @@ describe("rankingService.generateRunnerRanking edge cases", () => {
 
     expect(ranking[0]).toMatchObject({
       id_runner: 1,
-      average_pace: "4:30",
+      average_pace: "04:30",
       average_pace_seconds: 270,
     });
   });
