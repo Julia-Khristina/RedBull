@@ -1263,29 +1263,29 @@ Nesse exemplo, o Controller obtém os dados por meio da camada de Service e enca
  
 
 ### Repository Pattern
-
+ 
 #### Categoria
-
+ 
 Estrutural / Arquitetural
-
+ 
 #### Definição
-
+ 
 O Repository Pattern é um padrão responsável por centralizar e abstrair o acesso aos dados da aplicação em uma camada específica de repositório. Esse padrão atua como intermediário entre a aplicação e o banco de dados, encapsulando operações de persistência, como consultas, inserções, atualizações e remoções de registros.
-
+ 
 Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
-
+ 
 #### Problema resolvido
-
+ 
 Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados. Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura.
-
+ 
 #### Justificativa da adoção
-
-Esse padrão foi adotado porque o back-end possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do back-end, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
-
+ 
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do backend, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
+ 
 - `src/repositories/competitionRepository.ts`
 - `src/repositories/teamRepository.ts`
 - `src/repositories/runnerRepository.ts`
@@ -1294,32 +1294,30 @@ O padrão foi aplicado nos seguintes arquivos:
 - `src/repositories/reportRepository.ts`
 - `src/repositories/exportRepository.ts`
 - `src/repositories/authRepository.ts`
-- `src/repositories/treadmillRepository.ts`
-
 Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
-
+ 
 #### Exemplo de código
-
+ 
 ```typescript
 async findById(id: number): Promise<Competition | null> {
   const supabase = getSupabaseClient();
-
+ 
   const { data, error } = await supabase
     .from("competition")
     .select("id, name, address, date, status, created_at")
     .eq("id", id)
     .maybeSingle();
-
+ 
   if (error) {
     throw error;
   }
-
+ 
   return data as unknown as Competition | null;
 }
 ```
-
+ 
 No exemplo apresentado, o método `findById` encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
-
+ 
 ---
 
 ### Service Layer Pattern
