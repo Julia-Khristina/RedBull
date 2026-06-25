@@ -1746,6 +1746,16 @@ O último conjunto de telas representa as funcionalidades de revisão, validaç�
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
+**Tela TV**
+
+A tela da TV irá conter o countdown da competição para telespectadores que estão passando pelo local poderem acompanhar os corredores. 
+
+<div align="center">
+  <sub>Figura 23 - Wireframe de baixa fidelidade da tela TV durante a competição</sub><br>
+  <img src="../assets/design/telaTV.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
 #### Wireframe de Alta Fidelidade — Operadores
 
 Os wireframes de alta fidelidade representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, tipografia, hierarquia visual e estrutura de navegação da plataforma. O nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato fundamental para validação visual e operacional antes da implementação definitiva do sistema (Garrett, 2011).
