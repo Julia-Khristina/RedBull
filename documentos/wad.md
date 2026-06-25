@@ -2793,7 +2793,7 @@ Além de exemplificar diferentes tipos de operações SQL, como `SELECT`, `UPDAT
 SELECT id, corredor_id, competicao_id, km, tempo
 FROM checkpoint
 WHERE competicao_id = 1
-  AND (km > 10 OR km < 1);
+  AND (km > 30 OR km < 0,3);
 ```
 
 **Descrição em palavras:** seleciona os checkpoints pertencentes à competição de identificador `1` cuja distância registrada esteja fora de uma faixa esperada, considerando valores muito altos ou muito baixos para um checkpoint. A cláusula `WHERE` combina o filtro obrigatório por competição com uma condição composta sobre a distância, utilizando `AND` para exigir simultaneidade e `OR` para indicar que basta uma das situações de inconsistência ser verdadeira.
@@ -2805,11 +2805,11 @@ Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômica
 * **P:** o checkpoint pertence à competição de ID 1.
   `competicao_id = 1`
 
-* **Q:** o checkpoint possui distância maior que 10 km.
-  `km > 10`
+* **Q:** o checkpoint possui distância maior que 30 km.
+  `km > 30`
 
-* **R:** o checkpoint possui distância menor que 1 km.
-  `km < 1`
+* **R:** o checkpoint possui distância menor que 0,3 km.
+  `km < 0,3`
 
 #### Expressão lógica proposicional
 
@@ -2819,7 +2819,7 @@ A expressão lógica correspondente à consulta é:
 P ∧ (Q ∨ R)
 ```
 
-Em palavras: o checkpoint será selecionado se pertencer à competição 1 e possuir distância maior que 10 km ou menor que 1 km.
+Em palavras: o checkpoint será selecionado se pertencer à competição 1 e possuir distância maior que 30 km ou menor que 0,3 km.
 
 #### Identificação dos conectivos lógicos
 
@@ -3019,7 +3019,7 @@ A tabela demonstra que a atualização ocorre apenas quando o checkpoint ainda n
 | **Tipo de operação**       | `DELETE`                                                                                                                                                                           |
 | **Operadores lógicos**     | `AND`, `NOT`                                                                                                                                                                       |
 | **Operadores relacionais** | `=`, `<`                                                                                                                                                                           |
-| **Contexto de negócio**    | Remover registros temporários de checkpoints não validados após o encerramento da competição, evitando que dados incompletos permaneçam disponíveis para relatórios e exportações. |
+| **Contexto de negócio**    | Remover registros temporários de checkpoints não validados durante a rotina de limpeza executada após o encerramento da competição. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3206,7 +3206,7 @@ A consulta considera registros apenas quando a equipe pertence ao conjunto de eq
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização e remoção de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
+A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização, remoção e consolidação de informações de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
@@ -3214,9 +3214,7 @@ A WebAPI desenvolvida para a aplicação atua como a principal camada de comunic
 
 A implementação segue a arquitetura em camadas apresentada na Seção 3.2.1, organizada em **Routes → Controllers → Services → Repositories.** Nessa organização, cada camada possui responsabilidades bem definidas: as rotas recebem as requisições HTTP e realizam seu direcionamento; os controllers tratam a comunicação entre cliente e servidor; os services concentram toda a lógica de negócio da aplicação; e os repositories encapsulam o acesso ao banco de dados. Essa separação reduz o acoplamento entre componentes, facilita a manutenção do código, melhora a testabilidade da aplicação e favorece sua evolução ao longo das sprints.
 
-A documentação completa da API foi disponibilizada em uma página HTML versionada juntamente ao projeto. Esse artefato reúne os endpoints implementados, métodos HTTP utilizados, exemplos de requisição e resposta, códigos de status retornados e sua rastreabilidade com os requisitos funcionais e regras de negócio. A utilização de uma documentação externa ao WAD permite apresentar um nível maior de detalhamento sem comprometer a legibilidade deste documento, além de facilitar futuras atualizações da API conforme a evolução do sistema.
-
-A documentação detalhada da API pode ser consultada no arquivo documentos/outros/api-documentation.html, versionado juntamente ao projeto. Para facilitar a navegação durante a avaliação do projeto, a documentação também foi publicada por meio do GitLab Pages, permanecendo sincronizada com a versão mantida no repositório.
+A documentação completa da API foi disponibilizada em uma página HTML versionada juntamente ao projeto, reunindo os endpoints implementados, métodos HTTP utilizados, exemplos de requisição e resposta, códigos de status retornados e sua rastreabilidade com os requisitos funcionais e regras de negócio. A adoção de uma documentação externa ao WAD permite apresentar um nível maior de detalhamento sem comprometer a legibilidade deste documento, além de facilitar futuras atualizações da API conforme sua evolução. A documentação pode ser consultada no arquivo documentos/outros/api-documentation.html, versionado juntamente ao projeto, e também foi publicada por meio do GitLab Pages para facilitar a navegação durante a avaliação, permanecendo sincronizada com a versão mantida no repositório.
 
 No estado atual da aplicação, a WebAPI contempla os principais fluxos necessários para a operação do sistema desenvolvido para o evento Red Bull 24 Horas. Entre eles destacam-se o gerenciamento de competições, equipes e atletas, autenticação administrativa, processamento OCR, validação e registro de checkpoints, atualização de rankings, geração de relatórios, exportação de dados e disponibilização do painel público destinado às equipes.
 
@@ -3244,8 +3242,6 @@ Os domínios apresentados implementam diretamente os requisitos funcionais defin
 A WebAPI foi projetada seguindo os princípios de arquitetura REST (Representational State Transfer) sempre que os recursos representam entidades persistidas ou operações diretamente relacionadas ao domínio da aplicação. Dessa forma, cada recurso é identificado por uma URI única e manipulado por meio dos métodos HTTP adequados, preservando uma interface consistente e previsível para clientes e desenvolvedores.
 
 Os recursos da API são organizados de forma hierárquica para representar os relacionamentos existentes entre as entidades do sistema. Por exemplo, a rota ```/competitions/:id/teams/:teamId/runners``` evidencia que um atleta pertence a uma equipe, enquanto a equipe está vinculada a uma competição específica. Essa estrutura torna a navegação pela API mais intuitiva, reduz ambiguidades na identificação dos recursos e facilita sua manutenção conforme novas funcionalidades são incorporadas.
-
-Além dos endpoints REST, a aplicação utiliza rotas de Server-Side Rendering (SSR) responsáveis pela geração dinâmica das páginas HTML consumidas pelos usuários. Enquanto os endpoints REST retornam informações estruturadas em formato JSON para processamento da lógica da aplicação, as rotas SSR renderizam diretamente as interfaces administrativas, operacionais e públicas utilizadas durante a competição. Essa abordagem permite que a mesma aplicação ofereça interfaces completas aos operadores e, simultaneamente, mantenha uma camada de serviços reutilizável para integrações, testes automatizados e futuras expansões.
 
 A comunicação entre as camadas da aplicação ocorre de forma sequencial. Inicialmente, uma requisição HTTP é recebida pelas rotas, que direcionam a solicitação ao controller correspondente. Em seguida, o controller delega o processamento ao service responsável pela regra de negócio. Quando necessário, o service consulta ou altera os dados persistidos por meio dos repositories, responsáveis exclusivamente pela comunicação com o banco de dados. Após o processamento, a resposta retorna ao cliente acompanhada do código HTTP apropriado e do conteúdo correspondente à operação realizada.
 
