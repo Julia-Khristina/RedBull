@@ -8,7 +8,7 @@
 
 # Red Bull 24h 
 
-## Grupo 01
+## Propositivos
 
 ## Integrantes:
 
@@ -21,7 +21,7 @@
 
 ### Orientador(a)
 
-- <a href="https://www.linkedin.com/in/profclaudioandre/">Claudio Fernando André</a>
+- <a href="https://www.linkedin.com/in/profclaudioandre/ ">Claudio Fernando André</a>
 
 ### Instrutores
 
@@ -51,38 +51,163 @@ _Em breve._
 
 ```
 g01/
-│
-├── assets/
-│   ├── design/         
-│   ├── integrantes/     
-│   ├── negocios/       
-│   └── programacao/    
-│
-├── documentos/
-│   ├── wad.md          
-│   └── outros/         
-│       └── migrations/  
-│
-├── src/
-│   ├── controllers/    
-│   ├── services/        
-│   ├── repositories/   
-│   ├── routes/          
-│   ├── models/        
-│   ├── validators/     
-│   ├── middlewares/    
-│   ├── errors/         
-│   ├── helpers/        
-│   ├── database/        
-│   └── server.ts        
-│
-├── dist/               
-├── .env                 
+├── .env
+├── .env.example
+├── .gitattributes
 ├── .gitignore
+├── .ocr-cache/
+├── assets/
+│   ├── design/
+│   ├── integrantes/
+│   ├── negocios/
+│   └── programacao/
+├── coverage/
+├── dist/
+├── documentos/
+│   ├── wad.md
+│   └── outros/
+│       └── migrations/
+├── eng.traineddata
+├── how origin
+├── dados-salvos.png
 ├── jest.config.js
+├── jest.setup.js
+├── node_modules/
+├── package-lock.json
 ├── package.json
-├── tsconfig.json
-└── README.md
+├── public/
+│   ├── css/
+│   ├── fonts/
+│   ├── img/
+│   └── js/
+├── README.md
+├── scripts/
+├── src/
+│   ├── app.ts
+│   ├── server.ts
+│   ├── controllers/
+│   │   ├── adminController.ts
+│   │   ├── authController.ts
+│   │   ├── checkpointController.ts
+│   │   ├── competitionController.ts
+│   │   ├── exportController.ts
+│   │   ├── ocrController.ts
+│   │   ├── rankingController.ts
+│   │   ├── reportController.ts
+│   │   ├── runnerController.ts
+│   │   ├── teamController.ts
+│   │   └── tvPanelController.ts
+│   ├── database/
+│   │   └── supabaseClient.ts
+│   ├── errors/
+│   │   └── AppError.ts
+│   ├── helpers/
+│   │   ├── asyncHandler.ts
+│   │   ├── inferInputMethod.ts
+│   │   └── selectedCompetition.ts
+│   ├── middlewares/
+│   │   ├── authMiddleware.ts
+│   │   └── errorHandler.ts
+│   ├── models/
+│   │   ├── admin.ts
+│   │   ├── auth.ts
+│   │   ├── checkpoint.ts
+│   │   ├── competition.ts
+│   │   ├── export.ts
+│   │   ├── ocr.ts
+│   │   ├── ranking.ts
+│   │   ├── report.ts
+│   │   ├── runner.ts
+│   │   ├── team.ts
+│   │   └── tvPanel.ts
+│   ├── repositories/
+│   │   ├── adminRepository.ts
+│   │   ├── authRepository.ts
+│   │   ├── checkpointRepository.ts
+│   │   ├── competitionRepository.ts
+│   │   ├── exportRepository.ts
+│   │   ├── reportRepository.ts
+│   │   ├── runnerRepository.ts
+│   │   └── teamRepository.ts
+│   ├── routes/
+│   │   ├── adminRoutes.ts
+│   │   ├── athleteRoutes.ts
+│   │   ├── authRoutes.ts
+│   │   ├── checkpointRoutes.ts
+│   │   ├── competitionRoutes.ts
+│   │   ├── dashboardRoutes.ts
+│   │   ├── exportRoutes.ts
+│   │   ├── ocrRoutes.ts
+│   │   ├── rankingRoutes.ts
+│   │   ├── reportRoutes.ts
+│   │   ├── runnerRoutes.ts
+│   │   ├── teamRoutes.ts
+│   │   └── tvPanelRoutes.ts
+│   ├── services/
+│   │   ├── adminService.ts
+│   │   ├── authService.ts
+│   │   ├── checkpointService.ts
+│   │   ├── competitionService.ts
+│   │   ├── excelExportService.ts
+│   │   ├── exportService.ts
+│   │   ├── ocrGroqService.ts
+│   │   ├── ocrNormalize.ts
+│   │   ├── ocrService.ts
+│   │   ├── ocrTesseractService.ts
+│   │   ├── rankingService.ts
+│   │   ├── reportService.ts
+│   │   ├── runnerService.ts
+│   │   ├── teamService.ts
+│   │   └── tvPanelService.ts
+│   ├── types/
+│   │   └── express-ejs-layouts.d.ts
+│   ├── validators/
+│   │   ├── checkpointValidator.ts
+│   │   ├── competitionValidator.ts
+│   │   ├── runnerValidator.ts
+│   │   └── teamValidator.ts
+│   └── views/
+│       ├── audit/
+│       ├── auth/
+│       ├── competitions/
+│       ├── dadosSalvos/
+│       ├── dashboard/
+│       ├── errors/
+│       ├── home.ejs
+│       ├── layouts/
+│       ├── operational-panel/
+│       ├── partials/
+│       ├── ranking/
+│       ├── reports/
+│       ├── runner/
+│       ├── teams/
+│       └── tv-panel/
+├── tests/
+│   ├── admin.e2e.spec.ts
+│   ├── adminService.test.ts
+│   ├── auth.e2e.spec.ts
+│   ├── authService.test.ts
+│   ├── checkpoint.e2e.spec.ts
+│   ├── checkpointService.spec.ts
+│   ├── competition.e2e.spec.ts
+│   ├── competitionRepository.spec.ts
+│   ├── competitionService.spec.ts
+│   ├── export.e2e.spec.ts
+│   ├── exportRepository.spec.ts
+│   ├── exportService.spec.ts
+│   ├── helpers/
+│   ├── ranking.e2e.spec.ts
+│   ├── rankingService.spec.ts
+│   ├── report.e2e.spec.ts
+│   ├── runner.e2e.spec.ts
+│   ├── runnerRepository.spec.ts
+│   ├── runnerService.spec.ts
+│   ├── team.e2e.spec.ts
+│   ├── teamRepository.spec.ts
+│   ├── teamService.spec.ts
+│   ├── tvPanel.e2e.spec.ts
+│   └── tvPanelService.spec.ts
+└── tsconfig.json
 ```
 
 Dentre os arquivos e pastas presentes na raiz do projeto, destacam-se:
@@ -120,10 +245,14 @@ npm install
 Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
 
 ```env
-SUPABASE_URL=sua_url_do_supabase
-SUPABASE_KEY=sua_chave_do_supabase
-JWT_SECRET=sua_chave_secreta_jwt
+SUPABASE_URL=
+SUPABASE_SERVICE_ROLE_KEY=
 PORT=3000
+JWT_SECRET=
+ADMIN_PASSWORD=
+GROQ_API_KEY=
+GROQ_MODEL=
+ADMIN_PASSWORD_HASH=
 ```
 
 > Nunca versione o arquivo `.env`. Ele já está listado no `.gitignore`.
