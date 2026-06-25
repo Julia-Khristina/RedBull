@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
-import { treadmillService } from "../services/treadmillService";
 import { runnerService } from "../services/runnerService";
 import { teamService } from "../services/teamService";
 import { ValidationError } from "../errors/AppError";
@@ -121,7 +120,7 @@ export const checkpointController = {
     const teamId = parseOptionalIntegerParam(req.query.teamId);
     const competitionId = parseOptionalIntegerParam(req.query.competitionId) ?? 1;
     const adminId = parseOptionalIntegerParam(req.query.adminId) ?? 1;
-    const treadmill = await treadmillService.getOrCreateDefault();
+    const startMode = req.query.mode === "manual" ? "manual" : "ocr";
     const selectedRunner =
       runnerId && teamId
         ? await runnerService.findByTeamAndId(teamId, runnerId)
@@ -141,11 +140,11 @@ export const checkpointController = {
       pageCSS: "/css/operational-panel.css",
       selectedRunner,
       selectedTeam,
+      startMode,
       checkpointContext: {
         identifier: `MANUAL-${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}-${runnerId ?? "runner"}`,
         id_runner: runnerId ?? "",
         id_competition: competitionId,
-        id_treadmill: treadmill.id,
         id_admin: adminId,
         team_id: teamId ?? "",
         average_pace_seconds: averagePaceSeconds,

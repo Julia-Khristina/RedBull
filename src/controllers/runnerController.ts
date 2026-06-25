@@ -164,7 +164,7 @@ export const runnerController = {
     // [A1][B1] Ranking filtrado para runners desta equipe
     const teamRunnerRanking = runnerRanking.filter((r) => r.id_team === teamId);
 
-    const REST_RECOMMENDED_MIN = 50;
+    const REST_RECOMMENDED_MIN = 120;
     const CIRCLE_CIRCUMFERENCE = 314.16;
 
     // Enriquece cada runner com dados de ranking e último checkpoint
@@ -211,7 +211,7 @@ export const runnerController = {
       is_leader: thisTeamRanking?.position === 1,
     };
 
-    // [D2] Calculadora de descanso simplificada — 50 min recomendados (RN08)
+    // [D2] Calculadora de descanso simplificada — 120 min recomendados (RN08)
     // Fórmula real requer parâmetros do evento não expostos na Seção 7
     const runnerRestOptions = runnersEnriched.map((runner) => {
       const rest = calculateRestProgress(
@@ -261,6 +261,13 @@ export const runnerController = {
     const runnersWithCp = new Set(checkpoints.map((cp) => cp.id_runner));
     const nextRunner = runners.find((r) => !runnersWithCp.has(r.id)) ?? null;
 
+    // [A1] Calcula o delay até o próximo minuto :00 (hora cheia)
+    // para refresh automático da página sincronizado com o relógio
+    const now = new Date();
+    const nextHour = new Date(now);
+    nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+    const refreshDelayMs = nextHour.getTime() - now.getTime();
+
     res.render("runner/runner", {
       title: `${team.name} — Red Bull 24h`,
       pageCSS: "/css/runner.css",
@@ -275,6 +282,7 @@ export const runnerController = {
       restOffset,
       nextRunner,
       currentPage: "teams",
+      refreshDelayMs,
     });
   },
 };

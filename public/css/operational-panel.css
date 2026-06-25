@@ -387,6 +387,25 @@
   border-color: var(--vermelho);
 }
 
+.manual-field--pace-auto input[readonly] {
+  background: var(--fundo-cards);
+  opacity: 0.85;
+  cursor: default;
+  border-style: dashed;
+}
+
+.manual-field--pace-auto input[readonly]:focus {
+  border-color: var(--azul-principal);
+}
+
+.pace-auto-hint {
+  font-size: 11px;
+  font-weight: var(--font-weight-medium);
+  color: var(--azul-secundario);
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
 .manual-form__divider {
   justify-self: center;
   width: var(--op-divider-width);
@@ -463,6 +482,28 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+.time-input-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+}
+
+.time-input-group .time-part {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+}
+
+.time-sep {
+  flex-shrink: 0;
+  font-size: 34px;
+  font-weight: var(--font-weight-extrabold);
+  color: var(--texto);
+  line-height: 1;
+  pointer-events: none;
 }
 
 @media (min-width: 621px) and (max-width: 900px) {

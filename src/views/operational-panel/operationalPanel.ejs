@@ -11,6 +11,8 @@
   const checkpointNumber = checkpointContext.checkpoint_number || 1;
   const averagePaceSeconds = checkpointContext.average_pace_seconds ?? "";
   const averagePaceLabel = checkpointContext.average_pace_label || "";
+  const startMode = locals.startMode || "ocr";
+  const isManual = startMode === "manual";
 %>
 
 <main
@@ -19,16 +21,18 @@
   data-ocr-panel
   data-endpoint="<%= checkpointEndpoint %>"
   data-ocr-endpoint="/ocr/extractions"
-  data-input-method="ocr"
+  data-input-method="<%= isManual ? 'manual' : 'ocr' %>"
+  data-start-mode="<%= startMode %>"
   data-average-pace-seconds="<%= averagePaceSeconds %>"
   data-average-pace-label="<%= averagePaceLabel %>"
+  data-team-id="<%= checkpointContext.team_id || '' %>"
+  data-competition-id="<%= checkpointContext.id_competition || '' %>"
 >
   <input type="hidden" name="id_runner" value="<%= runnerId %>" data-ocr-context>
   <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>" data-ocr-context>
-  <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>" data-ocr-context>
   <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>" data-ocr-context>
 
-  <section class="ocr-capture" data-ocr-step="capture">
+  <section class="ocr-capture" data-ocr-step="capture" <%= isManual ? 'hidden' : '' %>>
     <header class="operational-panel__page-title">
       <h1>RedBull 24H - Painel Admin</h1>
     </header>
@@ -99,7 +103,13 @@
         </label>
         <label class="ocr-metric-field">
           <span>Tempo</span>
-          <input type="text" name="time" data-ocr-time>
+          <div class="time-input-group">
+            <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" data-ocr-time-h>
+            <span class="time-sep">:</span>
+            <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" data-ocr-time-m>
+            <span class="time-sep">:</span>
+            <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" data-ocr-time-s>
+          </div>
         </label>
       </div>
     </section>
@@ -119,7 +129,7 @@
     </div>
   </section>
 
-  <section class="manual-mode" data-manual-mode hidden>
+  <section class="manual-mode" data-manual-mode <%= isManual ? '' : 'hidden' %>>
     <nav class="operational-panel__breadcrumb" aria-label="Caminho atual">
       Operacional &gt; Registro manual
     </nav>
@@ -149,7 +159,6 @@
         <input type="hidden" name="identifier" value="<%= checkpointContext.identifier || '' %>">
         <input type="hidden" name="id_runner" value="<%= runnerId %>">
         <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>">
-        <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>">
         <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>">
 
         <div class="manual-form__row manual-form__row--top">
@@ -170,14 +179,20 @@
             <input type="number" name="distance_km" min="0" step="0.01" inputmode="decimal" required value="0.00">
           </label>
 
-          <label class="manual-field manual-field--metric">
-            <span>Pace (min/km)</span>
-            <input type="text" name="pace" inputmode="numeric" placeholder="00:00/km">
+          <label class="manual-field manual-field--metric manual-field--pace-auto">
+            <span>Pace (min/km) <small class="pace-auto-hint">calculado automaticamente</small></span>
+            <input type="text" name="pace" inputmode="numeric" placeholder="00:00/km" readonly>
           </label>
 
           <label class="manual-field manual-field--metric">
             <span>Tempo total</span>
-            <input type="text" name="time" inputmode="numeric" placeholder="00:00:00">
+            <div class="time-input-group">
+              <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" name="time_hours">
+              <span class="time-sep">:</span>
+              <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" name="time_minutes">
+              <span class="time-sep">:</span>
+              <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" name="time_seconds">
+            </div>
           </label>
         </div>
 
@@ -188,7 +203,7 @@
           <button class="manual-button manual-button--secondary" type="button" data-manual-cancel>
             Cancelar
           </button>
-          <button class="manual-button manual-button--primary" type="submit" data-manual-submit>
+          <button class="manual-button manual-button--primary" type="button" data-manual-submit>
             Salvar registro manual
           </button>
         </div>
