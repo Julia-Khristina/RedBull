@@ -1322,27 +1322,27 @@ No exemplo apresentado, o método `findById` encapsula toda a lógica de consult
 ---
 
 ### Service Layer Pattern
-
+ 
 #### Categoria
-
+ 
 Arquitetural
-
+ 
 #### Definição
-
-O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do back-end, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
-
+ 
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários. Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
-
+ 
 #### Justificativa da adoção
-
-Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do back-end. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
-
+ 
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
+ 
 - `src/services/competitionService.ts`
 - `src/services/teamService.ts`
 - `src/services/runnerService.ts`
@@ -1352,25 +1352,23 @@ O padrão foi aplicado nos seguintes arquivos:
 - `src/services/rankingService.ts`
 - `src/services/exportService.ts`
 - `src/services/reportService.ts`
-- `src/services/treadmillService.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 async findById(idParam: unknown): Promise<Competition> {
   const id = validateCompetitionId(idParam);
   const competition = await repository.findById(id);
-
+ 
   if (!competition) {
     throw new NotFoundError("Competição não encontrada");
   }
-
+ 
   return competition;
 }
 ```
-
+ 
 Nesse exemplo, o Service realiza validação do identificador recebido, consulta o repositório e verifica se o registro existe antes de retornar a informação. Dessa forma, a lógica de negócio permanece isolada da camada responsável pelas requisições HTTP.
-
+ 
 ---
 
 ### Dependency Injection Pattern
