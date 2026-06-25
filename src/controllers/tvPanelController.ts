@@ -55,4 +55,21 @@ export const tvPanelController = {
 
     res.status(200).json(payload);
   },
+
+  // Rota SSR pública — alimenta o Painel TV (US19 #519). O polling subsequente
+  // do client consome `metrics` (acima) para atualizar in-place a cada 10s.
+  async renderTvPanel(req: Request, res: Response): Promise<void> {
+    const competitionId = parseIntegerParam(req.params.id, "id");
+
+    const payload = await tvPanelService.generateMetrics(
+      competitionId,
+      TV_PANEL_DEFAULT_TOP_N
+    );
+
+    res.render("tv-panel/tvPanel", {
+      title: `${payload.competition_name} — Painel TV`,
+      payload,
+      layout: "layouts/tv",
+    });
+  },
 };

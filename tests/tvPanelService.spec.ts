@@ -11,11 +11,20 @@ const competitionInProgress: Competition = {
   date: "2026-06-15",
   status: "in_progress",
   created_at: "2026-06-15T08:00:00.000Z",
+  /* Marco zero do countdown — gravado por activate() (feature #557).
+     2h antes de NOW pra que elapsed_time = 02:00:00 nas asserções. */
+  started_at: "2026-06-15T10:00:00.000Z",
 };
 
 const competitionClosed: Competition = {
   ...competitionInProgress,
   status: "closed",
+};
+
+const competitionNotStarted: Competition = {
+  ...competitionInProgress,
+  status: "not_started",
+  started_at: null,
 };
 
 const baseCheckpoint: Checkpoint = {
@@ -135,9 +144,9 @@ describe("tvPanelService.generateMetrics", () => {
     expect(payload.generated_at).toBe(NOW.toISOString());
   });
 
-  it("retorna metricas zeradas e elapsed null quando nao ha checkpoints", async () => {
+  it("retorna metricas zeradas e elapsed null quando competicao nao iniciou", async () => {
     const service = createTvPanelService(
-      { findById: jest.fn().mockResolvedValue(competitionInProgress) },
+      { findById: jest.fn().mockResolvedValue(competitionNotStarted) },
       { findByCompetition: jest.fn().mockResolvedValue([]) },
       {
         generateRunnerRanking: jest.fn().mockResolvedValue([]),
@@ -155,6 +164,23 @@ describe("tvPanelService.generateMetrics", () => {
       total_distance_km: 0,
       top_teams: [],
     });
+  });
+
+  it("retorna elapsed mesmo sem checkpoints quando started_at esta gravado", async () => {
+    const service = createTvPanelService(
+      { findById: jest.fn().mockResolvedValue(competitionInProgress) },
+      { findByCompetition: jest.fn().mockResolvedValue([]) },
+      {
+        generateRunnerRanking: jest.fn().mockResolvedValue([]),
+        generateTeamRanking: jest.fn().mockResolvedValue([]),
+      }
+    );
+
+    const payload = await service.generateMetrics(1);
+
+    // started_at = 10:00, NOW = 12:00 → elapsed = 02:00:00 mesmo sem checkpoint.
+    expect(payload.metrics.elapsed_time_seconds).toBe(7200);
+    expect(payload.metrics.elapsed_time).toBe("02:00:00");
   });
 
   it("limita elapsed pelo ultimo checkpoint quando competicao esta closed", async () => {

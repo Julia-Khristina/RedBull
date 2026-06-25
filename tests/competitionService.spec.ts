@@ -16,6 +16,7 @@ function createRepositoryMock() {
     update: jest.fn().mockResolvedValue(null),
     delete: jest.fn().mockResolvedValue(false),
     close: jest.fn().mockResolvedValue(null),
+    activate: jest.fn().mockResolvedValue(null),
   };
 }
 
