@@ -7,10 +7,12 @@
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  font-family: var(--font-family);
 }
 
 .share-header {
   margin-bottom: 2rem;
+  font-family: var(--font-family);
 }
 
 .share-title {
@@ -47,8 +49,8 @@
 /* ── Card ── */
 .share-card {
   background: var(--fundo-cards);
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: var(--border-radius);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
   overflow: hidden;
   transition: box-shadow 0.2s;
 }
@@ -60,7 +62,7 @@
 .share-card-preview {
   position: relative;
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 9 / 16;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -142,7 +144,7 @@
 
 .share-card-desc {
   font-size: 0.8rem;
-  color: #666;
+  color: var(--texto-muted);
   margin: 0 0 0.75rem;
 }
 
@@ -161,18 +163,18 @@
 .share-athlete-select {
   flex: 1;
   padding: 0.5rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: 10px;
   font-family: var(--font-family);
   font-size: 0.8rem;
-  background: #fff;
+  background: var(--fundo-cards);
 }
 
 .share-btn {
   display: inline-block;
   padding: 0.5rem 1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-family: var(--font-family);
   font-size: 0.8rem;
   font-weight: 700;
@@ -197,15 +199,13 @@
   cursor: not-allowed;
 }
 
-/* ==============================================================
-   TEMPLATE PAGES (Instagram-style posts)
-   ============================================================== */
+/* ── Template Pages ── */
 
 .share-template-body {
   margin: 0;
   padding: 0;
-  background: #f0f0f0;
-  font-family: 'Montserrat', sans-serif;
+  background: var(--fundo);
+  font-family: var(--font-family);
 }
 
 .template-page {
@@ -249,8 +249,8 @@
   background: var(--azul-principal);
   color: #fff;
   border: none;
-  border-radius: 6px;
-  font-family: 'Montserrat', sans-serif;
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
   font-size: 0.85rem;
   font-weight: 700;
   cursor: pointer;
@@ -258,7 +258,7 @@
 }
 
 .template-download-btn:hover {
-  opacity: 0.9;
+  opacity: 0.85;
 }
 
 .template-download-btn:disabled {
@@ -268,14 +268,19 @@
 
 /* ── Instagram Post Container ── */
 .template-instagram-wrapper {
-  padding: 1rem;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
   box-sizing: border-box;
+  width: 100%;
 }
 
 .template-instagram {
   position: relative;
-  width: 540px;
-  height: 540px;
+  width: 450px;
+  height: 800px;
   background-size: cover;
   background-position: center;
   display: flex;
@@ -283,8 +288,8 @@
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  border-radius: 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 /* Background images */
@@ -305,15 +310,15 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.2);
   z-index: 0;
 }
 
 .template-logo {
   position: relative;
-  width: 80px;
+  width: 70px;
   height: auto;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   z-index: 1;
 }
 
@@ -326,19 +331,20 @@
 }
 
 .template-title {
-  font-size: 1.1rem;
-  font-weight: 900;
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-extrabold);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
-  margin: 0 0 0.25rem;
+  margin: 0 0 0.2rem;
+  line-height: 1;
 }
 
 .template-subtitle {
-  font-size: 0.75rem;
-  font-weight: 600;
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   opacity: 0.9;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   margin: 0 0 1rem;
@@ -357,17 +363,18 @@
   height: 100px;
   border-radius: 50%;
   overflow: hidden;
-  border: 3px solid rgba(255, 255, 255, 0.8);
+  border: 3px solid rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background: rgba(255, 255, 255, 0.15);
-  transition: background 0.2s;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.2s, transform 0.2s;
 }
 
 .template-photo-circle:hover {
   background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
 }
 
 .template-photo-placeholder {
@@ -384,25 +391,32 @@
 }
 
 .template-photo-input {
-  display: none;
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
 }
 
 .template-photo-hint {
-  font-size: 0.65rem;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0.25rem 0 0;
+  font-size: var(--font-size-texto-cabecalho);
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0.35rem 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .template-runner-name {
-  font-size: 1.25rem;
-  font-weight: 800;
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-extrabold);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   margin: 0 0 0.15rem;
+  line-height: 1.2;
 }
 
 .template-team-name {
-  font-size: 0.8rem;
-  font-weight: 600;
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
   opacity: 0.85;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   margin: 0 0 0.75rem;
@@ -420,41 +434,44 @@
 
 .template-stat-value {
   display: block;
-  font-size: 1.5rem;
-  font-weight: 900;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-extrabold);
   text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
   line-height: 1;
 }
 
 .template-stat-label {
   display: block;
-  font-size: 0.6rem;
-  font-weight: 700;
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
   opacity: 0.8;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
-  margin-top: 0.15rem;
+  margin-top: 0.2rem;
 }
 
 .template-hashtag {
   position: absolute;
   bottom: 1.25rem;
+  left: 0;
+  right: 0;
   z-index: 1;
   color: #fff;
-  font-size: 0.6rem;
-  font-weight: 700;
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
   text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
   opacity: 0.9;
+  text-align: center;
 }
 
 /* ── Responsive ── */
-@media (max-width: 640px) {
+@media (max-width: 480px) {
   .template-instagram {
-    width: 340px;
-    height: 340px;
+    width: 300px;
+    height: 533px;
   }
 
   .template-logo {
@@ -462,32 +479,28 @@
   }
 
   .template-title {
-    font-size: 0.85rem;
+    font-size: calc(var(--font-size-h2) * 0.7);
   }
 
   .template-runner-name {
-    font-size: 1rem;
+    font-size: calc(var(--font-size-subtitulo) * 0.7);
   }
 
   .template-stat-value {
-    font-size: 1.1rem;
+    font-size: calc(var(--font-size-h1) * 0.7);
   }
 
   .template-photo-circle {
     width: 70px;
     height: 70px;
   }
-}
 
-/* ── Download-ready full size ── */
-@media (min-width: 1080px) {
-  .template-instagram {
-    width: 540px;
-    height: 540px;
+  .template-instagram-wrapper {
+    padding: 0.5rem;
   }
 }
 
-/* Print styles for saving */
+/* Print styles for saving — 9:16 high-res */
 @media print {
   .template-toolbar {
     display: none;
@@ -499,7 +512,7 @@
 
   .template-instagram {
     width: 1080px;
-    height: 1080px;
+    height: 1920px;
     border-radius: 0;
     box-shadow: none;
     page-break-after: always;
@@ -510,29 +523,29 @@
   }
 
   .template-logo {
-    width: 140px;
+    width: 160px;
   }
 
   .template-title {
-    font-size: 2rem;
+    font-size: calc(var(--font-size-h2) * 1.8);
   }
 
   .template-runner-name {
-    font-size: 2.5rem;
+    font-size: calc(var(--font-size-subtitulo) * 2);
   }
 
   .template-stat-value {
-    font-size: 2.8rem;
+    font-size: calc(var(--font-size-h1) * 2);
   }
 
   .template-photo-circle {
-    width: 180px;
-    height: 180px;
+    width: 220px;
+    height: 220px;
   }
 
   .template-hashtag {
-    font-size: 1rem;
-    bottom: 2rem;
+    font-size: calc(var(--font-size-body) * 1.4);
+    bottom: 3rem;
   }
 
   body {

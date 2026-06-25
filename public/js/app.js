@@ -1519,25 +1519,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Painel público da equipe (/public/team/:uuid)
   if (path.startsWith('/public/team/')) {
-    // ── Botão "Criar Post" (compartilhar resultado) ──
-    const postBtn = document.querySelector('[data-runner-share-post]');
-    const postSelect = document.querySelector('[data-runner-share-select]');
-    if (postBtn && postSelect) {
-      function updatePostLink() {
-        const runnerId = postSelect.value;
-        const competitionId = postBtn.dataset.competitionId;
-        if (runnerId && competitionId) {
-          postBtn.href = '/public/competitions/' + competitionId + '/share/template/athlete?runnerId=' + runnerId;
-          postBtn.classList.remove('is-disabled');
-        } else {
-          postBtn.href = '#';
-          postBtn.classList.add('is-disabled');
-        }
-      }
-      postSelect.addEventListener('change', updatePostLink);
-      updatePostLink();
-    }
-
+    // The "Criar Post" button on the runner page is no longer used; it has been removed as part of the migration to public team URLs.
     const restOptions = Array.isArray(window.RUNNER_REST_OPTIONS)
       ? window.RUNNER_REST_OPTIONS
       : [];
@@ -1590,24 +1572,42 @@ document.addEventListener('DOMContentLoaded', function () {
       updateRestCalculator(select.value);
     }
   }
-
   // ── Compartilhar — Página de seleção ───────────────────────────────────────
   if (document.querySelector('[data-share-page]')) {
     const sharePage = document.querySelector('[data-share-page]');
-    const competitionId = sharePage.dataset.competitionId;
+    const teamUuid = sharePage.dataset.teamUuid;
     const select = document.querySelector('[data-share-athlete-select]');
     const generateBtn = document.querySelector('[data-share-generate="athlete"]');
 
     function updateAthleteButton() {
       if (!select || !generateBtn) return;
       const selected = select.value;
-      if (selected) {
-        generateBtn.removeAttribute('disabled');
-        generateBtn.href = '/competitions/' + competitionId + '/share/template/athlete?runnerId=' + selected;
-      } else {
-        generateBtn.setAttribute('disabled', 'disabled');
-        generateBtn.href = '#';
+      const canGenerate = Boolean(selected && teamUuid);
+
+      if ('disabled' in generateBtn) {
+        generateBtn.disabled = !canGenerate;
       }
+      generateBtn.toggleAttribute('disabled', !canGenerate);
+      generateBtn.setAttribute('aria-disabled', canGenerate ? 'false' : 'true');
+
+      if (generateBtn.tagName === 'A') {
+        generateBtn.href = canGenerate
+          ? '/public/team/' + teamUuid + '/share/template/athlete?runnerId=' + selected
+          : '#';
+      }
+    }
+
+    if (generateBtn) {
+      generateBtn.addEventListener('click', function (event) {
+        const selected = select ? select.value : '';
+        if (!selected || !teamUuid) {
+          event.preventDefault();
+          if (select) select.focus();
+          return;
+        }
+
+        window.location.assign('/public/team/' + teamUuid + '/share/template/athlete?runnerId=' + encodeURIComponent(selected));
+      });
     }
 
     if (select) {

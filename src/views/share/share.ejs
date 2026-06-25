@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="/css/share.css">
-<main class="share-main" data-share-page data-competition-id="<%= competitionId %>">
+<main class="share-main" data-share-page data-team-uuid="<%= teamUuid %>">
   <header class="share-header">
     <h1 class="share-title">Compartilhar Resultados</h1>
     <p class="share-subtitle"><%= competitionName %></p>
@@ -24,7 +24,7 @@
               <option value="<%= a.id %>"><%= a.name %> <%= a.team_name ? '- ' + a.team_name : '' %></option>
             <% }); %>
           </select>
-          <a href="#" class="share-btn share-btn-primary" data-share-generate="athlete" disabled>Gerar</a>
+          <button type="button" class="share-btn share-btn-primary" data-share-generate="athlete" disabled>Gerar</button>
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@
         <% if (highlights && highlights[0]) { %>
           <p class="share-card-highlight"><strong><%= highlights[0].runnerName %></strong> — <%= Number(highlights[0].distanceKm).toFixed(1) %> km</p>
         <% } %>
-        <a href="/competitions/<%= competitionId %>/share/template/maior-km" class="share-btn share-btn-primary">Gerar</a>
+        <a href="/public/team/<%= teamUuid %>/share/template/maior-km" class="share-btn share-btn-primary">Gerar</a>
       </div>
     </div>
 
@@ -63,7 +63,7 @@
         <% if (highlights && highlights[1]) { %>
           <p class="share-card-highlight"><strong><%= highlights[1].runnerName %></strong> — <%= highlights[1].pace || '—' %>/km</p>
         <% } %>
-        <a href="/competitions/<%= competitionId %>/share/template/menor-pace" class="share-btn share-btn-primary">Gerar</a>
+        <a href="/public/team/<%= teamUuid %>/share/template/menor-pace" class="share-btn share-btn-primary">Gerar</a>
       </div>
     </div>
 
@@ -82,7 +82,7 @@
         <% if (highlights && highlights[2]) { %>
           <p class="share-card-highlight"><strong><%= highlights[2].runnerName %></strong> — <%= Number(highlights[2].distanceKm).toFixed(1) %> km</p>
         <% } %>
-        <a href="/competitions/<%= competitionId %>/share/template/manha" class="share-btn share-btn-primary">Gerar</a>
+        <a href="/public/team/<%= teamUuid %>/share/template/manha" class="share-btn share-btn-primary">Gerar</a>
       </div>
     </div>
 
@@ -101,7 +101,7 @@
         <% if (highlights && highlights[3]) { %>
           <p class="share-card-highlight"><strong><%= highlights[3].runnerName %></strong> — <%= Number(highlights[3].distanceKm).toFixed(1) %> km</p>
         <% } %>
-        <a href="/competitions/<%= competitionId %>/share/template/tarde" class="share-btn share-btn-primary">Gerar</a>
+        <a href="/public/team/<%= teamUuid %>/share/template/tarde" class="share-btn share-btn-primary">Gerar</a>
       </div>
     </div>
 
@@ -120,7 +120,7 @@
         <% if (highlights && highlights[4]) { %>
           <p class="share-card-highlight"><strong><%= highlights[4].runnerName %></strong> — <%= Number(highlights[4].distanceKm).toFixed(1) %> km</p>
         <% } %>
-        <a href="/competitions/<%= competitionId %>/share/template/madrugada" class="share-btn share-btn-primary">Gerar</a>
+        <a href="/public/team/<%= teamUuid %>/share/template/madrugada" class="share-btn share-btn-primary">Gerar</a>
       </div>
     </div>
   </section>

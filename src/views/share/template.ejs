@@ -1,10 +1,9 @@
 <%
   var bgClass = 'bg-' + highlight.background;
-  var isAthlete = highlight.type === 'athlete';
 %>
 <main class="template-page" data-template-page>
   <div class="template-toolbar">
-    <a href="/competitions/<%= competitionId %>/share" class="template-back-btn">&larr; Voltar</a>
+    <a href="/public/team/<%= teamUuid %>/share" class="template-back-btn">&larr; Voltar</a>
     <h2 class="template-toolbar-title"><%= highlight.title %></h2>
     <button class="template-download-btn" data-template-download>Baixar PNG</button>
   </div>
@@ -17,15 +16,13 @@
         <p class="template-title"><%= highlight.title %></p>
         <p class="template-subtitle"><%= highlight.subtitle %></p>
 
-        <% if (isAthlete) { %>
           <div class="template-photo-area">
-            <div class="template-photo-circle" data-template-photo>
+            <div class="template-photo-circle" data-template-photo-circle>
               <span class="template-photo-placeholder">+</span>
             </div>
             <input type="file" accept="image/*" class="template-photo-input" data-template-photo-input />
             <p class="template-photo-hint">Clique para adicionar foto</p>
           </div>
-        <% } %>
 
         <p class="template-runner-name"><%= highlight.runnerName %></p>
         <% if (highlight.teamName) { %>
@@ -85,6 +82,8 @@ document.addEventListener('DOMContentLoaded', function() {
         img.alt = 'Foto do atleta';
         img.className = 'template-photo-img';
         photoCircle.appendChild(img);
+        var hint = templatePage.querySelector('.template-photo-hint');
+        if (hint) hint.style.display = 'none';
       };
       reader.readAsDataURL(file);
     });

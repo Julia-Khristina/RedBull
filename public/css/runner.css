@@ -72,8 +72,8 @@
 
 .share-post-select {
   padding: 6px 8px;
-  border: 1px solid var(--bordas-separadores);
-  border-radius: 6px;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: 10px;
   font-family: var(--font-family);
   font-size: 0.75rem;
   background: var(--fundo-cards);
@@ -88,7 +88,7 @@
   background: var(--azul-principal);
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: 10px;
   font-family: var(--font-family);
   font-size: 0.75rem;
   font-weight: 700;

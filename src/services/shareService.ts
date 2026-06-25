@@ -6,7 +6,6 @@ import { rankingService } from "./rankingService";
 import { competitionService } from "./competitionService";
 import { teamService } from "./teamService";
 import { runnerService } from "./runnerService";
-import { AppError } from "../errors/AppError";
 
 function formatPace(seconds: number | null): string | null {
   if (seconds === null || !Number.isFinite(seconds)) return null;
@@ -32,19 +31,13 @@ function getPeriodLabel(date: Date): "manha" | "tarde" | "madrugada" {
 }
 
 export function createShareService() {
-  async function getAthletes(competitionId: number): Promise<ShareAthlete[]> {
-    const teams = await teamService.findByCompetition(competitionId);
-    const athletes: ShareAthlete[] = [];
-    for (const team of teams) {
-      const runners = await runnerService.findByTeam(team.id);
-      for (const runner of runners) {
-        athletes.push({
-          id: runner.id,
-          name: runner.name,
-          team_name: team.name,
-        });
-      }
-    }
+  async function getAthletes(teamId: number): Promise<ShareAthlete[]> {
+    const runners = await runnerService.findByTeam(teamId);
+    const athletes: ShareAthlete[] = runners.map((runner) => ({
+      id: runner.id,
+      name: runner.name,
+      team_name: null,
+    }));
     return athletes.sort((a, b) => a.name.localeCompare(b.name));
   }
 
@@ -176,9 +169,9 @@ export function createShareService() {
       return getAthleteHighlight(competitionId, runnerId);
     },
 
-    async getAthletes(competitionId: number): Promise<ShareAthlete[]> {
-      return getAthletes(competitionId);
-    },
+      async getAthletes(teamId: number): Promise<ShareAthlete[]> {
+        return getAthletes(teamId);
+      },
 
     async getCompetitionName(competitionId: number): Promise<string> {
       const comp = await competitionService.findById(competitionId);
