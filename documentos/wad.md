@@ -1494,37 +1494,35 @@ router.get("/competitions/:id", asyncHandler(competitionController.findById));
 Nesse exemplo, o `asyncHandler` encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o `errorHandler`.
  
 ---
- 
 
 ### Validation Layer Pattern
-
+ 
 #### Categoria
-
+ 
 Estrutural / Arquitetural
-
+ 
 #### Definição
-
+ 
 O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio. Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelos Services e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
-
+ 
 #### Problema resolvido
-
+ 
 Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
-
+ 
 #### Justificativa da adoção
-
+ 
 Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação. A centralização das validações em arquivos específicos permite reduzir repetição de código, organizar validações da aplicação, padronizar verificações realizadas e impedir envio de dados inválidos para os Services. Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
-
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
+ 
 - `src/validators/competitionValidator.ts`
 - `src/validators/teamValidator.ts`
 - `src/validators/runnerValidator.ts`
 - `src/validators/checkpointValidator.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 export function validateCreateCompetition(
   payload: unknown
@@ -1532,53 +1530,53 @@ export function validateCreateCompetition(
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
   }
-
+ 
   const name = readRequiredText(payload, "name");
   const date = readRequiredText(payload, "date");
   const address = readRequiredText(payload, "address");
-
+ 
   if (name.length > 100) {
     throw new ValidationError("name deve ter no máximo 100 caracteres");
   }
-
+ 
   if (address.length > 255) {
     throw new ValidationError("address deve ter no máximo 255 caracteres");
   }
-
+ 
   if (!isValidDate(date)) {
     throw new ValidationError("date deve ser uma data válida");
   }
-
+ 
   return { name, date, address };
 }
 ```
-
+ 
 Nesse exemplo, a função realiza validações relacionadas à estrutura, tipos, formatos e tamanhos dos campos esperados no payload antes que os dados sejam enviados para as regras de negócio da aplicação.
-
+ 
 ---
-
+ 
 ### Template View com Partial Views
-
+ 
 #### Categoria
-
+ 
 Estrutural / Apresentação
-
+ 
 #### Definição
-
-O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo back-end. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
-
+ 
+O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo backend. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, cada página precisaria replicar manualmente estruturas comuns da interface, como layout principal, navegação, estilos e scripts compartilhados, aumentando a duplicidade de código e dificultando manutenção.
-
+ 
 #### Justificativa da adoção
-
+ 
 Esse padrão foi adotado para permitir a renderização dinâmica das páginas utilizando EJS e reutilizar elementos compartilhados da interface por meio de layouts e parciais. Dessa forma, a estrutura visual da aplicação permanece centralizada e padronizada entre as diferentes telas do sistema.
-
+ 
 #### Aplicação no projeto
-
+ 
 O padrão pode ser observado nos seguintes arquivos:
-
+ 
 - `src/views/layouts/main.ejs`
 - `src/views/partials/menu.ejs`
 - `src/views/dashboard/`
@@ -1587,30 +1585,31 @@ O padrão pode ser observado nos seguintes arquivos:
 - `src/views/ranking/`
 - `src/views/reports/`
 - `src/views/teams/`
-
 #### Exemplo de código
-
+ 
 ```html
 <head>
   <link rel="stylesheet" href="/css/variables.css">
-
+ 
   <% if (locals.pageCSS) { %>
     <link rel="stylesheet" href="<%= locals.pageCSS %>">
   <% } %>
 </head>
-
+ 
 <body>
   <%- include('../partials/menu') %>
-
+ 
   <div class="content-wrapper">
     <%- body %>
   </div>
-
+ 
   <script src="/js/app.js"></script>
 </body>
 ```
-
+ 
 Nesse exemplo, o layout principal define a estrutura compartilhada da interface, enquanto o partial `menu.ejs` é reutilizado em diferentes páginas da aplicação, evitando duplicação de código e facilitando manutenção.
+ 
+
 
 ## 3.3. Wireframes (sprint 2)
 
