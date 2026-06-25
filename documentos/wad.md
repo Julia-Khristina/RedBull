@@ -4066,7 +4066,7 @@ O Business Model Canvas é uma ferramenta de gestão estratégica que descreve, 
 
 <div align="center">
   <sub>Figura X - Business Model Canvas</sub><br>
-    <img src="../assets/negocios/business-model-canvas.jpeg" 
+    <img src="../assets/negocios/business-model-canvas.png" 
     width="100%" alt="Template do business model canvas"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
