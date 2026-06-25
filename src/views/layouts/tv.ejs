@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title : 'Painel TV — Red Bull 24h' %></title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <%# Jost = fallback open-source de Futura; o protótipo da Luiza usa Futura,
+      que é licenciada e pode não existir no PC que toca a TV. %>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@500;700;800;900&display=swap">
+  <link rel="stylesheet" href="/css/variables.css">
+  <link rel="stylesheet" href="/css/tv-panel.css">
+</head>
+<body class="tv-body">
+  <%- body %>
+  <script src="/js/tv-panel.js"></script>
+</body>
+</html>

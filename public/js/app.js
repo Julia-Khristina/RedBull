@@ -1,4 +1,27 @@
 // [D1] Padrão: verificação de autenticação + ativação de menu
+function formatPacePartsForApi(minutes, seconds) {
+  return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0') + '/km';
+}
+
+function formatPacePartsForDisplay(minutes, seconds) {
+  return String(minutes).padStart(2, '0') + ':' + String(seconds).padStart(2, '0');
+}
+
+function normalizePaceForApi(value) {
+  const raw = String(value || '').trim();
+  if (!raw) return undefined;
+
+  const match = raw.match(/^([0-9]{1,2})(?:[:'])([0-9]{2})(?:''|")?(?:\s*\/\s*km)?$/i);
+  if (!match) return raw;
+  if (Number(match[2]) > 59) return raw;
+
+  return formatPacePartsForApi(match[1], match[2]);
+}
+
+function stripPaceUnit(value) {
+  return String(value || '').trim().replace(/\s*\/\s*km$/i, '');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
   const path = window.location.pathname;
 
@@ -130,6 +153,120 @@ document.addEventListener('DOMContentLoaded', function () {
         }
       });
     }
+  }
+
+  // ── Dashboard — Modal de edição de competição ──────────────────────────────
+  // [A1] PUT /competitions/:id — update competition
+  // [A1] GET /competitions/:id — fetch single competition data
+  if (path === '/' || path === '/dashboard') {
+    const modal = document.querySelector('[data-db-edit-modal]');
+    const form = document.querySelector('[data-db-edit-form]');
+    const idInput = form ? form.querySelector('[data-db-edit-id]') : null;
+    const nameInput = document.getElementById('db-edit-name');
+    const dateInput = document.getElementById('db-edit-date');
+    const addressInput = document.getElementById('db-edit-address');
+    const submitBtn = document.getElementById('db-edit-submit');
+    const errorEl = document.getElementById('db-edit-error');
+
+    function showEditError(message) {
+      if (!errorEl) return;
+      errorEl.textContent = message;
+      errorEl.classList.add('visible');
+    }
+
+    function clearEditError() {
+      if (!errorEl) return;
+      errorEl.textContent = '';
+      errorEl.classList.remove('visible');
+    }
+
+    function openEditModal(id) {
+      if (!modal || !form || !idInput || !nameInput || !dateInput || !addressInput) return;
+
+      clearEditError();
+      fetch('/competitions/' + id)
+        .then(function (res) {
+          if (!res.ok) throw new Error('Erro ao carregar dados da competição.');
+          return res.json();
+        })
+        .then(function (comp) {
+          idInput.value = comp.id;
+          nameInput.value = comp.name || '';
+          dateInput.value = comp.date || '';
+          addressInput.value = comp.address || '';
+          modal.hidden = false;
+        })
+        .catch(function (err) {
+          showEditError(err.message || 'Não foi possível carregar a competição.');
+        });
+    }
+
+    function closeEditModal() {
+      if (!modal) return;
+      modal.hidden = true;
+      clearEditError();
+    }
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!idInput || !nameInput || !dateInput || !addressInput || !submitBtn) return;
+
+        const id = idInput.value;
+        if (!id) return;
+
+        clearEditError();
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Salvando...';
+
+        fetch('/competitions/' + id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nameInput.value.trim(),
+            date: dateInput.value,
+            address: addressInput.value.trim(),
+          }),
+        })
+          .then(function (res) {
+            if (!res.ok) {
+              return res.json().then(function (data) {
+                throw new Error(data.message || 'Erro ao atualizar.');
+              });
+            }
+            window.location.reload();
+          })
+          .catch(function (err) {
+            showEditError(err.message || 'Erro ao atualizar competição.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          });
+      });
+    }
+
+    // Event delegation for edit buttons and modal backdrop/close
+    document.addEventListener('click', function (e) {
+      var target = e.target.closest('[data-db-edit-action]');
+      if (target) {
+        var action = target.dataset.dbEditAction;
+        if (action === 'close') closeEditModal();
+        return;
+      }
+
+      target = e.target.closest('.db-edit-btn');
+      if (target) {
+        var id = target.dataset.id;
+        if (id) openEditModal(id);
+      }
+    });
+
+    // Escape key closes modal
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && !modal.hidden) {
+        closeEditModal();
+      }
+    });
   }
 
   // ===========================================================================
@@ -301,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // =======================================================================
       // Task #329 — Copiar URL pública (UUID) com feedback visual
       // [A1] Botão estruturado em teams.ejs com data-teams-action="copy-uuid"
-      //   e data-uuid contendo o UUID gerado pelo backend (RN01).
+      //   e data-uuid contendo a URL pública completa (http://localhost:3000/public/team/<uuid>).
       // [D1] Fallback para document.execCommand quando navigator.clipboard
       //   não estiver disponível (browsers antigos / contexto inseguro).
       // =======================================================================
@@ -480,9 +617,12 @@ document.addEventListener('DOMContentLoaded', function () {
         return { teamName: teamName, runners: runners };
       }
 
-      async function createTeamAndRunners(event) {
-        event.preventDefault();
-        clearCreateError();
+        async function createTeamAndRunners(event) {
+          event.preventDefault();
+          if (submitBtn && submitBtn.disabled) return;
+
+          clearCreateError();
+
 
         let payload;
         try {
@@ -504,7 +644,10 @@ document.addEventListener('DOMContentLoaded', function () {
           const teamRes = await fetch('/competitions/' + competitionId + '/teams', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: payload.teamName }),
+            body: JSON.stringify({ 
+              name: payload.teamName, 
+              runners: payload.runners 
+            }),
           });
 
           if (!teamRes.ok) {
@@ -513,22 +656,6 @@ document.addEventListener('DOMContentLoaded', function () {
           }
 
           createdTeam = await teamRes.json();
-
-          for (const runner of payload.runners) {
-            const runnerRes = await fetch(
-              '/competitions/' + competitionId + '/teams/' + createdTeam.id + '/runners',
-              {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(runner),
-              }
-            );
-
-            if (!runnerRes.ok) {
-              const data = await runnerRes.json().catch(function () { return { message: 'Erro ao cadastrar atleta.' }; });
-              throw new Error(data.message || 'Erro ao cadastrar atleta.');
-            }
-          }
 
           window.location.href = '/teams?competitionId=' + encodeURIComponent(competitionId);
         } catch (err) {
@@ -823,7 +950,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         manualRegistrationLink.href = '/operational-panel/' + runnerId +
           '?competitionId=' + encodeURIComponent(competitionId) +
-          '&teamId=' + encodeURIComponent(teamId);
+          '&teamId=' + encodeURIComponent(teamId) +
+          '&mode=manual';
         manualRegistrationLink.classList.remove('is-disabled');
         manualRegistrationLink.setAttribute('aria-disabled', 'false');
       }
@@ -954,11 +1082,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Registro manual (/operational-panel)
   if (path === '/operational-panel' || path.startsWith('/operational-panel/')) {
+    function getTimeFromParts(h, m, s) {
+      return (String(h.value || '0').padStart(2, '0') + ':' +
+              String(m.value || '0').padStart(2, '0') + ':' +
+              String(s.value || '0').padStart(2, '0'));
+    }
+
+    function filterNumericInput() {
+      this.value = this.value.replace(/\D/g, '').slice(0, 2);
+    }
+
+    document.querySelectorAll('.time-part').forEach(function (input) {
+      input.addEventListener('input', filterNumericInput);
+    });
+
+    function normalizeDecimalForApi(value) {
+      return Number(String(value || '').trim().replace(',', '.'));
+    }
+
+    function durationToSeconds(value) {
+      const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
+      if (parts.length === 2 && parts.every(Number.isFinite)) {
+        return parts[0] * 60 + parts[1];
+      }
+      if (parts.length === 3 && parts.every(Number.isFinite)) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      }
+      return null;
+    }
+
+    function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
+      const distance = normalizeDecimalForApi(distanceValue);
+      const seconds = durationToSeconds(timeValue);
+      if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
+      const secondsPerKm = Math.round(seconds / distance);
+      const minutes = Math.floor(secondsPerKm / 60);
+      const remainingSeconds = secondsPerKm % 60;
+      return formatPacePartsForApi(minutes, remainingSeconds);
+    }
+
     const ocrPanel = document.querySelector('[data-ocr-panel]');
     if (ocrPanel) {
       const captureStep = ocrPanel.querySelector('[data-ocr-step="capture"]');
       const reviewStep = ocrPanel.querySelector('[data-ocr-step="review"]');
       const manualMode = ocrPanel.querySelector('[data-manual-mode]');
+      if (ocrPanel.dataset.startMode === 'manual') {
+        showStep('manual');
+      }
       const fileInput = ocrPanel.querySelector('[data-ocr-image-input]');
       const openFileBtn = ocrPanel.querySelector('[data-ocr-open-file]');
       const capturePreview = ocrPanel.querySelector('[data-ocr-capture-preview]');
@@ -970,7 +1140,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const retakeBtn = ocrPanel.querySelector('[data-ocr-retake]');
       const distanceInput = ocrPanel.querySelector('[data-ocr-distance]');
       const paceInput = ocrPanel.querySelector('[data-ocr-pace]');
-      const timeInput = ocrPanel.querySelector('[data-ocr-time]');
+      const timeInputH = ocrPanel.querySelector('[data-ocr-time-h]');
+      const timeInputM = ocrPanel.querySelector('[data-ocr-time-m]');
+      const timeInputS = ocrPanel.querySelector('[data-ocr-time-s]');
       const discrepancy = ocrPanel.querySelector('[data-ocr-discrepancy]');
       const discrepancyText = ocrPanel.querySelector('[data-ocr-discrepancy-text]');
       const capturedClock = ocrPanel.querySelector('[data-ocr-captured-clock]');
@@ -1001,9 +1173,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (manualMode) manualMode.hidden = step !== 'manual';
       }
 
-      function normalizeDecimalForApi(value) {
-        return Number(String(value || '').trim().replace(',', '.'));
-      }
 
       function normalizeOcrTime(value) {
         const raw = String(value || '').trim();
@@ -1018,27 +1187,6 @@ document.addEventListener('DOMContentLoaded', function () {
             String(parts[2]).padStart(2, '0');
         }
         return raw;
-      }
-
-      function durationToSeconds(value) {
-        const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
-        if (parts.length === 2 && parts.every(Number.isFinite)) {
-          return parts[0] * 60 + parts[1];
-        }
-        if (parts.length === 3 && parts.every(Number.isFinite)) {
-          return parts[0] * 3600 + parts[1] * 60 + parts[2];
-        }
-        return null;
-      }
-
-      function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
-        const distance = normalizeDecimalForApi(distanceValue);
-        const seconds = durationToSeconds(timeValue);
-        if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
-        const secondsPerKm = Math.round(seconds / distance);
-        const minutes = Math.floor(secondsPerKm / 60);
-        const remainingSeconds = String(secondsPerKm % 60).padStart(2, '0');
-        return minutes + ':' + remainingSeconds + '/km';
       }
 
       function updateOcrSourceNotice(result) {
@@ -1061,7 +1209,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const pace = calculatePaceFromDistanceAndTime(distance, time);
         if (distanceInput) distanceInput.value = distance;
         if (paceInput) paceInput.value = pace;
-        if (timeInput) timeInput.value = time;
+        var parts = time.split(':');
+        if (timeInputH) timeInputH.value = parts[0] || '';
+        if (timeInputM) timeInputM.value = parts[1] || '';
+        if (timeInputS) timeInputS.value = parts[2] || '';
         ocrState.originalValues = { distance: distance, pace: pace, time: time };
         updateOcrSourceNotice(result);
         if (saveBtn) saveBtn.disabled = false;
@@ -1110,28 +1261,26 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = normalizeDecimalForApi(distanceInput ? distanceInput.value : '');
         const idRunner = readContextNumber('id_runner');
         const idCompetition = readContextNumber('id_competition');
-        const idTreadmill = readContextNumber('id_treadmill');
         const idAdmin = readContextNumber('id_admin');
         if (!Number.isFinite(distance) || distance < 0) {
           throw new Error('Distancia deve ser um numero nao negativo.');
         }
-        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+        if (!idRunner || !idCompetition || !idAdmin) {
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
-        const time = normalizeOcrTime(timeInput ? timeInput.value : '');
+        const time = getTimeFromParts(timeInputH, timeInputM, timeInputS);
         const pace = calculatePaceFromDistanceAndTime(distanceInput ? distanceInput.value : '', time);
         const edited = !ocrState.originalValues ||
           String(distanceInput ? distanceInput.value : '') !== String(ocrState.originalValues.distance) ||
-          String(timeInput ? timeInput.value : '') !== String(ocrState.originalValues.time);
+          getTimeFromParts(timeInputH, timeInputM, timeInputS) !== String(ocrState.originalValues.time);
 
         const payload = {
-          identifier: 'OCR-' + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
+          identifier: (edited ? 'OCR-EDITED-' : 'OCR-') + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
           distance_km: distance,
           id_runner: idRunner,
           id_competition: idCompetition,
-          id_treadmill: idTreadmill,
           id_admin: idAdmin,
           image: {
             input_method: 'ocr',
@@ -1170,18 +1319,18 @@ document.addEventListener('DOMContentLoaded', function () {
           showStep('capture');
         });
       }
-      [distanceInput, paceInput, timeInput].forEach(function (input) {
-        if (!input) return;
-        input.addEventListener('input', function () {
-          if (input !== paceInput && paceInput) {
-            const normalizedTime = normalizeOcrTime(timeInput ? timeInput.value : '');
-            paceInput.value = calculatePaceFromDistanceAndTime(
-              distanceInput ? distanceInput.value : '',
-              normalizedTime
-            );
-          }
-          updateOcrSourceNotice(ocrState.extraction);
-        });
+      function updateOcrPace() {
+        if (!paceInput) return;
+        paceInput.value = calculatePaceFromDistanceAndTime(
+          distanceInput ? distanceInput.value : '',
+          getTimeFromParts(timeInputH, timeInputM, timeInputS)
+        );
+        updateOcrSourceNotice(ocrState.extraction);
+      }
+
+      if (distanceInput) distanceInput.addEventListener('input', updateOcrPace);
+      [timeInputH, timeInputM, timeInputS].forEach(function (input) {
+        if (input) input.addEventListener('input', updateOcrPace);
       });
       if (saveBtn) {
         saveBtn.addEventListener('click', async function () {
@@ -1208,8 +1357,8 @@ document.addEventListener('DOMContentLoaded', function () {
             setOcrFeedback(reviewFeedback, 'Checkpoint salvo com sucesso.', false);
           } catch (err) {
             setOcrFeedback(reviewFeedback, err.message || 'Erro ao salvar checkpoint.', true);
-            saveBtn.disabled = false;
           } finally {
+            saveBtn.disabled = false;
             saveBtn.textContent = originalLabel;
           }
         });
@@ -1229,15 +1378,29 @@ document.addEventListener('DOMContentLoaded', function () {
         feedback.dataset.state = isError ? 'error' : (message ? 'success' : '');
       }
 
+      const manualDistanceInput = form.querySelector('input[name="distance_km"]');
+      const manualPaceInput = form.querySelector('input[name="pace"]');
+      const manualTimeH = form.querySelector('input[name="time_hours"]');
+      const manualTimeM = form.querySelector('input[name="time_minutes"]');
+      const manualTimeS = form.querySelector('input[name="time_seconds"]');
+
+      function updateManualPace() {
+        if (!manualDistanceInput || !manualPaceInput) return;
+        manualPaceInput.value = calculatePaceFromDistanceAndTime(
+          manualDistanceInput.value,
+          getTimeFromParts(manualTimeH, manualTimeM, manualTimeS)
+        );
+      }
+
+      if (manualDistanceInput) {
+        manualDistanceInput.addEventListener('input', updateManualPace);
+      }
+      [manualTimeH, manualTimeM, manualTimeS].forEach(function (input) {
+        if (input) input.addEventListener('input', updateManualPace);
+      });
+
       function normalizePace(value) {
-        const raw = String(value || '').trim();
-        if (!raw) return undefined;
-        if (/^[0-9]{1,2}:[0-9]{2}\/km$/.test(raw)) return raw;
-
-        const quoteMatch = raw.match(/^([0-9]{1,2})'?[:']([0-9]{2})/);
-        if (quoteMatch) return quoteMatch[1] + ':' + quoteMatch[2] + '/km';
-
-        return raw;
+        return normalizePaceForApi(value);
       }
 
       function buildCheckpointPayload() {
@@ -1245,14 +1408,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = Number(data.get('distance_km'));
         const idRunner = Number(data.get('id_runner'));
         const idCompetition = Number(data.get('id_competition'));
-        const idTreadmill = Number(data.get('id_treadmill'));
         const idAdmin = Number(data.get('id_admin'));
 
         if (!Number.isFinite(distance) || distance < 0) {
           throw new Error('Distância deve ser um número não negativo.');
         }
-        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+        if (!idRunner || !idCompetition || !idAdmin) {
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
@@ -1263,7 +1425,6 @@ document.addEventListener('DOMContentLoaded', function () {
           distance_km: distance,
           id_runner: idRunner,
           id_competition: idCompetition,
-          id_treadmill: idTreadmill,
           id_admin: idAdmin,
           image: {
             input_method: form.dataset.inputMethod || 'manual',
@@ -1271,16 +1432,38 @@ document.addEventListener('DOMContentLoaded', function () {
           },
         };
         const pace = normalizePace(data.get('pace'));
-        const time = String(data.get('time') || '').trim();
+        const time = getTimeFromParts(manualTimeH, manualTimeM, manualTimeS);
         if (pace) payload.pace = pace;
-        if (time) payload.time = time;
+        if (time !== '00:00:00') payload.time = time;
 
         return payload;
       }
 
-      form.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        const originalLabel = submitBtn ? submitBtn.textContent : '';
+      function detectOutliers(payload) {
+        var warnings = [];
+
+        if (payload.distance_km > 20) {
+          var guess = (payload.distance_km / 10).toFixed(1);
+          warnings.push('Distancia ' + payload.distance_km + 'km parece muito alta. Talvez seja ' + guess + 'km (virgula faltando?)');
+        } else if (payload.distance_km > 0 && payload.distance_km < 0.3) {
+          warnings.push('Distancia ' + payload.distance_km + 'km parece muito baixa. Faltou um zero?');
+        }
+
+        if (payload.time) {
+          var parts = payload.time.split(':').map(Number);
+          var totalMin = parts[0] * 60 + parts[1] + parts[2] / 60;
+          if (totalMin > 30) {
+            warnings.push('Tempo ' + payload.time + ' parece longo demais para um checkpoint.');
+          }
+        }
+
+        return warnings;
+      }
+
+      if (!submitBtn) return;
+
+      submitBtn.addEventListener('click', async function () {
+        const originalLabel = submitBtn.textContent;
         let payload;
 
         try {
@@ -1290,10 +1473,17 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Salvando...';
+        var warnings = detectOutliers(payload);
+        if (warnings.length > 0) {
+          var msg = 'ATENCAO:\n' + warnings.join('\n') + '\n\nDeseja salvar mesmo assim?';
+          if (!confirm(msg)) {
+            showManualFeedback('Salvamento cancelado. Revise os dados.', true);
+            return;
+          }
         }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Salvando...';
         showManualFeedback('', false);
 
         try {
@@ -1308,14 +1498,14 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error(data.message || 'Erro ao salvar registro manual.');
           }
 
-          showManualFeedback('Registro manual salvo com sucesso.', false);
+          showManualFeedback('Checkpoint realizado com sucesso!', false);
+          console.log('Checkpoint manual salvo, status:', res.status);
         } catch (err) {
-          showManualFeedback(err.message || 'Erro ao salvar registro manual.', true);
+          console.error('Erro ao salvar checkpoint manual:', err);
+          showManualFeedback('ERRO: ' + err.message, true);
         } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalLabel;
-          }
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
         }
       });
 
@@ -1438,18 +1628,354 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================================
-  // RANKING — Auto-polling (admin: 5 min, public: 1h)
-  // RN11: painel adm a cada 5 min
-  // RN09: painel público a cada 1h
+  // RANKING — Auto-polling (1 min)
   // ============================================================
   var competitionId = window.COMPETITION_ID;
   var isAdmin = window.IS_ADMIN;
 
   if (competitionId) {
-    var pollIntervalMs = isAdmin ? 5 * 60 * 1000 : 60 * 60 * 1000;
+    var pollIntervalMs = 60 * 1000;
 
     fetchRanking(competitionId, isAdmin);
     setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);
+  }
+
+  // ============================================================
+  // REPORTS — Chart.js gráfico de km acumulado por equipe
+  // ============================================================
+  if (window.EQUIPE_HORÁRIO_KM) {
+    var kmCanvas = document.getElementById('kmChart');
+    if (kmCanvas && typeof Chart !== 'undefined') {
+      var hourlyData = window.EQUIPE_HORÁRIO_KM;
+      var colors = ['#d2003c', '#0f0069', '#ffcc00', '#233972'];
+      var datasets = hourlyData.datasets.map(function (ds, index) {
+        return {
+          label: ds.team_name,
+          data: ds.data,
+          borderColor: colors[index % colors.length],
+          backgroundColor: colors[index % colors.length] + '33',
+          borderWidth: 3,
+          pointRadius: 4,
+          pointBackgroundColor: colors[index % colors.length],
+          pointBorderColor: '#fff',
+          pointBorderWidth: 2,
+          tension: 0.3,
+          fill: false,
+        };
+      });
+
+      new Chart(kmCanvas, {
+        type: 'line',
+        data: {
+          labels: hourlyData.labels,
+          datasets: datasets,
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: true,
+              position: 'bottom',
+              labels: {
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+                usePointStyle: true,
+                padding: 16,
+              },
+            },
+          },
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'Horas',
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+              },
+              ticks: {
+                font: { family: 'Montserrat', size: 11 },
+                color: '#0f0069',
+              },
+              grid: { color: '#dadada' },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'Distância (km)',
+                font: { family: 'Montserrat', size: 12, weight: 'bold' },
+                color: '#0f0069',
+              },
+              ticks: {
+                font: { family: 'Montserrat', size: 11 },
+                color: '#0f0069',
+              },
+              grid: { color: '#dadada' },
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+    }
+  }
+
+  // ============================================================
+  // DASHBOARD — Filtro e paginação de competições
+  // ============================================================
+  if (path === '/dashboard') {
+    (function () {
+      var ITEMS_PER_PAGE = 5;
+      var cards = Array.from(document.querySelectorAll('#competition-list .db-competition-card'));
+      var listEl = document.getElementById('competition-list');
+      var paginationEl = document.getElementById('pagination');
+      var infoEl = document.getElementById('pagination-info');
+      var prevBtn = document.getElementById('prev-page');
+      var nextBtn = document.getElementById('next-page');
+      var statusFilter = document.getElementById('filter-status');
+      var dateFilter = document.getElementById('filter-date');
+      var locationFilter = document.getElementById('filter-location');
+      var resetBtn = document.getElementById('filter-reset');
+
+      if (!cards.length) return;
+
+      var noResults = document.createElement('div');
+      noResults.className = 'db-card';
+      noResults.id = 'no-results-msg';
+      noResults.style.display = 'none';
+      noResults.innerHTML = '<h3 class="db-card-heading">Nenhuma competição encontrada</h3><hr class="db-divider" /><p class="db-card-body">Nenhuma competição corresponde aos filtros aplicados.</p>';
+      listEl.appendChild(noResults);
+
+      var currentPage = 1;
+
+      function getFilteredCards() {
+        var status = statusFilter.value;
+        var date = dateFilter.value;
+        var location = locationFilter.value.toLowerCase().trim();
+
+        return cards.filter(function (card) {
+          var cardStatus = card.getAttribute('data-status');
+          var cardDate = card.getAttribute('data-date');
+          var cardLocation = card.getAttribute('data-location');
+
+          if (status === 'ativas' && cardStatus !== 'in_progress') return false;
+          if (status !== 'all' && status !== 'ativas' && cardStatus !== status) return false;
+          if (date && cardDate !== date) return false;
+          if (location && !cardLocation.includes(location)) return false;
+
+          return true;
+        });
+      }
+
+      function render() {
+        var filtered = getFilteredCards();
+        var totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+
+        if (currentPage > totalPages) currentPage = totalPages;
+        if (currentPage < 1) currentPage = 1;
+
+        var start = (currentPage - 1) * ITEMS_PER_PAGE;
+        var end = start + ITEMS_PER_PAGE;
+        var pageItems = filtered.slice(start, end);
+
+        cards.forEach(function (card) { card.style.display = 'none'; });
+        noResults.style.display = 'none';
+
+        if (filtered.length === 0) {
+          noResults.style.display = 'block';
+          paginationEl.style.display = 'none';
+        } else {
+          pageItems.forEach(function (card) { card.style.display = 'flex'; });
+          paginationEl.style.display = 'flex';
+        }
+
+        infoEl.textContent = (filtered.length > 0 ? (start + 1) + '-' + Math.min(end, filtered.length) : '0') + ' de ' + filtered.length;
+        prevBtn.disabled = currentPage <= 1;
+        nextBtn.disabled = currentPage >= totalPages;
+      }
+
+      function handleAction(btnSelector, urlSuffix, confirmMsg, errorMsg) {
+        document.querySelectorAll(btnSelector).forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var id = this.getAttribute('data-id');
+            if (!confirm(confirmMsg)) return;
+            fetch('/competitions/' + id + urlSuffix, { method: 'PATCH' })
+              .then(function (r) {
+                if (!r.ok) throw new Error('Erro');
+                location.reload();
+              })
+              .catch(function () { alert(errorMsg); });
+          });
+        });
+      }
+
+      handleAction('.db-activate-btn', '/activate', 'Ativar esta competição?', 'Erro ao ativar competição');
+      handleAction('.db-close-btn', '', 'Encerrar esta competição?', 'Erro ao encerrar competição');
+
+      prevBtn.addEventListener('click', function () {
+        if (currentPage > 1) { currentPage--; render(); }
+      });
+
+      nextBtn.addEventListener('click', function () {
+        var totalPages = Math.max(1, Math.ceil(getFilteredCards().length / ITEMS_PER_PAGE));
+        if (currentPage < totalPages) { currentPage++; render(); }
+      });
+
+      statusFilter.addEventListener('change', function () { currentPage = 1; render(); });
+      dateFilter.addEventListener('change', function () { currentPage = 1; render(); });
+      locationFilter.addEventListener('input', function () { currentPage = 1; render(); });
+
+      resetBtn.addEventListener('click', function () {
+        statusFilter.value = 'all';
+        dateFilter.value = '';
+        locationFilter.value = '';
+        currentPage = 1;
+        render();
+      });
+
+      render();
+    })();
+  }
+
+  // ── Export Modal ──
+  if (window.EXPORT_SHEETS && Array.isArray(window.EXPORT_SHEETS)) {
+    const exportBtn = document.getElementById('export-btn');
+    const modal = document.getElementById('export-modal');
+    const backdrop = document.getElementById('export-modal-backdrop');
+    const list = document.getElementById('export-sheets-list');
+    const cancelBtn = document.getElementById('export-modal-cancel');
+    const confirmBtn = document.getElementById('export-modal-confirm');
+    const errorEl = document.getElementById('export-modal-error');
+
+    if (!exportBtn || !modal || !backdrop || !list || !cancelBtn || !confirmBtn || !errorEl) {
+      // skip if modal elements are missing
+    } else {
+      var selectedSheets = {};
+
+      function renderSheetOptions() {
+        list.innerHTML = '';
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          var option = document.createElement('label');
+          option.className = 'export-sheet-option';
+          if (selectedSheets[sheet.id]) option.classList.add('selected');
+
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'export-sheet-checkbox';
+          checkbox.checked = selectedSheets[sheet.id] || false;
+          checkbox.dataset.sheetId = sheet.id;
+
+          var info = document.createElement('div');
+          info.className = 'export-sheet-info';
+
+          var label = document.createElement('span');
+          label.className = 'export-sheet-label';
+          label.textContent = sheet.label;
+
+          var desc = document.createElement('span');
+          desc.className = 'export-sheet-desc';
+          desc.textContent = sheet.description;
+
+          info.appendChild(label);
+          info.appendChild(desc);
+          option.appendChild(checkbox);
+          option.appendChild(info);
+
+          option.addEventListener('click', function (e) {
+            if (e.target === checkbox) return;
+            checkbox.checked = !checkbox.checked;
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          checkbox.addEventListener('change', function () {
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          list.appendChild(option);
+        });
+      }
+
+      function updateConfirmState() {
+        var count = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; }).length;
+        confirmBtn.disabled = count === 0;
+      }
+
+      function openExportModal() {
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          if (selectedSheets[sheet.id] === undefined) {
+            selectedSheets[sheet.id] = true;
+          }
+        });
+        renderSheetOptions();
+        updateConfirmState();
+        errorEl.textContent = '';
+        modal.hidden = false;
+      }
+
+      function closeExportModal() {
+        modal.hidden = true;
+      }
+
+      exportBtn.addEventListener('click', openExportModal);
+      backdrop.addEventListener('click', closeExportModal);
+      cancelBtn.addEventListener('click', closeExportModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) closeExportModal();
+      });
+
+      confirmBtn.addEventListener('click', async function () {
+        var sheetIds = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; });
+        if (sheetIds.length === 0) {
+          errorEl.textContent = 'Selecione pelo menos uma aba para exportar.';
+          return;
+        }
+
+        var competitionId = window.COMPETITION_ID;
+        if (!competitionId) {
+          errorEl.textContent = 'ID da competição não encontrado.';
+          return;
+        }
+
+        var originalLabel = confirmBtn.textContent;
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Exportando...';
+        errorEl.textContent = '';
+
+        try {
+          var res = await fetch('/competitions/' + encodeURIComponent(competitionId) + '/export/excel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sheets: sheetIds }),
+          });
+
+          if (!res.ok) {
+            var errData = await res.json().catch(function () { return {}; });
+            throw new Error(errData.message || 'Erro ao exportar planilha.');
+          }
+
+          var blob = await res.blob();
+          var url = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'relatorio_' + competitionId + '.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+
+          closeExportModal();
+        } catch (err) {
+          errorEl.textContent = err.message || 'Erro ao exportar planilha.';
+        } finally {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = originalLabel;
+        }
+      });
+    }
   }
 });
 
@@ -1682,12 +2208,12 @@ function formatPace(seconds) {
   if (seconds === null || seconds === undefined || !Number.isFinite(seconds)) return '—';
   var rounded = Math.round(seconds);
   var minutes = Math.floor(rounded / 60);
-  var remainingSeconds = String(rounded % 60).padStart(2, '0');
-  return minutes + ':' + remainingSeconds;
+  var remainingSeconds = rounded % 60;
+  return formatPacePartsForDisplay(minutes, remainingSeconds);
 }
 
 function formatCheckpointPace(checkpoint) {
-  if (checkpoint.pace) return checkpoint.pace;
+  if (checkpoint.pace) return stripPaceUnit(checkpoint.pace);
   if (!checkpoint.time || !checkpoint.distance_km) return null;
 
   var parts = checkpoint.time.split(':').map(function (part) {
@@ -1865,7 +2391,7 @@ window.CHECKPOINTS = window.CHECKPOINTS || [];
       payload.distance_km = parseFloat(distanceValue);
     }
     if (paceValue !== '') {
-      payload.pace = paceValue;
+      payload.pace = normalizePaceForApi(paceValue);
     }
     if (timeValue !== '') {
       payload.time = timeValue;

@@ -1,0 +1,90 @@
+<%#
+  VIEW: tv-panel/tvPanel.ejs
+  ROTA SSR: GET /public/competitions/:id/tv-panel — Painel TV PÚBLICO, sem login (US19 #519)
+  ENDPOINT (polling): GET /public/competitions/:id/tv-panel/metrics
+  POLLING: 10 segundos (tv-panel.js)
+  PROTÓTIPO: Luiza Cardoso
+
+  PROTÓTIPO (Canva DAHNOc2EPTM, página 8 — 1920x1080) entrega:
+    1. Logo Red Bull 24 Horas (top-left) + nome da competição em maiúsculas
+    2. Countdown digital gigante (24:00:00 → 00:00:00, decrescente)
+    3. Card "KM TOTAL" (total_distance_km)
+    4. Card "PACE MÉDIO" (average_pace_overall, MIN/KM)
+    5. Card "VEL. MÉDIA" (3600 / average_pace_overall_seconds, KM/H)
+
+  O payload do BE inclui top_teams, mas o protótipo não consome —
+  só duas equipes participam por competição (WAD §1.1 linha 41).
+%>
+
+<main class="tv-panel"
+      data-tv-panel
+      data-competition-id="<%= payload.id_competition %>"
+      data-poll-interval-ms="10000">
+
+  <header class="tv-header">
+    <img class="tv-logo"
+         src="/img/logo_redbull-24horas.png"
+         alt="Red Bull 24 Horas">
+    <h1 class="tv-competition-title" data-tv-title>
+      <%= (payload.competition_name || '').toUpperCase() %>
+    </h1>
+  </header>
+
+  <section class="tv-clock-section" aria-label="Tempo restante da prova">
+    <%
+      /* Render inicial do countdown — espelha a lógica de tv-panel.js para
+         que a tela já abra com o valor correto (sem flash de "--:--:--"
+         antes do primeiro tick). Marco zero = competition.started_at. */
+      var TOTAL_SECONDS = 24 * 60 * 60;
+      var elapsedForInitial = payload.metrics.elapsed_time_seconds;
+      var initialRemainingSeconds = elapsedForInitial === null
+        ? TOTAL_SECONDS
+        : Math.max(0, TOTAL_SECONDS - Math.floor(elapsedForInitial));
+      var hh = String(Math.floor(initialRemainingSeconds / 3600)).padStart(2, '0');
+      var mm = String(Math.floor((initialRemainingSeconds % 3600) / 60)).padStart(2, '0');
+      var ss = String(initialRemainingSeconds % 60).padStart(2, '0');
+    %>
+    <div class="tv-clock"
+         data-tv-clock
+         data-elapsed-seconds="<%= payload.metrics.elapsed_time_seconds === null ? '' : payload.metrics.elapsed_time_seconds %>"
+         data-generated-at="<%= payload.generated_at %>"
+         data-status="<%= payload.competition_status %>">
+      <%= hh %>:<%= mm %>:<%= ss %>
+    </div>
+  </section>
+
+  <section class="tv-metrics" aria-label="Métricas globais da competição">
+
+    <article class="tv-card tv-card--km" aria-label="Quilometragem total">
+      <h2 class="tv-card-label">KM TOTAL</h2>
+      <p class="tv-card-value" data-tv-km>
+        <%= payload.metrics.total_distance_km.toFixed(1).replace('.', ',') %>
+      </p>
+      <span class="tv-card-unit">KM TOTAIS</span>
+    </article>
+
+    <article class="tv-card tv-card--pace" aria-label="Pace médio global">
+      <h2 class="tv-card-label">PACE MÉDIO</h2>
+      <p class="tv-card-value" data-tv-pace>
+        <%= payload.metrics.average_pace_overall || '--:--' %>
+      </p>
+      <span class="tv-card-unit">MIN/KM</span>
+    </article>
+
+    <article class="tv-card tv-card--speed" aria-label="Velocidade média">
+      <h2 class="tv-card-label">VEL. MÉDIA</h2>
+      <p class="tv-card-value" data-tv-speed>
+        <%
+          var paceSecondsForSpeed = payload.metrics.average_pace_overall_seconds;
+          var initialSpeedKmh = (paceSecondsForSpeed && paceSecondsForSpeed > 0)
+            ? (3600 / paceSecondsForSpeed).toFixed(1).replace('.', ',')
+            : '--';
+        %>
+        <%= initialSpeedKmh %>
+      </p>
+      <span class="tv-card-unit">KM/H</span>
+    </article>
+
+  </section>
+
+</main>

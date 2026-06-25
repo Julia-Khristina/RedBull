@@ -23,10 +23,10 @@ function withActiveRunners(teams: Team[]): Team[] {
 }
 
 export const teamRepository: TeamRepository = {
-  async create(input: CreateTeamInput): Promise<Team> {
+  async create(input: CreateTeamInput & { runners?: any[] }): Promise<Team> {
     const supabase = getSupabaseClient();
 
-    const { data, error } = await supabase
+    const { data: teamData, error: teamError } = await supabase
       .from("team")
       .insert({
         name: input.name,
@@ -35,11 +35,28 @@ export const teamRepository: TeamRepository = {
       .select(SELECT_COLUMNS)
       .single();
 
-    if (error) {
-      throw error;
+    if (teamError) {
+      throw teamError;
     }
 
-    return withActiveRunner(data as unknown as Team) as Team;
+    if (input.runners && input.runners.length > 0) {
+      const runnersToInsert = input.runners.map(runner => ({
+        ...runner,
+        id_team: teamData.id
+      }));
+
+      const { error: runnersError } = await supabase
+        .from("runner")
+        .insert(runnersToInsert);
+
+      if (runnersError) {
+        // Opcional: deletar a equipe se os atletas falharem para manter atomicidade
+        await supabase.from("team").delete().eq("id", teamData.id);
+        throw runnersError;
+      }
+    }
+
+    return withActiveRunner(teamData as unknown as Team) as Team;
   },
 
   async findByCompetition(competitionId: number): Promise<Team[]> {

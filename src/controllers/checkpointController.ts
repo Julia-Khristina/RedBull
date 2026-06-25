@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { Checkpoint } from "../models/checkpoint";
 import { checkpointService } from "../services/checkpointService";
-import { treadmillService } from "../services/treadmillService";
 import { runnerService } from "../services/runnerService";
 import { teamService } from "../services/teamService";
 import { ValidationError } from "../errors/AppError";
@@ -35,9 +34,10 @@ function parsePaceToSeconds(pace: string | null): number | null {
 }
 
 function formatSecondsAsPace(totalSeconds: number): string {
-  const minutes = Math.floor(totalSeconds / 60);
-  const seconds = Math.round(totalSeconds % 60);
-  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+  const rounded = Math.round(totalSeconds);
+  const minutes = Math.floor(rounded / 60);
+  const seconds = rounded % 60;
+  return `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
 function parseDurationToSeconds(time: string | null): number | null {
@@ -119,8 +119,8 @@ export const checkpointController = {
       parseOptionalIntegerParam(req.query.runnerId);
     const teamId = parseOptionalIntegerParam(req.query.teamId);
     const competitionId = parseOptionalIntegerParam(req.query.competitionId) ?? 1;
-    const adminId = parseOptionalIntegerParam(req.query.adminId) ?? 1;
-    const treadmill = await treadmillService.getOrCreateDefault();
+    const adminId = parseOptionalIntegerParam(req.query.adminId) ?? (req as any).admin?.id ?? 1;
+    const startMode = req.query.mode === "manual" ? "manual" : "ocr";
     const selectedRunner =
       runnerId && teamId
         ? await runnerService.findByTeamAndId(teamId, runnerId)
@@ -140,11 +140,11 @@ export const checkpointController = {
       pageCSS: "/css/operational-panel.css",
       selectedRunner,
       selectedTeam,
+      startMode,
       checkpointContext: {
         identifier: `MANUAL-${new Date().toISOString().replace(/[-:.]/g, "").slice(0, 15)}-${runnerId ?? "runner"}`,
         id_runner: runnerId ?? "",
         id_competition: competitionId,
-        id_treadmill: treadmill.id,
         id_admin: adminId,
         team_id: teamId ?? "",
         average_pace_seconds: averagePaceSeconds,
@@ -223,6 +223,7 @@ export const checkpointController = {
     const checkpoint = await checkpointService.create({
       ...req.body,
       id_runner: runnerId,
+      id_admin: req.admin?.id,
     });
     res.status(201).json(checkpoint);
   },

@@ -83,10 +83,22 @@
     }));
   }
 
+  const teamsList = Array.isArray(report?.teamRanking) ? report.teamRanking : [];
+  const runnersList = Array.isArray(report?.runnerRanking) ? report.runnerRanking : [];
+  const operatorsList = Array.isArray(report?.operatorRanking) ? report.operatorRanking : [];
+
+  function formatTimeHM(value) {
+    if (!value || value === '-') return '-';
+    if (/^\d{2}:\d{2}:\d{2}$/.test(value)) {
+      const parts = value.split(':');
+      return parts[0] + 'h ' + parts[1] + 'm';
+    }
+    return value;
+  }
+
   const totalKm = pickValue(summary, ['total_distance_km', 'total_km', 'distance_total_km', 'km_total'], '-');
   const avgPace = pickValue(summary, ['average_pace', 'avg_pace', 'pace_medio', 'global_average_pace'], '-');
   const checkpointCount = pickValue(summary, ['checkpoint_count', 'checkpoints_count', 'total_checkpoints'], '-');
-  const reportText = pickValue(highlights, ['summary', 'description', 'text'], 'Veja como as equipes se movimentaram durante a competição ao longo do tempo.');
   const teams = Array.isArray(highlights.teams) && highlights.teams.length > 0
     ? highlights.teams
     : fallbackTeams.map((team) => ({ name: team.team_name, position: team.position }));
@@ -147,56 +159,143 @@
 
     <div class="report-panel report-team-panel">
       <div class="report-chart-block">
-        <h3 class="report-panel-title report-panel-title--accent">Posição durante à competição</h3>
-        <div class="report-chart" aria-label="Gráfico de posição das equipes">
-          <% if (history.length > 1 && chartTeams.length > 0) { %>
-            <svg class="report-chart-svg" viewBox="0 0 <%= chartWidth %> <%= chartHeight %>" role="img" aria-label="Histórico de posições por equipe">
-              <% for (let i = 0; i <= 4; i++) { %>
-                <line class="report-chart-line" x1="<%= chartPadding %>" x2="<%= chartWidth - chartPadding %>" y1="<%= chartPadding + (chartPlotHeight * i / 4) %>" y2="<%= chartPadding + (chartPlotHeight * i / 4) %>"></line>
-                <line class="report-chart-line" y1="<%= chartPadding %>" y2="<%= chartHeight - chartPadding %>" x1="<%= chartPadding + (chartPlotWidth * i / 4) %>" x2="<%= chartPadding + (chartPlotWidth * i / 4) %>"></line>
-              <% } %>
-              <% chartTeams.forEach(function(team) {
-                const points = history.map((point, index) => pointFor(team.name, point, index)).filter(Boolean).join(' ');
-              %>
-                <% if (points) { %>
-                  <polyline class="report-chart-path report-chart-path--<%= team.colorClass %>" points="<%= points %>"></polyline>
-                  <% points.split(' ').forEach(function(point) { const parts = point.split(','); %>
-                    <circle class="report-chart-dot report-chart-dot--<%= team.colorClass %>" cx="<%= parts[0] %>" cy="<%= parts[1] %>" r="4"></circle>
-                  <% }) %>
-                <% } %>
-              <% }) %>
-              <% history.forEach(function(point, index) { %>
-                <text class="report-chart-axis" x="<%= chartPadding + (chartPlotWidth * index) / (history.length - 1) %>" y="<%= chartHeight - 8 %>"><%= point.label %></text>
-              <% }) %>
-              <% for (let pos = 1; pos <= maxPosition; pos++) { %>
-                <text class="report-chart-axis report-chart-axis--y" x="18" y="<%= chartPadding + ((pos - 1) * chartPlotHeight) / Math.max(maxPosition - 1, 1) + 4 %>"><%= pos === maxPosition ? '0' : String(pos).padStart(2, '0') %></text>
-              <% } %>
-            </svg>
+        <h3 class="report-panel-title report-panel-title--accent">Distância acumulada por equipe</h3>
+        <div class="report-chart" aria-label="Gráfico de quilometragem por equipe ao longo das horas">
+          <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
+            <canvas id="kmChart" width="500" height="280"></canvas>
           <% } else { %>
             <div class="report-chart-grid" aria-hidden="true"></div>
-            <p class="report-chart-empty">Histórico de posições indisponível no relatório.</p>
+            <p class="report-chart-empty">Histórico de quilometragem indisponível no relatório.</p>
           <% } %>
         </div>
       </div>
+    </div>
 
-      <div class="report-about">
-        <h3 class="report-panel-title">Sobre o relatório</h3>
-        <p><%= reportText %></p>
+    <div class="report-panel report-table-panel">
+      <% if (teamsList.length === 0) { %>
+        <div class="empty-state report-empty-state">
+          <p>Nenhuma equipe encontrada para esta competição.</p>
+        </div>
+      <% } else { %>
+        <div class="report-table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Equipe</th>
+                <th>Total km</th>
+                <th>Média de pace</th>
+                <th>Média tempo por turno</th>
+                <th>Total de trocas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% teamsList.forEach(function(team) { %>
+                <tr>
+                  <td><%= team.team_name %></td>
+                  <td><%= team.total_distance_km.toFixed(1) %> km</td>
+                  <td><%= team.average_pace ?? '-' %><%= team.average_pace ? '/km' : '' %></td>
+                  <td><%= formatTimeHM(team.average_time_per_turn) || '-' %></td>
+                  <td><%= team.total_turns %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </section>
 
-        <h4>Equipes:</h4>
-        <% if (chartTeams.length > 0) { %>
-          <ul class="report-team-list">
-            <% chartTeams.forEach(function(team) { %>
-              <li>
-                <span class="report-team-dot report-team-dot--<%= team.colorClass %>"></span>
-                <%= team.name %>
-              </li>
-            <% }) %>
-          </ul>
-        <% } else { %>
-          <p class="report-muted">Equipes indisponíveis no relatório.</p>
-        <% } %>
-      </div>
+  <!-- ── Relatório por atleta ── -->
+  <section class="reports-section">
+    <h2 class="section-title reports-section-title">Relatório por atleta</h2>
+
+    <div class="report-panel report-table-panel">
+      <% if (runnersList.length === 0) { %>
+        <div class="empty-state report-empty-state">
+          <p>Nenhum atleta encontrado para esta competição.</p>
+        </div>
+      <% } else { %>
+        <div class="report-filter-bar">
+          <input
+            type="text"
+            id="runner-filter"
+            class="report-filter-input"
+            placeholder="Filtrar por nome do atleta ou equipe..."
+            autocomplete="off"
+          />
+        </div>
+        <div class="report-table-wrap">
+          <table class="report-table" id="runner-table">
+            <thead>
+              <tr>
+                <th>Atleta</th>
+                <th>Equipe</th>
+                <th>Total de checkpoints</th>
+                <th>Total km</th>
+                <th>Média km</th>
+                <th>Média de pace</th>
+                <th>Total de trocas</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% runnersList.forEach(function(runner) { %>
+                <tr data-runner-name="<%= (runner.runner_name ?? '').toLowerCase() %>" data-team-name="<%= (runner.team_name ?? '').toLowerCase() %>">
+                  <td><%= runner.runner_name ?? 'Atleta #' + runner.id_runner %></td>
+                  <td><%= runner.team_name ?? '-' %></td>
+                  <td><%= runner.total_checkpoints %></td>
+                  <td><%= runner.total_distance_km.toFixed(1) %> km</td>
+                  <td>
+                    <% if (runner.total_checkpoints > 0) { %>
+                      <%= (runner.total_distance_km / runner.total_checkpoints).toFixed(2) %> km
+                    <% } else { %>
+                      -
+                    <% } %>
+                  </td>
+                  <td><%= runner.average_pace ?? '-' %><%= runner.average_pace ? '/km' : '' %></td>
+                  <td><%= runner.total_turns %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+        <p class="report-filter-count" id="runner-count"><%= runnersList.length %> atleta(s)</p>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- ── Relatório por operador ── -->
+  <section class="reports-section">
+    <h2 class="section-title reports-section-title">Relatório por operador</h2>
+
+    <div class="report-panel report-table-panel">
+      <% if (operatorsList.length === 0) { %>
+        <div class="empty-state report-empty-state">
+          <p>Nenhum operador registrou checkpoints nesta competição.</p>
+        </div>
+      <% } else { %>
+        <div class="report-table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Operador</th>
+                <th>Checkpoints manuais</th>
+                <th>Checkpoints OCR</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% operatorsList.forEach(function(op) { %>
+                <tr>
+                  <td><%= op.admin_name ?? 'Operador #' + op.id_admin %></td>
+                  <td><%= op.manual_checkpoints %></td>
+                  <td><%= op.ocr_checkpoints %></td>
+                  <td><%= op.total_checkpoints %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
     </div>
   </section>
 
@@ -247,7 +346,7 @@
                   <td><%= getOcrValue(checkpoint) %></td>
                   <td><%= getCorrectedValue(checkpoint) %></td>
                   <td><%= getDifference(checkpoint) %></td>
-                  <td><%= checkpoint.admin_name ?? checkpoint.id_admin ?? '-' %></td>
+                  <td><%= checkpoint.admin?.name ?? checkpoint.id_admin ?? '-' %></td>
                 </tr>
               <% }) %>
             </tbody>
@@ -257,9 +356,62 @@
     </div>
   </section>
 
-  <a class="report-export-button" href="/competitions/<%= competition.id %>/export">Exportar dados</a>
+  <button type="button" class="report-export-button" id="export-btn">Exportar dados</button>
 
+  <div id="export-modal" class="export-modal" hidden>
+    <div class="export-modal-backdrop" id="export-modal-backdrop"></div>
+    <div class="export-modal-panel">
+      <div class="export-modal-header">
+        <h2>Exportar Planilha</h2>
+        <p>Selecione as abas que deseja incluir na planilha:</p>
+      </div>
+      <div class="export-modal-body" id="export-sheets-list">
+      </div>
+      <div class="export-modal-error" id="export-modal-error"></div>
+      <div class="export-modal-footer">
+        <button type="button" class="export-modal-cancel" id="export-modal-cancel">Cancelar</button>
+        <button type="button" class="export-modal-confirm" id="export-modal-confirm">Exportar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
     window.COMPETITION_ID = '<%= competition.id %>';
+    window.EXPORT_SHEETS = <%- JSON.stringify([
+      { id: 'dashboard', label: 'Dashboard Executivo', description: 'KPIs gerais, ranking resumido, anomalias, uso de OCR e distribuição por operador' },
+      { id: 'equipes', label: 'Equipes', description: 'Ranking detalhado das equipes com km total, pace médio e trocas' },
+      { id: 'atletas', label: 'Atletas', description: 'Performance individual de cada atleta (km, pace médio, checkpoints)' },
+      { id: 'operacao', label: 'Operação', description: 'Checkpoints por operador, método de entrada (manual vs OCR) e tempo médio' },
+      { id: 'auditoria', label: 'Auditoria', description: 'Todos os checkpoints em ordem cronológica e registros suspeitos' },
+    ]) %>;
+    <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
+    window.EQUIPE_HORÁRIO_KM = <%- JSON.stringify(highlights.hourly_team_km) %>;
+    <% } %>
+
+    // ── Runner filter ──
+    (function() {
+      var input = document.getElementById('runner-filter');
+      var table = document.getElementById('runner-table');
+      var count = document.getElementById('runner-count');
+      if (!input || !table || !count) return;
+
+      var rows = Array.prototype.slice.call(table.querySelectorAll('tbody tr'));
+
+      input.addEventListener('input', function() {
+        var term = input.value.trim().toLowerCase();
+        var visible = 0;
+
+        rows.forEach(function(row) {
+          var runnerName = row.getAttribute('data-runner-name') || '';
+          var teamName = row.getAttribute('data-team-name') || '';
+          var match = !term || runnerName.indexOf(term) !== -1 || teamName.indexOf(term) !== -1;
+          row.style.display = match ? '' : 'none';
+          if (match) visible++;
+        });
+
+        count.textContent = visible + ' atleta(s)';
+      });
+    })();
   </script>
 </main>

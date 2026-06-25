@@ -10,6 +10,7 @@ const exportData: CompetitionExportData = {
     address: "Sao Paulo - SP",
     status: "not_started",
     created_at: "2026-05-21T00:00:00.000Z",
+    started_at: null,
   },
   teams: [
     {
@@ -53,7 +54,7 @@ function createRankingMock() {
         team_name: "Equipe Alpha",
         id_competition: 1,
         total_distance_km: 5,
-        average_pace: "5:00",
+        average_pace: "05:00",
         average_pace_seconds: 300,
         runner_count: 1,
       },
@@ -65,7 +66,7 @@ function createRankingMock() {
         runner_name: "Ana Silva",
         id_team: 10,
         total_distance_km: 5,
-        average_pace: "5:00",
+        average_pace: "05:00",
         average_pace_seconds: 300,
       },
     ]),

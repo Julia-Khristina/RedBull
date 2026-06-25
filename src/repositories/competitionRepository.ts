@@ -6,7 +6,8 @@ import {
 } from "../models/competition";
 import { getSupabaseClient } from "../database/supabaseClient";
 
-const competitionSelect = "id, name, address, date, status, created_at";
+const competitionSelect =
+  "id, name, address, date, status, created_at, started_at";
 
 export const competitionRepository: CompetitionRepository = {
   async create(input: CreateCompetitionInput): Promise<Competition> {
@@ -108,6 +109,29 @@ export const competitionRepository: CompetitionRepository = {
     const { data, error } = await supabase
       .from("competition")
       .update({ status: "closed" })
+      .eq("id", id)
+      .select(competitionSelect)
+      .maybeSingle();
+
+    if (error) {
+      throw error;
+    }
+
+    return data as unknown as Competition | null;
+  },
+
+  async activate(id: number): Promise<Competition | null> {
+    const supabase = getSupabaseClient();
+
+    /* started_at = NOW() é o marco zero do countdown de 24h do Painel TV
+       (US19 #519). Sem ele, a contagem regressiva exibida na TV não tem
+       referência. Setado apenas aqui — close() preserva o valor. */
+    const { data, error } = await supabase
+      .from("competition")
+      .update({
+        status: "in_progress",
+        started_at: new Date().toISOString(),
+      })
       .eq("id", id)
       .select(competitionSelect)
       .maybeSingle();
