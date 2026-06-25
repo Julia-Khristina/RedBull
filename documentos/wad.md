@@ -1208,33 +1208,32 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
-
-Com a evolução do sistema e a integração de um front-end renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no back-end quanto no front-end, com base no código efetivamente implementado na versão atual do projeto.
-
-
+ 
+Com a evolução do sistema e a integração de um frontend renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no backend quanto no frontend, com base no código efetivamente implementado na versão atual do projeto.
+ 
 ---
 ### MVC (Model-View-Controller)
-
+ 
 #### Categoria
-
+ 
 Arquitetural
-
+ 
 #### Definição
-
+ 
 O padrão Model-View-Controller (MVC) organiza a aplicação em camadas com responsabilidades distintas. Os Models representam os dados da aplicação, as Views são responsáveis pela apresentação das informações ao usuário e os Controllers coordenam o fluxo das requisições entre as diferentes camadas do sistema. No projeto, as Views são implementadas por meio de templates EJS renderizados no servidor pelo Express.
-
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, regras de negócio, acesso aos dados e elementos de interface poderiam ficar concentrados em uma única camada, aumentando o acoplamento e dificultando manutenção, testes e evolução da aplicação.
-
+ 
 #### Justificativa da adoção
-
-Com a implementação do front-end, tornou-se necessário estruturar a camada de apresentação de forma integrada ao back-end existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
-
+ 
+Com a implementação do frontend, tornou-se necessário estruturar a camada de apresentação de forma integrada ao backend existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão pode ser observado nos seguintes arquivos e diretórios:
-
+ 
 - `src/app.ts`
 - `src/controllers/`
 - `src/services/`
@@ -1244,25 +1243,24 @@ O padrão pode ser observado nos seguintes arquivos e diretórios:
 - `src/routes/dashboardRoutes.ts`
 - `src/controllers/rankingController.ts`
 - `src/controllers/reportController.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 const competitions = await competitionService.findAll();
-
+ 
 res.render("dashboard/dashboard", {
-  title: "Dashboard — Red Bull 24H",
+  title: "Dashboard - Red Bull 24H",
   competitions,
   activeCompetition,
   currentPage: "dashboard",
   pageCSS: "/css/dashboard.css"
 });
 ```
-
+ 
 Nesse exemplo, o Controller obtém os dados por meio da camada de Service e encaminha as informações para uma View EJS responsável pela renderização da interface.
-
-
+ 
 ---
+ 
 
 ### Repository Pattern
 
