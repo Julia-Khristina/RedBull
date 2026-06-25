@@ -3824,16 +3824,15 @@ A introdução de *circuit breaker* tornar-se-á efetivamente útil quando o mot
 
 A consolidação apresentada nesta seção mantém coerência direta com a seção 3.7, ao explicitar o `errorHandler` e a hierarquia `AppError` como os mecanismos centrais de tradução do estado interno em códigos HTTP previsíveis, e com a seção 3.2.1, ao alocar cada estratégia futura ao seu ponto natural na arquitetura em camadas — Repository para *timeout* e *retry* sobre o Supabase, Service para *circuit breaker* sobre o motor OCR. As estratégias enquadradas como Trabalho Futuro são candidatas explícitas à seção 7 deste documento, sem que a sua ausência atual comprometa as garantias contratuais já entregues no MVP: a idempotência REST das operações de atualização e remoção e o contrato determinístico de erros do *middleware* central são, em conjunto, a fundação que tornará segura a introdução posterior dos mecanismos ativos de tolerância a falhas.
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
-
+### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+ 
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
-
+ 
 A rastreabilidade contribui para a manutenção da consistência entre os artefatos do projeto, reduzindo ambiguidades, facilitando processos de validação e testes, além de permitir a identificação rápida de impactos causados por alterações nos requisitos ao longo das sprints.
-
+ 
 <div align="center">
-
   <sub>Quadro 49 - Matriz de Rastreabilidade (RTM)</sub>
-
+ 
 </div>
 
 | Persona | RF | RN | Endpoint | Tela | Arquivo de Teste (real) | Evidência |
@@ -3842,15 +3841,17 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
 | Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
 | Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/runners | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
-| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto da Esteira | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
+| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
 | Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
-| Marina Costa | RF007 | RN05, RN06, RN12 | PATCH /ocr/extractions/:extractionId | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados em log |
+| Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
 | Marina Costa | RF008 | RN04, RN05 | POST /checkpoints | Registro Manual | checkpointService.spec.ts | Checkpoint registrado com sucesso |
 | Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
 | Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
 | Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
 | Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/runners | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
 | Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
@@ -3860,10 +3861,15 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
 
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
+ 
 <div align="center">
-
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-
+ 
 </div>
 
 A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem rastreabilidade entre as necessidades das personas, os requisitos definidos, as regras de negócio estabelecidas, os endpoints implementados, as interfaces projetadas e os mecanismos de validação utilizados durante o desenvolvimento. Dessa forma, garante-se maior controle sobre a evolução da solução e alinhamento entre os artefatos produzidos ao longo das sprints.
