@@ -1294,6 +1294,7 @@ O padrão foi aplicado nos seguintes arquivos:
 - `src/repositories/reportRepository.ts`
 - `src/repositories/exportRepository.ts`
 - `src/repositories/authRepository.ts`
+
 Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
  
 #### Exemplo de código
