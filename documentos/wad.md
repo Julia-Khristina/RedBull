@@ -1435,32 +1435,31 @@ Em ambos os exemplos, as dependências são fornecidas como parâmetros com valo
 ---
 
 ### Middleware Pattern
-
+ 
 #### Categoria
-
+ 
 Comportamental / Arquitetural
-
+ 
 #### Definição
-
+ 
 O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP. Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros e encapsulamento de handlers assíncronos.
-
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
-
+ 
 #### Justificativa da adoção
-
-Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no back-end e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
-
+ 
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
-- `src/helpers/asyncHandler.ts` — encapsula handlers assíncronos, redirecionando erros para o middleware de tratamento de exceções
-- `src/middlewares/errorHandler.ts` — responsável pelo tratamento centralizado de erros, inspecionando o tipo da exceção via `instanceof AppError`
-
+ 
+- `src/helpers/asyncHandler.ts`, encapsula handlers assíncronos, redirecionando erros para o middleware de tratamento de exceções
+- `src/middlewares/errorHandler.ts`, responsável pelo tratamento centralizado de erros, inspecionando o tipo da exceção via `instanceof AppError`
 #### Exemplo de código
-
+ 
 ```typescript
 // src/helpers/asyncHandler.ts
 export function asyncHandler(
@@ -1471,7 +1470,7 @@ export function asyncHandler(
   };
 }
 ```
-
+ 
 ```typescript
 // src/middlewares/errorHandler.ts
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
@@ -1483,18 +1482,19 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   res.status(500).json({ message: "Erro interno do servidor" });
 };
 ```
-
+ 
 #### Exemplo de uso nas rotas
-
+ 
 ```typescript
 // src/routes/competitionRoutes.ts
 router.post("/competitions", asyncHandler(competitionController.create));
 router.get("/competitions/:id", asyncHandler(competitionController.findById));
 ```
-
+ 
 Nesse exemplo, o `asyncHandler` encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o `errorHandler`.
-
+ 
 ---
+ 
 
 ### Validation Layer Pattern
 
