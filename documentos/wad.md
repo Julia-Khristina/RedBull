@@ -3406,17 +3406,21 @@ Nesta sprint final, o foco esteve na entrega da camada de autenticação/autoriz
 
 **Camada de Autenticação e Autorização (RF001, RF004, RN03):** Implementação completa do controle de acesso à área administrativa, com login de administrador, persistência de senha por meio de hash (sem armazenamento em texto plano), criação e controle de sessão e verificação de autorização por rota no backend. O acesso público ao painel da equipe via UUID foi preservado sem autenticação (US12), mantendo a separação entre área privada de operação e área pública de acompanhamento. O detalhamento técnico do fluxo está descrito na [Seção 3.8 — Autenticação, Autorização e Resiliência](#38-autenticação-autorização-e-resiliência-sprint-5).
 
+<div align="center"> <sub>Figura 73 — Frontend da tela login negando acesso</sub><br> <img src="../assets/login-negado.png" width="100%" alt="Representação do frontend da tela login negando acesso ao colocar um email ou senha inválidos"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
 <div align="center"> <sub>Figura 73 — Camada service de autenticação</sub><br> <img src="../assets/programacao/service-auth.png" width="100%" alt="Código da camada service referente à autenticação (geração/verificação do hash de senha) e o middleware de autorização por rota."><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Integração final do módulo de OCR:** conclusão do ciclo completo de captura → extração → conferência humana → persistência (RF005–RF007). O frontend de captura foi desenvolvido e integrado ao backend, e a precisão da extração dos campos foi reforçada com o apoio da API da Groq como camada de validação inteligente. Diferentemente de um OCR puramente textual, o modelo multimodal utilizado (Llama 4 Scout) recebe a própria imagem da esteira como fonte principal e o texto extraído pelo Tesseract.js apenas como apoio, retornando os campos de distância (km) e tempo de forma estruturada. Essa camada complementa o pipeline OpenCV + Tesseract.js já existente e aumenta a confiabilidade da leitura em condições adversas de imagem (variações de iluminação, ângulo e foco do display).
 
+<div align="center"> <sub>Figura 73 — Frontend OCR parte 1</sub><br> <img src="../assets/programacao/view-ocr.png" width="100%" alt="Frontend da OCR para tirar a foto"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Frontend OCR parte 2</sub><br> <img src="../assets/programacao/view-ocr2.png" width="100%" alt="Frontend da OCR após a foto ser tirada"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
 <div align="center"> <sub>Figura 73 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada srvice referente à API do groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 <div align="center"> <sub>Figura 73 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada srvice referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-
-<div align="center"> <sub>Figura 73 — Camada service referente à normalização do OCR</sub><br> <img src="../assets/programacao/service-normalize.png" width="100%" alt="Código da camada srvice referente à normalização do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **Painel de TV para acompanhamento ao vivo (US12):** entrega de protótipo, backend e frontend da tela dedicada à exibição em monitores durante o evento, com atualização automática e consolidação das métricas agregadas da competição (pace médio geral, tempo de prova decorrido, quilometragem total e destaques por equipe). A interface foi projetada para leitura a distância, com fonte ampliada e alto contraste, e acesso público sem autenticação.
 
@@ -3432,21 +3436,30 @@ Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — 
 
 **Tela de auditoria (RN05):** finalização da interface de log de auditoria, exibindo o histórico detalhado de cada checkpoint — administrador ou operador responsável pelo registro, método utilizado (manual ou OCR), timestamp exato e valores capturados. A rastreabilidade por método de entrada, já persistida pelo backend desde a sprint 3, passou a ser exposta em uma interface navegável e filtrável para auditoria durante e após a competição.
 
-
-**Exportação de resultados em CSV (RF013, RF014):** implementação do endpoint e da interface de acionamento para geração do arquivo CSV consolidado ao encerramento da competição, contendo o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints, método de entrada, tempos parcial e total). Essa entrega substitui definitivamente a planilha manual utilizada hoje pela equipe da Red Bull na apuração oficial.
-
-<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em CSV</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em CSV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — Frontend da tela com log de auditoria</sub><br> <img src="../assets/programacao/view-log-auditoria.jpg" width="100%" alt="Representação da interface que apresenta o log de auditoria dos registros de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
-<div align="center"> <sub>Figura 73 — Camada service referente à exportação em CSV</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em CSV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+**Exportação de resultados em XLSX (RF013, RF014):** implementação do endpoint e da interface de acionamento para geração do arquivo XLSX consolidado ao encerramento da competição, contendo o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints, método de entrada, tempos parcial e total). Essa entrega substitui definitivamente a planilha manual utilizada hoje pela equipe da Red Bull na apuração oficial.
 
+
+
+<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em XSLX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente à exportação em XSLX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Aviso de inconsistência (RN06):** implementação do alerta visual acionado quando há divergência entre os dados capturados via OCR e os valores esperados/corrigidos manualmente, reforçando a confiabilidade do processo de validação humana antes da persistência.
 
+<div align="center"> <sub>Figura 73 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
 
 **Calculadora de descanso e gráfico de performance do atleta:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
 
+<div align="center"> <sub>Figura 73 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **Estabilização da suíte de testes:** consolidação e estabilização da suíte automatizada (E2E, unitário e integração), eliminando as colisões de dados únicos entre execuções identificadas como dívida técnica nas sprints anteriores e garantindo execução consistente e repetível.
 
@@ -3466,7 +3479,6 @@ Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e to
 ### (c) Dificuldades técnicas
 
 **Persistência segura de credenciais e controle de sessão:** a implementação da autenticação exigiu atenção à escolha e parametrização do algoritmo de hash, ao armazenamento seguro da sessão e à garantia de que a verificação de autorização ocorresse sempre no backend, nunca confiando no frontend como fonte de verdade. O equilíbrio entre segurança e a restrição do TAP — que não previa autenticação de usuários no escopo original — exigiu manter o login restrito à área administrativa, preservando o acesso público por UUID.
-
 
 **Integração de uma camada externa multimodal (API da Groq) ao pipeline de OCR:** combinar o processamento local existente (OpenCV + Tesseract.js) com uma chamada externa a um modelo de visão exigiu tratar latência de rede, fluxo de fallback (garantindo que a extração não dependesse exclusivamente do serviço externo), normalização das respostas, incluindo a conversão do separador decimal de vírgula para ponto, e a consolidação dos resultados das duas fontes, assegurando que a extração permanecesse confiável mesmo diante de variações de imagem.
 
