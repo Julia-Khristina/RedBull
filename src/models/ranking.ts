@@ -9,6 +9,8 @@ export interface RankingRunner {
   total_distance_km: number;
   average_pace: string | null;
   average_pace_seconds: number | null;
+  total_turns: number;
+  total_checkpoints: number;
 }
 
 export interface RankingTeam {
@@ -20,4 +22,15 @@ export interface RankingTeam {
   average_pace: string | null;
   average_pace_seconds: number | null;
   runner_count: number;
+  average_time_per_turn: string | null;
+  average_time_per_turn_seconds: number | null;
+  total_turns: number;
+}
+
+export interface OperatorRanking {
+  id_admin: number;
+  admin_name: string | null;
+  manual_checkpoints: number;
+  ocr_checkpoints: number;
+  total_checkpoints: number;
 }
