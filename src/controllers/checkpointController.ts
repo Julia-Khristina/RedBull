@@ -119,7 +119,7 @@ export const checkpointController = {
       parseOptionalIntegerParam(req.query.runnerId);
     const teamId = parseOptionalIntegerParam(req.query.teamId);
     const competitionId = parseOptionalIntegerParam(req.query.competitionId) ?? 1;
-    const adminId = parseOptionalIntegerParam(req.query.adminId) ?? 1;
+    const adminId = parseOptionalIntegerParam(req.query.adminId) ?? (req as any).admin?.id ?? 1;
     const startMode = req.query.mode === "manual" ? "manual" : "ocr";
     const selectedRunner =
       runnerId && teamId
@@ -223,6 +223,7 @@ export const checkpointController = {
     const checkpoint = await checkpointService.create({
       ...req.body,
       id_runner: runnerId,
+      id_admin: req.admin?.id,
     });
     res.status(201).json(checkpoint);
   },

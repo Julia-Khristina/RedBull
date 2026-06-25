@@ -1266,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error('Distancia deve ser um numero nao negativo.');
         }
         if (!idRunner || !idCompetition || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
@@ -1357,8 +1357,8 @@ document.addEventListener('DOMContentLoaded', function () {
             setOcrFeedback(reviewFeedback, 'Checkpoint salvo com sucesso.', false);
           } catch (err) {
             setOcrFeedback(reviewFeedback, err.message || 'Erro ao salvar checkpoint.', true);
-            saveBtn.disabled = false;
           } finally {
+            saveBtn.disabled = false;
             saveBtn.textContent = originalLabel;
           }
         });
@@ -1414,7 +1414,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error('Distância deve ser um número não negativo.');
         }
         if (!idRunner || !idCompetition || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
@@ -1503,6 +1503,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (err) {
           console.error('Erro ao salvar checkpoint manual:', err);
           showManualFeedback('ERRO: ' + err.message, true);
+        } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = originalLabel;
         }
