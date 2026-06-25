@@ -3972,9 +3972,8 @@ A rastreabilidade apresentada demonstra que os testes implementados validam requ
 
 ### 5.2.1. Relatório de testes de guerrilha
 
-### 5.2.1. Relatório de testes de guerrilha
 
-Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando as 5 tarefas previstas na planilha de testes de usabilidade. Cada tarefa foi avaliada por etapas, com registro das ocorrências e classificação do resultado geral.
+Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando as 5 tarefas previstas na planilha de testes de usabilidade. Cada tarefa foi avaliada por etapas, com registro das ocorrências e classificação do resultado geral.
 
 **Perfil dos participantes**
 
@@ -3982,6 +3981,9 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 |---|------|-------|-------|-------|
 | 1 | Valter Lima | Sistemas de Informação | 18 | Ateliê 2 – Turma 25 |
 | 2 | Sara Nunes | Sistemas de Informação | 20 | Ateliê 2 – Turma 25 |
+| 3 | Vini | Sistemas de Informação | 18 | Ateliê 2 – Turma 25 |
+| 4 | Matheus | Ciência da Computação | 18 | Ateliê 2 – Turma 25 |
+| 5 | Arthur | Adm Tech | 19 | Ateliê 2 – Turma 25 |
 
 ---
 
@@ -4004,6 +4006,9 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Teve dúvida inicial sobre por onde começar, pois encontrou várias competições já cadastradas; após alguns instantes, compreendeu que deveria criar uma nova. Cadastro concluído com sucesso. |
 | Sara Nunes | Sucesso | Cadastrou a competição sem dificuldades. |
+| Vini | Sucesso | Não teve dificuldade em criar a primeira competição; preenchimento fácil de todos os campos. |
+| Matheus | Sucesso com dificuldade | Cadastrou a competição, mas sugeriu permitir digitar a data, pois só há a opção de calendário. O card da nova competição apareceu em primeiro. |
+| Arthur | Sucesso | Criou a competição e conseguiu adicionar as informações nos campos. |
 
 ---
 
@@ -4026,6 +4031,9 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Antes de cadastrar a equipe, teve dificuldade para localizar a competição criada entre os registros existentes, mas conseguiu encontrá-la. No cadastro de equipes, o e-mail foi recusado como inválido por já estar cadastrado; após corrigir, concluiu a tarefa. Demonstrou dúvidas sobre quais campos eram obrigatórios. Elogiou a parte visual relacionada às equipes. |
 | Sara Nunes | Sucesso com dificuldade | Não localizou a competição criada e acessou diretamente o menu para criar a equipe. Concluiu o cadastro de equipe com sucesso. |
+| Vini | Sucesso com dificuldade | Criou equipes dentro da competição. Como participante de teste, foi pego pelas regras de negócio (ex.: número correto do CPF e campos obrigatórios). Não tinha noção das regras do evento — número de equipes e atletas e informações obrigatórias. |
+| Matheus | Sucesso | Criou as duas equipes sem problemas; achou as equipes intuitivas. |
+| Arthur | Sucesso com dificuldade | Trocou de atleta e criou as equipes, mas acabou criando a equipe 2 vezes. |
 
 ---
 
@@ -4048,6 +4056,9 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 |--------|-----------|-------------|
 | Valter Lima | Sucesso | Concluiu a tarefa com sucesso na funcionalidade de OCR. |
 | Sara Nunes | Sucesso com dificuldade | Apresentou dificuldade para compreender a funcionalidade de OCR, especialmente o botão amarelo utilizado para inserir imagens. Considerou a seção de checkpoints um pouco confusa. |
+| Vini | Sucesso | Conseguiu registrar checkpoints via OCR sem dificuldades. |
+| Matheus | Não realizada | Não testou o registro por foto. |
+| Arthur | — | Não registrou checkpoint por OCR (realizou apenas o registro manual). |
 
 ---
 
@@ -4070,6 +4081,9 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Apresentou dificuldade com o formato exigido para o preenchimento dos dados. Antes desta tarefa, ficou em dúvida sobre qual ação executar na sequência do fluxo. |
 | Sara Nunes | Sucesso com dificuldade | Concluiu a tarefa com sucesso, mas teve dúvidas sobre como marcar/definir o pace. Antes desta tarefa, demonstrou dúvida sobre qual seria o próximo passo do fluxo. |
+| Vini | Sucesso | Como não conseguiu realizar o registro pelo OCR em determinado momento, realizou o registro manualmente com sucesso. |
+| Matheus | Sucesso com dificuldade | Criou o checkpoint manual, mas teve problemas com a formatação do campo de horário, pois precisava adicionar os segundos — o sistema avisou. Sugeriu deixar o cálculo de pace explícito. |
+| Arthur | Sucesso com dificuldade | Registrou o checkpoint manualmente, mas teve problemas com a formatação dos dados e acabou criando o checkpoint 2 vezes. |
 
 ---
 
@@ -4092,6 +4106,9 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 |--------|-----------|-------------|
 | Valter Lima | Sucesso | Acessou e visualizou o ranking sem dificuldades. |
 | Sara Nunes | Sucesso com dificuldade | Não percebeu inicialmente a existência das funcionalidades de ranking e relatórios. |
+| Vini | Sucesso | Acessou a tela de relatórios sem ajuda e visualizou os checkpoints que ele mesmo havia registrado. |
+| Matheus | Sucesso | Exportou os dados em JSON; achou os rankings intuitivos e bons. |
+| Arthur | — | Não há registro de execução desta tarefa. |
 
 ---
 
@@ -4099,17 +4116,17 @@ Foram realizados testes de guerrilha com 2 participantes da Turma 25, aplicando 
 
 | Prioridade | Tarefa | Tipo | Severidade | Resumo do ocorrido e melhoria proposta | Participantes |
 |------------|--------|------|------------|----------------------------------------|---------------|
-| 1 | Geral / Fluxo | Usabilidade | 3. Alta | Ausência de um passo a passo/guia claro do fluxo. Ambos ficaram em dúvida sobre qual ação executar após criar a equipe. **Melhoria:** indicar o "próximo passo" sugerido na interface ou um onboarding guiado. | Valter, Sara |
-| 2 | T2 / T1 | Usabilidade | 3. Alta | Dificuldade em localizar a competição recém-criada entre os registros existentes (Valter encontrou; Sara desistiu de procurar). **Melhoria:** destacar/selecionar automaticamente a competição recém-criada e melhorar a busca/listagem. | Valter, Sara |
-| 3 | T3 / T4 | Compreensão de conteúdo | 3. Alta | Seção de checkpoints confusa: dificuldade com a função OCR (botão amarelo de inserir imagem) e com como definir/marcar o pace. **Melhoria:** rótulos mais descritivos, microcopy e exemplo de preenchimento de pace. | Valter, Sara |
-| 4 | T4 | Usabilidade | 2. Baixa | Dificuldade com o formato exigido no preenchimento manual dos dados. **Melhoria:** máscara de input, placeholder com formato esperado e validação amigável. | Valter |
-| 5 | T2 | Usabilidade | 2. Baixa | E-mail recusado como inválido por duplicidade, sem clareza; dúvidas sobre quais campos eram obrigatórios. **Melhoria:** mensagem de erro específica para e-mail duplicado e marcação visual de campos obrigatórios. | Valter |
-| 6 | T5 | Usabilidade | 2. Baixa | Funcionalidades de ranking e relatórios não percebidas inicialmente. **Melhoria:** aumentar a visibilidade/hierarquia desses elementos no painel. | Sara |
+| 1 | Geral / Fluxo | Usabilidade | 3. Alta | Ausência de um passo a passo/guia claro do fluxo. Dúvida sobre qual ação executar após criar a equipe e dificuldade para entender o fluxo da competição. **Melhoria:** indicar o "próximo passo" sugerido na interface ou um onboarding guiado. | Valter, Sara, Matheus |
+| 2 | T2 / T1 | Usabilidade | 3. Alta | Dificuldade em localizar a competição recém-criada entre os registros existentes; excesso de competições já criadas dificulta a navegação. **Melhoria:** destacar/selecionar automaticamente a competição recém-criada e melhorar a busca/listagem. | Valter, Sara, Matheus |
+| 3 | T3 / T4 | Compreensão de conteúdo | 3. Alta | Seção de checkpoints confusa: dificuldade com a função OCR (botão amarelo de inserir imagem) e com como definir/marcar o pace. **Melhoria:** rótulos mais descritivos, microcopy, exemplo de preenchimento de pace e tornar o cálculo de pace explícito. | Valter, Sara, Matheus |
+| 4 | T2 | Compreensão de conteúdo | 3. Alta | Usuário sem noção das regras de negócio do evento (CPF válido, campos obrigatórios, número de equipes e atletas), gerando bloqueios durante o cadastro. **Melhoria:** exibir as regras/limites de forma visível e mensagens de validação explicativas. | Vini |
+| 5 | T4 | Usabilidade | 2. Baixa | Dificuldade com o formato exigido no preenchimento manual dos dados (incluindo a necessidade de informar os segundos no campo de horário). **Melhoria:** máscara de input, placeholder com formato esperado e validação amigável. | Valter, Matheus, Arthur |
+| 6 | T2 / T4 | Usabilidade | 2. Baixa | Ações duplicadas: equipe e checkpoint criados 2 vezes. **Melhoria:** prevenir duplicidade com bloqueio de submit repetido e feedback de confirmação. | Arthur |
+| 7 | T2 | Usabilidade | 2. Baixa | E-mail recusado como inválido por duplicidade, sem clareza; dúvidas sobre quais campos eram obrigatórios. **Melhoria:** mensagem de erro específica para e-mail duplicado e marcação visual de campos obrigatórios. | Valter |
+| 8 | Login | Usabilidade | 2. Baixa | Ao errar a senha, o sistema exibiu um erro de servidor em vez de uma mensagem clara de credenciais inválidas. **Melhoria:** mensagem de erro de autenticação específica e amigável. | Matheus |
+| 9 | T1 | Usabilidade | 1. Cosmética | Campo de data permite apenas seleção por calendário, sem opção de digitação. **Melhoria:** permitir entrada manual da data além do seletor de calendário. | Matheus |
+| 10 | T5 | Usabilidade | 2. Baixa | Funcionalidades de ranking e relatórios não percebidas inicialmente. **Melhoria:** aumentar a visibilidade/hierarquia desses elementos no painel. | Sara |
 
-#### Feedback geral dos participantes
-
-- **Valter Lima:** sentiu falta de um passo a passo mais claro durante o uso da plataforma; elogiou a parte visual das equipes e o design da aplicação.
-- **Sara Nunes:** gostou da identidade visual inspirada na Red Bull e considerou a interface visualmente clara.
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
