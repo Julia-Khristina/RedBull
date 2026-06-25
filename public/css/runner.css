@@ -32,6 +32,15 @@
   margin: 0;
 }
 
+.runner-competition-time {
+  font-family: var(--font-family-mono, monospace);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--texto);
+  margin: 6px 0 0 0;
+  letter-spacing: 0.06em;
+}
+
 .btn-share {
   background: none;
   border: none;
@@ -368,5 +377,14 @@
 
   .circle-wrapper {
     justify-self: center;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .athletes-table {
+    min-width: max-content;
   }
 }
