@@ -1449,15 +1449,16 @@ O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados ex
 ### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
 O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
-
-O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó — o GitLab Pages — hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre inteiramente no lado do cliente (*client-side*), por meio da biblioteca Tesseract.js em conjunto com OpenCV.js, o que elimina a dependência de serviços externos de reconhecimento de imagem e mantém o dado sensível da captura sob controle da aplicação.
+ 
+O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó, o GitLab Pages, hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre no servidor de aplicação (*server-side*), por meio da biblioteca Tesseract.js em conjunto com pré-processamento de imagem pela biblioteca sharp, havendo ainda um mecanismo de extração assistida por modelo de linguagem (Groq) acionado como complemento. A imagem capturada no dispositivo cliente é enviada ao servidor, que executa a extração e devolve os dados para validação humana antes da persistência.
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
 
-```plantuml
+```
+plantuml
 @startuml diagrama-implantacao
-
+ 
 skinparam backgroundColor #FFFFFF
 skinparam node {
   BackgroundColor #F5F5F5
@@ -1476,54 +1477,61 @@ skinparam database {
   BackgroundColor #FFF2CC
   BorderColor #D6B656
 }
-
+ 
 node "Dispositivo do Operador / Capitão\n(Navegador Web)" as browser {
   artifact "Aplicação Web (HTML/CSS/JS)\nServida pelo Express (EJS)" as webapp
-  component "OCR Client-side\n(Tesseract.js + OpenCV.js)" as ocr
 }
-
-node "Servidor de Aplicação\n(Node.js 18 + TypeScript)" as server {
+ 
+node "Servidor de Aplicação\n(Node.js + TypeScript)" as server {
   artifact "Express App (app.ts)" as express
   component "Routes" as routes
   component "Controllers" as controllers
   component "Services" as services
+  component "OCR Server-side\n(Tesseract.js + sharp + Groq)" as ocr
   component "Repositories" as repositories
   component "Validators / Middlewares" as validators
 }
-
-node "Banco de Dados Gerenciado\n(Supabase — PostgreSQL)" as db {
-  database "Schema público\n(competicao, equipe, corredor,\ncheckpoint, administrador, audit_log)" as schema
+ 
+node "Banco de Dados Gerenciado\n(Supabase - PostgreSQL)" as db {
+  database "Schema público\n(competition, team, runner,\ncheckpoint, admin, ocr_extraction,\ncompetition_report)" as schema
 }
-
+ 
 node "GitLab Pages\n(Infraestrutura estática)" as pages {
   artifact "api-documentation.html\n(documentação da WebAPI)" as apidoc
 }
-
-browser --> server : "HTTP/REST\n(JSON — porta 3000)"
-repositories --> db : "Supabase JS SDK\n(HTTPS — porta 443)"
-browser ..> pages : "HTTPS (leitura apenas —\nacesso externo de revisores)"
-
+ 
+browser --> server : "HTTP/REST\n(JSON - porta 3000)"
+browser --> server : "Upload de imagem\n(multipart/form-data -\nPOST /ocr/extractions)"
+repositories --> db : "Supabase JS SDK\n(HTTPS - porta 443)"
+browser ..> pages : "HTTPS (leitura apenas -\nacesso externo de revisores)"
+ 
 express --> routes
 routes --> controllers
 controllers --> services
+services --> ocr
 services --> repositories
 services --> validators
-
+ 
 @enduml
 ```
-
+ 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. No fluxo de OCR implementado, o dispositivo captura ou seleciona a imagem do display da esteira e a envia ao servidor por `POST /ocr/extractions`; o processamento ocorre no back-end, com Tesseract.js e fallback via Groq quando configurado, retornando os dados extraídos para validação humana antes da persistência.
 
 O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `runners`, `checkpoints`, `ocr`, `ranking`, `reports`, `export`, `auth`, `admin` e `dashboard`). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON ou formulários HTML. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
-
+O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. A foto do painel é capturada pelo dispositivo e enviada ao servidor por meio de requisição `POST /ocr/extractions`, no formato *multipart/form-data*. O dispositivo cliente não executa o reconhecimento de imagem; sua função no fluxo OCR limita-se à captura e ao envio da foto.
+ 
+O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `runners`/`athletes`, `checkpoints`, `ocr`, `ranking`, `export`, `reports`, `auth` e o roteador administrativo montado sob o prefixo `/admin`). É também neste nó que ocorre o processamento OCR, por meio do módulo de serviços `src/services/ocr*.ts` (Tesseract.js, pré-processamento com sharp e extração assistida por Groq). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
+ 
 O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospedada pelo Supabase. O acesso é realizado exclusivamente pela camada Repository por meio do Supabase JS SDK, que encapsula as requisições HTTPS ao endpoint gerenciado. Nenhuma outra camada da aplicação detém acesso direto ao banco, garantindo o isolamento arquitetural descrito na seção 3.2.1. O esquema relacional é gerenciado pelos arquivos de migração DDL localizados em `documentos/outros/migrations/`, conforme detalhado na seção 3.6.3.
-
+ 
 O nó **GitLab Pages** hospeda a documentação estática da WebAPI (`documentos/outros/api-documentation.html`), publicada em `https://web-api-deploy-d81981.pages.git.inteli.edu.br/`. Este nó não integra o fluxo de dados operacional da aplicação; sua finalidade é exclusivamente facilitar a leitura e validação externa da documentação de endpoints sem necessidade de clonar o repositório.
+ 
+A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual do desenvolvimento: o mecanismo de autenticação e controle de sessão é executado pelo próprio servidor de aplicação, conforme descrito na seção 3.8, e não demanda um nó de infraestrutura separado.
 
-A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual da sprint 4: o módulo de autenticação JWT está em desenvolvimento e será plenamente documentado no diagrama atualizado da sprint 5, conforme previsto na seção 3.8.
+
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
