@@ -155,6 +155,120 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ── Dashboard — Modal de edição de competição ──────────────────────────────
+  // [A1] PUT /competitions/:id — update competition
+  // [A1] GET /competitions/:id — fetch single competition data
+  if (path === '/' || path === '/dashboard') {
+    const modal = document.querySelector('[data-db-edit-modal]');
+    const form = document.querySelector('[data-db-edit-form]');
+    const idInput = form ? form.querySelector('[data-db-edit-id]') : null;
+    const nameInput = document.getElementById('db-edit-name');
+    const dateInput = document.getElementById('db-edit-date');
+    const addressInput = document.getElementById('db-edit-address');
+    const submitBtn = document.getElementById('db-edit-submit');
+    const errorEl = document.getElementById('db-edit-error');
+
+    function showEditError(message) {
+      if (!errorEl) return;
+      errorEl.textContent = message;
+      errorEl.classList.add('visible');
+    }
+
+    function clearEditError() {
+      if (!errorEl) return;
+      errorEl.textContent = '';
+      errorEl.classList.remove('visible');
+    }
+
+    function openEditModal(id) {
+      if (!modal || !form || !idInput || !nameInput || !dateInput || !addressInput) return;
+
+      clearEditError();
+      fetch('/competitions/' + id)
+        .then(function (res) {
+          if (!res.ok) throw new Error('Erro ao carregar dados da competição.');
+          return res.json();
+        })
+        .then(function (comp) {
+          idInput.value = comp.id;
+          nameInput.value = comp.name || '';
+          dateInput.value = comp.date || '';
+          addressInput.value = comp.address || '';
+          modal.hidden = false;
+        })
+        .catch(function (err) {
+          showEditError(err.message || 'Não foi possível carregar a competição.');
+        });
+    }
+
+    function closeEditModal() {
+      if (!modal) return;
+      modal.hidden = true;
+      clearEditError();
+    }
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!idInput || !nameInput || !dateInput || !addressInput || !submitBtn) return;
+
+        const id = idInput.value;
+        if (!id) return;
+
+        clearEditError();
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Salvando...';
+
+        fetch('/competitions/' + id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nameInput.value.trim(),
+            date: dateInput.value,
+            address: addressInput.value.trim(),
+          }),
+        })
+          .then(function (res) {
+            if (!res.ok) {
+              return res.json().then(function (data) {
+                throw new Error(data.message || 'Erro ao atualizar.');
+              });
+            }
+            window.location.reload();
+          })
+          .catch(function (err) {
+            showEditError(err.message || 'Erro ao atualizar competição.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          });
+      });
+    }
+
+    // Event delegation for edit buttons and modal backdrop/close
+    document.addEventListener('click', function (e) {
+      var target = e.target.closest('[data-db-edit-action]');
+      if (target) {
+        var action = target.dataset.dbEditAction;
+        if (action === 'close') closeEditModal();
+        return;
+      }
+
+      target = e.target.closest('.db-edit-btn');
+      if (target) {
+        var id = target.dataset.id;
+        if (id) openEditModal(id);
+      }
+    });
+
+    // Escape key closes modal
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && !modal.hidden) {
+        closeEditModal();
+      }
+    });
+  }
+
   // ===========================================================================
   // Teams page — Sprint 4, task #328 (Integração CRUD via API)
   // [A1] Endpoints da Seção 7 do agent.md:
