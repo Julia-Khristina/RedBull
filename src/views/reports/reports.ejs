@@ -356,11 +356,35 @@
     </div>
   </section>
 
-  <a class="report-export-button" href="/competitions/<%= competition.id %>/export">Exportar dados</a>
+  <button type="button" class="report-export-button" id="export-btn">Exportar dados</button>
+
+  <div id="export-modal" class="export-modal" hidden>
+    <div class="export-modal-backdrop" id="export-modal-backdrop"></div>
+    <div class="export-modal-panel">
+      <div class="export-modal-header">
+        <h2>Exportar Planilha</h2>
+        <p>Selecione as abas que deseja incluir na planilha:</p>
+      </div>
+      <div class="export-modal-body" id="export-sheets-list">
+      </div>
+      <div class="export-modal-error" id="export-modal-error"></div>
+      <div class="export-modal-footer">
+        <button type="button" class="export-modal-cancel" id="export-modal-cancel">Cancelar</button>
+        <button type="button" class="export-modal-confirm" id="export-modal-confirm">Exportar</button>
+      </div>
+    </div>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <script>
     window.COMPETITION_ID = '<%= competition.id %>';
+    window.EXPORT_SHEETS = <%- JSON.stringify([
+      { id: 'dashboard', label: 'Dashboard Executivo', description: 'KPIs gerais, ranking resumido, anomalias, uso de OCR e distribuição por operador' },
+      { id: 'equipes', label: 'Equipes', description: 'Ranking detalhado das equipes com km total, pace médio e trocas' },
+      { id: 'atletas', label: 'Atletas', description: 'Performance individual de cada atleta (km, pace médio, checkpoints)' },
+      { id: 'operacao', label: 'Operação', description: 'Checkpoints por operador, método de entrada (manual vs OCR) e tempo médio' },
+      { id: 'auditoria', label: 'Auditoria', description: 'Todos os checkpoints em ordem cronológica e registros suspeitos' },
+    ]) %>;
     <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
     window.EQUIPE_HORÁRIO_KM = <%- JSON.stringify(highlights.hourly_team_km) %>;
     <% } %>
