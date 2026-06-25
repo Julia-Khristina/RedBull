@@ -5,7 +5,7 @@
   LACUNAS:
     - "Velocidade máx." computada a partir do pace mais rápido nos checkpoints [D2 — inferido, sem campo direto no model]
     - "Próximo atleta" = primeiro runner sem checkpoint registrado na competição [D2 — sem endpoint de scheduling na Seção 7]
-    - "Calculadora de descanso": 50 min default — RN08 exige parâmetros do evento não expostos via API [D3 — não implementável sem novo endpoint]
+    - "Calculadora de descanso": 120 min (2h) default — RN08 exige parâmetros do evento não expostos via API [D3 — não implementável sem novo endpoint]
     - Percentual de descanso computado por tempo decorrido desde último checkpoint, não por fórmula oficial [D2]
     - "Posição durante à competição" (gráfico) — histórico temporal de ranking não disponível na Seção 7 [D3 — placeholder]
     - "Tempo de competição" calculado a partir de competition.date meia-noite (sem campo start_time) [D2]
@@ -163,7 +163,7 @@
           </label>
         <% } %>
 
-        <%# [D2] Percentual: tempo decorrido desde último checkpoint / 50 min recomendados %>
+        <%# [D2] Percentual: tempo decorrido desde último checkpoint / 120 min recomendados %>
         <div class="circle-wrapper" aria-label="<%= restPct %>% do tempo de descanso concluído" data-rest-circle-label>
           <svg class="circle-svg" viewBox="0 0 120 120" aria-hidden="true">
             <circle cx="60" cy="60" r="50" fill="none"
@@ -200,11 +200,11 @@
 
           <%#
             [D3 ⚠ NÃO IMPLEMENTADO — aguardando confirmação]
-            Valor de 50 min hardcoded — RN08 exige parâmetros do evento (não expostos na Seção 7).
+            Valor de 120 min hardcoded — RN08 exige parâmetros do evento (não expostos na Seção 7).
             Implementar quando endpoint de parâmetros do evento for disponibilizado.
           %>
           <div class="rest-recommended">
-            Tempo recomendado de descanso: <strong>50 min</strong>
+            Tempo recomendado de descanso: <strong>120 min (2h)</strong>
           </div>
 
           <p class="rest-last-checkpoint" data-rest-last-checkpoint>
@@ -282,4 +282,5 @@
 
 <script>
   window.RUNNER_REST_OPTIONS = <%- JSON.stringify(runnerRestOptions || []) %>;
+  setTimeout(function(){ location.reload(); }, <%= refreshDelayMs %>);
 </script>

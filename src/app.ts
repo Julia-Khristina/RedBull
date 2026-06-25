@@ -48,6 +48,12 @@ app.use(rankingRoutes);
 app.use(exportRoutes);
 app.use(reportRoutes);
 app.use(tvPanelRoutes);
+
+// Catch-all 404 — unmatched routes
+app.use((_req, res) => {
+  res.status(404).render("errors/404", { title: "Página não encontrada" });
+});
+
 app.use(errorHandler);
 
 export default app;

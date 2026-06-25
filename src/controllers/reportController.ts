@@ -34,6 +34,7 @@ function emptyReport(competitionId: number) {
     checkpoints: [],
     teamRanking: [],
     runnerRanking: [],
+    operatorRanking: [],
     persisted: false,
   };
 }

@@ -155,6 +155,120 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ── Dashboard — Modal de edição de competição ──────────────────────────────
+  // [A1] PUT /competitions/:id — update competition
+  // [A1] GET /competitions/:id — fetch single competition data
+  if (path === '/' || path === '/dashboard') {
+    const modal = document.querySelector('[data-db-edit-modal]');
+    const form = document.querySelector('[data-db-edit-form]');
+    const idInput = form ? form.querySelector('[data-db-edit-id]') : null;
+    const nameInput = document.getElementById('db-edit-name');
+    const dateInput = document.getElementById('db-edit-date');
+    const addressInput = document.getElementById('db-edit-address');
+    const submitBtn = document.getElementById('db-edit-submit');
+    const errorEl = document.getElementById('db-edit-error');
+
+    function showEditError(message) {
+      if (!errorEl) return;
+      errorEl.textContent = message;
+      errorEl.classList.add('visible');
+    }
+
+    function clearEditError() {
+      if (!errorEl) return;
+      errorEl.textContent = '';
+      errorEl.classList.remove('visible');
+    }
+
+    function openEditModal(id) {
+      if (!modal || !form || !idInput || !nameInput || !dateInput || !addressInput) return;
+
+      clearEditError();
+      fetch('/competitions/' + id)
+        .then(function (res) {
+          if (!res.ok) throw new Error('Erro ao carregar dados da competição.');
+          return res.json();
+        })
+        .then(function (comp) {
+          idInput.value = comp.id;
+          nameInput.value = comp.name || '';
+          dateInput.value = comp.date || '';
+          addressInput.value = comp.address || '';
+          modal.hidden = false;
+        })
+        .catch(function (err) {
+          showEditError(err.message || 'Não foi possível carregar a competição.');
+        });
+    }
+
+    function closeEditModal() {
+      if (!modal) return;
+      modal.hidden = true;
+      clearEditError();
+    }
+
+    if (form) {
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!idInput || !nameInput || !dateInput || !addressInput || !submitBtn) return;
+
+        const id = idInput.value;
+        if (!id) return;
+
+        clearEditError();
+        submitBtn.disabled = true;
+        const originalLabel = submitBtn.textContent;
+        submitBtn.textContent = 'Salvando...';
+
+        fetch('/competitions/' + id, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            name: nameInput.value.trim(),
+            date: dateInput.value,
+            address: addressInput.value.trim(),
+          }),
+        })
+          .then(function (res) {
+            if (!res.ok) {
+              return res.json().then(function (data) {
+                throw new Error(data.message || 'Erro ao atualizar.');
+              });
+            }
+            window.location.reload();
+          })
+          .catch(function (err) {
+            showEditError(err.message || 'Erro ao atualizar competição.');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalLabel;
+          });
+      });
+    }
+
+    // Event delegation for edit buttons and modal backdrop/close
+    document.addEventListener('click', function (e) {
+      var target = e.target.closest('[data-db-edit-action]');
+      if (target) {
+        var action = target.dataset.dbEditAction;
+        if (action === 'close') closeEditModal();
+        return;
+      }
+
+      target = e.target.closest('.db-edit-btn');
+      if (target) {
+        var id = target.dataset.id;
+        if (id) openEditModal(id);
+      }
+    });
+
+    // Escape key closes modal
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal && !modal.hidden) {
+        closeEditModal();
+      }
+    });
+  }
+
   // ===========================================================================
   // Teams page — Sprint 4, task #328 (Integração CRUD via API)
   // [A1] Endpoints da Seção 7 do agent.md:
@@ -324,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // =======================================================================
       // Task #329 — Copiar URL pública (UUID) com feedback visual
       // [A1] Botão estruturado em teams.ejs com data-teams-action="copy-uuid"
-      //   e data-uuid contendo o UUID gerado pelo backend (RN01).
+      //   e data-uuid contendo a URL pública completa (http://localhost:3000/public/team/<uuid>).
       // [D1] Fallback para document.execCommand quando navigator.clipboard
       //   não estiver disponível (browsers antigos / contexto inseguro).
       // =======================================================================
@@ -836,7 +950,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         manualRegistrationLink.href = '/operational-panel/' + runnerId +
           '?competitionId=' + encodeURIComponent(competitionId) +
-          '&teamId=' + encodeURIComponent(teamId);
+          '&teamId=' + encodeURIComponent(teamId) +
+          '&mode=manual';
         manualRegistrationLink.classList.remove('is-disabled');
         manualRegistrationLink.setAttribute('aria-disabled', 'false');
       }
@@ -967,11 +1082,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Registro manual (/operational-panel)
   if (path === '/operational-panel' || path.startsWith('/operational-panel/')) {
+    function getTimeFromParts(h, m, s) {
+      return (String(h.value || '0').padStart(2, '0') + ':' +
+              String(m.value || '0').padStart(2, '0') + ':' +
+              String(s.value || '0').padStart(2, '0'));
+    }
+
+    function filterNumericInput() {
+      this.value = this.value.replace(/\D/g, '').slice(0, 2);
+    }
+
+    document.querySelectorAll('.time-part').forEach(function (input) {
+      input.addEventListener('input', filterNumericInput);
+    });
+
+    function normalizeDecimalForApi(value) {
+      return Number(String(value || '').trim().replace(',', '.'));
+    }
+
+    function durationToSeconds(value) {
+      const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
+      if (parts.length === 2 && parts.every(Number.isFinite)) {
+        return parts[0] * 60 + parts[1];
+      }
+      if (parts.length === 3 && parts.every(Number.isFinite)) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      }
+      return null;
+    }
+
+    function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
+      const distance = normalizeDecimalForApi(distanceValue);
+      const seconds = durationToSeconds(timeValue);
+      if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
+      const secondsPerKm = Math.round(seconds / distance);
+      const minutes = Math.floor(secondsPerKm / 60);
+      const remainingSeconds = secondsPerKm % 60;
+      return formatPacePartsForApi(minutes, remainingSeconds);
+    }
+
     const ocrPanel = document.querySelector('[data-ocr-panel]');
     if (ocrPanel) {
       const captureStep = ocrPanel.querySelector('[data-ocr-step="capture"]');
       const reviewStep = ocrPanel.querySelector('[data-ocr-step="review"]');
       const manualMode = ocrPanel.querySelector('[data-manual-mode]');
+      if (ocrPanel.dataset.startMode === 'manual') {
+        showStep('manual');
+      }
       const fileInput = ocrPanel.querySelector('[data-ocr-image-input]');
       const openFileBtn = ocrPanel.querySelector('[data-ocr-open-file]');
       const capturePreview = ocrPanel.querySelector('[data-ocr-capture-preview]');
@@ -983,7 +1140,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const retakeBtn = ocrPanel.querySelector('[data-ocr-retake]');
       const distanceInput = ocrPanel.querySelector('[data-ocr-distance]');
       const paceInput = ocrPanel.querySelector('[data-ocr-pace]');
-      const timeInput = ocrPanel.querySelector('[data-ocr-time]');
+      const timeInputH = ocrPanel.querySelector('[data-ocr-time-h]');
+      const timeInputM = ocrPanel.querySelector('[data-ocr-time-m]');
+      const timeInputS = ocrPanel.querySelector('[data-ocr-time-s]');
       const discrepancy = ocrPanel.querySelector('[data-ocr-discrepancy]');
       const discrepancyText = ocrPanel.querySelector('[data-ocr-discrepancy-text]');
       const capturedClock = ocrPanel.querySelector('[data-ocr-captured-clock]');
@@ -1014,9 +1173,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (manualMode) manualMode.hidden = step !== 'manual';
       }
 
-      function normalizeDecimalForApi(value) {
-        return Number(String(value || '').trim().replace(',', '.'));
-      }
 
       function normalizeOcrTime(value) {
         const raw = String(value || '').trim();
@@ -1031,27 +1187,6 @@ document.addEventListener('DOMContentLoaded', function () {
             String(parts[2]).padStart(2, '0');
         }
         return raw;
-      }
-
-      function durationToSeconds(value) {
-        const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
-        if (parts.length === 2 && parts.every(Number.isFinite)) {
-          return parts[0] * 60 + parts[1];
-        }
-        if (parts.length === 3 && parts.every(Number.isFinite)) {
-          return parts[0] * 3600 + parts[1] * 60 + parts[2];
-        }
-        return null;
-      }
-
-      function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
-        const distance = normalizeDecimalForApi(distanceValue);
-        const seconds = durationToSeconds(timeValue);
-        if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
-        const secondsPerKm = Math.round(seconds / distance);
-        const minutes = Math.floor(secondsPerKm / 60);
-        const remainingSeconds = secondsPerKm % 60;
-        return formatPacePartsForApi(minutes, remainingSeconds);
       }
 
       function updateOcrSourceNotice(result) {
@@ -1074,7 +1209,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const pace = calculatePaceFromDistanceAndTime(distance, time);
         if (distanceInput) distanceInput.value = distance;
         if (paceInput) paceInput.value = pace;
-        if (timeInput) timeInput.value = time;
+        var parts = time.split(':');
+        if (timeInputH) timeInputH.value = parts[0] || '';
+        if (timeInputM) timeInputM.value = parts[1] || '';
+        if (timeInputS) timeInputS.value = parts[2] || '';
         ocrState.originalValues = { distance: distance, pace: pace, time: time };
         updateOcrSourceNotice(result);
         if (saveBtn) saveBtn.disabled = false;
@@ -1123,28 +1261,26 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = normalizeDecimalForApi(distanceInput ? distanceInput.value : '');
         const idRunner = readContextNumber('id_runner');
         const idCompetition = readContextNumber('id_competition');
-        const idTreadmill = readContextNumber('id_treadmill');
         const idAdmin = readContextNumber('id_admin');
         if (!Number.isFinite(distance) || distance < 0) {
           throw new Error('Distancia deve ser um numero nao negativo.');
         }
-        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
+        if (!idRunner || !idCompetition || !idAdmin) {
           throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
-        const time = normalizeOcrTime(timeInput ? timeInput.value : '');
+        const time = getTimeFromParts(timeInputH, timeInputM, timeInputS);
         const pace = calculatePaceFromDistanceAndTime(distanceInput ? distanceInput.value : '', time);
         const edited = !ocrState.originalValues ||
           String(distanceInput ? distanceInput.value : '') !== String(ocrState.originalValues.distance) ||
-          String(timeInput ? timeInput.value : '') !== String(ocrState.originalValues.time);
+          getTimeFromParts(timeInputH, timeInputM, timeInputS) !== String(ocrState.originalValues.time);
 
         const payload = {
-          identifier: 'OCR-' + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
+          identifier: (edited ? 'OCR-EDITED-' : 'OCR-') + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
           distance_km: distance,
           id_runner: idRunner,
           id_competition: idCompetition,
-          id_treadmill: idTreadmill,
           id_admin: idAdmin,
           image: {
             input_method: 'ocr',
@@ -1183,18 +1319,18 @@ document.addEventListener('DOMContentLoaded', function () {
           showStep('capture');
         });
       }
-      [distanceInput, paceInput, timeInput].forEach(function (input) {
-        if (!input) return;
-        input.addEventListener('input', function () {
-          if (input !== paceInput && paceInput) {
-            const normalizedTime = normalizeOcrTime(timeInput ? timeInput.value : '');
-            paceInput.value = calculatePaceFromDistanceAndTime(
-              distanceInput ? distanceInput.value : '',
-              normalizedTime
-            );
-          }
-          updateOcrSourceNotice(ocrState.extraction);
-        });
+      function updateOcrPace() {
+        if (!paceInput) return;
+        paceInput.value = calculatePaceFromDistanceAndTime(
+          distanceInput ? distanceInput.value : '',
+          getTimeFromParts(timeInputH, timeInputM, timeInputS)
+        );
+        updateOcrSourceNotice(ocrState.extraction);
+      }
+
+      if (distanceInput) distanceInput.addEventListener('input', updateOcrPace);
+      [timeInputH, timeInputM, timeInputS].forEach(function (input) {
+        if (input) input.addEventListener('input', updateOcrPace);
       });
       if (saveBtn) {
         saveBtn.addEventListener('click', async function () {
@@ -1242,6 +1378,27 @@ document.addEventListener('DOMContentLoaded', function () {
         feedback.dataset.state = isError ? 'error' : (message ? 'success' : '');
       }
 
+      const manualDistanceInput = form.querySelector('input[name="distance_km"]');
+      const manualPaceInput = form.querySelector('input[name="pace"]');
+      const manualTimeH = form.querySelector('input[name="time_hours"]');
+      const manualTimeM = form.querySelector('input[name="time_minutes"]');
+      const manualTimeS = form.querySelector('input[name="time_seconds"]');
+
+      function updateManualPace() {
+        if (!manualDistanceInput || !manualPaceInput) return;
+        manualPaceInput.value = calculatePaceFromDistanceAndTime(
+          manualDistanceInput.value,
+          getTimeFromParts(manualTimeH, manualTimeM, manualTimeS)
+        );
+      }
+
+      if (manualDistanceInput) {
+        manualDistanceInput.addEventListener('input', updateManualPace);
+      }
+      [manualTimeH, manualTimeM, manualTimeS].forEach(function (input) {
+        if (input) input.addEventListener('input', updateManualPace);
+      });
+
       function normalizePace(value) {
         return normalizePaceForApi(value);
       }
@@ -1251,13 +1408,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = Number(data.get('distance_km'));
         const idRunner = Number(data.get('id_runner'));
         const idCompetition = Number(data.get('id_competition'));
-        const idTreadmill = Number(data.get('id_treadmill'));
         const idAdmin = Number(data.get('id_admin'));
 
         if (!Number.isFinite(distance) || distance < 0) {
           throw new Error('Distância deve ser um número não negativo.');
         }
-        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
+        if (!idRunner || !idCompetition || !idAdmin) {
           throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
         }
 
@@ -1269,7 +1425,6 @@ document.addEventListener('DOMContentLoaded', function () {
           distance_km: distance,
           id_runner: idRunner,
           id_competition: idCompetition,
-          id_treadmill: idTreadmill,
           id_admin: idAdmin,
           image: {
             input_method: form.dataset.inputMethod || 'manual',
@@ -1277,16 +1432,38 @@ document.addEventListener('DOMContentLoaded', function () {
           },
         };
         const pace = normalizePace(data.get('pace'));
-        const time = String(data.get('time') || '').trim();
+        const time = getTimeFromParts(manualTimeH, manualTimeM, manualTimeS);
         if (pace) payload.pace = pace;
-        if (time) payload.time = time;
+        if (time !== '00:00:00') payload.time = time;
 
         return payload;
       }
 
-      form.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        const originalLabel = submitBtn ? submitBtn.textContent : '';
+      function detectOutliers(payload) {
+        var warnings = [];
+
+        if (payload.distance_km > 20) {
+          var guess = (payload.distance_km / 10).toFixed(1);
+          warnings.push('Distancia ' + payload.distance_km + 'km parece muito alta. Talvez seja ' + guess + 'km (virgula faltando?)');
+        } else if (payload.distance_km > 0 && payload.distance_km < 0.3) {
+          warnings.push('Distancia ' + payload.distance_km + 'km parece muito baixa. Faltou um zero?');
+        }
+
+        if (payload.time) {
+          var parts = payload.time.split(':').map(Number);
+          var totalMin = parts[0] * 60 + parts[1] + parts[2] / 60;
+          if (totalMin > 30) {
+            warnings.push('Tempo ' + payload.time + ' parece longo demais para um checkpoint.');
+          }
+        }
+
+        return warnings;
+      }
+
+      if (!submitBtn) return;
+
+      submitBtn.addEventListener('click', async function () {
+        const originalLabel = submitBtn.textContent;
         let payload;
 
         try {
@@ -1296,10 +1473,17 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Salvando...';
+        var warnings = detectOutliers(payload);
+        if (warnings.length > 0) {
+          var msg = 'ATENCAO:\n' + warnings.join('\n') + '\n\nDeseja salvar mesmo assim?';
+          if (!confirm(msg)) {
+            showManualFeedback('Salvamento cancelado. Revise os dados.', true);
+            return;
+          }
         }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Salvando...';
         showManualFeedback('', false);
 
         try {
@@ -1314,14 +1498,13 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error(data.message || 'Erro ao salvar registro manual.');
           }
 
-          showManualFeedback('Registro manual salvo com sucesso.', false);
+          showManualFeedback('Checkpoint realizado com sucesso!', false);
+          console.log('Checkpoint manual salvo, status:', res.status);
         } catch (err) {
-          showManualFeedback(err.message || 'Erro ao salvar registro manual.', true);
-        } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalLabel;
-          }
+          console.error('Erro ao salvar checkpoint manual:', err);
+          showManualFeedback('ERRO: ' + err.message, true);
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
         }
       });
 
@@ -1444,15 +1627,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================================
-  // RANKING — Auto-polling (admin: 5 min, public: 1h)
-  // RN11: painel adm a cada 5 min
-  // RN09: painel público a cada 1h
+  // RANKING — Auto-polling (1 min)
   // ============================================================
   var competitionId = window.COMPETITION_ID;
   var isAdmin = window.IS_ADMIN;
 
   if (competitionId) {
-    var pollIntervalMs = isAdmin ? 5 * 60 * 1000 : 60 * 60 * 1000;
+    var pollIntervalMs = 60 * 1000;
 
     fetchRanking(competitionId, isAdmin);
     setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);

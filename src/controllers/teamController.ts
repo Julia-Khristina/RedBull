@@ -189,7 +189,6 @@ export const teamController = {
       checkpointContext: {
         id_competition: competitionId,
         id_runner: activeRunner?.id ?? "",
-        id_treadmill: 1,
         id_admin: 1,
       },
       currentPage: "teams",

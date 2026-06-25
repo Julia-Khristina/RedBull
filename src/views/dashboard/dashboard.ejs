@@ -40,6 +40,7 @@
   }
 %>
 
+<link rel="stylesheet" href="/css/competition-form.css">
 <main class="db-main">
 
   <!-- ── Header banner ── -->
@@ -170,6 +171,11 @@
                 <% } else { %>
                   <button class="db-close-btn" data-id="<%= item.id %>">Encerrar</button>
                 <% } %>
+                  <button class="db-edit-btn" data-id="<%= item.id %>" title="Editar competição">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    </svg>
+                  </button>
               </div>
             </article>
           <% }); %>
@@ -195,6 +201,48 @@
     <% } %>
   </section>
 
+  <!-- ── Modal de edição ── -->
+  <section
+    id="db-edit-modal"
+    class="db-modal"
+    data-db-edit-modal
+    role="dialog"
+    aria-modal="true"
+    hidden
+  >
+    <div class="db-modal-backdrop" data-db-edit-action="close"></div>
 
+    <div class="db-modal-card cf-main">
+      <button type="button" class="cf-back-link" data-db-edit-action="close">&lt; Voltar</button>
+
+      <h1 class="cf-page-title">Editar Competição</h1>
+
+      <div id="db-edit-error" class="cf-error" role="alert"></div>
+
+      <form class="cf-form" id="db-edit-form" data-db-edit-form novalidate>
+        <input type="hidden" name="id" data-db-edit-id>
+
+        <div class="cf-field">
+          <label class="cf-label" for="db-edit-name">Nome da Competição</label>
+          <input class="cf-input" type="text" id="db-edit-name" name="name" required maxlength="100" placeholder="RedBull 24 Horas Edição São Paulo - Butantã" autocomplete="off">
+        </div>
+
+        <div class="cf-field">
+          <label class="cf-label" for="db-edit-date">Data</label>
+          <input class="cf-input" type="date" id="db-edit-date" name="date" required>
+        </div>
+
+        <div class="cf-field">
+          <label class="cf-label" for="db-edit-address">Localização</label>
+          <input class="cf-input" type="text" id="db-edit-address" name="address" required maxlength="200" placeholder="Rua MMDC 80, Butantã, São Paulo" autocomplete="off">
+        </div>
+
+        <div class="cf-actions">
+          <button type="button" class="cf-btn-cancel" data-db-edit-action="close">Cancelar</button>
+          <button type="submit" class="cf-btn-submit" id="db-edit-submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </section>
 
 </main>

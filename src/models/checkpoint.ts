@@ -7,7 +7,6 @@ export interface Checkpoint {
   image: Record<string, unknown> | null;
   id_runner: number;
   id_competition: number;
-  id_treadmill: number;
   id_admin: number;
   created_at: string;
   runner?: {
@@ -33,7 +32,6 @@ export interface CreateCheckpointInput {
   image?: Record<string, unknown>;
   id_runner: number;
   id_competition: number;
-  id_treadmill: number;
   id_admin: number;
   created_at?: Date;
 }

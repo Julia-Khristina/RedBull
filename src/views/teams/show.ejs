@@ -103,13 +103,13 @@
       >
         Tirar Foto da Esteira
       </a>
-      <button
-        type="button"
-        class="team-panel__button team-panel__button--ghost"
-        data-photo-placeholder
+      <a
+        class="team-panel__button team-panel__button--ghost <%= activeRunner ? '' : 'is-disabled' %>"
+        href="<%= activeRunner ? '/operational-panel/' + activeRunner.id + '?competitionId=' + competition.id + '&teamId=' + team.id + '&mode=manual' : '#' %>"
+        <%= activeRunner ? '' : 'aria-disabled="true"' %>
       >
         Registro Manual
-      </button>
+      </a>
     </div>
   </section>
 
