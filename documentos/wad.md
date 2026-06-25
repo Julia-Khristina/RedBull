@@ -2274,7 +2274,7 @@ A seguir, a Figura 57 ilustra o Modelo Entidade-Relacionamento desenvolvido para
 
 <div align="center">
   <sub>Figura 57 - Modelo Entidade-Relacionamento</sub><br>
-    <img src="../assets/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
+    <img src="../assets/programacao/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
@@ -2338,6 +2338,7 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 | Competition | `address` | Texto | Sim | — | Local onde a competição ocorre |
 | Competition | `date` | Data | Sim | CHECK: data ≥ 01/01/2020 | Data de realização da competição |
 | Competition | `status` | Categórico | Sim | CHECK: `not_started`, `in_progress` ou `closed`; padrão `not_started` | Estado atual da competição |
+| Competition | `started_at` | Data/Hora | Não | — | Horário de início da competição, utilizado para configurar a exibição no painel de TV |
 | Competition | `created_at` | Data/Hora | Sim | Padrão: data/hora atual | Data e horário em que o registro foi inserido no sistema |
 
 <div align="center">
@@ -2608,7 +2609,7 @@ Com base nos requisitos funcionais, nas regras de negócio e na modelagem concei
 ##### Descrição das entidades
 
 **Tabela `competition`**  
-A tabela `competition` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo nome, endereço, data de realização e o status do evento (`not_started`, `in_progress` ou `closed`). Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
+A tabela `competition` armazena as informações referentes aos eventos esportivos cadastrados na plataforma, incluindo nome, endereço, data de realização, o status do evento (`not_started`, `in_progress` ou `closed`) e o horário de início usado pelo painel de TV (`started_at`). Essa entidade representa a base organizacional do sistema, servindo como referência para o cadastro das equipes participantes e para os registros operacionais gerados durante a competição.
 
 **Tabela `team`**  
 A tabela `team` registra os grupos participantes vinculados a uma competição específica por meio da chave estrangeira `id_competition`. Além de sua chave primária, contempla um identificador público único (`uuid`) e os metadados do QR Code (`qr_code`), que permitem individualizar cada equipe e associá-la ao respectivo evento esportivo.
@@ -2701,6 +2702,7 @@ CREATE TABLE competition (
     address     VARCHAR(255)  NOT NULL,
     date        DATE          NOT NULL,
     status      VARCHAR(30)   NOT NULL DEFAULT 'not_started',
+    started_at  TIMESTAMP     NULL,
     created_at  TIMESTAMP     NOT NULL DEFAULT NOW(),
 
     CONSTRAINT pk_competition PRIMARY KEY (id),
@@ -2715,7 +2717,7 @@ CREATE TABLE competition (
 CREATE INDEX idx_competition_date ON competition (date);
 ```
 
-A tabela **`competition`** é a raiz do modelo e, por não possuir dependências externas, é criada em primeiro lugar. O campo **`id`** é do tipo `INTEGER` e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **`name`** armazena o nome do evento e é protegido pela constraint `ck_competition_name_not_empty`, que impede a inserção de nomes em branco. O campo **`address`** é obrigatório, pois toda competição deve possuir um local de realização. O campo **`date`** armazena exclusivamente a data do evento (sem componente horária) e a constraint `ck_competition_date_min` impede o cadastro de datas anteriores a 01/01/2020. O campo **`status`** recebe `DEFAULT 'not_started'` e é restringido pela constraint `ck_competition_status` aos valores `not_started`, `in_progress` e `closed`, representando o ciclo de vida da competição. O atributo **`created_at`** recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro. Por fim, um **índice** é criado sobre `date` para otimizar consultas por período de realização.
+A tabela **`competition`** é a raiz do modelo e, por não possuir dependências externas, é criada em primeiro lugar. O campo **`id`** é do tipo `INTEGER` e utiliza `GENERATED ALWAYS AS IDENTITY` para geração automática e sequencial de identificadores. O campo **`name`** armazena o nome do evento e é protegido pela constraint `ck_competition_name_not_empty`, que impede a inserção de nomes em branco. O campo **`address`** é obrigatório, pois toda competição deve possuir um local de realização. O campo **`date`** armazena exclusivamente a data do evento (sem componente horária) e a constraint `ck_competition_date_min` impede o cadastro de datas anteriores a 01/01/2020. O campo **`status`** recebe `DEFAULT 'not_started'` e é restringido pela constraint `ck_competition_status` aos valores `not_started`, `in_progress` e `closed`, representando o ciclo de vida da competição. O campo `started_at` (`TIMESTAMP`, opcional) armazena o horário de início da competição utilizado para configurar o painel de TV, complementando `date` (data prevista do evento) e `created_at` (criação do registro). O atributo **`created_at`** recebe `DEFAULT NOW()`, garantindo rastreabilidade automática da criação do registro. Por fim, um **índice** é criado sobre `date` para otimizar consultas por período de realização.
 
 ##### Tabela `team` (`0002_create_team.sql`)
 
