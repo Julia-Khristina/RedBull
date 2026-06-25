@@ -705,7 +705,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Persona**              | Amanda Azevedo (Atleta) |
 | **User Story**           | "Como Amanda Azevedo, atleta da competição, posso gerar templates visuais personalizados com meus dados de desempenho para compartilhar no Instagram, para divulgar minha participação e resultados nas redes sociais." |
-| **Critério de aceite 1** | CR1: O template deve exibir os dados reais de desempenho do atleta selecionado (maior KM, menor pace, desempenho por período). **Teste**: Dado que um atleta é selecionado e um template é escolhido, quando a página é renderizada, então os campos de destaque devem conter os dados reais da competição. |
+| **Critério de aceite 1** | CR1: O template deve exibir os dados reais de desempenho do atleta selecionado dentro da equipe acessada por UUID (maior KM, menor pace, desempenho por período). **Teste**: Dado que um atleta é selecionado na página pública da equipe e um template é escolhido, quando a página é renderizada, então os campos de destaque devem conter os dados reais da equipe e do atleta selecionado. |
 | **Critério de aceite 2** | CR2: O template deve permitir o download como imagem PNG. **Teste**: Dado que o template está renderizado na tela, quando o usuário clica em "Baixar PNG", então uma imagem PNG deve ser baixada contendo o layout visual completo. |
 | **Critério de aceite 3** | CR3: O upload da foto do atleta deve ser processado localmente sem envio ao servidor. **Teste**: Dado que o usuário seleciona uma foto no input de arquivo, quando a imagem é carregada, então ela deve ser exibida no círculo do template sem nenhuma requisição ao backend. |
 | Critérios INVEST         | Independente: Pode ser implementada sem depender de outras funcionalidades de compartilhamento. <br> Negociável: A quantidade e o layout dos templates podem ser ajustados. <br> Valorosa: Permite que atletas divulguem seus resultados nas redes sociais. <br> Estimável: O escopo de geração de templates é bem definido. <br> Pequena: Funcionalidade específica e isolada. <br> Testável: A renderização e o download podem ser verificados. |
@@ -746,8 +746,8 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF013 | O sistema deve exportar os dados da competição em formato XLSX, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Concluído |
 | RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora.                                                  | Média      | Concluído |
-| RF016 | O sistema deve permitir a geração de templates visuais de destaques da competição formatados para compartilhamento em redes sociais                                       | Baixa      | Concluído |
-| RF017 | O sistema deve exibir dados reais da competição (maior KM, menor pace, períodos manhã/tarde/madrugada) nos templates de compartilhamento                                  | Baixa      | Concluído |
+| RF016 | O sistema deve permitir a geração de templates visuais de destaques por equipe, acessados via URL pública com UUID, formatados para compartilhamento em redes sociais      | Baixa      | Concluído |
+| RF017 | O sistema deve exibir dados reais da equipe acessada por UUID e de seus atletas (maior KM, menor pace, períodos manhã/tarde/madrugada) nos templates de compartilhamento  | Baixa      | Concluído |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -776,7 +776,7 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo XLSX contendo checkpoints, timestamps e logs de validação.                 |
 | RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
 | RF015	| Dado que existam novos checkpoints consolidados, quando o intervalo máximo de atualização do painel público for atingido, então o sistema deve atualizar o ranking exibido às equipes.  |
-| RF016 | Dado que o operador ou atleta acesse a página de compartilhamento, quando selecionar um template e um atleta, então o sistema deve renderizar um template visual com os dados reais de desempenho preenchidos |
+| RF016 | Dado que o operador ou atleta acesse a página pública de compartilhamento da equipe por UUID, quando selecionar um template e um atleta, então o sistema deve renderizar um template visual com os dados reais de desempenho da equipe e do atleta preenchidos |
 | RF017 | Dado que o template seja renderizado, quando o usuário clicar em "Baixar PNG", então o sistema deve gerar e baixar uma imagem PNG do template |
 
 <div align="center">
@@ -888,7 +888,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 | RF013 | RN15 | `/competitions/:id/export` | GET | Implementado | Permite exportar dados consolidados da competição para análise posterior. |
 | RF014 | RN16, RN17 | `/competitions/:id/reports` | GET | Implementado | Permite a geração de relatórios gerenciais e operacionais da competição. |
 | RF015 | RN09, RN13 | `/competitions/:id/ranking`; `/competitions/:id/ranking/teams`; `/competitions/:id/ranking/runners` | GET | Implementado | Retorna rankings por equipe e por atleta, ordenados conforme desempenho registrado. |
-| RF016 | RN19, RN20 | `/competitions/:id/share`; `/competitions/:id/share/template/:type`; `/public/competitions/:id/share/template/:type` | GET | Implementado | Permite visualizar grid de templates e renderizar template individual com dados reais da competição. Rota pública acessível sem autenticação pela página do corredor. |
+| RF016 | RN19, RN20 | `/public/team/:uuid/share`; `/public/team/:uuid/share/template/:type` | GET | Implementado | Permite visualizar o grid de templates da equipe e renderizar templates com dados reais da equipe acessada por UUID. Rota pública acessível sem autenticação pela página da equipe. |
 
 <div align="center">
 
@@ -3393,9 +3393,9 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Bruno Monteiro | RF004 | RN02, RN03 | POST /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administrador criado com sucesso |
 | Bruno Monteiro | RF004 | RN02, RN03 | PUT /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Dados administrativos atualizados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | DELETE /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Administrador removido corretamente |
-| Bruno Monteiro | RF016 | RN19, RN20 | GET /competitions/:id/share | Grid de Compartilhamento | — | Grid com 6 templates exibido com dados da competição |
-| Bruno Monteiro | RF016 | RN19, RN20 | GET /competitions/:id/share/template/:type | Template de Compartilhamento | — | Template Instagram renderizado com dados reais e download PNG funcional |
-| Amanda Azevedo | RF016 | RN19, RN20 | GET /public/competitions/:id/share/template/:type | Template de Compartilhamento | shareService.spec.ts (planejado) | Template Instagram gerado com dados reais a partir da página pública do corredor |
+| Bruno Monteiro | RF016 | RN19, RN20 | GET /public/team/:uuid/share | Grid de Compartilhamento | — | Grid com 6 templates exibido com dados da equipe acessada por UUID |
+| Bruno Monteiro | RF016 | RN19, RN20 | GET /public/team/:uuid/share/template/:type | Template de Compartilhamento | — | Template Instagram renderizado com dados reais da equipe e download PNG funcional |
+| Amanda Azevedo | RF016 | RN19, RN20 | GET /public/team/:uuid/share/template/:type | Template de Compartilhamento | shareService.spec.ts (planejado) | Template Instagram gerado com dados reais a partir da página pública da equipe |
 
 <div align="center">
 
