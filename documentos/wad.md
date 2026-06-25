@@ -249,7 +249,7 @@ No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possív
 
 Para identificar e priorizar os principais riscos do projeto, foi elaborada a matriz de risco apresentada no Quadro 1 a seguir.
 
-<p align = "center"> Quadro 1 - Matriz de Risco </p>
+<p align = "center"> Quadro 1 - Matriz de Risco </p> 
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
@@ -285,11 +285,9 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-## 2.2. Personas (sprint 1)
+## 2.2. Personas 
 
 Personas são personagens fictícios criados com base em dados plausíveis que representam um tipo de usuário compatível com o projeto. Elas incluem informações como objetivos, necessidades, frustrações e interesses, auxiliando na compreensão do problema e no desenvolvimento da solução.
-
-
 
 <div align="center">
   <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
@@ -354,8 +352,6 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 
 #### Biografia
 Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos atletas,  estejam consistentes e confiáveis para a análise de resultados no fim da prova. 
-
-
 
 #### Objetivos
 <ul>
@@ -901,11 +897,11 @@ Toda requisição originada no cliente, seja proveniente do painel administrativ
 
 **PostgreSQL** é a camada de persistência definitiva, acessada pela aplicação via cliente Supabase (`src/database/supabaseClient.ts`). Recebe conexões exclusivamente da camada de Repository, o que garante que nenhuma outra camada detenha acesso direto ao banco de dados. O esquema relacional é gerenciado por arquivos de migração versionados localizados em `documentos/outros/migrations/` (arquivos `0000_extensions.sql` a `0008_create_competition_report.sql`), assegurando rastreabilidade e reprodutibilidade do ambiente de dados.
 
-**Fluxo de OCR Híbrido**
+**Fluxo OCR assistido**
 
-O processamento de imagens capturadas pelos operadores da Red Bull 24h é tratado por uma camada de OCR híbrida, encapsulada no `OCRService` em conjunto com os serviços auxiliares `OCRTesseractService` e `OCRGroqService`. Ao receber uma imagem via requisição `POST /ocr/extractions`, o `OCRController` aciona o `OCRService`, que primeiro tenta a extração local com Tesseract.js — utilizando o modelo `eng.traineddata` embarcado no projeto — através do `OCRTesseractService`. Quando o reconhecimento local produz um resultado utilizável, este é retornado ao cliente com origem `tesseract`. Caso contrário, e havendo `GROQ_API_KEY` configurada, o `OCRGroqService` realiza uma segunda tentativa contra a API externa da Groq, retornando o resultado com origem `groq`.
+O processamento de imagens capturadas pelos funcionários da Red Bull 24h já está integrado ao servidor por meio da rota `POST /ocr/extractions`. Ao receber uma imagem no campo `image`, o `OcrController` persiste o arquivo em diretório controlado, aciona o `OcrService` e retorna `201 Created` com as métricas extraídas, a origem da leitura (`tesseract` ou `groq+tesseract`) e a URL de pré-visualização. A leitura usa Tesseract.js como primeira etapa e pode recorrer ao Groq quando a chave de API estiver configurada. A persistência definitiva da distância, pace, tempo, imagem e vínculos de atleta, competição, esteira e administrador ocorre no fluxo de checkpoint, após conferência humana.
 
-A validação dos dados extraídos é realizada manualmente pelo operador no painel operacional antes da persistência, em conformidade com a RN06 (validação humana obrigatória). Após a confirmação visual, o `CheckpointController` aciona o `CheckpointService`, que aplica as demais regras de negócio (RN04, RN05, RN12) e persiste o registro via `CheckpointRepository`. A arquitetura híbrida combina o baixo custo e a autonomia da execução local com a robustez de um modelo externo como rede de segurança, sem expor o sistema à indisponibilidade do provedor externo no caminho crítico.
+Esse desenho mantém a validação humana como etapa obrigatória antes do registro final e reduz o risco de gravar automaticamente leituras incorretas. Como a extração ainda ocorre de forma síncrona na requisição HTTP, permanece como evolução possível a criação de fila assíncrona caso os testes em ambiente real indiquem latência perceptível durante picos de checkpoints simultâneos.
 
 #### Tabela de Responsabilidades
 
@@ -934,49 +930,33 @@ A validação dos dados extraídos é realizada manualmente pelo operador no pai
   <sub>Quadro 26 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
 </div>
 
-| Camada         | Classe                                                              | Responsabilidade no projeto                                                                                                                                                                                                                                                                | RFs / RNs                       |
-| -------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------- |
-| **Controller** | `CompetitionController`                                             | Atende `POST/GET/PUT/PATCH/DELETE /competitions[/:id]`, criando, consultando, atualizando, encerrando (`PATCH`) e removendo competições; persiste a competição selecionada por meio de cookie para os fluxos administrativos subsequentes.                                                  | RF02, RF12, RN02, RN14          |
-| **Controller** | `TeamController`                                                    | Atende `POST/GET/PUT/PATCH/DELETE /competitions/:id/teams[/:teamId]` e renderiza as views server-side das equipes; expõe o endpoint `PATCH .../active-runner` para definir o atleta ativo da equipe.                                                                                        | RF01, RF03, RN01                |
-| **Controller** | `RunnerController`                                                  | Atende `POST/GET/PUT/DELETE /competitions/:id/teams/:teamId/runners[/:runnerId]` e a view pública `GET /public/team/:uuid`, gerenciando os atletas e renderizando o painel acessado por link único.                                                                                         | RF01, RF14, RN13, RN17          |
-| **Controller** | `CheckpointController`                                              | Atende `POST/GET/PUT/DELETE /checkpoints[/:id]`, `POST /runners/:runnerId/checkpoints`, `GET /competitions/:id/checkpoints[/inconsistencies]` e a view `/operational-panel`; registra checkpoints manuais e finaliza a persistência dos extraídos via OCR após confirmação humana.          | RF05, RF07, RF08, RF09, RN04, RN12 |
-| **Controller** | `RankingController`                                                 | Atende `GET /competitions/:id/ranking/{teams,runners}` (JSON) e as views de ranking (`/ranking`, `/view/competitions/:id/ranking`); expõe os rankings de equipes e atletas calculados em tempo real.                                                                                        | RF10, RF15, RN09, RN11          |
-| **Controller** | `OCRController`                                                     | Atende `POST /ocr/extractions`, recebe o upload da imagem (Multer) e delega a extração ao `OCRService`.                                                                                                                                                                                    | RF05, RF06, RN06                |
-| **Controller** | `ReportController`                                                  | Atende `GET /reports`, `GET /competitions/:id/reports` e `GET /view/competitions/:id/reports`; gera e renderiza os relatórios consolidados da competição.                                                                                                                                  | RF13                            |
-| **Controller** | `ExportController`                                                  | Atende o endpoint de exportação CSV de checkpoints, timestamps e logs operacionais.                                                                                                                                                                                                        | RF13                            |
-| **Controller** | `AdminController`                                                   | Atende `GET/POST/PUT/DELETE /admin[/:id]`, oferecendo o CRUD dos administradores autorizados.                                                                                                                                                                                              | RF04                            |
-| **Controller** | `AuthController`                                                    | Atende `POST /admin/login` e `POST /auth/sessions` (mesma operação de autenticação) e `GET /logout`; valida credenciais e emite o JWT consumido pelas demais áreas administrativas.                                                                                                        | RF04, RN03                      |
-| **Controller** | `TvPanelController`                                                 | Atende o endpoint público `GET /public/competitions/:id/tv-panel/metrics`, consolidando as métricas exibidas no painel de TV durante a competição.                                                                                                                                         | RF11                            |
-| **Service**    | `CompetitionService`                                                | Cria e gerencia competições, valida regras de período e estado e orquestra o `CompetitionRepository`.                                                                                                                                                                                      | RF02, RF12, RN02                |
-| **Service**    | `TeamService`                                                       | Cria equipes, gera o UUID público da equipe, valida unicidade do nome dentro da competição e mantém o atleta ativo selecionado.                                                                                                                                                            | RF01, RF03, RN01                |
-| **Service**    | `RunnerService`                                                     | Cadastra e atualiza atletas, valida dados obrigatórios e o limite de até 16 atletas por equipe.                                                                                                                                                                                            | RF01, RN17                      |
-| **Service**    | `CheckpointService`                                                 | Valida o pertencimento do atleta à equipe, aplica as regras temporais da competição e persiste os checkpoints via `CheckpointRepository`.                                                                                                                                                  | RF08, RN04, RN05, RN12          |
-| **Service**    | `RankingService`                                                    | Calcula os rankings de atletas e de equipes a partir dos checkpoints registrados, aplicando os critérios de desempate definidos pelas regras de negócio.                                                                                                                                   | RF10, RF15, RN09, RN11          |
-| **Service**    | `OCRService` (+ `OCRTesseractService`, `OCRGroqService`, `OcrNormalize`) | Orquestra o fluxo de OCR híbrido: tentativa local com Tesseract.js (modelo `eng.traineddata`) seguida de fallback para a API externa da Groq quando configurada, devolvendo as métricas extraídas para confirmação humana.                                                                  | RF05, RF06, RN06                |
-| **Service**    | `ReportService`                                                     | Compõe os dados consolidados que alimentam as views e endpoints de relatórios.                                                                                                                                                                                                             | RF13                            |
-| **Service**    | `ExportService`                                                     | Formata e gera os arquivos CSV de exportação a partir dos dados recuperados pelos repositórios de domínio.                                                                                                                                                                                 | RF13                            |
-| **Service**    | `AdminService`                                                      | Implementa as regras de criação, consulta e atualização dos administradores.                                                                                                                                                                                                               | RF04                            |
-| **Service**    | `AuthService`                                                       | Valida credenciais, emite e valida tokens JWT (HS256, validade de 8 horas) e expõe o perfil do administrador autenticado.                                                                                                                                                                  | RF04, RN03                      |
-| **Service**    | `TvPanelService`                                                    | Agrega, em uma única resposta, o estado da competição, distância total, tempo decorrido, pace médio ponderado e o top N de equipes.                                                                                                                                                        | RF11                            |
-| **Repository** | `CompetitionRepository`                                             | Operações de persistência das competições, incluindo criação, consulta, atualização e encerramento.                                                                                                                                                                                        | RF02, RF12                      |
-| **Repository** | `TeamRepository`                                                    | Persistência das equipes, com armazenamento do UUID público e suporte ao atleta ativo da equipe.                                                                                                                                                                                           | RF01, RF03                      |
-| **Repository** | `RunnerRepository`                                                  | Persistência dos atletas e consultas por equipe e por competição.                                                                                                                                                                                                                          | RF01                            |
-| **Repository** | `CheckpointRepository`                                              | Persistência e recuperação dos checkpoints e fornecimento dos dados agregados consumidos pelos serviços de ranking e painel de TV.                                                                                                                                                         | RF05, RF08, RF10                |
-| **Repository** | `ReportRepository`                                                  | Consultas otimizadas para a geração de relatórios consolidados da competição.                                                                                                                                                                                                              | RF13                            |
-| **Repository** | `ExportRepository`                                                  | Consultas otimizadas para alimentar a exportação CSV.                                                                                                                                                                                                                                      | RF13                            |
-| **Repository** | `AdminRepository`                                                   | Persistência dos administradores e consultas usadas no fluxo de autenticação.                                                                                                                                                                                                              | RF04                            |
-| **Repository** | `AuthRepository`                                                    | Recupera o administrador por e-mail durante o fluxo de autenticação.                                                                                                                                                                                                                       | RF04                            |
-| **Model**      | `Competition`                                                       | Estrutura tipada da competição: identificação, período de realização e estado operacional (`not_started`, `in_progress`, `closed`).                                                                                                                                                        | RF02                            |
-| **Model**      | `Team`                                                              | Estrutura tipada da equipe, contendo o identificador público (`uuid`), QR Code, atleta ativo (`active_runner_id`) e vínculo com a competição.                                                                                                                                              | RF01, RF03                      |
-| **Model**      | `Runner`                                                            | Estrutura tipada do atleta, vinculado a uma equipe da competição.                                                                                                                                                                                                                          | RF01                            |
-| **Model**      | `Admin`                                                             | Estrutura tipada do administrador autorizado a operar o sistema.                                                                                                                                                                                                                           | RF04                            |
-| **Model**      | `Checkpoint`                                                        | Estrutura tipada do registro de passagem utilizado para o cálculo de desempenho e ranking.                                                                                                                                                                                                 | RF05, RF08                      |
-| **Model**      | `Auth`                                                              | Contratos de entrada (`LoginInput`) e saída (`AuthResponse`) do fluxo de autenticação.                                                                                                                                                                                                     | RF04                            |
-| **Model**      | `OCR`                                                               | Estrutura do resultado da extração (`OcrExtractionResult`), incluindo as métricas reconhecidas, o texto original e a origem (`tesseract` ou `groq`).                                                                                                                                       | RF05, RF06                      |
-| **Model**      | `Ranking`                                                           | Estruturas `RankingRunner` e `RankingTeam` consumidas pelas views e endpoints de ranking.                                                                                                                                                                                                  | RF10, RF15                      |
-| **Model**      | `Report`                                                            | Contratos de dados dos relatórios consolidados da competição.                                                                                                                                                                                                                              | RF13                            |
-| **Model**      | `Export`                                                            | Contratos de dados consumidos pela exportação CSV.                                                                                                                                                                                                                                         | RF13                            |
-| **Model**      | `TvPanel`                                                           | Estruturas `TvPanelMetrics`, `TvPanelTopTeam` e `TvPanelResponse` consumidas pelo painel de TV.                                                                                                                                                                                            | RF11                            |
+| Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
+| -------------- | ----------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------- |
+| **Controller** | `CompetitionController` | Recebe `POST /competitions` e delega ao `CompetitionService` para criação de competição; recebe `GET /competitions/:competitionId` e delega ao `CompetitionService` para consulta de estado.                                       | RF02, RF12                   |
+| **Controller** | `TeamController`        | Recebe `POST /competitions/:competitionId/teams` e delega ao `TeamService` para criação de equipe com geração de UUID e QR Code; recebe `GET /competitions/:competitionId/teams` e delega ao `TeamService` para listagem. | RF03, RF01, RN01             |
+| **Controller** | `RunnerController`      | Recebe `POST /competitions/:id/teams/:teamId/runners` e delega ao `RunnerService` para cadastro de corredor; recebe `GET /public/team/:uuid` para renderizar o painel público da equipe.                                | RF01, RF03, RF15             |
+| **Controller** | `AdminController`       | Recebe `POST /admin` e delega ao `AdminService` para criação de usuário administrativo; recebe `GET /admin` e `GET /admin/:id` para consulta dos administradores cadastrados.                                           | RF04                         |
+| **Controller** | `CheckpointController`  | Recebe `POST /checkpoints` e `POST /runners/:runnerId/checkpoints` e delega ao `CheckpointService` para registro de passagem; também fornece consultas por atleta, competição e inconsistências.                         | RF05, RF07, RF08, RF09       |
+| **Controller** | `AuthController`        | Recebe `POST /auth/sessions` e `POST /admin/login` e delega ao `AuthService` para validação de credenciais, emissão de JWT e controle de acesso administrativo.                                                        | RF04, RN03                   |
+| **Service**    | `CompetitionService`    | Cria competições, valida regras de período e estado da competição e coordena operações por meio do `CompetitionRepository`.                                                                                             | RF02, RF12, RN02             |
+| **Service**    | `TeamService`           | Cria equipes, gera UUID e QR Code de identificação e valida unicidade do nome da equipe dentro da competição.                                                                                                           | RF01, RF03, RN01             |
+| **Service**    | `RunnerService`         | Cadastra corredores, valida dados obrigatórios, aplica limite de atletas por equipe e garante integridade das informações dos participantes.                                                                            | RF01, RF03                   |
+| **Service**    | `AdminService`          | Gerencia criação, consulta, atualização e remoção de administradores autorizados.                                                                                                                                       | RF04                         |
+| **Service**    | `AuthService`           | Valida credenciais de acesso administrativo, compara senha com hash bcrypt e gera JWT para rotas protegidas.                                                                                                            | RF04, RN03                   |
+| **Service**    | `OcrService`            | Persiste temporariamente imagens enviadas, processa OCR no servidor com Tesseract e fallback via Groq quando configurado, retornando dados para validação humana antes do checkpoint.                                   | RF05, RF06, RF09, RN05, RN06 |
+| **Service**    | `CheckpointService`     | Valida pertencimento do corredor à equipe, aplica regras temporais da competição, registra checkpoints e aciona mecanismos de auditoria.                                                                                | RF08, RN04, RN05, RN12       |
+| **Service**    | `RankingService`        | Calcula ranking em tempo real a partir dos checkpoints registrados, aplicando critérios de desempate definidos pelas regras de negócio.                                                                                 | RF10, RF15, RN09, RN11       |
+| **Repository** | `CompetitionRepository` | Executa operações de persistência relacionadas às competições, incluindo criação, consulta e atualização de estado.                                                                                                     | RF02, RF12                   |
+| **Repository** | `TeamRepository`        | Executa operações de persistência das equipes, incluindo armazenamento de UUID e QR Code e consultas por competição.                                                                                                    | RF01, RF03                   |
+| **Repository** | `RunnerRepository`      | Executa operações de persistência dos corredores, incluindo consultas por equipe e identificador.                                                                                                                       | RF01, RF03                   |
+| **Repository** | `AdminRepository`       | Executa operações de persistência relacionadas aos administradores e consultas por e-mail para autenticação.                                                                                                            | RF04                         |
+| **Repository** | `CheckpointRepository`  | Executa persistência e recuperação de checkpoints e fornece dados agregados para cálculo de rankings.                                                                                                                   | RF05, RF08, RF10             |
+| **Model**      | `Competition`           | Representa a entidade de competição contendo informações de identificação, data, local e estado operacional.                                                                                                            | RF02                         |
+| **Model**      | `Team`                  | Representa a entidade de equipe contendo identificador público UUID, vínculo com a competição e atleta ativo.                                                                                                           | RF01, RF03                   |
+| **Model**      | `Runner`                | Representa os participantes vinculados às equipes da competição.                                                                                                                                                        | RF01, RF03                   |
+| **Model**      | `Admin`                 | Representa os usuários autorizados a operar o sistema administrativo da competição.                                                                                                                                     | RF04                         |
+| **Model**      | `Checkpoint`            | Representa os registros de passagem utilizados para cálculo de desempenho e ranking.                                                                                                                                    | RF05, RF08                   |
+| **Model**      | `OcrExtractionResult`   | Representa o resultado estruturado da leitura OCR antes da validação e persistência como checkpoint.                                                                                                                    | RF05, RF06                   |
 
 
 <div align="center">
@@ -999,15 +979,15 @@ A validação dos dados extraídos é realizada manualmente pelo operador no pai
 
 A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os diagramas de sequência UML (seção 3.2.4), o diagrama de entidade-relacionamento (seção 3.6.1) e os arquivos de migração localizados em `documentos/outros/migrations/`, identificando pontos de atenção e ações necessárias.
 
-**Nomenclatura de camadas.** Os nomes `Controller`, `Service`, `Repository` e `Model` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A nomenclatura das classes do código foi padronizada em inglês ao longo do desenvolvimento — refletida nos arquivos atuais de `src/controllers/`, `src/services/`, `src/repositories/` e `src/models/` — e o WAD reflete essa convenção a partir desta entrega.
+**Nomenclatura de camadas.** Os nomes `Controller`, `Service`, `Repository` e `Model` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A nomenclatura do código está majoritariamente em inglês (`Competition`, `Team`, `Runner`, `Checkpoint`, `Admin`), com textos de interface e documentação em português para manter aderência ao contexto do parceiro. Essa separação foi preservada por clareza: nomes técnicos seguem o padrão do repositório, enquanto a linguagem de negócio permanece acessível aos operadores e revisores.
 
-**Coerência entre Models e tabelas de banco.** Os Models implementados em `src/models/` estão alinhados ao schema real das migrations. O Model `Team` (`team.ts`) expõe os campos `id`, `name`, `uuid`, `qr_code`, `id_competition`, `active_runner_id` e `created_at`. O Model `Admin` (`admin.ts`) expõe `id`, `name`, `email`, `area`, `password` e `created_at`. O Model `Checkpoint` (`checkpoint.ts`) expõe `id`, `identifier`, `distance_km`, `pace`, `time`, `image`, `id_runner`, `id_competition`, `id_admin` e `created_at`, conforme definido em `0006_create_checkpoint.sql`.
+**Coerência entre Models e tabelas de banco.** Os Models implementados estão alinhados às migrations principais: `Competition`, `Team`, `Runner`, `Treadmill`, `Admin` e `Checkpoint` correspondem às tabelas criadas entre `0001_create_competition.sql` e `0006_create_checkpoint.sql`. O `Checkpoint` já está implementado e persiste `identifier`, `distance_km`, `pace`, `time`, `image`, `id_runner`, `id_competition`, `id_treadmill`, `id_admin` e `created_at`, permitindo rastrear quem registrou cada marca e em qual contexto operacional.
 
-**Tabela `audit_logs` (pendência).** A RN05 prevê log imutável das operações críticas. A tabela `audit_logs` correspondente não foi criada nesta entrega e a camada de auditoria correspondente não consta na pasta de Services. A implementação foi remetida para a seção 7 (Trabalhos Futuros): consiste na criação de uma migration `0009_create_audit_logs.sql` (próximo número livre após `0007_create_ocr_extraction.sql` e `0008_create_competition_report.sql`) e do serviço de auditoria correspondente.
+**Rastreabilidade operacional.** A rastreabilidade atual é garantida principalmente pelos vínculos obrigatórios do checkpoint com atleta, competição, esteira e administrador, além do timestamp de criação e da imagem associada quando o registro deriva de captura. A migration `0007_create_ocr_extraction.sql` também prevê uma tabela específica para extrações OCR vinculáveis a checkpoints. Uma tabela imutável de auditoria ampla ainda pode ser considerada como evolução, mas não deve ser descrita como componente já existente no código.
 
-**Autenticação JWT.** A dependência `jsonwebtoken` consta em `package.json` (`^9.0.3`) e a infraestrutura de tokens já está implementada em `src/services/authService.ts`, que emite tokens HS256 com validade de 8 horas no fluxo de login e disponibiliza um validador. O middleware Express de proteção das rotas administrativas, no entanto, ainda não foi instalado em `src/middlewares/` (que contém apenas `errorHandler.ts`); a proteção efetiva das rotas é tratada na seção 7 (Trabalhos Futuros).
+**Autenticação JWT.** A autenticação administrativa já está implementada. O `AuthController` expõe `POST /auth/sessions` e `POST /admin/login`; o `AuthService` valida credenciais, compara a senha com hash bcrypt e emite JWT; e o middleware `garantirAutenticacao` protege as rotas administrativas. As dependências `jsonwebtoken`, `bcryptjs` e `cookie-parser` constam no `package.json`, alinhando código, arquitetura e seção 3.8.
 
-**Fluxo de OCR nos diagramas de sequência (3.2.4).** O fluxo de OCR implementado é síncrono dentro da requisição `POST /ocr/extractions`: o `OCRService` orquestra a tentativa local com Tesseract.js e, quando necessário, o fallback para a API externa da Groq. Os diagramas de sequência da seção 3.2.4 devem refletir esse desenho, com indicação explícita do ramo de fallback acionado quando a extração local não produz resultado utilizável.
+**Fluxo OCR nos diagramas de sequência (3.2.4).** O diagrama deve representar o fluxo real implementado: envio da imagem pelo operador para `POST /ocr/extractions`, processamento síncrono no servidor, retorno das métricas extraídas para conferência e posterior persistência por `POST /checkpoints` ou `PUT /checkpoints/:id`. Caso uma fila assíncrona seja adotada futuramente, a documentação deverá ser atualizada para diferenciar o comportamento planejado do comportamento efetivamente entregue.
 
 **Constraint `UNIQUE` sobre `uuid`.** Confirmada em `0002_create_team.sql` por meio da constraint `uq_team_uuid UNIQUE (uuid)`, garantindo a integridade das consultas do fluxo público acessado pelas equipes via link único.
 
@@ -1387,7 +1367,7 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Navegador sem permissão para acessar a área de transferência → sistema exibe a URL para cópia manual. |
 | **RFs/RNs relacionados** | RF14 |
 
-### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
+### 3.2.3. Diagrama de Classes do Domínio
 
 O diagrama de classes de domínio é uma representação visual que modela todos os elementos principais e os relacionamentos de um sistema. O objetivo do diagrama é descrever as entidades presentes no domínio do problema proposto de forma conceitual, descrever seus atributos e descrever como as entidades se conectam. Ele auxilia na compreensão da estrutura do sistema antes de ser implementado, facilitando a comunicação e entendimento de todos os membros da equipe e servindo como base para o desenvolvimento. 
 
@@ -1535,9 +1515,9 @@ services --> validators
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. O processamento OCR ocorre inteiramente neste nó: a imagem do display da esteira é capturada pela câmera do dispositivo, processada pelo módulo `ocr-src` (Tesseract.js + OpenCV.js) e os dados extraídos são enviados ao servidor via requisição `POST /ocr/extractions` para validação humana antes da persistência.
+O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. No fluxo de OCR implementado, o dispositivo captura ou seleciona a imagem do display da esteira e a envia ao servidor por `POST /ocr/extractions`; o processamento ocorre no back-end, com Tesseract.js e fallback via Groq quando configurado, retornando os dados extraídos para validação humana antes da persistência.
 
-O nó **Servidor de Aplicação** executa a aplicação Node.js 18 compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `athletes`, `checkpoints`, `auth`, `administradores`). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
+O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `runners`, `checkpoints`, `ocr`, `ranking`, `reports`, `export`, `auth`, `admin` e `dashboard`). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON ou formulários HTML. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
 
 O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospedada pelo Supabase. O acesso é realizado exclusivamente pela camada Repository por meio do Supabase JS SDK, que encapsula as requisições HTTPS ao endpoint gerenciado. Nenhuma outra camada da aplicação detém acesso direto ao banco, garantindo o isolamento arquitetural descrito na seção 3.2.1. O esquema relacional é gerenciado pelos arquivos de migração DDL localizados em `documentos/outros/migrations/`, conforme detalhado na seção 3.6.3.
 
@@ -3149,11 +3129,11 @@ A implementação física adota o padrão de separar a definição das colunas e
  
 Todos os campos de identificação seguem o tipo `SMALLINT` — equivalente ao `int2` definido no modelo relacional — com geração automática por `GENERATED ALWAYS AS IDENTITY`. Adicionalmente, todos os campos de auditoria temporal (`criado_em`) são preenchidos automaticamente por meio de `DEFAULT NOW()`, garantindo rastreabilidade histórica sem exigir intervenção da aplicação. A implementação completa e executável encontra-se no arquivo `migration.sql`, disponível no repositório do projeto.
 
-### 3.6.4. Consultas SQL e lógica proposicional (sprint 2)
+### 3.6.4. Consultas SQL e lógica proposicional
 
-A presente subseção apresenta um conjunto de consultas SQL utilizadas pela aplicação, selecionadas para demonstrar a diversidade de operações (`SELECT`, `UPDATE`, `DELETE`) e de combinações lógicas (`AND`, `OR`, `NOT`, `LIKE`, `NOT LIKE`, `IN`, `NOT IN`, `BETWEEN`) suportadas pela modelagem definida nas seções anteriores. Cada consulta é apresentada com seu código SQL, descrição em palavras, e a estrutura prevista para o preenchimento das proposições lógicas, da expressão lógica proposicional e da tabela-verdade.
+A presente subseção apresenta um conjunto de consultas SQL relacionadas às funcionalidades previstas para o sistema, com o objetivo de demonstrar a aplicação de lógica proposicional em operações de banco de dados. As consultas foram selecionadas considerando os requisitos funcionais atualizados do projeto, especialmente aqueles relacionados ao cadastro de equipes e atletas, captura e validação de checkpoints, identificação de inconsistências, atualização de ranking, encerramento da competição e exportação de dados.
 
-O código completo das consultas com suas respectivas análises proposicionais encontra-se também documentado no arquivo [`documentos/outros/mapeamento-consultas-sql.md`](../outros/mapeamento-consultas-sql.md), disponível no repositório para consulta e rastreabilidade.
+Além de exemplificar diferentes tipos de operações SQL, como `SELECT`, `UPDATE` e `DELETE`, as consultas também evidenciam o uso de operadores lógicos e relacionais, como `AND`, `OR`, `NOT`, `LIKE`, `IN`, `BETWEEN`, além de consultas com junções e agregações. Cada consulta é acompanhada de sua descrição, proposições lógicas, expressão proposicional correspondente, identificação dos conectivos e tabela-verdade.
 
 #### Q01 — `SELECT` com `AND` e `OR`
 
@@ -3161,12 +3141,12 @@ O código completo das consultas com suas respectivas análises proposicionais e
   <sub>Quadro 44 - Consulta Q01</sub>
 </div>
 
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `SELECT` |
-| **Operadores lógicos** | `AND`, `OR` |
-| **Operadores relacionais** | `=`, `>`, `<` |
-| **Contexto de negócio** | Identificar checkpoints com quilometragem fora da faixa esperada em uma competição, sinalizando registros candidatos a revisão manual. |
+| Atributo                   | Conteúdo                                                                                                                                                                                  |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo de operação**       | `SELECT`                                                                                                                                                                                  |
+| **Operadores lógicos**     | `AND`, `OR`                                                                                                                                                                               |
+| **Operadores relacionais** | `=`, `>`, `<`                                                                                                                                                                             |
+| **Contexto de negócio**    | Identificar checkpoints com possíveis inconsistências nos valores de distância em relação ao tempo registrado, apoiando a sinalização de dados suspeitos antes da validação pelo usuário. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3175,26 +3155,26 @@ O código completo das consultas com suas respectivas análises proposicionais e
 **Expressão SQL:**
 
 ```sql
-SELECT id, identificador, km, criado_em
+SELECT id, corredor_id, competicao_id, km, tempo
 FROM checkpoint
 WHERE competicao_id = 1
-  AND (km > 10 OR km < 2);
+  AND (km > 30 OR km < 0,3);
 ```
 
-**Descrição em palavras:** seleciona o identificador, a quilometragem e a data de criação dos checkpoints pertencentes à competição de identificador `1` cuja quilometragem registrada está fora da faixa esperada de 2 a 10 km. A cláusula `WHERE` combina três condições: o filtro obrigatório por competição é exigido em conjunto (`AND`) com uma disjunção (`OR`) entre dois extremos de quilometragem, agrupada por parênteses para garantir a precedência correta entre `AND` e `OR`.
+**Descrição em palavras:** seleciona os checkpoints pertencentes à competição de identificador `1` cuja distância registrada esteja fora de uma faixa esperada, considerando valores muito altos ou muito baixos para um checkpoint. A cláusula `WHERE` combina o filtro obrigatório por competição com uma condição composta sobre a distância, utilizando `AND` para exigir simultaneidade e `OR` para indicar que basta uma das situações de inconsistência ser verdadeira.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint pertence à competição de ID 1.  
+* **P:** o checkpoint pertence à competição de ID 1.
   `competicao_id = 1`
 
-- **Q:** o checkpoint possui quilometragem maior que 10 km.  
-  `km > 10`
+* **Q:** o checkpoint possui distância maior que 30 km.
+  `km > 30`
 
-- **R:** o checkpoint possui quilometragem menor que 2 km.  
-  `km < 2`
+* **R:** o checkpoint possui distância menor que 0,3 km.
+  `km < 0,3`
 
 #### Expressão lógica proposicional
 
@@ -3204,31 +3184,37 @@ A expressão lógica correspondente à consulta é:
 P ∧ (Q ∨ R)
 ```
 
-Em palavras:  
-o checkpoint será selecionado se pertencer à competição 1 e possuir quilometragem maior que 10 km ou menor que 2 km.
+Em palavras: o checkpoint será selecionado se pertencer à competição 1 e possuir distância maior que 30 km ou menor que 0,3 km.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que ambas as condições relacionadas sejam verdadeiras em conjunto;
-- **∨ (OR):** permite que pelo menos uma das condições de quilometragem seja verdadeira.
+* **∧ (AND):** exige que o checkpoint pertença à competição informada e também satisfaça a condição de distância;
+* **∨ (OR):** permite que a inconsistência seja identificada tanto por distância acima do limite quanto por distância abaixo do limite.
 
 #### Tabela-verdade
 
-| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
-|---|---|---|---|---|---|
-| V | V | V | V | V | Seleciona |
-| V | V | F | V | V | Seleciona |
-| V | F | V | V | V | Seleciona |
-| V | F | F | F | F | Não seleciona |
-| F | V | V | V | F | Não seleciona |
-| F | V | F | V | F | Não seleciona |
-| F | F | V | V | F | Não seleciona |
-| F | F | F | F | F | Não seleciona |
+<div align="center">
+  <sub>Tabela 1 - Tabela-verdade da Consulta Q01</sub>
+</div>
 
+| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado     |
+| - | - | - | ----- | ----------- | ------------- |
+| V | V | V | V     | V           | Seleciona     |
+| V | V | F | V     | V           | Seleciona     |
+| V | F | V | V     | V           | Seleciona     |
+| V | F | F | F     | F           | Não seleciona |
+| F | V | V | V     | F           | Não seleciona |
+| F | V | F | V     | F           | Não seleciona |
+| F | F | V | V     | F           | Não seleciona |
+| F | F | F | F     | F           | Não seleciona |
 
-### Interpretação da tabela-verdade
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição de identificador 1 e, ao mesmo tempo, apresenta quilometragem fora da faixa esperada. Caso o checkpoint não pertença à competição especificada ou esteja dentro da faixa entre 2 e 10 km, o registro não será selecionado.
+#### Interpretação da tabela-verdade
+
+A tabela demonstra que a consulta retorna registros apenas quando o checkpoint pertence à competição analisada e apresenta distância fora da faixa esperada. Caso o checkpoint pertença a outra competição ou esteja dentro do intervalo considerado aceitável, ele não será selecionado.
 
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
@@ -3236,15 +3222,13 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
   <sub>Quadro 45 - Consulta Q02</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `SELECT` |
-| **Operadores lógicos** | `AND`, `NOT` |
-| **Operadores especiais** | `LIKE` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Listar corredores ativos cujo nome começa com uma letra específica, útil em buscas rápidas durante a operação da competição. |
-
+| Atributo                   | Conteúdo                                                                                                                                                     |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Tipo de operação**       | `SELECT`                                                                                                                                                     |
+| **Operadores lógicos**     | `AND`, `NOT`                                                                                                                                                 |
+| **Operadores especiais**   | `LIKE`                                                                                                                                                       |
+| **Operadores relacionais** | `=`                                                                                                                                                          |
+| **Contexto de negócio**    | Buscar atletas cadastrados em uma equipe, permitindo localizar rapidamente corredores pelo nome e desconsiderar registros inativos ou removidos da operação. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3253,23 +3237,23 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 **Expressão SQL:**
 
 ```sql
-SELECT id, nome, status, equipe_id
+SELECT id, nome, equipe_id, status
 FROM corredor
 WHERE nome LIKE 'A%'
-  AND NOT status = 'Em descanso';
+  AND NOT status = 'Inativo';
 ```
 
-**Descrição em palavras:** seleciona os corredores cujo nome inicia com a letra "A" e que não estão com status "Em descanso". A cláusula `WHERE` aplica três operadores distintos: o `LIKE` para correspondência por padrão textual com curinga (`%`), o `AND` para exigir simultaneidade entre as duas condições e o `NOT` como operador lógico de negação aplicado diretamente sobre a comparação de igualdade — forma equivalente a `<>`, escolhida aqui para evidenciar o uso do `NOT` como conectivo proposicional.
+**Descrição em palavras:** seleciona os corredores cujo nome começa com a letra “A” e que não estão marcados como inativos. A consulta utiliza o operador `LIKE` para buscar nomes por padrão textual, o operador `AND` para exigir que as duas condições sejam verdadeiras ao mesmo tempo e o operador `NOT` para negar a condição de status inativo.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o nome do corredor inicia com a letra “A”.  
+* **P:** o nome do corredor inicia com a letra “A”.
   `nome LIKE 'A%'`
 
-- **Q:** o corredor está com status “Em descanso”.  
-  `status = 'Em descanso'`
+* **Q:** o corredor está com status “Inativo”.
+  `status = 'Inativo'`
 
 #### Expressão lógica proposicional
 
@@ -3279,42 +3263,47 @@ A expressão lógica correspondente à consulta é:
 P ∧ ¬Q
 ```
 
-Em palavras:  
-o corredor será selecionado se o nome iniciar com a letra “A” e o corredor não estiver em descanso.
+Em palavras: o corredor será selecionado se seu nome começar com a letra “A” e ele não estiver inativo.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que ambas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
+* **∧ (AND):** exige que as duas condições sejam satisfeitas simultaneamente;
+* **¬ (NOT):** inverte o valor lógico da proposição relacionada ao status do corredor.
 
 #### Tabela-verdade
 
-| P | Q | ¬Q | P ∧ ¬Q | Resultado |
-|---|---|---|---|---|
-| V | V | F | F | Não seleciona |
-| V | F | V | V | Seleciona |
-| F | V | F | F | Não seleciona |
-| F | F | V | F | Não seleciona |
+<div align="center">
+  <sub>Tabela 2 - Tabela-verdade da Consulta Q02</sub>
+</div>
 
-### Interpretação da tabela-verdade
+| P | Q | ¬Q | P ∧ ¬Q | Resultado     |
+| - | - | -- | ------ | ------------- |
+| V | V | F  | F      | Não seleciona |
+| V | F | V  | V      | Seleciona     |
+| F | V | F  | F      | Não seleciona |
+| F | F | V  | F      | Não seleciona |
 
-A tabela demonstra que a consulta retorna registros apenas quando o nome do corredor inicia com a letra “A” e, conjuntamente, o corredor não está com status “Em descanso”. Caso o nome não comece com “A” ou o corredor esteja em descanso, o registro não será selecionado.
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-#### Q03 — `UPDATE` com `AND` e `IN`
+#### Interpretação da tabela-verdade
+
+A consulta retorna somente corredores cujo nome começa com “A” e cujo status não é “Inativo”. Caso o nome não atenda ao padrão definido ou o corredor esteja inativo, o registro não será selecionado.
+
+#### Q03 — `UPDATE` com `AND` e `BETWEEN`
 
 <div align="center">
   <sub>Quadro 46 - Consulta Q03</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `UPDATE` |
-| **Operadores lógicos** | `AND`, `OR` |
-| **Operadores especiais** | `IN` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Ao final de um turno de corrida, marcar como "Em descanso" todos os corredores de uma equipe que estavam em corrida ou previstos para entrar (RN07). |
-
+| Atributo                   | Conteúdo                                                                                                                                                                      |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo de operação**       | `UPDATE`                                                                                                                                                                      |
+| **Operadores lógicos**     | `AND`                                                                                                                                                                         |
+| **Operadores especiais**   | `BETWEEN`                                                                                                                                                                     |
+| **Operadores relacionais** | `=`, `>=`, `<=`                                                                                                                                                               |
+| **Contexto de negócio**    | Atualizar manualmente dados capturados por OCR antes da confirmação definitiva do checkpoint, permitindo a correção de valores inconsistentes antes da persistência validada. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3323,75 +3312,79 @@ A tabela demonstra que a consulta retorna registros apenas quando o nome do corr
 **Expressão SQL:**
 
 ```sql
-UPDATE corredor
-SET status = 'Em descanso'
-WHERE equipe_id = 1
-  AND status IN ('Em corrida', 'Próximo');
+UPDATE checkpoint
+SET km = 5.42
+WHERE validado = FALSE
+  AND km BETWEEN 20 AND 100;
 ```
 
-**Descrição em palavras:** atualiza o status para "Em descanso" de todos os corredores pertencentes à equipe de identificador `1` cujo status atual seja "Em corrida" ou "Próximo". A cláusula `WHERE` utiliza o operador lógico `AND` em conjunto com o operador `IN`, que representa uma verificação de pertencimento a um conjunto de valores e pode ser expandido logicamente como uma disjunção (`OR`) entre comparações de igualdade.
+**Descrição em palavras:** atualiza a distância de checkpoints ainda não validados quando o valor capturado se encontra em uma faixa considerada inconsistente para o contexto da competição. A cláusula `WHERE` garante que apenas registros pendentes de validação sejam alterados e que a atualização ocorra somente quando a distância estiver entre 20 e 100 km. O operador `BETWEEN` equivale logicamente à combinação `km >= 20 AND km <= 100`.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o corredor pertence à equipe de identificador 1.  
-  `equipe_id = 1`
+* **P:** o checkpoint ainda não foi validado.
+  `validado = FALSE`
 
-- **Q:** o corredor está com status “Em corrida”.  
-  `status = 'Em corrida'`
+* **Q:** o checkpoint possui distância maior ou igual a 20 km.
+  `km >= 20`
 
-- **R:** o corredor está com status “Próximo”.  
-  `status = 'Próximo'`
+* **R:** o checkpoint possui distância menor ou igual a 100 km.
+  `km <= 100`
 
 #### Expressão lógica proposicional
 
 A expressão lógica correspondente à consulta é:
 
 ```text
-P ∧ (Q ∨ R)
+P ∧ Q ∧ R
 ```
 
-Em palavras:  
-o status do corredor será atualizado para “Em descanso” se ele pertencer à equipe 1 e estiver com status “Em corrida” ou “Próximo”.
+Em palavras: o checkpoint será atualizado se ainda não tiver sido validado e se sua distância estiver entre 20 e 100 km.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que o corredor pertença à equipe especificada e satisfaça uma das condições de status;
-- **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que o status seja “Em corrida” ou “Próximo”.
+* **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
+* **BETWEEN:** representa uma condição composta por limite inferior e limite superior, equivalente a `Q ∧ R`.
 
 #### Tabela-verdade
 
-| P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado |
-|---|---|---|---|---|---|
-| V | V | V | V | V | Atualiza |
-| V | V | F | V | V | Atualiza |
-| V | F | V | V | V | Atualiza |
-| V | F | F | F | F | Não atualiza |
-| F | V | V | V | F | Não atualiza |
-| F | V | F | V | F | Não atualiza |
-| F | F | V | V | F | Não atualiza |
-| F | F | F | F | F | Não atualiza |
+<div align="center">
+  <sub>Tabela 3 - Tabela-verdade da Consulta Q03</sub>
+</div>
 
-### Interpretação da tabela-verdade
+| P | Q | R | Q ∧ R | P ∧ Q ∧ R | Resultado    |
+| - | - | - | ----- | --------- | ------------ |
+| V | V | V | V     | V         | Atualiza     |
+| V | V | F | F     | F         | Não atualiza |
+| V | F | V | F     | F         | Não atualiza |
+| V | F | F | F     | F         | Não atualiza |
+| F | V | V | V     | F         | Não atualiza |
+| F | V | F | F     | F         | Não atualiza |
+| F | F | V | F     | F         | Não atualiza |
+| F | F | F | F     | F         | Não atualiza |
 
-A tabela demonstra que a atualização ocorrerá apenas quando o corredor pertencer à equipe de identificador `1` e, simultaneamente, estiver com status “Em corrida” ou “Próximo”. Caso o corredor pertença a outra equipe ou possua um status diferente dos especificados, o registro não será atualizado.
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-#### Q04 — `DELETE` com `AND` e `NOT LIKE`
+#### Interpretação da tabela-verdade
+
+A tabela demonstra que a atualização ocorre apenas quando o checkpoint ainda não foi validado e sua distância está dentro do intervalo definido como suspeito. Caso o checkpoint já tenha sido validado ou a distância esteja fora desse intervalo, o registro não será alterado.
+
+#### Q04 — `DELETE` com `AND` e `NOT`
 
 <div align="center">
   <sub>Quadro 47 - Consulta Q04</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `DELETE` |
-| **Operadores lógicos** | `AND` |
-| **Operadores especiais** | `NOT LIKE` |
-| **Operadores relacionais** | `=` |
-| **Contexto de negócio** | Remover registros de checkpoint criados fora do padrão esperado de identificador (por exemplo, registros provenientes de testes ou inserções manuais inválidas), para uma competição específica. |
-
+| Atributo                   | Conteúdo                                                                                                                                                                           |
+| -------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Tipo de operação**       | `DELETE`                                                                                                                                                                           |
+| **Operadores lógicos**     | `AND`, `NOT`                                                                                                                                                                       |
+| **Operadores relacionais** | `=`, `<`                                                                                                                                                                           |
+| **Contexto de negócio**    | Remover registros temporários de checkpoints não validados durante a rotina de limpeza executada após o encerramento da competição. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3402,20 +3395,20 @@ A tabela demonstra que a atualização ocorrerá apenas quando o corredor perten
 ```sql
 DELETE FROM checkpoint
 WHERE competicao_id = 1
-  AND identificador NOT LIKE 'CP-%';
+  AND NOT validado = TRUE;
 ```
 
-**Descrição em palavras:** remove da tabela de checkpoints todos os registros pertencentes à competição de identificador `1` cujo campo `identificador` não segue o padrão `CP-` seguido de qualquer sequência de caracteres. A cláusula `WHERE` combina uma igualdade simples (`=`) com a negação de um padrão textual (`NOT LIKE`), conectadas pelo operador `AND`, garantindo que apenas registros que satisfazem ambas as condições sejam removidos.
+**Descrição em palavras:** remove os checkpoints da competição de identificador `1` que não foram validados pelo usuário. Essa consulta é útil em um cenário de limpeza de registros temporários após o encerramento da competição, impedindo que checkpoints incompletos ou não confirmados sejam considerados nos relatórios finais. O operador `NOT` nega a condição de validação, enquanto o `AND` garante que a remoção esteja limitada à competição informada.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint pertence à competição de identificador 1.
+* **P:** o checkpoint pertence à competição de ID 1.
   `competicao_id = 1`
 
-- **Q:** o identificador do checkpoint segue o padrão esperado iniciado por `CP-`.
-  `identificador LIKE 'CP-%'`
+* **Q:** o checkpoint foi validado.
+  `validado = TRUE`
 
 #### Expressão lógica proposicional
 
@@ -3425,43 +3418,47 @@ A expressão lógica correspondente à consulta é:
 P ∧ ¬Q
 ```
 
-Em palavras:
-o checkpoint será removido se pertencer à competição 1 e seu identificador não seguir o padrão esperado iniciado por `CP-`.
+Em palavras: o checkpoint será removido se pertencer à competição 1 e não tiver sido validado.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que o checkpoint pertença à competição especificada e, ao mesmo tempo, não siga o padrão de identificador esperado;
-- **¬ (NOT):** representa a negação do padrão textual `LIKE 'CP-%'`, expressa na consulta pelo operador `NOT LIKE`.
+* **∧ (AND):** exige que o checkpoint pertença à competição especificada e satisfaça a condição de não validação;
+* **¬ (NOT):** representa a negação da proposição que indica se o checkpoint foi validado.
 
 #### Tabela-verdade
 
-| P | Q | ¬Q | P ∧ ¬Q | Resultado |
-|---|---|---|---|---|
-| V | V | F | F | Não remove |
-| V | F | V | V | Remove |
-| F | V | F | F | Não remove |
-| F | F | V | F | Não remove |
+<div align="center">
+  <sub>Tabela 4 - Tabela-verdade da Consulta Q04</sub>
+</div>
 
-### Interpretação da tabela-verdade
+| P | Q | ¬Q | P ∧ ¬Q | Resultado  |
+| - | - | -- | ------ | ---------- |
+| V | V | F  | F      | Não remove |
+| V | F | V  | V      | Remove     |
+| F | V | F  | F      | Não remove |
+| F | F | V  | F      | Não remove |
 
-A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à competição de identificador `1` e, simultaneamente, seu identificador não segue o padrão `CP-`. Caso o checkpoint pertença a outra competição ou possua identificador válido, o registro não será removido.
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
----
+#### Interpretação da tabela-verdade
 
-#### Q05 — `SELECT` com `BETWEEN`, `AND` e `NOT IN`
+A exclusão ocorre somente quando o checkpoint pertence à competição analisada e não foi validado. Checkpoints de outras competições ou já validados não são removidos.
+
+#### Q05 — `SELECT` com `JOIN`, `IN`, `BETWEEN` e agregação
 
 <div align="center">
   <sub>Quadro 48 - Consulta Q05</sub>
 </div>
 
-
-| Atributo | Conteúdo |
-|----------|----------|
-| **Tipo de operação** | `SELECT` |
-| **Operadores lógicos** | `AND` |
-| **Operadores especiais** | `BETWEEN`, `NOT IN` |
-| **Contexto de negócio** | Listar checkpoints com quilometragem dentro de uma faixa típica de desempenho, excluindo corredores específicos (por exemplo, atletas de equipes desclassificadas ou substituídos durante a competição). |
-
+| Atributo                    | Conteúdo                                                                                                           |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Tipo de operação**        | `SELECT`                                                                                                           |
+| **Operadores lógicos**      | `AND`                                                                                                              |
+| **Operadores especiais**    | `IN`, `BETWEEN`                                                                                                    |
+| **Recursos SQL adicionais** | `INNER JOIN`, `GROUP BY`, `SUM`                                                                                    |
+| **Contexto de negócio**     | Gerar dados consolidados por equipe para apoiar o ranking, os relatórios finais e a exportação XLSX da competição. |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -3470,88 +3467,191 @@ A tabela demonstra que a exclusão ocorre apenas quando o checkpoint pertence à
 **Expressão SQL:**
 
 ```sql
-SELECT id, identificador, km, pace, corredor_id
-FROM checkpoint
-WHERE km BETWEEN 4 AND 6
-  AND corredor_id NOT IN (1, 7);
+SELECT
+    e.nome AS equipe,
+    SUM(c.km) AS km_total
+FROM equipe e
+INNER JOIN corredor r
+    ON e.id = r.equipe_id
+INNER JOIN checkpoint c
+    ON r.id = c.corredor_id
+WHERE e.id IN (1, 2)
+  AND c.criado_em BETWEEN '2026-06-01' AND '2026-06-30'
+GROUP BY e.nome;
 ```
 
-**Descrição em palavras:** seleciona os checkpoints cuja quilometragem está entre 4 e 6 km (inclusive nos extremos, conforme a semântica do `BETWEEN`) e cujo identificador de corredor não pertence ao conjunto `{1, 7}`. A cláusula `WHERE` combina o operador `BETWEEN` — equivalente a uma conjunção entre `>=` e `<=` — com o operador `NOT IN`, conectados pelo `AND`, permitindo restringir simultaneamente intervalo numérico e exclusão por conjunto de identificadores.
+**Descrição em palavras:** seleciona o total de quilômetros registrados por equipe, considerando apenas as equipes de identificador `1` e `2` e os checkpoints criados dentro do intervalo de datas definido. A consulta utiliza `INNER JOIN` para relacionar equipes, corredores e checkpoints, `IN` para restringir o conjunto de equipes analisadas, `BETWEEN` para delimitar o período da consulta, `SUM` para somar a quilometragem e `GROUP BY` para consolidar os resultados por equipe.
 
 #### Proposições lógicas
 
 Considerando a cláusula `WHERE`, definem-se as seguintes proposições atômicas:
 
-- **P:** o checkpoint possui quilometragem maior ou igual a 4 km.
-  `km >= 4`
+* **P:** a equipe possui identificador 1.
+  `e.id = 1`
 
-- **Q:** o checkpoint possui quilometragem menor ou igual a 6 km.
-  `km <= 6`
+* **Q:** a equipe possui identificador 2.
+  `e.id = 2`
 
-- **R:** o checkpoint pertence ao corredor de identificador 1.
-  `corredor_id = 1`
+* **R:** o checkpoint foi criado em data igual ou posterior a 01/06/2026.
+  `c.criado_em >= '2026-06-01'`
 
-- **S:** o checkpoint pertence ao corredor de identificador 7.
-  `corredor_id = 7`
+* **S:** o checkpoint foi criado em data igual ou anterior a 30/06/2026.
+  `c.criado_em <= '2026-06-30'`
 
 #### Expressão lógica proposicional
 
 A expressão lógica correspondente à consulta é:
 
 ```text
-P ∧ Q ∧ ¬R ∧ ¬S
+(P ∨ Q) ∧ R ∧ S
 ```
 
-Em palavras:
-o checkpoint será selecionado se sua quilometragem estiver entre 4 e 6 km, inclusive, e se o corredor associado não for o de identificador 1 nem o de identificador 7.
+Em palavras: o registro será considerado se pertencer à equipe 1 ou à equipe 2 e se o checkpoint tiver sido criado dentro do intervalo de datas definido.
 
 #### Identificação dos conectivos lógicos
 
-- **∧ (AND):** exige que todas as condições sejam verdadeiras simultaneamente;
-- **¬ (NOT):** representa a exclusão dos corredores listados no conjunto do operador `NOT IN`. No caso específico da consulta, `corredor_id NOT IN (1, 7)` equivale a `¬R ∧ ¬S`; em conjuntos maiores, a expansão segue o mesmo padrão, de modo que `NOT IN (a, b, c, ...)` equivale à conjunção das negações de cada igualdade individual.
+* **∨ (OR):** representa a expansão lógica do operador `IN`, permitindo que a equipe seja a de ID 1 ou a de ID 2;
+* **∧ (AND):** exige que a equipe esteja no conjunto selecionado e que a data esteja dentro do intervalo especificado;
+* **BETWEEN:** representa uma condição composta por limite inferior e limite superior, equivalente a `R ∧ S`.
 
 #### Tabela-verdade
 
-| P | Q | R | S | ¬R | ¬S | P ∧ Q ∧ ¬R ∧ ¬S | Resultado |
-|---|---|---|---|---|---|---|---|
-| V | V | V | V | F | F | F | Não seleciona |
-| V | V | V | F | F | V | F | Não seleciona |
-| V | V | F | V | V | F | F | Não seleciona |
-| V | V | F | F | V | V | V | Seleciona |
-| V | F | V | V | F | F | F | Não seleciona |
-| V | F | V | F | F | V | F | Não seleciona |
-| V | F | F | V | V | F | F | Não seleciona |
-| V | F | F | F | V | V | F | Não seleciona |
-| F | V | V | V | F | F | F | Não seleciona |
-| F | V | V | F | F | V | F | Não seleciona |
-| F | V | F | V | V | F | F | Não seleciona |
-| F | V | F | F | V | V | F | Não seleciona |
-| F | F | V | V | F | F | F | Não seleciona |
-| F | F | V | F | F | V | F | Não seleciona |
-| F | F | F | V | V | F | F | Não seleciona |
-| F | F | F | F | V | V | F | Não seleciona |
+<div align="center">
+  <sub>Tabela 5 - Tabela-verdade da Consulta Q05</sub>
+</div>
+
+| P | Q | R | S | P ∨ Q | R ∧ S | (P ∨ Q) ∧ R ∧ S | Resultado     |
+| - | - | - | - | ----- | ----- | --------------- | ------------- |
+| V | V | V | V | V     | V     | V               | Seleciona     |
+| V | V | V | F | V     | F     | F               | Não seleciona |
+| V | V | F | V | V     | F     | F               | Não seleciona |
+| V | V | F | F | V     | F     | F               | Não seleciona |
+| V | F | V | V | V     | V     | V               | Seleciona     |
+| V | F | V | F | V     | F     | F               | Não seleciona |
+| V | F | F | V | V     | F     | F               | Não seleciona |
+| V | F | F | F | V     | F     | F               | Não seleciona |
+| F | V | V | V | V     | V     | V               | Seleciona     |
+| F | V | V | F | V     | F     | F               | Não seleciona |
+| F | V | F | V | V     | F     | F               | Não seleciona |
+| F | V | F | F | V     | F     | F               | Não seleciona |
+| F | F | V | V | F     | V     | F               | Não seleciona |
+| F | F | V | F | F     | F     | F               | Não seleciona |
+| F | F | F | V | F     | F     | F               | Não seleciona |
+| F | F | F | F | F     | F     | F               | Não seleciona |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Observação sobre dependências semânticas
 
-A tabela-verdade apresenta as 16 combinações proposicionais possíveis para quatro variáveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `km`: quando **P = F** e **Q = F**, a linha indicaria simultaneamente `km < 4` e `km > 6`, o que não pode ocorrer para um único valor de quilometragem. Já os casos **P = F, Q = V** e **P = V, Q = F** são possíveis e representam, respectivamente, quilometragem abaixo de 4 km e quilometragem acima de 6 km.
+A tabela-verdade apresenta todas as combinações proposicionais possíveis, mas nem todas representam situações possíveis no domínio real da consulta. As proposições **P** e **Q** dependem do mesmo atributo `e.id`, portanto uma equipe não pode possuir simultaneamente o identificador 1 e o identificador 2. Assim, linhas em que **P = V** e **Q = V** são válidas do ponto de vista lógico abstrato, mas não ocorrem na prática para um único registro.
 
-O mesmo raciocínio vale para **R** e **S**, pois um mesmo checkpoint possui apenas um `corredor_id`. Assim, linhas em que **R = V** e **S = V** são proposicionalmente listadas na tabela, mas não ocorrem na prática para um único registro, já que o corredor não pode ter simultaneamente os identificadores `1` e `7`.
+O mesmo raciocínio se aplica às proposições **R** e **S**, pois ambas dependem do mesmo atributo de data. Em termos práticos, a consulta seleciona somente checkpoints criados dentro do intervalo definido e vinculados a uma das equipes analisadas.
 
-### Interpretação da tabela-verdade
+#### Interpretação da tabela-verdade
 
-A tabela demonstra que a consulta seleciona registros apenas quando a quilometragem está dentro da faixa de 4 a 6 km e, ao mesmo tempo, o corredor associado não pertence ao conjunto de identificadores excluídos. A linha **P = V, Q = V, R = F, S = F** é a única que resulta em seleção, pois indica um checkpoint dentro do intervalo permitido e associado a um corredor diferente dos IDs `1` e `7`. Quando **P = V** e **Q = F**, por exemplo, o checkpoint tem `km > 6` e fica fora da faixa superior; quando **P = F** e **Q = V**, o checkpoint tem `km < 4` e fica fora da faixa inferior. Se **R** ou **S** forem verdadeiros, o registro também não é selecionado, mesmo que a quilometragem esteja dentro do intervalo.
+A consulta considera registros apenas quando a equipe pertence ao conjunto de equipes selecionadas e o checkpoint foi criado dentro do intervalo definido. Assim, o resultado consolidado por equipe será utilizado para apoiar a atualização do ranking, a geração de relatórios finais e a exportação dos dados da competição em formato XLSX.
+
+#### Síntese da relação entre consultas e requisitos funcionais
+
+<div align="center">
+  <sub>Quadro 49 - Relação entre consultas SQL e requisitos funcionais</sub>
+</div>
+
+| Consulta | Objetivo da consulta                                                       | Requisitos relacionados    |
+| -------- | -------------------------------------------------------------------------- | -------------------------- |
+| **Q01**  | Identificar checkpoints com possíveis inconsistências de distância         | RF008, RF009               |
+| **Q02**  | Buscar atletas cadastrados por padrão de nome e status                     | RF003                      |
+| **Q03**  | Atualizar manualmente valores capturados antes da validação definitiva     | RF005, RF006, RF007, RF008 |
+| **Q04**  | Remover checkpoints não validados após encerramento ou limpeza operacional | RF012                      |
+| **Q05**  | Consolidar quilômetros por equipe para ranking, relatórios e exportação    | RF010, RF013, RF014, RF015 |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização, remoção e consolidação de informações de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
 
 ## 3.7. WebAPI e endpoints (sprints 3 e 4)
 
-A documentação completa da WebAPI foi organizada em uma página HTML específica, reunindo os endpoints por domínio funcional, seus métodos HTTP, exemplos de payload, formatos de resposta, códigos de status esperados e indicação de quais recursos já estão implementados ou planejados. Este material complementa a matriz RF/RN/Endpoint apresentada na seção 3.1.4, detalhando o contrato de comunicação entre o *front-end* e o *back-end* (o banco de dados é acessado exclusivamente pela camada Repository, conforme a arquitetura em camadas descrita na seção 3.2.1, e não consome a API diretamente).
+A WebAPI desenvolvida para a aplicação atua como a principal camada de comunicação entre a interface web, os serviços de negócio e o banco de dados, sendo responsável por centralizar o processamento das requisições, aplicar as regras de negócio e controlar o acesso às informações persistidas. Dessa forma, o front-end não realiza acesso direto ao banco de dados; todas as operações de leitura, escrita, validação e atualização são intermediadas pela API, garantindo consistência dos dados, rastreabilidade das operações e maior segurança durante a execução da competição.
 
-A escolha por uma página HTML versionada, em vez de uma tabela embutida diretamente no WAD, foi deliberada: permite uma visualização navegável e formatada (*badges* de status, blocos de código com destaque, links internos entre seções), mantém o versionamento alinhado com cada sprint de desenvolvimento e facilita a validação externa por parte de revisores, sem necessidade de clonar o repositório ou abrir uma ferramenta auxiliar como Swagger ou Postman. As seções internas da página HTML adotam numeração própria (3.6.1 a 3.6.10) por domínio funcional; trata-se de uma numeração local ao artefato, não relacionada à numeração de capítulos do WAD — a normalização desse esquema (por exemplo, prefixo `API-`) está prevista para uma iteração posterior.
+A implementação segue a arquitetura em camadas apresentada na Seção 3.2.1, organizada em **Routes → Controllers → Services → Repositories.** Nessa organização, cada camada possui responsabilidades bem definidas: as rotas recebem as requisições HTTP e realizam seu direcionamento; os controllers tratam a comunicação entre cliente e servidor; os services concentram toda a lógica de negócio da aplicação; e os repositories encapsulam o acesso ao banco de dados. Essa separação reduz o acoplamento entre componentes, facilita a manutenção do código, melhora a testabilidade da aplicação e favorece sua evolução ao longo das sprints.
 
-A API segue convenções RESTful: recursos são organizados de forma hierárquica (por exemplo, `/competitions/:competicaoId/teams/:teamId/athletes`) e os métodos HTTP são aplicados conforme sua semântica padrão (POST cria, GET consulta, PUT/PATCH atualizam, DELETE remove; PUT e DELETE são operados como idempotentes, em conformidade com a estratégia de resiliência da seção 3.8.4). Os códigos HTTP devolvidos pelo *back-end* na Sprint 3 derivam diretamente das classes em `src/errors/AppError.ts` por meio do middleware `errorHandler`: `200` em consultas e atualizações bem-sucedidas, `201` em criações, `204` em remoções, `400` para `ValidationError`, `404` para `NotFoundError`, `409` para `ConflictError`, `422` para `UnprocessableError` e `500` como *fallback*. Os códigos `401 Unauthorized` e `403 Forbidden` estão documentados como contrato mas só serão emitidos a partir da Sprint 5, quando as camadas de autenticação e autorização entrarem em vigor (seção 3.8). A semântica e os códigos de status seguem a RFC 9110 (HTTP Semantics, IETF, 2022), que consolida e torna obsoletas as RFCs anteriores da família HTTP/1.1. Cada endpoint listado na documentação está rastreado a um ou mais Requisitos Funcionais (RF) e Regras de Negócio (RN) por meio da coluna RF/RN nas tabelas, servindo como ponte com as seções 3.1.1, 3.1.2 e 3.1.4 e contribuindo para a rastreabilidade a ser consolidada na seção 3.9 (atualização da RTM com os endpoints da Sprint 3 prevista em paralelo a esta entrega). Além dos endpoints implementados, a página HTML também descreve como planejados para as Sprints 4 e 5 os fluxos de autenticação (`POST /auth/sessions`), captura via OCR (`POST /ocr/extractions`, `PATCH /ocr/extractions/:extractionId`), identificação de inconsistências (`GET /competitions/:id/checkpoints/inconsistencies`) e relatórios analíticos (`GET /competitions/:id/reports`).
+A documentação completa da API foi disponibilizada em uma página HTML versionada juntamente ao projeto, reunindo os endpoints implementados, métodos HTTP utilizados, exemplos de requisição e resposta, códigos de status retornados e sua rastreabilidade com os requisitos funcionais e regras de negócio. A adoção de uma documentação externa ao WAD permite apresentar um nível maior de detalhamento sem comprometer a legibilidade deste documento, além de facilitar futuras atualizações da API conforme sua evolução. A documentação pode ser consultada no arquivo documentos/outros/api-documentation.html, versionado juntamente ao projeto, e também foi publicada por meio do GitLab Pages para facilitar a navegação durante a avaliação, permanecendo sincronizada com a versão mantida no repositório.
 
-Trabalhos de normalização ainda em curso são reconhecidos explicitamente nesta versão: (a) os parâmetros de rota oscilam entre `:id` (genérico), `:competicaoId` (português) e `:teamId`/`:athleteId` (inglês), refletindo a dívida de idioma já reconhecida na seção 3.2.1; (b) coexistem rotas com recursos em inglês (`/competitions/...`) e em português (`/corredores/:corredorId/checkpoints`); (c) os termos *athlete* e *runner* aparecem em diferentes pontos da API HTML para o mesmo conceito. A padronização desses três pontos está mapeada como pendência editorial e será endereçada em conjunto com a atualização da matriz da seção 3.1.4 e da RTM da seção 3.9.
+No estado atual da aplicação, a WebAPI contempla os principais fluxos necessários para a operação do sistema desenvolvido para o evento Red Bull 24 Horas. Entre eles destacam-se o gerenciamento de competições, equipes e atletas, autenticação administrativa, processamento OCR, validação e registro de checkpoints, atualização de rankings, geração de relatórios, exportação de dados e disponibilização do painel público destinado às equipes.
 
-A versão versionada no repositório pode ser consultada em [documentos/outros/api-documentation.html](outros/api-documentation.html). Para facilitar a leitura externa e a validação do artefato sem necessidade de clonar o projeto, a mesma documentação também foi publicada em ambiente web no link [https://web-api-deploy-d81981.pages.git.inteli.edu.br/](https://web-api-deploy-d81981.pages.git.inteli.edu.br/) (a sincronização automática do *deploy* com cada *merge* está mapeada como pendência operacional).
+Embora a aplicação seja disponibilizada como um sistema web completo, sua arquitetura distingue dois tipos principais de rotas. Os endpoints REST disponibilizam dados em formato JSON e executam as operações de negócio da aplicação, enquanto as rotas SSR (Server-Side Rendering) são responsáveis pela renderização dinâmica das interfaces utilizadas pelos administradores, operadores e equipes durante a competição. Essa separação desacopla a camada de serviços da interface gráfica, favorecendo a reutilização da lógica de negócio, a realização de testes automatizados e futuras integrações.
+
+Essa distinção permite que a mesma aplicação ofereça tanto interfaces prontas para utilização em campo quanto serviços reutilizáveis para integração, testes automatizados e futuras expansões da plataforma.
+
+Os principais domínios implementados pela WebAPI são apresentados no Quadro 39.
+
+| Domínio                 | Operações principais                                                        | Tipo       | Relação com o escopo                                                                                                          |
+| ----------------------- | --------------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Autenticação            | Login administrativo, criação e encerramento de sessão                      | REST + SSR | Controla o acesso ao ambiente administrativo por autenticação JWT, mantendo o painel público acessível sem autenticação.      |
+| Competições             | Cadastro, consulta, atualização, ativação, encerramento e exclusão          | REST       | Gerencia todo o ciclo de vida das competições, servindo como entidade principal do sistema.                                   |
+| Equipes                 | Cadastro, consulta, atualização, exclusão e definição do atleta em execução | REST       | Mantém a estrutura das equipes participantes e controla o atleta ativo durante a competição.                                  |
+| Atletas (Runners)       | Cadastro, consulta, atualização e exclusão                                  | REST       | Gerencia os atletas pertencentes a cada equipe e possibilita o vínculo correto dos checkpoints registrados.                   |
+| Checkpoints             | Registro, consulta, edição, exclusão e identificação de inconsistências     | REST       | Implementa o principal fluxo operacional da aplicação, registrando distância, tempo e validações realizadas pelos operadores. |
+| OCR                     | Extração automática de informações a partir de imagens da esteira           | REST       | Recebe imagens do visor das esteiras, realiza a extração automática dos dados e disponibiliza os valores obtidos para validação antes do registro definitivo do checkpoint.   |
+| Rankings                | Consulta dos rankings geral, por equipe e por atleta                        | REST + SSR | Disponibiliza os rankings da competição para consulta pelos usuários, respeitando a frequência de atualização definida pelo sistema.              |
+| Relatórios e Exportação | Consolidação dos dados da competição e geração de arquivos XLSX             | REST + SSR | Disponibiliza indicadores, relatórios e exportações utilizados na análise pós-evento.                                         |
+| Painel Público          | Visualização dos dados de cada equipe por UUID                              | SSR        | Disponibiliza aos atletas e capitães um painel público atualizado periodicamente sem necessidade de autenticação.             |
+| Administradores         | Cadastro e gerenciamento de usuários administrativos                        | REST       | Gerencia os usuários autorizados a operar o sistema durante o evento.                                                         |
+
+Os domínios apresentados implementam diretamente os requisitos funcionais definidos na Seção 3.1.1. O gerenciamento das competições, equipes e atletas atende aos requisitos RF001, RF002 e RF003; a autenticação administrativa implementa o RF004; o fluxo de captura, validação e confirmação dos checkpoints contempla os requisitos RF005 ao RF009; os serviços responsáveis pela atualização dos rankings atendem aos requisitos RF010, RF011 e RF015; enquanto os módulos de encerramento da competição, geração de relatórios e exportação dos dados implementam os requisitos RF012, RF013 e RF014.
+
+A WebAPI foi projetada seguindo os princípios de arquitetura REST (Representational State Transfer) sempre que os recursos representam entidades persistidas ou operações diretamente relacionadas ao domínio da aplicação. Dessa forma, cada recurso é identificado por uma URI única e manipulado por meio dos métodos HTTP adequados, preservando uma interface consistente e previsível para clientes e desenvolvedores.
+
+Os recursos da API são organizados de forma hierárquica para representar os relacionamentos existentes entre as entidades do sistema. Por exemplo, a rota ```/competitions/:id/teams/:teamId/runners``` evidencia que um atleta pertence a uma equipe, enquanto a equipe está vinculada a uma competição específica. Essa estrutura torna a navegação pela API mais intuitiva, reduz ambiguidades na identificação dos recursos e facilita sua manutenção conforme novas funcionalidades são incorporadas.
+
+A comunicação entre as camadas da aplicação ocorre de forma sequencial. Inicialmente, uma requisição HTTP é recebida pelas rotas, que direcionam a solicitação ao controller correspondente. Em seguida, o controller delega o processamento ao service responsável pela regra de negócio. Quando necessário, o service consulta ou altera os dados persistidos por meio dos repositories, responsáveis exclusivamente pela comunicação com o banco de dados. Após o processamento, a resposta retorna ao cliente acompanhada do código HTTP apropriado e do conteúdo correspondente à operação realizada.
+
+Os códigos de resposta HTTP adotados seguem a semântica definida pela RFC 9110, permitindo que clientes interpretem corretamente o resultado de cada requisição. Em operações realizadas com sucesso, a API retorna:
+
+- 200 (OK): utilizado para consultas e atualizações realizadas com sucesso;
+- 201 (Created): utilizado após a criação de novos recursos;
+- 204 (No Content): utilizado quando uma exclusão é concluída sem necessidade de retorno de conteúdo.
+
+Para situações de erro, são utilizados códigos compatíveis com a natureza da falha encontrada:
+
+- 400 (Bad Request): requisições contendo parâmetros inválidos ou inconsistentes;
+- 401 (Unauthorized): ausência de autenticação ou utilização de credenciais inválidas;
+- 404 (Not Found): tentativa de acesso a recursos inexistentes;
+- 409 (Conflict): violação de regras de negócio ou conflito entre estados da aplicação;
+- 422 (Unprocessable Content): payload sintaticamente válido, porém semanticamente incompatível com as validações da aplicação;
+- 500 (Internal Server Error): falhas inesperadas durante o processamento da requisição.
+
+O tratamento dessas respostas é centralizado pelo middleware errorHandler, responsável por interceptar exceções lançadas pelos serviços da aplicação e convertê-las em respostas HTTP padronizadas. Essa estratégia reduz duplicação de código, mantém consistência entre os diferentes módulos da API e simplifica a manutenção da aplicação.
+
+O acesso às funcionalidades administrativas é protegido por autenticação baseada em JSON Web Token (JWT). Após a validação das credenciais do administrador, o servidor gera um token assinado que acompanha as requisições subsequentes realizadas às rotas protegidas. A verificação desse token é realizada pelo middleware de autenticação antes da execução da lógica de negócio, garantindo que apenas usuários autenticados possam executar operações administrativas, como cadastro de competições, gerenciamento de equipes, registro de checkpoints e geração de relatórios.
+
+Em contraste, o painel público destinado às equipes permanece acessível sem autenticação. O acesso é realizado por meio de um identificador único (UUID) associado a cada equipe, permitindo a visualização das informações públicas da competição sem exposição das funcionalidades administrativas ou dos dados internos da aplicação.
+
+A implementação adota de forma consistente a nomenclatura runner para representar os atletas participantes da competição. Essa convenção é utilizada tanto na definição das rotas quanto na implementação dos serviços e da documentação técnica, garantindo uniformidade entre o modelo de domínio, a estrutura da API e o código-fonte. Da mesma forma, os recursos seguem uma convenção de nomenclatura baseada em substantivos no plural, prática recomendada para APIs REST por favorecer clareza, padronização e previsibilidade na construção das URIs.
+
+Outro aspecto relevante da implementação é a separação entre operações de consulta e operações que modificam o estado da aplicação. Requisições do tipo GET são utilizadas exclusivamente para recuperação de informações, preservando sua característica de não alterar o estado do sistema. Operações de criação, atualização e exclusão são realizadas, respectivamente, pelos métodos POST, PUT, PATCH e DELETE, respeitando a semântica esperada de cada verbo HTTP. Essa organização favorece a interoperabilidade da API com ferramentas de teste, clientes HTTP e futuras integrações.
+
+Por meio dessas decisões arquiteturais, a WebAPI fornece uma interface consistente para todas as funcionalidades centrais da aplicação, reduzindo o acoplamento entre interface e persistência, facilitando a evolução do sistema e garantindo maior confiabilidade durante a operação do evento.
+
+Embora a WebAPI implementada contemple integralmente os fluxos previstos para o escopo desta aplicação, algumas oportunidades de evolução foram identificadas durante o desenvolvimento do projeto. Entre elas, destaca-se a possibilidade de ampliar o nível de detalhamento da documentação da API por meio da adoção de especificações abertas, como a OpenAPI Specification (OAS), permitindo a geração automática de documentação interativa e facilitando futuras integrações com aplicações de terceiros.
+
+Outra possibilidade consiste na evolução do modelo de autorização atualmente adotado. A aplicação implementa autenticação baseada em JSON Web Token (JWT) para controle de acesso às funcionalidades administrativas, considerando apenas um perfil de usuário administrativo, conforme definido no escopo do projeto. Em versões futuras, esse mecanismo poderá ser expandido para suportar diferentes níveis de permissão, permitindo a definição de papéis específicos, como operadores, organizadores e administradores, com diferentes privilégios de acesso às funcionalidades do sistema.
+
+Também foi identificada a possibilidade de ampliar os recursos disponibilizados pelos serviços de consulta, incorporando filtros adicionais, paginação, ordenação e mecanismos de pesquisa mais avançados. Essas melhorias favorecem a escalabilidade da aplicação e reduzem o volume de dados trafegados em cenários com maior quantidade de competições, equipes, atletas e checkpoints registrados.
+
+Em relação à documentação técnica, optou-se por manter a descrição detalhada dos endpoints em uma página HTML versionada juntamente ao projeto. Essa abordagem facilita a manutenção da documentação durante o desenvolvimento, mas exige que eventuais alterações nas rotas implementadas sejam refletidas também no artefato correspondente, preservando a consistência entre a implementação e sua documentação.
+
+Apesar dessas oportunidades de evolução, a WebAPI implementada atende integralmente aos objetivos definidos para a solução proposta. Os serviços disponibilizados suportam o gerenciamento das competições, equipes e atletas, o processamento das imagens capturadas para extração automática dos dados via OCR, a validação e persistência dos checkpoints, a atualização dos rankings, a geração de relatórios consolidados e a exportação das informações produzidas durante a competição.
+
+Sob a perspectiva arquitetural, a separação entre as camadas da aplicação, aliada à utilização de endpoints REST, rotas SSR, autenticação baseada em JWT e organização hierárquica dos recursos, contribui para uma solução com baixo acoplamento, maior facilidade de manutenção e elevada reutilização dos componentes desenvolvidos. Essa organização também favorece a realização de testes automatizados, a evolução incremental da aplicação e a incorporação de novas funcionalidades sem necessidade de alterações significativas na arquitetura existente.
+
+Além disso, a correspondência entre os endpoints implementados e os requisitos funcionais definidos na Seção 3.1 demonstra a rastreabilidade entre especificação e implementação. Cada domínio funcional disponibilizado pela API está diretamente associado às funcionalidades previstas para o sistema, assegurando que os serviços implementados atendam às necessidades operacionais do evento Red Bull 24 Horas e sustentem os processos de captura, validação, monitoramento e consolidação das informações produzidas durante a competição.
+
+Dessa forma, a WebAPI constitui um dos principais elementos estruturais da solução desenvolvida, estabelecendo uma interface consistente entre a camada de apresentação e a persistência dos dados, garantindo segurança no acesso às funcionalidades administrativas, padronização das operações realizadas pela aplicação e suporte aos fluxos operacionais críticos do sistema. Sua implementação permite que as informações registradas durante o evento sejam processadas de maneira confiável, auditável e alinhada aos objetivos de negócio definidos para o projeto.
 
 ## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
@@ -3740,7 +3840,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa | RF001 | RN03 | POST /competitions | Cadastro de Competição | competitionService.spec.ts | Competição criada com sucesso e persistida no banco |
 | Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
 | Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
-| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts ⚠️ | Atleta vinculado corretamente à equipe |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/runners | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
 | Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto da Esteira | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
 | Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
@@ -3749,15 +3849,15 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
 | Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
 | Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts ⚠️ | Exibição do atleta em corrida e próximo atleta previsto |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/runners | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
 | Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
-| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/athletes | Painel Público da Equipe | rankingService.spec.ts | Ranking do painel das equipes atualizado e exibido corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administradores recuperados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administrador criado com sucesso |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Dados administrativos atualizados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Administrador removido corretamente |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
 
 <div align="center">
 
@@ -3940,7 +4040,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 ### (d) Próximos passos
 
-**1. Refinamento do OCR:** Incorporação do módulo OCR (ocr-src/) à navegação principal, conectando a captura da foto da esteira ao endpoint POST /ocr/extractions e ao fluxo de conferência humana antes da persistência, finalizando o ciclo RF005–RF007.
+**1. Refinamento do OCR:** Aprimoramento da integração entre a captura da foto da esteira, o `OcrService`, o endpoint `POST /ocr/extractions` e o fluxo de conferência humana antes da persistência, finalizando o ciclo RF005–RF007.
 
 **2. Calculadora de descanso e gráfico de performance do atleta:** Revisão da lógica de cálculo do tempo estimado de descanso e da alimentação de dados do gráfico de evolução na tela do atleta. A complexidade dos cálculos de agregação sobre o histórico de checkpoints e a renderização do gráfico sugerem a adoção de uma biblioteca de visualização (como Chart.js ou similar) para garantir precisão, responsividade e manutenibilidade adequadas.
 
@@ -4132,7 +4232,7 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/competitions/:id/teams/:teamId/runners/:runnerId` | GET | ✅ 200 (por id) | ✅ 400 (runnerId não numérico) | — | ✅ 404 |
 | `/competitions/:id/teams/:teamId/runners/:runnerId` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio + cpf no body + runnerId não numérico) | ✅ 409 (email dup) | ✅ 404 |
 | `/competitions/:id/teams/:teamId/runners/:runnerId` | DELETE | ✅ 204 (remoção) | ✅ 400 (runnerId não numérico) | ✅ 409 (com checkpoints) | ✅ 404 |
-| `/competitions/:competicaoId/export` | GET | ✅ 200 (exportação) | ✅ 400 (non-numeric id) | — | ✅ 404 |
+| `/competitions/:id/export` | GET | ✅ 200 (exportação) | ✅ 400 (id não numérico) | — | ✅ 404 |
 | `/checkpoints` | POST | ✅ 201 (criação) | ✅ 400 (3 casos) | ✅ 409 (id dup) | — |
 | `/checkpoints` | GET | ✅ 200 (lista) | — | — | — |
 | `/checkpoints/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
