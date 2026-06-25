@@ -71,9 +71,11 @@ export function createCheckpointService(
           );
         }
         if (isPgFkViolation(error)) {
-          throw new NotFoundError(
-            "Runner, competition or admin not found"
-          );
+          const errMsg = (error as any).message || "";
+          if (errMsg.includes("id_admin")) throw new NotFoundError("Administrador não encontrado");
+          if (errMsg.includes("id_competition")) throw new NotFoundError("Competição não encontrada");
+          if (errMsg.includes("id_runner")) throw new NotFoundError("Atleta não encontrado");
+          throw new NotFoundError("Referência de Runner, competition ou admin não encontrada");
         }
         throw error;
       }

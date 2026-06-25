@@ -61,8 +61,10 @@
     </div>
 
     <div class="metric-card">
-      <p class="metric-label">Distância para o líder</p>
-      <% if (teamStats.is_leader) { %>
+      <p class="metric-label">Distância para o <%= teamStats.is_leader ? 'segundo colocado' : 'líder' %></p>
+      <% if (teamStats.is_leader && teamStats.distance_to_next_km > 0) { %>
+        <p class="metric-value">+ <%= teamStats.distance_to_next_km.toFixed(2) %> km</p>
+      <% } else if (teamStats.is_leader) { %>
         <p class="metric-value">Líder</p>
       <% } else { %>
         <p class="metric-value">+ <%= teamStats.distance_to_leader_km.toFixed(2) %> km</p>

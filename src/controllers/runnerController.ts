@@ -203,12 +203,18 @@ export const runnerController = {
     const leaderDistanceKm = teamRanking.length > 0 ? teamRanking[0].total_distance_km : 0;
     const teamDistanceKm = thisTeamRanking?.total_distance_km ?? 0;
 
+    const isLeader = thisTeamRanking?.position === 1;
+    const distanceToNextKm = isLeader && teamRanking.length > 1
+      ? Math.max(0, teamRanking[0].total_distance_km - teamRanking[1].total_distance_km)
+      : 0;
+
     const teamStats = {
       position: thisTeamRanking?.position ?? 0,
       total_distance_km: teamDistanceKm,
       average_pace: thisTeamRanking?.average_pace ?? null,
       distance_to_leader_km: Math.max(0, leaderDistanceKm - teamDistanceKm),
-      is_leader: thisTeamRanking?.position === 1,
+      distance_to_next_km: distanceToNextKm,
+      is_leader: isLeader,
     };
 
     // [D2] Calculadora de descanso simplificada — 120 min recomendados (RN08)
@@ -271,6 +277,7 @@ export const runnerController = {
     res.render("runner/runner", {
       title: `${team.name} — Red Bull 24h`,
       pageCSS: "/css/runner.css",
+      hideMenuNav: true,
       competition,
       team,
       runnersEnriched,
