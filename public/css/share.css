@@ -1,0 +1,542 @@
+/* ==============================================================
+   COMPARTILHAR — Página de seleção + Templates Instagram
+   ============================================================== */
+
+/* ── Page Layout ── */
+.share-main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.share-header {
+  margin-bottom: 2rem;
+}
+
+.share-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--azul-principal);
+  margin: 0 0 0.25rem;
+}
+
+.share-subtitle {
+  font-size: 1rem;
+  color: var(--azul-secundario);
+  margin: 0 0 0.5rem;
+}
+
+.share-back-link {
+  color: var(--azul-principal);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.share-back-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Grid ── */
+.share-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Card ── */
+.share-card {
+  background: var(--fundo-cards);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.share-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.share-card-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.share-card-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.bg-preview-fundo-1 {
+  background-image: url('/img/fundo-1.png');
+}
+
+.bg-preview-fundo-2 {
+  background-image: url('/img/fundo-2.png');
+}
+
+.bg-preview-fundo-3 {
+  background-image: url('/img/fundo-3.png');
+}
+
+.share-card-logo {
+  position: relative;
+  width: 60px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.share-card-photo-placeholder {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.share-card-label {
+  position: relative;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  z-index: 1;
+  padding: 0 0.5rem;
+  line-height: 1.2;
+}
+
+.share-card-stat {
+  position: relative;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.share-card-body {
+  padding: 1rem;
+}
+
+.share-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--azul-principal);
+  margin: 0 0 0.25rem;
+}
+
+.share-card-desc {
+  font-size: 0.8rem;
+  color: #666;
+  margin: 0 0 0.75rem;
+}
+
+.share-card-highlight {
+  font-size: 0.8rem;
+  color: var(--azul-secundario);
+  margin: 0 0 0.75rem;
+}
+
+.share-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.share-athlete-select {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  background: #fff;
+}
+
+.share-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.share-btn-primary {
+  background: var(--azul-principal);
+  color: #fff;
+}
+
+.share-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.share-btn-primary:disabled,
+.share-btn-primary[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ==============================================================
+   TEMPLATE PAGES (Instagram-style posts)
+   ============================================================== */
+
+.share-template-body {
+  margin: 0;
+  padding: 0;
+  background: #f0f0f0;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.template-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.template-toolbar {
+  width: 100%;
+  max-width: 1080px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.template-back-btn {
+  color: var(--azul-principal);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.template-back-btn:hover {
+  text-decoration: underline;
+}
+
+.template-toolbar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--azul-principal);
+  margin: 0;
+  text-align: center;
+}
+
+.template-download-btn {
+  padding: 0.5rem 1.25rem;
+  background: var(--azul-principal);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.template-download-btn:hover {
+  opacity: 0.9;
+}
+
+.template-download-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Instagram Post Container ── */
+.template-instagram-wrapper {
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.template-instagram {
+  position: relative;
+  width: 540px;
+  height: 540px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Background images */
+.bg-fundo-1 {
+  background-image: url('/img/fundo-1.png');
+}
+
+.bg-fundo-2 {
+  background-image: url('/img/fundo-2.png');
+}
+
+.bg-fundo-3 {
+  background-image: url('/img/fundo-3.png');
+}
+
+/* Overlay for readability */
+.template-instagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 0;
+}
+
+.template-logo {
+  position: relative;
+  width: 80px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.template-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  padding: 0 2rem;
+}
+
+.template-title {
+  font-size: 1.1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  margin: 0 0 0.25rem;
+}
+
+.template-subtitle {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  margin: 0 0 1rem;
+}
+
+/* Photo area */
+.template-photo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.template-photo-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.2s;
+}
+
+.template-photo-circle:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.template-photo-placeholder {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+}
+
+.template-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.template-photo-input {
+  display: none;
+}
+
+.template-photo-hint {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0.25rem 0 0;
+}
+
+.template-runner-name {
+  font-size: 1.25rem;
+  font-weight: 800;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  margin: 0 0 0.15rem;
+}
+
+.template-team-name {
+  font-size: 0.8rem;
+  font-weight: 600;
+  opacity: 0.85;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  margin: 0 0 0.75rem;
+}
+
+.template-stats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.template-stat {
+  text-align: center;
+}
+
+.template-stat-value {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  line-height: 1;
+}
+
+.template-stat-label {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  opacity: 0.8;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 0.15rem;
+}
+
+.template-hashtag {
+  position: absolute;
+  bottom: 1.25rem;
+  z-index: 1;
+  color: #fff;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .template-instagram {
+    width: 340px;
+    height: 340px;
+  }
+
+  .template-logo {
+    width: 55px;
+  }
+
+  .template-title {
+    font-size: 0.85rem;
+  }
+
+  .template-runner-name {
+    font-size: 1rem;
+  }
+
+  .template-stat-value {
+    font-size: 1.1rem;
+  }
+
+  .template-photo-circle {
+    width: 70px;
+    height: 70px;
+  }
+}
+
+/* ── Download-ready full size ── */
+@media (min-width: 1080px) {
+  .template-instagram {
+    width: 540px;
+    height: 540px;
+  }
+}
+
+/* Print styles for saving */
+@media print {
+  .template-toolbar {
+    display: none;
+  }
+
+  .template-instagram-wrapper {
+    padding: 0;
+  }
+
+  .template-instagram {
+    width: 1080px;
+    height: 1080px;
+    border-radius: 0;
+    box-shadow: none;
+    page-break-after: always;
+  }
+
+  .template-instagram::before {
+    display: none;
+  }
+
+  .template-logo {
+    width: 140px;
+  }
+
+  .template-title {
+    font-size: 2rem;
+  }
+
+  .template-runner-name {
+    font-size: 2.5rem;
+  }
+
+  .template-stat-value {
+    font-size: 2.8rem;
+  }
+
+  .template-photo-circle {
+    width: 180px;
+    height: 180px;
+  }
+
+  .template-hashtag {
+    font-size: 1rem;
+    bottom: 2rem;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

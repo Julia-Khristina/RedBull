@@ -55,6 +55,59 @@
   height: 22px;
 }
 
+/* ── Runner header actions ────────────────────────────────── */
+
+.runner-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.share-post-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.share-post-select {
+  padding: 6px 8px;
+  border: 1px solid var(--bordas-separadores);
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  background: var(--fundo-cards);
+  color: var(--texto);
+  max-width: 120px;
+}
+
+.share-post-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--azul-principal);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.share-post-btn:hover {
+  opacity: 0.85;
+}
+
+.share-post-btn.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 /* ── Cards de métricas ────────────────────────────────────── */
 
 .runner-metrics {

@@ -1519,6 +1519,25 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Painel público da equipe (/public/team/:uuid)
   if (path.startsWith('/public/team/')) {
+    // ── Botão "Criar Post" (compartilhar resultado) ──
+    const postBtn = document.querySelector('[data-runner-share-post]');
+    const postSelect = document.querySelector('[data-runner-share-select]');
+    if (postBtn && postSelect) {
+      function updatePostLink() {
+        const runnerId = postSelect.value;
+        const competitionId = postBtn.dataset.competitionId;
+        if (runnerId && competitionId) {
+          postBtn.href = '/public/competitions/' + competitionId + '/share/template/athlete?runnerId=' + runnerId;
+          postBtn.classList.remove('is-disabled');
+        } else {
+          postBtn.href = '#';
+          postBtn.classList.add('is-disabled');
+        }
+      }
+      postSelect.addEventListener('change', updatePostLink);
+      updatePostLink();
+    }
+
     const restOptions = Array.isArray(window.RUNNER_REST_OPTIONS)
       ? window.RUNNER_REST_OPTIONS
       : [];
@@ -1572,6 +1591,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
+  // ── Compartilhar — Página de seleção ───────────────────────────────────────
+  if (document.querySelector('[data-share-page]')) {
+    const sharePage = document.querySelector('[data-share-page]');
+    const competitionId = sharePage.dataset.competitionId;
+    const select = document.querySelector('[data-share-athlete-select]');
+    const generateBtn = document.querySelector('[data-share-generate="athlete"]');
+
+    function updateAthleteButton() {
+      if (!select || !generateBtn) return;
+      const selected = select.value;
+      if (selected) {
+        generateBtn.removeAttribute('disabled');
+        generateBtn.href = '/competitions/' + competitionId + '/share/template/athlete?runnerId=' + selected;
+      } else {
+        generateBtn.setAttribute('disabled', 'disabled');
+        generateBtn.href = '#';
+      }
+    }
+
+    if (select) {
+      select.addEventListener('change', updateAthleteButton);
+      updateAthleteButton();
+    }
+  }
+
   // Ativar item do menu correspondente à rota atual
   document.querySelectorAll('.nav-item').forEach(function (item) {
     const href = item.getAttribute('href');
@@ -1589,7 +1633,8 @@ document.addEventListener('DOMContentLoaded', function () {
       path.startsWith(hrefPath + '/') ||
       (hrefPath === '/ranking' && /\/competitions\/\d+\/ranking/.test(path)) ||
       (hrefPath === '/reports' && (path === '/reports' || /\/view\/competitions\/\d+\/reports(?:\/|$)/.test(path))) ||
-      (hrefPath === '/teams' && (path === '/teams' || path.startsWith('/teams/') || /\/view\/competitions\/\d+\/teams(?:\/|$)/.test(path)));
+      (hrefPath === '/teams' && (path === '/teams' || path.startsWith('/teams/') || /\/view\/competitions\/\d+\/teams(?:\/|$)/.test(path))) ||
+      (hrefPath.includes('/share') && (path === hrefPath || path.startsWith(hrefPath + '/template/')));
 
     if (isActive) {
       item.classList.add('active');
