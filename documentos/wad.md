@@ -1454,7 +1454,9 @@ O sistema Red Bull 24h é composto por três nós principais em produção: o di
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
-```plantuml
+
+```
+plantuml
 @startuml diagrama-implantacao
  
 skinparam backgroundColor #FFFFFF
@@ -1522,12 +1524,14 @@ O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em Typ
 O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. A foto do painel é capturada pelo dispositivo e enviada ao servidor por meio de requisição `POST /ocr/extractions`, no formato *multipart/form-data*. O dispositivo cliente não executa o reconhecimento de imagem; sua função no fluxo OCR limita-se à captura e ao envio da foto.
  
 O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `runners`/`athletes`, `checkpoints`, `ocr`, `ranking`, `export`, `reports`, `auth` e o roteador administrativo montado sob o prefixo `/admin`). É também neste nó que ocorre o processamento OCR, por meio do módulo de serviços `src/services/ocr*.ts` (Tesseract.js, pré-processamento com sharp e extração assistida por Groq). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
-
+ 
 O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospedada pelo Supabase. O acesso é realizado exclusivamente pela camada Repository por meio do Supabase JS SDK, que encapsula as requisições HTTPS ao endpoint gerenciado. Nenhuma outra camada da aplicação detém acesso direto ao banco, garantindo o isolamento arquitetural descrito na seção 3.2.1. O esquema relacional é gerenciado pelos arquivos de migração DDL localizados em `documentos/outros/migrations/`, conforme detalhado na seção 3.6.3.
-
+ 
 O nó **GitLab Pages** hospeda a documentação estática da WebAPI (`documentos/outros/api-documentation.html`), publicada em `https://web-api-deploy-d81981.pages.git.inteli.edu.br/`. Este nó não integra o fluxo de dados operacional da aplicação; sua finalidade é exclusivamente facilitar a leitura e validação externa da documentação de endpoints sem necessidade de clonar o repositório.
+ 
+A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual do desenvolvimento: o mecanismo de autenticação e controle de sessão é executado pelo próprio servidor de aplicação, conforme descrito na seção 3.8, e não demanda um nó de infraestrutura separado.
 
-A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual da sprint 4: o módulo de autenticação JWT está em desenvolvimento e será plenamente documentado no diagrama atualizado da sprint 5, conforme previsto na seção 3.8.
+
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
