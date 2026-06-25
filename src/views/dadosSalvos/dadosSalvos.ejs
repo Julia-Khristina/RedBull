@@ -15,7 +15,7 @@
     - Dados externos exibidos somente com tags EJS escapadas [D1].
     - CSS usa apenas variaveis existentes em public/css/variables.css [A1][D1].
     - Menu Equipes destacado por CSS nesta tela, sem JS e sem reload [D1].
-    - Metodo exibido por inferencia do identifier: prefixo manual- => Manual; demais identificadores => Automatico [A2][B2][D1].
+    - Metodo exibido por inferencia do identifier: MANUAL- => Manual, OCR- => OCR, OCR-EDITED- / CORRIGIDO- => Corrigido [A2][B2][D1].
     - Cards de resumo calculados no controller a partir de checkpoints reais [A1][B1][D1].
     - Historico limitado a equipe da URL via runner.id_team === :teamId [A1][B1][D1].
   Campos esperados em checkpoints:
@@ -38,7 +38,11 @@
   };
   const formatMethod = (identifier) => {
     if (!identifier) return 'Nao informado';
-    return String(identifier).startsWith('manual-') ? 'Manual' : 'Automatico';
+    const id = String(identifier).toUpperCase();
+    if (id.startsWith('MANUAL-')) return 'Manual';
+    if (id.startsWith('OCR-EDITED-') || id.startsWith('CORRIGIDO-') || id.startsWith('CORREÇÃO-') || id.startsWith('REVISADO-')) return 'Corrigido';
+    if (id.startsWith('OCR-')) return 'OCR';
+    return 'Desconhecido';
   };
   const totalDistance = summary.totalDistanceKm ?? checkpoints.reduce((sum, checkpoint) => {
     return sum + Number(checkpoint.distance_km || 0);

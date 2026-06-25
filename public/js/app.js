@@ -438,7 +438,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // =======================================================================
       // Task #329 — Copiar URL pública (UUID) com feedback visual
       // [A1] Botão estruturado em teams.ejs com data-teams-action="copy-uuid"
-      //   e data-uuid contendo o UUID gerado pelo backend (RN01).
+      //   e data-uuid contendo a URL pública completa (http://localhost:3000/public/team/<uuid>).
       // [D1] Fallback para document.execCommand quando navigator.clipboard
       //   não estiver disponível (browsers antigos / contexto inseguro).
       // =======================================================================
@@ -950,7 +950,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
         manualRegistrationLink.href = '/operational-panel/' + runnerId +
           '?competitionId=' + encodeURIComponent(competitionId) +
-          '&teamId=' + encodeURIComponent(teamId);
+          '&teamId=' + encodeURIComponent(teamId) +
+          '&mode=manual';
         manualRegistrationLink.classList.remove('is-disabled');
         manualRegistrationLink.setAttribute('aria-disabled', 'false');
       }
@@ -1081,11 +1082,53 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Registro manual (/operational-panel)
   if (path === '/operational-panel' || path.startsWith('/operational-panel/')) {
+    function getTimeFromParts(h, m, s) {
+      return (String(h.value || '0').padStart(2, '0') + ':' +
+              String(m.value || '0').padStart(2, '0') + ':' +
+              String(s.value || '0').padStart(2, '0'));
+    }
+
+    function filterNumericInput() {
+      this.value = this.value.replace(/\D/g, '').slice(0, 2);
+    }
+
+    document.querySelectorAll('.time-part').forEach(function (input) {
+      input.addEventListener('input', filterNumericInput);
+    });
+
+    function normalizeDecimalForApi(value) {
+      return Number(String(value || '').trim().replace(',', '.'));
+    }
+
+    function durationToSeconds(value) {
+      const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
+      if (parts.length === 2 && parts.every(Number.isFinite)) {
+        return parts[0] * 60 + parts[1];
+      }
+      if (parts.length === 3 && parts.every(Number.isFinite)) {
+        return parts[0] * 3600 + parts[1] * 60 + parts[2];
+      }
+      return null;
+    }
+
+    function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
+      const distance = normalizeDecimalForApi(distanceValue);
+      const seconds = durationToSeconds(timeValue);
+      if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
+      const secondsPerKm = Math.round(seconds / distance);
+      const minutes = Math.floor(secondsPerKm / 60);
+      const remainingSeconds = secondsPerKm % 60;
+      return formatPacePartsForApi(minutes, remainingSeconds);
+    }
+
     const ocrPanel = document.querySelector('[data-ocr-panel]');
     if (ocrPanel) {
       const captureStep = ocrPanel.querySelector('[data-ocr-step="capture"]');
       const reviewStep = ocrPanel.querySelector('[data-ocr-step="review"]');
       const manualMode = ocrPanel.querySelector('[data-manual-mode]');
+      if (ocrPanel.dataset.startMode === 'manual') {
+        showStep('manual');
+      }
       const fileInput = ocrPanel.querySelector('[data-ocr-image-input]');
       const openFileBtn = ocrPanel.querySelector('[data-ocr-open-file]');
       const capturePreview = ocrPanel.querySelector('[data-ocr-capture-preview]');
@@ -1097,7 +1140,9 @@ document.addEventListener('DOMContentLoaded', function () {
       const retakeBtn = ocrPanel.querySelector('[data-ocr-retake]');
       const distanceInput = ocrPanel.querySelector('[data-ocr-distance]');
       const paceInput = ocrPanel.querySelector('[data-ocr-pace]');
-      const timeInput = ocrPanel.querySelector('[data-ocr-time]');
+      const timeInputH = ocrPanel.querySelector('[data-ocr-time-h]');
+      const timeInputM = ocrPanel.querySelector('[data-ocr-time-m]');
+      const timeInputS = ocrPanel.querySelector('[data-ocr-time-s]');
       const discrepancy = ocrPanel.querySelector('[data-ocr-discrepancy]');
       const discrepancyText = ocrPanel.querySelector('[data-ocr-discrepancy-text]');
       const capturedClock = ocrPanel.querySelector('[data-ocr-captured-clock]');
@@ -1128,9 +1173,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (manualMode) manualMode.hidden = step !== 'manual';
       }
 
-      function normalizeDecimalForApi(value) {
-        return Number(String(value || '').trim().replace(',', '.'));
-      }
 
       function normalizeOcrTime(value) {
         const raw = String(value || '').trim();
@@ -1145,27 +1187,6 @@ document.addEventListener('DOMContentLoaded', function () {
             String(parts[2]).padStart(2, '0');
         }
         return raw;
-      }
-
-      function durationToSeconds(value) {
-        const parts = String(value || '').trim().split(':').map(function (part) { return Number(part); });
-        if (parts.length === 2 && parts.every(Number.isFinite)) {
-          return parts[0] * 60 + parts[1];
-        }
-        if (parts.length === 3 && parts.every(Number.isFinite)) {
-          return parts[0] * 3600 + parts[1] * 60 + parts[2];
-        }
-        return null;
-      }
-
-      function calculatePaceFromDistanceAndTime(distanceValue, timeValue) {
-        const distance = normalizeDecimalForApi(distanceValue);
-        const seconds = durationToSeconds(timeValue);
-        if (!Number.isFinite(distance) || distance <= 0 || seconds === null || seconds <= 0) return '';
-        const secondsPerKm = Math.round(seconds / distance);
-        const minutes = Math.floor(secondsPerKm / 60);
-        const remainingSeconds = secondsPerKm % 60;
-        return formatPacePartsForApi(minutes, remainingSeconds);
       }
 
       function updateOcrSourceNotice(result) {
@@ -1188,7 +1209,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const pace = calculatePaceFromDistanceAndTime(distance, time);
         if (distanceInput) distanceInput.value = distance;
         if (paceInput) paceInput.value = pace;
-        if (timeInput) timeInput.value = time;
+        var parts = time.split(':');
+        if (timeInputH) timeInputH.value = parts[0] || '';
+        if (timeInputM) timeInputM.value = parts[1] || '';
+        if (timeInputS) timeInputS.value = parts[2] || '';
         ocrState.originalValues = { distance: distance, pace: pace, time: time };
         updateOcrSourceNotice(result);
         if (saveBtn) saveBtn.disabled = false;
@@ -1237,28 +1261,26 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = normalizeDecimalForApi(distanceInput ? distanceInput.value : '');
         const idRunner = readContextNumber('id_runner');
         const idCompetition = readContextNumber('id_competition');
-        const idTreadmill = readContextNumber('id_treadmill');
         const idAdmin = readContextNumber('id_admin');
         if (!Number.isFinite(distance) || distance < 0) {
           throw new Error('Distancia deve ser um numero nao negativo.');
         }
-        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+        if (!idRunner || !idCompetition || !idAdmin) {
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
-        const time = normalizeOcrTime(timeInput ? timeInput.value : '');
+        const time = getTimeFromParts(timeInputH, timeInputM, timeInputS);
         const pace = calculatePaceFromDistanceAndTime(distanceInput ? distanceInput.value : '', time);
         const edited = !ocrState.originalValues ||
           String(distanceInput ? distanceInput.value : '') !== String(ocrState.originalValues.distance) ||
-          String(timeInput ? timeInput.value : '') !== String(ocrState.originalValues.time);
+          getTimeFromParts(timeInputH, timeInputM, timeInputS) !== String(ocrState.originalValues.time);
 
         const payload = {
-          identifier: 'OCR-' + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
+          identifier: (edited ? 'OCR-EDITED-' : 'OCR-') + nowIso.replace(/[-:.]/g, '').slice(0, 15) + '-' + idRunner,
           distance_km: distance,
           id_runner: idRunner,
           id_competition: idCompetition,
-          id_treadmill: idTreadmill,
           id_admin: idAdmin,
           image: {
             input_method: 'ocr',
@@ -1297,18 +1319,18 @@ document.addEventListener('DOMContentLoaded', function () {
           showStep('capture');
         });
       }
-      [distanceInput, paceInput, timeInput].forEach(function (input) {
-        if (!input) return;
-        input.addEventListener('input', function () {
-          if (input !== paceInput && paceInput) {
-            const normalizedTime = normalizeOcrTime(timeInput ? timeInput.value : '');
-            paceInput.value = calculatePaceFromDistanceAndTime(
-              distanceInput ? distanceInput.value : '',
-              normalizedTime
-            );
-          }
-          updateOcrSourceNotice(ocrState.extraction);
-        });
+      function updateOcrPace() {
+        if (!paceInput) return;
+        paceInput.value = calculatePaceFromDistanceAndTime(
+          distanceInput ? distanceInput.value : '',
+          getTimeFromParts(timeInputH, timeInputM, timeInputS)
+        );
+        updateOcrSourceNotice(ocrState.extraction);
+      }
+
+      if (distanceInput) distanceInput.addEventListener('input', updateOcrPace);
+      [timeInputH, timeInputM, timeInputS].forEach(function (input) {
+        if (input) input.addEventListener('input', updateOcrPace);
       });
       if (saveBtn) {
         saveBtn.addEventListener('click', async function () {
@@ -1335,8 +1357,8 @@ document.addEventListener('DOMContentLoaded', function () {
             setOcrFeedback(reviewFeedback, 'Checkpoint salvo com sucesso.', false);
           } catch (err) {
             setOcrFeedback(reviewFeedback, err.message || 'Erro ao salvar checkpoint.', true);
-            saveBtn.disabled = false;
           } finally {
+            saveBtn.disabled = false;
             saveBtn.textContent = originalLabel;
           }
         });
@@ -1356,6 +1378,27 @@ document.addEventListener('DOMContentLoaded', function () {
         feedback.dataset.state = isError ? 'error' : (message ? 'success' : '');
       }
 
+      const manualDistanceInput = form.querySelector('input[name="distance_km"]');
+      const manualPaceInput = form.querySelector('input[name="pace"]');
+      const manualTimeH = form.querySelector('input[name="time_hours"]');
+      const manualTimeM = form.querySelector('input[name="time_minutes"]');
+      const manualTimeS = form.querySelector('input[name="time_seconds"]');
+
+      function updateManualPace() {
+        if (!manualDistanceInput || !manualPaceInput) return;
+        manualPaceInput.value = calculatePaceFromDistanceAndTime(
+          manualDistanceInput.value,
+          getTimeFromParts(manualTimeH, manualTimeM, manualTimeS)
+        );
+      }
+
+      if (manualDistanceInput) {
+        manualDistanceInput.addEventListener('input', updateManualPace);
+      }
+      [manualTimeH, manualTimeM, manualTimeS].forEach(function (input) {
+        if (input) input.addEventListener('input', updateManualPace);
+      });
+
       function normalizePace(value) {
         return normalizePaceForApi(value);
       }
@@ -1365,14 +1408,13 @@ document.addEventListener('DOMContentLoaded', function () {
         const distance = Number(data.get('distance_km'));
         const idRunner = Number(data.get('id_runner'));
         const idCompetition = Number(data.get('id_competition'));
-        const idTreadmill = Number(data.get('id_treadmill'));
         const idAdmin = Number(data.get('id_admin'));
 
         if (!Number.isFinite(distance) || distance < 0) {
           throw new Error('Distância deve ser um número não negativo.');
         }
-        if (!idRunner || !idCompetition || !idTreadmill || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+        if (!idRunner || !idCompetition || !idAdmin) {
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
@@ -1383,7 +1425,6 @@ document.addEventListener('DOMContentLoaded', function () {
           distance_km: distance,
           id_runner: idRunner,
           id_competition: idCompetition,
-          id_treadmill: idTreadmill,
           id_admin: idAdmin,
           image: {
             input_method: form.dataset.inputMethod || 'manual',
@@ -1391,16 +1432,38 @@ document.addEventListener('DOMContentLoaded', function () {
           },
         };
         const pace = normalizePace(data.get('pace'));
-        const time = String(data.get('time') || '').trim();
+        const time = getTimeFromParts(manualTimeH, manualTimeM, manualTimeS);
         if (pace) payload.pace = pace;
-        if (time) payload.time = time;
+        if (time !== '00:00:00') payload.time = time;
 
         return payload;
       }
 
-      form.addEventListener('submit', async function (event) {
-        event.preventDefault();
-        const originalLabel = submitBtn ? submitBtn.textContent : '';
+      function detectOutliers(payload) {
+        var warnings = [];
+
+        if (payload.distance_km > 20) {
+          var guess = (payload.distance_km / 10).toFixed(1);
+          warnings.push('Distancia ' + payload.distance_km + 'km parece muito alta. Talvez seja ' + guess + 'km (virgula faltando?)');
+        } else if (payload.distance_km > 0 && payload.distance_km < 0.3) {
+          warnings.push('Distancia ' + payload.distance_km + 'km parece muito baixa. Faltou um zero?');
+        }
+
+        if (payload.time) {
+          var parts = payload.time.split(':').map(Number);
+          var totalMin = parts[0] * 60 + parts[1] + parts[2] / 60;
+          if (totalMin > 30) {
+            warnings.push('Tempo ' + payload.time + ' parece longo demais para um checkpoint.');
+          }
+        }
+
+        return warnings;
+      }
+
+      if (!submitBtn) return;
+
+      submitBtn.addEventListener('click', async function () {
+        const originalLabel = submitBtn.textContent;
         let payload;
 
         try {
@@ -1410,10 +1473,17 @@ document.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        if (submitBtn) {
-          submitBtn.disabled = true;
-          submitBtn.textContent = 'Salvando...';
+        var warnings = detectOutliers(payload);
+        if (warnings.length > 0) {
+          var msg = 'ATENCAO:\n' + warnings.join('\n') + '\n\nDeseja salvar mesmo assim?';
+          if (!confirm(msg)) {
+            showManualFeedback('Salvamento cancelado. Revise os dados.', true);
+            return;
+          }
         }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Salvando...';
         showManualFeedback('', false);
 
         try {
@@ -1428,14 +1498,14 @@ document.addEventListener('DOMContentLoaded', function () {
             throw new Error(data.message || 'Erro ao salvar registro manual.');
           }
 
-          showManualFeedback('Registro manual salvo com sucesso.', false);
+          showManualFeedback('Checkpoint realizado com sucesso!', false);
+          console.log('Checkpoint manual salvo, status:', res.status);
         } catch (err) {
-          showManualFeedback(err.message || 'Erro ao salvar registro manual.', true);
+          console.error('Erro ao salvar checkpoint manual:', err);
+          showManualFeedback('ERRO: ' + err.message, true);
         } finally {
-          if (submitBtn) {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalLabel;
-          }
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalLabel;
         }
       });
 
@@ -1558,15 +1628,13 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // ============================================================
-  // RANKING — Auto-polling (admin: 5 min, public: 1h)
-  // RN11: painel adm a cada 5 min
-  // RN09: painel público a cada 1h
+  // RANKING — Auto-polling (1 min)
   // ============================================================
   var competitionId = window.COMPETITION_ID;
   var isAdmin = window.IS_ADMIN;
 
   if (competitionId) {
-    var pollIntervalMs = isAdmin ? 5 * 60 * 1000 : 60 * 60 * 1000;
+    var pollIntervalMs = 60 * 1000;
 
     fetchRanking(competitionId, isAdmin);
     setInterval(function () { fetchRanking(competitionId, isAdmin); }, pollIntervalMs);
@@ -1766,6 +1834,148 @@ document.addEventListener('DOMContentLoaded', function () {
 
       render();
     })();
+  }
+
+  // ── Export Modal ──
+  if (window.EXPORT_SHEETS && Array.isArray(window.EXPORT_SHEETS)) {
+    const exportBtn = document.getElementById('export-btn');
+    const modal = document.getElementById('export-modal');
+    const backdrop = document.getElementById('export-modal-backdrop');
+    const list = document.getElementById('export-sheets-list');
+    const cancelBtn = document.getElementById('export-modal-cancel');
+    const confirmBtn = document.getElementById('export-modal-confirm');
+    const errorEl = document.getElementById('export-modal-error');
+
+    if (!exportBtn || !modal || !backdrop || !list || !cancelBtn || !confirmBtn || !errorEl) {
+      // skip if modal elements are missing
+    } else {
+      var selectedSheets = {};
+
+      function renderSheetOptions() {
+        list.innerHTML = '';
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          var option = document.createElement('label');
+          option.className = 'export-sheet-option';
+          if (selectedSheets[sheet.id]) option.classList.add('selected');
+
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'export-sheet-checkbox';
+          checkbox.checked = selectedSheets[sheet.id] || false;
+          checkbox.dataset.sheetId = sheet.id;
+
+          var info = document.createElement('div');
+          info.className = 'export-sheet-info';
+
+          var label = document.createElement('span');
+          label.className = 'export-sheet-label';
+          label.textContent = sheet.label;
+
+          var desc = document.createElement('span');
+          desc.className = 'export-sheet-desc';
+          desc.textContent = sheet.description;
+
+          info.appendChild(label);
+          info.appendChild(desc);
+          option.appendChild(checkbox);
+          option.appendChild(info);
+
+          option.addEventListener('click', function (e) {
+            if (e.target === checkbox) return;
+            checkbox.checked = !checkbox.checked;
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          checkbox.addEventListener('change', function () {
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          list.appendChild(option);
+        });
+      }
+
+      function updateConfirmState() {
+        var count = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; }).length;
+        confirmBtn.disabled = count === 0;
+      }
+
+      function openExportModal() {
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          if (selectedSheets[sheet.id] === undefined) {
+            selectedSheets[sheet.id] = true;
+          }
+        });
+        renderSheetOptions();
+        updateConfirmState();
+        errorEl.textContent = '';
+        modal.hidden = false;
+      }
+
+      function closeExportModal() {
+        modal.hidden = true;
+      }
+
+      exportBtn.addEventListener('click', openExportModal);
+      backdrop.addEventListener('click', closeExportModal);
+      cancelBtn.addEventListener('click', closeExportModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) closeExportModal();
+      });
+
+      confirmBtn.addEventListener('click', async function () {
+        var sheetIds = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; });
+        if (sheetIds.length === 0) {
+          errorEl.textContent = 'Selecione pelo menos uma aba para exportar.';
+          return;
+        }
+
+        var competitionId = window.COMPETITION_ID;
+        if (!competitionId) {
+          errorEl.textContent = 'ID da competição não encontrado.';
+          return;
+        }
+
+        var originalLabel = confirmBtn.textContent;
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Exportando...';
+        errorEl.textContent = '';
+
+        try {
+          var res = await fetch('/competitions/' + encodeURIComponent(competitionId) + '/export/excel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sheets: sheetIds }),
+          });
+
+          if (!res.ok) {
+            var errData = await res.json().catch(function () { return {}; });
+            throw new Error(errData.message || 'Erro ao exportar planilha.');
+          }
+
+          var blob = await res.blob();
+          var url = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'relatorio_' + competitionId + '.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+
+          closeExportModal();
+        } catch (err) {
+          errorEl.textContent = err.message || 'Erro ao exportar planilha.';
+        } finally {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = originalLabel;
+        }
+      });
+    }
   }
 });
 
