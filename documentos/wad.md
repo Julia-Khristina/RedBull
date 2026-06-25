@@ -1771,8 +1771,18 @@ Essa tela foi feita para os competidores poderem postar seus recultados depois d
 As seguintes telas foram feitas para serem postadas nos períodos da manhã, tarde, noite e madrugada para comemorar os atletas em destaque naquelas horários.  
 
 <div align="center">
-  <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram para competidores</sub><br>
+  <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram para destaques</sub><br>
   <img src="../assets/design/instagram_telas_destaques.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+**Tela do Instagram com maior quilometragem e menor pace médio**
+
+Essas duas telas foram criadas para serem postadas para compartilhar o melhor desempenho da competição.  
+
+<div align="center">
+  <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram pace/km</sub><br>
+  <img src="../assets/design/instagram_telas_pacekm.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
