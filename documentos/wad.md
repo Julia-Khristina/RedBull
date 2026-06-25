@@ -36,7 +36,7 @@
 <br>
 
 
-# <a name="c1"></a>1. Introdução (sprints 1 a 5)
+# <a name="c1"></a>1. Introdução 
 
 A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é realizado de forma manual por operadores, que anotam em pranchetas os momentos de início e término de cada turno, além de checkpoints periódicos. Esse processo é suscetível a erros de anotação, distrações humanas e inconsistências, o que compromete a confiabilidade e a rastreabilidade dos resultados finais. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como dispositivos vestíveis sincronizados se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente de registros humanos, sem mecanismos estruturados de auditabilidade dos dados.
 
@@ -249,7 +249,7 @@ No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possív
 
 Para identificar e priorizar os principais riscos do projeto, foi elaborada a matriz de risco apresentada no Quadro 1 a seguir.
 
-<p align = "center"> Quadro 1 - Matriz de Risco </p>
+<p align = "center"> Quadro 1 - Matriz de Risco </p> 
 
 | Risco                              | Descrição                                                                 | Probabilidade       | Impacto     | Classificação | Plano de Resposta                                                                 |
 |-----------------------------------|---------------------------------------------------------------------------|--------------------|-------------|--------------|-----------------------------------------------------------------------------------|
@@ -285,11 +285,9 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-## 2.2. Personas (sprint 1)
+## 2.2. Personas 
 
 Personas são personagens fictícios criados com base em dados plausíveis que representam um tipo de usuário compatível com o projeto. Elas incluem informações como objetivos, necessidades, frustrações e interesses, auxiliando na compreensão do problema e no desenvolvimento da solução.
-
-
 
 <div align="center">
   <sub>Figura 5 - Persona 1: Marina Costa, Coordenadora Operacional</sub><br>
@@ -354,8 +352,6 @@ Marina Costa tem 29 anos e atua como Coordenadora Operacional em eventos esporti
 
 #### Biografia
 Bruno Monteiro tem 32 anos e atua como Gerente de Field Marketing, sendo responsável pela supervisão e validação das operações em eventos esportivos da marca. No contexto do Red Bull 24 Horas, o Bruno lidera com uma visão geral da prova e acompanha o desempenho das equipes, garantindo que todos os dados coletados, como quilometragem, pace médio e entradas dos atletas,  estejam consistentes e confiáveis para a análise de resultados no fim da prova. 
-
-
 
 #### Objetivos
 <ul>
@@ -701,7 +697,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web 
 
 ## 3.1. Requisitos do Sistema 
 
@@ -1046,7 +1042,7 @@ divergência relevante. A exportação em CSV é «include» de "Acessar
 relatório", visto que a exportação é parte integrante da tela de
 relatório.
 
-### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
+### 3.2.3. Diagrama de Classes do Domínio
 
 O diagrama de classes de domínio é uma representação visual que modela todos os elementos principais e os relacionamentos de um sistema. O objetivo do diagrama é descrever as entidades presentes no domínio do problema proposto de forma conceitual, descrever seus atributos e descrever como as entidades se conectam. Ele auxilia na compreensão da estrutura do sistema antes de ser implementado, facilitando a comunicação e entendimento de todos os membros da equipe e servindo como base para o desenvolvimento. 
 
@@ -2832,6 +2828,10 @@ Em palavras: o checkpoint será selecionado se pertencer à competição 1 e pos
 
 #### Tabela-verdade
 
+<div align="center">
+  <sub>Tabela 1 - Tabela-verdade da Consulta Q01</sub>
+</div>
+
 | P | Q | R | Q ∨ R | P ∧ (Q ∨ R) | Resultado     |
 | - | - | - | ----- | ----------- | ------------- |
 | V | V | V | V     | V           | Seleciona     |
@@ -2842,6 +2842,10 @@ Em palavras: o checkpoint será selecionado se pertencer à competição 1 e pos
 | F | V | F | V     | F           | Não seleciona |
 | F | F | V | V     | F           | Não seleciona |
 | F | F | F | F     | F           | Não seleciona |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Interpretação da tabela-verdade
 
@@ -2903,12 +2907,20 @@ Em palavras: o corredor será selecionado se seu nome começar com a letra “A�
 
 #### Tabela-verdade
 
+<div align="center">
+  <sub>Tabela 2 - Tabela-verdade da Consulta Q02</sub>
+</div>
+
 | P | Q | ¬Q | P ∧ ¬Q | Resultado     |
 | - | - | -- | ------ | ------------- |
 | V | V | F  | F      | Não seleciona |
 | V | F | V  | V      | Seleciona     |
 | F | V | F  | F      | Não seleciona |
 | F | F | V  | F      | Não seleciona |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Interpretação da tabela-verdade
 
@@ -2973,6 +2985,10 @@ Em palavras: o checkpoint será atualizado se ainda não tiver sido validado e s
 
 #### Tabela-verdade
 
+<div align="center">
+  <sub>Tabela 3 - Tabela-verdade da Consulta Q03</sub>
+</div>
+
 | P | Q | R | Q ∧ R | P ∧ Q ∧ R | Resultado    |
 | - | - | - | ----- | --------- | ------------ |
 | V | V | V | V     | V         | Atualiza     |
@@ -2983,6 +2999,10 @@ Em palavras: o checkpoint será atualizado se ainda não tiver sido validado e s
 | F | V | F | F     | F         | Não atualiza |
 | F | F | V | F     | F         | Não atualiza |
 | F | F | F | F     | F         | Não atualiza |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Interpretação da tabela-verdade
 
@@ -3042,12 +3062,20 @@ Em palavras: o checkpoint será removido se pertencer à competição 1 e não t
 
 #### Tabela-verdade
 
+<div align="center">
+  <sub>Tabela 4 - Tabela-verdade da Consulta Q04</sub>
+</div>
+
 | P | Q | ¬Q | P ∧ ¬Q | Resultado  |
 | - | - | -- | ------ | ---------- |
 | V | V | F  | F      | Não remove |
 | V | F | V  | V      | Remove     |
 | F | V | F  | F      | Não remove |
 | F | F | V  | F      | Não remove |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Interpretação da tabela-verdade
 
@@ -3123,6 +3151,10 @@ Em palavras: o registro será considerado se pertencer à equipe 1 ou à equipe 
 
 #### Tabela-verdade
 
+<div align="center">
+  <sub>Tabela 5 - Tabela-verdade da Consulta Q05</sub>
+</div>
+
 | P | Q | R | S | P ∨ Q | R ∧ S | (P ∨ Q) ∧ R ∧ S | Resultado     |
 | - | - | - | - | ----- | ----- | --------------- | ------------- |
 | V | V | V | V | V     | V     | V               | Seleciona     |
@@ -3141,6 +3173,10 @@ Em palavras: o registro será considerado se pertencer à equipe 1 ou à equipe 
 | F | F | V | F | F     | F     | F               | Não seleciona |
 | F | F | F | V | F     | F     | F               | Não seleciona |
 | F | F | F | F | F     | F     | F               | Não seleciona |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Observação sobre dependências semânticas
 
