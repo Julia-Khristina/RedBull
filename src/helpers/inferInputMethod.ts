@@ -16,6 +16,7 @@ export function inferInputMethod(
 
   const id = (identifier ?? "").toUpperCase();
 
+  if (id.startsWith("OCR-EDITED-")) return "corrigido";
   if (id.startsWith("OCR-")) return "ocr";
   if (id.startsWith("MANUAL-")) return "manual";
   if (id.startsWith("CORRIGIDO-") || id.startsWith("CORREÇÃO-") || id.startsWith("REVISADO-")) return "corrigido";
