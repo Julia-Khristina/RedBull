@@ -1372,36 +1372,35 @@ Nesse exemplo, o Service realiza validação do identificador recebido, consulta
 ---
 
 ### Dependency Injection Pattern
-
+ 
 #### Categoria
-
+ 
 Criacional / Arquitetural
-
+ 
 #### Definição
-
-A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. No projeto, o padrão é implementado por meio de factory functions que recebem repositórios — e, em alguns casos, outros services — como parâmetros com valores padrão, retornando um objeto com os métodos do service. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade, especialmente na realização de testes automatizados.
-
+ 
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. No projeto, o padrão é implementado por meio de factory functions que recebem repositórios, e, em alguns casos, outros services, como parâmetros com valores padrão, retornando um objeto com os métodos do service. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade, especialmente na realização de testes automatizados.
+ 
 #### Problema resolvido
-
+ 
 Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
-
+ 
 #### Justificativa da adoção
-
+ 
 Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes. Além disso, o padrão contribui para reduzir acoplamento entre camadas, facilitar manutenção, melhorar testabilidade e permitir maior flexibilidade na criação dos Services.
-
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos, todos seguindo a mesma convenção de factory function com parâmetro de dependência e valor padrão:
-
+ 
 - `src/services/competitionService.ts`
 - `src/services/checkpointService.ts`
 - `src/services/authService.ts`
 - `src/services/exportService.ts`
 - `src/services/rankingService.ts`
 - `src/services/reportService.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 // Injeção simples: repositório como dependência
 export function createCompetitionService(
@@ -1415,10 +1414,10 @@ export function createCompetitionService(
     // ...
   };
 }
-
+ 
 export const competitionService = createCompetitionService();
 ```
-
+ 
 ```typescript
 // Injeção múltipla: dois services como dependências
 export function createRankingService(
@@ -1427,12 +1426,12 @@ export function createRankingService(
 ) {
   return { ... };
 }
-
+ 
 export const rankingService = createRankingService();
 ```
-
+ 
 Em ambos os exemplos, as dependências são fornecidas como parâmetros com valores padrão. Durante a execução normal da aplicação, utiliza-se a implementação real; nos testes, podem ser fornecidos mocks para simular o comportamento esperado.
-
+ 
 ---
 
 ### Middleware Pattern
