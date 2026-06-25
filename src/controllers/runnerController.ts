@@ -5,6 +5,7 @@ import { rankingService } from "../services/rankingService";
 import { checkpointService } from "../services/checkpointService";
 import { competitionService } from "../services/competitionService";
 import { Checkpoint } from "../models/checkpoint";
+import { CompetitionStatus } from "../models/competition";
 import { ValidationError } from "../errors/AppError";
 
 // [D2] Converte pace em velocidade km/h. Aceita "MM:SS" e "MM:SS/km" (formato do banco)
@@ -33,10 +34,19 @@ function formatDateTimePtBR(dateStr: string | null): string {
   return `${dd}/${mo}/${yyyy} às ${hh}:${mi}:${ss}`;
 }
 
-// [D2] Tempo decorrido desde competition.date meia-noite — sem campo start_time no model Competition
-function computeElapsedTime(dateStr: string): string {
-  const start = new Date(dateStr + "T00:00:00");
-  const totalSec = Math.max(0, Math.floor((Date.now() - start.getTime()) / 1000));
+// Tempo decorrido desde competition.started_at (marco zero real da competição).
+// Se não foi ativada (started_at null) ou já foi encerrada (closed), exibe "00:00:00".
+function computeElapsedTime(
+  startedAtIso: string | null,
+  status: CompetitionStatus,
+  checkpoints: Checkpoint[]
+): string {
+  if (!startedAtIso || status === "closed") return "00:00:00";
+
+  const startedAt = new Date(startedAtIso);
+  const endAt = new Date();
+
+  const totalSec = Math.max(0, Math.floor((endAt.getTime() - startedAt.getTime()) / 1000));
   const hh = String(Math.floor(totalSec / 3600)).padStart(2, "0");
   const mm = String(Math.floor((totalSec % 3600) / 60)).padStart(2, "0");
   const sec = String(totalSec % 60).padStart(2, "0");
@@ -164,7 +174,7 @@ export const runnerController = {
     // [A1][B1] Ranking filtrado para runners desta equipe
     const teamRunnerRanking = runnerRanking.filter((r) => r.id_team === teamId);
 
-    const REST_RECOMMENDED_MIN = 50;
+    const REST_RECOMMENDED_MIN = 120;
     const CIRCLE_CIRCUMFERENCE = 314.16;
 
     // Enriquece cada runner com dados de ranking e último checkpoint
@@ -203,15 +213,21 @@ export const runnerController = {
     const leaderDistanceKm = teamRanking.length > 0 ? teamRanking[0].total_distance_km : 0;
     const teamDistanceKm = thisTeamRanking?.total_distance_km ?? 0;
 
+    const isLeader = thisTeamRanking?.position === 1;
+    const distanceToNextKm = isLeader && teamRanking.length > 1
+      ? Math.max(0, teamRanking[0].total_distance_km - teamRanking[1].total_distance_km)
+      : 0;
+
     const teamStats = {
       position: thisTeamRanking?.position ?? 0,
       total_distance_km: teamDistanceKm,
       average_pace: thisTeamRanking?.average_pace ?? null,
       distance_to_leader_km: Math.max(0, leaderDistanceKm - teamDistanceKm),
-      is_leader: thisTeamRanking?.position === 1,
+      distance_to_next_km: distanceToNextKm,
+      is_leader: isLeader,
     };
 
-    // [D2] Calculadora de descanso simplificada — 50 min recomendados (RN08)
+    // [D2] Calculadora de descanso simplificada — 120 min recomendados (RN08)
     // Fórmula real requer parâmetros do evento não expostos na Seção 7
     const runnerRestOptions = runnersEnriched.map((runner) => {
       const rest = calculateRestProgress(
@@ -261,20 +277,29 @@ export const runnerController = {
     const runnersWithCp = new Set(checkpoints.map((cp) => cp.id_runner));
     const nextRunner = runners.find((r) => !runnersWithCp.has(r.id)) ?? null;
 
+    // [A1] Calcula o delay até o próximo minuto :00 (hora cheia)
+    // para refresh automático da página sincronizado com o relógio
+    const now = new Date();
+    const nextHour = new Date(now);
+    nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+    const refreshDelayMs = nextHour.getTime() - now.getTime();
+
     res.render("runner/runner", {
       title: `${team.name} — Red Bull 24h`,
       pageCSS: "/css/runner.css",
+      hideMenuNav: true,
       competition,
       team,
       runnersEnriched,
       teamStats,
-      competitionTimeFormatted: computeElapsedTime(competition.date),
+      competitionTimeFormatted: computeElapsedTime(competition.started_at, competition.status, checkpoints),
       runnerRestOptions,
       selectedRunnerRest,
       restPct,
       restOffset,
       nextRunner,
       currentPage: "teams",
+      refreshDelayMs,
     });
   },
 };

@@ -30,6 +30,19 @@ function readRequiredPositiveNumber(
   return value;
 }
 
+function readRequiredDistanceKm(
+  payload: Record<string, unknown>,
+  field: string
+): number {
+  const value = readRequiredPositiveNumber(payload, field);
+  if (value < 1.0 || value > 42.2) {
+    throw new ValidationError(
+      `${field} deve estar entre 1.0 km e 42.2 km (valor recebido: ${value})`
+    );
+  }
+  return value;
+}
+
 function readRequiredPositiveInteger(
   payload: Record<string, unknown>,
   field: string
@@ -73,8 +86,14 @@ function normalizePace(pace: string): string | null {
 
   if (!match) return null;
 
+  const minutes = Number(match[1]);
   const seconds = Number(match[2]);
   if (!Number.isInteger(seconds) || seconds > 59) return null;
+
+  const totalSeconds = minutes * 60 + seconds;
+  if (totalSeconds < 180 || totalSeconds > 1200) {
+    return null;
+  }
 
   return `${match[1].padStart(2, "0")}:${match[2].padStart(2, "0")}/km`;
 }
@@ -106,10 +125,9 @@ export function validateCreateCheckpoint(
   }
 
   const identifier = readRequiredText(payload, "identifier");
-  const distance_km = readRequiredPositiveNumber(payload, "distance_km");
+  const distance_km = readRequiredDistanceKm(payload, "distance_km");
   const id_runner = readRequiredPositiveInteger(payload, "id_runner");
   const id_competition = readRequiredPositiveInteger(payload, "id_competition");
-  const id_treadmill = readRequiredPositiveInteger(payload, "id_treadmill");
   const id_admin = readRequiredPositiveInteger(payload, "id_admin");
 
   const result: CreateCheckpointInput = {
@@ -117,7 +135,6 @@ export function validateCreateCheckpoint(
     distance_km,
     id_runner,
     id_competition,
-    id_treadmill,
     id_admin,
   };
 
@@ -147,7 +164,7 @@ export function validateUpdateCheckpoint(
   const result: UpdateCheckpointInput = {};
 
   if ("distance_km" in payload) {
-    result.distance_km = readRequiredPositiveNumber(payload, "distance_km");
+    result.distance_km = readRequiredDistanceKm(payload, "distance_km");
   }
 
   const pace = readOptionalPace(payload, "pace");

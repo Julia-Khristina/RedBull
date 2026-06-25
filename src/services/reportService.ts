@@ -204,6 +204,7 @@ function DadosKmPorHora(
       checkpoints: data.checkpoints,
       teamRanking: data.teamRanking,
       runnerRanking: data.runnerRanking,
+      operatorRanking: data.operatorRanking,
       persisted: Boolean(savedReport),
     };
   }
@@ -213,13 +214,14 @@ function DadosKmPorHora(
       competitionIdParam: unknown
     ): Promise<CompetitionReportView> {
       const competitionId = parseCompetitionId(competitionIdParam);
-      const [competition, savedReport, checkpoints, teamRanking, runnerRanking] =
+      const [competition, savedReport, checkpoints, teamRanking, runnerRanking, operatorRanking] =
         await Promise.all([
           competitionService.findById(competitionId),
           repository.generateCompetitionReport(competitionId),
           checkpointService.findByCompetition(competitionId),
           rankingService.generateTeamRanking(competitionId),
           rankingService.generateRunnerRanking(competitionId),
+          rankingService.generateOperatorRanking(competitionId),
         ]);
 
       return mergeReportData(savedReport, {
@@ -227,6 +229,7 @@ function DadosKmPorHora(
         checkpoints,
         teamRanking,
         runnerRanking,
+        operatorRanking,
       });
     },
   };
