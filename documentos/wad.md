@@ -1746,6 +1746,46 @@ O último conjunto de telas representa as funcionalidades de revisão, validaç�
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
+**Tela TV**
+
+A tela da TV irá conter o countdown da competição para telespectadores que estão passando pelo local poderem acompanhar os corredores. 
+
+<div align="center">
+  <sub>Figura 23 - Wireframe de baixa fidelidade da tela TV durante a competição</sub><br>
+  <img src="../assets/design/telaTV.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+**Tela do Instagram para os competidores**
+
+Essa tela foi feita para os competidores poderem postar seus recultados depois da competição baseado nos dados coletados.  
+
+<div align="center">
+  <sub>Figura 24 - Wireframe de baixa fidelidade da tela do Instagram para competidores</sub><br>
+  <img src="../assets/design/instagram_telas_atletas.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+**Tela do Instagram para atletas em destaque**
+
+As seguintes telas foram feitas para serem postadas nos períodos da manhã, tarde, noite e madrugada para comemorar os atletas em destaque naquelas horários.  
+
+<div align="center">
+  <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram para destaques</sub><br>
+  <img src="../assets/design/instagram_telas_destaques.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
+**Tela do Instagram com maior quilometragem e menor pace médio**
+
+Essas duas telas foram criadas para serem postadas para compartilhar o melhor desempenho da competição.  
+
+<div align="center">
+  <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram pace/km</sub><br>
+  <img src="../assets/design/instagram_telas_pacekm.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <sup>Fonte: Material produzido pelos autores (2026).</sup>
+</div>
+
 #### Wireframe de Alta Fidelidade — Operadores
 
 Os wireframes de alta fidelidade representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, tipografia, hierarquia visual e estrutura de navegação da plataforma. O nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato fundamental para validação visual e operacional antes da implementação definitiva do sistema (Garrett, 2011).
