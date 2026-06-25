@@ -3776,6 +3776,10 @@ Toda operação de escrita (criação, atualização, exclusão) e acesso ao pai
 
 ### 3.8.4. Estratégias de Resiliência
 
+*Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
+
+### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+ 
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
 Esta seção descreve, organizadas segundo o seu *status* de entrega no MVP da Sprint 5, as quatro estratégias canônicas de resiliência consideradas no projeto: idempotência das operações `PUT` e `DELETE`, sustentada por contrato determinístico de erros via *middleware* central — **implementação consolidada**; e *timeout* explícito, *retry* com *backoff* exponencial e *circuit breaker* — **enquadradas como Trabalhos Futuros (seção 7)**, com justificativa técnica e contextual para cada exclusão. A ordenação adotada — primeiro idempotência e contrato de erros, somente depois *timeout*, *retry* e *circuit breaker* — segue a recomendação implícita da RFC 9110 (HTTP Semantics, IETF, 2022), em seu §9.2.2: a aplicação de *retry* sobre métodos não-idempotentes é, na ausência de mecanismos complementares como o cabeçalho `Idempotency-Key`, fonte ativa de inconsistência em vez de resiliência. Por essa razão, a entrega do MVP consolida primeiro a garantia de idempotência e o determinismo do contrato HTTP, condição sem a qual a introdução posterior dos mecanismos ativos de tolerância seria arquiteturalmente insegura.
@@ -3828,10 +3832,13 @@ A consolidação apresentada nesta seção mantém coerência direta com a seç�
  
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
  
+ 
 A rastreabilidade contribui para a manutenção da consistência entre os artefatos do projeto, reduzindo ambiguidades, facilitando processos de validação e testes, além de permitir a identificação rápida de impactos causados por alterações nos requisitos ao longo das sprints.
+ 
  
 <div align="center">
   <sub>Quadro 49 - Matriz de Rastreabilidade (RTM)</sub>
+ 
  
 </div>
 
@@ -3840,21 +3847,31 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa | RF001 | RN03 | POST /competitions | Cadastro de Competição | competitionService.spec.ts | Competição criada com sucesso e persistida no banco |
 | Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
 | Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/runners | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
 | Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
+| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
 | Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
+| Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
 | Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
 | Marina Costa | RF008 | RN04, RN05 | POST /checkpoints | Registro Manual | checkpointService.spec.ts | Checkpoint registrado com sucesso |
 | Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
 | Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
 | Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/runners | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
 | Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
+ 
 | Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
@@ -3869,6 +3886,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
  
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
+ 
  
 </div>
 
