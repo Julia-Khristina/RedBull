@@ -2,6 +2,7 @@ import { Checkpoint } from "../models/checkpoint";
 import { RankingRunner, RankingTeam, OperatorRanking } from "../models/ranking";
 import { checkpointService } from "./checkpointService";
 import { teamService } from "./teamService";
+import { inferInputMethod } from "../helpers/inferInputMethod";
 
 type CheckpointServiceDependency = Pick<
   typeof checkpointService,
@@ -299,10 +300,13 @@ export function createRankingService(
         }
 
         const entry = operatorMap.get(adminId)!;
-        const inputMethod = (checkpoint.image as Record<string, unknown>)?.input_method;
-        if (inputMethod === 'manual') {
+        const inputMethod = inferInputMethod(
+          checkpoint.identifier,
+          checkpoint.image as Record<string, unknown> | null
+        );
+        if (inputMethod === "manual" || inputMethod === "corrigido") {
           entry.manual += 1;
-        } else if (inputMethod === 'ocr') {
+        } else if (inputMethod === "ocr") {
           entry.ocr += 1;
         }
       }

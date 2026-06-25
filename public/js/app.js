@@ -1835,6 +1835,148 @@ document.addEventListener('DOMContentLoaded', function () {
       render();
     })();
   }
+
+  // ── Export Modal ──
+  if (window.EXPORT_SHEETS && Array.isArray(window.EXPORT_SHEETS)) {
+    const exportBtn = document.getElementById('export-btn');
+    const modal = document.getElementById('export-modal');
+    const backdrop = document.getElementById('export-modal-backdrop');
+    const list = document.getElementById('export-sheets-list');
+    const cancelBtn = document.getElementById('export-modal-cancel');
+    const confirmBtn = document.getElementById('export-modal-confirm');
+    const errorEl = document.getElementById('export-modal-error');
+
+    if (!exportBtn || !modal || !backdrop || !list || !cancelBtn || !confirmBtn || !errorEl) {
+      // skip if modal elements are missing
+    } else {
+      var selectedSheets = {};
+
+      function renderSheetOptions() {
+        list.innerHTML = '';
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          var option = document.createElement('label');
+          option.className = 'export-sheet-option';
+          if (selectedSheets[sheet.id]) option.classList.add('selected');
+
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'export-sheet-checkbox';
+          checkbox.checked = selectedSheets[sheet.id] || false;
+          checkbox.dataset.sheetId = sheet.id;
+
+          var info = document.createElement('div');
+          info.className = 'export-sheet-info';
+
+          var label = document.createElement('span');
+          label.className = 'export-sheet-label';
+          label.textContent = sheet.label;
+
+          var desc = document.createElement('span');
+          desc.className = 'export-sheet-desc';
+          desc.textContent = sheet.description;
+
+          info.appendChild(label);
+          info.appendChild(desc);
+          option.appendChild(checkbox);
+          option.appendChild(info);
+
+          option.addEventListener('click', function (e) {
+            if (e.target === checkbox) return;
+            checkbox.checked = !checkbox.checked;
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          checkbox.addEventListener('change', function () {
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          list.appendChild(option);
+        });
+      }
+
+      function updateConfirmState() {
+        var count = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; }).length;
+        confirmBtn.disabled = count === 0;
+      }
+
+      function openExportModal() {
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          if (selectedSheets[sheet.id] === undefined) {
+            selectedSheets[sheet.id] = true;
+          }
+        });
+        renderSheetOptions();
+        updateConfirmState();
+        errorEl.textContent = '';
+        modal.hidden = false;
+      }
+
+      function closeExportModal() {
+        modal.hidden = true;
+      }
+
+      exportBtn.addEventListener('click', openExportModal);
+      backdrop.addEventListener('click', closeExportModal);
+      cancelBtn.addEventListener('click', closeExportModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) closeExportModal();
+      });
+
+      confirmBtn.addEventListener('click', async function () {
+        var sheetIds = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; });
+        if (sheetIds.length === 0) {
+          errorEl.textContent = 'Selecione pelo menos uma aba para exportar.';
+          return;
+        }
+
+        var competitionId = window.COMPETITION_ID;
+        if (!competitionId) {
+          errorEl.textContent = 'ID da competição não encontrado.';
+          return;
+        }
+
+        var originalLabel = confirmBtn.textContent;
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Exportando...';
+        errorEl.textContent = '';
+
+        try {
+          var res = await fetch('/competitions/' + encodeURIComponent(competitionId) + '/export/excel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sheets: sheetIds }),
+          });
+
+          if (!res.ok) {
+            var errData = await res.json().catch(function () { return {}; });
+            throw new Error(errData.message || 'Erro ao exportar planilha.');
+          }
+
+          var blob = await res.blob();
+          var url = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'relatorio_' + competitionId + '.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+
+          closeExportModal();
+        } catch (err) {
+          errorEl.textContent = err.message || 'Erro ao exportar planilha.';
+        } finally {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = originalLabel;
+        }
+      });
+    }
+  }
 });
 
 // [A1][B1] Endpoint: GET /competitions/:id/ranking/teams — retorna RankingTeam[]

@@ -38,7 +38,10 @@
   };
   const formatMethod = (identifier) => {
     if (!identifier) return 'Nao informado';
-    return String(identifier).startsWith('manual-') ? 'Manual' : 'Automatico';
+    const id = String(identifier).toUpperCase();
+    if (id.startsWith('MANUAL-') || id.startsWith('CORRIGIDO-')) return 'Manual';
+    if (id.startsWith('OCR-')) return 'OCR';
+    return 'Automatico';
   };
   const totalDistance = summary.totalDistanceKm ?? checkpoints.reduce((sum, checkpoint) => {
     return sum + Number(checkpoint.distance_km || 0);
