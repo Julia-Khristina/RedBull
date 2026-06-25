@@ -4127,6 +4127,13 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 | 9 | T1 | Usabilidade | 1. Cosmética | Campo de data permite apenas seleção por calendário, sem opção de digitação. **Melhoria:** permitir entrada manual da data além do seletor de calendário. | Matheus |
 | 10 | T5 | Usabilidade | 2. Baixa | Funcionalidades de ranking e relatórios não percebidas inicialmente. **Melhoria:** aumentar a visibilidade/hierarquia desses elementos no painel. | Sara |
 
+#### Feedback geral dos participantes
+
+- **Valter Lima:** sentiu falta de um passo a passo mais claro durante o uso da plataforma; elogiou a parte visual das equipes e o design da aplicação.
+- **Sara Nunes:** gostou da identidade visual inspirada na Red Bull e considerou a interface visualmente clara.
+- **Vini:** não relatou dificuldades nas tarefas principais; as barreiras encontradas foram relacionadas ao desconhecimento das regras de negócio do evento (campos obrigatórios, CPF, número de equipes e atletas).
+- **Matheus:** achou a ferramenta boa; teve dificuldade para entender o fluxo da competição (muitas competições já criadas); elogiou o dashboard, achou as equipes intuitivas e os rankings bons; sugeriu deixar o cálculo de pace explícito e não chegou a testar o registro por foto.
+- **Arthur:** conseguiu concluir os cadastros, mas enfrentou problemas de formatação no registro manual e duplicou ações (equipe e checkpoint criados duas vezes).
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
