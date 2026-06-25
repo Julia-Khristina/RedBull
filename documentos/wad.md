@@ -36,7 +36,7 @@
 <br>
 
 
-# <a name="c1"></a>1. Introdução (sprints 1 a 5)
+# <a name="c1"></a>1. Introdução
 
 A Red Bull, marca global atuante em eventos esportivos e experiências de marca, é o parceiro deste projeto por meio de seu time de Field Marketing, responsável pela operação do Red Bull 24 Horas, competição anual em que duas equipes de dezesseis corredores se revezam ininterruptamente em esteiras durante vinte e quatro horas, buscando acumular a maior quilometragem total. Atualmente, o registro dos quilômetros percorridos é realizado de forma manual por operadores, que anotam em pranchetas os momentos de início e término de cada turno, além de checkpoints periódicos. Esse processo é suscetível a erros de anotação, distrações humanas e inconsistências, o que compromete a confiabilidade e a rastreabilidade dos resultados finais. Como as esteiras utilizadas no evento não permitem integração direta com dispositivos externos e alternativas como dispositivos vestíveis sincronizados se mostraram inviáveis diante da dinâmica de trocas rápidas entre corredores, a apuração depende exclusivamente de registros humanos, sem mecanismos estruturados de auditabilidade dos dados.
 
@@ -701,7 +701,7 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-# <a name="c3"></a>3. Projeto da Aplicação Web (sprints 1 a 5)
+# <a name="c3"></a>3. Projeto da Aplicação Web
 
 ## 3.1. Requisitos do Sistema 
 
@@ -1339,12 +1339,12 @@ estabelecida em outras seções.
 
 | Campo | Conteúdo |
 | --- | --- |
-| **Descrição** | Corredor consulta o ranking público de todas as equipes da competição a partir do painel da própria equipe. |
+| **Descrição** | Corredor consulta o ranking de todas as equipes da competição a partir do painel da própria equipe. |
 | **Ator primário** | Corredor |
 | **Atores secundários** | — |
 | **Pré-requisitos** | UC17 concluído; competição em andamento ou encerrada. |
-| **Pós-requisitos** | Ranking público exibido com a posição da equipe destacada. |
-| **Fluxo principal** | 1. Corredor solicita a visualização do ranking global no painel. 2. Sistema consulta o ranking público via `RankingService`. 3. Ranking é renderizado com a posição da equipe destacada. |
+| **Pós-requisitos** | Ranking exibido com a posição da equipe destacada. |
+| **Fluxo principal** | 1. Corredor solicita a visualização do ranking global no painel. 2. Sistema consulta o ranking via `RankingService`. 3. Ranking é renderizado com a posição da equipe destacada. |
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF10, RF15 |
 
@@ -3667,7 +3667,7 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 | `DELETE /checkpoints/:id` | DELETE | Administrativo | Remover checkpoint |
 | `GET /operational-panel` | GET | Administrativo | Painel operacional de corrida |
 | `GET /ranking` | GET | Público | Ranking geral por equipe |
-| `GET /view/competitions/:id/ranking` | GET | Público | Ranking público por competição (via UUID) |
+| `GET /view/competitions/:id/ranking` | GET | Público | Ranking do paienl das equipes por competição (via UUID) |
 
 **Responsabilidade da camada de back-end:**
 
@@ -3753,7 +3753,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
 | Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
-| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/athletes | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/athletes | Painel Público da Equipe | rankingService.spec.ts | Ranking do painel das equipes atualizado e exibido corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | GET /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administradores recuperados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | POST /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administrador criado com sucesso |
 | Bruno Monteiro | RF004 | RN02, RN03 | PUT /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Dados administrativos atualizados corretamente |
@@ -4396,14 +4396,17 @@ Os testes automatizados implementados foram relacionados às respectivas regras 
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
-## 5.2. Testes de usabilidade (sprint 5)
+## 5.2. Testes de usabilidade
 
 ### 5.2.1. Relatório de testes de guerrilha
-
 
 Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando as 5 tarefas previstas na planilha de testes de usabilidade. Cada tarefa foi avaliada por etapas, com registro das ocorrências e classificação do resultado geral.
 
 **Perfil dos participantes**
+
+<div align="center">
+  <sub>Quadro x - Perfil dos participantes </sub>
+</div>
 
 | # | Nome | Curso | Idade | Turma |
 |---|------|-------|-------|-------|
@@ -4413,7 +4416,9 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 | 4 | Matheus | Ciência da Computação | 18 | Ateliê 2 – Turma 25 |
 | 5 | Arthur | Adm Tech | 19 | Ateliê 2 – Turma 25 |
 
----
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Tarefa 1: Cadastro de nova competição
 
@@ -4426,9 +4431,9 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 4. Confirmar o cadastro e verificar que a competição foi criada e está disponível para uso.
 
 **Heurísticas relacionadas:** 
-- H1, Visibilidade do status do sistema
-- H5, Prevenção de erros
-- H8, Estética e design minimalista.
+- H1 - Visibilidade do status do sistema
+- H5 - Prevenção de erros
+- H8 - Estética e design minimalista.
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
@@ -4438,11 +4443,13 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 | Matheus | Sucesso com dificuldade | Cadastrou a competição, mas sugeriu permitir digitar a data, pois só há a opção de calendário. O card da nova competição apareceu em primeiro. |
 | Arthur | Sucesso | Criou a competição e conseguiu adicionar as informações nos campos. |
 
----
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Tarefa 2:  Cadastro de equipe e obtenção do link público (UUID)
 
- *Suponha que você é Bruno Monteiro, Gerente de Field Marketing, e precisa cadastrar a equipe "Falcões Vermelhos" com seus atletas no sistema. Após o cadastro, você precisa obter o link exclusivo da equipe para enviá-lo ao capitão. Utilize o sistema para cadastrar a equipe e copiar o link público gerado.*
+ *Suponha que você é Bruno Monteiro, Gerente de Field Marketing, e precisa cadastrar a equipe "Falcões Vermelhos" com seus atletas no sistema. Após o cadastro, você precisa obter o link público exclusivo da equipe para enviá-lo ao capitão. Utilize o sistema para cadastrar a equipe e copiar o link público gerado.*
 
 **Etapas:**
 1. Acessar a área de Equipes a partir do menu de navegação ou do card de atalho na Dashboard.
@@ -4451,19 +4458,21 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 4. Localizar o link UUID gerado no card da equipe e copiá-lo para enviar ao capitão.
 
 **Heurísticas relacionadas:** 
-- H1, Visibilidade do status do sistema
-- H7, Flexibilidade e eficiência de uso
-- H8, Estética e design minimalista.
+- H1 - Visibilidade do status do sistema
+- H7 - Flexibilidade e eficiência de uso
+- H8 - Estética e design minimalista.
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
-| Valter Lima | Sucesso com dificuldade | Antes de cadastrar a equipe, teve dificuldade para localizar a competição criada entre os registros existentes, mas conseguiu encontrá-la. No cadastro de equipes, o e-mail foi recusado como inválido por já estar cadastrado; após corrigir, concluiu a tarefa. Demonstrou dúvidas sobre quais campos eram obrigatórios. Elogiou a parte visual relacionada às equipes. |
+| Valter Lima | Sucesso com dificuldade | Teve dificuldade para localizar a competição recém-criada entre diversos registros existentes. Após encontrá-la, enfrentou erro por e-mail já cadastrado e dúvidas sobre campos obrigatórios, concluindo a tarefa após corrigir os dados. |
 | Sara Nunes | Sucesso com dificuldade | Não localizou a competição criada e acessou diretamente o menu para criar a equipe. Concluiu o cadastro de equipe com sucesso. |
 | Vini | Sucesso com dificuldade | Criou equipes dentro da competição. Como participante de teste, foi pego pelas regras de negócio (ex.: número correto do CPF e campos obrigatórios). Não tinha noção das regras do evento — número de equipes e atletas e informações obrigatórias. |
 | Matheus | Sucesso | Criou as duas equipes sem problemas; achou as equipes intuitivas. |
 | Arthur | Sucesso com dificuldade | Trocou de atleta e criou as equipes, mas acabou criando a equipe 2 vezes. |
 
----
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Tarefa 3: Registro de checkpoint via OCR (foto da esteira)
 
@@ -4476,9 +4485,9 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 4. Conferir os dados extraídos pelo OCR e confirmar o registro do checkpoint.
 
 **Heurísticas relacionadas:** 
-- H1, Visibilidade do status do sistema; 
-- H6, Reconhecimento em vez de memorização; 
-- H9, Ajudar usuários a reconhecer, diagnosticar e recuperar erros.
+- H1 - Visibilidade do status do sistema; 
+- H6 - Reconhecimento em vez de memorização; 
+- H9 - Ajudar usuários a reconhecer, diagnosticar e recuperar erros.
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
@@ -4488,7 +4497,9 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 | Matheus | Não realizada | Não testou o registro por foto. |
 | Arthur | — | Não registrou checkpoint por OCR (realizou apenas o registro manual). |
 
----
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 #### Tarefa 4: Registro de checkpoint manual
 
@@ -4501,52 +4512,76 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 4. Confirmar o registro manual e verificar a confirmação do sistema.
 
 **Heurísticas relacionadas:** 
-- H4,Consistência e padrões; 
-- H6, Reconhecimento em vez de memorização; 
-- H10, Ajuda e documentação.
+- H4 - Consistência e padrões; 
+- H6 - Reconhecimento em vez de memorização; 
+- H10 - Ajuda e documentação.
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Apresentou dificuldade com o formato exigido para o preenchimento dos dados. Antes desta tarefa, ficou em dúvida sobre qual ação executar na sequência do fluxo. |
-| Sara Nunes | Sucesso com dificuldade | Concluiu a tarefa com sucesso, mas teve dúvidas sobre como marcar/definir o pace. Antes desta tarefa, demonstrou dúvida sobre qual seria o próximo passo do fluxo. |
+| Sara Nunes | Sucesso com dificuldade | Concluiu a tarefa com sucesso, mas teve dúvidas sobre como informar o pace. Antes desta tarefa, demonstrou dúvida sobre qual seria o próximo passo do fluxo. |
 | Vini | Sucesso | Como não conseguiu realizar o registro pelo OCR em determinado momento, realizou o registro manualmente com sucesso. |
 | Matheus | Sucesso com dificuldade | Criou o checkpoint manual, mas teve problemas com a formatação do campo de horário, pois precisava adicionar os segundos — o sistema avisou. Sugeriu deixar o cálculo de pace explícito. |
 | Arthur | Sucesso com dificuldade | Registrou o checkpoint manualmente, mas teve problemas com a formatação dos dados e acabou criando o checkpoint 2 vezes. |
 
----
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
-#### Tarefa 5: Acompanhamento da competição pelo painel público da equipe (UUID)
+#### Tarefa 5: Acompanhamento da competição pelo painel da equipe (UUID)
 
- *Suponha que você é Amanda Azevedo, atleta da equipe "Falcões Vermelhos" no Red Bull 24 Horas, e quer acompanhar o desempenho da sua equipe na competição utilizando o link que sua capitã enviou pelo celular. Utilize esse link para descobrir a posição atual da equipe no ranking e identificar quanto tempo de descanso é recomendado entre seus turnos.*
+ *Suponha que você é Amanda Azevedo, atleta da equipe "Falcões Vermelhos" no Red Bull 24 Horas, e quer acompanhar o desempenho da sua equipe na competição utilizando o link enviado pela sua capitã. Utilize esse link para descobrir a posição atual da equipe no ranking e identificar quanto tempo de descanso é recomendado entre seus turnos.*
 
 **Etapas:**
-1. Acessar o link UUID público da equipe enviado pela capitã.
+1. Acessar o link UUID da equipe enviado pela capitã.
 2. Localizar a posição atual da equipe no ranking global da competição.
 3. Encontrar seu próprio status individual e suas métricas na lista de atletas da equipe.
 4. Consultar a calculadora de descanso e identificar a recomendação atual.
 
 **Heurísticas relacionadas:** 
-- H1, Visibilidade do status do sistema; 
-- H2, Correspondência entre sistema e mundo real; 
-- H8, Estética e design minimalista.
+- H1 - Visibilidade do status do sistema; 
+- H2 - Correspondência entre sistema e mundo real; 
+- H8 - Estética e design minimalista.
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso | Acessou e visualizou o ranking sem dificuldades. |
 | Sara Nunes | Sucesso com dificuldade | Não percebeu inicialmente a existência das funcionalidades de ranking e relatórios. |
 | Vini | Sucesso | Acessou a tela de relatórios sem ajuda e visualizou os checkpoints que ele mesmo havia registrado. |
-| Matheus | Sucesso | Exportou os dados em JSON; achou os rankings intuitivos e bons. |
+| Matheus | Sucesso | acessou o painel público, visualizou o ranking e posteriormente explorou espontaneamente a funcionalidade de exportação. |
 | Arthur | — | Não há registro de execução desta tarefa. |
 
----
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+#### Síntese dos resultados dos testes
+
+Com base na execução das cinco tarefas propostas, foi possível observar a taxa de sucesso dos participantes em cada atividade. A Tabela XX apresenta um resumo consolidado dos resultados obtidos.
+
+| Tarefa | Sucesso | Sucesso com dificuldade | Não realizada |
+| ------ | ------- | ----------------------- | ------------- |
+| T1     | 3       | 2                       | 0             |
+| T2     | 1       | 4                       | 0             |
+| T3     | 2       | 1                       | 2             |
+| T4     | 1       | 4                       | 0             |
+| T5     | 3       | 1                       | 1             |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+Observa-se que todas as tarefas puderam ser concluídas pela maioria dos participantes. Entretanto, as atividades relacionadas ao cadastro de equipes e ao registro de checkpoints concentraram a maior quantidade de dificuldades, indicando oportunidades de melhoria principalmente na compreensão do fluxo da aplicação, na validação dos campos e na comunicação das funcionalidades disponíveis.
 
 #### Resumo das ocorrências (ordenado por prioridade de melhoria)
+
+As ocorrências identificadas foram classificadas conforme sua severidade, considerando o impacto na execução das tarefas: severidade 1 (cosmética), quando o problema não compromete a realização da tarefa; 2 (baixa), quando gera dificuldades, mas não impede sua conclusão; e 3 (alta), quando compromete significativamente a eficiência ou compreensão do fluxo pelo usuário.
 
 | Prioridade | Tarefa | Tipo | Severidade | Resumo do ocorrido e melhoria proposta | Participantes |
 |------------|--------|------|------------|----------------------------------------|---------------|
 | 1 | Geral / Fluxo | Usabilidade | 3. Alta | Ausência de um passo a passo/guia claro do fluxo. Dúvida sobre qual ação executar após criar a equipe e dificuldade para entender o fluxo da competição. **Melhoria:** indicar o "próximo passo" sugerido na interface ou um onboarding guiado. | Valter, Sara, Matheus |
 | 2 | T2 / T1 | Usabilidade | 3. Alta | Dificuldade em localizar a competição recém-criada entre os registros existentes; excesso de competições já criadas dificulta a navegação. **Melhoria:** destacar/selecionar automaticamente a competição recém-criada e melhorar a busca/listagem. | Valter, Sara, Matheus |
-| 3 | T3 / T4 | Compreensão de conteúdo | 3. Alta | Seção de checkpoints confusa: dificuldade com a função OCR (botão amarelo de inserir imagem) e com como definir/marcar o pace. **Melhoria:** rótulos mais descritivos, microcopy, exemplo de preenchimento de pace e tornar o cálculo de pace explícito. | Valter, Sara, Matheus |
+| 3 | T3 / T4 | Compreensão de conteúdo | 3. Alta | Seção de checkpoints confusa: dificuldade com a função OCR (botão destinado ao envio da imagem) e com como definir/marcar o pace. **Melhoria:** rótulos mais descritivos, microcopy, exemplo de preenchimento de pace e tornar o cálculo de pace explícito. | Valter, Sara, Matheus |
 | 4 | T2 | Compreensão de conteúdo | 3. Alta | Usuário sem noção das regras de negócio do evento (CPF válido, campos obrigatórios, número de equipes e atletas), gerando bloqueios durante o cadastro. **Melhoria:** exibir as regras/limites de forma visível e mensagens de validação explicativas. | Vini |
 | 5 | T4 | Usabilidade | 2. Baixa | Dificuldade com o formato exigido no preenchimento manual dos dados (incluindo a necessidade de informar os segundos no campo de horário). **Melhoria:** máscara de input, placeholder com formato esperado e validação amigável. | Valter, Matheus, Arthur |
 | 6 | T2 / T4 | Usabilidade | 2. Baixa | Ações duplicadas: equipe e checkpoint criados 2 vezes. **Melhoria:** prevenir duplicidade com bloqueio de submit repetido e feedback de confirmação. | Arthur |
@@ -4555,25 +4590,31 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 | 9 | T1 | Usabilidade | 1. Cosmética | Campo de data permite apenas seleção por calendário, sem opção de digitação. **Melhoria:** permitir entrada manual da data além do seletor de calendário. | Matheus |
 | 10 | T5 | Usabilidade | 2. Baixa | Funcionalidades de ranking e relatórios não percebidas inicialmente. **Melhoria:** aumentar a visibilidade/hierarquia desses elementos no painel. | Sara |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 #### Feedback geral dos participantes
 
 - **Valter Lima:** sentiu falta de um passo a passo mais claro durante o uso da plataforma; elogiou a parte visual das equipes e o design da aplicação.
 - **Sara Nunes:** gostou da identidade visual inspirada na Red Bull e considerou a interface visualmente clara.
 - **Vini:** não relatou dificuldades nas tarefas principais; as barreiras encontradas foram relacionadas ao desconhecimento das regras de negócio do evento (campos obrigatórios, CPF, número de equipes e atletas).
-- **Matheus:** achou a ferramenta boa; teve dificuldade para entender o fluxo da competição (muitas competições já criadas); elogiou o dashboard, achou as equipes intuitivas e os rankings bons; sugeriu deixar o cálculo de pace explícito e não chegou a testar o registro por foto.
-- **Arthur:** conseguiu concluir os cadastros, mas enfrentou problemas de formatação no registro manual e duplicou ações (equipe e checkpoint criados duas vezes).
+- **Matheus:** avaliou positivamente a plataforma, destacando que teve dificuldade para entender o fluxo da competição (muitas competições já criadas); elogiou o dashboard, achou as equipes intuitivas e os rankings bons; sugeriu deixar o cálculo de pace explícito e não chegou a testar o registro por foto.
+- **Arthur:** conseguiu concluir os cadastros, mas enfrentou problemas de formatação no registro manual e duplicou ações (equipe e checkpoint criados duas vezes). 
+
+De modo geral, os testes de guerrilha evidenciaram que os participantes conseguiram concluir a maior parte das tarefas propostas, indicando boa facilidade de aprendizagem da plataforma. As principais dificuldades concentraram-se na compreensão do fluxo operacional da competição, na identificação de algumas funcionalidades e na formatação de determinados campos durante o cadastro manual. As melhorias identificadas foram registradas e serviram de base para refinamentos da interface antes da versão final do sistema.
 
 ### 5.2.2. Relatório de testes SUS (System Usability Scale)
 
 Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado o método **System Usability Scale (SUS)**, um dos instrumentos mais utilizados para mensurar a percepção dos usuários quanto à facilidade de uso de sistemas interativos. O SUS permite obter uma avaliação quantitativa da usabilidade percebida por meio de um questionário padronizado composto por dez afirmações avaliadas em escala Likert de cinco pontos (Brooke, 1996).
 
-A coleta das respostas foi realizada por meio de um formulário eletrônico desenvolvido no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)), aplicado individualmente após a utilização da plataforma pelos participantes. Ao todo, sete usuários participaram da avaliação, respondendo ao questionário de forma independente após executarem as tarefas propostas durante os testes de usabilidade.
+A coleta das respostas foi realizada por meio de um formulário eletrônico elaborado no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)), aplicado individualmente após a execução das tarefas propostas durante os testes de usabilidade. Participaram da avaliação sete usuários, que responderam ao questionário de forma independente imediatamente após utilizarem a plataforma.
 
 O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro XX.
 
 <div align="center">
 
-  <sub>Quadro XX – Escala de respostas do questionário SUS</sub>
+<sub>Quadro XX – Escala de respostas do questionário SUS</sub>
 
 </div>
 
@@ -4584,16 +4625,16 @@ O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apres
 | 3 | Neutro |
 | 4 | Concordo parcialmente |
 | 5 | Concordo totalmente |
+
 <div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+<sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-
-As afirmações apresentadas aos participantes estão descritas no Quadro XX.
+As dez afirmações apresentadas aos participantes estão descritas no Quadro XX.
 
 <div align="center">
 
-  <sub>Quadro XX – Questões do questionário SUS</sub>
+<sub>Quadro XX – Questões do questionário SUS</sub>
 
 </div>
 
@@ -4609,19 +4650,20 @@ As afirmações apresentadas aos participantes estão descritas no Quadro XX.
 | 8 | Eu achei o sistema complicado de usar. |
 | 9 | Eu me senti confiante utilizando o sistema. |
 | 10 | Eu precisei aprender muitas coisas antes de conseguir utilizar o sistema. |
+
 <div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+<sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+Após a coleta das respostas, os dados foram consolidados em uma planilha eletrônica desenvolvida no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)).
 
-
-Após a coleta das respostas, os dados foram consolidados em uma planilha eletrônica desenvolvida no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)). As pontuações individuais foram calculadas conforme a metodologia oficial do SUS, resultando em uma nota final entre 0 e 100 pontos para cada participante.
+Conforme a metodologia proposta por Brooke (1996), para as afirmações positivas (questões ímpares) foi subtraído 1 da resposta atribuída pelo participante, enquanto para as afirmações negativas (questões pares) a resposta foi subtraída de 5. Em seguida, a soma dos valores obtidos foi multiplicada por 2,5, resultando em uma pontuação final compreendida entre 0 e 100 pontos para cada participante.
 
 A Tabela XX apresenta as pontuações obtidas pelos participantes.
 
 <div align="center">
 
-  <sub>Tabela XX – Pontuação SUS por participante</sub>
+<sub>Tabela XX – Pontuação SUS por participante</sub>
 
 </div>
 
@@ -4634,15 +4676,40 @@ A Tabela XX apresenta as pontuações obtidas pelos participantes.
 | Participante 5 | 77,5 |
 | Participante 6 | 100,0 |
 | Participante 7 | 72,5 |
+
 <div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+<sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
+#### 5.2.2.1. Análise dos resultados SUS
 
-A partir das respostas coletadas, foi obtida uma pontuação média de **80,71 pontos**. A interpretação desse resultado e sua classificação segundo os critérios do método SUS são apresentadas na subseção seguinte.
+A aplicação do questionário SUS resultou em uma pontuação média de **80,71 pontos**, valor superior à média de referência do método, estabelecida em aproximadamente 68 pontos. Segundo a classificação proposta por Bangor, Kortum e Miller (2009), pontuações superiores a 80 pontos enquadram-se na categoria **Excelente**, indicando elevado nível de satisfação dos usuários e forte aceitação da solução desenvolvida.
 
+A análise das pontuações individuais também evidencia uma percepção consistente entre os participantes. Das sete avaliações realizadas, seis apresentaram pontuações entre **72,5 e 82,5 pontos**, enquanto um participante atribuiu a nota máxima de **100 pontos**, indicando uma experiência de uso extremamente positiva. Essa distribuição demonstra que a percepção favorável da usabilidade foi compartilhada pela maior parte dos avaliadores.
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+<div align="center">
+  <sub>Figura X - Distribuição das respostas da Questão 7 do questionário SUS</sub><br>
+    <img src="../assets/design/questao7.png" width="100%" alt="Gráfico representando visualmente a distribuição das respostas da Questão 7 do questionário SUS"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+A Figura XX apresenta os resultados da questão **"Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente"**. Observa-se que **85,7% dos participantes concordaram totalmente** com a afirmação, enquanto **14,3% concordaram parcialmente**, não havendo respostas neutras ou discordantes. Esse resultado evidencia que os usuários perceberam a plataforma como intuitiva e de rápida aprendizagem, característica especialmente importante para o contexto operacional do evento Red Bull 24 Horas, no qual diferentes operadores podem utilizar o sistema durante a competição.
+
+<div align="center">
+  <sub>Figura X - Distribuição das respostas da Questão 8 do questionário SUS</sub><br>
+    <img src="../assets/design/questao8.png" width="100%" alt="Gráfico representando visualmente a distribuição das respostas da Questão 7 do questionário SUS"><br>
+      <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+A Figura XX apresenta os resultados da questão **"Eu achei o sistema complicado de usar"**. Por se tratar de uma afirmação negativa, respostas de discordância representam uma avaliação positiva da usabilidade. Observa-se que **85,7% dos participantes discordaram parcialmente** da afirmação e **14,3% discordaram totalmente**, sem registros de respostas neutras ou concordantes. Esse comportamento reforça a percepção de que a plataforma apresenta uma navegação simples e um fluxo de utilização compreensível.
+
+Os resultados observados nessas questões refletem uma tendência identificada ao longo de todo o questionário SUS: os participantes avaliaram positivamente aspectos relacionados à facilidade de aprendizado, simplicidade de utilização, integração das funcionalidades e confiança durante o uso do sistema. Essas percepções estão alinhadas com o desempenho observado durante os testes de usabilidade, nos quais os usuários conseguiram concluir as tarefas propostas sem dificuldades significativas.
+
+Embora a avaliação tenha indicado excelente nível de usabilidade, os testes de usabilidade realizados anteriormente permitiram identificar oportunidades de melhoria relacionadas ao refinamento de alguns elementos visuais da interface e à maior clareza de determinadas mensagens exibidas pelo sistema. Essas observações não comprometeram a execução das funcionalidades, mas foram registradas como oportunidades de evolução para versões futuras da plataforma.
+
+Portanto, conclui-se que a solução desenvolvida apresenta um nível de usabilidade considerado **excelente**, segundo os critérios do método SUS. Os resultados obtidos demonstram que os usuários conseguem compreender, aprender e utilizar suas funcionalidades de forma eficiente, reforçando a adequação da plataforma ao contexto operacional do evento Red Bull 24 Horas e contribuindo para uma operação mais ágil, confiável e com menor probabilidade de erros durante a competição.
+
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing
 
 ## 6.1 Resumo Executivo
 
