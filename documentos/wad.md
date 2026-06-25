@@ -1012,9 +1012,16 @@ funcionais, garantindo rastreabilidade entre o que os usuários precisam
 fazer e o que o sistema deve oferecer.
 
 A Figura 9 apresenta o diagrama de casos de uso do Sistema Red Bull 24
-Horas, modelando as interações entre os três atores identificados,
-Administrador / Juiz, Corredor e Sistema OCR, e os principais fluxos
-do sistema.
+Horas, modelando as interações entre os dois atores externos
+identificados — Administrador e Corredor — e os principais fluxos do
+sistema, organizados em quatro pacotes funcionais: Operação da
+competição, Registro de checkpoints, Acompanhamento e relatórios e
+Painel público das equipes. A fonte editável do diagrama está
+versionada em
+`documentos/outros/programacao/diagrama-casos-de-uso.puml` (PlantUML),
+de modo que alterações futuras possam ser realizadas no código-fonte
+e o PNG regerado via Kroki sem retrabalho manual em ferramentas
+visuais.
 
 Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
 
@@ -1022,30 +1029,348 @@ Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
 
 Fonte: Material produzido pelos autores (2026).
 
-O **Administrador / Juiz** unifica as personas Mariana (Coordenadora
-Operacional) e Bruno (Gerente de Field Marketing), responsáveis pela
-operação e supervisão do evento. É o ator com maior número de casos de
-uso, atuando desde a criação da competição e cadastro de equipes até o
-registro de checkpoints, acompanhamento do ranking, acesso ao relatório
-e encerramento da competição. O **Corredor** representa atletas e
-capitães das equipes, acessando o sistema via URL única sem autenticação
-para acompanhar o ranking, o status dos atletas e a calculadora de
-descanso. O **Sistema OCR**, marcado com o estereótipo «system», é um
-serviço externo consumido via API que extrai dados das fotos do visor
-da esteira e alerta inconsistências.
+O **Administrador** unifica as personas Marina Costa (Coordenadora
+Operacional) e Bruno Monteiro (Gerente de Field Marketing) e
+corresponde ao operador autenticado responsável pela configuração e
+operação do evento. É o ator com maior número de casos de uso,
+atuando desde o acesso ao painel administrativo, a gestão dos demais
+administradores autorizados, a criação e o encerramento de
+competições, o cadastro de equipes e atletas, a operação do registro
+de checkpoints (manual ou assistido por OCR), o acompanhamento do
+ranking, o acesso ao relatório consolidado, a exportação em CSV e a
+exibição do painel da competição em TV durante o evento. O
+**Corredor** representa atletas e capitães de equipe, que acessam o
+sistema por meio de uma URL única vinculada ao UUID público da
+equipe, sem autenticação, para acompanhar o ranking global, consultar
+o status dos atletas, utilizar a calculadora de descanso e
+compartilhar o ranking da equipe.
+
+O reconhecimento óptico de caracteres aplicado às imagens capturadas
+pelo operador a partir do visor da esteira durante a competição é
+tratado internamente pelo sistema, na forma do subsistema híbrido
+descrito na seção 3.2.1 (Tesseract.js executado localmente no
+servidor, com fallback opcional para a API externa da Groq), e por
+isso não figura como ator externo no diagrama. A responsabilidade
+antes representada por um ator «system» dedicado — a extração das
+métricas a partir da imagem — passa a ser representada pelo caso de
+uso interno "Registrar checkpoint via OCR". O acompanhamento de
+checkpoints inconsistentes, por sua vez, foi modelado como uma
+consulta operacional ("Consultar checkpoints inconsistentes")
+disponível ao Administrador para auditoria e composição do relatório
+consolidado, refletindo o comportamento efetivamente implementado em
+`checkpointRepository.findInconsistenciesByCompetition` — que retorna
+os checkpoints persistidos cujo corredor associado não pôde ser
+resolvido — em vez de uma sinalização ativa em tempo real durante a
+confirmação dos dados.
 
 O diagrama emprega relações «include» e «extend» para representar
 dependências entre casos de uso. A geração do UUID é «include» de
-"Cadastrar equipes/atletas", refletindo que o identificador único é
-gerado automaticamente ao salvar uma equipe. A seleção do atleta ativo
-é «include» dos dois fluxos de registro de checkpoint, sendo etapa
-obrigatória antes do registro. O fluxo manual de registro estende o
-fluxo via OCR como caminho alternativo em caso de falha técnica, e
-ambos incluem a confirmação humana dos dados antes do salvamento. O
-alerta de inconsistência estende a confirmação de dados quando há
-divergência relevante. A exportação em CSV é «include» de "Acessar
-relatório", visto que a exportação é parte integrante da tela de
-relatório.
+"Cadastrar equipes e atletas", refletindo que o identificador único é
+gerado automaticamente ao persistir a equipe e é posteriormente
+utilizado pela URL pública do painel da equipe. A seleção do atleta
+ativo é «include» dos dois fluxos de registro de checkpoint, sendo
+etapa obrigatória para vincular o registro ao corredor que está em
+pista no momento. A confirmação humana dos dados é «include» de
+ambos os fluxos de registro, em conformidade com a RN06 (validação
+humana obrigatória) descrita na seção 3.1.2. O registro manual
+estende o registro via OCR como caminho alternativo acionado quando a
+extração automática falha ou não produz resultado utilizável. A
+exportação em CSV é «include» do acesso ao relatório, uma vez que a
+exportação é parte integrante da tela de relatórios consolidados.
+
+#### 3.2.2.1 Descrição estruturada dos casos de uso
+
+A literatura de UML recomenda que cada caso de uso identificado no
+diagrama seja acompanhado por uma descrição estruturada, com seus
+atores, pré-requisitos, pós-requisitos e fluxos principais e
+alternativos (BOOCH; RUMBAUGH; JACOBSON, 2006). Os quadros a seguir
+apresentam essa descrição para cada um dos vinte e um casos de uso da
+Figura 9, identificados pelos rótulos UC01 a UC21 e agrupados pelos
+quatro pacotes funcionais introduzidos anteriormente. A numeração
+adotada é interna a esta subseção (UC), independente da numeração de
+Quadros do restante do WAD, para evitar conflito com a numeração já
+estabelecida em outras seções.
+
+##### Pacote: Operação da competição
+
+<div align="center"><sub>UC01 — Acessar painel administrativo</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Operador autenticado acessa a área administrativa do sistema para iniciar a sessão e habilitar as demais funcionalidades restritas a usuários autorizados. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | Administrador cadastrado e ativo, com credenciais válidas (e-mail e senha). |
+| **Pós-requisitos** | Sessão administrativa iniciada e token JWT emitido pelo `AuthService` (HS256, validade de 8 horas); cookie de sessão definido no navegador. |
+| **Fluxo principal** | 1. Administrador informa e-mail e senha no formulário de login. 2. Sistema delega a validação das credenciais ao `AuthService`, que consulta o `AdminRepository`. 3. Sistema emite o token JWT e o registra no cookie de sessão. 4. Sistema redireciona o Administrador para o painel administrativo. |
+| **Fluxos alternativos** | 2a. Credenciais inválidas → sistema responde HTTP 401, exibe mensagem de erro e mantém o Administrador na tela de login; sessão não iniciada. |
+| **RFs/RNs relacionados** | RF04, RN03 |
+
+<div align="center"><sub>UC02 — Gerenciar administradores</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador autenticado cadastra, consulta, atualiza ou remove os demais usuários autorizados a operar o sistema. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído com sucesso. |
+| **Pós-requisitos** | Lista de administradores atualizada via `AdminRepository`. |
+| **Fluxo principal** | 1. Administrador acessa a área de gestão de administradores. 2. Seleciona a operação desejada (criar, consultar, atualizar ou remover). 3. Sistema delega a operação ao `AdminService`, que valida os dados e persiste a alteração via `AdminRepository`. |
+| **Fluxos alternativos** | 2a. E-mail duplicado em cadastro/atualização → `AdminService` lança `ConflictError`, sistema rejeita a operação e persistência não é realizada. 2b. Identificador inexistente em consulta/atualização/remoção → `AdminService` lança `NotFoundError` e o sistema retorna HTTP 404. |
+| **RFs/RNs relacionados** | RF04 |
+
+<div align="center"><sub>UC03 — Criar competição</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador cadastra uma nova competição com janela temporal definida, que será posteriormente populada com equipes, atletas e checkpoints. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído com sucesso. |
+| **Pós-requisitos** | Competição persistida no estado `not_started` via `CompetitionRepository`. |
+| **Fluxo principal** | 1. Administrador informa nome, datas e demais parâmetros da competição. 2. `CompetitionService` valida os parâmetros (datas coerentes, nome não vazio). 3. Sistema persiste a competição via `CompetitionRepository`. 4. Sistema retorna a competição criada e a marca como selecionada via cookie para os fluxos administrativos subsequentes. |
+| **Fluxos alternativos** | 2a. Parâmetros inválidos → sistema rejeita a criação com mensagem de erro; nenhuma persistência ocorre. |
+| **RFs/RNs relacionados** | RF02, RN02 |
+
+<div align="center"><sub>UC04 — Encerrar competição</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador encerra uma competição em andamento, congelando o estado dos checkpoints, do ranking e dos relatórios. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; competição existente no estado `in_progress`. |
+| **Pós-requisitos** | Competição transicionada para o estado `closed` via `CompetitionRepository`; novos checkpoints não são mais aceitos pelo `CheckpointService`. |
+| **Fluxo principal** | 1. Administrador solicita o encerramento da competição. 2. `CompetitionService` verifica que a competição está em `in_progress`. 3. Sistema executa o `PATCH` correspondente e persiste a transição de estado. |
+| **Fluxos alternativos** | 2a. Competição já encerrada ou ainda não iniciada → sistema rejeita a transição com mensagem informativa. |
+| **RFs/RNs relacionados** | RF12, RN14 |
+
+<div align="center"><sub>UC05 — Cadastrar equipes e atletas</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador cadastra uma equipe vinculada a uma competição e os atletas que compõem a equipe (até dezesseis por equipe, conforme RN17). |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; competição existente (UC03). |
+| **Pós-requisitos** | Equipe persistida via `TeamRepository`, com UUID público atribuído (UC06); atletas persistidos via `RunnerRepository` e vinculados à equipe. |
+| **Fluxo principal** | 1. Administrador informa o nome da equipe. 2. `TeamService` valida a unicidade do nome dentro da competição e persiste a equipe. 3. Sistema executa «include» do UC06 para gerar o UUID público. 4. Administrador cadastra os atletas da equipe. 5. `RunnerService` valida o limite de até dezesseis atletas por equipe e persiste cada atleta via `RunnerRepository`. |
+| **Fluxos alternativos** | 2a. Nome de equipe duplicado na competição → sistema rejeita o cadastro e exibe mensagem de erro. 5a. Limite de atletas excedido → sistema bloqueia o cadastro adicional e orienta o Administrador. |
+| **RFs/RNs relacionados** | RF01, RF03, RN01, RN17 |
+
+<div align="center"><sub>UC06 — Gerar UUID (include)</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Sistema gera o identificador público único da equipe, utilizado pela URL única do painel público (UC17). |
+| **Ator primário** | Sistema (acionado por UC05) |
+| **Atores secundários** | — |
+| **Pré-requisitos** | Equipe em processo de criação no fluxo UC05. |
+| **Pós-requisitos** | Campo `uuid` da equipe preenchido e persistido com a constraint `uq_team_uuid UNIQUE`, garantindo unicidade global. |
+| **Fluxo principal** | 1. Sistema invoca `gen_random_uuid()` no PostgreSQL durante o `INSERT` da equipe. 2. Valor é persistido no campo `uuid` da tabela `team`. |
+| **Fluxos alternativos** | — |
+| **RFs/RNs relacionados** | RF01, RN01 |
+
+<div align="center"><sub>UC07 — Visualizar painel operacional</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador acessa a tela `/operational-panel`, que concentra a operação do evento ao vivo: equipes, atletas ativos e últimos checkpoints. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; competição selecionada via cookie. |
+| **Pós-requisitos** | Tela do painel operacional renderizada com o estado atual da competição. |
+| **Fluxo principal** | 1. Administrador acessa `/operational-panel`. 2. `CheckpointController` consulta o estado atual junto aos repositórios de equipes, atletas e checkpoints. 3. Sistema renderiza a view com os dados consolidados. |
+| **Fluxos alternativos** | 1a. Nenhuma competição selecionada → sistema redireciona o Administrador para a tela de seleção de competição. |
+| **RFs/RNs relacionados** | RF05, RF09 |
+
+##### Pacote: Registro de checkpoints
+
+<div align="center"><sub>UC08 — Selecionar atleta ativo (include)</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador define qual atleta da equipe está em pista no momento, vinculando os checkpoints subsequentes a esse corredor. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; equipe com pelo menos um atleta cadastrado (UC05). |
+| **Pós-requisitos** | Campo `active_runner_id` da equipe atualizado via `TeamRepository`. |
+| **Fluxo principal** | 1. Administrador acessa o painel operacional (UC07) e seleciona uma equipe. 2. Escolhe o atleta ativo entre os cadastrados. 3. Sistema executa `PATCH /competitions/:id/teams/:teamId/active-runner` e persiste a seleção. |
+| **Fluxos alternativos** | 2a. Atleta não pertence à equipe selecionada → sistema rejeita a operação. |
+| **RFs/RNs relacionados** | RF08, RN04 |
+
+<div align="center"><sub>UC09 — Registrar checkpoint via OCR</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador captura uma imagem do visor da esteira e o sistema extrai automaticamente as métricas (distância, pace, tempo) por OCR, oferecendo-as para confirmação humana antes da persistência. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; UC08 executado (atleta ativo definido); competição no estado `in_progress`. |
+| **Pós-requisitos** | Métricas extraídas exibidas ao Administrador para confirmação no fluxo UC11; nenhum dado é persistido sem confirmação humana. |
+| **Fluxo principal** | 1. Administrador captura a imagem pela câmera do iPad. 2. `OCRController` recebe o upload e delega ao `OCRService`. 3. `OCRService` tenta a extração local com Tesseract.js (modelo `eng.traineddata`); se o resultado for utilizável, retorna-o com origem `tesseract`. 4. Caso contrário, e havendo `GROQ_API_KEY` configurada, o `OCRGroqService` realiza a extração contra a API externa da Groq e o resultado é retornado com origem `groq`. 5. Sistema executa «include» do UC11 para confirmação humana. |
+| **Fluxos alternativos** | 3a. Tesseract retorna resultado incompleto e Groq indisponível ou desativada → sistema responde `422 Unprocessable` e oferece ao Administrador o caminho de UC10 (registro manual). 4a. Erro de credencial Groq (`401`/`403`) → sistema desativa Groq para a sessão e registra o erro em log. |
+| **RFs/RNs relacionados** | RF05, RF06, RN06 |
+
+<div align="center"><sub>UC10 — Registrar checkpoint manual</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador insere manualmente as métricas do checkpoint quando o registro via OCR (UC09) falha, não é viável ou foi conscientemente preterido pelo operador. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; UC08 executado (atleta ativo definido); competição no estado `in_progress`. |
+| **Pós-requisitos** | Checkpoint persistido via `CheckpointRepository` com vínculo aos identificadores de corredor, equipe e competição. |
+| **Fluxo principal** | 1. Administrador acessa o registro manual a partir do painel operacional. 2. Informa as métricas (distância, pace, tempo). 3. Sistema executa «include» do UC11 para confirmação. 4. `CheckpointService` aplica as regras de validação (RN04, RN05, RN12) e persiste o checkpoint via `CheckpointRepository`. |
+| **Fluxos alternativos** | 2a. Métricas inválidas (formato incorreto, valores fora de faixa) → sistema rejeita o envio com mensagem de erro de validação; persistência não realizada. |
+| **RFs/RNs relacionados** | RF07, RF08, RN04, RN05, RN12 |
+
+<div align="center"><sub>UC11 — Confirmar dados do checkpoint (include)</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Validação humana obrigatória das métricas do checkpoint antes da persistência, em conformidade com a RN06. Atua tanto sobre o fluxo via OCR (UC09) quanto sobre o registro manual (UC10). |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | Métricas disponíveis para revisão, oriundas de UC09 ou UC10. |
+| **Pós-requisitos** | Checkpoint persistido via `CheckpointRepository` quando confirmado; nenhum registro persistido quando rejeitado. |
+| **Fluxo principal** | 1. Sistema exibe as métricas extraídas ou digitadas. 2. Administrador revisa os valores. 3. Administrador confirma a operação. 4. `CheckpointController` aciona o `CheckpointService`, que persiste o checkpoint via `CheckpointRepository`. |
+| **Fluxos alternativos** | 3a. Administrador edita as métricas antes de confirmar → o sistema atualiza a previsão e segue o fluxo. 3b. Administrador rejeita o registro → métricas descartadas, nenhum checkpoint é persistido. |
+| **RFs/RNs relacionados** | RN05, RN06 |
+
+##### Pacote: Acompanhamento e relatórios
+
+<div align="center"><sub>UC12 — Acessar ranking</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador consulta o ranking em tempo real das equipes e dos atletas, calculado a partir dos checkpoints registrados. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; competição com checkpoints registrados. |
+| **Pós-requisitos** | Ranking renderizado em JSON (`GET /competitions/:id/ranking/teams|runners`) ou em view administrativa (`/ranking`, `/view/competitions/:id/ranking`). |
+| **Fluxo principal** | 1. Administrador acessa a tela de ranking. 2. `RankingController` consulta o `RankingService`. 3. `RankingService` calcula posições, pace médio e desempates a partir do `CheckpointRepository`. 4. Sistema renderiza o ranking solicitado. |
+| **Fluxos alternativos** | 1a. Nenhum checkpoint registrado → sistema retorna ranking vazio com mensagem informativa. |
+| **RFs/RNs relacionados** | RF10, RF15, RN09, RN11 |
+
+<div align="center"><sub>UC13 — Acessar relatório</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador acessa o relatório consolidado da competição, que reúne métricas agregadas, ranking final e dados auditáveis. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; competição com dados disponíveis. |
+| **Pós-requisitos** | Relatório consolidado renderizado em `GET /reports`, `GET /competitions/:id/reports` ou `GET /view/competitions/:id/reports`. |
+| **Fluxo principal** | 1. Administrador acessa a tela de relatórios. 2. `ReportController` aciona o `ReportService`, que compõe os dados a partir do `ReportRepository`. 3. Sistema renderiza o relatório. 4. Sistema disponibiliza a exportação por «include» do UC14. |
+| **Fluxos alternativos** | — |
+| **RFs/RNs relacionados** | RF13 |
+
+<div align="center"><sub>UC14 — Exportar dados em CSV (include)</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Sistema gera o arquivo CSV consolidado a partir dos dados da competição, possibilitando análises externas e arquivamento. |
+| **Ator primário** | Administrador (acionando a exportação a partir de UC13) |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC13 em execução. |
+| **Pós-requisitos** | Arquivo CSV gerado pelo `ExportService` e disponibilizado para download. |
+| **Fluxo principal** | 1. Administrador aciona a exportação na tela de relatórios. 2. `ExportController` delega ao `ExportService`. 3. `ExportService` consulta o `ExportRepository` e formata o arquivo CSV. 4. Sistema retorna o arquivo para download. |
+| **Fluxos alternativos** | — |
+| **RFs/RNs relacionados** | RF13 |
+
+<div align="center"><sub>UC15 — Consultar checkpoints inconsistentes</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador lista os checkpoints da competição que apresentam inconsistência de vínculo — registros persistidos cujo corredor associado não pôde ser resolvido — para fins de auditoria operacional e composição do relatório consolidado. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC01 concluído; competição existente com pelo menos um checkpoint registrado. |
+| **Pós-requisitos** | Lista de checkpoints inconsistentes da competição retornada em `GET /competitions/:id/checkpoints/inconsistencies` ou consolidada na seção de inconsistências do relatório (UC13). |
+| **Fluxo principal** | 1. Administrador aciona a consulta a partir da rota dedicada ou da tela de relatórios. 2. `CheckpointController.findInconsistenciesByCompetition` delega a consulta ao `CheckpointService`. 3. `CheckpointRepository.findInconsistenciesByCompetition` recupera os checkpoints da competição e devolve aqueles cujo `runner` associado é nulo. 4. Sistema renderiza o resultado em JSON ou na tabela de inconsistências do relatório. |
+| **Fluxos alternativos** | 1a. Nenhum checkpoint inconsistente → sistema retorna lista vazia (HTTP 200 com payload `[]` ou tabela com mensagem informativa no relatório). |
+| **RFs/RNs relacionados** | RF13, RN05 |
+
+<div align="center"><sub>UC16 — Exibir painel da competição em TV</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Administrador abre o painel público da competição em uma televisão ou projetor durante o evento, consolidando em uma única tela o estado da competição, a distância total percorrida, o tempo decorrido, o pace médio ponderado e as primeiras equipes do ranking. O painel é consumido visualmente pelo público presente, ainda que sem interação direta com o sistema. |
+| **Ator primário** | Administrador |
+| **Atores secundários** | — |
+| **Pré-requisitos** | Competição existente e identificada por `:competitionId`. |
+| **Pós-requisitos** | Painel renderizado na URL pública `GET /public/competitions/:id/tv-panel/metrics`, com atualização periódica das métricas. |
+| **Fluxo principal** | 1. Administrador abre a URL do painel de TV em um navegador da televisão ou do projetor. 2. `TvPanelController` consulta o `TvPanelService`. 3. `TvPanelService` agrega o estado da competição, a distância total, o tempo decorrido, o pace médio ponderado e o top N de equipes. 4. Sistema renderiza a view consolidada e a atualiza ao longo do evento. |
+| **Fluxos alternativos** | 1a. `:competitionId` inexistente → sistema retorna HTTP 404 com a tela pública de erro. |
+| **RFs/RNs relacionados** | RF11 |
+
+##### Pacote: Painel público das equipes
+
+<div align="center"><sub>UC17 — Acessar painel via UUID</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Corredor acessa o painel público da própria equipe a partir do link único distribuído pela equipe, sem necessidade de autenticação. |
+| **Ator primário** | Corredor |
+| **Atores secundários** | — |
+| **Pré-requisitos** | Equipe cadastrada (UC05), com UUID público válido (UC06). |
+| **Pós-requisitos** | Painel da equipe renderizado em `GET /public/team/:uuid`, com os dados atualizados da competição. |
+| **Fluxo principal** | 1. Corredor abre a URL `/public/team/:uuid` no navegador. 2. `RunnerController` busca a equipe pelo UUID. 3. Sistema renderiza a view pública com as informações da equipe. |
+| **Fluxos alternativos** | 2a. UUID inexistente ou removido → sistema retorna HTTP 404 com a tela pública de erro. |
+| **RFs/RNs relacionados** | RF14, RN13, RN17 |
+
+<div align="center"><sub>UC18 — Visualizar ranking global</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Corredor consulta o ranking público de todas as equipes da competição a partir do painel da própria equipe. |
+| **Ator primário** | Corredor |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC17 concluído; competição em andamento ou encerrada. |
+| **Pós-requisitos** | Ranking público exibido com a posição da equipe destacada. |
+| **Fluxo principal** | 1. Corredor solicita a visualização do ranking global no painel. 2. Sistema consulta o ranking público via `RankingService`. 3. Ranking é renderizado com a posição da equipe destacada. |
+| **Fluxos alternativos** | — |
+| **RFs/RNs relacionados** | RF10, RF15 |
+
+<div align="center"><sub>UC19 — Ver status dos atletas</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Corredor consulta o status de cada atleta da equipe (em pista, em descanso, última atualização) para apoiar a coordenação dos turnos. |
+| **Ator primário** | Corredor |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC17 concluído. |
+| **Pós-requisitos** | Lista de atletas exibida com o respectivo status e o instante do último checkpoint. |
+| **Fluxo principal** | 1. Corredor abre a visão de status no painel da equipe. 2. Sistema apresenta cada atleta com o respectivo status e os indicadores associados. |
+| **Fluxos alternativos** | — |
+| **RFs/RNs relacionados** | RF14 |
+
+<div align="center"><sub>UC20 — Usar calculadora de descanso</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Corredor consulta o tempo restante recomendado de descanso para cada atleta, calculado a partir do último checkpoint registrado e do tempo recomendado de 50 minutos (RN08), com classificação visual em três categorias (verde, amarelo ou vermelho) conforme o progresso do descanso. |
+| **Ator primário** | Corredor |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC17 concluído; atleta com pelo menos um checkpoint registrado. |
+| **Pós-requisitos** | Percentual e tempo restante de descanso exibidos no painel da equipe, com a categoria visual (verde, amarelo ou vermelho) correspondente ao progresso. |
+| **Fluxo principal** | 1. Corredor seleciona um atleta no painel. 2. Sistema calcula o tempo decorrido desde o último checkpoint. 3. Sistema apresenta o percentual concluído, o tempo restante até o limite recomendado de 50 minutos e a categoria visual correspondente, em conformidade com a RN08. |
+| **Fluxos alternativos** | 1a. Atleta sem checkpoint registrado → sistema exibe a indicação "Aguardando tempo de descanso…" sem cálculo numérico. |
+| **RFs/RNs relacionados** | RN08 |
+
+<div align="center"><sub>UC21 — Compartilhar ranking</sub></div>
+
+| Campo | Conteúdo |
+| --- | --- |
+| **Descrição** | Corredor compartilha o link público do painel da equipe copiando a URL para a área de transferência do dispositivo. |
+| **Ator primário** | Corredor |
+| **Atores secundários** | — |
+| **Pré-requisitos** | UC17 concluído. |
+| **Pós-requisitos** | URL pública (`/public/team/:uuid`) copiada para a área de transferência do dispositivo. |
+| **Fluxo principal** | 1. Corredor aciona o botão de compartilhar no cabeçalho do painel. 2. Sistema copia a URL pública da equipe para a área de transferência. 3. Sistema apresenta um *toast* de confirmação. |
+| **Fluxos alternativos** | 2a. Navegador sem permissão para acessar a área de transferência → sistema exibe a URL para cópia manual. |
+| **RFs/RNs relacionados** | RF14 |
 
 ### 3.2.3. Diagrama de Classes do Domínio (sprint 2)
 

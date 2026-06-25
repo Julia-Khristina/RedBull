@@ -1,0 +1,118 @@
+@startuml diagrama-casos-de-uso
+' Diagrama de Casos de Uso - Sistema Red Bull 24 Horas
+' Fonte editavel da Figura 9 da secao 3.2.2 do WAD.
+' Renderizado em PNG via Kroki (https://kroki.io/plantuml/png) a partir deste arquivo.
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam actorStyle awesome
+skinparam shadowing false
+skinparam defaultFontName "Helvetica"
+skinparam defaultFontSize 13
+skinparam ranksep 30
+skinparam nodesep 22
+skinparam usecase {
+  BackgroundColor #E8F0FE
+  BorderColor #1F3A93
+  ArrowColor #1F3A93
+  FontColor #0B1F4A
+}
+skinparam actor {
+  BackgroundColor #FFFFFF
+  BorderColor #1F3A93
+  FontStyle bold
+}
+skinparam rectangle {
+  BorderColor #1F3A93
+  FontStyle bold
+}
+skinparam package {
+  BackgroundColor #F7F9FC
+  BorderColor #4A5C7A
+  FontColor #2B3A55
+  FontStyle bold
+}
+
+actor "Administrador" as ADM
+actor "Corredor" as RUN
+
+rectangle "Sistema Red Bull 24 Horas" {
+
+  package "Operação da competição" as PKG_OP {
+    usecase "Acessar painel\nadministrativo" as UC_LOGIN
+    usecase "Gerenciar\nadministradores" as UC_ADMINS
+    usecase "Criar competição" as UC_CRIAR_COMP
+    usecase "Encerrar competição" as UC_ENC_COMP
+    usecase "Cadastrar equipes\ne atletas" as UC_CAD
+    usecase "Gerar UUID" as UC_UUID
+    usecase "Visualizar painel\noperacional" as UC_OP
+  }
+
+  package "Registro de checkpoints" as PKG_CHK {
+    usecase "Selecionar atleta\nativo" as UC_ATIVO
+    usecase "Registrar checkpoint\nvia OCR" as UC_OCR
+    usecase "Registrar checkpoint\nmanual" as UC_MAN
+    usecase "Confirmar dados\ndo checkpoint" as UC_CONF
+  }
+
+  package "Acompanhamento e relatórios" as PKG_REL {
+    usecase "Acessar ranking" as UC_RANK_ADM
+    usecase "Acessar relatório" as UC_REL
+    usecase "Exportar dados\nem CSV" as UC_CSV
+    usecase "Consultar checkpoints\ninconsistentes" as UC_INCONS
+    usecase "Exibir painel\nda competição em TV" as UC_TV
+  }
+
+  package "Painel público das equipes" as PKG_PUB {
+    usecase "Acessar painel\nvia UUID" as UC_PUB #FDE2E2
+    usecase "Visualizar ranking\nglobal" as UC_RANK_PUB #FDE2E2
+    usecase "Ver status\ndos atletas" as UC_STATUS #FDE2E2
+    usecase "Usar calculadora\nde descanso" as UC_DESC #FDE2E2
+    usecase "Compartilhar ranking" as UC_SHARE #FDE2E2
+  }
+}
+
+' --- Associacoes do Administrador ---
+ADM --> UC_LOGIN
+ADM --> UC_ADMINS
+ADM --> UC_CRIAR_COMP
+ADM --> UC_ENC_COMP
+ADM --> UC_CAD
+ADM --> UC_OP
+ADM --> UC_ATIVO
+ADM --> UC_OCR
+ADM --> UC_MAN
+ADM --> UC_CONF
+ADM --> UC_RANK_ADM
+ADM --> UC_REL
+ADM --> UC_INCONS
+ADM --> UC_TV
+
+' --- Associacoes do Corredor ---
+RUN --> UC_PUB
+RUN --> UC_RANK_PUB
+RUN --> UC_STATUS
+RUN --> UC_DESC
+RUN --> UC_SHARE
+
+' --- Relacoes include ---
+UC_CAD  ..> UC_UUID  : <<include>>
+UC_OCR  ..> UC_ATIVO : <<include>>
+UC_MAN  ..> UC_ATIVO : <<include>>
+UC_OCR  ..> UC_CONF  : <<include>>
+UC_MAN  ..> UC_CONF  : <<include>>
+UC_REL  ..> UC_CSV   : <<include>>
+
+' --- Relacao extend ---
+UC_MAN ..> UC_OCR : <<extend>>
+
+legend bottom
+  | Símbolo | Significado |
+  | Linha contínua | associação ator → caso de uso |
+  | Linha tracejada «include» | inclusão obrigatória de comportamento |
+  | Linha tracejada «extend» | extensão opcional acionada por condição |
+  | Oval azul | caso de uso do Administrador |
+  | Oval rosa | caso de uso do Corredor |
+endlegend
+
+@enduml
