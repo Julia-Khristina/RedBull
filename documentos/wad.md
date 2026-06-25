@@ -1454,10 +1454,9 @@ O sistema Red Bull 24h é composto por três nós principais em produção: o di
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
-
 ```plantuml
 @startuml diagrama-implantacao
-
+ 
 skinparam backgroundColor #FFFFFF
 skinparam node {
   BackgroundColor #F5F5F5
@@ -1476,42 +1475,44 @@ skinparam database {
   BackgroundColor #FFF2CC
   BorderColor #D6B656
 }
-
+ 
 node "Dispositivo do Operador / Capitão\n(Navegador Web)" as browser {
   artifact "Aplicação Web (HTML/CSS/JS)\nServida pelo Express (EJS)" as webapp
-  component "OCR Client-side\n(Tesseract.js + OpenCV.js)" as ocr
 }
-
-node "Servidor de Aplicação\n(Node.js 18 + TypeScript)" as server {
+ 
+node "Servidor de Aplicação\n(Node.js + TypeScript)" as server {
   artifact "Express App (app.ts)" as express
   component "Routes" as routes
   component "Controllers" as controllers
   component "Services" as services
+  component "OCR Server-side\n(Tesseract.js + sharp + Groq)" as ocr
   component "Repositories" as repositories
   component "Validators / Middlewares" as validators
 }
-
-node "Banco de Dados Gerenciado\n(Supabase — PostgreSQL)" as db {
-  database "Schema público\n(competicao, equipe, corredor,\ncheckpoint, administrador, audit_log)" as schema
+ 
+node "Banco de Dados Gerenciado\n(Supabase - PostgreSQL)" as db {
+  database "Schema público\n(competition, team, runner,\ncheckpoint, admin, ocr_extraction,\ncompetition_report)" as schema
 }
-
+ 
 node "GitLab Pages\n(Infraestrutura estática)" as pages {
   artifact "api-documentation.html\n(documentação da WebAPI)" as apidoc
 }
-
-browser --> server : "HTTP/REST\n(JSON — porta 3000)"
-repositories --> db : "Supabase JS SDK\n(HTTPS — porta 443)"
-browser ..> pages : "HTTPS (leitura apenas —\nacesso externo de revisores)"
-
+ 
+browser --> server : "HTTP/REST\n(JSON - porta 3000)"
+browser --> server : "Upload de imagem\n(multipart/form-data -\nPOST /ocr/extractions)"
+repositories --> db : "Supabase JS SDK\n(HTTPS - porta 443)"
+browser ..> pages : "HTTPS (leitura apenas -\nacesso externo de revisores)"
+ 
 express --> routes
 routes --> controllers
 controllers --> services
+services --> ocr
 services --> repositories
 services --> validators
-
+ 
 @enduml
 ```
-
+ 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
