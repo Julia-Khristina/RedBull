@@ -1120,7 +1120,7 @@ O diagrama de atividades a seguir representa o fluxo de registro de checkpoint p
 
 <div align="center">
   <sub>Figura 16 - Diagrama de atividades do registro de checkpoint via OCR</sub><br>
-  <img src="../assets/programacao/diagrama-de-atividades.png" width="100%" alt="Diagrama de atividades do fluxo de registro de checkpoint via OCR, com validação, correção manual, persistência e atualização de ranking"><br>
+  <img src="../assets/programacao/diagrama-de-atividades.png" width="100%" alt="Diagrama de atividades do fluxo de registro de checkpoint via OCR, com validação, correção manual, persistência e atualização de ranking sendo atualizado"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
