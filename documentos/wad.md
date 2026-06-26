@@ -871,7 +871,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 </div>
 
-## 3.2. Arquitetura (sprints 1 a 5)
+## 3.2. Arquitetura 
 
 ### 3.2.1. Arquitetura em Camadas
 
@@ -992,8 +992,7 @@ A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os 
 **Constraint `UNIQUE` sobre `uuid`.** Confirmada em `0002_create_team.sql` por meio da constraint `uq_team_uuid UNIQUE (uuid)`, garantindo a integridade das consultas do fluxo público acessado pelas equipes via link único.
 
 
-### 3.2.2. Diagrama de Casos de Uso (sprint 1)
-
+### 3.2.2. Diagrama de Casos de Uso 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
 Modelagem Unificada (UML) que descreve as funcionalidades de um sistema
 do ponto de vista de seus usuários, evidenciando as interações entre
@@ -1393,7 +1392,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 </div>
 
 
-### 3.2.4. Diagrama de Sequência UML (sprint 3)
+### 3.2.4. Diagrama de Sequência UML 
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1433,7 +1432,7 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+### 3.2.5. Diagrama de Atividades ou Estados 
 
 O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da foto do painel pelo operador, seguida pelo envio da imagem ao servidor para processamento. Após a extração dos dados pelo servidor, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
 
@@ -1445,7 +1444,7 @@ O diagrama de atividades a seguir representa o fluxo de registro de checkpoint p
 
 O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados extraídos pelo OCR apresentam inconsistências. Nessas situações, o sistema solicita correção manual e realiza uma nova validação antes de permitir o registro do checkpoint. Desta forma, o processo contribui para a confiabilidade das informações utilizadas na atualização do ranking administrativo e do painel das equipes.
 
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### 3.2.6. Diagrama de Implantação 
 
 O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
  
@@ -1532,7 +1531,7 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 
 
 
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.7. Padrões de Projeto Aplicados 
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
  
@@ -1938,7 +1937,7 @@ Nesse exemplo, o layout principal define a estrutura compartilhada da interface,
  
 
 
-## 3.3. Wireframes (sprint 2)
+## 3.3. Wireframes 
 
 Os wireframes apresentados nesta seção têm como objetivo representar visualmente os principais fluxos de navegação da solução proposta para o evento Red Bull 24 Horas, evidenciando a organização das funcionalidades priorizadas. Os artefatos foram desenvolvidos com foco na compreensão da experiência do usuário, permitindo validar rapidamente a estrutura da aplicação, os componentes principais das telas e a sequência de interação entre os módulos do sistema.
 
@@ -2310,7 +2309,7 @@ O layout utiliza cartões informativos, tabelas e indicadores visuais para facil
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
-## 3.4. Guia de estilos (sprint 3)
+## 3.4. Guia de estilos 
 
 O Guia de Estilos é um documento que define as diretrizes visuais e os padrões utilizados no desenvolvimento de um produto digital, incluindo elementos como cores, tipografia, iconografia, espaçamentos e componentes de interface. Seu objetivo é garantir consistência visual ao longo de todo o produto, orientando as equipes durante o processo de desenvolvimento e assegurando uma experiência coesa e de qualidade para o usuário. Ao sistematizar decisões de design, o guia também facilita a aplicação de princípios de UI e UX de forma integrada e contínua (PM3, s.d.).
 
@@ -2344,7 +2343,7 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 </div>
 
 
-## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade (sprint 3)
+## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade 
 
 **🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
 
@@ -2810,7 +2809,7 @@ A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelagem de bancos de dados para representar, de forma visual, as entidades de um sistema, seus atributos e os relacionamentos existentes entre elas. Esse diagrama auxilia na organização e estruturação das informações que serão armazenadas no banco de dados, permitindo uma melhor compreensão da lógica do sistema antes de seu desenvolvimento (Lucid Software Inc., s.d.).
 
@@ -2892,7 +2891,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 </div>
 
 
-## 3.6.3 Modelo Relacional e Modelo Físico (sprints 2 e 4)
+## 3.6.3 Modelo Relacional e Modelo Físico 
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
@@ -3573,7 +3572,7 @@ A consulta considera registros apenas quando a equipe pertence ao conjunto de eq
 
 A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização, remoção e consolidação de informações de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## 3.7. WebAPI e endpoints 
 
 A WebAPI desenvolvida para a aplicação atua como a principal camada de comunicação entre a interface web, os serviços de negócio e o banco de dados, sendo responsável por centralizar o processamento das requisições, aplicar as regras de negócio e controlar o acesso às informações persistidas. Dessa forma, o front-end não realiza acesso direto ao banco de dados; todas as operações de leitura, escrita, validação e atualização são intermediadas pela API, garantindo consistência dos dados, rastreabilidade das operações e maior segurança durante a execução da competição.
 
@@ -3653,7 +3652,7 @@ Além disso, a correspondência entre os endpoints implementados e os requisitos
 
 Dessa forma, a WebAPI constitui um dos principais elementos estruturais da solução desenvolvida, estabelecendo uma interface consistente entre a camada de apresentação e a persistência dos dados, garantindo segurança no acesso às funcionalidades administrativas, padronização das operações realizadas pela aplicação e suporte aos fluxos operacionais críticos do sistema. Sua implementação permite que as informações registradas durante o evento sejam processadas de maneira confiável, auditável e alinhada aos objetivos de negócio definidos para o projeto.
 
-## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência 
 
 ### 3.8.1. Autenticação
 
@@ -3777,7 +3776,7 @@ Toda operação de escrita (criação, atualização, exclusão) e acesso ao pai
 
 *Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
 
-### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+### 3.9. Matriz de Rastreabilidade (RTM) 
  
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
@@ -3827,7 +3826,7 @@ A introdução de *circuit breaker* tornar-se-á efetivamente útil quando o mot
 
 A consolidação apresentada nesta seção mantém coerência direta com a seção 3.7, ao explicitar o `errorHandler` e a hierarquia `AppError` como os mecanismos centrais de tradução do estado interno em códigos HTTP previsíveis, e com a seção 3.2.1, ao alocar cada estratégia futura ao seu ponto natural na arquitetura em camadas — Repository para *timeout* e *retry* sobre o Supabase, Service para *circuit breaker* sobre o motor OCR. As estratégias enquadradas como Trabalho Futuro são candidatas explícitas à seção 7 deste documento, sem que a sua ausência atual comprometa as garantias contratuais já entregues no MVP: a idempotência REST das operações de atualização e remoção e o contrato determinístico de erros do *middleware* central são, em conjunto, a fundação que tornará segura a introdução posterior dos mecanismos ativos de tolerância a falhas.
 
-### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+### 3.9. Matriz de Rastreabilidade (RTM) 
  
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
  
@@ -3895,7 +3894,7 @@ A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem r
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## 4.1. Primeira versão da aplicação web (sprint 3)
+## 4.1. Primeira versão da aplicação web 
 
 ### (a) O que foi implementado
 
@@ -4016,7 +4015,7 @@ Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo
 **5. Dívida técnica identificada na sprint 3**
 Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
 
-## 4.2. Segunda versão da aplicação web (sprint 4)
+## 4.2. Segunda versão da aplicação web 
 
 ### (a) O que foi implementado
 
@@ -4052,7 +4051,11 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 ### (b) O que não foi concluído
 
-**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 5.
+
+**Funcionamento da calculadora de descanso:** A calculadora de descanso, apesar de implementada, ainda carece de contas complexas que partem de consultas específicas no histórico de cada atleta e seus checkpoints. Não foi possível ajustar perfeitamente esse funcionamento durante a sprint 4.
+
+**Padronização do WAD:** Apesar de boa parte da sprint 4 ter sido voltada à padronização de nomenclatura e seções do wad, ainda sim a seção de modelagem do banco de dados permaneceu desatualizada em relação à situação atual do projeto, carecendo de duas entidades (ocr_extraction e competition_report) e um atributo (started_at em competitions).
 
 ### (c) Dificuldades técnicas
 
@@ -4061,6 +4064,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 **- Compatibilidade entre rotas SSR e rotas de API no mesmo servidor Express:** O registro da rota GET /admin/login precisou ser gerenciado com atenção à ordem de declaração em relação à rota genérica GET /admin/:id já existente — registrar as rotas específicas antes das parametrizadas evitou colisões de roteamento.
 
 **- Propagação de contexto operacional para o painel de checkpoint manual:** Os campos obrigatórios do payload (id_runner, id_competition, id_treadmill, id_admin) precisam chegar à view via locals do SSR ou query string, pois a tela não tem estado próprio para buscá-los. Sem esses dados, o formulário bloqueia o envio com erro de contexto faltante — o fluxo completo depende de uma tela anterior que selecione o atleta e passe o contexto, o que ainda não existe.
+
 
 ### (d) Próximos passos
 
@@ -4075,7 +4079,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 **5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo back-end desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
 
 
-## 4.3. Versão final da aplicação web (sprint 5)
+## 4.3. Versão final da aplicação web 
 
 ### (a) O que foi refinado ou adicionado desde a sprint 4
 
@@ -4135,7 +4139,7 @@ Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — 
 <div align="center"> <sub>Figura 73 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
-**Calculadora de descanso e gráfico de performance do atleta:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
+**Calculadora de descanso** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
 
 <div align="center"> <sub>Figura 73 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
@@ -4164,7 +4168,7 @@ Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e to
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes de integração de endpoints automatizados 
 
 ### 5.1.1 Estratégia de Testes
 
@@ -4603,7 +4607,7 @@ Os testes automatizados implementados foram relacionados às respectivas regras 
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
-## <a name="52"></a>5.2. Testes de usabilidade (sprint 5)
+## <a name="52"></a>5.2. Testes de usabilidade 
 
 ### 5.2.1. Relatório de testes de guerrilha
 
@@ -4849,7 +4853,7 @@ A Tabela XX apresenta as pontuações obtidas pelos participantes.
 A partir das respostas coletadas, foi obtida uma pontuação média de **80,71 pontos**. A interpretação desse resultado e sua classificação segundo os critérios do método SUS são apresentadas na subseção seguinte.
 
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing 
 
 ## 6.1 Resumo Executivo
 
@@ -5066,7 +5070,7 @@ A divulgação da solução concentra-se na geração de evidências de valor e 
 
 O próprio Red Bull 24 Horas funciona como principal canal de promoção, permitindo demonstrações da solução durante a competição e evidenciando sua aplicação em um contexto real de uso. As estratégias de relacionamento, por meio da comunicação pós-evento com organizadores, operadores e capitães de equipe, fortalecem a percepção de valor da plataforma ao longo do tempo. Além disso, a associação à marca Red Bull confere credibilidade à solução, enquanto a participação das running crews contribui para ampliar sua visibilidade dentro da comunidade esportiva.
 
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c7"></a>7. Conclusões e trabalhos futuros 
 
 ### Atingimento dos objetivos
 A solução desenvolvida para o Red Bull 24 Horas foi concebida para responder aos benefícios esperados e aos critérios de sucesso estabelecidos na Seção 2. A avaliação a seguir considera cada objetivo de forma individualizada.
@@ -5102,94 +5106,93 @@ A partir da avaliação de usabilidade, e tendo em vista a margem de melhoria si
 **Refinamento e integração do OCR:** Elevar a precisão da extração de distância, pace e tempo total; tratar variações de iluminação e de posicionamento do display; ajustar o limiar de discrepância que dispara os alertas de inconsistência; e consolidar o ciclo captura → extração → validação humana → persistência de forma integrada ao frontend e ao backend, reduzindo a fricção percebida no fluxo de registro.
 
 
-**Aprimoramento da calculadora de descanso e do gráfico de performance do atleta:** Refinar a lógica de cálculo e a visualização das informações, com o refinamento do uso de biblioteca de gráficos, de modo a tornar a leitura dos dados mais clara e imediata.
+**Refinamento de UX e design:** A partir dos pontos de fricção sinalizados pelas menores pontuações do SUS, propõe-se revisar os fluxos de maior atrito identificados nos testes de guerrilha, com foco na redução do número de interações para as tarefas críticas de registro de checkpoint e validação de dados; ampliar o feedback visual imediato — indicadores de estado e mensagens de erro contextuais — para reduzir ambiguidade em momentos de decisão rápida; e ajustar a hierarquia visual das telas operacionais para que as ações primárias sejam acessíveis sem rolagem, respeitando as dimensões de tela do iPad e as condições do ambiente do evento.
 
 ### Trabalhos futuros
 Além dos planos derivados dos testes, o grupo mapeou as seguintes oportunidades de evolução da solução:
 
 **Integração direta na esteira para captura automática de dados:** Investigar a possibilidade de integração entre a aplicação web e a infraestrutura da esteira, de modo a capturar os dados de desempenho (distância, pace, tempo) automaticamente, sem necessidade de fotografar o visor. Esta integração permitiria eliminar a dependência de OCR em determinadas condições e aumentar a precisão e a frequência de coleta de dados, reduzindo ainda mais a intervenção humana manual.
+
+
 **Aumentar o número de templates de divulgação para redes sociais:** Desenvolver uma maior suite de templates pré-formatados para divulgação de resultados, rankings parciais e momentos highlights do evento em redes sociais (Instagram, Twitter/X, Facebook). Esta funcionalidade possibilitaria ao parceiro compartilhar atualizações do evento em tempo real, amplificando o engajamento da comunidade e o alcance da marca durante a competição.
 **Tratamento de dívidas técnicas: centralização do tratamento de erros de constraint do PostgreSQL e padronização do ambiente de testes ponta a ponta, com vistas à robustez e à manutenibilidade do sistema.
 
 Em síntese, a solução desenvolvida cumpriu os objetivos funcionais previstos no escopo e demonstrou boa usabilidade, conforme evidenciado pela avaliação SUS de 80,71 pontos, ao mesmo tempo em que deixa mapeado um conjunto consistente de melhorias e trabalhos futuros capazes de ampliar sua precisão, sua abrangência analítica e sua aderência às necessidades operacionais do parceiro.
 
 
+# <a name="c8"></a>8. Referências 
 
+ABRACEO; TICKET SPORTS. **Perfil do Atleta Brasileiro 25/26**. 2026. Disponível em: https://hub.ticketsports.com.br/perfil-atleta-brasileiro-2025-ticket-sports/. Acesso em: 11 jun. 2026.
 
+AMAZON WEB SERVICES. **A diferença entre modelo de dados lógico e físico**. 2024. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. **Software Architecture in Practice**. 3. ed. Boston: Addison-Wesley, 2012.
 
-ABRACEO; TICKET SPORTS. Perfil do Atleta Brasileiro 25/26. 2026. Disponível em: <https://hub.ticketsports.com.br/perfil-atleta-brasileiro-2025-ticket-sports/>. Acesso em: 11 jun. 2026.
+BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. **The Unified Modeling Language User Guide**. 2. ed. Boston: Addison-Wesley, 2005.
 
-AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. 2024. Disponível em: <https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/>. Acesso em: 11 maio 2026.
+BROOKE, John. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). **Usability Evaluation in Industry**. London: Taylor & Francis, 1996. p. 189–194. Disponível em: https://hell.meiert.org/core/pdf/sus.pdf. Acesso em: 17 jun. 2026.
 
-BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
+CARTACAPITAL. **Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano**. 2026. Disponível em: https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026. Acesso em: 11 jun. 2026.
 
-BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. The Unified Modeling Language User Guide. 2. ed. Boston: Addison-Wesley, 2005.
+CASAROTTO, Camila. **Análise SWOT**: o que é e como fazer. Rock Content, 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
 
-BROOKE, John. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). Usability Evaluation in Industry. London: Taylor & Francis, 1996. p. 189–194. Disponível em: <https://hell.meiert.org/core/pdf/sus.pdf>. Acesso em: 17 jun. 2026.
+CODD, Edgar F. A Relational Model of Data for Large Shared Data Banks. **Communications of the ACM**, New York, v. 13, n. 6, p. 377–387, 1970.
 
-CARTACAPITAL. Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano. 2026. Disponível em: <https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026>. Acesso em: 11 jun. 2026.
+CREDERA. **The BA perspective**: How to INVEST in a good user story. 2023. Disponível em: https://www.credera.com/en-gb/insights/ba-perspective-invest-good-user-story. Acesso em: 1 maio 2026.
 
-CASAROTTO, Camila. Análise SWOT: o que é e como fazer. Rock Content, 2019. Disponível em: <https://rockcontent.com/br/blog/analise-swot/>. Acesso em: 1 maio 2026.
+FIGUEIREDO, R. M. **Diagrama de Sequência**. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
 
-CODD, Edgar F. A Relational Model of Data for Large Shared Data Banks. Communications of the ACM, New York, v. 13, n. 6, p. 377–387, 1970.
+FINCH, Grace. **What is acceptance criteria?** Definition, examples, & tips. Atlassian, 2026. Disponível em: https://www.atlassian.com/work-management/project-management/acceptance-criteria. Acesso em: 1 maio 2026.
 
-CREDERA. The BA perspective: How to INVEST in a good user story. 2023. Disponível em: <https://www.credera.com/en-gb/insights/ba-perspective-invest-good-user-story>. Acesso em: 1 maio 2026.
+FOWLER, Martin. **Patterns of Enterprise Application Architecture**. Boston: Addison-Wesley, 2002.
 
-FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: <https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf>. Acesso em: 12 maio 2026.
+GARRETT, Jesse James. **The Elements of User Experience**: User-Centered Design for the Web and Beyond. 2. ed. Berkeley: New Riders, 2011.
 
-FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison-Wesley, 2002.
+GRAND VIEW RESEARCH. **Brazil optical character recognition market size & outlook, 2030**. [s.d.]. Disponível em: https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil. Acesso em: 11 jun. 2026.
 
-GARRETT, Jesse James. The Elements of User Experience: User-Centered Design for the Web and Beyond. 2. ed. Berkeley: New Riders, 2011.
+HUBSPOT. **Segmentação de mercado**. HubSpot, 2025. Disponível em: https://br.hubspot.com/glossary/market-segmentation. Acesso em: 11 jun. 2026.
 
-GRACE, Finch. What is acceptance criteria? Definition, examples, & tips. Atlassian, 2026. Disponível em: <https://www.atlassian.com/work-management/project-management/acceptance-criteria>. Acesso em: 1 maio 2026.
+INTERACTION DESIGN FOUNDATION. **What are user stories?** [s.d.]. Disponível em: https://www.interaction-design.org/literature/topics/user-stories. Acesso em: 1 maio 2026.
 
-GRAND VIEW RESEARCH. Brazil optical character recognition market size & outlook, 2030. [s.d.]. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil>. Acesso em: 11 jun. 2026.
+INTERNET ENGINEERING TASK FORCE (IETF). **HTTP Semantics**. RFC 9110. 2022. Disponível em: https://www.ietf.org/rfc/rfc9110.html. Acesso em: 28 maio 2026.
 
-HUBSPOT. Segmentação de mercado. HubSpot, 2025. Disponível em: <https://br.hubspot.com/glossary/market-segmentation>. Acesso em: 11 jun. 2026.
+ITATIAIA. **BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes**. 2025. Disponível em: https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/. Acesso em: 6 jun. 2026.
 
-INTERNET ENGINEERING TASK FORCE (IETF). HTTP Semantics. RFC 9110. 2022. Disponível em: <https://www.ietf.org/rfc/rfc9110.html>. Acesso em: 28 maio 2026.
+JOEL. **MER e DER**: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
 
-INTERACTION DESIGN FOUNDATION. What are user stories? [s.d.]. Disponível em: <https://www.interaction-design.org/literature/topics/user-stories>. Acesso em: 1 maio 2026.
+LETS EVENTS. **O papel da tecnologia na organização de eventos de sucesso**. 22 abr. 2024. Disponível em: https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/. Acesso em: 2 jun. 2026.
 
-ITATIAIA. BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes. 2025. Disponível em: <https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/>. Acesso em: 6 jun. 2026.
+LUCID SOFTWARE INC. **O que é um diagrama entidade relacionamento?** [s.d.]. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.
 
-JOEL. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: <https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332>. Acesso em: 7 maio 2026.
+MANIA DE CORRIDA. **Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro**. 2025. Disponível em: https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html. Acesso em: 11 jun. 2026.
 
-LETS EVENTS. O papel da tecnologia na organização de eventos de sucesso. 22 abr. 2024. Disponível em: <https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/>. Acesso em: 2 jun. 2026.
+MARTIN, Robert C. **Agile Software Development**: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
 
-LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento? [s.d.]. Disponível em: <https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento>. Acesso em: 6 maio 2026.
+MICROSOFT. **Web API design best practices**. Microsoft Learn, 2023. Disponível em: https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design. Acesso em: 1 maio 2026.
 
-MANIA DE CORRIDA. Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro. 2025. Disponível em: <https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html>. Acesso em: 11 jun. 2026.
+MUNDO DO MARKETING. **Os profissionais de Marketing no Brasil**: dados mostram maioria feminina e faixa etária madura. [s.d.]. Disponível em: https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura. Acesso em: 2 jun. 2026.
 
-MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: <https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices>. Acesso em: 28 maio 2026.
+NIELSEN NORMAN GROUP. **Personas**. 2025. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 1 maio 2026.
 
-MICROSOFT. Web API design best practices. Microsoft Learn, 2023. Disponível em: <https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design>. Acesso em: 1 maio 2026.
+OSTERWALDER, Alexander; PIGNEUR, Yves. **Business Model Generation**. Hoboken: John Wiley & Sons, 2010.
 
-MUNDO DO MARKETING. Os profissionais de Marketing no Brasil: dados mostram maioria feminina e faixa etária madura. [s.d.]. Disponível em: <https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura>. Acesso em: 2 jun. 2026.
+OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design**. Hoboken: John Wiley & Sons, 2011.
 
-NIELSEN NORMAN GROUP. Personas. 2025. Disponível em: <https://www.nngroup.com/articles/persona/>. Acesso em: 1 maio 2026.
+PERERA, Nuwan. **Understanding Crow’s Foot Notation**: Symbols & Usage Guide. Creately, 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation. Hoboken: John Wiley & Sons, 2010.
+PLANTUML. **PlantUML**: open-source tool that uses simple textual descriptions to draw UML diagrams. [s.d.]. Disponível em: https://plantuml.com. Acesso em: 12 maio 2026.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Value Proposition Design. Hoboken: John Wiley & Sons, 2011.
+PM3. **Style guide**: o que é e como criar um guia de estilo para produtos digitais. [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/. Acesso em: 13 maio 2026.
 
-PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 2026. Disponível em: <https://creately.com/guides/crows-foot-notation/>. Acesso em: 11 maio 2026.
+PORTER, Michael E. The Five Competitive Forces That Shape Strategy. **Harvard Business Review**, Boston, v. 86, n. 1, p. 78–93, 2008.
 
-PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. [s.d.]. Disponível em: <https://plantuml.com>. Acesso em: 12 maio 2026.
+PROJECT MANAGEMENT INSTITUTE (PMI). **A guide to the project management body of knowledge (PMBOK guide)**. 7. ed. Newtown Square: Project Management Institute, 2021.
 
-PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. [s.d.]. Disponível em: <https://pm3.com.br/blog/style-guide/>. Acesso em: 13 maio 2026.
+RED BULL. **Red Bull 24 Hours**. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
-PORTER, Michael E. The Five Competitive Forces That Shape Strategy. Harvard Business Review, Boston, v. 86, n. 1, p. 78–93, 2008.
+VIAL, Gregory. Understanding Digital Transformation: A Review and a Research Agenda. **The Journal of Strategic Information Systems**, [S. l.], v. 28, n. 2, p. 118–144, 2019.
 
-PROJECT MANAGEMENT INSTITUTE (PMI). A guide to the project management body of knowledge (PMBOK guide). 7. ed. Newtown Square: Project Management Institute, 2021.
-
-RED BULL. Red Bull 24 Hours. 2025. Disponível em: <https://www.redbull.com/se-en/events/24-hours>. Acesso em: 1 maio 2026.
-
-VIAL, Gregory. Understanding Digital Transformation: A Review and a Research Agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
-
-WEBRUN. Red Bull 24 Horas: equipe paulista corre 343 km e se consagra campeã nacional. 2025. Disponível em: <https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro>. Acesso em: 11 jun. 2026.
+WEBRUN. **Red Bull 24 Horas**: equipe paulista corre 343 km e se consagra campeã nacional. 2025. Disponível em: https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro. Acesso em: 11 jun. 2026.
 
 
 # <a name="c9"></a>Anexos
