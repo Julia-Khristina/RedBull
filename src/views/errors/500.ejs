@@ -1,0 +1,18 @@
+<%#
+  render: errors/500
+  locals:
+    - title (string) — título da página, ex.: "Erro interno"
+%>
+<link rel="stylesheet" href="/css/error.css">
+
+<main class="error-page">
+  <div class="error-card">
+    <p class="error-code">500</p>
+    <h1 class="error-title"><%= typeof title !== 'undefined' ? title : 'Erro interno' %></h1>
+    <p class="error-message">
+      Ocorreu um erro inesperado no servidor.
+      Tente novamente mais tarde ou entre em contato com o suporte.
+    </p>
+    <a href="/dashboard" class="error-back-btn">Voltar ao Dashboard</a>
+  </div>
+</main>

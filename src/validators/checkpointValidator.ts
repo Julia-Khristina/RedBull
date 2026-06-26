@@ -109,7 +109,6 @@ export function validateCreateCheckpoint(
   const distance_km = readRequiredPositiveNumber(payload, "distance_km");
   const id_runner = readRequiredPositiveInteger(payload, "id_runner");
   const id_competition = readRequiredPositiveInteger(payload, "id_competition");
-  const id_treadmill = readRequiredPositiveInteger(payload, "id_treadmill");
   const id_admin = readRequiredPositiveInteger(payload, "id_admin");
 
   const result: CreateCheckpointInput = {
@@ -117,7 +116,6 @@ export function validateCreateCheckpoint(
     distance_km,
     id_runner,
     id_competition,
-    id_treadmill,
     id_admin,
   };
 

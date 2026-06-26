@@ -10,6 +10,7 @@ const exportData: CompetitionExportData = {
     address: "Sao Paulo - SP",
     status: "not_started",
     created_at: "2026-05-21T00:00:00.000Z",
+    started_at: null,
   },
   teams: [
     {
