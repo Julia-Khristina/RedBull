@@ -1,4 +1,4 @@
-# WAD - Web Application Document - Módulo 2 - Inteli
+﻿# WAD - Web Application Document - Módulo 2 - Inteli
 
 ## Propositivos
 
@@ -1373,7 +1373,7 @@ O diagrama de classes de domínio é uma representação visual que modela todos
 
 <div align="center">
   <sub>Figura 10 - Diagrama de Classes de Domínio </sub><br>
-  <img src="../assets/diagrama_classedominios.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
+  <img src="../assets/programacao/diagrama_classe_dominios.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1381,20 +1381,19 @@ O diagrama de classes de domínio é uma representação visual que modela todos
 
 O Diagrama de Classes Arquitetural é uma das representações da UML (Unified Modeling Language) que apresenta, em nível de projeto, as principais classes do sistema, seus atributos, métodos e os relacionamentos entre elas. Diferentemente do diagrama de classes de domínio, voltado à modelagem conceitual do negócio, o diagrama arquitetural reflete diretamente a estrutura do código-fonte, evidenciando como as responsabilidades são distribuídas entre as camadas da aplicação e como os componentes se comunicam entre si.
 
-No projeto em questão, a arquitetura adotada segue o padrão em três camadas: Controller, Service e Repository, amplamente utilizado em aplicações back-end por promover separação de responsabilidades, facilitar a manutenção e viabilizar a testabilidade independente de cada camada. A camada Controller é responsável por receber as requisições HTTP e delegar o processamento para a camada de serviço. Já a camada Service concentra as regras de negócio da aplicação. Além disso, a camada Repository abstrai o acesso ao banco de dados, expondo métodos padronizados de consulta e persistência.
+No projeto em questão, a arquitetura adotada segue o padrão Controller-Service-Repository, amplamente utilizado em aplicações back-end por promover separação de responsabilidades, facilitar a manutenção e viabilizar a testabilidade independente de cada camada. A camada Controller é responsável por receber as requisições HTTP e delegar o processamento para a camada de serviço. A camada Service concentra as regras de negócio da aplicação. Já a camada Repository abstrai o acesso ao banco de dados PostgreSQL via Supabase, expondo métodos padronizados de consulta e persistência. Complementando esse núcleo, o sistema conta ainda com camadas de Routes (definição de rotas Express com middlewares de autenticação), Validators (schemas zod para validação de entrada), Middlewares (autenticação JWT e tratamento global de erros) e Helpers (funções utilitárias como inferência de método de entrada e seleção de competição ativa).
 
-O diagrama é composto pelos seguintes módulos principais: Administrador, Autenticação (Auth), Competição, Corredor, Checkpoint, Esteira, Equipe, Ranking e OCR. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, fogem a essa regra por terem uma função de suporte geral à aplicação, sendo o caso do AuthService, do ValidacaoService e do OCRService, que são utilizados por diferentes partes do sistema. Além disso, o diagrama também apresenta interfaces de modelo (como CompeticaoModel, EquipeModel, CorredorModel, CheckpointModel e EsteiraModel), cuja função é validar os dados recebidos pela aplicação antes de serem processados, evitando inconsistências.
+O diagrama é composto pelos seguintes módulos principais: Admin, Auth, Competition, Team, Runner, Checkpoint, OCR, Ranking, Report, Export e TvPanel. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, fogem a essa regra por terem função de suporte geral ou por consumirem outros serviços diretamente. É o caso do AuthService, que utiliza o AdminRepository para autenticação; do OCRService, que orquestra os submódulos Tesseract (local) e Groq (fallback via LLM) sem depender de outros serviços do sistema; e do RankingService, ReportService, ExportService e TvPanelService, que reutilizam serviços existentes (como CheckpointService, CompetitionService e TeamService) para gerar rankings, relatórios e exportações. As entidades do sistema são representadas por interfaces TypeScript nos modelos (Competition, Team, Runner, Checkpoint, Admin, etc.), enquanto a validação de dados de entrada é feita por validators dedicados com zod, e não pelas interfaces de modelo.
 
-As dependências entre as classes são representadas por setas tracejadas, indicando uso ou associação. Destaca-se a dependência do CheckpointService com os serviços CorredorService, EsteiraService, ValidacaoService e OCRService, refletindo a centralidade da lógica de registro de checkpoints no fluxo operacional da competição. O RankingService, por sua vez, depende do CheckpointService e do EquipeService para calcular posições, pace médio e gerar o ranking das equipes em tempo real.
+As dependências entre as classes seguem o fluxo Controller → Service → Repository, com setas indicando uso ou associação. O CheckpointService depende do CompetitionService para verificar se a competição ainda está ativa antes de registrar um novo checkpoint, e do CheckpointRepository para persistência. O RankingService depende do CheckpointService e do TeamService para calcular posições, pace médio e classificação de equipes e corredores em tempo real. O ReportService, por sua vez, consome CompetitionService, CheckpointService e RankingService para gerar relatórios consolidados. O ExportService utiliza o ExportRepository e o RankingService para montar a exportação de dados. O TvPanelService combina dados do CompetitionService, CheckpointRepository e RankingService para alimentar o painel de TV público. O OCRService opera de forma independente, chamando apenas os submódulos Tesseract e Groq, sem depender de CheckpointService ou qualquer outro serviço do sistema — a extração de métricas é dissociada da criação do checkpoint, que ocorre em uma requisição separada.
 
 <div align="center">
-  <sub>Figura 11 - Diagrama de Classes Arquitetural</sub><br>
-  <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
+  <sub>Figura 10 - Diagrama de Classes Arquitetural</sub><br>
+  <img src="../assets/programacao/Diagrama_de_Classe_Arquitetural.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-
-### 3.2.4. Diagrama de Sequência UML (sprint 3)
+### 3.2.4. Diagrama de Sequência UML 
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1422,7 +1421,7 @@ O terceiro diagrama mapeia o fluxo de autenticação de administrador (Fluxo 3).
 
 <div align="center">
   <sub>Figura 14 - Diagrama de sequência do fluxo de autenticação do administrador</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-3.svg" width="100%" alt="Diagrama de sequência UML do fluxo de autenticação de administrador via JWT, com validação de credenciais e retorno de token de acesso"><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-3.png" width="100%" alt="Diagrama de sequência UML do fluxo de autenticação de administrador via JWT, com validação de credenciais e retorno de token de acesso"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1430,11 +1429,11 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
 
 <div align="center">
   <sub>Figura 15 - Diagrama de sequência do fluxo de criação de checkpoint</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-4.svg" width="100%" alt="Diagrama de sequência UML do fluxo de criação de checkpoint, com validação de payload, persistência no banco e tratamento de erros"><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-4.jpeg" width="100%" alt="Diagrama de sequência UML do fluxo de criação de checkpoint, com validação de payload, persistência no banco e tratamento de erros"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+### 3.2.5. Diagrama de Atividades ou Estados 
 
 O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da imagem do visor da esteira pelo fiscal, seguida pelo envio da imagem para processamento. Após a extração dos dados, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
 
@@ -1446,7 +1445,7 @@ O diagrama de atividades a seguir representa o fluxo de registro de checkpoint p
 
 O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados extraídos pelo OCR apresentam inconsistências. Nessas situações, o sistema solicita correção manual e realiza uma nova validação antes de permitir o registro do checkpoint. Dessa forma, o processo contribui para a confiabilidade das informações utilizadas na atualização do ranking administrativo e do painel das equipes.
 
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### 3.2.6. Diagrama de Implantação 
 
 O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
 
