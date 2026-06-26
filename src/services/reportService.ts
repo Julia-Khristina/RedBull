@@ -124,17 +124,17 @@ function DadosKmPorHora(
 
         if (sampleTime > lastTime) return null;
 
-        let maxDistance = 0;
+        let totalDistance = 0;
         for (const checkpoint of sorted) {
           const checkpointTime = new Date(checkpoint.created_at).getTime();
           if (checkpointTime > sampleTime) break;
 
           if (checkpoint.runner?.id_team === team.id_team) {
-            maxDistance = Math.max(maxDistance, checkpoint.distance_km);
+            totalDistance += checkpoint.distance_km;
           }
         }
 
-        return Math.round(maxDistance * 100) / 100;
+        return Math.round(totalDistance * 100) / 100;
       });
 
       return {
