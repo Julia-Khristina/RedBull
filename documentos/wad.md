@@ -29,7 +29,7 @@
 
 [7. Conclusões e trabalhos futuros](#c7)
 
-[8. Referências](c#8)
+[8. Referências](#c8)
 
 [Anexos](#c9)
 
@@ -892,7 +892,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 </div>
 
-## 3.2. Arquitetura (sprints 1 a 5)
+## 3.2. Arquitetura 
 
 ### 3.2.1. Arquitetura em Camadas
 
@@ -1013,8 +1013,7 @@ A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os 
 **Constraint `UNIQUE` sobre `uuid`.** Confirmada em `0002_create_team.sql` por meio da constraint `uq_team_uuid UNIQUE (uuid)`, garantindo a integridade das consultas do fluxo público acessado pelas equipes via link único.
 
 
-### 3.2.2. Diagrama de Casos de Uso (sprint 1)
-
+### 3.2.2. Diagrama de Casos de Uso 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
 Modelagem Unificada (UML) que descreve as funcionalidades de um sistema
 do ponto de vista de seus usuários, evidenciando as interações entre
@@ -1040,7 +1039,7 @@ visuais.
 
 Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
 
-![Diagrama de Casos de Uso](../assets/diagrama_caso_uso.png)
+![Diagrama de Casos de Uso](../assets/programacao/diagrama_caso_uso.png)
 
 Fonte: Material produzido pelos autores (2026).
 
@@ -1414,7 +1413,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 </div>
 
 
-### 3.2.4. Diagrama de Sequência UML (sprint 3)
+### 3.2.4. Diagrama de Sequência UML 
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1454,7 +1453,7 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+### 3.2.5. Diagrama de Atividades ou Estados 
 
 O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da foto do painel pelo operador, seguida pelo envio da imagem ao servidor para processamento. Após a extração dos dados pelo servidor, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
 
@@ -1466,7 +1465,7 @@ O diagrama de atividades a seguir representa o fluxo de registro de checkpoint p
 
 O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados extraídos pelo OCR apresentam inconsistências. Nessas situações, o sistema solicita correção manual e realiza uma nova validação antes de permitir o registro do checkpoint. Desta forma, o processo contribui para a confiabilidade das informações utilizadas na atualização do ranking administrativo e do painel das equipes.
 
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### 3.2.6. Diagrama de Implantação 
 
 O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
  
@@ -1553,7 +1552,7 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 
 
 
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.7. Padrões de Projeto Aplicados 
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
  
@@ -1959,7 +1958,7 @@ Nesse exemplo, o layout principal define a estrutura compartilhada da interface,
  
 
 
-## 3.3. Wireframes (sprint 2)
+## 3.3. Wireframes 
 
 Os wireframes apresentados nesta seção têm como objetivo representar visualmente os principais fluxos de navegação da solução proposta para o evento Red Bull 24 Horas, evidenciando a organização das funcionalidades priorizadas. Os artefatos foram desenvolvidos com foco na compreensão da experiência do usuário, permitindo validar rapidamente a estrutura da aplicação, os componentes principais das telas e a sequência de interação entre os módulos do sistema.
 
@@ -2089,41 +2088,41 @@ O último conjunto de telas representa as funcionalidades de revisão, validaç�
 
 **Tela TV**
 
-A tela da TV irá conter o countdown da competição para telespectadores que estão passando pelo local poderem acompanhar os corredores. 
+A tela de TV exibe o countdown da competição para que os telespectadores que passam pelo local possam acompanhar os corredores.
 
 <div align="center">
   <sub>Figura 23 - Wireframe de baixa fidelidade da tela TV durante a competição</sub><br>
-  <img src="../assets/design/telaTV.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <img src="../assets/design/telaTV.png" width="100%" alt="Wireframe de baixa fidelidade da tela de TV exibida durante a competição, com countdown e acompanhamento dos corredores."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
 **Tela do Instagram para os competidores**
 
-Essa tela foi feita para os competidores poderem postar seus recultados depois da competição baseado nos dados coletados.  
+Essa tela foi feita para que os competidores possam postar seus resultados após a competição, com base nos dados coletados.
 
 <div align="center">
   <sub>Figura 24 - Wireframe de baixa fidelidade da tela do Instagram para competidores</sub><br>
-  <img src="../assets/design/instagram_telas_atletas.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <img src="../assets/design/instagram_telas_atletas.png" width="100%" alt="Wireframe de baixa fidelidade da tela do Instagram para os competidores divulgarem seus resultados após a competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
 **Tela do Instagram para atletas em destaque**
 
-As seguintes telas foram feitas para serem postadas nos períodos da manhã, tarde, noite e madrugada para comemorar os atletas em destaque naquelas horários.  
+As telas a seguir foram feitas para serem postadas nos períodos da manhã, tarde, noite e madrugada, comemorando os atletas em destaque em cada um desses horários.
 
 <div align="center">
   <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram para destaques</sub><br>
-  <img src="../assets/design/instagram_telas_destaques.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <img src="../assets/design/instagram_telas_destaques.png" width="100%" alt="Wireframe de baixa fidelidade das telas do Instagram para divulgação dos atletas em destaque por período."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
 **Tela do Instagram com maior quilometragem e menor pace médio**
 
-Essas duas telas foram criadas para serem postadas para compartilhar o melhor desempenho da competição.  
+Essas duas telas foram criadas para compartilhar os melhores desempenhos da competição.
 
 <div align="center">
   <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram pace/km</sub><br>
-  <img src="../assets/design/instagram_telas_pacekm.png" width="100%" alt="Wireframe de baixa fidelidade das telas de revisão e análise dos dados da competição."><br>
+  <img src="../assets/design/instagram_telas_pacekm.png" width="100%" alt="Wireframe de baixa fidelidade das telas do Instagram com a maior quilometragem e o menor pace médio da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
@@ -2137,7 +2136,7 @@ A construção das telas priorizou rápida interpretação das informações, or
 
 ---
 
-As Figuras 16 e 17 apresentam o início do fluxo administrativo, desde a tela principal do painel até o formulário de criação de uma nova competição.
+As figuras a seguir apresentam o início do fluxo administrativo, desde a tela principal do painel até o formulário de criação de uma nova competição.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -2157,7 +2156,7 @@ As Figuras 16 e 17 apresentam o início do fluxo administrativo, desde a tela pr
 
 ---
 
-As Figuras 18 e 19 mostram a etapa de preparação das equipes, contemplando o estado inicial sem equipes cadastradas e o formulário de cadastro com capitão e atletas.
+As figuras a seguir mostram a etapa de preparação das equipes, contemplando o estado inicial sem equipes cadastradas e o formulário de cadastro com capitão e atletas.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -2177,7 +2176,7 @@ As Figuras 18 e 19 mostram a etapa de preparação das equipes, contemplando o e
 
 ---
 
-As Figuras 27 e 28 apresentam a continuidade do gerenciamento das equipes, incluindo o retorno ao estado de cadastro e a visualização das equipes com URLs públicas geradas por UUID.
+As figuras a seguir apresentam a continuidade do gerenciamento das equipes, incluindo o retorno ao estado de cadastro e a visualização das equipes com URLs públicas geradas por UUID.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -2197,7 +2196,7 @@ As Figuras 27 e 28 apresentam a continuidade do gerenciamento das equipes, inclu
 
 ---
 
-As Figuras 29 e 30 apresentam a visão geral do painel operacional administrativo e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores em tempo real.
+As figuras a seguir apresentam a visão geral do painel operacional administrativo e a interface de seleção do atleta ativo, utilizadas para acompanhamento da competição e gerenciamento dos corredores em tempo real.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -2217,7 +2216,7 @@ As Figuras 29 e 30 apresentam a visão geral do painel operacional administrativ
 
 ---
 
-As Figuras 31 e 32 demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade central da proposta de automação da solução.
+As figuras a seguir demonstram o processo de captura da imagem da esteira e a validação dos dados extraídos via OCR, funcionalidade central da proposta de automação da solução.
 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
@@ -2237,7 +2236,7 @@ As Figuras 31 e 32 demonstram o processo de captura da imagem da esteira e a val
 
 ---
 
-As Figuras 33, 34 e 35 apresentam funcionalidades complementares da plataforma, incluindo o registro manual de checkpoints, a visualização consolidada das informações da competição e a geração de relatórios operacionais.
+As figuras a seguir apresentam funcionalidades complementares da plataforma, incluindo o registro manual de checkpoints, a visualização consolidada das informações da competição e a geração de relatórios operacionais.
 
 <div align="center" 
      style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap;">
@@ -2331,7 +2330,7 @@ O layout utiliza cartões informativos, tabelas e indicadores visuais para facil
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
-## 3.4. Guia de estilos (sprint 3)
+## 3.4. Guia de estilos 
 
 O Guia de Estilos é um documento que define as diretrizes visuais e os padrões utilizados no desenvolvimento de um produto digital, incluindo elementos como cores, tipografia, iconografia, espaçamentos e componentes de interface. Seu objetivo é garantir consistência visual ao longo de todo o produto, orientando as equipes durante o processo de desenvolvimento e assegurando uma experiência coesa e de qualidade para o usuário. Ao sistematizar decisões de design, o guia também facilita a aplicação de princípios de UI e UX de forma integrada e contínua (PM3, s.d.).
 
@@ -2365,9 +2364,8 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 </div>
 
 
-## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade (sprint 3)
+## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade 
 
-**🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
 
 Esta seção apresenta a documentação do protótipo de alta fidelidade desenvolvido para a aplicação web. O objetivo do protótipo é representar, de forma visual e funcional, a experiência que o usuário final terá ao interagir com a plataforma. A interface foi projetada com foco em usabilidade, clareza das informações e alinhamento com os fluxos definidos nas User Stories.
 
@@ -2377,12 +2375,12 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 ### Persona 1 - Marina Costa
 #### Tela de Login
-&nbsp; &nbsp; &nbsp; &nbsp;Abaixo nota-se a Tela de Login, onde o background é uma foto real da competição 24hrs, essa tela pede, em um popup de fundo branco, email e senha para autorizar o acesso do administrador. Conta com uma frase da Red Bull de encorajamento e botão em destaque "entrar"
+&nbsp; &nbsp; &nbsp; &nbsp;Abaixo, nota-se a Tela de Login, cujo background é uma foto real da competição 24 Horas. Essa tela solicita, em um pop-up de fundo branco, e-mail e senha para autorizar o acesso do administrador. Conta com uma frase de encorajamento da Red Bull e um botão em destaque "Entrar".
 
 
 <div align="center">
-  <sub>Figura 1 - Dashboard Principal</sub><br>
-    <img src="../assets/design/protótipo/painel-login.jpg"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dashboard principal"><br>
+  <sub>Figura 1 - Tela de Login</sub><br>
+    <img src="../assets/design/protótipo/painel-login.jpg"  width="100%" alt="Representação da tela de login do sistema web"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -2396,37 +2394,37 @@ O protótipo também está servindo como referência para o desenvolvimento fron
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Cadastro de nova competição.
+#### Cadastro de nova competição
 &nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo um formulário de cadastro de competição, permitindo ao administrador inserir nome do evento, data, localização e uma descrição opcional. Ao finalizar o preenchimento, o administrador pode confirmar a criação por meio do botão "Criar nova Competição" ou cancelar a ação e retornar ao Dashboard.
 
 
 <div align="center">
   <sub>Figura 43 - Cadastro de competição </sub><br>
-    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de nova competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Dashboard pós-cadastro de Competição.
+#### Dashboard pós-cadastro de competição
 &nbsp; &nbsp; &nbsp; &nbsp;Estado do Dashboard após o cadastro bem-sucedido de uma competição, exibindo uma mensagem de confirmação "Competição cadastrada com sucesso!". O tutorial de cadastro de equipes e atletas permanece visível, orientando o próximo passo do fluxo operacional, e os atalhos de ação rápida continuam acessíveis.
 
 
 <div align="center">
   <sub>Figura 44 - Competição Cadastrada </sub><br>
-    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard pós cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard após o cadastro da competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Painel de equipes (sem equipes cadastradas).
+#### Painel de equipes (sem equipes cadastradas)
 &nbsp; &nbsp; &nbsp; &nbsp;Tela de gerenciamento de equipes no estado inicial, quando nenhuma equipe foi cadastrada ainda. Exibe uma mensagem orientativa indicando que as duas equipes da competição devem ser adicionadas, juntamente com o botão "+ Adicionar Equipe" para iniciar o cadastro.
 
 
 <div align="center">
   <sub>Figura 45 - Painel Equipes vazio</sub><br>
-    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação da tela de cadastro de equipe antes de qualquer cadastro"><br>
+    <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação do painel de equipes sem nenhuma equipe cadastrada"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Cadastro de equipes.
+#### Cadastro de equipes
 &nbsp; &nbsp; &nbsp; &nbsp;Encontra-se abaixo a tela de cadastro de equipes, que permite ao administrador inserir o nome da equipe, definir o capitão e registrar os atletas participantes. O sistema também oferece a opção de adicionar novos atletas dinamicamente. Ao finalizar o preenchimento, o administrador pode confirmar a criação da equipe por meio do botão “Criar Equipe” ou cancelar a ação e retornar à tela anterior.
 
 
@@ -2437,7 +2435,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 
-#### Painel de administração das equipes.
+#### Painel de administração das equipes
 &nbsp; &nbsp; &nbsp; &nbsp; Apresenta-se o painel de administração das equipes, que permite ao administrador visualizar todas as equipes cadastradas na competição, acessar links públicos individuais, editar informações, remover equipes e acessar diretamente o painel operacional de cada grupo. A tela também exibe o status geral da competição em tempo real.
 
 
@@ -2448,70 +2446,70 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 </div>
 
 
-#### Painel operacional das equipes.
+#### Painel operacional das equipes
 &nbsp; &nbsp; &nbsp; &nbsp; Em seguida, apresenta-se o painel operacional da equipe, utilizado pelo juiz para acompanhar o atleta em tempo real durante a corrida, controlar o tempo do turno e registrar checkpoints da competição. A interface também exibe métricas da equipe, como distância percorrida, pace médio, tempo ativo e o histórico dos últimos checkpoints registrados.
 
 
 <div align="center">
   <sub>Figura 48 - Painel de operacional das equipes</sub><br>
-    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+    <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação do painel operacional da equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
-#### Painel operacional das equipes com dropdown.
+#### Painel operacional das equipes com dropdown
 &nbsp; &nbsp; &nbsp; &nbsp;    Abaixo está a funcionalidade de troca de atleta ativo, que permite ao juiz selecionar o próximo participante da equipe durante a competição. A tela apresenta o status atual de cada atleta, indicando quais estão em corrida, em descanso ou prontos para entrar. O processo é realizado por meio de um menu dropdown, proporcionando maior controle operacional e organização durante os revezamentos.
 
 
 <div align="center">
   <sub>Figura 49 - Painel de operacional das equipes com dropdown</sub><br>
-    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
+    <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação do painel operacional com dropdown de troca de atleta ativo"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Captura da foto da esteira.
+#### Captura da foto da esteira
 &nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de captura da foto da esteira, utilizada para registrar os dados do participante durante a competição. Nela, o operador pode visualizar a imagem capturada do painel da esteira referente ao checkpoint atual, além de optar entre realizar um registro manual ou prosseguir com a captura automática para extração dos dados via OCR, garantindo maior agilidade e precisão no processo de validação dos checkpoints.
 
 
 
 <div align="center">
   <sub>Figura 50 - Captura da foto da esteira </sub><br>
-    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de captura da foto da esteira"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Dados extraídos via OCR.
+#### Dados extraídos via OCR
 &nbsp; &nbsp; &nbsp; &nbsp; A figura abaixo apresenta a tela de validação dos dados extraídos automaticamente via OCR a partir da foto capturada da esteira. Nela, o operador pode visualizar a imagem utilizada no processamento, conferir as informações identificadas pelo sistema, como distância, pace e tempo, além de receber alertas em casos de discrepâncias nos dados. A interface também permite corrigir manualmente as informações antes da confirmação e salvamento do checkpoint.
 
 
 <div align="center">
   <sub>Figura 51 - Dados extraídos via OCR </sub><br>
-    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de validação dos dados extraídos via OCR"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Registro Manual.
+#### Registro manual
 &nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo representa a tela de registro manual de checkpoints, utilizada em situações nas quais a captura automática ou a leitura via OCR não funcionem corretamente. Nela, o operador pode inserir manualmente os dados do atleta, como distância percorrida, pace e tempo total, garantindo a continuidade do registro da competição. A interface também exibe um alerta indicando que a ação será registrada no log de auditoria do sistema para fins de rastreabilidade e validação posterior.
 
 
 <div align="center">
   <sub>Figura 52 -  Registro Manual </sub><br>
-    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de registro manual de checkpoint"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-#### Checkpoints salvos.
+#### Checkpoints salvos
 &nbsp; &nbsp; &nbsp; &nbsp;A figura abaixo apresenta a tela de visualização dos checkpoints salvos da equipe durante a competição. Nela, o operador pode acompanhar métricas gerais da equipe, como distância acumulada, pace médio e tempo total registrado, além de visualizar o histórico completo dos checkpoints realizados por cada atleta. A interface também informa o método utilizado em cada registro, permitindo identificar se os dados foram capturados automaticamente ou inseridos manualmente, garantindo maior controle e rastreabilidade das informações registradas no sistema.
 
 
 <div align="center">
   <sub>Figura 53 -  Checkpoints salvos </sub><br>
-    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de cadastro de equipe"><br>
+    <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de checkpoints salvos da equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
-### Ranking em tempo real
+#### Ranking em tempo real
 
 Tela de ranking em tempo real da competição, exibindo métricas globais como total de quilômetros percorridos, pace médio global e número de checkpoints. Na seção "Disputa ao vivo", são apresentadas as duas equipes em competição, com a diferença de quilômetros entre elas. Ao final, exibe os atletas atualmente em corrida, com informações individuais de distância, pace atual e último checkpoint registrado. Um botão "Congelar ranking" está disponível no canto superior direito para pausar a atualização em tempo real.
 
@@ -2533,20 +2531,20 @@ Tela de relatório final da competição, apresentando um resumo geral com total
 
 ### Persona 3 - Amanda Azevedo
 
-#### Painel operacional da equipe.
+#### Painel operacional da equipe
 Painel operacional da Equipe, acessado apenas pelos integrantes da mesma, exibindo métricas em tempo real como tempo de competição, distância para o líder e pace médio da equipe. A seção "Status por atleta da equipe" apresenta uma tabela com dados individuais de cada atleta, incluindo pace médio geral, velocidade máxima, distância percorrida e último checkpoint registrado. Na parte inferior, a "Calculadora de descanso" indica que o atleta atual atingiu 100% do tempo de descanso recomendado (50 min) e está pronto para voltar, apontando o próximo atleta como Rafael Lima. Um gráfico de posição ao longo do tempo complementa o painel, permitindo ao capitão acompanhar a evolução da equipe na disputa.
 
 Durante o processo de validação com o parceiro de projeto, foi identificado que as competições Red Bull 24h não ocorrem simultaneamente em diferentes localidades do Brasil, o que inviabilizou a existência de um ranking global entre eventos distintos. Essa informação levou à reestruturação da tela de equipe, com a remoção do componente de "Ranking global" e a adição de modais quantitativos exibindo o tempo total de competição e o pace médio da equipe, além de um gráfico de evolução da posição da equipe ao longo do evento em função do tempo, tornando o painel mais aderente à realidade operacional da competição.
 
 <div align="center">
   <sub>Figura 56 - Painel operacional da equipe</sub><br>
-    <img src="../assets/design/protótipo/Equipes.png"  width="100%" alt="Representação do painel da equipe acessada vis UUID"><br>
+    <img src="../assets/design/protótipo/Equipes.png"  width="100%" alt="Representação do painel da equipe acessado via UUID"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
 ### Painel TV
-&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela TV criada para ser projetada durante a competição para que o público possa acompanhar dados da competição em tempo real
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela de TV, criada para ser projetada durante a competição, permitindo que o público acompanhe os dados em tempo real.
 
 <div align="center">
   <sub>Figura 56 - Painel TV</sub><br>
@@ -2557,55 +2555,57 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 
 ### Telas de divulgação pós competição
 #### Tela de desempenho do atleta
-&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte dos atletas de seu desempenho na competição. Com informações como quilometragem total, pace mínimo e velocidade máxima alcançada. 
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para que os atletas divulguem seu desempenho na competição, com informações como quilometragem total, pace mínimo e velocidade máxima alcançada.
 
 <div align="center">
   <sub>Figura 56 - Stories de divulgação do atleta</sub><br>
-    <img src="../assets/design/protótipo/insta-atleta.png"  width="100%" alt="Representação da tela de desempnho do atleta divulgada pelos stories do instagram"><br>
+    <img src="../assets/design/protótipo/insta-atleta.png"  width="100%" alt="Representação da tela de desempenho do atleta divulgada pelos stories do Instagram"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Tela de desempenho por período 
-&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte da RedBull dos atletas destaque no período da manhã, tarde, noite e madrugada, considerando a maior quilometragem realizada por atleta em cada um. 
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação, por parte da Red Bull, dos atletas em destaque nos períodos da manhã, tarde, noite e madrugada, considerando a maior quilometragem realizada por atleta em cada um.
 
 <div align="center">
   <sub>Figura 56 - Stories atleta destaque da manhã</sub><br>
-    <img src="../assets/design/protótipo/insta-manha.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da manhã"><br>
+    <img src="../assets/design/protótipo/insta-manha.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da manhã"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stries atleta destaque de tarde</sub><br>
-    <img src="../assets/design/protótipo/insta-tarde.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da tarde"><br>
+  <sub>Figura 56 - Stories atleta destaque da tarde</sub><br>
+    <img src="../assets/design/protótipo/insta-tarde.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da tarde"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque de noite</sub><br>
-    <img src="../assets/design/protótipo/insta-noite.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da noite"><br>
+  <sub>Figura 56 - Stories atleta destaque da noite</sub><br>
+    <img src="../assets/design/protótipo/insta-noite.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da noite"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destque na madrugada</sub><br>
-    <img src="../assets/design/protótipo/insta-madrugada.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque do período da madrugada"><br>
+  <sub>Figura 56 - Stories atleta destaque da madrugada</sub><br>
+    <img src="../assets/design/protótipo/insta-madrugada.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da madrugada"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 #### Tela de atleta destaque 
-&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação por parte da RedBull dos atletas destaques da competição, isso é, o atleta com a maior quilometragem e o atleta com o menor pace registrado da competição
+&nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação, por parte da Red Bull, dos atletas destaques da competição, isto é, o atleta com a maior quilometragem e o atleta com o menor pace registrado.
 
 <div align="center">
   <sub>Figura 56 - Stories atleta destaque com maior quilometragem</sub><br>
-    <img src="../assets/design/protótipo/insta-km.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque com a maior quilometragem realizada durante a competição"><br>
+    <img src="../assets/design/protótipo/insta-km.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque com a maior quilometragem realizada durante a competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
   <sub>Figura 56 - Stories atleta destaque com menor pace</sub><br>
-    <img src="../assets/design/protótipo/insta-pace.png"  width="100%" alt="Representação da tela de stories do instagram para divulgar o atleta destaque com omenor pace realizado durante a competição"><br>
+    <img src="../assets/design/protótipo/insta-pace.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque com o menor pace realizado durante a competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
+
+
 ## 3.6. Modelagem do banco de dados 
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) 
@@ -2860,7 +2860,7 @@ A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### 3.6.2. Diagrama Entidade-Relacionamento (DER)
 
 O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelagem de bancos de dados para representar, de forma visual, as entidades de um sistema, seus atributos e os relacionamentos existentes entre elas. Esse diagrama auxilia na organização e estruturação das informações que serão armazenadas no banco de dados, permitindo uma melhor compreensão da lógica do sistema antes de seu desenvolvimento (Lucid Software Inc., s.d.).
 
@@ -2950,7 +2950,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 </div>
 
 
-## 3.6.3 Modelo Relacional e Modelo Físico (sprints 2 e 4)
+## 3.6.3 Modelo Relacional e Modelo Físico 
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
@@ -3707,7 +3707,7 @@ A consulta considera registros apenas quando a equipe pertence ao conjunto de eq
 
 A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização, remoção e consolidação de informações de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## 3.7. WebAPI e endpoints 
 
 A WebAPI desenvolvida para a aplicação atua como a principal camada de comunicação entre a interface web, os serviços de negócio e o banco de dados, sendo responsável por centralizar o processamento das requisições, aplicar as regras de negócio e controlar o acesso às informações persistidas. Dessa forma, o front-end não realiza acesso direto ao banco de dados; todas as operações de leitura, escrita, validação e atualização são intermediadas pela API, garantindo consistência dos dados, rastreabilidade das operações e maior segurança durante a execução da competição.
 
@@ -3787,7 +3787,7 @@ Além disso, a correspondência entre os endpoints implementados e os requisitos
 
 Dessa forma, a WebAPI constitui um dos principais elementos estruturais da solução desenvolvida, estabelecendo uma interface consistente entre a camada de apresentação e a persistência dos dados, garantindo segurança no acesso às funcionalidades administrativas, padronização das operações realizadas pela aplicação e suporte aos fluxos operacionais críticos do sistema. Sua implementação permite que as informações registradas durante o evento sejam processadas de maneira confiável, auditável e alinhada aos objetivos de negócio definidos para o projeto.
 
-## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência 
 
 ### 3.8.1. Autenticação
 
@@ -3911,7 +3911,7 @@ Toda operação de escrita (criação, atualização, exclusão) e acesso ao pai
 
 *Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
 
-### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+### Resiliência 
  
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
@@ -3961,7 +3961,7 @@ A introdução de *circuit breaker* tornar-se-á efetivamente útil quando o mot
 
 A consolidação apresentada nesta seção mantém coerência direta com a seção 3.7, ao explicitar o `errorHandler` e a hierarquia `AppError` como os mecanismos centrais de tradução do estado interno em códigos HTTP previsíveis, e com a seção 3.2.1, ao alocar cada estratégia futura ao seu ponto natural na arquitetura em camadas — Repository para *timeout* e *retry* sobre o Supabase, Service para *circuit breaker* sobre o motor OCR. As estratégias enquadradas como Trabalho Futuro são candidatas explícitas à seção 7 deste documento, sem que a sua ausência atual comprometa as garantias contratuais já entregues no MVP: a idempotência REST das operações de atualização e remoção e o contrato determinístico de erros do *middleware* central são, em conjunto, a fundação que tornará segura a introdução posterior dos mecanismos ativos de tolerância a falhas.
 
-### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+### 3.9. Matriz de Rastreabilidade (RTM) 
  
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
  
@@ -4029,11 +4029,11 @@ A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem r
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## 4.1. Primeira versão da aplicação web (sprint 3)
+## 4.1. Primeira versão da aplicação web 
 
 ### (a) O que foi implementado
 
-Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin,2002).
+Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin, 2002).
 
 <div align="center">
   <sub>Figura 58 - Estrutura de pastas</sub><br>
@@ -4148,7 +4148,7 @@ Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo
 **5. Dívida técnica identificada na sprint 3**
 Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
 
-## 4.2. Segunda versão da aplicação web (sprint 4)
+## 4.2. Segunda versão da aplicação web 
 
 ### (a) O que foi implementado
 
@@ -4160,9 +4160,9 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 **- Sistema de design modular (CSS):** As folhas de estilo foram organizadas em módulos independentes — variables.css (design tokens de cor, tipografia e espaçamento alinhados ao protótipo de alta fidelidade), garantindo consistência visual e facilitando a manutenção e expansão para as telas restantes.
 
-<div align="center"> <sub>Figura 68 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/estrutura-css.png" width="100%" alt="Estrutura de pastas do public/css"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 68 — Estrutura de pastas do CSS</sub><br> <img src="../assets/programacao/estrutura-css.png" width="100%" alt="Estrutura de pastas do public/css"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-**- Tela de login funcional (RF004, RN02, RN03):** Nessa sprint, foi reconhecida a necessidade e, a paritr disso, criado o protótipo de alta fidelidade da tela de login dos auditores, que não havia sido desenvolvido na sprint 3. A view auth/login.ejs foi implementada com formulário completo de autenticação, integrado ao endpoint POST /admin/login. Ao submeter, o app.js consome a API via fetch, persiste o accessToken retornado no sessionStorage e redireciona para /dashboard. Erros de autenticação são exibidos inline, sem recarregamento de página. A tela inclui toggle de visibilidade da senha e não depende do layout base (renderizada sem sidebar).
+**- Tela de login funcional (RF004, RN02, RN03):** Nesta sprint, reconheceu-se a necessidade de criar o protótipo de alta fidelidade da tela de login dos auditores, que não havia sido desenvolvido na sprint 3. A view auth/login.ejs foi implementada com formulário completo de autenticação, integrado ao endpoint POST /admin/login. Ao submeter, o app.js consome a API via fetch, persiste o accessToken retornado no sessionStorage e redireciona para /dashboard. Erros de autenticação são exibidos inline, sem recarregamento de página. A tela inclui toggle de visibilidade da senha e não depende do layout base (renderizada sem sidebar).
 
 <div align="center"> <sub>Figura 69 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
@@ -4180,11 +4180,15 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 <div align="center"> <sub>Figura 73 — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt2.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-**Evolução do módulo de OCR:** além do protótipo inicial, foram implementadas melhorias significativas na robustez da extração. A principal entrega foi a detecção automática das regiões de interesse do display da esteira, permitindo que o sistema localize e segmente os campos de distância, pace e tempo total independentemente de variações de tamanho, ângulo ou iluminação da imagem capturada. Em paralelo, o banco de imagens de referência foi expandido para cobrir mais cenários reais do ambiente operacional, funcionando como base de testes e adaptação iterativa para aumentar a precisão da extração em condições adversas.
+**- Evolução do módulo de OCR:** além do protótipo inicial, foram implementadas melhorias significativas na robustez da extração. A principal entrega foi a detecção automática das regiões de interesse do display da esteira, permitindo que o sistema localize e segmente os campos de distância, pace e tempo total independentemente de variações de tamanho, ângulo ou iluminação da imagem capturada. Em paralelo, o banco de imagens de referência foi expandido para cobrir mais cenários reais do ambiente operacional, funcionando como base de testes e adaptação iterativa para aumentar a precisão da extração em condições adversas.
 
 ### (b) O que não foi concluído
 
-**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 4.
+**Integração do OCR com o front-end e o back-end:** Apesar dos avanços na precisão e robustez da extração, o módulo de OCR ainda opera de forma isolada. A implementação da interface de captura no front-end e a integração com o endpoint de checkpoints no back-end — fechando o fluxo completo de captura → extração → validação humana → persistência — estão previstas para a sprint 5.
+
+**Funcionamento da calculadora de descanso:** A calculadora de descanso, apesar de implementada, ainda carece de contas complexas que partem de consultas específicas no histórico de cada atleta e seus checkpoints. Não foi possível ajustar perfeitamente esse funcionamento durante a sprint 4.
+
+**Padronização do WAD:** Apesar de boa parte da sprint 4 ter sido voltada à padronização de nomenclatura e seções do wad, ainda sim a seção de modelagem do banco de dados permaneceu desatualizada em relação à situação atual do projeto, carecendo de duas entidades (ocr_extraction e competition_report) e um atributo (started_at em competitions).
 
 ### (c) Dificuldades técnicas
 
@@ -4193,6 +4197,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 **- Compatibilidade entre rotas SSR e rotas de API no mesmo servidor Express:** O registro da rota GET /admin/login precisou ser gerenciado com atenção à ordem de declaração em relação à rota genérica GET /admin/:id já existente — registrar as rotas específicas antes das parametrizadas evitou colisões de roteamento.
 
 **- Propagação de contexto operacional para o painel de checkpoint manual:** Os campos obrigatórios do payload (id_runner, id_competition, id_treadmill, id_admin) precisam chegar à view via locals do SSR ou query string, pois a tela não tem estado próprio para buscá-los. Sem esses dados, o formulário bloqueia o envio com erro de contexto faltante — o fluxo completo depende de uma tela anterior que selecione o atleta e passe o contexto, o que ainda não existe.
+
 
 ### (d) Próximos passos
 
@@ -4207,14 +4212,14 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 **5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo back-end desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
 
 
-## 4.3. Versão final da aplicação web (sprint 5)
+## 4.3. Versão final da aplicação web 
 
 ### (a) O que foi refinado ou adicionado desde a sprint 4
 
-Nesta sprint final, o foco esteve na entrega da camada de autenticação/autorização, no fechamento dos fluxos operacionais críticos para o evento e na estabilização geral do sistema, como a captura por OCR, o desenvolvimento de templates para a divulgação do evento após a competição e, por fim, de testes com pessoas reais para validar o fluxo do sistema, consolidando a versão final da aplicação.
+Nesta sprint final, o foco esteve na entrega da camada de autenticação/autorização, no fechamento dos fluxos operacionais críticos para o evento — como a captura por OCR — e na estabilização geral do sistema. Também foram desenvolvidos os templates para a divulgação do evento após a competição e realizados testes com pessoas reais para validar o fluxo do sistema, consolidando a versão final da aplicação.
 
 
-**Camada de Autenticação e Autorização (RF001, RF004, RN03):** Implementação completa do controle de acesso à área administrativa, com login de administrador, persistência de senha por meio de hash (sem armazenamento em texto plano), criação e controle de sessão e verificação de autorização por rota no backend. O acesso público ao painel da equipe via UUID foi preservado sem autenticação (US12), mantendo a separação entre área privada de operação e área pública de acompanhamento. O detalhamento técnico do fluxo está descrito na [Seção 3.8 — Autenticação, Autorização e Resiliência](#38-autenticação-autorização-e-resiliência-sprint-5).
+**Camada de Autenticação e Autorização (RF001, RF004, RN03):** Implementação completa do controle de acesso à área administrativa, com login de administrador, persistência de senha por meio de hash (sem armazenamento em texto plano), criação e controle de sessão e verificação de autorização por rota no backend. O acesso público ao painel da equipe via UUID foi preservado sem autenticação (US12), mantendo a separação entre área privada de operação e área pública de acompanhamento. O detalhamento técnico do fluxo está descrito na [Seção 3.8 — Autenticação, Autorização e Resiliência](#38).
 
 <div align="center"> <sub>Figura 73 — Frontend da tela login negando acesso</sub><br> <img src="../assets/login-negado.png" width="100%" alt="Representação do frontend da tela login negando acesso ao colocar um email ou senha inválidos"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
@@ -4227,9 +4232,9 @@ Nesta sprint final, o foco esteve na entrega da camada de autenticação/autoriz
 
 <div align="center"> <sub>Figura 73 — Frontend OCR parte 2</sub><br> <img src="../assets/programacao/view-ocr2.png" width="100%" alt="Frontend da OCR após a foto ser tirada"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada srvice referente à API do groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada service referente à API do Groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada srvice referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada service referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Painel de TV para acompanhamento ao vivo (US12):** entrega de protótipo, backend e frontend da tela dedicada à exibição em monitores durante o evento, com atualização automática e consolidação das métricas agregadas da competição (pace médio geral, tempo de prova decorrido, quilometragem total e destaques por equipe). A interface foi projetada para leitura a distância, com fonte ampliada e alto contraste, e acesso público sem autenticação.
@@ -4239,7 +4244,7 @@ Para visualizar o protótipo da Tela TV acesse [Seção 3.5 — Protótipo de al
 <div align="center"> <sub>Figura 73 — Camada routes referente ao Painel TV</sub><br> <img src="../assets/programacao/routes-painelTV.png" width="100%" alt="Código da camada routes referente ao painel TV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
-**Telas para Instagram:** entrega de protótipo, backend e frontend das telas voltadas à geração de conteúdo para divulgação nas redes sociais do evento, permititindo o compartilhamento de resultados e destaques da competição em formato adequado à plataforma.
+**Telas para Instagram:** entrega de protótipo, backend e frontend das telas voltadas à geração de conteúdo para divulgação nas redes sociais do evento, permitindo o compartilhamento de resultados e destaques da competição em formato adequado à plataforma.
 
 Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
@@ -4253,13 +4258,13 @@ Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — 
 
 
 
-<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — View da tabela de informações exportada (atletas)</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — View da tabela de informações exportada (checkpoints)</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em XSLX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em XLSX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XLSX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service referente à exportação em XSLX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 73 — Camada service referente à exportação em XLSX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XLSX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Aviso de inconsistência (RN06):** implementação do alerta visual acionado quando há divergência entre os dados capturados via OCR e os valores esperados/corrigidos manualmente, reforçando a confiabilidade do processo de validação humana antes da persistência.
@@ -4267,14 +4272,14 @@ Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — 
 <div align="center"> <sub>Figura 73 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
-**Calculadora de descanso e gráfico de performance do atleta:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
+**Calculadora de descanso:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
 
 <div align="center"> <sub>Figura 73 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **Estabilização da suíte de testes:** consolidação e estabilização da suíte automatizada (E2E, unitário e integração), eliminando as colisões de dados únicos entre execuções identificadas como dívida técnica nas sprints anteriores e garantindo execução consistente e repetível.
 
 
-**Testes de usabilidade:** realização dos testes de usabilidade com usuários, cujos relatórios e resultados estão documentados na [Seção 5.2 — Testes de usabilidade](#52-testes-de-usabilidade-sprint-5), fornecendo evidências para os ajustes finais de interface.
+**Testes de usabilidade:** realização dos testes de usabilidade com usuários, cujos relatórios e resultados estão documentados na [Seção 5.2 — Testes de usabilidade](#52), fornecendo evidências para os ajustes finais de interface.
 
 
 
@@ -4296,7 +4301,7 @@ Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e to
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes de integração de endpoints automatizados 
 
 ### 5.1.1 Estratégia de Testes
 
@@ -4735,7 +4740,7 @@ Os testes automatizados implementados foram relacionados às respectivas regras 
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
-## 5.2. Testes de usabilidade
+## <a name="52"></a>5.2. Testes de usabilidade 
 
 ### 5.2.1. Relatório de testes de guerrilha
 
@@ -5265,7 +5270,7 @@ A divulgação da solução concentra-se na geração de evidências de valor e 
 
 O próprio Red Bull 24 Horas funciona como principal canal de promoção, permitindo demonstrações da solução durante a competição e evidenciando sua aplicação em um contexto real de uso. As estratégias de relacionamento, por meio da comunicação pós-evento com organizadores, operadores e capitães de equipe, fortalecem a percepção de valor da plataforma ao longo do tempo. Além disso, a associação à marca Red Bull confere credibilidade à solução, enquanto a participação das running crews contribui para ampliar sua visibilidade dentro da comunidade esportiva.
 
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c7"></a>7. Conclusões e trabalhos futuros 
 
 ### Atingimento dos objetivos
 A solução desenvolvida para o Red Bull 24 Horas foi concebida para responder aos benefícios esperados e aos critérios de sucesso estabelecidos na Seção 2. A avaliação a seguir considera cada objetivo de forma individualizada.
@@ -5301,96 +5306,94 @@ A partir da avaliação de usabilidade, e tendo em vista a margem de melhoria si
 **Refinamento e integração do OCR:** Elevar a precisão da extração de distância, pace e tempo total; tratar variações de iluminação e de posicionamento do display; ajustar o limiar de discrepância que dispara os alertas de inconsistência; e consolidar o ciclo captura → extração → validação humana → persistência de forma integrada ao frontend e ao backend, reduzindo a fricção percebida no fluxo de registro.
 
 
-**Aprimoramento da calculadora de descanso e do gráfico de performance do atleta:** Refinar a lógica de cálculo e a visualização das informações, com o refinamento do uso de biblioteca de gráficos, de modo a tornar a leitura dos dados mais clara e imediata.
+**Refinamento de UX e design:** A partir dos pontos de fricção sinalizados pelas menores pontuações do SUS, propõe-se revisar os fluxos de maior atrito identificados nos testes de guerrilha, com foco na redução do número de interações para as tarefas críticas de registro de checkpoint e validação de dados; ampliar o feedback visual imediato — indicadores de estado e mensagens de erro contextuais — para reduzir ambiguidade em momentos de decisão rápida; e ajustar a hierarquia visual das telas operacionais para que as ações primárias sejam acessíveis sem rolagem, respeitando as dimensões de tela do iPad e as condições do ambiente do evento.
 
 ### Trabalhos futuros
 Além dos planos derivados dos testes, o grupo mapeou as seguintes oportunidades de evolução da solução:
 
 **Integração direta na esteira para captura automática de dados:** Investigar a possibilidade de integração entre a aplicação web e a infraestrutura da esteira, de modo a capturar os dados de desempenho (distância, pace, tempo) automaticamente, sem necessidade de fotografar o visor. Esta integração permitiria eliminar a dependência de OCR em determinadas condições e aumentar a precisão e a frequência de coleta de dados, reduzindo ainda mais a intervenção humana manual.
+
+
 **Aumentar o número de templates de divulgação para redes sociais:** Desenvolver uma maior suite de templates pré-formatados para divulgação de resultados, rankings parciais e momentos highlights do evento em redes sociais (Instagram, Twitter/X, Facebook). Esta funcionalidade possibilitaria ao parceiro compartilhar atualizações do evento em tempo real, amplificando o engajamento da comunidade e o alcance da marca durante a competição.
 **Tratamento de dívidas técnicas: centralização do tratamento de erros de constraint do PostgreSQL e padronização do ambiente de testes ponta a ponta, com vistas à robustez e à manutenibilidade do sistema.
 
 Em síntese, a solução desenvolvida cumpriu os objetivos funcionais previstos no escopo e demonstrou boa usabilidade, conforme evidenciado pela avaliação SUS de 80,71 pontos, ao mesmo tempo em que deixa mapeado um conjunto consistente de melhorias e trabalhos futuros capazes de ampliar sua precisão, sua abrangência analítica e sua aderência às necessidades operacionais do parceiro.
 
 
+# <a name="c8"></a>8. Referências 
 
+ABRACEO; TICKET SPORTS. **Perfil do Atleta Brasileiro 25/26**. 2026. Disponível em: https://hub.ticketsports.com.br/perfil-atleta-brasileiro-2025-ticket-sports/. Acesso em: 11 jun. 2026.
 
+AMAZON WEB SERVICES. **A diferença entre modelo de dados lógico e físico**. 2024. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. **Software Architecture in Practice**. 3. ed. Boston: Addison-Wesley, 2012.
 
-ABRACEO; TICKET SPORTS. Perfil do Atleta Brasileiro 25/26. 2026. Disponível em: <https://hub.ticketsports.com.br/perfil-atleta-brasileiro-2025-ticket-sports/>. Acesso em: 11 jun. 2026.
+BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. **The Unified Modeling Language User Guide**. 2. ed. Boston: Addison-Wesley, 2005.
 
-AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. 2024. Disponível em: <https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/>. Acesso em: 11 maio 2026.
+BROOKE, John. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). **Usability Evaluation in Industry**. London: Taylor & Francis, 1996. p. 189–194. Disponível em: https://hell.meiert.org/core/pdf/sus.pdf. Acesso em: 17 jun. 2026.
 
-BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
+CARTACAPITAL. **Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano**. 2026. Disponível em: https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026. Acesso em: 11 jun. 2026.
 
-BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. The Unified Modeling Language User Guide. 2. ed. Boston: Addison-Wesley, 2005.
+CASAROTTO, Camila. **Análise SWOT**: o que é e como fazer. Rock Content, 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
 
-BROOKE, John. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). Usability Evaluation in Industry. London: Taylor & Francis, 1996. p. 189–194. Disponível em: <https://hell.meiert.org/core/pdf/sus.pdf>. Acesso em: 17 jun. 2026.
+CODD, Edgar F. A Relational Model of Data for Large Shared Data Banks. **Communications of the ACM**, New York, v. 13, n. 6, p. 377–387, 1970.
 
-CARTACAPITAL. Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano. 2026. Disponível em: <https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026>. Acesso em: 11 jun. 2026.
+CREDERA. **The BA perspective**: How to INVEST in a good user story. 2023. Disponível em: https://www.credera.com/en-gb/insights/ba-perspective-invest-good-user-story. Acesso em: 1 maio 2026.
 
-CASAROTTO, Camila. Análise SWOT: o que é e como fazer. Rock Content, 2019. Disponível em: <https://rockcontent.com/br/blog/analise-swot/>. Acesso em: 1 maio 2026.
+FIGUEIREDO, R. M. **Diagrama de Sequência**. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
 
-CODD, Edgar F. A Relational Model of Data for Large Shared Data Banks. Communications of the ACM, New York, v. 13, n. 6, p. 377–387, 1970.
+FINCH, Grace. **What is acceptance criteria?** Definition, examples, & tips. Atlassian, 2026. Disponível em: https://www.atlassian.com/work-management/project-management/acceptance-criteria. Acesso em: 1 maio 2026.
 
-CREDERA. The BA perspective: How to INVEST in a good user story. 2023. Disponível em: <https://www.credera.com/en-gb/insights/ba-perspective-invest-good-user-story>. Acesso em: 1 maio 2026.
+FOWLER, Martin. **Patterns of Enterprise Application Architecture**. Boston: Addison-Wesley, 2002.
 
-FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: <https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf>. Acesso em: 12 maio 2026.
+GARRETT, Jesse James. **The Elements of User Experience**: User-Centered Design for the Web and Beyond. 2. ed. Berkeley: New Riders, 2011.
 
-FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison-Wesley, 2002.
+GRAND VIEW RESEARCH. **Brazil optical character recognition market size & outlook, 2030**. [s.d.]. Disponível em: https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil. Acesso em: 11 jun. 2026.
 
-GARRETT, Jesse James. The Elements of User Experience: User-Centered Design for the Web and Beyond. 2. ed. Berkeley: New Riders, 2011.
+HUBSPOT. **Segmentação de mercado**. HubSpot, 2025. Disponível em: https://br.hubspot.com/glossary/market-segmentation. Acesso em: 11 jun. 2026.
 
-GRACE, Finch. What is acceptance criteria? Definition, examples, & tips. Atlassian, 2026. Disponível em: <https://www.atlassian.com/work-management/project-management/acceptance-criteria>. Acesso em: 1 maio 2026.
+INTERACTION DESIGN FOUNDATION. **What are user stories?** [s.d.]. Disponível em: https://www.interaction-design.org/literature/topics/user-stories. Acesso em: 1 maio 2026.
 
-GRAND VIEW RESEARCH. Brazil optical character recognition market size & outlook, 2030. [s.d.]. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil>. Acesso em: 11 jun. 2026.
+INTERNET ENGINEERING TASK FORCE (IETF). **HTTP Semantics**. RFC 9110. 2022. Disponível em: https://www.ietf.org/rfc/rfc9110.html. Acesso em: 28 maio 2026.
 
-HUBSPOT. Segmentação de mercado. HubSpot, 2025. Disponível em: <https://br.hubspot.com/glossary/market-segmentation>. Acesso em: 11 jun. 2026.
+ITATIAIA. **BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes**. 2025. Disponível em: https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/. Acesso em: 6 jun. 2026.
 
-INTERNET ENGINEERING TASK FORCE (IETF). HTTP Semantics. RFC 9110. 2022. Disponível em: <https://www.ietf.org/rfc/rfc9110.html>. Acesso em: 28 maio 2026.
+JOEL. **MER e DER**: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
 
-INTERACTION DESIGN FOUNDATION. What are user stories? [s.d.]. Disponível em: <https://www.interaction-design.org/literature/topics/user-stories>. Acesso em: 1 maio 2026.
+LETS EVENTS. **O papel da tecnologia na organização de eventos de sucesso**. 22 abr. 2024. Disponível em: https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/. Acesso em: 2 jun. 2026.
 
-ITATIAIA. BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes. 2025. Disponível em: <https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/>. Acesso em: 6 jun. 2026.
+LUCID SOFTWARE INC. **O que é um diagrama entidade relacionamento?** [s.d.]. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.
 
-JOEL. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: <https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332>. Acesso em: 7 maio 2026.
+MANIA DE CORRIDA. **Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro**. 2025. Disponível em: https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html. Acesso em: 11 jun. 2026.
 
-LETS EVENTS. O papel da tecnologia na organização de eventos de sucesso. 22 abr. 2024. Disponível em: <https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/>. Acesso em: 2 jun. 2026.
+MARTIN, Robert C. **Agile Software Development**: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
 
-LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento? [s.d.]. Disponível em: <https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento>. Acesso em: 6 maio 2026.
+MICROSOFT. **Web API design best practices**. Microsoft Learn, 2023. Disponível em: https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design. Acesso em: 1 maio 2026.
 
-MANIA DE CORRIDA. Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro. 2025. Disponível em: <https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html>. Acesso em: 11 jun. 2026.
+MUNDO DO MARKETING. **Os profissionais de Marketing no Brasil**: dados mostram maioria feminina e faixa etária madura. [s.d.]. Disponível em: https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura. Acesso em: 2 jun. 2026.
 
-MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: <https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices>. Acesso em: 28 maio 2026.
+NIELSEN NORMAN GROUP. **Personas**. 2025. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 1 maio 2026.
 
-MICROSOFT. Web API design best practices. Microsoft Learn, 2023. Disponível em: <https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design>. Acesso em: 1 maio 2026.
+OSTERWALDER, Alexander; PIGNEUR, Yves. **Business Model Generation**. Hoboken: John Wiley & Sons, 2010.
 
-MUNDO DO MARKETING. Os profissionais de Marketing no Brasil: dados mostram maioria feminina e faixa etária madura. [s.d.]. Disponível em: <https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura>. Acesso em: 2 jun. 2026.
+OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design**. Hoboken: John Wiley & Sons, 2011.
 
-NIELSEN NORMAN GROUP. Personas. 2025. Disponível em: <https://www.nngroup.com/articles/persona/>. Acesso em: 1 maio 2026.
+PERERA, Nuwan. **Understanding Crow’s Foot Notation**: Symbols & Usage Guide. Creately, 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation. Hoboken: John Wiley & Sons, 2010.
+PLANTUML. **PlantUML**: open-source tool that uses simple textual descriptions to draw UML diagrams. [s.d.]. Disponível em: https://plantuml.com. Acesso em: 12 maio 2026.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Value Proposition Design. Hoboken: John Wiley & Sons, 2011.
+PM3. **Style guide**: o que é e como criar um guia de estilo para produtos digitais. [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/. Acesso em: 13 maio 2026.
 
-PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 2026. Disponível em: <https://creately.com/guides/crows-foot-notation/>. Acesso em: 11 maio 2026.
+PORTER, Michael E. The Five Competitive Forces That Shape Strategy. **Harvard Business Review**, Boston, v. 86, n. 1, p. 78–93, 2008.
 
-PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. [s.d.]. Disponível em: <https://plantuml.com>. Acesso em: 12 maio 2026.
+PROJECT MANAGEMENT INSTITUTE (PMI). **A guide to the project management body of knowledge (PMBOK guide)**. 7. ed. Newtown Square: Project Management Institute, 2021.
 
-PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. [s.d.]. Disponível em: <https://pm3.com.br/blog/style-guide/>. Acesso em: 13 maio 2026.
+RED BULL. **Red Bull 24 Hours**. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
 
-PORTER, Michael E. The Five Competitive Forces That Shape Strategy. Harvard Business Review, Boston, v. 86, n. 1, p. 78–93, 2008.
+VIAL, Gregory. Understanding Digital Transformation: A Review and a Research Agenda. **The Journal of Strategic Information Systems**, [S. l.], v. 28, n. 2, p. 118–144, 2019.
 
-PROJECT MANAGEMENT INSTITUTE (PMI). A guide to the project management body of knowledge (PMBOK guide). 7. ed. Newtown Square: Project Management Institute, 2021.
-
-RED BULL. Red Bull 24 Hours. 2025. Disponível em: <https://www.redbull.com/se-en/events/24-hours>. Acesso em: 1 maio 2026.
-
-VIAL, Gregory. Understanding Digital Transformation: A Review and a Research Agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
-
-WEBRUN. Red Bull 24 Horas: equipe paulista corre 343 km e se consagra campeã nacional. 2025. Disponível em: <https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro>. Acesso em: 11 jun. 2026.
+WEBRUN. **Red Bull 24 Horas**: equipe paulista corre 343 km e se consagra campeã nacional. 2025. Disponível em: https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro. Acesso em: 11 jun. 2026.
 
 
 # <a name="c9"></a>Anexos
-
-*Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
+Não se aplica.
