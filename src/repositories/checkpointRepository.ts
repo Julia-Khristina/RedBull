@@ -114,7 +114,15 @@ export const checkpointRepository: CheckpointRepository = {
       competitionId
     );
 
-    return checkpoints.filter((checkpoint) => !checkpoint.runner);
+    return checkpoints.filter((checkpoint) => {
+      if (!checkpoint.runner) return true;
+
+      const id = String(checkpoint.identifier ?? "").toUpperCase();
+      const image = checkpoint.image as Record<string, unknown> | null;
+      const correctedManually = image?.corrected_manually === true;
+
+      return correctedManually || id.startsWith("OCR-EDITED-") || id.startsWith("CORRIGIDO-") || id.startsWith("CORREÇÃO-") || id.startsWith("REVISADO-");
+    });
   },
 
   async update(

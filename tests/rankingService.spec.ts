@@ -11,7 +11,6 @@ const baseCheckpoint: Checkpoint = {
   image: null,
   id_runner: 1,
   id_competition: 1,
-  id_treadmill: 1,
   id_admin: 1,
   created_at: "2026-05-01T10:00:00.000Z",
 };

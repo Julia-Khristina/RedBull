@@ -8,7 +8,8 @@
     - "Calculadora de descanso": 120 min (2h) default — RN08 exige parâmetros do evento não expostos via API [D3 — não implementável sem novo endpoint]
     - Percentual de descanso computado por tempo decorrido desde último checkpoint, não por fórmula oficial [D2]
     - "Posição durante à competição" (gráfico) — histórico temporal de ranking não disponível na Seção 7 [D3 — placeholder]
-    - "Tempo de competição" calculado a partir de competition.date meia-noite (sem campo start_time) [D2]
+    - "Tempo de competição" agora usa competition.started_at (marco real da ativação) ao invés de competition.date meia-noite [Implementado]
+    - Ao encerrar a competição (closed), o cronômetro mostra "00:00:00" [Implementado]
   DECISÕES VALIDADAS (humano):
     - RN13: exibir dados individuais por atleta (pace/velocidade/distância) foi APROVADO seguindo o Figma Equipes.png — não simplificar o leaderboard nesta tela.
   ENDPOINTS CONSUMIDOS (via SSR):
@@ -18,7 +19,7 @@
     - rankingService.generateTeamRanking(id)       [A1][B1]
     - rankingService.generateRunnerRanking(id)     [A1][B1]
     - checkpointService.findByCompetition(id)      [A1][B1]
-  ÚLTIMA ATUALIZAÇÃO: Sprint atual
+  ÚLTIMA ATUALIZAÇÃO: Sprint atual — corrida implementada em runnerController.ts:40 (computeElapsedTime usa started_at + status)
 %>
 
 <main class="runner-main">
@@ -34,6 +35,7 @@
           Ranking global
         <% } %>
       </p>
+      <p class="runner-competition-time"><%= competitionTimeFormatted %></p>
     </div>
 
     <div class="runner-header-actions">
@@ -62,9 +64,8 @@
   <section class="runner-metrics" aria-label="Métricas da equipe">
 
     <div class="metric-card">
-      <p class="metric-label">Tempo de competição</p>
-      <%# [D2] Calculado a partir de competition.date meia-noite — sem start_time no model %>
-      <p class="metric-value"><%= competitionTimeFormatted %></p>
+      <p class="metric-label">Total da equipe</p>
+      <p class="metric-value"><%= teamStats.total_distance_km.toFixed(1).replace('.', ',') %> km</p>
     </div>
 
     <div class="metric-card">
@@ -236,48 +237,6 @@
 
         </div>
       </div>
-    </div>
-
-    <%# Gráfico de posição — [D3] placeholder %>
-    <div class="chart-section">
-      <h3 class="chart-title">Posição durante à competição</h3>
-
-      <%#
-        [D3 ⚠ NÃO IMPLEMENTADO — aguardando confirmação]
-        Histórico temporal de ranking não está disponível em nenhum endpoint da Seção 7.
-        Implementar quando endpoint de série temporal for disponibilizado.
-      %>
-      <svg class="chart-placeholder-svg" viewBox="0 0 360 160" aria-label="Gráfico de posição — dados indisponíveis">
-
-        <%# Eixos %>
-        <line x1="40" y1="20" x2="40" y2="140" stroke="var(--bordas-separadores)" stroke-width="1.5"/>
-        <line x1="40" y1="140" x2="340" y2="140" stroke="var(--bordas-separadores)" stroke-width="1.5"/>
-
-        <%# Labels eixo Y (posições) %>
-        <text x="30" y="25" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">1</text>
-        <text x="30" y="60" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">2</text>
-        <text x="30" y="95" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">3</text>
-        <text x="30" y="140" text-anchor="end" font-family="var(--font-family)" font-size="10" fill="#aaa">4</text>
-
-        <%# Labels eixo X (tempo) %>
-        <text x="40"  y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">0h</text>
-        <text x="130" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">6h</text>
-        <text x="220" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">12h</text>
-        <text x="310" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">18h</text>
-        <text x="340" y="155" text-anchor="middle" font-family="var(--font-family)" font-size="10" fill="#aaa">24h</text>
-
-        <%# Curva decorativa — linha tracejada indicando dados indisponíveis %>
-        <path d="M40,80 C90,60 140,100 190,70 S280,50 340,80"
-              fill="none" stroke="var(--azul-secundario)" stroke-width="2"
-              stroke-dasharray="6 4" opacity="0.4"/>
-
-        <%# Texto central indicando lacuna %>
-        <text x="190" y="82" text-anchor="middle"
-              font-family="var(--font-family)" font-size="11" fill="#aaa">
-          Dados históricos indisponíveis
-        </text>
-
-      </svg>
     </div>
 
   </section>
