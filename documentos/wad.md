@@ -269,9 +269,8 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 
  De forma complementar, o Quadro 2 a seguir apresenta a matriz de oportunidades identificadas para o projeto.
 
-<div align="center">
-  <sub>Quadro 2 - Matriz de oportunidades do projeto</sub>
-</div>
+<p align = "center"> Quadro 2 - Matriz de Oportunidades do projeto </p> 
+
 
 | Oportunidade | Descrição | Probabilidade | Impacto | Classificação | Plano de Resposta |
 |--------------|----------|--------------|--------|--------------|-------------------|
@@ -693,23 +692,6 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Critérios INVEST         | Independente: A calculadora pode ser implementada sem dependência das demais funcionalidades do painel público. <br> Negociável: As regras de cálculo e os indicadores podem ser ajustados conforme testes futuros. <br> Valorosa: Auxilia atletas no gerenciamento de descanso durante a competição. <br> Estimável: A lógica de cálculo e exibição possui escopo claro. <br> Pequena: Escopo limitado à recomendação de descanso. <br> Testável: Os indicadores e tempos exibidos podem ser verificados objetivamente. |
 
 
-<div align="center">
-  <sub>Quadro 18 - User Story 16 </sub>
-</div>
-
-| Identificação            | US16 |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**              | Amanda Azevedo (Atleta) |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso gerar templates visuais personalizados com meus dados de desempenho para compartilhar no Instagram, para divulgar minha participação e resultados nas redes sociais." |
-| **Critério de aceite 1** | CR1: O template deve exibir os dados reais de desempenho do atleta selecionado dentro da equipe acessada por UUID (maior KM, menor pace, desempenho por período). **Teste**: Dado que um atleta é selecionado na página pública da equipe e um template é escolhido, quando a página é renderizada, então os campos de destaque devem conter os dados reais da equipe e do atleta selecionado. |
-| **Critério de aceite 2** | CR2: O template deve permitir o download como imagem PNG. **Teste**: Dado que o template está renderizado na tela, quando o usuário clica em "Baixar PNG", então uma imagem PNG deve ser baixada contendo o layout visual completo. |
-| **Critério de aceite 3** | CR3: O upload da foto do atleta deve ser processado localmente sem envio ao servidor. **Teste**: Dado que o usuário seleciona uma foto no input de arquivo, quando a imagem é carregada, então ela deve ser exibida no círculo do template sem nenhuma requisição ao backend. |
-| Critérios INVEST         | Independente: Pode ser implementada sem depender de outras funcionalidades de compartilhamento. <br> Negociável: A quantidade e o layout dos templates podem ser ajustados. <br> Valorosa: Permite que atletas divulguem seus resultados nas redes sociais. <br> Estimável: O escopo de geração de templates é bem definido. <br> Pequena: Funcionalidade específica e isolada. <br> Testável: A renderização e o download podem ser verificados. |
-
-
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web
 
@@ -719,10 +701,10 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 
 ### 3.1.1. Requisitos Funcionais
 
-O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
 
 <div align="center">
-  <sub>Quadro 19 - Requisitos Funcionais </sub>
+  <sub>Quadro 18 - Requisitos Funcionais </sub>
 </div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
@@ -752,7 +734,7 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 ### 3.1.1.1 Critérios de Aceite dos Requisitos Funcionais
 
 <div align="center">
-  <sub>Quadro 20 - Critérios de Aceite dos Requisitos Funcionais </sub>
+  <sub>Quadro 19 - Critérios de Aceite dos Requisitos Funcionais </sub>
 </div>
 
 | RF    | Critério de Aceite                                                                                                                                                                    |
@@ -781,10 +763,10 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio 
 
-No Quadro 21, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 20, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 21 - Regras de Negócio </sub>
+  <sub>Quadro 20 - Regras de Negócio </sub>
 </div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
@@ -816,10 +798,10 @@ No Quadro 21, são apresentadas as regras de negócio do sistema, as quais defin
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
-Os requisitos não funcionais apresentados no Quadro 22 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 22), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
+Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 21), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
 
 <div align="center">
-  <sub>Quadro 22 - Requisitos Não Funcionais </sub>
+  <sub>Quadro 21 - Requisitos Não Funcionais </sub>
 </div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Status                      | Como atendido                                      |
@@ -863,7 +845,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 <div align="center">
 
-  <sub>Quadro 23 - Matriz RF → RN → Endpoint</sub>
+  <sub>Quadro 22 - Matriz RF → RN → Endpoint</sub>
 
 </div>
 
@@ -927,7 +909,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Responsabilidades
 
 <div align="center">
-  <sub>Quadro 24 - Responsabilidades das Camadas</sub>
+  <sub>Quadro 23 - Responsabilidades das Camadas</sub>
 </div>
 
 | Camada | Responsabilidade | O que não faz | Pasta do projeto |
@@ -948,7 +930,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Rastreabilidade
 
 <div align="center">
-  <sub>Quadro 25 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
+  <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
 </div>
 
 | Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
@@ -1037,11 +1019,11 @@ de modo que alterações futuras possam ser realizadas no código-fonte
 e o PNG regerado via Kroki sem retrabalho manual em ferramentas
 visuais.
 
-Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
-
-![Diagrama de Casos de Uso](../assets/programacao/diagrama_caso_uso.png)
-
-Fonte: Material produzido pelos autores (2026).
+<div align="center">
+  <sub>Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas</sub><br>
+  <img src="../assets/programacao/diagrama_caso_uso.png" width="100%" alt="Representação visual do diagrama de casos de uso."><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 O **Administrador** unifica as personas Marina Costa (Coordenadora
 Operacional) e Bruno Monteiro (Gerente de Field Marketing) e
@@ -1097,17 +1079,14 @@ exportação é parte integrante da tela de relatórios consolidados.
 A literatura de UML recomenda que cada caso de uso identificado no
 diagrama seja acompanhado por uma descrição estruturada, com seus
 atores, pré-requisitos, pós-requisitos e fluxos principais e
-alternativos (BOOCH; RUMBAUGH; JACOBSON, 2006). Os quadros a seguir
+alternativos (Booch; Rumbaugh; Jacobson, 2006). Os quadros a seguir
 apresentam essa descrição para cada um dos vinte e um casos de uso da
 Figura 9, identificados pelos rótulos UC01 a UC21 e agrupados pelos
-quatro pacotes funcionais introduzidos anteriormente. A numeração
-adotada é interna a esta subseção (UC), independente da numeração de
-Quadros do restante do WAD, para evitar conflito com a numeração já
-estabelecida em outras seções.
+quatro pacotes funcionais introduzidos anteriormente. Cada caso de uso é apresentado em um quadro próprio, numerado de forma contínua com os demais Quadros do WAD (Quadros 25 a 45); os rótulos UC01 a UC21 são mantidos como identificadores internos para as referências cruzadas ao longo do texto.
 
 ##### Pacote: Operação da competição
 
-<div align="center"><sub>UC01 — Acessar painel administrativo</sub></div>
+<div align="center"><sub>Quadro 25 - UC01 — Acessar painel administrativo</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1120,7 +1099,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Credenciais inválidas → sistema responde HTTP 401, exibe mensagem de erro e mantém o Administrador na tela de login; sessão não iniciada. |
 | **RFs/RNs relacionados** | RF04, RN03 |
 
-<div align="center"><sub>UC02 — Gerenciar administradores</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 26 - UC02 — Gerenciar administradores</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1133,7 +1116,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. E-mail duplicado em cadastro/atualização → `AdminService` lança `ConflictError`, sistema rejeita a operação e persistência não é realizada. 2b. Identificador inexistente em consulta/atualização/remoção → `AdminService` lança `NotFoundError` e o sistema retorna HTTP 404. |
 | **RFs/RNs relacionados** | RF04 |
 
-<div align="center"><sub>UC03 — Criar competição</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 27 - UC03 — Criar competição</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1146,7 +1133,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Parâmetros inválidos → sistema rejeita a criação com mensagem de erro; nenhuma persistência ocorre. |
 | **RFs/RNs relacionados** | RF02, RN02 |
 
-<div align="center"><sub>UC04 — Encerrar competição</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 28 - UC04 — Encerrar competição</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1159,7 +1150,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Competição já encerrada ou ainda não iniciada → sistema rejeita a transição com mensagem informativa. |
 | **RFs/RNs relacionados** | RF12, RN14 |
 
-<div align="center"><sub>UC05 — Cadastrar equipes e atletas</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 29 - UC05 — Cadastrar equipes e atletas</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1172,7 +1167,7 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Nome de equipe duplicado na competição → sistema rejeita o cadastro e exibe mensagem de erro. 5a. Limite de atletas excedido → sistema bloqueia o cadastro adicional e orienta o Administrador. |
 | **RFs/RNs relacionados** | RF01, RF03, RN01, RN17 |
 
-<div align="center"><sub>UC06 — Gerar UUID (include)</sub></div>
+<div align="center"><sub>Quadro 30 - UC06 — Gerar UUID (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1185,7 +1180,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF01, RN01 |
 
-<div align="center"><sub>UC07 — Visualizar painel operacional</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 31 - UC07 — Visualizar painel operacional</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1198,9 +1197,13 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Nenhuma competição selecionada → sistema redireciona o Administrador para a tela de seleção de competição. |
 | **RFs/RNs relacionados** | RF05, RF09 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ##### Pacote: Registro de checkpoints
 
-<div align="center"><sub>UC08 — Selecionar atleta ativo (include)</sub></div>
+<div align="center"><sub>Quadro 32 - UC08 — Selecionar atleta ativo (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1213,7 +1216,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Atleta não pertence à equipe selecionada → sistema rejeita a operação. |
 | **RFs/RNs relacionados** | RF08, RN04 |
 
-<div align="center"><sub>UC09 — Registrar checkpoint via OCR</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 33 - UC09 — Registrar checkpoint via OCR</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1226,7 +1233,7 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 3a. Tesseract retorna resultado incompleto e Groq indisponível ou desativada → sistema responde `422 Unprocessable` e oferece ao Administrador o caminho de UC10 (registro manual). 4a. Erro de credencial Groq (`401`/`403`) → sistema desativa Groq para a sessão e registra o erro em log. |
 | **RFs/RNs relacionados** | RF05, RF06, RN06 |
 
-<div align="center"><sub>UC10 — Registrar checkpoint manual</sub></div>
+<div align="center"><sub>Quadro 34 - UC10 — Registrar checkpoint manual</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1239,7 +1246,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Métricas inválidas (formato incorreto, valores fora de faixa) → sistema rejeita o envio com mensagem de erro de validação; persistência não realizada. |
 | **RFs/RNs relacionados** | RF07, RF08, RN04, RN05, RN12 |
 
-<div align="center"><sub>UC11 — Confirmar dados do checkpoint (include)</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 35 - UC11 — Confirmar dados do checkpoint (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1252,9 +1263,13 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 3a. Administrador edita as métricas antes de confirmar → o sistema atualiza a previsão e segue o fluxo. 3b. Administrador rejeita o registro → métricas descartadas, nenhum checkpoint é persistido. |
 | **RFs/RNs relacionados** | RN05, RN06 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ##### Pacote: Acompanhamento e relatórios
 
-<div align="center"><sub>UC12 — Acessar ranking</sub></div>
+<div align="center"><sub>Quadro 36 - UC12 — Acessar ranking</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1267,7 +1282,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Nenhum checkpoint registrado → sistema retorna ranking vazio com mensagem informativa. |
 | **RFs/RNs relacionados** | RF10, RF15, RN09, RN11 |
 
-<div align="center"><sub>UC13 — Acessar relatório</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 37 - UC13 — Acessar relatório</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1280,11 +1299,15 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF13 |
 
-<div align="center"><sub>UC14 — Exportar dados em CSV (include)</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 38 - UC14 — Exportar dados em XLSX (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
-| **Descrição** | Sistema gera o arquivo CSV consolidado a partir dos dados da competição, possibilitando análises externas e arquivamento. |
+| **Descrição** | Sistema gera o arquivo XLSX consolidado a partir dos dados da competição, possibilitando análises externas e arquivamento. |
 | **Ator primário** | Administrador (acionando a exportação a partir de UC13) |
 | **Atores secundários** | — |
 | **Pré-requisitos** | UC13 em execução. |
@@ -1293,7 +1316,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF13 |
 
-<div align="center"><sub>UC15 — Consultar checkpoints inconsistentes</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 39 - UC15 — Consultar checkpoints inconsistentes</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1306,7 +1333,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Nenhum checkpoint inconsistente → sistema retorna lista vazia (HTTP 200 com payload `[]` ou tabela com mensagem informativa no relatório). |
 | **RFs/RNs relacionados** | RF13, RN05 |
 
-<div align="center"><sub>UC16 — Exibir painel da competição em TV</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 40 - UC16 — Exibir painel da competição em TV</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1319,9 +1350,13 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. `:competitionId` inexistente → sistema retorna HTTP 404 com a tela pública de erro. |
 | **RFs/RNs relacionados** | RF11 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ##### Pacote: Painel público das equipes
 
-<div align="center"><sub>UC17 — Acessar painel via UUID</sub></div>
+<div align="center"><sub>Quadro 41 - UC17 — Acessar painel via UUID</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1334,7 +1369,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. UUID inexistente ou removido → sistema retorna HTTP 404 com a tela pública de erro. |
 | **RFs/RNs relacionados** | RF14, RN13, RN17 |
 
-<div align="center"><sub>UC18 — Visualizar ranking global</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 42 - UC18 — Visualizar ranking global</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1347,7 +1386,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF10, RF15 |
 
-<div align="center"><sub>UC19 — Ver status dos atletas</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 43 - UC19 — Ver status dos atletas</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1360,7 +1403,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF14 |
 
-<div align="center"><sub>UC20 — Usar calculadora de descanso</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 44 - UC20 — Usar calculadora de descanso</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1373,7 +1420,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Atleta sem checkpoint registrado → sistema exibe a indicação "Aguardando tempo de descanso…" sem cálculo numérico. |
 | **RFs/RNs relacionados** | RN08 |
 
-<div align="center"><sub>UC21 — Compartilhar ranking</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 45 - UC21 — Compartilhar ranking</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1385,6 +1436,10 @@ estabelecida em outras seções.
 | **Fluxo principal** | 1. Corredor aciona o botão de compartilhar no cabeçalho do painel. 2. Sistema copia a URL pública da equipe para a área de transferência. 3. Sistema apresenta um *toast* de confirmação. |
 | **Fluxos alternativos** | 2a. Navegador sem permissão para acessar a área de transferência → sistema exibe a URL para cópia manual. |
 | **RFs/RNs relacionados** | RF14 |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 ### 3.2.3. Diagrama de Classes do Domínio
 
@@ -1473,67 +1528,7 @@ O sistema Red Bull 24h é composto por três nós principais em produção: o di
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
-
-```
-plantuml
-@startuml diagrama-implantacao
- 
-skinparam backgroundColor #FFFFFF
-skinparam node {
-  BackgroundColor #F5F5F5
-  BorderColor #333333
-  FontName Arial
-}
-skinparam artifact {
-  BackgroundColor #DAE8FC
-  BorderColor #6C8EBF
-}
-skinparam component {
-  BackgroundColor #D5E8D4
-  BorderColor #82B366
-}
-skinparam database {
-  BackgroundColor #FFF2CC
-  BorderColor #D6B656
-}
- 
-node "Dispositivo do Operador / Capitão\n(Navegador Web)" as browser {
-  artifact "Aplicação Web (HTML/CSS/JS)\nServida pelo Express (EJS)" as webapp
-}
- 
-node "Servidor de Aplicação\n(Node.js + TypeScript)" as server {
-  artifact "Express App (app.ts)" as express
-  component "Routes" as routes
-  component "Controllers" as controllers
-  component "Services" as services
-  component "OCR Server-side\n(Tesseract.js + sharp + Groq)" as ocr
-  component "Repositories" as repositories
-  component "Validators / Middlewares" as validators
-}
- 
-node "Banco de Dados Gerenciado\n(Supabase - PostgreSQL)" as db {
-  database "Schema público\n(competition, team, runner,\ncheckpoint, admin, ocr_extraction,\ncompetition_report)" as schema
-}
- 
-node "GitLab Pages\n(Infraestrutura estática)" as pages {
-  artifact "api-documentation.html\n(documentação da WebAPI)" as apidoc
-}
- 
-browser --> server : "HTTP/REST\n(JSON - porta 3000)"
-browser --> server : "Upload de imagem\n(multipart/form-data -\nPOST /ocr/extractions)"
-repositories --> db : "Supabase JS SDK\n(HTTPS - porta 443)"
-browser ..> pages : "HTTPS (leitura apenas -\nacesso externo de revisores)"
- 
-express --> routes
-routes --> controllers
-controllers --> services
-services --> ocr
-services --> repositories
-services --> validators
- 
-@enduml
-```
- 
+  <img src="../assets/programacao/diagrama-de-implantacao.png" width="100%" alt="Representação visual do diagrama de implantação."><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1549,8 +1544,6 @@ O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospeda
 O nó **GitLab Pages** hospeda a documentação estática da WebAPI (`documentos/outros/api-documentation.html`), publicada em `https://web-api-deploy-d81981.pages.git.inteli.edu.br/`. Este nó não integra o fluxo de dados operacional da aplicação; sua finalidade é exclusivamente facilitar a leitura e validação externa da documentação de endpoints sem necessidade de clonar o repositório.
  
 A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual do desenvolvimento: o mecanismo de autenticação e controle de sessão é executado pelo próprio servidor de aplicação, conforme descrito na seção 3.8, e não demanda um nó de infraestrutura separado.
-
-
 
 ### 3.2.7. Padrões de Projeto Aplicados 
 
@@ -1955,8 +1948,6 @@ O padrão pode ser observado nos seguintes arquivos:
 ```
  
 Nesse exemplo, o layout principal define a estrutura compartilhada da interface, enquanto o partial `menu.ejs` é reutilizado em diferentes páginas da aplicação, evitando duplicação de código e facilitando manutenção.
- 
-
 
 ## 3.3. Wireframes 
 
@@ -1999,10 +1990,8 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
  Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
 
  <div align="center">
-  <sub>Quadro 26 - User Stories cobertas: </sub>
+  <sub>Quadro 46 - User Stories cobertas: </sub>
 </div>
-
-
 
 
 | ID   | User Story | Descrição |
@@ -2017,13 +2006,14 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 | US09 | Fotografar a esteira para extração via OCR | Captura da imagem da esteira para leitura automática de dados utilizando OCR |
 | US10 | Registrar checkpoint manualmente | Inserção manual de checkpoint como alternativa em caso de falha do OCR |
 | US11 | Visualizar tabela com auto-refresh a cada 5 min | Atualização automática periódica das informações operacionais da competição |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
 
 <div align="center"> 
-  <sub>Quadro 27 - Critérios de baixa fidelidade adotados</sub> 
+  <sub>Quadro 47 - Critérios de baixa fidelidade adotados</sub> 
 </div>
 
 | Critério | Descrição |
@@ -2270,7 +2260,7 @@ Amanda Azevedo representa os atletas participantes da competição, utilizando o
 Diferentemente das personas administrativas, Amanda interage exclusivamente com a área pública da plataforma, acessada por meio do link gerado automaticamente pelo sistema. Seu fluxo prioriza rapidez na visualização das informações, simplicidade de navegação e acompanhamento contínuo da competição em tempo real.
 
 <div align="center"> 
-  <sub>Quadro 28 - User Stories cobertas pela Persona Corredor</sub> 
+  <sub>Quadro 48 - User Stories cobertas pela Persona Corredor</sub> 
 </div>
 
 | ID | User Story | Descrição |
@@ -2614,10 +2604,10 @@ O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma
 
 De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como `name`, `email` e `cpf` na entidade Runner. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Os relacionamentos, por sua vez, são representados por losangos que contêm o verbo que descreve a interação entre as entidades, demonstrando as associações existentes entre elas.
 
-O relacionamento entre entidades é feito por meio de uma linha que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 29 apresenta as principais cardinalidades e a sua utilização.
+O relacionamento entre entidades é feito por meio de uma linha que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 49 apresenta as principais cardinalidades e a sua utilização.
 
 <div align="center">
-  <sub>Quadro 29 - Cardinalidades </sub>
+  <sub>Quadro 49 - Cardinalidades </sub>
 </div>
 
 | Cardinalidade |  Leitura | Exemplo de Aplicação |
@@ -2641,10 +2631,10 @@ A seguir, a Figura 70 ilustra o Modelo Entidade-Relacionamento desenvolvido para
 
 #### Descrição das entidades e relacionamentos
 
-A seguir, o Quadro 30 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema. A notação `1:N` adotada na coluna de relacionamentos corresponde à notação de Chen e equivale à forma `0..N` da notação UML; a participação obrigatória (mínimo 1) é indicada em texto quando aplicável.
+A seguir, o Quadro 50 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema. A notação `1:N` adotada na coluna de relacionamentos corresponde à notação de Chen e equivale à forma `0..N` da notação UML; a participação obrigatória (mínimo 1) é indicada em texto quando aplicável.
 
 <div align="center">
-  <sub>Quadro 30 - Descrição das entidades e relacionamentos</sub>
+  <sub>Quadro 50 - Descrição das entidades e relacionamentos</sub>
 </div>
 
 | Entidade | Papel no sistema | Relacionamentos |
@@ -2664,10 +2654,10 @@ A seguir, o Quadro 30 apresenta cada entidade, seu papel e os relacionamentos qu
 
 Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando na organização das informações e em seus relacionamentos, sem detalhar tipos de dados ou nomes de colunas. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais como chaves estrangeiras, restrições de integridade e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional. O dicionário de dados apresentado a seguir já incorpora informações do nível lógico/físico (tipos, chaves estrangeiras e obrigatoriedade), de modo a aproximar a modelagem conceitual da implementação efetivamente adotada no projeto.
 
-A seguir, o Quadro 31 exemplifica os elementos da notação de Chen utilizados no MER.
+A seguir, o Quadro 51 exemplifica os elementos da notação de Chen utilizados no MER.
 
 <div align="center">
-  <sub>Quadro 31 - Exemplificação dos elementos da notação de Chen </sub>
+  <sub>Quadro 51 - Exemplificação dos elementos da notação de Chen </sub>
 </div>
 
 | Elemento |  Símbolo  | Aplicação ao MER |
@@ -2685,10 +2675,10 @@ A seguir, o Quadro 31 exemplifica os elementos da notação de Chen utilizados n
 
 Por meio de quadros, serão detalhadas todas as entidades, listando seus atributos com o respectivo tipo semântico, a obrigatoriedade e a descrição, a fim de contextualizar a implementação ao sistema. A coluna "Obrigatório" indica se o atributo é de preenchimento obrigatório no banco de dados (`SIM`) ou se aceita valor nulo (`NÃO`).
 
-- O Quadro 32 apresenta a entidade e os atributos de "Competição".
+- O Quadro 52 apresenta a entidade e os atributos de "Competição".
 
 <div align="center">
-  <sub>Quadro 32 - Dicionário de Dados da Entidade Competição</sub>
+  <sub>Quadro 52 - Dicionário de Dados da Entidade Competição</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2705,10 +2695,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- A seguir, o Quadro 33 ilustra a entidade Equipe e os seus atributos.
+- A seguir, o Quadro 53 ilustra a entidade Equipe e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 33 - Dicionário de Dados da Entidade Equipe</sub>
+  <sub>Quadro 53 - Dicionário de Dados da Entidade Equipe</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2724,10 +2714,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- O Quadro 34 representa o dicionário de dados da entidade Corredor.
+- O Quadro 54 representa o dicionário de dados da entidade Corredor.
 
 <div align="center">
-  <sub>Quadro 34 - Dicionário de Dados da Entidade Corredor</sub>
+  <sub>Quadro 54 - Dicionário de Dados da Entidade Corredor</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2745,10 +2735,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- O Quadro 35 apresenta a entidade e os atributos de "Checkpoint".
+- O Quadro 55 apresenta a entidade e os atributos de "Checkpoint".
 
 <div align="center">
-  <sub>Quadro 35 - Dicionário de Dados da Entidade Checkpoint</sub>
+  <sub>Quadro 55 - Dicionário de Dados da Entidade Checkpoint</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2768,10 +2758,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- A seguir, o Quadro 36 ilustra a entidade Administrador e os seus atributos.
+- A seguir, o Quadro 56 ilustra a entidade Administrador e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 36 - Dicionário de Dados da Entidade Administrador</sub>
+  <sub>Quadro 56 - Dicionário de Dados da Entidade Administrador</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2788,10 +2778,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 </div> 
 
 
-- O Quadro 37 apresenta a entidade e os atributos de "Extração OCR".
+O Quadro 57 apresenta a entidade e os atributos de "Extração OCR".
 
 <div align="center">
-  <sub>Quadro 37 - Dicionário de Dados da Entidade Extração OCR</sub>
+  <sub>Quadro 57 - Dicionário de Dados da Entidade Extração OCR</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2810,10 +2800,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 </div>
 
 
-- O Quadro 38 representa o dicionário de dados da entidade Relatório da Competição.
+- O Quadro 58 representa o dicionário de dados da entidade Relatório da Competição.
 
 <div align="center">
-  <sub>Quadro 38 - Dicionário de Dados da Entidade Relatório da Competição</sub>
+  <sub>Quadro 58 - Dicionário de Dados da Entidade Relatório da Competição</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2839,10 +2829,10 @@ Além dos atributos, o modelo é governado por regras de integridade definidas n
 
 #### Rastreabilidade entidade → RF → RN
 
-A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
+A seguir, o Quadro 59 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
 
 <div align="center">
-  <sub>Quadro 39 - Rastreabilidade entidade → RF → RN </sub>
+  <sub>Quadro 59 - Rastreabilidade entidade → RF → RN </sub>
 </div>
 
 | Entidade | RF que origina | RN que governa |
@@ -2877,7 +2867,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 ### Glossário de cardinalidades  
 <div align="center">
-  <sub>Quadro 40 - Glossário de cardinalidades </sub>
+  <sub>Quadro 60 - Glossário de cardinalidades </sub>
 </div>
 
 | Símbolo | Nome | Significado |
@@ -2905,8 +2895,9 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 
 ### Relacionamentos do DER
+
 <div align="center">
-  <sub>Quadro 41 - Relacionamentos do DER </sub>
+  <sub>Quadro 61 - Relacionamentos do DER </sub>
 </div>
 
 | # | Entidade A | Entidade B | A → B | B → A |
@@ -2924,8 +2915,9 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 </div>
 
 ### Coerência com o Diagrama de Classes
+
 <div align="center">
-  <sub>Quadro 42 - Coerência com o Diagrama de Classes </sub>
+  <sub>Quadro 62 - Coerência com o Diagrama de Classes </sub>
 </div>
 
 | Diagrama de Classes                                         | DER                                   |
@@ -3007,8 +2999,9 @@ Os relacionamentos entre as entidades foram definidos por meio de chaves primár
 ##### Constraints do modelo relacional
 
 As constraints do modelo relacional definem as regras de integridade que serão implementadas posteriormente no modelo físico. Elas indicam quais campos identificam unicamente cada registro, quais relacionamentos devem ser preservados entre as tabelas e quais valores precisam respeitar regras específicas do domínio do sistema.
+
 <div align="center">
-  <sub>Quadro 43 - Constraints do modelo relacional </sub>
+  <sub>Quadro 63 - Constraints do modelo relacional </sub>
 </div>
 
 | Tabela | Constraint | Campo(s) | Finalidade |
@@ -3272,7 +3265,7 @@ Além de exemplificar diferentes tipos de operações SQL, como `SELECT`, `UPDAT
 #### Q01 — `SELECT` com `AND` e `OR`
 
 <div align="center">
-  <sub>Quadro 44 - Consulta Q01</sub>
+  <sub>Quadro 64 - Consulta Q01</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                                                  |
@@ -3353,7 +3346,7 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
 <div align="center">
-  <sub>Quadro 45 - Consulta Q02</sub>
+  <sub>Quadro 65 - Consulta Q02</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                     |
@@ -3428,7 +3421,7 @@ A consulta retorna somente corredores cujo nome começa com “A” e cujo statu
 #### Q03 — `UPDATE` com `AND` e `BETWEEN`
 
 <div align="center">
-  <sub>Quadro 46 - Consulta Q03</sub>
+  <sub>Quadro 66 - Consulta Q03</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                                      |
@@ -3510,7 +3503,7 @@ A tabela demonstra que a atualização ocorre apenas quando o checkpoint ainda n
 #### Q04 — `DELETE` com `AND` e `NOT`
 
 <div align="center">
-  <sub>Quadro 47 - Consulta Q04</sub>
+  <sub>Quadro 67 - Consulta Q04</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                                           |
@@ -3583,7 +3576,7 @@ A exclusão ocorre somente quando o checkpoint pertence à competição analisad
 #### Q05 — `SELECT` com `JOIN`, `IN`, `BETWEEN` e agregação
 
 <div align="center">
-  <sub>Quadro 48 - Consulta Q05</sub>
+  <sub>Quadro 68 - Consulta Q05</sub>
 </div>
 
 | Atributo                    | Conteúdo                                                                                                           |
@@ -3690,7 +3683,7 @@ A consulta considera registros apenas quando a equipe pertence ao conjunto de eq
 #### Síntese da relação entre consultas e requisitos funcionais
 
 <div align="center">
-  <sub>Quadro 49 - Relação entre consultas SQL e requisitos funcionais</sub>
+  <sub>Quadro 69 - Relação entre consultas SQL e requisitos funcionais</sub>
 </div>
 
 | Consulta | Objetivo da consulta                                                       | Requisitos relacionados    |
@@ -3721,10 +3714,10 @@ Embora a aplicação seja disponibilizada como um sistema web completo, sua arqu
 
 Essa distinção permite que a mesma aplicação ofereça tanto interfaces prontas para utilização em campo quanto serviços reutilizáveis para integração, testes automatizados e futuras expansões da plataforma.
 
-Os principais domínios implementados pela WebAPI são apresentados no Quadro 50.
+Os principais domínios implementados pela WebAPI são apresentados no Quadro 70.
 
 <div align="center">
-  <sub>Quadro 50 - Domínios da WebAPI</sub>
+  <sub>Quadro 70 - Domínios da WebAPI</sub>
 </div>
 
 | Domínio                 | Operações principais                                                        | Tipo       | Relação com o escopo                                                                                                          |
@@ -3856,6 +3849,10 @@ A operação de logout não realiza a invalidação do token no servidor. Ao enc
 
 #### 3.8.2.4 Justificativa da escolha e trade-offs
 
+<div align="center">
+  <sub>Quadro 71 - Justificativa da escolha e trade-offs </sub>
+</div>
+
 | Aspecto                | JWT (implementado)                                                                                                                                | Session ID em tabela                                                                 |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | Natureza               | **Stateless** — o servidor não mantém estado da sessão                                                                                            | **Stateful** — exige armazenamento e gerenciamento das sessões                       |
@@ -3863,6 +3860,10 @@ A operação de logout não realiza a invalidação do token no servidor. Ao enc
 | Revogação imediata     | Não suportada nativamente — um token permanece válido até sua expiração                                                                           | Sessões podem ser invalidadas imediatamente pela remoção do registro correspondente  |
 | Informações do usuário | O payload pode ser decodificado por qualquer cliente, pois utiliza codificação Base64URL, mas sua integridade é garantida pela assinatura digital | Os dados permanecem armazenados exclusivamente no servidor                           |
 | Overhead de banco      | Não há necessidade de consulta ao banco para validar o token                                                                                      | Geralmente exige consulta ao mecanismo de armazenamento da sessão em cada requisição |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 A utilização de JWT é adequada ao contexto do sistema **Red Bull 24H**, que possui apenas um perfil autenticado (**admin**) e é utilizado durante períodos específicos de operação correspondentes ao evento. A arquitetura **stateless** reduz a complexidade da infraestrutura, melhora a escalabilidade da aplicação e elimina a necessidade de gerenciamento centralizado de sessões, mantendo um nível de segurança compatível com o escopo do projeto.
 
@@ -3893,6 +3894,10 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 
 **Mapeamento de rotas por nível de acesso:**
 
+<div align="center">
+  <sub>Quadro 72 - Mapeamento de rotas por nível de acesso </sub>
+</div>
+
 | Rota | Método | Acesso | Descrição |
 |---|---|---|---|
 | `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
@@ -3911,15 +3916,17 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 | `GET /ranking` | GET | Público | Ranking geral por equipe |
 | `GET /view/competitions/:id/ranking` | GET | Público | Ranking do paienl das equipes por competição (via UUID) |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 **Responsabilidade da camada de back-end:**
 
 Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O front-end recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
-*Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
-
-### Resiliência 
+#### Resiliência 
  
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
@@ -3978,7 +3985,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
  
  
 <div align="center">
-  <sub>Quadro 51 - Matriz de Rastreabilidade (RTM)</sub>
+  <sub>Quadro 73 - Matriz de Rastreabilidade (RTM)</sub>
  
  
 </div>
@@ -4347,7 +4354,7 @@ Além disso, os testes foram desenvolvidos de forma determinística, evitando de
 A camada de Service foi estabilizada do ponto de vista funcional e de cobertura no recorte automatizado da seção 5.1. O comando `npm test -- --coverage` utiliza a configuração de cobertura do Jest para medir os módulos cobertos integralmente pela suíte documentada, com `coverageThreshold` global de 100% para statements, branches, functions e lines. Assim, a execução falha automaticamente caso qualquer métrica do recorte fique abaixo de 100%.
 
 <div align="center">
-  <sub>Quadro 52 - Cobertura da Camada Service </sub>
+  <sub>Quadro 74 - Cobertura da Camada Service </sub>
 </div>
 
 | Métrica | Cobertura atingida | Meta |
@@ -4366,7 +4373,7 @@ A meta foi atingida com 100% dos testes passando e 100% de cobertura no recorte 
 ### Mapeamento CT → RN — Testes Unitários de Service
 
 <div align="center">
-  <sub>Quadro 53 - Mapeamento CT → RN dos Testes Unitários de Service </sub>
+  <sub>Quadro 75 - Mapeamento CT → RN dos Testes Unitários de Service </sub>
 </div>
 
 | Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) | Descrição |
@@ -4450,7 +4457,7 @@ As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar
 **Cobertura por endpoint:**
 
 <div align="center">
-  <sub>Quadro 54 - Legenda de Cenários de Teste </sub>
+  <sub>Quadro 76 - Legenda de Cenários de Teste </sub>
 </div>
 
 | Cenário | Descrição |
@@ -4465,7 +4472,7 @@ As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar
 </div>
 
 <div align="center">
-  <sub>Quadro 55 - Cobertura de Endpoints por Cenário </sub>
+  <sub>Quadro 77 - Cobertura de Endpoints por Cenário </sub>
 </div>
 
 | Endpoint | Método | 200/201 | 400/422 | 409 | 404 |
@@ -4553,7 +4560,7 @@ As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar
 **Painel geral — 10 suítes e2e, 20 grupos de endpoints cobertos:**
 
 <div align="center">
-  <sub>Quadro 56 - Painel Geral de Endpoints e Suítes de Teste </sub>
+  <sub>Quadro 78 - Painel Geral de Endpoints e Suítes de Teste </sub>
 </div>
 
 | Endpoint | Método | Arquivo de Teste |
@@ -4610,7 +4617,7 @@ Ran all test suites.
 **Resumo da Execução**
 
 <div align="center">
-  <sub>Quadro 57 - Resumo da Execução dos Testes </sub>
+  <sub>Quadro 79 - Resumo da Execução dos Testes </sub>
 </div>
 
 | Métrica | Resultado |
@@ -4680,7 +4687,7 @@ npm test -- --coverage
 O relatório gerado permitiu analisar o percentual de código exercitado pelos testes automatizados em cada camada da aplicação.
 
 <div align="center">
-  <sub>Quadro 58 - Cobertura por Camada da Aplicação </sub>
+  <sub>Quadro 80 - Cobertura por Camada da Aplicação </sub>
 </div>
 
 | Camada / arquivo | Statements | Branches | Functions | Lines |
@@ -4726,7 +4733,7 @@ Além disso, o `coverageThreshold` global está configurado em 100%, garantindo 
 Os testes automatizados implementados foram relacionados às respectivas regras de negócio e requisitos funcionais, garantindo consistência com a Matriz RF → RN → Endpoint (Seção 3.1.4) e com a Matriz de Rastreabilidade do Projeto (Seção 3.9).
 
 <div align="center">
-  <sub>Quadro 59 - Rastreabilidade dos Casos de Teste (CT → RN → RF) </sub>
+  <sub>Quadro 81 - Rastreabilidade dos Casos de Teste (CT → RN → RF) </sub>
 </div>
 
 | Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) |
@@ -4768,7 +4775,7 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 **Perfil dos participantes**
 
 <div align="center">
-  <sub>Quadro 60 - Perfil dos participantes </sub>
+  <sub>Quadro 82 - Perfil dos participantes </sub>
 </div>
 
 | # | Nome | Curso | Idade | Turma |
@@ -4798,6 +4805,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H5 - Prevenção de erros
 - H8 - Estética e design minimalista.
 
+<div align="center">
+  <sub>Quadro 83 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
+
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Teve dúvida inicial sobre por onde começar, pois encontrou várias competições já cadastradas; após alguns instantes, compreendeu que deveria criar uma nova. Cadastro concluído com sucesso. |
@@ -4824,6 +4835,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H1 - Visibilidade do status do sistema
 - H7 - Flexibilidade e eficiência de uso
 - H8 - Estética e design minimalista.
+
+<div align="center">
+  <sub>Quadro 84 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
@@ -4852,6 +4867,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H6 - Reconhecimento em vez de memorização; 
 - H9 - Ajudar usuários a reconhecer, diagnosticar e recuperar erros.
 
+<div align="center">
+  <sub>Quadro 85 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
+
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso | Concluiu a tarefa com sucesso na funcionalidade de OCR. |
@@ -4879,6 +4898,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H6 - Reconhecimento em vez de memorização; 
 - H10 - Ajuda e documentação.
 
+<div align="center">
+  <sub>Quadro 86 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
+
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Apresentou dificuldade com o formato exigido para o preenchimento dos dados. Antes desta tarefa, ficou em dúvida sobre qual ação executar na sequência do fluxo. |
@@ -4905,6 +4928,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H1 - Visibilidade do status do sistema; 
 - H2 - Correspondência entre sistema e mundo real; 
 - H8 - Estética e design minimalista.
+
+<div align="center">
+  <sub>Quadro 87 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
@@ -4946,6 +4973,10 @@ Observa-se que todas as tarefas puderam ser concluídas pela maioria dos partici
 
 As ocorrências identificadas foram classificadas conforme sua severidade, considerando o impacto na execução das tarefas: severidade 1 (cosmética), quando o problema não compromete a realização da tarefa; 2 (baixa), quando gera dificuldades, mas não impede sua conclusão; e 3 (alta), quando compromete significativamente a eficiência ou compreensão do fluxo pelo usuário.
 
+<div align="center">
+  <sub>Quadro 88 - Análise dos testes de guerrilha </sub>
+</div>
+
 | Prioridade | Tarefa | Tipo | Severidade | Resumo do ocorrido e melhoria proposta | Participantes |
 |------------|--------|------|------------|----------------------------------------|---------------|
 | 1 | Geral / Fluxo | Usabilidade | 3. Alta | Ausência de um passo a passo/guia claro do fluxo. Dúvida sobre qual ação executar após criar a equipe e dificuldade para entender o fluxo da competição. **Melhoria:** indicar o "próximo passo" sugerido na interface ou um onboarding guiado. | Valter, Sara, Matheus |
@@ -4979,11 +5010,11 @@ Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado
 
 A coleta das respostas foi realizada por meio de um formulário eletrônico elaborado no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)), aplicado individualmente após a execução das tarefas propostas durante os testes de usabilidade. Participaram da avaliação sete usuários, que responderam ao questionário de forma independente imediatamente após utilizarem a plataforma.
 
-O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro 61.
+O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro 81.
 
 <div align="center">
 
-<sub>Quadro 61 – Escala de respostas do questionário SUS</sub>
+<sub>Quadro 89 – Escala de respostas do questionário SUS</sub>
 
 </div>
 
@@ -4999,11 +5030,11 @@ O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apres
 <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-As dez afirmações apresentadas aos participantes estão descritas no Quadro 62.
+As dez afirmações apresentadas aos participantes estão descritas no Quadro 82.
 
 <div align="center">
 
-<sub>Quadro 62 – Questões do questionário SUS</sub>
+<sub>Quadro 90 – Questões do questionário SUS</sub>
 
 </div>
 
