@@ -1,0 +1,194 @@
+.saved-data-page,
+.saved-data-page * {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+body:has(.saved-data-page) .sidebar-nav .nav-item-wrapper:nth-child(2)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 4px;
+  height: 100%;
+  background-color: var(--vermelho);
+  border-radius: 2px 0 0 2px;
+}
+
+body:has(.saved-data-page) .sidebar-nav .nav-item-wrapper:nth-child(2) .nav-item {
+  background: var(--azul-secundario);
+}
+
+.saved-data-page {
+  min-height: 100vh;
+  padding: 52px 64px;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--font-family);
+}
+
+.saved-data-header {
+  margin-bottom: 40px;
+}
+
+.saved-data-breadcrumb {
+  margin: 0 0 18px;
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-header h1 {
+  margin: 0;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-alert {
+  max-width: 920px;
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  border: 1px solid var(--vermelho);
+  border-radius: var(--border-radius);
+  background: var(--fundo-cards);
+  color: var(--vermelho);
+  font-weight: var(--font-weight-bold);
+}
+
+.saved-data-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 28px;
+  max-width: 940px;
+  margin-bottom: 48px;
+}
+
+.saved-data-metric {
+  min-height: 140px;
+  padding: 18px 22px;
+  border: 1px solid var(--amarelo);
+  border-radius: var(--border-radius);
+  background: var(--azul-principal);
+  color: var(--fundo);
+  box-sizing: border-box;
+}
+
+.saved-data-metric h2 {
+  margin: 0 0 22px;
+  font-size: var(--font-size-subtitulo);
+  line-height: 1.1;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-metric strong {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--vermelho);
+  font-size: var(--font-size-h1);
+  line-height: 1;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-metric p {
+  margin: 0;
+  font-size: var(--font-size-subtitulo);
+  line-height: 1.12;
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-history {
+  max-width: 940px;
+  overflow: hidden;
+  border: 1px solid var(--azul-principal);
+  border-radius: var(--border-radius);
+  background: var(--fundo-cards);
+}
+
+.saved-data-history h2 {
+  margin: 0;
+  padding: 24px 34px 18px;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-table-wrap {
+  overflow-x: auto;
+}
+
+.saved-data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--font-size-texto-cabecalho);
+}
+
+.saved-data-table th,
+.saved-data-table td {
+  padding: 14px 22px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.saved-data-table th {
+  background: var(--bordas-separadores);
+  font-weight: var(--font-weight-extrabold);
+}
+
+.saved-data-table td {
+  font-weight: var(--font-weight-medium);
+}
+
+.saved-data-empty {
+  padding: 40px 34px;
+  border-top: 1px solid var(--bordas-separadores);
+}
+
+.saved-data-empty p {
+  margin: 0;
+  color: var(--azul-secundario);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;             /* ← centraliza com flex */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal[aria-hidden="true"] {
+  display: none !important;  /* ← garante que o display:none do JS funcione */
+}
+
+.modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.50);
+  cursor: pointer;
+}
+
+.modal-content {
+  position: relative;       /* ← fica acima do backdrop */
+  z-index: 1;
+  background: var(--fundo-cards, #fff);
+  border-radius: var(--border-radius, 15px);
+  width: 480px;
+  max-width: calc(100vw - 32px);
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 900px) {
+  .saved-data-page {
+    padding: 36px 24px;
+  }
+
+  .saved-data-metrics {
+    grid-template-columns: 1fr;
+    max-width: 520px;
+  }
+}

@@ -1,0 +1,192 @@
+<%#
+  VIEW: teams/show.ejs
+  ESTADO: [C2 — Painel administrativo por equipe]
+  LACUNAS:
+    - Atleta ativo é persistido em memória no backend até existir coluna/tabela dedicada. [A3][D2]
+    - Registro manual navega para /operational-panel com contexto; o formulário exige distância antes de salvar. [A1][B1]
+  ENDPOINTS CONSUMIDOS:
+    - GET /competitions/:id/teams/:teamId [A1][B1]
+    - GET /competitions/:id/teams/:teamId/runners [A1][B1]
+    - PATCH /competitions/:id/teams/:teamId/active-runner [D2]
+    - POST /checkpoints via /operational-panel [A1][B1]
+%>
+
+<%
+  const activeId = activeRunner ? activeRunner.id : '';
+  const manualHref = activeRunner
+    ? `/operational-panel/${activeRunner.id}?competitionId=${competition.id}&teamId=${team.id}`
+    : '#';
+%>
+
+<main
+  class="teams team-panel"
+  data-team-panel
+  data-competition-id="<%= competition.id %>"
+  data-team-id="<%= team.id %>"
+  data-active-runner-id="<%= activeId %>"
+>
+  <nav class="teams__breadcrumb" aria-label="Caminho atual">
+    <a href="/teams?competitionId=<%= competition.id %>">Equipes</a>
+    <span>&gt;</span>
+    <span><%= team.name %></span>
+  </nav>
+
+  <header class="team-panel__header">
+    <div>
+      <h1 class="teams__title"><%= team.name %></h1>
+      <p class="teams__subtitle">
+        <%= runners.length %> de 16 atletas cadastrados
+      </p>
+    </div>
+    <div class="team-panel__actions">
+      <a class="team-panel__back" href="/teams?competitionId=<%= competition.id %>">Voltar para equipes</a>
+      <a class="team-panel__audit" href="/view/competitions/<%= competition.id %>/teams/<%= team.id %>/checkpoints/saved">Auditoria</a>
+    </div>
+  </header>
+
+  <section class="team-panel__summary" aria-label="Resumo da equipe">
+    <article class="team-panel__metric">
+      <span>Distância total</span>
+      <strong>
+        <% if (teamStats) { %>
+          <%= Number(teamStats.total_distance_km).toFixed(1) %> km
+        <% } else { %>
+          —
+        <% } %>
+      </strong>
+    </article>
+    <article class="team-panel__metric">
+      <span>Pace médio</span>
+      <strong><%= teamStats && teamStats.average_pace ? teamStats.average_pace + '/km' : '—' %></strong>
+    </article>
+    <article class="team-panel__metric">
+      <span>Posição</span>
+      <strong><%= teamStats && teamStats.position ? teamStats.position + 'º' : '—' %></strong>
+    </article>
+  </section>
+
+  <section class="team-panel__active" aria-labelledby="active-runner-title">
+    <div>
+      <span class="team-panel__eyebrow">Atleta ativo</span>
+      <h2 id="active-runner-title" data-active-runner-name>
+        <%= activeRunner ? activeRunner.name : 'Nenhum atleta cadastrado' %>
+      </h2>
+      <p data-active-runner-meta>
+        <% if (activeRunner) { %>
+          <%= activeRunner.status === 'captain' ? 'Capitão' : 'Atleta' %>
+          <% if (runnerStats && runnerStats.total_distance_km) { %>
+            · <%= Number(runnerStats.total_distance_km).toFixed(1) %> km
+          <% } %>
+          <% if (lastCheckpoint) { %>
+            · Último checkpoint <%= lastCheckpoint.identifier %>
+          <% } %>
+        <% } else { %>
+          Cadastre atletas para iniciar a operação da equipe.
+        <% } %>
+      </p>
+    </div>
+
+    <div class="team-panel__actions">
+      <button
+        type="button"
+        class="team-panel__button team-panel__button--secondary"
+        data-open-runner-switch
+        <%= runners.length === 0 ? 'disabled' : '' %>
+      >
+        Trocar atleta
+      </button>
+      <a
+        class="team-panel__button team-panel__button--primary <%= activeRunner ? '' : 'is-disabled' %>"
+        href="<%= manualHref %>"
+        aria-disabled="<%= activeRunner ? 'false' : 'true' %>"
+      >
+        Tirar Foto da Esteira
+      </a>
+      <a
+        class="team-panel__button team-panel__button--ghost <%= activeRunner ? '' : 'is-disabled' %>"
+        href="<%= activeRunner ? '/operational-panel/' + activeRunner.id + '?competitionId=' + competition.id + '&teamId=' + team.id + '&mode=manual' : '#' %>"
+        data-manual-registration-link
+        <%= activeRunner ? '' : 'aria-disabled="true"' %>
+      >
+        Registro Manual
+      </a>
+    </div>
+  </section>
+
+  <section class="team-panel__switch" data-runner-switch hidden>
+    <div class="team-panel__switch-header">
+      <div>
+        <h2>Trocar atleta ativo</h2>
+        <p>Selecione o atleta que está na esteira agora.</p>
+      </div>
+    </div>
+
+    <div class="team-panel__runner-list" data-runner-options>
+      <% runners.forEach(function(runner) { %>
+        <label
+          class="team-panel__runner-option <%= runner.id === activeId ? 'is-active' : '' %>"
+          data-runner-option
+          data-runner-id="<%= runner.id %>"
+          data-runner-name="<%= runner.name %>"
+          data-runner-status="<%= runner.status %>"
+        >
+          <input
+            type="radio"
+            name="active_runner"
+            value="<%= runner.id %>"
+            <%= runner.id === activeId ? 'checked' : '' %>
+          >
+          <span>
+            <strong><%= runner.name %></strong>
+            <small><%= runner.status === 'captain' ? 'Capitão' : 'Atleta' %></small>
+          </span>
+          <% if (runner.id === activeId) { %>
+            <em>Atual</em>
+          <% } %>
+        </label>
+      <% }); %>
+    </div>
+
+    <p class="team-panel__feedback" data-runner-switch-feedback role="alert" hidden></p>
+
+    <div class="team-panel__switch-actions">
+      <button type="button" class="team-panel__button team-panel__button--secondary" data-cancel-runner-switch>
+        Cancelar
+      </button>
+      <button type="button" class="team-panel__button team-panel__button--primary" data-confirm-runner-switch>
+        Confirmar Troca
+      </button>
+    </div>
+  </section>
+
+  <section class="team-panel__athletes" aria-labelledby="athletes-title">
+    <h2 id="athletes-title">Atletas da equipe</h2>
+    <% if (runners.length === 0) { %>
+      <div class="teams__empty">
+        <p class="teams__empty-title">Nenhum atleta cadastrado</p>
+        <p class="teams__empty-text">Use a tela de criação de equipe para cadastrar atletas.</p>
+      </div>
+    <% } else { %>
+      <div class="team-panel__table-wrap">
+        <table class="team-panel__table">
+          <thead>
+            <tr>
+              <th>Atleta</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% runners.forEach(function(runner) { %>
+              <tr class="<%= runner.id === activeId ? 'is-active-row' : '' %>">
+                <td><%= runner.name %></td>
+                <td><%= runner.status === 'captain' ? 'Capitão' : 'Atleta' %></td>
+              </tr>
+            <% }); %>
+          </tbody>
+        </table>
+      </div>
+    <% } %>
+  </section>
+
+  <div class="team-panel__toast" data-team-toast hidden></div>
+</main>

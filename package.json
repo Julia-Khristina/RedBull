@@ -8,9 +8,13 @@
   },
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
-    "build": "tsc",
+    "build": "tsc && copyfiles -u 2 \"src/views/**/*.ejs\" dist/views",
     "start": "node dist/server.js",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "jest --coverage=false --testMatch \"**/tests/**/*.e2e.spec.ts\"",
+    "test:unit": "jest --coverage=false --testMatch \"**/tests/**/*Service.@(test|spec).ts\"",
+    "test:integration": "jest --coverage=false --testMatch \"**/tests/**/*Repository.spec.ts\""
   },
   "repository": {
     "type": "git",
@@ -22,18 +26,31 @@
   "type": "commonjs",
   "dependencies": {
     "@supabase/supabase-js": "^2.106.1",
+    "bcryptjs": "^3.0.3",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
+    "exceljs": "^4.4.0",
     "express": "^5.2.1",
     "express-ejs-layouts": "^2.5.1",
-    "jsonwebtoken": "^9.0.3"
+    "jsonwebtoken": "^9.0.3",
+    "multer": "^2.2.0",
+    "openai": "^6.42.0",
+    "sharp": "^0.35.2",
+    "tesseract.js": "^7.0.0",
+    "zod": "^4.4.3",
+    "cookie-parser": "^1.4.7"
   },
   "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.10",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/jsonwebtoken": "^9.0.10",
+    "@types/multer": "^2.1.0",
     "@types/node": "^25.9.1",
     "@types/supertest": "^7.2.0",
+    "copyfiles": "^2.4.1",
     "jest": "^30.4.2",
     "supertest": "^7.2.2",
     "ts-jest": "^29.4.11",

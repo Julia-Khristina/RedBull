@@ -1,143 +1,213 @@
-<%#
-  VIEW: operational-panel/operationalPanel.ejs
-  ESTADO: [C2 - Parcial]
-  LACUNAS:
-    - A rota SSR GET /operational-panel renderiza a view, mas os IDs reais ainda dependem de query string ou controller de fluxo operacional. [A1][C2][D2]
-    - Os IDs obrigatorios de POST /checkpoints precisam chegar por locals/query; sem eles o JS bloqueia o envio e mostra erro local. [A1][B1][C2][D1]
-    - O identifier e gerado no cliente quando o SSR nao fornece valor, porque o PNG nao tem campo visual para ele. [A1][B1][D2]
-    - O backend nao possui campo dedicado para metodo de entrada/audit log; o JS envia image.input_method = "manual" como metadata permitida pelo contrato atual. [A1][B1][D2]
-    - Valores visuais default seguem o PNG informado quando o SSR nao fornecer dados reais. [A1][C2][D2]
-  ENDPOINTS CONSUMIDOS:
-    - POST /checkpoints [A1][B1]
-    - GET /competitions/:id/ranking/teams [A1][B1]
-  ULTIMA ATUALIZACAO: 2026-06-10
-%>
-
 <%
   const checkpointContext = locals.checkpointContext || {};
   const selectedRunner = locals.selectedRunner || locals.runner || {};
+  const selectedTeam = locals.selectedTeam || {};
   const manualCheckpoint = locals.manualCheckpoint || {};
-  const runnerName = selectedRunner.name || manualCheckpoint.runnerName || "João Silva";
+  const runnerName = selectedRunner.name || manualCheckpoint.runnerName || "Atleta nao selecionado";
+  const teamName = selectedTeam.name || manualCheckpoint.teamName || "Equipe nao informada";
   const checkpointClock = manualCheckpoint.checkpointClock || manualCheckpoint.checkpoint_clock || "14:28:00";
-  const distanceValue = manualCheckpoint.distance_km ?? "0.00";
-  const paceValue = manualCheckpoint.pace || "";
-  const totalTimeValue = manualCheckpoint.time || "";
+  const runnerId = checkpointContext.id_runner || selectedRunner.id || "";
+  const checkpointEndpoint = runnerId ? `/runners/${runnerId}/checkpoints` : "/checkpoints";
+  const checkpointNumber = checkpointContext.checkpoint_number || 1;
+  const averagePaceSeconds = checkpointContext.average_pace_seconds ?? "";
+  const averagePaceLabel = checkpointContext.average_pace_label || "";
+  const startMode = locals.startMode || "ocr";
+  const isManual = startMode === "manual";
 %>
 
-<main class="operational-panel" data-operational-panel>
-  <nav class="operational-panel__breadcrumb" aria-label="Caminho atual">
-    Operacional &gt; Registro manual
-  </nav>
+<main
+  class="operational-panel operational-panel--ocr"
+  data-operational-panel
+  data-ocr-panel
+  data-endpoint="<%= checkpointEndpoint %>"
+  data-ocr-endpoint="/ocr/extractions"
+  data-input-method="<%= isManual ? 'manual' : 'ocr' %>"
+  data-start-mode="<%= startMode %>"
+  data-average-pace-seconds="<%= averagePaceSeconds %>"
+  data-average-pace-label="<%= averagePaceLabel %>"
+  data-team-id="<%= checkpointContext.team_id || '' %>"
+  data-competition-id="<%= checkpointContext.id_competition || '' %>"
+>
+  <input type="hidden" name="id_runner" value="<%= runnerId %>" data-ocr-context>
+  <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>" data-ocr-context>
+  <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>" data-ocr-context>
 
-  <header class="operational-panel__header">
-    <h1>Registrar checkpoint manualmente</h1>
-  </header>
+  <section class="ocr-capture" data-ocr-step="capture" <%= isManual ? 'hidden' : '' %>>
+    <header class="operational-panel__page-title">
+      <h1>RedBull 24H - Painel Admin</h1>
+    </header>
 
-  <section class="manual-warning" role="note" aria-label="Aviso sobre registro manual">
-    <span class="manual-warning__icon" aria-hidden="true">!</span>
-    <div class="manual-warning__copy">
-      <p>Use este modo apenas quando a câmera falhar ou a foto estiver ilegível.</p>
-      <p>O registro será marcado como "manual" no log de auditoria</p>
+    <div class="ocr-card ocr-card--capture">
+      <button class="ocr-card__close" type="button" data-ocr-cancel aria-label="Fechar">X</button>
+
+      <div class="ocr-card__heading">
+        <h2>Capturar foto da esteira</h2>
+        <p><%= runnerName %> &gt; <%= teamName %> &gt; Checkpoint #<%= checkpointNumber %></p>
+      </div>
+
+      <div class="ocr-card__divider" aria-hidden="true"></div>
+
+      <label class="ocr-photo-drop" for="ocrImageInput" data-ocr-drop>
+        <input
+          id="ocrImageInput"
+          type="file"
+          name="image"
+          accept="image/png,image/jpeg,image/webp"
+          capture="environment"
+          data-ocr-image-input
+        >
+        <span data-ocr-empty-preview>Toque no botao amarelo para escolher ou capturar a foto da esteira.</span>
+      </label>
+
+      <p class="ocr-feedback" data-ocr-capture-feedback aria-live="polite"></p>
+
+      <div class="ocr-capture__actions">
+        <button class="manual-button manual-button--secondary" type="button" data-ocr-cancel>
+          Cancelar
+        </button>
+        <button class="ocr-shutter" type="button" data-ocr-open-file aria-label="Capturar foto"></button>
+        <button class="manual-button manual-button--primary" type="button" data-open-manual>
+          Registro Manual
+        </button>
+      </div>
     </div>
   </section>
 
-  <section class="manual-card" aria-labelledby="manual-checkpoint-title">
-    <h2 id="manual-checkpoint-title" class="sr-only">Dados do checkpoint manual</h2>
+  <section class="ocr-review" data-ocr-step="review" hidden>
+    <nav class="operational-panel__breadcrumb" aria-label="Caminho atual">
+      Operacional &gt; Foto capturada &gt; Validar dados
+    </nav>
 
-    <form
-      class="manual-form"
-      data-operational-manual-form
-      data-endpoint="/checkpoints"
-      data-ranking-endpoint-template="/competitions/:id/ranking/teams"
-      data-input-method="manual"
-      novalidate
-    >
-      <input type="hidden" name="identifier" value="<%= checkpointContext.identifier || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.identifier || '' %>">
-      <input type="hidden" name="id_runner" value="<%= checkpointContext.id_runner || selectedRunner.id || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_runner || selectedRunner.id || '' %>">
-      <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_competition || '' %>">
-      <input type="hidden" name="id_treadmill" value="<%= checkpointContext.id_treadmill || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_treadmill || '' %>">
-      <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>" data-checkpoint-field data-initial-value="<%= checkpointContext.id_admin || '' %>">
+    <header class="operational-panel__header">
+      <h1>Dados extraidos via OCR</h1>
+      <p><%= runnerName %> &gt; Checkpoint #<%= checkpointNumber %> &gt; Capturado as <span data-ocr-captured-clock><%= checkpointClock %></span></p>
+    </header>
 
-      <div class="manual-form__row manual-form__row--top">
-        <label class="manual-field manual-field--wide">
-          <span>Atleta selecionado:</span>
-          <input
-            type="text"
-            name="runner_name"
-            value="<%= runnerName %>"
-            readonly
-            data-initial-value="<%= runnerName %>"
-          >
+    <section class="ocr-card ocr-preview-card" aria-labelledby="ocr-preview-title">
+      <h2 id="ocr-preview-title">Preview da foto:</h2>
+      <img alt="Foto capturada da esteira" data-ocr-review-preview>
+    </section>
+
+    <section class="ocr-card ocr-data-card" aria-labelledby="ocr-data-title">
+      <h2 id="ocr-data-title">Dados extraidos - Revise antes de confirmar :</h2>
+      <div class="ocr-card__divider" aria-hidden="true"></div>
+
+      <div class="ocr-metrics">
+        <label class="ocr-metric-field">
+          <span>Distancia (km)</span>
+          <input type="number" step="0.01" min="0" name="distance_km" data-ocr-distance>
         </label>
-
-        <label class="manual-field manual-field--wide">
-          <span>Horário do checkpoint</span>
-          <input
-            type="text"
-            name="checkpoint_clock"
-            value="<%= checkpointClock %>"
-            readonly
-            data-initial-value="<%= checkpointClock %>"
-          >
+        <label class="ocr-metric-field">
+          <span>Pace calculado (min/km)</span>
+          <input type="text" name="pace" data-ocr-pace readonly>
         </label>
-      </div>
-
-      <div class="manual-form__row manual-form__row--metrics">
-        <label class="manual-field manual-field--metric">
-          <span>Distância (km)</span>
-          <input
-            type="number"
-            name="distance_km"
-            min="0"
-            step="0.01"
-            inputmode="decimal"
-            required
-            value="<%= distanceValue %>"
-            data-checkpoint-field
-            data-initial-value="<%= distanceValue %>"
-          >
-        </label>
-
-        <label class="manual-field manual-field--metric">
-          <span>Pace (min/km)</span>
-          <input
-            type="text"
-            name="pace"
-            inputmode="numeric"
-            placeholder="0'00''"
-            value="<%= paceValue %>"
-            data-checkpoint-field
-            data-initial-value="<%= paceValue %>"
-          >
-        </label>
-
-        <label class="manual-field manual-field--metric">
-          <span>Tempo total</span>
-          <input
-            type="text"
-            name="time"
-            inputmode="numeric"
-            placeholder="00:00:00"
-            value="<%= totalTimeValue %>"
-            data-checkpoint-field
-            data-initial-value="<%= totalTimeValue %>"
-          >
+        <label class="ocr-metric-field">
+          <span>Tempo</span>
+          <div class="time-input-group">
+            <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" data-ocr-time-h>
+            <span class="time-sep">:</span>
+            <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" data-ocr-time-m>
+            <span class="time-sep">:</span>
+            <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" data-ocr-time-s>
+          </div>
         </label>
       </div>
+    </section>
 
-      <div class="manual-form__divider" aria-hidden="true"></div>
+    <p class="ocr-feedback" data-ocr-review-feedback aria-live="polite"></p>
 
-      <div class="manual-form__feedback" data-manual-form-feedback aria-live="polite"></div>
-      <div class="manual-form__ranking-status" data-manual-ranking-status aria-live="polite"></div>
+    <div class="ocr-review__actions">
+      <button class="manual-button manual-button--primary" type="button" data-ocr-retake>
+        Tirar nova foto
+      </button>
+      <button class="manual-button manual-button--primary" type="button" data-open-manual>
+        Editar manualmente
+      </button>
+      <button class="manual-button manual-button--success" type="button" data-ocr-save disabled>
+        Confirmar e salvar checkpoint
+      </button>
+    </div>
+  </section>
 
-      <div class="manual-form__actions">
-        <button class="manual-button manual-button--secondary" type="button" data-manual-cancel>
-          Cancelar
-        </button>
-        <button class="manual-button manual-button--primary" type="submit" data-manual-submit>
-          Salvar registro manual
-        </button>
+  <section class="manual-mode" data-manual-mode <%= isManual ? '' : 'hidden' %>>
+    <nav class="operational-panel__breadcrumb" aria-label="Caminho atual">
+      Operacional &gt; Registro manual
+    </nav>
+
+    <header class="operational-panel__header">
+      <h1>Registrar checkpoint manualmente</h1>
+    </header>
+
+    <section class="manual-warning" role="note" aria-label="Aviso sobre registro manual">
+      <span class="manual-warning__icon" aria-hidden="true">!</span>
+      <div class="manual-warning__copy">
+        <p>Use este modo apenas quando a camera falhar ou a foto estiver ilegivel.</p>
+        <p>O registro sera marcado como "manual" no log de auditoria</p>
       </div>
-    </form>
+    </section>
+
+    <section class="manual-card" aria-labelledby="manual-checkpoint-title">
+      <h2 id="manual-checkpoint-title" class="sr-only">Dados do checkpoint manual</h2>
+
+      <form
+        class="manual-form"
+        data-operational-manual-form
+        data-endpoint="<%= checkpointEndpoint %>"
+        data-input-method="manual"
+        novalidate
+      >
+        <input type="hidden" name="identifier" value="<%= checkpointContext.identifier || '' %>">
+        <input type="hidden" name="id_runner" value="<%= runnerId %>">
+        <input type="hidden" name="id_competition" value="<%= checkpointContext.id_competition || '' %>">
+        <input type="hidden" name="id_admin" value="<%= checkpointContext.id_admin || '' %>">
+
+        <div class="manual-form__row manual-form__row--top">
+          <label class="manual-field manual-field--wide">
+            <span>Atleta selecionado:</span>
+            <input type="text" name="runner_name" value="<%= runnerName %>" readonly>
+          </label>
+
+          <label class="manual-field manual-field--wide">
+            <span>Horario do checkpoint</span>
+            <input type="text" name="checkpoint_clock" value="<%= checkpointClock %>" readonly>
+          </label>
+        </div>
+
+        <div class="manual-form__row manual-form__row--metrics">
+          <label class="manual-field manual-field--metric">
+            <span>Distancia (km)</span>
+            <input type="number" name="distance_km" min="0" step="0.01" inputmode="decimal" required value="0.00">
+          </label>
+
+          <label class="manual-field manual-field--metric manual-field--pace-auto">
+            <span>Pace (min/km) <small class="pace-auto-hint">calculado automaticamente</small></span>
+            <input type="text" name="pace" inputmode="numeric" placeholder="00:00/km" readonly>
+          </label>
+
+          <label class="manual-field manual-field--metric">
+            <span>Tempo total</span>
+            <div class="time-input-group">
+              <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" name="time_hours">
+              <span class="time-sep">:</span>
+              <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" name="time_minutes">
+              <span class="time-sep">:</span>
+              <input type="text" class="time-part" inputmode="numeric" maxlength="2" placeholder="00" name="time_seconds">
+            </div>
+          </label>
+        </div>
+
+        <div class="manual-form__divider" aria-hidden="true"></div>
+        <div class="manual-form__feedback" data-manual-form-feedback aria-live="polite"></div>
+
+        <div class="manual-form__actions">
+          <button class="manual-button manual-button--secondary" type="button" data-manual-cancel>
+            Cancelar
+          </button>
+          <button class="manual-button manual-button--primary" type="button" data-manual-submit>
+            Salvar registro manual
+          </button>
+        </div>
+      </form>
+    </section>
   </section>
 </main>

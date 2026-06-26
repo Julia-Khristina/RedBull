@@ -1,0 +1,443 @@
+/* runner.css — Painel de equipe (runner/runner.ejs) */
+
+/* ── Layout principal ─────────────────────────────────────── */
+
+.runner-main {
+  padding: 28px 32px;
+  max-width: 1100px;
+}
+
+/* ── Header ───────────────────────────────────────────────── */
+
+.runner-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.runner-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--texto);
+  margin: 0 0 4px 0;
+}
+
+.runner-subtitle {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-medium);
+  color: var(--azul-principal);
+  margin: 0;
+}
+
+.runner-competition-time {
+  font-family: var(--font-family-mono, monospace);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--texto);
+  margin: 6px 0 0 0;
+  letter-spacing: 0.06em;
+}
+
+.btn-share {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  color: var(--texto);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.15s ease;
+  flex-shrink: 0;
+}
+
+.btn-share:hover {
+  background: var(--bordas-separadores);
+}
+
+.btn-share svg {
+  width: 22px;
+  height: 22px;
+}
+
+/* ── Runner header actions ────────────────────────────────── */
+
+.runner-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.share-post-group {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.share-post-select {
+  padding: 6px 8px;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  background: var(--fundo-cards);
+  color: var(--texto);
+  max-width: 120px;
+}
+
+.share-post-btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background: var(--azul-principal);
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 0.15s;
+  white-space: nowrap;
+}
+
+.share-post-btn:hover {
+  opacity: 0.85;
+}
+
+.share-post-btn.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* ── Cards de métricas ────────────────────────────────────── */
+
+.runner-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-card {
+  background: var(--azul-secundario);
+  color: #ffffff;
+  border-radius: var(--border-radius);
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric-label {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-medium);
+  opacity: 0.85;
+  margin: 0;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.metric-value {
+  font-family: var(--font-family);
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-extrabold);
+  margin: 0;
+  line-height: 1.1;
+}
+
+/* ── Seção de atletas ─────────────────────────────────────── */
+
+.athletes-section {
+  margin-bottom: 32px;
+}
+
+.section-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  margin: 0 0 16px 0;
+}
+
+.table-wrapper {
+  background: var(--fundo-cards);
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  border: 1px solid var(--bordas-separadores);
+}
+
+.athletes-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+}
+
+.athletes-table thead tr {
+  background: var(--fundo);
+  border-bottom: 2px solid var(--bordas-separadores);
+}
+
+.athletes-table th {
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+.athletes-table tbody tr {
+  border-bottom: 1px solid var(--bordas-separadores);
+  transition: background 0.1s ease;
+}
+
+.athletes-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.athletes-table tbody tr:hover {
+  background: var(--fundo);
+}
+
+.athletes-table td {
+  padding: 11px 16px;
+  color: var(--texto);
+  white-space: nowrap;
+}
+
+.athletes-table td:first-child {
+  font-weight: var(--font-weight-medium);
+}
+
+.empty-state {
+  background: var(--fundo-cards);
+  border: 1px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+  padding: 32px;
+  text-align: center;
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: #888;
+}
+
+/* ── Seção inferior: calculadora + gráfico ────────────────── */
+
+.bottom-section {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── Calculadora de descanso ──────────────────────────────── */
+
+.rest-calculator {
+  background: var(--fundo-cards);
+  border: 1px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+  padding: 24px;
+}
+
+.rest-content {
+  display: grid;
+  grid-template-columns: 1fr 110px minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+}
+
+.rest-runner-select {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.rest-runner-select span {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.rest-runner-select select {
+  width: 100%;
+  min-width: 0;
+  padding: 11px 12px;
+  font-family: var(--font-family);
+  color: var(--texto);
+  background: var(--fundo);
+  border: 1px solid var(--bordas-separadores);
+  border-radius: 10px;
+}
+
+/* Círculo SVG */
+
+.circle-wrapper {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  flex-shrink: 0;
+}
+
+.circle-svg {
+  width: 110px;
+  height: 110px;
+  transform: rotate(0deg);
+}
+
+.circle-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-extrabold);
+  color: var(--texto);
+}
+
+/* Info ao lado do círculo */
+
+.rest-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.rest-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  padding: 4px 10px;
+  border-radius: 99px;
+  width: fit-content;
+}
+
+.rest-status-badge.ready {
+  background: rgba(114, 185, 127, 0.15);
+  color: var(--verde);
+}
+
+.rest-status-badge.resting {
+  background: rgba(255, 204, 0, 0.15);
+  color: #9a7800;
+}
+
+.rest-desc {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: #666;
+  margin: 0;
+}
+
+.rest-recommended {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: var(--texto);
+  background: var(--fundo);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+
+.rest-next {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: var(--texto);
+  margin: 0;
+}
+
+.rest-last-checkpoint {
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  color: var(--texto);
+  margin: 0;
+}
+
+/* ── Gráfico (placeholder D3) ─────────────────────────────── */
+
+.chart-section {
+  background: var(--fundo-cards);
+  border: 1px solid var(--bordas-separadores);
+  border-radius: var(--border-radius);
+  padding: 24px;
+}
+
+.chart-title {
+  font-family: var(--font-family);
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-bold);
+  color: var(--texto);
+  margin: 0 0 16px 0;
+}
+
+.chart-placeholder-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* ── Toast de compartilhamento ───────────────────────────── */
+
+.share-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--azul-principal);
+  color: #fff;
+  font-family: var(--font-family);
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-medium);
+  padding: 10px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  transition: opacity 0.2s ease;
+}
+
+.share-toast.hidden {
+  display: none;
+}
+
+/* ── Responsivo básico ───────────────────────────────────── */
+
+@media (max-width: 900px) {
+  .runner-metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .bottom-section {
+    grid-template-columns: 1fr;
+  }
+
+  .rest-content {
+    grid-template-columns: 1fr;
+  }
+
+  .circle-wrapper {
+    justify-self: center;
+  }
+
+  .table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .athletes-table {
+    min-width: max-content;
+  }
+}

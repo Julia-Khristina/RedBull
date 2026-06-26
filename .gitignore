@@ -56,6 +56,10 @@ typings/
 # Optional eslint cache
 .eslintcache
 
+# OCR runtime uploads/cache
+.ocr-cache/
+*.traineddata
+
 # Microbundle cache
 .rpt2_cache/
 .rts2_cache_cjs/
@@ -108,3 +112,4 @@ dist
 
 # Implementation Plan
 documentos/outros/implementation-plan/
+.opencode

@@ -12,16 +12,18 @@
 --verde: #72b97f;
 --vermelho: #d2003c;
 --amarelo: #ffcc00;
+--texto-muted: #6b6b6b;
 
 /* Tipografia */   
 --font-family:'Montserrat', sans-serif;
 
-/* Tamanhos de fonte */   
+/* Tamanhos de fonte */
 --font-size-h1: 30px; /* H1 — títulos principais */
 --font-size-h2: 28px; /* H2 — títulos de páginas */
 --font-size-h3: 26px; /* H3 — seções importantes */
 --font-size-subtitulo: 20px; /* Subtítulo e destaques — cards */
---font-size-texto-cabecalho: 12px; /* Cabeçalho quadro / Texto corpo */
+--font-size-body: 14px; /* Texto de corpo — parágrafos e listas */
+--font-size-texto-cabecalho: 12px; /* Cabeçalho quadro / Texto menu */
 
 /* Peso da fonte */  
 --font-weight-bold: 700;

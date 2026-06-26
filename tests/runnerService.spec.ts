@@ -1,6 +1,7 @@
 import { createRunnerService } from "../src/services/runnerService";
 import { Runner, RunnerRepository } from "../src/models/runner";
 import {
+  ConflictError,
   NotFoundError,
   ValidationError,
   UnprocessableError,
@@ -8,7 +9,7 @@ import {
 
 const runnerFixture: Runner = {
   id: 1,
-  name: "João Silva",
+  name: "Joao Silva",
   status: "runner",
   email: "joao@test.com",
   phone: null,
@@ -33,7 +34,7 @@ function makeRepositoryMock(
 }
 
 describe("runnerService.create", () => {
-  it("deve criar atleta com payload válido", async () => {
+  it("deve criar atleta com payload valido", async () => {
     const repository = makeRepositoryMock({
       findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
       countByTeam: jest.fn().mockResolvedValue(0),
@@ -42,17 +43,37 @@ describe("runnerService.create", () => {
     const service = createRunnerService(repository);
 
     const result = await service.create({
-      name: "João Silva",
+      name: "Joao Silva",
       cpf: "111.222.333-44",
       email: "joao@test.com",
       id_team: 10,
     });
 
-    expect(result).toMatchObject({ name: "João Silva", id_team: 10 });
+    expect(result).toMatchObject({ name: "Joao Silva", id_team: 10 });
     expect(repository.create).toHaveBeenCalled();
   });
 
-  it("deve lançar NotFoundError quando equipe não existe", async () => {
+  it("deve normalizar CPF sem mascara antes de persistir", async () => {
+    const repository = makeRepositoryMock({
+      findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
+      countByTeam: jest.fn().mockResolvedValue(0),
+      create: jest.fn().mockResolvedValue(runnerFixture),
+    });
+    const service = createRunnerService(repository);
+
+    await service.create({
+      name: "Joao Silva",
+      cpf: "11122233344",
+      email: "joao@test.com",
+      id_team: 10,
+    });
+
+    expect(repository.create).toHaveBeenCalledWith(
+      expect.objectContaining({ cpf: "111.222.333-44" })
+    );
+  });
+
+  it("deve lancar NotFoundError quando equipe nao existe", async () => {
     const repository = makeRepositoryMock({
       findTeamById: jest.fn().mockResolvedValue(null),
     });
@@ -69,7 +90,7 @@ describe("runnerService.create", () => {
     expect(repository.create).not.toHaveBeenCalled();
   });
 
-  it("deve lançar UnprocessableError quando equipe já tem 16 atletas", async () => {
+  it("deve lancar UnprocessableError quando equipe ja tem 16 atletas", async () => {
     const repository = makeRepositoryMock({
       findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
       countByTeam: jest.fn().mockResolvedValue(16),
@@ -87,7 +108,7 @@ describe("runnerService.create", () => {
     expect(repository.create).not.toHaveBeenCalled();
   });
 
-  it("deve lançar ValidationError quando name está ausente", async () => {
+  it("deve lancar ValidationError quando name esta ausente", async () => {
     const repository = makeRepositoryMock({
       findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
       countByTeam: jest.fn().mockResolvedValue(0),
@@ -102,6 +123,69 @@ describe("runnerService.create", () => {
       } as never)
     ).rejects.toBeInstanceOf(ValidationError);
   });
+
+  it("deve lancar ConflictError quando CPF ja existe", async () => {
+    const repository = makeRepositoryMock({
+      findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
+      countByTeam: jest.fn().mockResolvedValue(0),
+      create: jest.fn().mockRejectedValue({
+        code: "23505",
+        details: "Key (cpf)=(111.222.333-44) already exists.",
+      }),
+    });
+    const service = createRunnerService(repository);
+
+    await expect(
+      service.create({
+        name: "Joao Silva",
+        cpf: "111.222.333-44",
+        email: "joao@test.com",
+        id_team: 10,
+      })
+    ).rejects.toBeInstanceOf(ConflictError);
+  });
+
+  it("deve relancar erro inesperado ao criar atleta", async () => {
+    const repository = makeRepositoryMock({
+      findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
+      countByTeam: jest.fn().mockResolvedValue(0),
+      create: jest.fn().mockRejectedValue(new Error("database unavailable")),
+    });
+    const service = createRunnerService(repository);
+
+    await expect(
+      service.create({
+        name: "Joao Silva",
+        cpf: "111.222.333-44",
+        email: "joao@test.com",
+        id_team: 10,
+      })
+    ).rejects.toThrow("database unavailable");
+  });
+});
+
+describe("runnerService.findByTeam", () => {
+  it("deve listar atletas quando equipe existe", async () => {
+    const repository = makeRepositoryMock({
+      findTeamById: jest.fn().mockResolvedValue({ id: 10 }),
+      findByTeam: jest.fn().mockResolvedValue([runnerFixture]),
+    });
+    const service = createRunnerService(repository);
+
+    await expect(service.findByTeam(10)).resolves.toEqual([runnerFixture]);
+    expect(repository.findTeamById).toHaveBeenCalledWith(10);
+    expect(repository.findByTeam).toHaveBeenCalledWith(10);
+  });
+
+  it("deve lancar NotFoundError quando equipe nao existe", async () => {
+    const repository = makeRepositoryMock({
+      findTeamById: jest.fn().mockResolvedValue(null),
+    });
+    const service = createRunnerService(repository);
+
+    await expect(service.findByTeam(999)).rejects.toBeInstanceOf(NotFoundError);
+    expect(repository.findByTeam).not.toHaveBeenCalled();
+  });
 });
 
 describe("runnerService.findByTeamAndId", () => {
@@ -115,7 +199,7 @@ describe("runnerService.findByTeamAndId", () => {
     expect(result).toEqual(runnerFixture);
   });
 
-  it("deve lançar NotFoundError quando não existe", async () => {
+  it("deve lancar NotFoundError quando nao existe", async () => {
     const repository = makeRepositoryMock({
       findByTeamAndId: jest.fn().mockResolvedValue(null),
     });
@@ -133,15 +217,19 @@ describe("runnerService.updateByTeamAndId", () => {
       updateByTeamAndId: jest.fn().mockResolvedValue(updated),
     });
 
-    const result = await createRunnerService(repository).updateByTeamAndId(10, 1, {
-      name: "Atualizado",
-    });
+    const result = await createRunnerService(repository).updateByTeamAndId(
+      10,
+      1,
+      { name: "Atualizado" }
+    );
 
     expect(result.name).toBe("Atualizado");
-    expect(repository.updateByTeamAndId).toHaveBeenCalledWith(10, 1, { name: "Atualizado" });
+    expect(repository.updateByTeamAndId).toHaveBeenCalledWith(10, 1, {
+      name: "Atualizado",
+    });
   });
 
-  it("deve lançar NotFoundError quando não existe", async () => {
+  it("deve lancar NotFoundError quando nao existe", async () => {
     const repository = makeRepositoryMock({
       updateByTeamAndId: jest.fn().mockResolvedValue(null),
     });
@@ -150,10 +238,37 @@ describe("runnerService.updateByTeamAndId", () => {
       createRunnerService(repository).updateByTeamAndId(10, 999, { name: "X" })
     ).rejects.toBeInstanceOf(NotFoundError);
   });
+
+  it("deve lancar ConflictError quando email ja existe", async () => {
+    const repository = makeRepositoryMock({
+      updateByTeamAndId: jest.fn().mockRejectedValue({
+        code: "23505",
+        details: "Key (email)=(joao@test.com) already exists.",
+      }),
+    });
+
+    await expect(
+      createRunnerService(repository).updateByTeamAndId(10, 1, {
+        email: "joao@test.com",
+      })
+    ).rejects.toBeInstanceOf(ConflictError);
+  });
+
+  it("deve relancar erro inesperado ao atualizar atleta", async () => {
+    const repository = makeRepositoryMock({
+      updateByTeamAndId: jest.fn().mockRejectedValue(new Error("timeout")),
+    });
+
+    await expect(
+      createRunnerService(repository).updateByTeamAndId(10, 1, {
+        name: "Atualizado",
+      })
+    ).rejects.toThrow("timeout");
+  });
 });
 
 describe("runnerService.deleteByTeamAndId", () => {
-  it("deve deletar atleta existente sem lançar erro", async () => {
+  it("deve deletar atleta existente sem lancar erro", async () => {
     const repository = makeRepositoryMock({
       deleteByTeamAndId: jest.fn().mockResolvedValue(true),
     });
@@ -164,7 +279,7 @@ describe("runnerService.deleteByTeamAndId", () => {
     expect(repository.deleteByTeamAndId).toHaveBeenCalledWith(10, 1);
   });
 
-  it("deve lançar NotFoundError quando não existe", async () => {
+  it("deve lancar NotFoundError quando nao existe", async () => {
     const repository = makeRepositoryMock({
       deleteByTeamAndId: jest.fn().mockResolvedValue(false),
     });
@@ -172,5 +287,25 @@ describe("runnerService.deleteByTeamAndId", () => {
     await expect(
       createRunnerService(repository).deleteByTeamAndId(10, 999)
     ).rejects.toBeInstanceOf(NotFoundError);
+  });
+
+  it("deve lancar ConflictError quando atleta possui checkpoints", async () => {
+    const repository = makeRepositoryMock({
+      deleteByTeamAndId: jest.fn().mockRejectedValue({ code: "23503" }),
+    });
+
+    await expect(
+      createRunnerService(repository).deleteByTeamAndId(10, 1)
+    ).rejects.toBeInstanceOf(ConflictError);
+  });
+
+  it("deve relancar erro inesperado ao deletar atleta", async () => {
+    const repository = makeRepositoryMock({
+      deleteByTeamAndId: jest.fn().mockRejectedValue(new Error("delete failed")),
+    });
+
+    await expect(
+      createRunnerService(repository).deleteByTeamAndId(10, 1)
+    ).rejects.toThrow("delete failed");
   });
 });

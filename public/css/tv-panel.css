@@ -1,0 +1,245 @@
+/*
+ * Painel TV — Red Bull 24 Horas (US19 #519)
+ * Tela pública em monitores/TVs durante o evento.
+ *
+ * Tasks #522 (estrutura + visual base) + #523 (polimento, leitura à
+ * distância e contraste WCAG AAA). Layout 100% baseado no protótipo da
+ * Luiza (página 8 do Canva, 1920x1080).
+ */
+
+/* DSEG7 — fonte de display 7-segmentos do cronômetro e dos valores grandes.
+   Self-hosted em /public/fonts pra não depender de CDN externo. */
+@font-face {
+  font-family: "DSEG7-Classic";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/DSEG7Classic-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "DSEG7-Classic";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/DSEG7Classic-Regular.woff2") format("woff2");
+}
+
+/* Fonte do título: o protótipo usa Futura (proprietária da Adobe).
+   Sistema (Mac/iOS) cai em Futura nativa; restante cai em Jost,
+   que é o clone open-source mais próximo (importado em tv.ejs). */
+:root {
+  --tv-font-display:
+    "Futura", "Futura PT", "Futura Std", "Jost", "Trebuchet MS",
+    "Montserrat", sans-serif;
+}
+
+html,
+body.tv-body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  color: #ffffff;
+  font-family: var(--tv-font-display);
+  background-color: var(--azul-principal);
+}
+
+/* Container principal — fullscreen em coluna, com o background ilustrado
+   do protótipo (silhuetas SP + NYC + corredores + watermark Red Bull). */
+.tv-panel {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  width: 100vw;
+  height: 100vh;
+  padding: 32px 56px 40px;
+  box-sizing: border-box;
+  background-image: url("/img/tv-panel-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* ── Header — logo Red Bull 24h à esquerda + título centralizado ──── */
+
+.tv-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  min-height: 130px;
+  padding: 0 180px;
+}
+
+.tv-logo {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 132px;
+  width: auto;
+  display: block;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.45));
+}
+
+.tv-competition-title {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: 800;
+  /* Dimensionado para "REDBULL 24 HORAS - EDIÇÃO ESTADO" (32 chars)
+     caber em uma linha em 1920px com margem confortável. */
+  font-size: clamp(44px, 4.1vw, 70px);
+  letter-spacing: 2px;
+  line-height: 1.05;
+  text-align: center;
+  text-wrap: balance;
+  color: #ffffff;
+  text-transform: uppercase;
+  /* Sombra dupla — garante 7:1 mesmo sobre as áreas mais claras do bg. */
+  text-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.55),
+    0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+/* ── Cronômetro central (display 7-segmentos) ──────────────────────── */
+
+.tv-clock-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 24px;
+  box-sizing: border-box;
+}
+
+.tv-clock {
+  font-family: "DSEG7-Classic", "Courier New", Courier, monospace;
+  /* Limitado para acomodar HH:MM:SS (8 chars) confortável em 1920px com
+     margem pra dados maiores em ambientes de teste/staging. */
+  font-size: clamp(140px, 13.5vw, 250px);
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: #ffffff;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  /* Glow suave sem causar flicker em updates (não animamos a sombra). */
+  text-shadow:
+    0 0 24px rgba(255, 255, 255, 0.45),
+    0 0 60px rgba(15, 0, 105, 0.55),
+    0 4px 0 rgba(0, 0, 0, 0.35);
+  /* Transição suave em mudanças in-place — atende "sem flicker" (#523). */
+  transition: color 0.15s ease-out;
+}
+
+/* ── 3 cards de métrica — KM TOTAL, PACE MÉDIO, VEL. MÉDIA ─────────── */
+
+.tv-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+  width: 100%;
+}
+
+.tv-card {
+  position: relative;
+  background: rgba(15, 0, 105, 0.62);
+  backdrop-filter: blur(3px);
+  -webkit-backdrop-filter: blur(3px);
+  border-radius: 4px;
+  padding: 22px 28px 26px 38px;
+  display: flex;
+  flex-direction: column;
+  /* gap maior compensa o descender da vírgula DSEG7 — sem isso o ","
+     de "988,8" colidia visualmente com o texto "KM TOTAIS" abaixo. */
+  gap: 18px;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+/* Barra vertical colorida na borda esquerda — diferencia cada métrica.
+   O protótipo usa barra VERTICAL (não top), por isso ::before absoluto. */
+.tv-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 8px;
+  background: var(--bordas-separadores);
+}
+
+.tv-card-label {
+  margin: 0;
+  font-family: var(--tv-font-display);
+  font-weight: 700;
+  font-size: clamp(28px, 2.2vw, 38px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.tv-card-value {
+  margin: 0;
+  font-family: "DSEG7-Classic", "Courier New", Courier, monospace;
+  font-weight: 700;
+  /* Dimensionado para "XXX,X" (5 chars) caber sem overflow no card. */
+  font-size: clamp(64px, 6.4vw, 108px);
+  /* line-height > 1 acomoda o descender da vírgula DSEG7. */
+  line-height: 1.1;
+  color: #ffffff;
+  text-shadow: 0 0 14px rgba(255, 255, 255, 0.35);
+  letter-spacing: 2px;
+  white-space: nowrap;
+  /* Mesma transição suave do cronômetro — evita flicker no polling. */
+  transition: color 0.15s ease-out;
+}
+
+.tv-card-unit {
+  font-family: var(--tv-font-display);
+  font-weight: 700;
+  font-size: clamp(18px, 1.5vw, 26px);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  line-height: 1;
+  opacity: 0.95;
+}
+
+/* Cores por card — alinhadas à paleta do design system + protótipo. */
+.tv-card--km::before {
+  background: var(--amarelo);
+}
+.tv-card--km .tv-card-unit {
+  color: var(--amarelo);
+}
+
+.tv-card--pace::before {
+  background: var(--vermelho);
+}
+.tv-card--pace .tv-card-unit {
+  color: var(--vermelho);
+}
+
+.tv-card--speed::before {
+  background: var(--verde);
+}
+.tv-card--speed .tv-card-unit {
+  color: var(--verde);
+}
+
+/* ── Ajustes responsivos para resoluções >1080p (2K/4K) ─────────────── */
+
+@media (min-width: 2400px) {
+  .tv-panel {
+    padding: 48px 80px 56px;
+  }
+  .tv-logo {
+    height: 160px;
+  }
+  .tv-header {
+    min-height: 170px;
+    padding: 0 220px;
+  }
+}

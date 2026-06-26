@@ -7,6 +7,10 @@ export interface Competition {
   date: string;
   status: CompetitionStatus;
   created_at: string;
+  /* Gravado por competitionRepository.activate() — marco zero do countdown
+     de 24h exibido no Painel TV (US19 #519). Null enquanto a competição
+     ainda está em "not_started". */
+  started_at: string | null;
 }
 
 export interface CreateCompetitionInput {
@@ -28,4 +32,5 @@ export interface CompetitionRepository {
   update(id: number, input: UpdateCompetitionInput): Promise<Competition | null>;
   delete(id: number): Promise<boolean>;
   close(id: number): Promise<Competition | null>;
+  activate(id: number): Promise<Competition | null>;
 }

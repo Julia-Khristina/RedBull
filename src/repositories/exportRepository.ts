@@ -10,7 +10,7 @@ const TEAM_SELECT = "id, name, uuid, qr_code, id_competition, created_at";
 const RUNNER_SELECT =
   "id, name, status, email, phone, cpf, id_team, created_at";
 const CHECKPOINT_SELECT =
-  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_treadmill, id_admin, created_at, runner:id_runner(id, name, id_team)";
+  "id, identifier, distance_km, pace, time, image, id_runner, id_competition, id_admin, created_at, runner:id_runner(id, name, id_team, team:id_team(id, name))";
 
 type SupabaseCheckpoint = Record<string, unknown>;
 

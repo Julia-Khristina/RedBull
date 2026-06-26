@@ -1,0 +1,249 @@
+<%#
+  VIEW: dashboard/dashboard.ejs
+  ESTADO: [C2 — Parcial]
+  LACUNAS:
+    - Ranking da competição ativa não exibido: controller não busca dados ainda.
+      Aguarda dashboardController com GET /competitions [A1][B2] e
+      GET /competitions/:id/ranking/teams [A1][B2] (agent.md Seção 11).
+    - Botão "Ver Ranking" linka para /ranking sem ID de competição [D2] —
+      atualizar quando o controller passar activeCompetition.
+    - Botão "Encerrar Competição" (RN14) não implementado: exige activeCompetition
+      do controller e fetch PATCH /competitions/:id [A1][B2] — documentado
+      como lacuna até o controller existir.
+  ENDPOINTS CONSUMIDOS:
+    - Nenhum endpoint consumido nesta renderização (view estática SSR).
+      GET /competitions e GET /competitions/:id/ranking/teams [A1][B2]
+      serão consumidos quando o dashboardController for implementado.
+  ÚLTIMA ATUALIZAÇÃO: 2026-06-10
+%>
+
+<%
+  // [D1] Data gerada server-side no momento da renderização SSR
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('pt-BR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric'
+  });
+  const rankingHref = locals.activeCompetition
+    ? `/competitions/${activeCompetition.id}/ranking`
+    : '/ranking';
+  const competitionsList = Array.isArray(locals.competitions) ? locals.competitions : [];
+
+  function formatCompetitionDate(value) {
+    if (!value) return '';
+    const parsed = /^\d{4}-\d{2}-\d{2}$/.test(String(value))
+      ? new Date(`${value}T00:00:00`)
+      : new Date(value);
+    if (Number.isNaN(parsed.getTime())) return '';
+    return parsed.toLocaleDateString('pt-BR');
+  }
+%>
+
+<link rel="stylesheet" href="/css/competition-form.css">
+<main class="db-main">
+
+  <!-- ── Header banner ── -->
+  <header class="db-banner">
+    <p class="db-banner-title">RedBull 24H - Painel Admin</p>
+    <p class="db-banner-date"><%= dateStr %></p>
+  </header>
+
+  <!-- ── Título da página ── -->
+  <h1 class="db-page-title">Dashboard - RedBull 24H</h1>
+
+  <%#
+    Estado de sucesso (tela3): exibido quando success === true,
+    injetado pela dashboardRoute via query param ?created=1.
+    [A1] Lido em src/routes/dashboardRoutes.ts — req.query.created === '1'
+
+    Estado padrão (tela1): card de boas-vindas.
+  %>
+  <% if (locals.success) { %>
+    <div class="db-card">
+      <h3 class="db-card-heading">Competição cadastrada com sucesso!</h3>
+      <hr class="db-divider" />
+    </div>
+  <% } else { %>
+    <div class="db-card">
+      <h3 class="db-card-heading">Seja bem vindo(a) Administrador!</h3>
+      <hr class="db-divider" />
+      <p class="db-card-body">
+        Essa é a plataforma de gestão da competição RedBull 24 Horas!
+        Acompanhe o tutorial, crie nova competição e veja o ranking nesse
+        Dashboard inicial!
+      </p>
+    </div>
+  <% } %>
+
+  <!-- ── Tutorial ── -->
+  <section class="db-section">
+    <h2 class="db-section-title">Tutorial</h2>
+    <div class="db-card">
+      <h3 class="db-card-heading">Cadastrar equipes e atletas:</h3>
+      <hr class="db-divider" />
+      <ul class="db-tutorial-list">
+        <li>Passo 1: Inserir nome e dados da equipe</li>
+        <li>Passo 2: Gerar UUID Identificador Único Universal</li>
+        <li>Passo 3: Criar equipes, preencher seus devidos capitães</li>
+        <li>Passo 4: Após criar as 2 equipes, iniciar a competição</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ── Ação rápida ── -->
+  <%#
+    [A1] "Nova Competição" → GET /competitions/new (rota SSR, view tela2)
+    [D2] "Ver Ranking" → /ranking sem ID de competição — atualizar quando
+         o dashboardController passar activeCompetition.id
+  %>
+  <section class="db-section">
+    <h2 class="db-section-title">Ação rápida</h2>
+    <div class="db-actions">
+      <a href="/competitions/new" class="db-action-btn">
+        Nova<br>Competição
+      </a>
+      <a href="<%= rankingHref %>" class="db-action-btn">
+        Ver<br>Ranking
+      </a>
+    </div>
+  </section>
+
+  <section class="db-section">
+    <h2 class="db-section-title">Selecionar competição</h2>
+
+    <!-- ── Filtros ── -->
+    <div class="db-filter-bar">
+      <div class="db-filter-group">
+        <label for="filter-status" class="db-filter-label">Status</label>
+        <select id="filter-status" class="db-filter-select">
+          <option value="all">Todas</option>
+          <option value="ativas">Em andamento</option>
+          <option value="not_started">Não iniciadas</option>
+          <option value="closed">Encerradas</option>
+        </select>
+      </div>
+      <div class="db-filter-group">
+        <label for="filter-date" class="db-filter-label">Data</label>
+        <input type="date" id="filter-date" class="db-filter-input">
+      </div>
+      <div class="db-filter-group">
+        <label for="filter-location" class="db-filter-label">Localização</label>
+        <input type="text" id="filter-location" class="db-filter-input" placeholder="Filtrar por local...">
+      </div>
+      <div class="db-filter-group db-filter-group--action">
+        <label class="db-filter-label">&nbsp;</label>
+        <button type="button" id="filter-reset" class="db-filter-reset-btn">Limpar</button>
+      </div>
+    </div>
+
+    <% if (competitionsList.length === 0) { %>
+      <div class="db-card">
+        <h3 class="db-card-heading">Nenhuma competição cadastrada</h3>
+        <hr class="db-divider" />
+        <p class="db-card-body">
+          Crie uma competição antes de acessar equipes, ranking ou relatórios.
+        </p>
+      </div>
+    <% } else { %>
+      <div id="competition-container">
+        <div class="db-competition-list" id="competition-list">
+          <% competitionsList.forEach(function(item) { %>
+            <article class="db-competition-card <%= activeCompetition && activeCompetition.id === item.id ? 'is-selected' : '' %>"
+              data-status="<%= item.status %>"
+              data-date="<%= item.date || '' %>"
+              data-location="<%= (item.address || '').toLowerCase() %>">
+              <div>
+                <h3><%= item.name %></h3>
+                <p>
+                  ID <%= item.id %>
+                  <% if (item.date) { %>
+                    · <%= formatCompetitionDate(item.date) %>
+                  <% } %>
+                  · <%= item.status === 'in_progress' ? 'Em andamento' : item.status === 'not_started' ? 'Não iniciada' : 'Encerrada' %>
+                </p>
+              </div>
+              <div class="db-competition-actions">
+                <a href="/dashboard?competitionId=<%= item.id %>">Selecionar</a>
+                <a href="/teams?competitionId=<%= item.id %>">Equipes</a>
+                
+                <% if (item.status !== 'in_progress') { %>
+                  <button class="db-activate-btn" data-id="<%= item.id %>">Ativar</button>
+                <% } else { %>
+                  <button class="db-close-btn" data-id="<%= item.id %>">Encerrar</button>
+                <% } %>
+                  <button class="db-edit-btn" data-id="<%= item.id %>" title="Editar competição">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/>
+                    </svg>
+                  </button>
+              </div>
+            </article>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- ── Paginação ── -->
+      <div class="db-pagination" id="pagination">
+        <button class="db-page-btn" id="prev-page" aria-label="Anterior">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+          Anterior
+        </button>
+        <span class="db-pagination-info" id="pagination-info"></span>
+        <button class="db-page-btn" id="next-page" aria-label="Próximo">
+          Próximo
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
+      </div>
+    <% } %>
+  </section>
+
+  <!-- ── Modal de edição ── -->
+  <section
+    id="db-edit-modal"
+    class="db-modal"
+    data-db-edit-modal
+    role="dialog"
+    aria-modal="true"
+    hidden
+  >
+    <div class="db-modal-backdrop" data-db-edit-action="close"></div>
+
+    <div class="db-modal-card cf-main">
+      <button type="button" class="cf-back-link" data-db-edit-action="close">&lt; Voltar</button>
+
+      <h1 class="cf-page-title">Editar Competição</h1>
+
+      <div id="db-edit-error" class="cf-error" role="alert"></div>
+
+      <form class="cf-form" id="db-edit-form" data-db-edit-form novalidate>
+        <input type="hidden" name="id" data-db-edit-id>
+
+        <div class="cf-field">
+          <label class="cf-label" for="db-edit-name">Nome da Competição</label>
+          <input class="cf-input" type="text" id="db-edit-name" name="name" required maxlength="100" placeholder="RedBull 24 Horas Edição São Paulo - Butantã" autocomplete="off">
+        </div>
+
+        <div class="cf-field">
+          <label class="cf-label" for="db-edit-date">Data</label>
+          <input class="cf-input" type="date" id="db-edit-date" name="date" required>
+        </div>
+
+        <div class="cf-field">
+          <label class="cf-label" for="db-edit-address">Localização</label>
+          <input class="cf-input" type="text" id="db-edit-address" name="address" required maxlength="200" placeholder="Rua MMDC 80, Butantã, São Paulo" autocomplete="off">
+        </div>
+
+        <div class="cf-actions">
+          <button type="button" class="cf-btn-cancel" data-db-edit-action="close">Cancelar</button>
+          <button type="submit" class="cf-btn-submit" id="db-edit-submit">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+</main>

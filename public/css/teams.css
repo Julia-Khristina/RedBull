@@ -1,0 +1,1109 @@
+/*
+ * teams.css
+ * Estilos da Tela de Equipes — Sprint 4, task #327 (Estrutura visual).
+ * Tokens usados a partir de variables.css: cores, tipografia e raio padrão.
+ * Classes em BEM (teams__elemento) para evitar colisão com menu/operational-panel.
+ */
+
+/* ---------------------------------------------------------------------------
+ * Container principal — alinhado ao conteúdo após o menu lateral
+ * ------------------------------------------------------------------------- */
+
+.teams {
+    padding: 40px 48px 64px;
+    font-family: var(--font-family);
+    color: var(--texto);
+    background-color: var(--fundo);
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ---------------------------------------------------------------------------
+ * Cabeçalho — título da página + botão "Nova Equipe"
+ * ------------------------------------------------------------------------- */
+
+.teams__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 32px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--bordas-separadores);
+}
+
+.teams__title-block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.teams__title {
+    margin: 0;
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-extrabold);
+    color: var(--azul-principal);
+    letter-spacing: -0.5px;
+}
+
+.teams__subtitle {
+    margin: 0;
+    font-size: var(--font-size-subtitulo);
+    font-weight: var(--font-weight-medium);
+    color: var(--azul-secundario);
+}
+
+.teams__new-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    padding: 14px 28px;
+    font-family: var(--font-family);
+    font-size: 15px;
+    font-weight: var(--font-weight-bold);
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.18s ease, transform 0.18s ease;
+}
+
+.teams__new-btn:hover {
+    background-color: #b00033;
+}
+
+.teams__new-btn:active {
+    transform: translateY(1px);
+}
+
+.teams__new-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Empty State — exibido quando não há equipes cadastradas
+ * ------------------------------------------------------------------------- */
+
+.teams__empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 64px 32px;
+    background-color: var(--fundo-cards);
+    border: 1px dashed var(--bordas-separadores);
+    border-radius: var(--border-radius);
+    text-align: center;
+}
+
+.teams__empty-icon {
+    width: 80px;
+    height: 80px;
+    color: var(--azul-secundario);
+}
+
+.teams__empty-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.teams__empty-title {
+    margin: 0;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+}
+
+.teams__empty-text {
+    margin: 0;
+    font-size: 15px;
+    color: var(--azul-secundario);
+    max-width: 380px;
+}
+
+.teams__empty-cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8px;
+    padding: 12px 24px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    color: var(--vermelho);
+    background-color: transparent;
+    border: 2px solid var(--vermelho);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.teams__breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--azul-secundario);
+}
+
+.teams__breadcrumb a {
+    color: var(--azul-principal);
+    text-decoration: none;
+}
+
+.teams__second-team {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+    padding: 18px 22px;
+    background-color: var(--fundo-cards);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: var(--border-radius);
+}
+
+.teams__second-team div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    color: var(--azul-secundario);
+}
+
+.teams__second-team strong {
+    color: var(--azul-principal);
+}
+
+.teams__second-team-link {
+    flex-shrink: 0;
+    padding: 11px 18px;
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+}
+
+.teams__empty-cta:hover {
+    background-color: var(--vermelho);
+    color: #ffffff;
+}
+
+.teams__empty-cta:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Listagem de equipes — cards
+ * ------------------------------------------------------------------------- */
+
+.teams__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 20px;
+}
+
+.teams__card {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 24px;
+    background-color: var(--fundo-cards);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: var(--border-radius);
+    transition: box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.teams__card:hover {
+    box-shadow: 0 6px 24px rgba(15, 0, 105, 0.08);
+    transform: translateY(-1px);
+}
+
+.teams__card-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.teams__card-name {
+    margin: 0;
+    font-size: var(--font-size-subtitulo);
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+}
+
+.teams__card-meta {
+    margin: 0;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--azul-secundario);
+}
+
+/* ---------------------------------------------------------------------------
+ * Bloco de URL pública (UUID) dentro de cada card
+ * ------------------------------------------------------------------------- */
+
+.teams__card-uuid {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.teams__uuid-label {
+    font-size: var(--font-size-texto-cabecalho);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--azul-secundario);
+}
+
+.teams__uuid-row {
+    display: flex;
+    align-items: stretch;
+    gap: 8px;
+}
+
+.teams__uuid-input {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 10px 12px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    color: var(--texto);
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 8px;
+}
+
+.teams__copy-btn {
+    flex-shrink: 0;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.teams__copy-btn:hover {
+    background-color: var(--azul-principal);
+    color: #ffffff;
+}
+
+.teams__copy-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+.teams__link-btn {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 16px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    color: #ffffff;
+    background-color: var(--azul-principal);
+    border: 1px solid var(--azul-principal);
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.teams__link-btn:hover {
+    background-color: var(--azul-secundario);
+    border-color: var(--azul-secundario);
+}
+
+.teams__link-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* Estado "Copiado!" — feedback visual de 2 segundos após cópia bem-sucedida */
+.teams__copy-btn--success,
+.teams__copy-btn--success:hover {
+    color: #ffffff;
+    background-color: var(--verde);
+    border-color: var(--verde);
+    cursor: default;
+}
+
+/* ---------------------------------------------------------------------------
+ * Ações do card (Editar / Excluir)
+ * ------------------------------------------------------------------------- */
+
+.teams__card-actions {
+    display: flex;
+    gap: 12px;
+    padding-top: 16px;
+    border-top: 1px solid var(--bordas-separadores);
+}
+
+.teams__access-btn,
+.teams__edit-btn,
+.teams__delete-btn {
+    flex: 1 1 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 12px;
+    font-family: var(--font-family);
+    font-size: 13px;
+    font-weight: var(--font-weight-bold);
+    border-radius: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.teams__access-btn {
+    color: #ffffff;
+    background-color: var(--azul-principal);
+    border: 1px solid var(--azul-principal);
+}
+
+.teams__access-btn:hover {
+    background-color: var(--azul-secundario);
+}
+
+.teams__edit-btn {
+    color: var(--azul-principal);
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+}
+
+.teams__edit-btn:hover {
+    background-color: var(--azul-principal);
+    color: #ffffff;
+}
+
+.teams__delete-btn {
+    color: var(--vermelho);
+    background-color: transparent;
+    border: 1px solid var(--vermelho);
+}
+
+.teams__delete-btn:hover {
+    background-color: var(--vermelho);
+    color: #ffffff;
+}
+
+.teams__access-btn:focus-visible,
+.teams__edit-btn:focus-visible,
+.teams__delete-btn:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Formulário de criação completa
+ * ------------------------------------------------------------------------- */
+
+.teams--form {
+    max-width: 1180px;
+}
+
+.teams--notice {
+    max-width: 980px;
+}
+
+.teams__notice {
+    min-height: 360px;
+    border-style: solid;
+}
+
+.teams__notice-icon {
+    color: var(--vermelho);
+}
+
+.team-create {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.team-create__panel,
+.team-panel__active,
+.team-panel__switch,
+.team-panel__athletes,
+.team-panel__summary {
+    background-color: var(--fundo-cards);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: var(--border-radius);
+}
+
+.team-create__panel {
+    padding: 26px;
+}
+
+.team-create__section-header {
+    margin-bottom: 22px;
+}
+
+.team-create__section-header h2,
+.team-panel__switch-header h2,
+.team-panel__athletes h2 {
+    margin: 0 0 6px;
+    color: var(--azul-principal);
+    font-size: var(--font-size-subtitulo);
+}
+
+.team-create__section-header p,
+.team-panel__switch-header p {
+    margin: 0;
+    color: var(--azul-secundario);
+    font-size: var(--font-size-body);
+}
+
+.team-create__section-header--row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.team-create__field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.team-create__field span {
+    color: var(--azul-secundario);
+    font-size: var(--font-size-texto-cabecalho);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+}
+
+.team-create__field input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 14px;
+    font-family: var(--font-family);
+    color: var(--texto);
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 10px;
+}
+
+.team-create__runners {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.team-create__runner {
+    display: grid;
+    grid-template-columns: minmax(104px, 0.65fr) minmax(180px, 1.35fr) minmax(138px, 0.9fr) minmax(180px, 1.25fr) minmax(132px, 0.9fr) auto;
+    grid-template-areas: "captain name cpf email phone remove";
+    gap: 14px;
+    align-items: end;
+    padding: 16px;
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 12px;
+}
+
+.team-create__runner .team-create__captain {
+    grid-area: captain;
+}
+
+.team-create__runner .team-create__field:nth-of-type(2) {
+    grid-area: name;
+}
+
+.team-create__runner .team-create__field:nth-of-type(3) {
+    grid-area: cpf;
+}
+
+.team-create__runner .team-create__field:nth-of-type(4) {
+    grid-area: email;
+}
+
+.team-create__runner .team-create__field:nth-of-type(5) {
+    grid-area: phone;
+}
+
+.team-create__runner .team-create__remove {
+    grid-area: remove;
+}
+
+.team-create__captain {
+    min-height: 45px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--azul-principal);
+    font-weight: var(--font-weight-bold);
+}
+
+.team-create__add,
+.team-create__remove,
+.team-create__submit,
+.team-create__cancel {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 18px;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.team-create__add {
+    color: var(--vermelho);
+    background-color: transparent;
+    border: 1px solid var(--vermelho);
+}
+
+.team-create__remove {
+    color: var(--vermelho);
+    background-color: transparent;
+    border: 1px solid var(--bordas-separadores);
+}
+
+.team-create__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+}
+
+.team-create__cancel {
+    color: var(--azul-secundario);
+    background-color: transparent;
+    border: 1px solid var(--bordas-separadores);
+}
+
+.team-create__submit {
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border: 1px solid var(--vermelho);
+}
+
+.team-create__submit:disabled {
+    opacity: 0.65;
+    cursor: not-allowed;
+}
+
+.team-create__error {
+    margin: 0;
+    padding: 12px 16px;
+    color: var(--vermelho);
+    background-color: var(--fundo-cards);
+    border: 1px solid var(--vermelho);
+    border-radius: 10px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Painel administrativo por equipe
+ * ------------------------------------------------------------------------- */
+
+.team-panel__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+}
+
+.team-panel__back, .team-panel__audit {
+    padding: 11px 16px;
+    color: var(--azul-principal);
+    border: 1px solid var(--azul-principal);
+    border-radius: 10px;
+    font-weight: var(--font-weight-bold);
+    text-decoration: none;
+}
+
+.team-panel__summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    margin-bottom: 22px;
+    overflow: hidden;
+}
+
+.team-panel__metric {
+    padding: 20px;
+    background-color: var(--fundo-cards);
+}
+
+.team-panel__metric span,
+.team-panel__eyebrow {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--azul-secundario);
+    font-size: var(--font-size-texto-cabecalho);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+}
+
+.team-panel__metric strong {
+    color: var(--azul-principal);
+    font-size: var(--font-size-h3);
+}
+
+.team-panel__active {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 22px;
+    padding: 28px;
+}
+
+.team-panel__active h2 {
+    margin: 0 0 8px;
+    color: var(--azul-principal);
+    font-size: var(--font-size-h2);
+}
+
+.team-panel__active p {
+    margin: 0;
+    color: var(--azul-secundario);
+}
+
+.team-panel__actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.team-panel__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 11px 18px;
+    font-family: var(--font-family);
+    font-weight: var(--font-weight-bold);
+    border-radius: 10px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.team-panel__button--primary {
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border: 1px solid var(--vermelho);
+}
+
+.team-panel__button--secondary {
+    color: var(--azul-principal);
+    background-color: transparent;
+    border: 1px solid var(--azul-principal);
+}
+
+.team-panel__button--ghost {
+    color: var(--azul-secundario);
+    background-color: transparent;
+    border: 1px solid var(--bordas-separadores);
+}
+
+.team-panel__button:disabled,
+.team-panel__button.is-disabled {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.team-panel__switch {
+    margin-bottom: 22px;
+    padding: 24px;
+}
+
+.team-panel__switch[hidden] {
+    display: none;
+}
+
+.team-panel__switch-header {
+    margin-bottom: 18px;
+}
+
+.team-panel__runner-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+}
+
+.team-panel__runner-option {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.team-panel__runner-option.is-selected,
+.team-panel__runner-option.is-active {
+    border-color: var(--vermelho);
+    box-shadow: 0 0 0 3px rgba(210, 0, 60, 0.12);
+}
+
+.team-panel__runner-option span {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.team-panel__runner-option strong {
+    color: var(--azul-principal);
+}
+
+.team-panel__runner-option small,
+.team-panel__runner-option em {
+    color: var(--azul-secundario);
+    font-style: normal;
+}
+
+.team-panel__runner-option em {
+    margin-left: auto;
+    color: var(--verde);
+    font-weight: var(--font-weight-bold);
+}
+
+.team-panel__feedback {
+    margin: 14px 0 0;
+    color: var(--vermelho);
+    font-weight: var(--font-weight-medium);
+}
+
+.team-panel__switch-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 18px;
+}
+
+.team-panel__athletes {
+    padding: 24px;
+}
+
+.team-panel__table-wrap {
+    overflow-x: auto;
+}
+
+.team-panel__table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.team-panel__table th,
+.team-panel__table td {
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--bordas-separadores);
+    text-align: left;
+}
+
+.team-panel__table th {
+    color: var(--azul-secundario);
+    font-size: var(--font-size-texto-cabecalho);
+    text-transform: uppercase;
+}
+
+.team-panel__table tr.is-active-row td {
+    background-color: rgba(255, 204, 0, 0.14);
+    font-weight: var(--font-weight-bold);
+}
+
+.team-panel__toast {
+    position: fixed;
+    right: 28px;
+    bottom: 28px;
+    z-index: 200;
+    padding: 14px 18px;
+    color: #ffffff;
+    background-color: var(--azul-principal);
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(15, 0, 105, 0.24);
+}
+
+.team-panel__toast[hidden] {
+    display: none;
+}
+
+@media (max-width: 1120px) {
+    .teams--form {
+        max-width: none;
+    }
+
+    .team-create__runner {
+        grid-template-columns: minmax(112px, 0.8fr) minmax(220px, 1.4fr) minmax(160px, 1fr);
+        grid-template-areas:
+            "captain name cpf"
+            ". email phone"
+            ". remove remove";
+    }
+
+    .team-create__runner .team-create__remove {
+        justify-self: end;
+    }
+}
+
+@media (max-width: 900px) {
+    .team-create__runner {
+        grid-template-columns: minmax(112px, 0.8fr) minmax(0, 1fr);
+        grid-template-areas:
+            "captain name"
+            "cpf cpf"
+            "email email"
+            "phone phone"
+            "remove remove";
+    }
+
+    .team-create__runner .team-create__remove {
+        justify-self: stretch;
+    }
+}
+
+/* ---------------------------------------------------------------------------
+ * Modal de cadastro / edição
+ * ------------------------------------------------------------------------- */
+
+.teams__modal[hidden] {
+    display: none;
+}
+
+.teams__modal {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.teams__modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(15, 0, 105, 0.35);
+    backdrop-filter: blur(2px);
+}
+
+.teams__modal-card {
+    position: relative;
+    width: 100%;
+    max-width: 480px;
+    background-color: var(--fundo-cards);
+    border-radius: var(--border-radius);
+    box-shadow: 0 18px 48px rgba(15, 0, 105, 0.25);
+    overflow: hidden;
+}
+
+.teams__modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--bordas-separadores);
+}
+
+.teams__modal-title {
+    margin: 0;
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-bold);
+    color: var(--azul-principal);
+}
+
+.teams__modal-close {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--azul-secundario);
+    background-color: transparent;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.18s ease;
+}
+
+.teams__modal-close:hover {
+    background-color: var(--bordas-separadores);
+}
+
+/* ---------------------------------------------------------------------------
+ * Formulário dentro do modal
+ * ------------------------------------------------------------------------- */
+
+.teams__form {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.teams__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.teams__form-label {
+    font-size: var(--font-size-texto-cabecalho);
+    font-weight: var(--font-weight-bold);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    color: var(--azul-secundario);
+}
+
+.teams__form-input {
+    padding: 12px 14px;
+    font-family: var(--font-family);
+    font-size: 15px;
+    color: var(--texto);
+    background-color: var(--fundo);
+    border: 1px solid var(--bordas-separadores);
+    border-radius: 8px;
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.teams__form-input:focus {
+    outline: none;
+    border-color: var(--azul-principal);
+    box-shadow: 0 0 0 3px rgba(15, 0, 105, 0.15);
+}
+
+.teams__form-input:invalid:not(:placeholder-shown) {
+    border-color: var(--vermelho);
+}
+
+.teams__form-error[hidden] {
+    display: none;
+}
+
+.teams__form-error {
+    margin: 0;
+    font-size: 13px;
+    font-weight: var(--font-weight-medium);
+    color: var(--vermelho);
+}
+
+.teams__form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    padding-top: 4px;
+}
+
+.teams__form-cancel,
+.teams__form-submit {
+    padding: 12px 20px;
+    font-family: var(--font-family);
+    font-size: 14px;
+    font-weight: var(--font-weight-bold);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.18s ease;
+}
+
+.teams__form-cancel {
+    color: var(--azul-secundario);
+    background-color: transparent;
+    border: 1px solid var(--bordas-separadores);
+}
+
+.teams__form-cancel:hover {
+    background-color: var(--bordas-separadores);
+}
+
+.teams__form-submit {
+    color: #ffffff;
+    background-color: var(--vermelho);
+    border: 1px solid var(--vermelho);
+}
+
+.teams__form-submit:hover {
+    background-color: #b00033;
+}
+
+.teams__form-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.teams__form-cancel:focus-visible,
+.teams__form-submit:focus-visible {
+    outline: 3px solid var(--amarelo);
+    outline-offset: 2px;
+}
+
+/* ---------------------------------------------------------------------------
+ * Responsivo — telas estreitas (iPad em pé / mobile)
+ * ------------------------------------------------------------------------- */
+
+@media (max-width: 720px) {
+    .teams {
+        padding: 24px 16px 40px;
+    }
+
+    .teams__header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .teams__new-btn {
+        width: 100%;
+    }
+
+    .teams__list {
+        grid-template-columns: 1fr;
+    }
+
+    .teams__second-team,
+    .team-create__section-header--row,
+    .team-panel__header,
+    .team-panel__active {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .team-create__runner {
+        grid-template-columns: 1fr;
+        grid-template-areas:
+            "captain"
+            "name"
+            "cpf"
+            "email"
+            "phone"
+            "remove";
+    }
+
+    .team-panel__summary {
+        grid-template-columns: 1fr;
+    }
+
+    .team-panel__actions,
+    .team-panel__switch-actions,
+    .team-create__actions {
+        flex-direction: column;
+    }
+}

@@ -1,0 +1,121 @@
+%% Diagrama de Arquitetura em Camadas — Red Bull 24 Horas (g01)
+%% Source-of-truth versionada. Para regerar o SVG:
+%%   npx --yes @mermaid-js/mermaid-cli -i diagrama-arquitetura-camadas.mmd -o diagrama-arquitetura-camadas.svg
+flowchart TB
+    classDef client fill:#E3F2FD,stroke:#1565C0,color:#0D47A1
+    classDef ext fill:#FFEBEE,stroke:#C62828,color:#B71C1C,stroke-dasharray:5 5
+    classDef route fill:#E8F5E9,stroke:#2E7D32,color:#1B5E20
+    classDef controller fill:#FFF3E0,stroke:#E65100,color:#BF360C
+    classDef service fill:#FCE4EC,stroke:#AD1457,color:#880E4F
+    classDef repo fill:#E0F2F1,stroke:#00695C,color:#004D40
+    classDef db fill:#ECEFF1,stroke:#37474F,color:#263238
+
+    subgraph CLIENTES["Clientes"]
+        direction LR
+        iPad["iPad — Operador / Juiz"]:::client
+        Browser["Navegador — Corredor / Painel TV"]:::client
+    end
+
+    subgraph EXT["Serviços Externos"]
+        Groq["API Groq (fallback OCR)"]:::ext
+    end
+
+    subgraph ROUTES["Routes (Express)"]
+        direction LR
+        PublicRoutes["Routes Públicas<br/>(sem autenticação)"]:::route
+        AdminRoutes["Routes Administrativas<br/>(garantirAutenticacao)"]:::route
+    end
+
+    subgraph CONTROLLERS["Controllers"]
+        direction LR
+        AuthC["AuthController"]:::controller
+        AdminC["AdminController"]:::controller
+        CompC["CompetitionController"]:::controller
+        TeamC["TeamController"]:::controller
+        RunnerC["RunnerController"]:::controller
+        CheckC["CheckpointController"]:::controller
+        OCRC["OCRController"]:::controller
+        RankC["RankingController"]:::controller
+        ReportC["ReportController"]:::controller
+        ExportC["ExportController"]:::controller
+        TvPanelC["TvPanelController"]:::controller
+    end
+
+    subgraph SERVICES["Services"]
+        direction LR
+        AuthS["AuthService"]:::service
+        AdminS["AdminService"]:::service
+        CompS["CompetitionService"]:::service
+        TeamS["TeamService"]:::service
+        RunnerS["RunnerService"]:::service
+        CheckS["CheckpointService"]:::service
+        OCRS["OCRService<br/>+ Tesseract<br/>+ Groq"]:::service
+        RankS["RankingService"]:::service
+        ReportS["ReportService"]:::service
+        ExportS["ExportService"]:::service
+        TvPanelS["TvPanelService"]:::service
+    end
+
+    subgraph REPOS["Repositories"]
+        direction LR
+        AdminR["AdminRepository"]:::repo
+        CompR["CompetitionRepository"]:::repo
+        TeamR["TeamRepository"]:::repo
+        RunnerR["RunnerRepository"]:::repo
+        CheckR["CheckpointRepository"]:::repo
+        ReportR["ReportRepository"]:::repo
+        ExportR["ExportRepository"]:::repo
+    end
+
+    subgraph DB["Banco de Dados"]
+        PG[("PostgreSQL — Supabase")]:::db
+    end
+
+    %% Fluxo principal (cliente -> rota)
+    iPad --> AdminRoutes
+    Browser --> PublicRoutes
+
+    %% Routes -> Controllers (agrupamento por autenticação)
+    PublicRoutes --> AuthC & RankC & TvPanelC & RunnerC
+    AdminRoutes --> AdminC & CompC & TeamC & RunnerC & CheckC & OCRC & ReportC & ExportC
+
+    %% Controller -> Service (1:1)
+    AuthC --> AuthS
+    AdminC --> AdminS
+    CompC --> CompS
+    TeamC --> TeamS
+    RunnerC --> RunnerS
+    CheckC --> CheckS
+    OCRC --> OCRS
+    RankC --> RankS
+    ReportC --> ReportS
+    ExportC --> ExportS
+    TvPanelC --> TvPanelS
+
+    %% Service -> Repository (direto)
+    AuthS --> AdminR
+    AdminS --> AdminR
+    CompS --> CompR
+    TeamS --> TeamR
+    RunnerS --> RunnerR
+    CheckS --> CheckR
+    ReportS --> ReportR
+    ExportS --> ExportR
+    TvPanelS --> CheckR
+
+    %% Service -> Service (dependências entre serviços)
+    CheckS --> CompS
+    RankS --> CheckS
+    RankS --> TeamS
+    ReportS --> CompS
+    ReportS --> CheckS
+    ReportS --> RankS
+    ExportS --> RankS
+    TvPanelS --> CompS
+    TvPanelS --> RankS
+
+    %% Repository -> DB
+    AdminR & CompR & TeamR & RunnerR & CheckR & ReportR & ExportR --> PG
+
+    %% Fluxo externo (fallback OCR)
+    OCRS -.->|fallback síncrono| Groq
