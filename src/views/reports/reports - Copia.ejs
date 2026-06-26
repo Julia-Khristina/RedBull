@@ -1,0 +1,228 @@
+<link rel="stylesheet" href="/css/ranking.css">
+
+<%
+  const summary = report && report.summary && typeof report.summary === 'object' ? report.summary : {};
+  const highlights = report && report.highlights && typeof report.highlights === 'object' ? report.highlights : {};
+  const inconsistencyRows = Array.isArray(inconsistencies) ? inconsistencies : [];
+  const fallbackTeams = Array.isArray(report?.teamRanking) ? report.teamRanking : [];
+
+  function pickValue(source, keys, fallback) {
+    for (const key of keys) {
+      if (Object.prototype.hasOwnProperty.call(source, key) && source[key] !== null && source[key] !== undefined && source[key] !== '') {
+        return source[key];
+      }
+    }
+    return fallback;
+  }
+
+  function formatDateTime(value) {
+    if (!value) return '-';
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return value;
+    return parsed.toLocaleString('pt-BR');
+  }
+
+  function formatDate(value) {
+    if (!value) return '';
+    const parsed = /^\d{4}-\d{2}-\d{2}$/.test(String(value))
+      ? new Date(`${value}T00:00:00`)
+      : new Date(value);
+    if (Number.isNaN(parsed.getTime())) return '';
+    return parsed.toLocaleDateString('pt-BR');
+  }
+
+  function formatKm(value) {
+    if (value === '-' || value === null || value === undefined) return '-';
+    const parsed = Number(value);
+    if (!Number.isFinite(parsed)) return value;
+    return parsed.toFixed(1);
+  }
+
+  function getTeamName(row) {
+    return row.runner?.team?.name ?? row.runner?.team_name ?? row.team_name ?? row.team?.name ?? '-';
+  }
+
+  function getOcrValue(row) {
+    return row.ocr_original ?? row.original_value ?? row.image?.ocr_original ?? row.image?.distance_km ?? '-';
+  }
+
+  function getCorrectedValue(row) {
+    return row.corrected_value ?? row.validation_corrected ?? row.distance_km ?? '-';
+  }
+
+  function getDifference(row) {
+    const original = Number(getOcrValue(row));
+    const corrected = Number(getCorrectedValue(row));
+    if (!Number.isFinite(original) || !Number.isFinite(corrected)) return row.difference ?? '-';
+    const difference = corrected - original;
+    return `${difference > 0 ? '+' : ''}${difference.toFixed(2)}`;
+  }
+
+  function normalizeHistory(rawHistory, teamOptions) {
+    if (!Array.isArray(rawHistory) || rawHistory.length === 0) {
+      return [];
+    }
+
+    if (rawHistory[0] && Array.isArray(rawHistory[0].teams)) {
+      return rawHistory.map((point) => ({
+        label: point.label ?? point.time ?? '',
+        teams: point.teams.map((team) => ({
+          name: team.name ?? team.team_name ?? team.label ?? '-',
+          position: Number(team.position ?? team.value ?? 0),
+        })).filter((team) => Number.isFinite(team.position) && team.position > 0),
+      }));
+    }
+
+    const teamName = teamOptions[0]?.name ?? teamOptions[0]?.team_name ?? 'Equipe';
+    return rawHistory.map((point, index) => ({
+      label: point.label ?? point.time ?? `${index + 1}`,
+      teams: [{
+        name: point.team_name ?? point.name ?? teamName,
+        position: Number(point.position ?? point.value ?? 0),
+      }],
+    }));
+  }
+
+  const totalKm = pickValue(summary, ['total_distance_km', 'total_km', 'distance_total_km', 'km_total'], '-');
+  const avgPace = pickValue(summary, ['average_pace', 'avg_pace', 'pace_medio', 'global_average_pace'], '-');
+  const checkpointCount = pickValue(summary, ['checkpoint_count', 'checkpoints_count', 'total_checkpoints'], '-');
+  const teams = Array.isArray(highlights.teams) && highlights.teams.length > 0
+    ? highlights.teams
+    : fallbackTeams.map((team) => ({ name: team.team_name, position: team.position }));
+  const auditTeams = Array.isArray(report?.teamRanking) ? report.teamRanking : [];
+  const history = normalizeHistory(highlights.position_history, teams);
+  const chartTeams = teams.map((team, index) => ({
+    name: team.name ?? team.team_name ?? team,
+    colorClass: index % 3 === 1 ? 'accent' : index % 3 === 2 ? 'yellow' : 'primary',
+  }));
+  const maxPosition = Math.max(2, ...history.flatMap((point) => point.teams.map((team) => team.position)));
+  const chartWidth = 520;
+  const chartHeight = 260;
+  const chartPadding = 34;
+  const chartPlotWidth = chartWidth - chartPadding * 2;
+  const chartPlotHeight = chartHeight - chartPadding * 2;
+
+  function pointFor(teamName, point, index) {
+    const team = point.teams.find((item) => item.name === teamName);
+    if (!team || history.length <= 1) return null;
+    const x = chartPadding + (chartPlotWidth * index) / (history.length - 1);
+    const y = chartPadding + ((team.position - 1) * chartPlotHeight) / Math.max(maxPosition - 1, 1);
+    return `${x},${y}`;
+  }
+%>
+
+<main class="ranking-page reports-page">
+  <div class="ranking-topbar reports-kicker">
+    <div class="ranking-topbar-left">
+      <span class="ranking-competition-label">
+        <%= competition.name %><%= competition.date ? ` ${formatDate(competition.date)}` : '' %>
+      </span>
+    </div>
+  </div>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <div class="fetch-error" role="alert"><%= error %></div>
+  <% } %>
+
+  <h1 class="ranking-main-title reports-title">Relatório - RedBull 24H</h1>
+
+  <section class="stat-cards reports-stat-cards" aria-label="Resumo da competição">
+    <article class="stat-card report-stat-card">
+      <span class="stat-label">Total de km percorridos</span>
+      <span class="stat-value"><%= formatKm(totalKm) %><%= totalKm === '-' ? '' : ' km' %></span>
+    </article>
+    <article class="stat-card report-stat-card">
+      <span class="stat-label">Média geral de pace</span>
+      <span class="stat-value"><%= avgPace %><%= avgPace === '-' ? '' : '/km' %></span>
+    </article>
+    <article class="stat-card report-stat-card">
+      <span class="stat-label">Número de checkpoints</span>
+      <span class="stat-value"><%= checkpointCount %></span>
+    </article>
+  </section>
+
+  <section class="reports-section">
+    <h2 class="section-title reports-section-title">Relatório por equipe</h2>
+
+    <div class="report-panel report-team-panel">
+      <div class="report-chart-block">
+        <h3 class="report-panel-title report-panel-title--accent">Distância acumulada por equipe</h3>
+        <div class="report-chart" aria-label="Gráfico de quilometragem por equipe ao longo das horas">
+          <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
+            <canvas id="kmChart" width="500" height="280"></canvas>
+          <% } else { %>
+            <div class="report-chart-grid" aria-hidden="true"></div>
+            <p class="report-chart-empty">Histórico de quilometragem indisponível no relatório.</p>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="reports-section">
+    <div class="reports-section-heading">
+      <h2 class="section-title reports-section-title">Relatório de inconsistências</h2>
+      <div class="report-action-group">
+        <label for="audit-team-select" class="report-action-label">Equipe</label>
+        <select id="audit-team-select" class="report-action-select" aria-label="Selecionar equipe para auditoria">
+          <option value="">Selecione uma equipe</option>
+          <% auditTeams.forEach(function(team) { %>
+            <option value="<%= team.id_team %>"><%= team.team_name %></option>
+          <% }) %>
+        </select>
+        <a id="audit-link" class="report-action-button report-action-button--disabled" href="#" aria-disabled="true">Ver dados salvos</a>
+      </div>
+    </div>
+
+    <div class="report-panel report-table-panel">
+      <h3 class="report-table-title">Registros corrigidos manualmente</h3>
+
+      <% if (inconsistencyRows.length === 0) { %>
+        <div class="empty-state report-empty-state">
+          <p>Nenhuma inconsistência encontrada para esta competição.</p>
+        </div>
+      <% } else { %>
+        <div class="report-table-wrap">
+          <table class="report-table">
+            <thead>
+              <tr>
+                <th>Data / Hora</th>
+                <th>Atleta</th>
+                <th>Equipe</th>
+                <th>Checkpoint</th>
+                <th>OCR (original)</th>
+                <th>Validade (corrigido)</th>
+                <th>Diferença</th>
+                <th>Usuário</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% inconsistencyRows.forEach(function(checkpoint) { %>
+                <tr>
+                  <td><%= formatDateTime(checkpoint.created_at) %></td>
+                  <td><%= checkpoint.runner?.name ?? checkpoint.runner_name ?? 'Não vinculado' %></td>
+                  <td><%= getTeamName(checkpoint) %></td>
+                  <td>#<%= checkpoint.identifier %></td>
+                  <td><%= getOcrValue(checkpoint) %></td>
+                  <td><%= getCorrectedValue(checkpoint) %></td>
+                  <td><%= getDifference(checkpoint) %></td>
+                  <td><%= checkpoint.admin_name ?? checkpoint.id_admin ?? '-' %></td>
+                </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      <% } %>
+    </div>
+  </section>
+
+  <a class="report-export-button" href="/competitions/<%= competition.id %>/export">Exportar dados</a>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script>
+    window.COMPETITION_ID = '<%= competition.id %>';
+    <% if (highlights.hourly_team_km && highlights.hourly_team_km.datasets && highlights.hourly_team_km.datasets.length > 0) { %>
+    window.EQUIPE_HORÁRIO_KM = <%- JSON.stringify(highlights.hourly_team_km) %>;
+    <% } %>
+  </script>
+</main>

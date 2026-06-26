@@ -1,0 +1,164 @@
+<%#
+  VIEW: ranking/ranking.ejs
+  ESTADO: [C1 — Completo]
+  ENDPOINTS CONSUMIDOS:
+    - GET /competitions/:id/ranking/teams      [A1][B1]
+    - GET /competitions/:id/ranking/runners    [A1][B1]
+  POLLING:
+    - Admin: 5 min (RN11)
+    - Público: 1h (RN09) — via public/js/app.js
+  LACUNAS:
+    - Ranking de corredores não exibe team_name (model RankingRunner não possui o campo)
+  ÚLTIMA ATUALIZAÇÃO: sprint atual
+%>
+<link rel="stylesheet" href="/css/ranking.css">
+
+<main class="ranking-page">
+
+  <!-- ── Header ── -->
+  <div class="ranking-topbar">
+    <div class="ranking-topbar-left">
+      <span class="ranking-competition-label"><%= competition.name %></span>
+    </div>
+    <% if (isAdmin) { %>
+      <button id="btn-freeze" class="btn-freeze" type="button">Congelar ranking</button>
+    <% } %>
+  </div>
+
+  <h1 class="ranking-main-title">Ranking em tempo real</h1>
+
+  <!-- ── Stat Cards ── -->
+  <div class="stat-cards">
+    <div class="stat-card">
+      <span class="stat-label">Total de km percorridos</span>
+      <span class="stat-value" id="stat-total-km">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Pace médio global</span>
+      <span class="stat-value" id="stat-avg-pace">—</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-label">Número de checkpoints</span>
+      <span class="stat-value" id="stat-checkpoints">—</span>
+    </div>
+  </div>
+
+  <!-- ── Disputa ao vivo ── -->
+  <section class="live-section">
+    <h2 class="section-title">Disputa ao vivo</h2>
+
+    <div id="team-ranking-error" class="fetch-error" style="display:none;" role="alert"></div>
+
+    <div id="live-teams-list">
+      <% if (teamRanking.length === 0) { %>
+        <div class="empty-state">
+          <p>Nenhum checkpoint registrado ainda. O ranking será exibido assim que houver dados.</p>
+        </div>
+      <% } else { %>
+        <% teamRanking.forEach(function(team, index) { %>
+
+          <% if (index === 1 && teamRanking.length > 1) { %>
+            <!-- Gap separator between 1st and 2nd -->
+            <div class="gap-separator" id="gap-separator">
+              <div class="gap-line"></div>
+              <div class="gap-info">
+                <span class="gap-label">Diferença para o líder</span>
+                <span class="gap-value" id="gap-value">—</span>
+              </div>
+              <div class="gap-line"></div>
+            </div>
+          <% } %>
+
+          <div class="team-card <%= team.position === 1 ? 'team-card--leader' : '' %>"
+               data-position="<%= team.position %>"
+               data-id="<%= team.id_team %>">
+            <div class="team-card-left">
+              <div class="team-pos-badge team-pos-<%= team.position === 1 ? 'leader' : 'other' %>">
+                <%= team.position %>
+              </div>
+            </div>
+            <div class="team-card-body">
+              <div class="team-name-row">
+                <span class="team-name"><%= team.team_name %></span>
+                <% if (team.position === 1) { %>
+                  <span class="leader-pill">Líder</span>
+                <% } %>
+              </div>
+              <div class="team-stats-row">
+                <div class="team-stat">
+                  <span class="team-stat-value"><%= Number(team.total_distance_km).toFixed(1) %> km</span>
+                  <span class="team-stat-label">Distância total</span>
+                </div>
+                <% if (isAdmin) { %>
+                  <div class="team-stat">
+                    <span class="team-stat-label">Pace médio</span>
+                    <span class="team-stat-value"><%= team.average_pace ?? '—' %>/km</span>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          </div>
+
+        <% }); %>
+      <% } %>
+    </div>
+  </section>
+
+  <!-- ── Atleta em corrida agora (admin only) ── -->
+  <% if (isAdmin) { %>
+    <section class="runners-section">
+      <h2 class="section-title">Atleta em corrida agora</h2>
+
+      <div id="runner-ranking-error" class="fetch-error" style="display:none;" role="alert"></div>
+
+      <div id="live-runners-grid" class="runners-grid">
+        <% if (runnerRanking.length === 0) { %>
+          <div class="empty-state">
+            <p>Nenhum corredor com checkpoint registrado.</p>
+          </div>
+        <% } else { %>
+          <% runnerRanking.forEach(function(runner) { %>
+            <div class="runner-card"
+                 data-position="<%= runner.position %>"
+                 data-id="<%= runner.id_runner %>">
+              <div class="runner-card-top">
+                <div class="runner-pos-badge runner-pos-<%= runner.position === 1 ? 'leader' : 'other' %>">
+                  <%= runner.position %>
+                </div>
+                <div class="runner-identity">
+                  <span class="runner-name"><%= runner.runner_name %></span>
+                  <span class="runner-team"><%= runner.team_name ?? '—' %></span>
+                </div>
+                <div class="runner-treadmill">
+                  <span class="runner-treadmill-time"><%= runner.treadmill_time ?? '—' %></span>
+                  <span class="runner-treadmill-label">Tempo na esteira</span>
+                </div>
+              </div>
+              <div class="runner-card-bottom">
+                <div class="runner-stat">
+                  <span class="runner-stat-label">Distância atual</span>
+                  <span class="runner-stat-value"><%= Number(runner.total_distance_km).toFixed(1) %> km</span>
+                </div>
+                <div class="runner-stat">
+                  <span class="runner-stat-label">Pace atual</span>
+                  <span class="runner-stat-value"><%= runner.average_pace ?? '—' %>/km</span>
+                </div>
+                <div class="runner-stat">
+                  <span class="runner-stat-label">Último CP</span>
+                  <span class="runner-stat-value">#<%= runner.last_checkpoint ?? '—' %></span>
+                </div>
+              </div>
+            </div>
+          <% }); %>
+        <% } %>
+      </div>
+    </section>
+  <% } %>
+
+</main>
+
+<script>
+  window.COMPETITION_ID = '<%= competition.id %>';
+  window.IS_ADMIN = <%= isAdmin %>;
+  window.IS_PUBLIC = false;
+</script>

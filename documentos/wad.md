@@ -871,7 +871,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 </div>
 
-## 3.2. Arquitetura (sprints 1 a 5)
+## 3.2. Arquitetura 
 
 ### 3.2.1. Arquitetura em Camadas
 
@@ -992,7 +992,7 @@ A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os 
 **Constraint `UNIQUE` sobre `uuid`.** Confirmada em `0002_create_team.sql` por meio da constraint `uq_team_uuid UNIQUE (uuid)`, garantindo a integridade das consultas do fluxo público acessado pelas equipes via link único.
 
 
-### 3.2.2. Diagrama de Casos de Uso (sprint 1)
+### 3.2.2. Diagrama de Casos de Uso
 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
 Modelagem Unificada (UML) que descreve as funcionalidades de um sistema
@@ -1394,7 +1394,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 </div>
 
 
-### 3.2.4. Diagrama de Sequência UML (sprint 3)
+### 3.2.4. Diagrama de Sequência UML
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1434,7 +1434,7 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
+### 3.2.5. Diagrama de Atividades ou Estados
 
 O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da foto do painel pelo operador, seguida pelo envio da imagem ao servidor para processamento. Após a extração dos dados pelo servidor, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
 
@@ -1446,7 +1446,7 @@ O diagrama de atividades a seguir representa o fluxo de registro de checkpoint p
 
 O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados extraídos pelo OCR apresentam inconsistências. Nessas situações, o sistema solicita correção manual e realiza uma nova validação antes de permitir o registro do checkpoint. Desta forma, o processo contribui para a confiabilidade das informações utilizadas na atualização do ranking administrativo e do painel das equipes.
 
-### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
+### 3.2.6. Diagrama de Implantação
 
 O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
  
@@ -1533,7 +1533,7 @@ A ausência de um nó de autenticação dedicado nesta versão reflete o estado 
 
 
 
-### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
+### 3.2.7. Padrões de Projeto Aplicados
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
  
@@ -1939,7 +1939,7 @@ Nesse exemplo, o layout principal define a estrutura compartilhada da interface,
  
 
 
-## 3.3. Wireframes (sprint 2)
+## 3.3. Wireframes
 
 Os wireframes apresentados nesta seção têm como objetivo representar visualmente os principais fluxos de navegação da solução proposta para o evento Red Bull 24 Horas, evidenciando a organização das funcionalidades priorizadas. Os artefatos foram desenvolvidos com foco na compreensão da experiência do usuário, permitindo validar rapidamente a estrutura da aplicação, os componentes principais das telas e a sequência de interação entre os módulos do sistema.
 
@@ -2311,7 +2311,7 @@ O layout utiliza cartões informativos, tabelas e indicadores visuais para facil
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
 
-## 3.4. Guia de estilos (sprint 3)
+## 3.4. Guia de estilos
 
 O Guia de Estilos é um documento que define as diretrizes visuais e os padrões utilizados no desenvolvimento de um produto digital, incluindo elementos como cores, tipografia, iconografia, espaçamentos e componentes de interface. Seu objetivo é garantir consistência visual ao longo de todo o produto, orientando as equipes durante o processo de desenvolvimento e assegurando uma experiência coesa e de qualidade para o usuário. Ao sistematizar decisões de design, o guia também facilita a aplicação de princípios de UI e UX de forma integrada e contínua (PM3, s.d.).
 
@@ -2345,7 +2345,7 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 </div>
 
 
-## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade (sprint 3)
+## 3.5. <a name="prototipo-alta-fidelidade"></a>Protótipo de alta fidelidade
 
 **🔗 Link do protótipo de alta fidelidade (Sprint 3 — Semana 1 + Semana 2):** [Acessar protótipo no Figma](https://www.figma.com/design/EwmFk3rjbrv3SqLx8YGMqD/Prot%C3%B3tipo-AF-Red-Bull-24h?node-id=0-1&t=wad-link)
 
@@ -2811,7 +2811,7 @@ A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
+### 3.6.2. Diagrama Entidade-Relacionamento (DER) 
 
 O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelagem de bancos de dados para representar, de forma visual, as entidades de um sistema, seus atributos e os relacionamentos existentes entre elas. Esse diagrama auxilia na organização e estruturação das informações que serão armazenadas no banco de dados, permitindo uma melhor compreensão da lógica do sistema antes de seu desenvolvimento (LUCID SOFTWARE INC., s.d.).
 
@@ -2893,7 +2893,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 </div>
 
 
-## 3.6.3 Modelo Relacional e Modelo Físico (sprints 2 e 4)
+## 3.6.3 Modelo Relacional e Modelo Físico
 
 O modelo relacional consiste em uma abordagem de organização e gerenciamento de dados baseada na representação das informações por meio de relações, normalmente implementadas como tabelas compostas por linhas e colunas. Esse modelo possibilita a definição de entidades, atributos e relacionamentos, além de mecanismos que garantem integridade, consistência e redução de redundâncias no armazenamento das informações. Sua estrutura fundamenta-se em conceitos como chaves primárias, chaves estrangeiras e restrições de integridade, permitindo representar de forma estruturada as regras de negócio de um sistema (Codd, 1970).
 
@@ -3574,7 +3574,7 @@ A consulta considera registros apenas quando a equipe pertence ao conjunto de eq
 
 A partir das consultas apresentadas, observa-se que a lógica proposicional está diretamente relacionada às regras de seleção, atualização, remoção e consolidação de informações de registros no banco de dados. Cada cláusula `WHERE` pode ser representada por proposições atômicas combinadas por conectivos lógicos, permitindo compreender formalmente as condições que determinam quando um registro será selecionado, atualizado ou removido. Dessa forma, a seção evidencia tanto a aplicação prática de SQL no contexto do sistema quanto a correspondência entre consultas computacionais e expressões da lógica proposicional.
 
-## 3.7. WebAPI e endpoints (sprints 3 e 4)
+## 3.7. WebAPI e endpoints
 
 A WebAPI desenvolvida para a aplicação atua como a principal camada de comunicação entre a interface web, os serviços de negócio e o banco de dados, sendo responsável por centralizar o processamento das requisições, aplicar as regras de negócio e controlar o acesso às informações persistidas. Dessa forma, o front-end não realiza acesso direto ao banco de dados; todas as operações de leitura, escrita, validação e atualização são intermediadas pela API, garantindo consistência dos dados, rastreabilidade das operações e maior segurança durante a execução da competição.
 
@@ -3654,7 +3654,7 @@ Além disso, a correspondência entre os endpoints implementados e os requisitos
 
 Dessa forma, a WebAPI constitui um dos principais elementos estruturais da solução desenvolvida, estabelecendo uma interface consistente entre a camada de apresentação e a persistência dos dados, garantindo segurança no acesso às funcionalidades administrativas, padronização das operações realizadas pela aplicação e suporte aos fluxos operacionais críticos do sistema. Sua implementação permite que as informações registradas durante o evento sejam processadas de maneira confiável, auditável e alinhada aos objetivos de negócio definidos para o projeto.
 
-## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência
 
 ### 3.8.1. Autenticação
 
@@ -3778,7 +3778,7 @@ Toda operação de escrita (criação, atualização, exclusão) e acesso ao pai
 
 *Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
 
-### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+### 3.9. Matriz de Rastreabilidade (RTM)
  
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
@@ -3828,7 +3828,7 @@ A introdução de *circuit breaker* tornar-se-á efetivamente útil quando o mot
 
 A consolidação apresentada nesta seção mantém coerência direta com a seção 3.7, ao explicitar o `errorHandler` e a hierarquia `AppError` como os mecanismos centrais de tradução do estado interno em códigos HTTP previsíveis, e com a seção 3.2.1, ao alocar cada estratégia futura ao seu ponto natural na arquitetura em camadas — Repository para *timeout* e *retry* sobre o Supabase, Service para *circuit breaker* sobre o motor OCR. As estratégias enquadradas como Trabalho Futuro são candidatas explícitas à seção 7 deste documento, sem que a sua ausência atual comprometa as garantias contratuais já entregues no MVP: a idempotência REST das operações de atualização e remoção e o contrato determinístico de erros do *middleware* central são, em conjunto, a fundação que tornará segura a introdução posterior dos mecanismos ativos de tolerância a falhas.
 
-### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+### 3.9. Matriz de Rastreabilidade (RTM)
  
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
  
@@ -3896,7 +3896,7 @@ A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem r
 
 # <a name="c4"></a>4. Desenvolvimento da Aplicação Web
 
-## 4.1. Primeira versão da aplicação web (sprint 3)
+## 4.1. Primeira versão da aplicação web
 
 ### (a) O que foi implementado
 
@@ -4017,7 +4017,7 @@ Manutenção da abordagem de TDD para todas as novas funcionalidades, expandindo
 **5. Dívida técnica identificada na sprint 3**
 Avaliação da centralização do tratamento de erros de constraint do PostgreSQL (códigos 23505 e 23503) em um helper único, evitando a repetição desse padrão entre repositories, e adoção de prefixos ou IDs descartáveis no ambiente de testes E2E para eliminar a colisão de dados únicos entre execuções.
 
-## 4.2. Segunda versão da aplicação web (sprint 4)
+## 4.2. Segunda versão da aplicação web
 
 ### (a) O que foi implementado
 
@@ -4076,7 +4076,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 **5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo back-end desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
 
 
-## 4.3. Versão final da aplicação web (sprint 5)
+## 4.3. Versão final da aplicação web
 
 ### (a) O que foi refinado ou adicionado desde a sprint 4
 
@@ -4165,7 +4165,7 @@ Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e to
 
 # <a name="c5"></a>5. Testes
 
-## 5.1. Relatório de testes de integração de endpoints automatizados (sprint 4)
+## 5.1. Relatório de testes de integração de endpoints automatizados
 
 ### 5.1.1 Estratégia de Testes
 
@@ -4604,7 +4604,7 @@ Os testes automatizados implementados foram relacionados às respectivas regras 
 
 A rastreabilidade apresentada demonstra que os testes implementados validam requisitos funcionais e regras de negócio previamente definidos, assegurando alinhamento entre especificação, implementação e processo de validação da aplicação.
 
-## <a name="52"></a>5.2. Testes de usabilidade (sprint 5)
+## <a name="52"></a>5.2. Testes de usabilidade
 
 ### 5.2.1. Relatório de testes de guerrilha
 
@@ -4850,7 +4850,7 @@ A Tabela XX apresenta as pontuações obtidas pelos participantes.
 A partir das respostas coletadas, foi obtida uma pontuação média de **80,71 pontos**. A interpretação desse resultado e sua classificação segundo os critérios do método SUS são apresentadas na subseção seguinte.
 
 
-# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing (sprint 4)
+# <a name="c6"></a>6. Estudo de Mercado e Plano de Marketing
 
 ## 6.1 Resumo Executivo
 
@@ -5067,7 +5067,7 @@ A divulgação da solução concentra-se na geração de evidências de valor e 
 
 O próprio Red Bull 24 Horas funciona como principal canal de promoção, permitindo demonstrações da solução durante a competição e evidenciando sua aplicação em um contexto real de uso. As estratégias de relacionamento, por meio da comunicação pós-evento com organizadores, operadores e capitães de equipe, fortalecem a percepção de valor da plataforma ao longo do tempo. Além disso, a associação à marca Red Bull confere credibilidade à solução, enquanto a participação das running crews contribui para ampliar sua visibilidade dentro da comunidade esportiva.
 
-# <a name="c7"></a>7. Conclusões e trabalhos futuros (sprint 5)
+# <a name="c7"></a>7. Conclusões e trabalhos futuros
 
 ### Atingimento dos objetivos
 A solução desenvolvida para o Red Bull 24 Horas foi concebida para responder aos benefícios esperados e aos critérios de sucesso estabelecidos na Seção 2. A avaliação a seguir considera cada objetivo de forma individualizada.
@@ -5118,7 +5118,7 @@ Em síntese, a solução desenvolvida cumpriu os objetivos funcionais previstos 
 
 
 
-# <a name="c8"></a>8. Referências (sprints 1 a 5)
+# <a name="c8"></a>8. Referências
 
 ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
 
@@ -5198,5 +5198,4 @@ UX COLLECTIVE. *UI Design em Foco*. Disponível em: https://uxdesign.cc. Acesso 
 WEBRUN. Red Bull 24 Horas: equipe paulista corre 343 km e se consagra campeã nacional. nov. 2025. Disponível em: https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro. Acesso em: 11 jun. 2026.
 
 # <a name="c9"></a>Anexos
-
-*Inclua aqui quaisquer complementos para seu projeto, como diagramas, imagens, tabelas etc. Organize em sub-tópicos utilizando headings menores (use ## ou ### para isso)*
+Não se aplica.
