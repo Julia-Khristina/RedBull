@@ -47,6 +47,10 @@ A aplicação tem dois ambientes:
 
 https://drive.google.com/drive/folders/1xnHPbD3JcEmOzRDek9VcEBLIQBR5_CX8?usp=sharing
 
+## Link deploy
+
+https://pace-cam.onrender.com/admin/login
+
 ## Estrutura de pastas
 
 ```
