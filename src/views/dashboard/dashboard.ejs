@@ -166,6 +166,7 @@
               <div class="db-competition-actions">
                 <a href="/dashboard?competitionId=<%= item.id %>">Selecionar</a>
                 <a href="/teams?competitionId=<%= item.id %>">Equipes</a>
+                
                 <% if (item.status !== 'in_progress') { %>
                   <button class="db-activate-btn" data-id="<%= item.id %>">Ativar</button>
                 <% } else { %>

@@ -42,12 +42,12 @@ describe("Admin CRUD", () => {
       adminId = res.body.id;
     });
 
-    it("deve rejeitar payload sem campos obrigatorios → 500", async () => {
+    it("deve rejeitar payload sem campos obrigatorios → 400", async () => {
       const res = await request(app)
         .post("/admin")
         .set(bearer(token))
         .send({});
-      expect(res.status).toBe(500);
+      expect(res.status).toBe(400);
     });
 
     it("deve rejeitar email duplicado → 409", async () => {

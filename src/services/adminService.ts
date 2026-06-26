@@ -10,6 +10,23 @@ export interface AdminRepository {
   delete(id: number): Promise<boolean>;
 }
 
+function requireText(value: unknown, field: string): string {
+  if (typeof value !== "string" || value.trim().length === 0) {
+    throw new AppError(`${field} é obrigatório.`, 400);
+  }
+
+  return value.trim();
+}
+
+function validateCreateAdminInput(input: Partial<AdminInput>): AdminInput {
+  return {
+    name: requireText(input.name, "name"),
+    email: requireText(input.email, "email"),
+    area: requireText(input.area, "area"),
+    password: requireText(input.password, "password"),
+  };
+}
+
 export function createAdminService(repository: AdminRepository) {
   return {
     async findAll(): Promise<Admin[]> {
@@ -36,14 +53,15 @@ export function createAdminService(repository: AdminRepository) {
       return await repository.findByEmail(email);
     },
 
-    async create(input: AdminInput): Promise<Admin> {
-      const existing = await repository.findByEmail(input.email);
+    async create(input: Partial<AdminInput>): Promise<Admin> {
+      const validatedInput = validateCreateAdminInput(input);
+      const existing = await repository.findByEmail(validatedInput.email);
 
       if (existing) {
         throw new ConflictError("Email já cadastrado");
       }
 
-      return await repository.create(input);
+      return await repository.create(validatedInput);
     },
 
     async update(id: string, input: Partial<AdminInput>): Promise<Admin> {
