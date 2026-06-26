@@ -1,4 +1,4 @@
-# WAD - Web Application Document - Módulo 2 - Inteli
+﻿# WAD - Web Application Document - Módulo 2 - Inteli
 
 ## Propositivos
 
@@ -269,9 +269,8 @@ Para identificar e priorizar os principais riscos do projeto, foi elaborada a ma
 
  De forma complementar, o Quadro 2 a seguir apresenta a matriz de oportunidades identificadas para o projeto.
 
-<div align="center">
-  <sub>Quadro 2 - Matriz de oportunidades do projeto</sub>
-</div>
+<p align = "center"> Quadro 2 - Matriz de Oportunidades do projeto </p> 
+
 
 | Oportunidade | Descrição | Probabilidade | Impacto | Classificação | Plano de Resposta |
 |--------------|----------|--------------|--------|--------------|-------------------|
@@ -693,23 +692,6 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 | Critérios INVEST         | Independente: A calculadora pode ser implementada sem dependência das demais funcionalidades do painel público. <br> Negociável: As regras de cálculo e os indicadores podem ser ajustados conforme testes futuros. <br> Valorosa: Auxilia atletas no gerenciamento de descanso durante a competição. <br> Estimável: A lógica de cálculo e exibição possui escopo claro. <br> Pequena: Escopo limitado à recomendação de descanso. <br> Testável: Os indicadores e tempos exibidos podem ser verificados objetivamente. |
 
 
-<div align="center">
-  <sub>Quadro 18 - User Story 16 </sub>
-</div>
-
-| Identificação            | US16 |
-| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Persona**              | Amanda Azevedo (Atleta) |
-| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso gerar templates visuais personalizados com meus dados de desempenho para compartilhar no Instagram, para divulgar minha participação e resultados nas redes sociais." |
-| **Critério de aceite 1** | CR1: O template deve exibir os dados reais de desempenho do atleta selecionado dentro da equipe acessada por UUID (maior KM, menor pace, desempenho por período). **Teste**: Dado que um atleta é selecionado na página pública da equipe e um template é escolhido, quando a página é renderizada, então os campos de destaque devem conter os dados reais da equipe e do atleta selecionado. |
-| **Critério de aceite 2** | CR2: O template deve permitir o download como imagem PNG. **Teste**: Dado que o template está renderizado na tela, quando o usuário clica em "Baixar PNG", então uma imagem PNG deve ser baixada contendo o layout visual completo. |
-| **Critério de aceite 3** | CR3: O upload da foto do atleta deve ser processado localmente sem envio ao servidor. **Teste**: Dado que o usuário seleciona uma foto no input de arquivo, quando a imagem é carregada, então ela deve ser exibida no círculo do template sem nenhuma requisição ao backend. |
-| Critérios INVEST         | Independente: Pode ser implementada sem depender de outras funcionalidades de compartilhamento. <br> Negociável: A quantidade e o layout dos templates podem ser ajustados. <br> Valorosa: Permite que atletas divulguem seus resultados nas redes sociais. <br> Estimável: O escopo de geração de templates é bem definido. <br> Pequena: Funcionalidade específica e isolada. <br> Testável: A renderização e o download podem ser verificados. |
-
-
-<div align="center">
-  <sup>Fonte: Elaborado pelos autores (2026).</sup>
-</div> 
 
 # <a name="c3"></a>3. Projeto da Aplicação Web
 
@@ -719,10 +701,10 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 
 ### 3.1.1. Requisitos Funcionais
 
-O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
 
 <div align="center">
-  <sub>Quadro 19 - Requisitos Funcionais </sub>
+  <sub>Quadro 18 - Requisitos Funcionais </sub>
 </div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
@@ -752,7 +734,7 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 ### 3.1.1.1 Critérios de Aceite dos Requisitos Funcionais
 
 <div align="center">
-  <sub>Quadro 20 - Critérios de Aceite dos Requisitos Funcionais </sub>
+  <sub>Quadro 19 - Critérios de Aceite dos Requisitos Funcionais </sub>
 </div>
 
 | RF    | Critério de Aceite                                                                                                                                                                    |
@@ -781,10 +763,10 @@ O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio 
 
-No Quadro 21, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 20, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 21 - Regras de Negócio </sub>
+  <sub>Quadro 20 - Regras de Negócio </sub>
 </div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
@@ -816,10 +798,10 @@ No Quadro 21, são apresentadas as regras de negócio do sistema, as quais defin
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
-Os requisitos não funcionais apresentados no Quadro 22 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 22), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
+Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 21), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
 
 <div align="center">
-  <sub>Quadro 22 - Requisitos Não Funcionais </sub>
+  <sub>Quadro 21 - Requisitos Não Funcionais </sub>
 </div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Status                      | Como atendido                                      |
@@ -863,7 +845,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 <div align="center">
 
-  <sub>Quadro 23 - Matriz RF → RN → Endpoint</sub>
+  <sub>Quadro 22 - Matriz RF → RN → Endpoint</sub>
 
 </div>
 
@@ -927,7 +909,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Responsabilidades
 
 <div align="center">
-  <sub>Quadro 24 - Responsabilidades das Camadas</sub>
+  <sub>Quadro 23 - Responsabilidades das Camadas</sub>
 </div>
 
 | Camada | Responsabilidade | O que não faz | Pasta do projeto |
@@ -948,7 +930,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Rastreabilidade
 
 <div align="center">
-  <sub>Quadro 25 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
+  <sub>Quadro 24 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
 </div>
 
 | Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
@@ -1037,11 +1019,11 @@ de modo que alterações futuras possam ser realizadas no código-fonte
 e o PNG regerado via Kroki sem retrabalho manual em ferramentas
 visuais.
 
-Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas
-
-![Diagrama de Casos de Uso](../assets/programacao/diagrama_caso_uso.png)
-
-Fonte: Material produzido pelos autores (2026).
+<div align="center">
+  <sub>Figura 9 - Diagrama de Casos de Uso do Sistema Red Bull 24 Horas</sub><br>
+  <img src="../assets/programacao/diagrama_caso_uso.png" width="100%" alt="Representação visual do diagrama de casos de uso."><br>
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 O **Administrador** unifica as personas Marina Costa (Coordenadora
 Operacional) e Bruno Monteiro (Gerente de Field Marketing) e
@@ -1097,17 +1079,14 @@ exportação é parte integrante da tela de relatórios consolidados.
 A literatura de UML recomenda que cada caso de uso identificado no
 diagrama seja acompanhado por uma descrição estruturada, com seus
 atores, pré-requisitos, pós-requisitos e fluxos principais e
-alternativos (BOOCH; RUMBAUGH; JACOBSON, 2006). Os quadros a seguir
+alternativos (Booch; Rumbaugh; Jacobson, 2006). Os quadros a seguir
 apresentam essa descrição para cada um dos vinte e um casos de uso da
 Figura 9, identificados pelos rótulos UC01 a UC21 e agrupados pelos
-quatro pacotes funcionais introduzidos anteriormente. A numeração
-adotada é interna a esta subseção (UC), independente da numeração de
-Quadros do restante do WAD, para evitar conflito com a numeração já
-estabelecida em outras seções.
+quatro pacotes funcionais introduzidos anteriormente. Cada caso de uso é apresentado em um quadro próprio, numerado de forma contínua com os demais Quadros do WAD (Quadros 25 a 45); os rótulos UC01 a UC21 são mantidos como identificadores internos para as referências cruzadas ao longo do texto.
 
 ##### Pacote: Operação da competição
 
-<div align="center"><sub>UC01 — Acessar painel administrativo</sub></div>
+<div align="center"><sub>Quadro 25 - UC01 — Acessar painel administrativo</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1120,7 +1099,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Credenciais inválidas → sistema responde HTTP 401, exibe mensagem de erro e mantém o Administrador na tela de login; sessão não iniciada. |
 | **RFs/RNs relacionados** | RF04, RN03 |
 
-<div align="center"><sub>UC02 — Gerenciar administradores</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 26 - UC02 — Gerenciar administradores</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1133,7 +1116,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. E-mail duplicado em cadastro/atualização → `AdminService` lança `ConflictError`, sistema rejeita a operação e persistência não é realizada. 2b. Identificador inexistente em consulta/atualização/remoção → `AdminService` lança `NotFoundError` e o sistema retorna HTTP 404. |
 | **RFs/RNs relacionados** | RF04 |
 
-<div align="center"><sub>UC03 — Criar competição</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 27 - UC03 — Criar competição</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1146,7 +1133,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Parâmetros inválidos → sistema rejeita a criação com mensagem de erro; nenhuma persistência ocorre. |
 | **RFs/RNs relacionados** | RF02, RN02 |
 
-<div align="center"><sub>UC04 — Encerrar competição</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 28 - UC04 — Encerrar competição</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1159,7 +1150,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Competição já encerrada ou ainda não iniciada → sistema rejeita a transição com mensagem informativa. |
 | **RFs/RNs relacionados** | RF12, RN14 |
 
-<div align="center"><sub>UC05 — Cadastrar equipes e atletas</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 29 - UC05 — Cadastrar equipes e atletas</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1172,7 +1167,7 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Nome de equipe duplicado na competição → sistema rejeita o cadastro e exibe mensagem de erro. 5a. Limite de atletas excedido → sistema bloqueia o cadastro adicional e orienta o Administrador. |
 | **RFs/RNs relacionados** | RF01, RF03, RN01, RN17 |
 
-<div align="center"><sub>UC06 — Gerar UUID (include)</sub></div>
+<div align="center"><sub>Quadro 30 - UC06 — Gerar UUID (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1185,7 +1180,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF01, RN01 |
 
-<div align="center"><sub>UC07 — Visualizar painel operacional</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 31 - UC07 — Visualizar painel operacional</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1198,9 +1197,13 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Nenhuma competição selecionada → sistema redireciona o Administrador para a tela de seleção de competição. |
 | **RFs/RNs relacionados** | RF05, RF09 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ##### Pacote: Registro de checkpoints
 
-<div align="center"><sub>UC08 — Selecionar atleta ativo (include)</sub></div>
+<div align="center"><sub>Quadro 32 - UC08 — Selecionar atleta ativo (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1213,7 +1216,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Atleta não pertence à equipe selecionada → sistema rejeita a operação. |
 | **RFs/RNs relacionados** | RF08, RN04 |
 
-<div align="center"><sub>UC09 — Registrar checkpoint via OCR</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 33 - UC09 — Registrar checkpoint via OCR</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1226,7 +1233,7 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 3a. Tesseract retorna resultado incompleto e Groq indisponível ou desativada → sistema responde `422 Unprocessable` e oferece ao Administrador o caminho de UC10 (registro manual). 4a. Erro de credencial Groq (`401`/`403`) → sistema desativa Groq para a sessão e registra o erro em log. |
 | **RFs/RNs relacionados** | RF05, RF06, RN06 |
 
-<div align="center"><sub>UC10 — Registrar checkpoint manual</sub></div>
+<div align="center"><sub>Quadro 34 - UC10 — Registrar checkpoint manual</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1239,7 +1246,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Métricas inválidas (formato incorreto, valores fora de faixa) → sistema rejeita o envio com mensagem de erro de validação; persistência não realizada. |
 | **RFs/RNs relacionados** | RF07, RF08, RN04, RN05, RN12 |
 
-<div align="center"><sub>UC11 — Confirmar dados do checkpoint (include)</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 35 - UC11 — Confirmar dados do checkpoint (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1252,9 +1263,13 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 3a. Administrador edita as métricas antes de confirmar → o sistema atualiza a previsão e segue o fluxo. 3b. Administrador rejeita o registro → métricas descartadas, nenhum checkpoint é persistido. |
 | **RFs/RNs relacionados** | RN05, RN06 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ##### Pacote: Acompanhamento e relatórios
 
-<div align="center"><sub>UC12 — Acessar ranking</sub></div>
+<div align="center"><sub>Quadro 36 - UC12 — Acessar ranking</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1267,7 +1282,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Nenhum checkpoint registrado → sistema retorna ranking vazio com mensagem informativa. |
 | **RFs/RNs relacionados** | RF10, RF15, RN09, RN11 |
 
-<div align="center"><sub>UC13 — Acessar relatório</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 37 - UC13 — Acessar relatório</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1280,7 +1299,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF13 |
 
-<div align="center"><sub>UC14 — Exportar dados em XLSX (include)</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 38 - UC14 — Exportar dados em XLSX (include)</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1293,7 +1316,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF13 |
 
-<div align="center"><sub>UC15 — Consultar checkpoints inconsistentes</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 39 - UC15 — Consultar checkpoints inconsistentes</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1306,7 +1333,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Nenhum checkpoint inconsistente → sistema retorna lista vazia (HTTP 200 com payload `[]` ou tabela com mensagem informativa no relatório). |
 | **RFs/RNs relacionados** | RF13, RN05 |
 
-<div align="center"><sub>UC16 — Exibir painel da competição em TV</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 40 - UC16 — Exibir painel da competição em TV</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1319,9 +1350,13 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. `:competitionId` inexistente → sistema retorna HTTP 404 com a tela pública de erro. |
 | **RFs/RNs relacionados** | RF11 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ##### Pacote: Painel público das equipes
 
-<div align="center"><sub>UC17 — Acessar painel via UUID</sub></div>
+<div align="center"><sub>Quadro 41 - UC17 — Acessar painel via UUID</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1334,7 +1369,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. UUID inexistente ou removido → sistema retorna HTTP 404 com a tela pública de erro. |
 | **RFs/RNs relacionados** | RF14, RN13, RN17 |
 
-<div align="center"><sub>UC18 — Visualizar ranking global</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 42 - UC18 — Visualizar ranking global</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1347,7 +1386,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF10, RF15 |
 
-<div align="center"><sub>UC19 — Ver status dos atletas</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 43 - UC19 — Ver status dos atletas</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1360,7 +1403,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF14 |
 
-<div align="center"><sub>UC20 — Usar calculadora de descanso</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 44 - UC20 — Usar calculadora de descanso</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1373,7 +1420,11 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 1a. Atleta sem checkpoint registrado → sistema exibe a indicação "Aguardando tempo de descanso…" sem cálculo numérico. |
 | **RFs/RNs relacionados** | RN08 |
 
-<div align="center"><sub>UC21 — Compartilhar ranking</sub></div>
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
+<div align="center"><sub>Quadro 45 - UC21 — Compartilhar ranking</sub></div>
 
 | Campo | Conteúdo |
 | --- | --- |
@@ -1386,13 +1437,17 @@ estabelecida em outras seções.
 | **Fluxos alternativos** | 2a. Navegador sem permissão para acessar a área de transferência → sistema exibe a URL para cópia manual. |
 | **RFs/RNs relacionados** | RF14 |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 ### 3.2.3. Diagrama de Classes do Domínio
 
 O diagrama de classes de domínio é uma representação visual que modela todos os elementos principais e os relacionamentos de um sistema. O objetivo do diagrama é descrever as entidades presentes no domínio do problema proposto de forma conceitual, descrever seus atributos e descrever como as entidades se conectam. Ele auxilia na compreensão da estrutura do sistema antes de ser implementado, facilitando a comunicação e entendimento de todos os membros da equipe e servindo como base para o desenvolvimento. 
 
 <div align="center">
   <sub>Figura 10 - Diagrama de Classes de Domínio </sub><br>
-  <img src="../assets/diagrama_classedominios.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
+  <img src="../assets/programacao/diagrama_classe_dominios.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1400,20 +1455,20 @@ O diagrama de classes de domínio é uma representação visual que modela todos
 
 O Diagrama de Classes Arquitetural é uma das representações da UML (Unified Modeling Language) que apresenta, em nível de projeto, as principais classes do sistema, seus atributos, métodos e os relacionamentos entre elas. Diferentemente do diagrama de classes de domínio, voltado à modelagem conceitual do negócio, o diagrama arquitetural reflete diretamente a estrutura do código-fonte, evidenciando como as responsabilidades são distribuídas entre as camadas da aplicação e como os componentes se comunicam entre si.
 
-No projeto em questão, a arquitetura adotada segue o padrão em três camadas: Controller, Service e Repository, amplamente utilizado em aplicações back-end por promover separação de responsabilidades, facilitar a manutenção e viabilizar a testabilidade independente de cada camada. A camada Controller é responsável por receber as requisições HTTP e delegar o processamento para a camada de serviço. Já a camada Service concentra as regras de negócio da aplicação. Além disso, a camada Repository abstrai o acesso ao banco de dados, expondo métodos padronizados de consulta e persistência.
+No projeto em questão, a arquitetura adotada segue o padrão Controller-Service-Repository, amplamente utilizado em aplicações back-end por promover separação de responsabilidades, facilitar a manutenção e viabilizar a testabilidade independente de cada camada. A camada Controller é responsável por receber as requisições HTTP e delegar o processamento para a camada de serviço. A camada Service concentra as regras de negócio da aplicação. Já a camada Repository abstrai o acesso ao banco de dados PostgreSQL via Supabase, expondo métodos padronizados de consulta e persistência. Complementando esse núcleo, o sistema conta ainda com camadas de Routes (definição de rotas Express com middlewares de autenticação), Validators (schemas zod para validação de entrada), Middlewares (autenticação JWT e tratamento global de erros) e Helpers (funções utilitárias como inferência de método de entrada e seleção de competição ativa).
 
-O diagrama é composto pelos seguintes módulos principais: Administrador, Autenticação (Auth), Competição, Corredor, Checkpoint, Esteira, Equipe, Ranking e OCR. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, fogem a essa regra por terem uma função de suporte geral à aplicação, sendo o caso do AuthService, do ValidacaoService e do OCRService, que são utilizados por diferentes partes do sistema. Além disso, o diagrama também apresenta interfaces de modelo (como CompeticaoModel, EquipeModel, CorredorModel, CheckpointModel e EsteiraModel), cuja função é validar os dados recebidos pela aplicação antes de serem processados, evitando inconsistências.
+O diagrama é composto pelos seguintes módulos principais: Admin, Auth, Competition, Team, Runner, Checkpoint, OCR, Ranking, Report, Export e TvPanel. A maior parte desses módulos segue a estrutura de três camadas apresentada anteriormente. Alguns serviços, no entanto, fogem a essa regra por terem função de suporte geral ou por consumirem outros serviços diretamente. É o caso do AuthService, que utiliza o AdminRepository para autenticação; do OCRService, que orquestra os submódulos Tesseract (local) e Groq (fallback via LLM) sem depender de outros serviços do sistema; e do RankingService, ReportService, ExportService e TvPanelService, que reutilizam serviços existentes (como CheckpointService, CompetitionService e TeamService) para gerar rankings, relatórios e exportações. As entidades do sistema são representadas por interfaces TypeScript nos modelos (Competition, Team, Runner, Checkpoint, Admin, etc.), enquanto a validação de dados de entrada é feita por validators dedicados com zod, e não pelas interfaces de modelo.
 
-As dependências entre as classes são representadas por setas tracejadas, indicando uso ou associação. Destaca-se a dependência do CheckpointService com os serviços CorredorService, EsteiraService, ValidacaoService e OCRService, refletindo a centralidade da lógica de registro de checkpoints no fluxo operacional da competição. O RankingService, por sua vez, depende do CheckpointService e do EquipeService para calcular posições, pace médio e gerar o ranking das equipes em tempo real.
+As dependências entre as classes seguem o fluxo Controller → Service → Repository, com setas indicando uso ou associação. O CheckpointService depende do CompetitionService para verificar se a competição ainda está ativa antes de registrar um novo checkpoint, e do CheckpointRepository para persistência. O RankingService depende do CheckpointService e do TeamService para calcular posições, pace médio e classificação de equipes e corredores em tempo real. O ReportService, por sua vez, consome CompetitionService, CheckpointService e RankingService para gerar relatórios consolidados. O ExportService utiliza o ExportRepository e o RankingService para montar a exportação de dados. O TvPanelService combina dados do CompetitionService, CheckpointRepository e RankingService para alimentar o painel de TV público. O OCRService opera de forma independente, chamando apenas os submódulos Tesseract e Groq, sem depender de CheckpointService ou qualquer outro serviço do sistema — a extração de métricas é dissociada da criação do checkpoint, que ocorre em uma requisição separada.
 
 <div align="center">
   <sub>Figura 11 - Diagrama de Classes Arquitetural</sub><br>
-  <img src="../assets/programacao/Diagrama de Classes Arquitetural.drawio.png" width="100%" alt="Diagrama de Classes Arquitetural do Projeto em Análise"><br>
+  <img src="../assets/programacao/Diagrama_de_Classe_Arquitetural.png" width="100%" alt="Análise de negócios dos riscos por um modelo de Matriz"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
-### 3.2.4. Diagrama de Sequência UML 
+### 3.2.4. Diagrama de Sequência UML (sprint 3)
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
@@ -1441,7 +1496,7 @@ O terceiro diagrama mapeia o fluxo de autenticação de administrador (Fluxo 3).
 
 <div align="center">
   <sub>Figura 14 - Diagrama de sequência do fluxo de autenticação do administrador</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-3.svg" width="100%" alt="Diagrama de sequência UML do fluxo de autenticação de administrador via JWT, com validação de credenciais e retorno de token de acesso"><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-3.png" width="100%" alt="Diagrama de sequência UML do fluxo de autenticação de administrador via JWT, com validação de credenciais e retorno de token de acesso"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1449,7 +1504,7 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
 
 <div align="center">
   <sub>Figura 15 - Diagrama de sequência do fluxo de criação de checkpoint</sub><br>
-  <img src="../assets/programacao/diagrama-sequencia-uml-4.svg" width="100%" alt="Diagrama de sequência UML do fluxo de criação de checkpoint, com validação de payload, persistência no banco e tratamento de erros"><br>
+  <img src="../assets/programacao/diagrama-sequencia-uml-4.jpeg" width="100%" alt="Diagrama de sequência UML do fluxo de criação de checkpoint, com validação de payload, persistência no banco e tratamento de erros"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1473,67 +1528,7 @@ O sistema Red Bull 24h é composto por três nós principais em produção: o di
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
-
-```
-plantuml
-@startuml diagrama-implantacao
- 
-skinparam backgroundColor #FFFFFF
-skinparam node {
-  BackgroundColor #F5F5F5
-  BorderColor #333333
-  FontName Arial
-}
-skinparam artifact {
-  BackgroundColor #DAE8FC
-  BorderColor #6C8EBF
-}
-skinparam component {
-  BackgroundColor #D5E8D4
-  BorderColor #82B366
-}
-skinparam database {
-  BackgroundColor #FFF2CC
-  BorderColor #D6B656
-}
- 
-node "Dispositivo do Operador / Capitão\n(Navegador Web)" as browser {
-  artifact "Aplicação Web (HTML/CSS/JS)\nServida pelo Express (EJS)" as webapp
-}
- 
-node "Servidor de Aplicação\n(Node.js + TypeScript)" as server {
-  artifact "Express App (app.ts)" as express
-  component "Routes" as routes
-  component "Controllers" as controllers
-  component "Services" as services
-  component "OCR Server-side\n(Tesseract.js + sharp + Groq)" as ocr
-  component "Repositories" as repositories
-  component "Validators / Middlewares" as validators
-}
- 
-node "Banco de Dados Gerenciado\n(Supabase - PostgreSQL)" as db {
-  database "Schema público\n(competition, team, runner,\ncheckpoint, admin, ocr_extraction,\ncompetition_report)" as schema
-}
- 
-node "GitLab Pages\n(Infraestrutura estática)" as pages {
-  artifact "api-documentation.html\n(documentação da WebAPI)" as apidoc
-}
- 
-browser --> server : "HTTP/REST\n(JSON - porta 3000)"
-browser --> server : "Upload de imagem\n(multipart/form-data -\nPOST /ocr/extractions)"
-repositories --> db : "Supabase JS SDK\n(HTTPS - porta 443)"
-browser ..> pages : "HTTPS (leitura apenas -\nacesso externo de revisores)"
- 
-express --> routes
-routes --> controllers
-controllers --> services
-services --> ocr
-services --> repositories
-services --> validators
- 
-@enduml
-```
- 
+  <img src="../assets/programacao/diagrama-de-implantacao.png" width="100%" alt="Representação visual do diagrama de implantação."><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
@@ -1549,8 +1544,6 @@ O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospeda
 O nó **GitLab Pages** hospeda a documentação estática da WebAPI (`documentos/outros/api-documentation.html`), publicada em `https://web-api-deploy-d81981.pages.git.inteli.edu.br/`. Este nó não integra o fluxo de dados operacional da aplicação; sua finalidade é exclusivamente facilitar a leitura e validação externa da documentação de endpoints sem necessidade de clonar o repositório.
  
 A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual do desenvolvimento: o mecanismo de autenticação e controle de sessão é executado pelo próprio servidor de aplicação, conforme descrito na seção 3.8, e não demanda um nó de infraestrutura separado.
-
-
 
 ### 3.2.7. Padrões de Projeto Aplicados 
 
@@ -1955,8 +1948,6 @@ O padrão pode ser observado nos seguintes arquivos:
 ```
  
 Nesse exemplo, o layout principal define a estrutura compartilhada da interface, enquanto o partial `menu.ejs` é reutilizado em diferentes páginas da aplicação, evitando duplicação de código e facilitando manutenção.
- 
-
 
 ## 3.3. Wireframes 
 
@@ -1999,10 +1990,8 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
  Persona 1: Marina Costa, 29, Coordenadora Operacional (Administradora)
 
  <div align="center">
-  <sub>Quadro 27 - User Stories cobertas: </sub>
+  <sub>Quadro 46 - User Stories cobertas: </sub>
 </div>
-
-
 
 
 | ID   | User Story | Descrição |
@@ -2017,13 +2006,14 @@ representar de forma rápida e simplificada o fluxo de navegação da persona 1 
 | US09 | Fotografar a esteira para extração via OCR | Captura da imagem da esteira para leitura automática de dados utilizando OCR |
 | US10 | Registrar checkpoint manualmente | Inserção manual de checkpoint como alternativa em caso de falha do OCR |
 | US11 | Visualizar tabela com auto-refresh a cada 5 min | Atualização automática periódica das informações operacionais da competição |
+
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
 
 <div align="center"> 
-  <sub>Quadro 28 - Critérios de baixa fidelidade adotados</sub> 
+  <sub>Quadro 47 - Critérios de baixa fidelidade adotados</sub> 
 </div>
 
 | Critério | Descrição |
@@ -2121,7 +2111,7 @@ As telas a seguir foram feitas para serem postadas nos períodos da manhã, tard
 Essas duas telas foram criadas para compartilhar os melhores desempenhos da competição.
 
 <div align="center">
-  <sub>Figura 25 - Wireframe de baixa fidelidade da tela do Instagram pace/km</sub><br>
+  <sub>Figura 26 - Wireframe de baixa fidelidade da tela do Instagram pace/km</sub><br>
   <img src="../assets/design/instagram_telas_pacekm.png" width="100%" alt="Wireframe de baixa fidelidade das telas do Instagram com a maior quilometragem e o menor pace médio da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
@@ -2141,13 +2131,13 @@ As figuras a seguir apresentam o início do fluxo administrativo, desde a tela p
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 23 - Dashboard principal do painel administrativo</sub><br>
+    <sub>Figura 27 - Dashboard principal do painel administrativo</sub><br>
     <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Dashboard Principal.png" width="400px" alt="Dashboard principal do painel administrativo Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 24 - Criação de nova competição</sub><br>
+    <sub>Figura 28 - Criação de nova competição</sub><br>
     <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Dashboard - Nova competição.png" width="400px" alt="Formulário de criação de uma nova competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -2161,13 +2151,13 @@ As figuras a seguir mostram a etapa de preparação das equipes, contemplando o 
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 25 - Estado inicial da tela de equipes</sub><br>
+    <sub>Figura 29 - Estado inicial da tela de equipes</sub><br>
     <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Painel Admin Nenhuma Equipe Cadastrada.png" width="400px" alt="Tela de equipes sem equipes cadastradas no painel administrativo."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 26 - Cadastro de equipe e atletas</sub><br>
+    <sub>Figura 30 - Cadastro de equipe e atletas</sub><br>
     <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Cadastrar Equipe.png" width="400px" alt="Formulário de cadastro de equipe com capitão e atletas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -2181,13 +2171,13 @@ As figuras a seguir apresentam a continuidade do gerenciamento das equipes, incl
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 27 - Competição cadastrada sem equipes</sub><br>
+    <sub>Figura 31 - Competição cadastrada sem equipes</sub><br>
     <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Competição Cadastrada Sucesso.png" width="400px" alt="Tela de equipes após o cadastro da competição, ainda sem equipes cadastradas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 28 - Equipes cadastradas com URLs públicas</sub><br>
+    <sub>Figura 32 - Equipes cadastradas com URLs públicas</sub><br>
     <img src="../assets/design/Alta fidelidade Persona 1 - Wireframe 1-6/Painel Admin Equipes.png" width="400px" alt="Painel administrativo com equipes cadastradas e URLs públicas por UUID."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -2201,13 +2191,13 @@ As figuras a seguir apresentam a visão geral do painel operacional administrati
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 29 - Painel operacional administrativo da competição</sub><br>
+    <sub>Figura 33 - Painel operacional administrativo da competição</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-1.png" width="400px" alt="Painel operacional administrativo da competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 30 - Seleção do atleta ativo</sub><br>
+    <sub>Figura 34 - Seleção do atleta ativo</sub><br>
     <img src="../assets/design/Equipes - Painel operacional.png" width="400px" alt="Interface de seleção do atleta ativo durante a competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -2221,13 +2211,13 @@ As figuras a seguir demonstram o processo de captura da imagem da esteira e a va
 <div align="center" style="display: flex; justify-content: center; gap: 30px; flex-wrap: wrap;">
 
   <div>
-    <sub>Figura 31 - Captura da imagem da esteira</sub><br>
+    <sub>Figura 35 - Captura da imagem da esteira</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-2.png" width="400px" alt="Captura da imagem da esteira para processamento OCR."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 32 - Validação dos dados extraídos via OCR</sub><br>
+    <sub>Figura 36 - Validação dos dados extraídos via OCR</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-3.png" width="400px" alt="Tela de validação dos dados extraídos automaticamente via OCR."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -2242,19 +2232,19 @@ As figuras a seguir apresentam funcionalidades complementares da plataforma, inc
      style="display: flex; justify-content: center; align-items: flex-start; gap: 20px; flex-wrap: nowrap;">
 
   <div>
-    <sub>Figura 33 - Registro manual de checkpoint</sub><br>
+    <sub>Figura 37 - Registro manual de checkpoint</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-4.png" width="400px" alt="Tela de registro manual de checkpoints da competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 34 - Visualização consolidada dos dados da competição</sub><br>
+    <sub>Figura 38 - Visualização consolidada dos dados da competição</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-5.png" width="400px" alt="Tabela consolidada com os dados operacionais da competição."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
 
   <div>
-    <sub>Figura 35 - Relatório operacional da competição</sub><br>
+    <sub>Figura 39 - Relatório operacional da competição</sub><br>
     <img src="../assets/design/Equipes - Painel operacional-6.png" width="400px" alt="Tela de relatório operacional da competição Red Bull 24 Horas."><br>
     <sup>Fonte: Elaborado pelos autores (2026).</sup>
   </div>
@@ -2270,7 +2260,7 @@ Amanda Azevedo representa os atletas participantes da competição, utilizando o
 Diferentemente das personas administrativas, Amanda interage exclusivamente com a área pública da plataforma, acessada por meio do link gerado automaticamente pelo sistema. Seu fluxo prioriza rapidez na visualização das informações, simplicidade de navegação e acompanhamento contínuo da competição em tempo real.
 
 <div align="center"> 
-  <sub>Quadro 29 - User Stories cobertas pela Persona Corredor</sub> 
+  <sub>Quadro 48 - User Stories cobertas pela Persona Corredor</sub> 
 </div>
 
 | ID | User Story | Descrição |
@@ -2291,7 +2281,7 @@ Diferentemente das personas administrativas, Amanda interage exclusivamente com 
 O fluxo abaixo representa a navegação realizada pelos corredores ao acessarem o painel público da equipe por meio do link compartilhado da competição. O fluxo contempla o acesso via UUID, validação do link, visualização das métricas da equipe e compartilhamento simplificado do ranking.
 
 <div align="center">
-  <sub>Figura 36 - Fluxo de navegação da Persona Corredor</sub><br>
+  <sub>Figura 40 - Fluxo de navegação da Persona Corredor</sub><br>
   <img src="../assets/design/fluxo_corredor.png" width="100%" alt="Fluxo de navegação do painel público da equipe, incluindo acesso via UUID, tela de erro, painel da equipe e compartilhamento do ranking."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
@@ -2309,7 +2299,7 @@ O wireframe de baixa fidelidade da persona corredor foi desenvolvido para valida
 A prototipação buscou representar os principais elementos utilizados pelos atletas durante a competição, incluindo ranking geral, métricas da equipe, informações dos corredores e funcionalidades estratégicas relacionadas ao acompanhamento da prova.
 
 <div align="center">
-  <sub>Figura 37 - Wireframe de baixa fidelidade do painel público da equipe</sub><br>
+  <sub>Figura 41 - Wireframe de baixa fidelidade do painel público da equipe</sub><br>
   <img src="../assets/design/WF-persona2.png" width="100%" alt="Wireframe de baixa fidelidade do painel público da equipe, incluindo ranking, métricas dos atletas e acompanhamento da competição."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
@@ -2325,7 +2315,7 @@ As telas abaixo representam o painel público da equipe, desenvolvido para acomp
 O layout utiliza cartões informativos, tabelas e indicadores visuais para facilitar a leitura de métricas como ranking, pace, velocidade, distância percorrida e descanso dos atletas. Além disso, a interface contempla funcionalidades estratégicas, como a Calculadora de Descanso e o compartilhamento simplificado do ranking da equipe, priorizando legibilidade, organização visual e rápida navegação durante a competição.
 
 <div align="center">
-  <sub>Figura 38 - Painel público da equipe</sub><br>
+  <sub>Figura 42 - Painel público da equipe</sub><br>
   <img src="../assets/design/wireframe de alta-fi.png" width="100%" alt="Painel público da equipe com ranking geral, métricas dos atletas, calculadora de descanso e compartilhamento do ranking."><br>
   <sup>Fonte: Material produzido pelos autores (2026).</sup>
 </div>
@@ -2342,7 +2332,7 @@ Para garantir essa padronização, o guia de estilos desenvolvido pelo grupo foi
 A paleta de cores da solução foi definida com base na identidade visual da Red Bull, sendo composta por três cores primárias e cinco cores secundárias. As cores primárias são utilizadas nos principais elementos da interface e na comunicação visual do sistema, enquanto as cores secundárias auxiliam na composição de fundos, textos, componentes de apoio e detalhes visuais, contribuindo para a padronização e harmonia da interface.
 
 <div align="center">
-  <sub>Figura 39 - Paleta de cores</sub><br>
+  <sub>Figura 43 - Paleta de cores</sub><br>
     <img src="../assets/design/paleta-de-cores.png" width="100%" alt="Paleta de cores do guia de estilos"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2350,7 +2340,7 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 ### 3.4.2 Tipografia
 
 <div align="center">
-  <sub>Figura 40 - Tipografia</sub><br>
+  <sub>Figura 44 - Tipografia</sub><br>
     <img src="../assets/design/tipografia.png" width="100%" alt="Tipografia do guia de estilos"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2358,7 +2348,7 @@ A paleta de cores da solução foi definida com base na identidade visual da Red
 ### 3.4.3 Iconografia e imagens 
 
 <div align="center">
-  <sub>Figura 41 - Ícones e imagens</sub><br>
+  <sub>Figura 45 - Ícones e imagens</sub><br>
     <img src="../assets/design/icones-e-imagens.png" width="100%" alt="Ícones e imagens do guia de estilos"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2379,7 +2369,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 1 - Tela de Login</sub><br>
+  <sub>Figura 46 - Tela de Login</sub><br>
     <img src="../assets/design/protótipo/painel-login.jpg"  width="100%" alt="Representação da tela de login do sistema web"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2389,7 +2379,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 42 - Dashboard Principal</sub><br>
+  <sub>Figura 47 - Dashboard Principal</sub><br>
     <img src="../assets/design/protótipo/(1).Dashboard-principal.png"  width="100%" alt="Representação da primeira tela do Sistema WEB - O dashboard principal"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2399,7 +2389,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 43 - Cadastro de competição </sub><br>
+  <sub>Figura 48 - Cadastro de competição </sub><br>
     <img src="../assets/design/protótipo/(2).Dashboard-nova-competição.png"  width="100%" alt="Representação da tela de cadastro de nova competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2409,7 +2399,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 44 - Competição Cadastrada </sub><br>
+  <sub>Figura 49 - Competição Cadastrada </sub><br>
     <img src="../assets/design/protótipo/(3).Dashboard-competição-cadastrada.png"  width="100%" alt="Representação do dashboard após o cadastro da competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2419,7 +2409,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 45 - Painel Equipes vazio</sub><br>
+  <sub>Figura 50 - Painel Equipes vazio</sub><br>
     <img src="../assets/design/protótipo/(4).Paineladmin-sem-equipe-cadastrada.png"  width="100%" alt="Representação do painel de equipes sem nenhuma equipe cadastrada"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2429,7 +2419,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 46 - Tela de Cadastro das equipes</sub><br>
+  <sub>Figura 51 - Tela de Cadastro das equipes</sub><br>
     <img src="../assets/design/protótipo/cadastrar-equipes.png"  width="100%" alt="Representação da tela de cadastro das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2440,7 +2430,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 47 - Painel de admin das equipes</sub><br>
+  <sub>Figura 52 - Painel de admin das equipes</sub><br>
     <img src="../assets/design/protótipo/painel-admin-equipes.png"  width="100%" alt="Representação da tela de admin das equipes"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2451,7 +2441,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 48 - Painel de operacional das equipes</sub><br>
+  <sub>Figura 53 - Painel de operacional das equipes</sub><br>
     <img src="../assets/design/protótipo/painel-operacional-equipes.png"  width="100%" alt="Representação do painel operacional da equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2462,7 +2452,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 49 - Painel de operacional das equipes com dropdown</sub><br>
+  <sub>Figura 54 - Painel de operacional das equipes com dropdown</sub><br>
     <img src="../assets/design/protótipo/painel-operacional-com-dropdown.png"  width="100%" alt="Representação do painel operacional com dropdown de troca de atleta ativo"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2473,7 +2463,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 50 - Captura da foto da esteira </sub><br>
+  <sub>Figura 55 - Captura da foto da esteira </sub><br>
     <img src="../assets/design/protótipo/(9).Captura-da-foto-da-esteira.png"  width="100%" alt="Representação da tela de captura da foto da esteira"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2483,7 +2473,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 51 - Dados extraídos via OCR </sub><br>
+  <sub>Figura 56 - Dados extraídos via OCR </sub><br>
     <img src="../assets/design/protótipo/(10).Dados-extraídos-via-OCR.png"  width="100%" alt="Representação da tela de validação dos dados extraídos via OCR"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2493,7 +2483,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 52 -  Registro Manual </sub><br>
+  <sub>Figura 57 -  Registro Manual </sub><br>
     <img src="../assets/design/protótipo/(11).Registro-manual.png"  width="100%" alt="Representação da tela de registro manual de checkpoint"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2503,7 +2493,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 
 
 <div align="center">
-  <sub>Figura 53 -  Checkpoints salvos </sub><br>
+  <sub>Figura 58 -  Checkpoints salvos </sub><br>
     <img src="../assets/design/protótipo/(12).Checkpoints-Salvos.png"  width="100%" alt="Representação da tela de checkpoints salvos da equipe"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2514,7 +2504,7 @@ O protótipo também está servindo como referência para o desenvolvimento fron
 Tela de ranking em tempo real da competição, exibindo métricas globais como total de quilômetros percorridos, pace médio global e número de checkpoints. Na seção "Disputa ao vivo", são apresentadas as duas equipes em competição, com a diferença de quilômetros entre elas. Ao final, exibe os atletas atualmente em corrida, com informações individuais de distância, pace atual e último checkpoint registrado. Um botão "Congelar ranking" está disponível no canto superior direito para pausar a atualização em tempo real.
 
 <div align="center">
-  <sub>Figura 54 - Ranking em tempo real</sub><br>
+  <sub>Figura 59 - Ranking em tempo real</sub><br>
     <img src="../assets/design/protótipo/Ranking.png"  width="100%" alt="Representação da tela de ranking em tempo real da competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2524,7 +2514,7 @@ Tela de ranking em tempo real da competição, exibindo métricas globais como t
 Tela de relatório final da competição, apresentando um resumo geral com total de quilômetros percorridos, média geral de pace e número de checkpoints. Exibe um gráfico de linha com a evolução das posições das equipes ao longo do tempo (de 0h a 24h), permitindo visualizar as variações de liderança durante a prova. Abaixo, há uma seção de "Relatório de inconsistências" com uma tabela de registros corrigidos manualmente, contendo informações de data, atleta, equipe, checkpoint, valor OCR original, valor corrigido, diferença e usuário responsável pela correção. Um botão "Log de Auditoria" e outro de "Exportar dados" estão disponíveis para rastreabilidade e extração das informações.
 
 <div align="center">
-  <sub>Figura 55 - Relatório da competição</sub><br>
+  <sub>Figura 60 - Relatório da competição</sub><br>
     <img src="../assets/design/protótipo/Relatórios.png"  width="100%" alt="Representação da tela de relatório da competição com gráfico e tabela de inconsistências"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2537,7 +2527,7 @@ Painel operacional da Equipe, acessado apenas pelos integrantes da mesma, exibin
 Durante o processo de validação com o parceiro de projeto, foi identificado que as competições Red Bull 24h não ocorrem simultaneamente em diferentes localidades do Brasil, o que inviabilizou a existência de um ranking global entre eventos distintos. Essa informação levou à reestruturação da tela de equipe, com a remoção do componente de "Ranking global" e a adição de modais quantitativos exibindo o tempo total de competição e o pace médio da equipe, além de um gráfico de evolução da posição da equipe ao longo do evento em função do tempo, tornando o painel mais aderente à realidade operacional da competição.
 
 <div align="center">
-  <sub>Figura 56 - Painel operacional da equipe</sub><br>
+  <sub>Figura 61 - Painel operacional da equipe</sub><br>
     <img src="../assets/design/protótipo/Equipes.png"  width="100%" alt="Representação do painel da equipe acessado via UUID"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2547,7 +2537,7 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela de TV, criada para ser projetada durante a competição, permitindo que o público acompanhe os dados em tempo real.
 
 <div align="center">
-  <sub>Figura 56 - Painel TV</sub><br>
+  <sub>Figura 62 - Painel TV</sub><br>
     <img src="../assets/design/protótipo/painelTV.png"  width="100%" alt="Representação do protótipo de alta fidelidade do painel TV"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2558,7 +2548,7 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para que os atletas divulguem seu desempenho na competição, com informações como quilometragem total, pace mínimo e velocidade máxima alcançada.
 
 <div align="center">
-  <sub>Figura 56 - Stories de divulgação do atleta</sub><br>
+  <sub>Figura 63 - Stories de divulgação do atleta</sub><br>
     <img src="../assets/design/protótipo/insta-atleta.png"  width="100%" alt="Representação da tela de desempenho do atleta divulgada pelos stories do Instagram"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2567,25 +2557,25 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação, por parte da Red Bull, dos atletas em destaque nos períodos da manhã, tarde, noite e madrugada, considerando a maior quilometragem realizada por atleta em cada um.
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque da manhã</sub><br>
+  <sub>Figura 64 - Stories atleta destaque da manhã</sub><br>
     <img src="../assets/design/protótipo/insta-manha.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da manhã"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque da tarde</sub><br>
+  <sub>Figura 65 - Stories atleta destaque da tarde</sub><br>
     <img src="../assets/design/protótipo/insta-tarde.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da tarde"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque da noite</sub><br>
+  <sub>Figura 66 - Stories atleta destaque da noite</sub><br>
     <img src="../assets/design/protótipo/insta-noite.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da noite"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque da madrugada</sub><br>
+  <sub>Figura 67 - Stories atleta destaque da madrugada</sub><br>
     <img src="../assets/design/protótipo/insta-madrugada.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque do período da madrugada"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2594,13 +2584,13 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 &nbsp; &nbsp; &nbsp; &nbsp;Esse é o protótipo de alta fidelidade da tela criada para a divulgação, por parte da Red Bull, dos atletas destaques da competição, isto é, o atleta com a maior quilometragem e o atleta com o menor pace registrado.
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque com maior quilometragem</sub><br>
+  <sub>Figura 68 - Stories atleta destaque com maior quilometragem</sub><br>
     <img src="../assets/design/protótipo/insta-km.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque com a maior quilometragem realizada durante a competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 56 - Stories atleta destaque com menor pace</sub><br>
+  <sub>Figura 69 - Stories atleta destaque com menor pace</sub><br>
     <img src="../assets/design/protótipo/insta-pace.png"  width="100%" alt="Representação da tela de stories do Instagram para divulgar o atleta destaque com o menor pace realizado durante a competição"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -2614,10 +2604,10 @@ O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma
 
 De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como `name`, `email` e `cpf` na entidade Runner. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Os relacionamentos, por sua vez, são representados por losangos que contêm o verbo que descreve a interação entre as entidades, demonstrando as associações existentes entre elas.
 
-O relacionamento entre entidades é feito por meio de uma linha que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 25 apresenta as principais cardinalidades e a sua utilização.
+O relacionamento entre entidades é feito por meio de uma linha que contém as cardinalidades, representação numérica que identifica quantas instâncias de uma entidade podem se relacionar com instâncias de outra. A seguir, o Quadro 49 apresenta as principais cardinalidades e a sua utilização.
 
 <div align="center">
-  <sub>Quadro 30 - Cardinalidades </sub>
+  <sub>Quadro 49 - Cardinalidades </sub>
 </div>
 
 | Cardinalidade |  Leitura | Exemplo de Aplicação |
@@ -2630,10 +2620,10 @@ O relacionamento entre entidades é feito por meio de uma linha que contém as c
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-A seguir, a Figura 57 ilustra o Modelo Entidade-Relacionamento desenvolvido para o projeto.
+A seguir, a Figura 70 ilustra o Modelo Entidade-Relacionamento desenvolvido para o projeto.
 
 <div align="center">
-  <sub>Figura 57 - Modelo Entidade-Relacionamento</sub><br>
+  <sub>Figura 70 - Modelo Entidade-Relacionamento</sub><br>
     <img src="../assets/programacao/modelo_er.png" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
@@ -2641,10 +2631,10 @@ A seguir, a Figura 57 ilustra o Modelo Entidade-Relacionamento desenvolvido para
 
 #### Descrição das entidades e relacionamentos
 
-A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema. A notação `1:N` adotada na coluna de relacionamentos corresponde à notação de Chen e equivale à forma `0..N` da notação UML; a participação obrigatória (mínimo 1) é indicada em texto quando aplicável.
+A seguir, o Quadro 50 apresenta cada entidade, seu papel e os relacionamentos que desempenha no sistema. A notação `1:N` adotada na coluna de relacionamentos corresponde à notação de Chen e equivale à forma `0..N` da notação UML; a participação obrigatória (mínimo 1) é indicada em texto quando aplicável.
 
 <div align="center">
-  <sub>Quadro 31 - Descrição das entidades e relacionamentos</sub>
+  <sub>Quadro 50 - Descrição das entidades e relacionamentos</sub>
 </div>
 
 | Entidade | Papel no sistema | Relacionamentos |
@@ -2664,10 +2654,10 @@ A seguir, o Quadro 26 apresenta cada entidade, seu papel e os relacionamentos qu
 
 Em relação à diferença entre o modelo conceitual (MER) e o modelo físico (SQL), o MER representa de forma abstrata a estrutura que o banco de dados deverá possuir, focando na organização das informações e em seus relacionamentos, sem detalhar tipos de dados ou nomes de colunas. Já o modelo físico apresenta a implementação prática no banco de dados, contendo elementos adicionais como chaves estrangeiras, restrições de integridade e definições específicas da linguagem SQL, necessários para o funcionamento do sistema em um contexto relacional. O dicionário de dados apresentado a seguir já incorpora informações do nível lógico/físico (tipos, chaves estrangeiras e obrigatoriedade), de modo a aproximar a modelagem conceitual da implementação efetivamente adotada no projeto.
 
-A seguir, o Quadro 32 exemplifica os elementos da notação de Chen utilizados no MER.
+A seguir, o Quadro 51 exemplifica os elementos da notação de Chen utilizados no MER.
 
 <div align="center">
-  <sub>Quadro 32 - Exemplificação dos elementos da notação de Chen </sub>
+  <sub>Quadro 51 - Exemplificação dos elementos da notação de Chen </sub>
 </div>
 
 | Elemento |  Símbolo  | Aplicação ao MER |
@@ -2685,10 +2675,10 @@ A seguir, o Quadro 32 exemplifica os elementos da notação de Chen utilizados n
 
 Por meio de quadros, serão detalhadas todas as entidades, listando seus atributos com o respectivo tipo semântico, a obrigatoriedade e a descrição, a fim de contextualizar a implementação ao sistema. A coluna "Obrigatório" indica se o atributo é de preenchimento obrigatório no banco de dados (`SIM`) ou se aceita valor nulo (`NÃO`).
 
-- O Quadro 33 apresenta a entidade e os atributos de "Competição".
+- O Quadro 52 apresenta a entidade e os atributos de "Competição".
 
 <div align="center">
-  <sub>Quadro 33 - Dicionário de Dados da Entidade Competição</sub>
+  <sub>Quadro 52 - Dicionário de Dados da Entidade Competição</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2705,10 +2695,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- A seguir, o Quadro 34 ilustra a entidade Equipe e os seus atributos.
+- A seguir, o Quadro 53 ilustra a entidade Equipe e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 34 - Dicionário de Dados da Entidade Equipe</sub>
+  <sub>Quadro 53 - Dicionário de Dados da Entidade Equipe</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2724,10 +2714,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- O Quadro 35 representa o dicionário de dados da entidade Corredor.
+- O Quadro 54 representa o dicionário de dados da entidade Corredor.
 
 <div align="center">
-  <sub>Quadro 35 - Dicionário de Dados da Entidade Corredor</sub>
+  <sub>Quadro 54 - Dicionário de Dados da Entidade Corredor</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2745,10 +2735,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- O Quadro 36 apresenta a entidade e os atributos de "Checkpoint".
+- O Quadro 55 apresenta a entidade e os atributos de "Checkpoint".
 
 <div align="center">
-  <sub>Quadro 36 - Dicionário de Dados da Entidade Checkpoint</sub>
+  <sub>Quadro 55 - Dicionário de Dados da Entidade Checkpoint</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2768,10 +2758,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
-- A seguir, o Quadro 37 ilustra a entidade Administrador e os seus atributos.
+- A seguir, o Quadro 56 ilustra a entidade Administrador e os seus atributos.
 
 <div align="center">
-  <sub>Quadro 37 - Dicionário de Dados da Entidade Administrador</sub>
+  <sub>Quadro 56 - Dicionário de Dados da Entidade Administrador</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2788,10 +2778,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 </div> 
 
 
-- O Quadro 39 apresenta a entidade e os atributos de "Extração OCR".
+O Quadro 57 apresenta a entidade e os atributos de "Extração OCR".
 
 <div align="center">
-  <sub>Quadro 39 - Dicionário de Dados da Entidade Extração OCR</sub>
+  <sub>Quadro 57 - Dicionário de Dados da Entidade Extração OCR</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2810,10 +2800,10 @@ Por meio de quadros, serão detalhadas todas as entidades, listando seus atribut
 </div>
 
 
-- O Quadro 40 representa o dicionário de dados da entidade Relatório da Competição.
+- O Quadro 58 representa o dicionário de dados da entidade Relatório da Competição.
 
 <div align="center">
-  <sub>Quadro 40 - Dicionário de Dados da Entidade Relatório da Competição</sub>
+  <sub>Quadro 58 - Dicionário de Dados da Entidade Relatório da Competição</sub>
 </div>
 
 | Entidade | Atributo | Tipo semântico | Obrigatório | Restrições / Chave | Descrição |
@@ -2839,10 +2829,10 @@ Além dos atributos, o modelo é governado por regras de integridade definidas n
 
 #### Rastreabilidade entidade → RF → RN
 
-A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
+A seguir, o Quadro 59 apresenta a rastreabilidade entre as entidades criadas com os Requisitos Funcionais e Não Funcionais, para assim, ser possível o entendimento e compreensão integral do sistema:
 
 <div align="center">
-  <sub>Quadro 39 - Rastreabilidade entidade → RF → RN </sub>
+  <sub>Quadro 59 - Rastreabilidade entidade → RF → RN </sub>
 </div>
 
 | Entidade | RF que origina | RN que governa |
@@ -2877,7 +2867,7 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 ### Glossário de cardinalidades  
 <div align="center">
-  <sub>Quadro 40 - Glossário de cardinalidades </sub>
+  <sub>Quadro 60 - Glossário de cardinalidades </sub>
 </div>
 
 | Símbolo | Nome | Significado |
@@ -2898,15 +2888,16 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 
 
 <div align="center">
-  <sub>Figura 57 - Diagrama Entidade Relacionamento</sub><br>
+  <sub>Figura 71 - Diagrama Entidade Relacionamento</sub><br>
     <img src="../assets/programacao/diagrama-entidade-relacionamento.jpg" width="100%" alt="Representação do Modelo Entidade Relacionamento"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 
 ### Relacionamentos do DER
+
 <div align="center">
-  <sub>Quadro 41 - Relacionamentos do DER </sub>
+  <sub>Quadro 61 - Relacionamentos do DER </sub>
 </div>
 
 | # | Entidade A | Entidade B | A → B | B → A |
@@ -2924,8 +2915,9 @@ Por meio dessa representação, é possível identificar de forma clara relaçõ
 </div>
 
 ### Coerência com o Diagrama de Classes
+
 <div align="center">
-  <sub>Quadro 42 - Coerência com o Diagrama de Classes </sub>
+  <sub>Quadro 62 - Coerência com o Diagrama de Classes </sub>
 </div>
 
 | Diagrama de Classes                                         | DER                                   |
@@ -2958,10 +2950,10 @@ No contexto deste projeto, o modelo relacional foi desenvolvido a partir dos req
 
 #### 3.6.3.1 Modelo Relacional
 
-Com base nos requisitos funcionais, nas regras de negócio e na modelagem conceitual definida nas etapas anteriores, foi elaborado o modelo relacional do sistema, contemplando as principais entidades, seus atributos e os relacionamentos necessários para garantir integridade e consistência dos dados. A Figura 28 apresenta a estrutura relacional proposta para o projeto.
+Com base nos requisitos funcionais, nas regras de negócio e na modelagem conceitual definida nas etapas anteriores, foi elaborado o modelo relacional do sistema, contemplando as principais entidades, seus atributos e os relacionamentos necessários para garantir integridade e consistência dos dados. A Figura 72 apresenta a estrutura relacional proposta para o projeto.
 
 <div align="center">
-  <sub>Figura 58 - Modelo Relacional</sub><br>
+  <sub>Figura 72 - Modelo Relacional</sub><br>
   <img src="../assets/programacao/modelorelacional.png" width="100%" alt="Modelo relacional do sistema representando as tabelas do banco de dados, seus atributos, chaves primárias, chaves estrangeiras e os relacionamentos entre competições, equipes, corredores, checkpoints, administradores e esteiras"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -3007,8 +2999,9 @@ Os relacionamentos entre as entidades foram definidos por meio de chaves primár
 ##### Constraints do modelo relacional
 
 As constraints do modelo relacional definem as regras de integridade que serão implementadas posteriormente no modelo físico. Elas indicam quais campos identificam unicamente cada registro, quais relacionamentos devem ser preservados entre as tabelas e quais valores precisam respeitar regras específicas do domínio do sistema.
+
 <div align="center">
-  <sub>Quadro 43 - Constraints do modelo relacional </sub>
+  <sub>Quadro 63 - Constraints do modelo relacional </sub>
 </div>
 
 | Tabela | Constraint | Campo(s) | Finalidade |
@@ -3272,7 +3265,7 @@ Além de exemplificar diferentes tipos de operações SQL, como `SELECT`, `UPDAT
 #### Q01 — `SELECT` com `AND` e `OR`
 
 <div align="center">
-  <sub>Quadro 44 - Consulta Q01</sub>
+  <sub>Quadro 64 - Consulta Q01</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                                                  |
@@ -3353,7 +3346,7 @@ A tabela demonstra que a consulta retorna registros apenas quando o checkpoint p
 #### Q02 — `SELECT` com `LIKE`, `AND` e `NOT`
 
 <div align="center">
-  <sub>Quadro 45 - Consulta Q02</sub>
+  <sub>Quadro 65 - Consulta Q02</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                     |
@@ -3428,7 +3421,7 @@ A consulta retorna somente corredores cujo nome começa com “A” e cujo statu
 #### Q03 — `UPDATE` com `AND` e `BETWEEN`
 
 <div align="center">
-  <sub>Quadro 46 - Consulta Q03</sub>
+  <sub>Quadro 66 - Consulta Q03</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                                      |
@@ -3510,7 +3503,7 @@ A tabela demonstra que a atualização ocorre apenas quando o checkpoint ainda n
 #### Q04 — `DELETE` com `AND` e `NOT`
 
 <div align="center">
-  <sub>Quadro 47 - Consulta Q04</sub>
+  <sub>Quadro 67 - Consulta Q04</sub>
 </div>
 
 | Atributo                   | Conteúdo                                                                                                                                                                           |
@@ -3583,7 +3576,7 @@ A exclusão ocorre somente quando o checkpoint pertence à competição analisad
 #### Q05 — `SELECT` com `JOIN`, `IN`, `BETWEEN` e agregação
 
 <div align="center">
-  <sub>Quadro 48 - Consulta Q05</sub>
+  <sub>Quadro 68 - Consulta Q05</sub>
 </div>
 
 | Atributo                    | Conteúdo                                                                                                           |
@@ -3690,7 +3683,7 @@ A consulta considera registros apenas quando a equipe pertence ao conjunto de eq
 #### Síntese da relação entre consultas e requisitos funcionais
 
 <div align="center">
-  <sub>Quadro 49 - Relação entre consultas SQL e requisitos funcionais</sub>
+  <sub>Quadro 69 - Relação entre consultas SQL e requisitos funcionais</sub>
 </div>
 
 | Consulta | Objetivo da consulta                                                       | Requisitos relacionados    |
@@ -3721,7 +3714,11 @@ Embora a aplicação seja disponibilizada como um sistema web completo, sua arqu
 
 Essa distinção permite que a mesma aplicação ofereça tanto interfaces prontas para utilização em campo quanto serviços reutilizáveis para integração, testes automatizados e futuras expansões da plataforma.
 
-Os principais domínios implementados pela WebAPI são apresentados no Quadro 39.
+Os principais domínios implementados pela WebAPI são apresentados no Quadro 70.
+
+<div align="center">
+  <sub>Quadro 70 - Domínios da WebAPI</sub>
+</div>
 
 | Domínio                 | Operações principais                                                        | Tipo       | Relação com o escopo                                                                                                          |
 | ----------------------- | --------------------------------------------------------------------------- | ---------- | ----------------------------------------------------------------------------------------------------------------------------- |
@@ -3735,6 +3732,10 @@ Os principais domínios implementados pela WebAPI são apresentados no Quadro 39
 | Relatórios e Exportação | Consolidação dos dados da competição e geração de arquivos XLSX             | REST + SSR | Disponibiliza indicadores, relatórios e exportações utilizados na análise pós-evento.                                         |
 | Painel Público          | Visualização dos dados de cada equipe por UUID                              | SSR        | Disponibiliza aos atletas e capitães um painel público atualizado periodicamente sem necessidade de autenticação.             |
 | Administradores         | Cadastro e gerenciamento de usuários administrativos                        | REST       | Gerencia os usuários autorizados a operar o sistema durante o evento.                                                         |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 Os domínios apresentados implementam diretamente os requisitos funcionais definidos na Seção 3.1.1. O gerenciamento das competições, equipes e atletas atende aos requisitos RF001, RF002 e RF003; a autenticação administrativa implementa o RF004; o fluxo de captura, validação e confirmação dos checkpoints contempla os requisitos RF005 ao RF009; os serviços responsáveis pela atualização dos rankings atendem aos requisitos RF010, RF011 e RF015; enquanto os módulos de encerramento da competição, geração de relatórios e exportação dos dados implementam os requisitos RF012, RF013 e RF014.
 
@@ -3848,6 +3849,10 @@ A operação de logout não realiza a invalidação do token no servidor. Ao enc
 
 #### 3.8.2.4 Justificativa da escolha e trade-offs
 
+<div align="center">
+  <sub>Quadro 71 - Justificativa da escolha e trade-offs </sub>
+</div>
+
 | Aspecto                | JWT (implementado)                                                                                                                                | Session ID em tabela                                                                 |
 | ---------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | Natureza               | **Stateless** — o servidor não mantém estado da sessão                                                                                            | **Stateful** — exige armazenamento e gerenciamento das sessões                       |
@@ -3855,6 +3860,10 @@ A operação de logout não realiza a invalidação do token no servidor. Ao enc
 | Revogação imediata     | Não suportada nativamente — um token permanece válido até sua expiração                                                                           | Sessões podem ser invalidadas imediatamente pela remoção do registro correspondente  |
 | Informações do usuário | O payload pode ser decodificado por qualquer cliente, pois utiliza codificação Base64URL, mas sua integridade é garantida pela assinatura digital | Os dados permanecem armazenados exclusivamente no servidor                           |
 | Overhead de banco      | Não há necessidade de consulta ao banco para validar o token                                                                                      | Geralmente exige consulta ao mecanismo de armazenamento da sessão em cada requisição |
+
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
 
 A utilização de JWT é adequada ao contexto do sistema **Red Bull 24H**, que possui apenas um perfil autenticado (**admin**) e é utilizado durante períodos específicos de operação correspondentes ao evento. A arquitetura **stateless** reduz a complexidade da infraestrutura, melhora a escalabilidade da aplicação e elimina a necessidade de gerenciamento centralizado de sessões, mantendo um nível de segurança compatível com o escopo do projeto.
 
@@ -3885,6 +3894,10 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 
 **Mapeamento de rotas por nível de acesso:**
 
+<div align="center">
+  <sub>Quadro 72 - Mapeamento de rotas por nível de acesso </sub>
+</div>
+
 | Rota | Método | Acesso | Descrição |
 |---|---|---|---|
 | `POST /auth/sessions` | POST | Público | Autenticação — geração de token |
@@ -3903,15 +3916,17 @@ O método `authService.validateToken(token)` é responsável por decodificar e v
 | `GET /ranking` | GET | Público | Ranking geral por equipe |
 | `GET /view/competitions/:id/ranking` | GET | Público | Ranking do paienl das equipes por competição (via UUID) |
 
+<div align="center">
+  <sup>Fonte: Elaborado pelos autores (2026).</sup>
+</div>
+
 **Responsabilidade da camada de back-end:**
 
 Toda operação de escrita (criação, atualização, exclusão) e acesso ao painel administrativo exige que o token JWT esteja presente no cabeçalho `Authorization: Bearer <token>` e seja validado pelo serviço antes de qualquer processamento. O front-end recebe apenas os dados necessários para renderização, sem receber informações de controle de acesso que possam ser manipuladas pelo cliente.
 
 ### 3.8.4. Estratégias de Resiliência
 
-*Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
-
-### Resiliência 
+#### Resiliência 
  
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
@@ -3970,7 +3985,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
  
  
 <div align="center">
-  <sub>Quadro 49 - Matriz de Rastreabilidade (RTM)</sub>
+  <sub>Quadro 73 - Matriz de Rastreabilidade (RTM)</sub>
  
  
 </div>
@@ -4036,13 +4051,13 @@ A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem r
 Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em **Node.js + TypeScript + Supabase**, seguindo arquitetura em camadas (Routes → Controllers → Services → Repositories) para garantir separação de responsabilidades e aderência aos princípios SOLID (Martin, 2002).
 
 <div align="center">
-  <sub>Figura 58 - Estrutura de pastas</sub><br>
+  <sub>Figura 73 - Estrutura de pastas</sub><br>
     <img src="../assets/programacao/estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 59 - Arquivo supabaseClient.ts</sub><br>
+  <sub>Figura 74 - Arquivo supabaseClient.ts</sub><br>
     <img src="../assets/programacao/pasta-supabaseClient.ts.png" width="100%" alt="Representação da pasta supabaseClient.ts do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4050,13 +4065,13 @@ Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em *
 **- Configuração do ambiente e gestão de dependências:** o arquivo `package.json` foi estruturado contendo as dependências de produção e de desenvolvimento, além de scripts padronizados de execução (`dev`, `build`, `start`, `test`, `test:e2e`, `test:unit`, `test:integration`), garantindo que qualquer membro da equipe consiga rodar o projeto e os testes de forma consistente. Foi configurado também o arquivo `.env` para gerenciamento seguro de variáveis sensíveis (URL e chave do Supabase, porta da aplicação, ambiente de execução), com um `.env.example` versionado no repositório para servir de referência, mantendo o arquivo real fora do controle de versão via `.gitignore`. Essa estrutura padroniza o setup local, evita o vazamento de credenciais e prepara o projeto para deploy em diferentes ambientes (desenvolvimento, teste e produção).
 
 <div align="center">
-  <sub>Figura 60 - Arquivo Package.json</sub><br>
+  <sub>Figura 75 - Arquivo Package.json</sub><br>
     <img src="../assets/programacao/pasta-package.json.png" width="100%" alt="Representação do package.json do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 61 - Representação do .env</sub><br>
+  <sub>Figura 76 - Representação do .env</sub><br>
     <img src="../assets/programacao/pasta-.env.png" width="100%" alt="Representação do .env do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4064,7 +4079,7 @@ Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em *
 **- Infraestrutura base:** servidor Express configurado, integração com Supabase, sistema de erros customizados (`ValidationError`, `NotFoundError`, `ConflictError`, `UnprocessableError`), middleware centralizado de tratamento de erros e helper `asyncHandler` para padronização do fluxo assíncrono.
 
 <div align="center">
-  <sub>Figura 62 - Arquivo AppError.ts</sub><br>
+  <sub>Figura 77 - Arquivo AppError.ts</sub><br>
     <img src="../assets/programacao/pasta-apperror.ts.png" width="100%" alt="Representação da pasta appError.ts do projeto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4091,19 +4106,19 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 **- Protótipo do OCR finalizado:** o fluxo de captura, extração e validação dos dados da esteira já está validado em protótipo funcional, com o funcionamento end-to-end definido (captura da imagem → processamento no back-end → persistência dos campos extraídos → validação humana). A solução será integrada ao servidor para garantir a persistência de logs de extração e auditoria (RN05), permitindo que o administrador revise registros e trate discrepâncias (RN06) diretamente via API. O comportamento atual está alinhado com os critérios de aceite da US09, restando a implementação das rotas de extração no back-end e a integração refinada com o módulo de Checkpoints na sprint 4.
 
 <div align="center">
-  <sub>Figura 63 - Adicionar imagem</sub><br>
+  <sub>Figura 78 - Adicionar imagem</sub><br>
     <img src="../assets/programacao/OCR-add-img.jpg" width="100%" alt="OCR: Representação da tela de adicionar imagem."><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 64 - Leitura da imagem</sub><br>
+  <sub>Figura 79 - Leitura da imagem</sub><br>
     <img src="../assets/programacao/OCR-leitura-img.jpg" width="100%" alt="OCR: Representação da tela de leitura da imagem."><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 <div align="center">
-  <sub>Figura 65 - Registro das informações</sub><br>
+  <sub>Figura 80 - Registro das informações</sub><br>
     <img src="../assets/programacao/OCR-registro.jpg" width="100%" alt="Representação do registro das informações da foto"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4111,7 +4126,7 @@ Para mais informações acesse a [Seção 3.5 — Protótipo de alta fidelidade]
 **- Desenvolvimento orientado a testes (TDD) em todos os módulos:** a equipe adotou a prática de **Test-Driven Development** durante toda a sprint, escrevendo primeiro os testes com **Jest** e **Supertest** para cada funcionalidade planejada, executando-os para confirmar que falhavam como esperado (fase *red* do ciclo) e somente então implementando os endpoints, services e repositories necessários para fazê-los passar (fase *green*), seguida da refatoração quando aplicável (fase *refactor*). Essa abordagem foi aplicada nos três níveis de teste — E2E, unitário e integração — garantindo que toda regra de negócio e contrato de API entregue na sprint nasceu a partir de um teste falho e, portanto, possui cobertura automatizada associada desde o primeiro commit.
 
 <div align="center">
-  <sub>Figura 66 - Testes jest e supertest</sub><br>
+  <sub>Figura 81 - Testes jest e supertest</sub><br>
     <img src="../assets/programacao/testes.jpg" width="100%" alt="Testes jest e supertest"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4156,29 +4171,29 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 **- Estrutura de pastas do front-end:** Infraestrutura de views e layout base: o motor de templates EJS foi configurado no app.ts, com express-ejs-layouts gerenciando um layout mestre (src/views/layouts/main.ejs) que injeta a sidebar de navegação e o wrapper de conteúdo em todas as telas autenticadas. Os assets estáticos (CSS, imagens e JavaScript) são servidos diretamente da pasta public/. Essa estrutura centraliza a identidade visual e evita duplicação de marcação entre as views.
 
-<div align="center"> <sub>Figura 67 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/view-estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas das views EJS"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 82 — Estrutura de views EJS</sub><br> <img src="../assets/programacao/view-estrutura-de-pastas.png" width="100%" alt="Estrutura de pastas das views EJS"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Sistema de design modular (CSS):** As folhas de estilo foram organizadas em módulos independentes — variables.css (design tokens de cor, tipografia e espaçamento alinhados ao protótipo de alta fidelidade), garantindo consistência visual e facilitando a manutenção e expansão para as telas restantes.
 
-<div align="center"> <sub>Figura 68 — Estrutura de pastas do CSS</sub><br> <img src="../assets/programacao/estrutura-css.png" width="100%" alt="Estrutura de pastas do public/css"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 83 — Estrutura de pastas do CSS</sub><br> <img src="../assets/programacao/estrutura-css.png" width="100%" alt="Estrutura de pastas do public/css"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Tela de login funcional (RF004, RN02, RN03):** Nesta sprint, reconheceu-se a necessidade de criar o protótipo de alta fidelidade da tela de login dos auditores, que não havia sido desenvolvido na sprint 3. A view auth/login.ejs foi implementada com formulário completo de autenticação, integrado ao endpoint POST /admin/login. Ao submeter, o app.js consome a API via fetch, persiste o accessToken retornado no sessionStorage e redireciona para /dashboard. Erros de autenticação são exibidos inline, sem recarregamento de página. A tela inclui toggle de visibilidade da senha e não depende do layout base (renderizada sem sidebar).
 
-<div align="center"> <sub>Figura 69 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 84 — Tela de login</sub><br> <img src="../assets/programacao/front-login.jpg" width="100%" alt="Tela de login do painel administrativo"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Endpoint de compatibilidade POST /admin/login:** Além da rota de API POST /auth/sessions já existente na sprint 3, foi adicionada a rota POST /admin/login em authRoutes.ts como ponto de entrada esperado pelo front-end, mapeada para o mesmo authController.createSession. A rota GET /admin/login renderiza a view SSR, e GET /logout limpa a sessão e redireciona para login.
 
 **- Sidebar de navegação persistente:** O partial partials/menu.ejs, incluído no layout base, renderiza a barra lateral com os links para todas as telas. O app.js ativa dinamicamente o item correspondente à rota atual via comparação com window.location.pathname, seguindo o comportamento definido no protótipo de alta fidelidade.
 
-<div align="center"> <sub>Figura 70 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 85 — Arquivo menu.ejs </sub><br> <img src="../assets/programacao/menu.ejs-pt1.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 71 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 86 — Arquivo menu.ejs</sub><br> <img src="../assets/programacao/menu.ejs-pt2.png" width="100%" alt="Código front-end da sidebar de navegação persistente"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Registro de checkpoint e atualização de ranking (RF008, RN04, RN05):** Foi implementado o fluxo de registro manual de checkpoint, conectado diretamente ao endpoint POST /checkpoints. O formulário coleta distância (km), pace e tempo total, valida os campos obrigatórios no cliente antes do envio e exibe feedback em tempo real (loading, sucesso e erro). Após um registro bem-sucedido, o painel dispara automaticamente uma consulta ao endpoint GET /competitions/:id/ranking/teams para atualizar o ranking sem recarregamento da página.
 
-<div align="center"> <sub>Figura 72 — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt1.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 87 — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt1.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt2.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 88 — Painel operacional: registro manual de checkpoint</sub><br> <img src="../assets/programacao/codigo-operationalpainel-pt2.png" width="100%" alt="Código da tela de registro manual de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **- Evolução do módulo de OCR:** além do protótipo inicial, foram implementadas melhorias significativas na robustez da extração. A principal entrega foi a detecção automática das regiões de interesse do display da esteira, permitindo que o sistema localize e segmente os campos de distância, pace e tempo total independentemente de variações de tamanho, ângulo ou iluminação da imagem capturada. Em paralelo, o banco de imagens de referência foi expandido para cobrir mais cenários reais do ambiente operacional, funcionando como base de testes e adaptação iterativa para aumentar a precisão da extração em condições adversas.
 
@@ -4221,27 +4236,27 @@ Nesta sprint final, o foco esteve na entrega da camada de autenticação/autoriz
 
 **Camada de Autenticação e Autorização (RF001, RF004, RN03):** Implementação completa do controle de acesso à área administrativa, com login de administrador, persistência de senha por meio de hash (sem armazenamento em texto plano), criação e controle de sessão e verificação de autorização por rota no backend. O acesso público ao painel da equipe via UUID foi preservado sem autenticação (US12), mantendo a separação entre área privada de operação e área pública de acompanhamento. O detalhamento técnico do fluxo está descrito na [Seção 3.8 — Autenticação, Autorização e Resiliência](#38).
 
-<div align="center"> <sub>Figura 73 — Frontend da tela login negando acesso</sub><br> <img src="../assets/login-negado.png" width="100%" alt="Representação do frontend da tela login negando acesso ao colocar um email ou senha inválidos"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 89 — Frontend da tela login negando acesso</sub><br> <img src="../assets/login-negado.png" width="100%" alt="Representação do frontend da tela login negando acesso ao colocar um email ou senha inválidos"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service de autenticação</sub><br> <img src="../assets/programacao/service-auth.png" width="100%" alt="Código da camada service referente à autenticação (geração/verificação do hash de senha) e o middleware de autorização por rota."><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 90 — Camada service de autenticação</sub><br> <img src="../assets/programacao/service-auth.png" width="100%" alt="Código da camada service referente à autenticação (geração/verificação do hash de senha) e o middleware de autorização por rota."><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Integração final do módulo de OCR:** conclusão do ciclo completo de captura → extração → conferência humana → persistência (RF005–RF007). O frontend de captura foi desenvolvido e integrado ao backend, e a precisão da extração dos campos foi reforçada com o apoio da API da Groq como camada de validação inteligente. Diferentemente de um OCR puramente textual, o modelo multimodal utilizado (Llama 4 Scout) recebe a própria imagem da esteira como fonte principal e o texto extraído pelo Tesseract.js apenas como apoio, retornando os campos de distância (km) e tempo de forma estruturada. Essa camada complementa o pipeline OpenCV + Tesseract.js já existente e aumenta a confiabilidade da leitura em condições adversas de imagem (variações de iluminação, ângulo e foco do display).
 
-<div align="center"> <sub>Figura 73 — Frontend OCR parte 1</sub><br> <img src="../assets/programacao/view-ocr.png" width="100%" alt="Frontend da OCR para tirar a foto"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 91 — Frontend OCR parte 1</sub><br> <img src="../assets/programacao/view-ocr.png" width="100%" alt="Frontend da OCR para tirar a foto"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Frontend OCR parte 2</sub><br> <img src="../assets/programacao/view-ocr2.png" width="100%" alt="Frontend da OCR após a foto ser tirada"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 92 — Frontend OCR parte 2</sub><br> <img src="../assets/programacao/view-ocr2.png" width="100%" alt="Frontend da OCR após a foto ser tirada"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada service referente à API do Groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 93 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada service referente à API do Groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada service referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 94 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada service referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Painel de TV para acompanhamento ao vivo (US12):** entrega de protótipo, backend e frontend da tela dedicada à exibição em monitores durante o evento, com atualização automática e consolidação das métricas agregadas da competição (pace médio geral, tempo de prova decorrido, quilometragem total e destaques por equipe). A interface foi projetada para leitura a distância, com fonte ampliada e alto contraste, e acesso público sem autenticação.
 
 Para visualizar o protótipo da Tela TV acesse [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
 
-<div align="center"> <sub>Figura 73 — Camada routes referente ao Painel TV</sub><br> <img src="../assets/programacao/routes-painelTV.png" width="100%" alt="Código da camada routes referente ao painel TV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 95 — Camada routes referente ao Painel TV</sub><br> <img src="../assets/programacao/routes-painelTV.png" width="100%" alt="Código da camada routes referente ao painel TV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Telas para Instagram:** entrega de protótipo, backend e frontend das telas voltadas à geração de conteúdo para divulgação nas redes sociais do evento, permitindo o compartilhamento de resultados e destaques da competição em formato adequado à plataforma.
@@ -4251,32 +4266,34 @@ Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — 
 
 **Tela de auditoria (RN05):** finalização da interface de log de auditoria, exibindo o histórico detalhado de cada checkpoint — administrador ou operador responsável pelo registro, método utilizado (manual ou OCR), timestamp exato e valores capturados. A rastreabilidade por método de entrada, já persistida pelo backend desde a sprint 3, passou a ser exposta em uma interface navegável e filtrável para auditoria durante e após a competição.
 
-<div align="center"> <sub>Figura 73 — Frontend da tela com log de auditoria</sub><br> <img src="../assets/programacao/view-log-auditoria.jpg" width="100%" alt="Representação da interface que apresenta o log de auditoria dos registros de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 96 — Frontend da tela com log de auditoria</sub><br> <img src="../assets/programacao/view-log-auditoria.jpg" width="100%" alt="Representação da interface que apresenta o log de auditoria dos registros de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Exportação de resultados em XLSX (RF013, RF014):** implementação do endpoint e da interface de acionamento para geração do arquivo XLSX consolidado ao encerramento da competição, contendo o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints, método de entrada, tempos parcial e total). Essa entrega substitui definitivamente a planilha manual utilizada hoje pela equipe da Red Bull na apuração oficial.
 
 
 
-<div align="center"> <sub>Figura 73 — View da tabela de informações exportada (atletas)</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 97 — View da tabela de informações exportada (atletas)</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — View da tabela de informações exportada (checkpoints)</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 98 — View da tabela de informações exportada (checkpoints)</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em XLSX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XLSX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 99 — Camada controller referente à exportação em XLSX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XLSX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
-<div align="center"> <sub>Figura 73 — Camada service referente à exportação em XLSX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XLSX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 100 — Camada service referente à exportação em XLSX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XLSX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Aviso de inconsistência (RN06):** implementação do alerta visual acionado quando há divergência entre os dados capturados via OCR e os valores esperados/corrigidos manualmente, reforçando a confiabilidade do processo de validação humana antes da persistência.
 
-<div align="center"> <sub>Figura 73 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 101 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Calculadora de descanso:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
 
-<div align="center"> <sub>Figura 73 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+<div align="center"> <sub>Figura 102 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 **Estabilização da suíte de testes:** consolidação e estabilização da suíte automatizada (E2E, unitário e integração), eliminando as colisões de dados únicos entre execuções identificadas como dívida técnica nas sprints anteriores e garantindo execução consistente e repetível.
+
+<div align="center"> <sub>Figura 103 — Registro da suite de testes</sub><br> <img src="../assets/programacao/suite-testes.jpeg" width="100%" alt="Representação da suite de testes 100%"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
 
 
 **Testes de usabilidade:** realização dos testes de usabilidade com usuários, cujos relatórios e resultados estão documentados na [Seção 5.2 — Testes de usabilidade](#52), fornecendo evidências para os ajustes finais de interface.
@@ -4337,7 +4354,7 @@ Além disso, os testes foram desenvolvidos de forma determinística, evitando de
 A camada de Service foi estabilizada do ponto de vista funcional e de cobertura no recorte automatizado da seção 5.1. O comando `npm test -- --coverage` utiliza a configuração de cobertura do Jest para medir os módulos cobertos integralmente pela suíte documentada, com `coverageThreshold` global de 100% para statements, branches, functions e lines. Assim, a execução falha automaticamente caso qualquer métrica do recorte fique abaixo de 100%.
 
 <div align="center">
-  <sub>Quadro 26 - Cobertura da Camada Service </sub>
+  <sub>Quadro 74 - Cobertura da Camada Service </sub>
 </div>
 
 | Métrica | Cobertura atingida | Meta |
@@ -4356,7 +4373,7 @@ A meta foi atingida com 100% dos testes passando e 100% de cobertura no recorte 
 ### Mapeamento CT → RN — Testes Unitários de Service
 
 <div align="center">
-  <sub>Quadro 27 - Mapeamento CT → RN dos Testes Unitários de Service </sub>
+  <sub>Quadro 75 - Mapeamento CT → RN dos Testes Unitários de Service </sub>
 </div>
 
 | Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) | Descrição |
@@ -4440,7 +4457,7 @@ As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar
 **Cobertura por endpoint:**
 
 <div align="center">
-  <sub>Quadro 28 - Legenda de Cenários de Teste </sub>
+  <sub>Quadro 76 - Legenda de Cenários de Teste </sub>
 </div>
 
 | Cenário | Descrição |
@@ -4455,7 +4472,7 @@ As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar
 </div>
 
 <div align="center">
-  <sub>Quadro 29 - Cobertura de Endpoints por Cenário </sub>
+  <sub>Quadro 77 - Cobertura de Endpoints por Cenário </sub>
 </div>
 
 | Endpoint | Método | 200/201 | 400/422 | 409 | 404 |
@@ -4543,7 +4560,7 @@ As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar
 **Painel geral — 10 suítes e2e, 20 grupos de endpoints cobertos:**
 
 <div align="center">
-  <sub>Quadro 30 - Painel Geral de Endpoints e Suítes de Teste </sub>
+  <sub>Quadro 78 - Painel Geral de Endpoints e Suítes de Teste </sub>
 </div>
 
 | Endpoint | Método | Arquivo de Teste |
@@ -4600,7 +4617,7 @@ Ran all test suites.
 **Resumo da Execução**
 
 <div align="center">
-  <sub>Quadro 31 - Resumo da Execução dos Testes </sub>
+  <sub>Quadro 79 - Resumo da Execução dos Testes </sub>
 </div>
 
 | Métrica | Resultado |
@@ -4652,7 +4669,7 @@ Durante a execução, foram testadas diferentes camadas e funcionalidades do sis
 
 
 <div align="center">
-  <sub>Figura X - Resultado da execução do comando `npm test`.</sub><br>
+  <sub>Figura 104 - Resultado da execução do comando `npm test`.</sub><br>
     <img src="../assets/programacao/execucao-dos-testes.png" width="700" alt="Testes jest e supertest"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4670,7 +4687,7 @@ npm test -- --coverage
 O relatório gerado permitiu analisar o percentual de código exercitado pelos testes automatizados em cada camada da aplicação.
 
 <div align="center">
-  <sub>Quadro 32 - Cobertura por Camada da Aplicação </sub>
+  <sub>Quadro 80 - Cobertura por Camada da Aplicação </sub>
 </div>
 
 | Camada / arquivo | Statements | Branches | Functions | Lines |
@@ -4706,7 +4723,7 @@ Além disso, o `coverageThreshold` global está configurado em 100%, garantindo 
 
 **Evidência**
 <div align="center">
-  <sub>Figura X - Relatório completo de cobertura gerado pelo Jest.</sub><br>
+  <sub>Figura 105 - Relatório completo de cobertura gerado pelo Jest.</sub><br>
     <img src="../assets/programacao/relatorio-cobertura-teste.png" width="100%" alt="Testes jest e supertest"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
@@ -4716,7 +4733,7 @@ Além disso, o `coverageThreshold` global está configurado em 100%, garantindo 
 Os testes automatizados implementados foram relacionados às respectivas regras de negócio e requisitos funcionais, garantindo consistência com a Matriz RF → RN → Endpoint (Seção 3.1.4) e com a Matriz de Rastreabilidade do Projeto (Seção 3.9).
 
 <div align="center">
-  <sub>Quadro 33 - Rastreabilidade dos Casos de Teste (CT → RN → RF) </sub>
+  <sub>Quadro 81 - Rastreabilidade dos Casos de Teste (CT → RN → RF) </sub>
 </div>
 
 | Caso de Teste (CT) | Arquivo de Teste | Regra de Negócio (RN) | Requisito Funcional (RF) |
@@ -4758,7 +4775,7 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 **Perfil dos participantes**
 
 <div align="center">
-  <sub>Quadro x - Perfil dos participantes </sub>
+  <sub>Quadro 82 - Perfil dos participantes </sub>
 </div>
 
 | # | Nome | Curso | Idade | Turma |
@@ -4788,6 +4805,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H5 - Prevenção de erros
 - H8 - Estética e design minimalista.
 
+<div align="center">
+  <sub>Quadro 83 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
+
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso com dificuldade | Teve dúvida inicial sobre por onde começar, pois encontrou várias competições já cadastradas; após alguns instantes, compreendeu que deveria criar uma nova. Cadastro concluído com sucesso. |
@@ -4814,6 +4835,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H1 - Visibilidade do status do sistema
 - H7 - Flexibilidade e eficiência de uso
 - H8 - Estética e design minimalista.
+
+<div align="center">
+  <sub>Quadro 84 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
@@ -4842,6 +4867,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H6 - Reconhecimento em vez de memorização; 
 - H9 - Ajudar usuários a reconhecer, diagnosticar e recuperar erros.
 
+<div align="center">
+  <sub>Quadro 85 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
+
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso | Concluiu a tarefa com sucesso na funcionalidade de OCR. |
@@ -4868,6 +4897,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H4 - Consistência e padrões; 
 - H6 - Reconhecimento em vez de memorização; 
 - H10 - Ajuda e documentação.
+
+<div align="center">
+  <sub>Quadro 86 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
 
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
@@ -4896,6 +4929,10 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 - H2 - Correspondência entre sistema e mundo real; 
 - H8 - Estética e design minimalista.
 
+<div align="center">
+  <sub>Quadro 87 - Observação dos usuários na realização dos testes de guerilha </sub>
+</div>
+
 | Tester | Resultado | Ocorrências |
 |--------|-----------|-------------|
 | Valter Lima | Sucesso | Acessou e visualizou o ranking sem dificuldades. |
@@ -4910,7 +4947,13 @@ Foram realizados testes de guerrilha com 5 participantes da Turma 25, aplicando 
 
 #### Síntese dos resultados dos testes
 
-Com base na execução das cinco tarefas propostas, foi possível observar a taxa de sucesso dos participantes em cada atividade. A Tabela XX apresenta um resumo consolidado dos resultados obtidos.
+Com base na execução das cinco tarefas propostas, foi possível observar a taxa de sucesso dos participantes em cada atividade. A Tabela 6 apresenta um resumo consolidado dos resultados obtidos.
+
+<div align="center">
+
+<sub>Tabela 6 – Taxa de sucesso por tarefa</sub>
+
+</div>
 
 | Tarefa | Sucesso | Sucesso com dificuldade | Não realizada |
 | ------ | ------- | ----------------------- | ------------- |
@@ -4929,6 +4972,10 @@ Observa-se que todas as tarefas puderam ser concluídas pela maioria dos partici
 #### Resumo das ocorrências (ordenado por prioridade de melhoria)
 
 As ocorrências identificadas foram classificadas conforme sua severidade, considerando o impacto na execução das tarefas: severidade 1 (cosmética), quando o problema não compromete a realização da tarefa; 2 (baixa), quando gera dificuldades, mas não impede sua conclusão; e 3 (alta), quando compromete significativamente a eficiência ou compreensão do fluxo pelo usuário.
+
+<div align="center">
+  <sub>Quadro 88 - Análise dos testes de guerrilha </sub>
+</div>
 
 | Prioridade | Tarefa | Tipo | Severidade | Resumo do ocorrido e melhoria proposta | Participantes |
 |------------|--------|------|------------|----------------------------------------|---------------|
@@ -4963,11 +5010,11 @@ Com o objetivo de avaliar a usabilidade da plataforma desenvolvida, foi aplicado
 
 A coleta das respostas foi realizada por meio de um formulário eletrônico elaborado no Google Forms ([link](https://docs.google.com/forms/d/e/1FAIpQLSfbogO73x2usq7xjncadyTzCvAgDskjZmJD1b7VFlcXzymP_w/viewform)), aplicado individualmente após a execução das tarefas propostas durante os testes de usabilidade. Participaram da avaliação sete usuários, que responderam ao questionário de forma independente imediatamente após utilizarem a plataforma.
 
-O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro XX.
+O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apresentado no Quadro 81.
 
 <div align="center">
 
-<sub>Quadro XX – Escala de respostas do questionário SUS</sub>
+<sub>Quadro 89 – Escala de respostas do questionário SUS</sub>
 
 </div>
 
@@ -4983,11 +5030,11 @@ O questionário SUS utiliza uma escala de concordância de 1 a 5, conforme apres
 <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-As dez afirmações apresentadas aos participantes estão descritas no Quadro XX.
+As dez afirmações apresentadas aos participantes estão descritas no Quadro 82.
 
 <div align="center">
 
-<sub>Quadro XX – Questões do questionário SUS</sub>
+<sub>Quadro 90 – Questões do questionário SUS</sub>
 
 </div>
 
@@ -5012,11 +5059,11 @@ Após a coleta das respostas, os dados foram consolidados em uma planilha eletr�
 
 Conforme a metodologia proposta por Brooke (1996), para as afirmações positivas (questões ímpares) foi subtraído 1 da resposta atribuída pelo participante, enquanto para as afirmações negativas (questões pares) a resposta foi subtraída de 5. Em seguida, a soma dos valores obtidos foi multiplicada por 2,5, resultando em uma pontuação final compreendida entre 0 e 100 pontos para cada participante.
 
-A Tabela XX apresenta as pontuações obtidas pelos participantes.
+A Tabela 7 apresenta as pontuações obtidas pelos participantes.
 
 <div align="center">
 
-<sub>Tabela XX – Pontuação SUS por participante</sub>
+<sub>Tabela 7 – Pontuação SUS por participante</sub>
 
 </div>
 
@@ -5041,20 +5088,20 @@ A aplicação do questionário SUS resultou em uma pontuação média de **80,71
 A análise das pontuações individuais também evidencia uma percepção consistente entre os participantes. Das sete avaliações realizadas, seis apresentaram pontuações entre **72,5 e 82,5 pontos**, enquanto um participante atribuiu a nota máxima de **100 pontos**, indicando uma experiência de uso extremamente positiva. Essa distribuição demonstra que a percepção favorável da usabilidade foi compartilhada pela maior parte dos avaliadores.
 
 <div align="center">
-  <sub>Figura X - Distribuição das respostas da Questão 7 do questionário SUS</sub><br>
+  <sub>Figura 106 - Distribuição das respostas da Questão 7 do questionário SUS</sub><br>
     <img src="../assets/design/questao7.png" width="100%" alt="Gráfico representando visualmente a distribuição das respostas da Questão 7 do questionário SUS"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-A Figura XX apresenta os resultados da questão **"Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente"**. Observa-se que **85,7% dos participantes concordaram totalmente** com a afirmação, enquanto **14,3% concordaram parcialmente**, não havendo respostas neutras ou discordantes. Esse resultado evidencia que os usuários perceberam a plataforma como intuitiva e de rápida aprendizagem, característica especialmente importante para o contexto operacional do evento Red Bull 24 Horas, no qual diferentes operadores podem utilizar o sistema durante a competição.
+A Figura 106 apresenta os resultados da questão **"Eu imagino que a maioria das pessoas aprenderia a usar este sistema rapidamente"**. Observa-se que **85,7% dos participantes concordaram totalmente** com a afirmação, enquanto **14,3% concordaram parcialmente**, não havendo respostas neutras ou discordantes. Esse resultado evidencia que os usuários perceberam a plataforma como intuitiva e de rápida aprendizagem, característica especialmente importante para o contexto operacional do evento Red Bull 24 Horas, no qual diferentes operadores podem utilizar o sistema durante a competição.
 
 <div align="center">
-  <sub>Figura X - Distribuição das respostas da Questão 8 do questionário SUS</sub><br>
+  <sub>Figura 107 - Distribuição das respostas da Questão 8 do questionário SUS</sub><br>
     <img src="../assets/design/questao8.png" width="100%" alt="Gráfico representando visualmente a distribuição das respostas da Questão 7 do questionário SUS"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-A Figura XX apresenta os resultados da questão **"Eu achei o sistema complicado de usar"**. Por se tratar de uma afirmação negativa, respostas de discordância representam uma avaliação positiva da usabilidade. Observa-se que **85,7% dos participantes discordaram parcialmente** da afirmação e **14,3% discordaram totalmente**, sem registros de respostas neutras ou concordantes. Esse comportamento reforça a percepção de que a plataforma apresenta uma navegação simples e um fluxo de utilização compreensível.
+A Figura 107 apresenta os resultados da questão **"Eu achei o sistema complicado de usar"**. Por se tratar de uma afirmação negativa, respostas de discordância representam uma avaliação positiva da usabilidade. Observa-se que **85,7% dos participantes discordaram parcialmente** da afirmação e **14,3% discordaram totalmente**, sem registros de respostas neutras ou concordantes. Esse comportamento reforça a percepção de que a plataforma apresenta uma navegação simples e um fluxo de utilização compreensível.
 
 Os resultados observados nessas questões refletem uma tendência identificada ao longo de todo o questionário SUS: os participantes avaliaram positivamente aspectos relacionados à facilidade de aprendizado, simplicidade de utilização, integração das funcionalidades e confiança durante o uso do sistema. Essas percepções estão alinhadas com o desempenho observado durante os testes de usabilidade, nos quais os usuários conseguiram concluir as tarefas propostas sem dificuldades significativas.
 
@@ -5187,7 +5234,7 @@ A percepção de valor desejada é a de uma solução que não apenas substitui 
 O Business Model Canvas é uma ferramenta de gestão estratégica que descreve, de forma visual e integrada, a lógica pela qual uma organização cria, entrega e captura valor, organizando o modelo de negócio em nove blocos interdependentes (Osterwalder; Pigneur, 2010). No contexto deste projeto, o canvas foi aplicado à solução desenvolvida para o Red Bull 24 Horas, evidenciando como a digitalização do registro de quilometragem se conecta às necessidades operacionais do time de Field Marketing da Red Bull e aos recursos, parcerias e custos necessários para viabilizá-la.
 
 <div align="center">
-  <sub>Figura X - Business Model Canvas</sub><br>
+  <sub>Figura 108 - Business Model Canvas</sub><br>
     <img src="../assets/negocios/business-model-canvas.png" 
     width="100%" alt="Template do business model canvas"><br>
       <sup>Fonte: Elaborado pelos autores (2026).</sup>
