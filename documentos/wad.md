@@ -235,7 +235,7 @@ A partir da análise do Value Proposition Canvas, observa-se que a solução pro
 
 ### 2.1.5. Matriz de Riscos do Projeto
 
-A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto (PMI, 2021).
+A Matriz de Riscos é uma ferramenta de gestão utilizada para identificar, analisar e priorizar eventos que possam impactar negativamente o desenvolvimento e a execução de um projeto. Por meio da avaliação da probabilidade de ocorrência e do nível de impacto de cada risco, torna-se possível classificá-los conforme sua criticidade e definir estratégias preventivas, corretivas ou de contingência, reduzindo incertezas e aumentando as chances de sucesso do projeto (Project Management Institute, 2021).
 
 No contexto deste projeto, a Matriz de Riscos é aplicada para antecipar possíveis desafios relacionados à implementação da solução de captura e processamento dos dados durante eventos esportivos da Red Bull 24 Horas. Considerando fatores técnicos, operacionais e humanos, a análise dos riscos permite estabelecer planos de resposta capazes de minimizar falhas na coleta, processamento e disponibilização das informações, garantindo maior confiabilidade, desempenho e continuidade operacional da solução proposta.
 
@@ -434,13 +434,13 @@ Amanda Azevedo tem 20 anos e é participante do Red Bull 24 Horas, integrando um
 
 ## 2.3. User Stories
 
-User stories são descrições curtas e objetivas de funcionalidades escritas sob a perspectiva do usuário final. Elas seguem geralmente o formato: “Como (papel/perfil), posso (ação/meta), para (benefício/razão)”, com foco no valor entregue e não em detalhes técnicos (Interaction Design Foundation, 2024). Esse modelo é amplamente utilizado em metodologias ágeis, como o Scrum, pois facilita a comunicação entre equipe de desenvolvimento e stakeholders, além de permitir a divisão dos requisitos em partes menores e testáveis.
+User stories são descrições curtas e objetivas de funcionalidades escritas sob a perspectiva do usuário final. Elas seguem geralmente o formato: “Como (papel/perfil), posso (ação/meta), para (benefício/razão)”, com foco no valor entregue e não em detalhes técnicos (Interaction Design Foundation, s.d.). Esse modelo é amplamente utilizado em metodologias ágeis, como o Scrum, pois facilita a comunicação entre equipe de desenvolvimento e stakeholders, além de permitir a divisão dos requisitos em partes menores e testáveis.
 
-A partir das user stories, torna-se necessário compreender quem são os usuários que estão sendo representados. Nesse contexto, entram as personas, que são representações fictícias baseadas em dados reais de usuários. Elas descrevem características como necessidades, objetivos, comportamentos e desafios, permitindo que a equipe tenha uma visão mais concreta do público-alvo (Nielsen Norman Group, 2024). Dessa forma, as decisões de design e desenvolvimento passam a ser guiadas por perfis realistas, garantindo maior alinhamento com as expectativas dos usuários e contribuindo para soluções mais eficazes e centradas na experiência.
+A partir das user stories, torna-se necessário compreender quem são os usuários que estão sendo representados. Nesse contexto, entram as personas, que são representações fictícias baseadas em dados reais de usuários. Elas descrevem características como necessidades, objetivos, comportamentos e desafios, permitindo que a equipe tenha uma visão mais concreta do público-alvo (Nielsen Norman Group, 2025). Dessa forma, as decisões de design e desenvolvimento passam a ser guiadas por perfis realistas, garantindo maior alinhamento com as expectativas dos usuários e contribuindo para soluções mais eficazes e centradas na experiência.
 
-Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (Tymoshchenko, 2023). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário. Por exemplo, um critério de aceitação pode ser: “Dado que o usuário adiciona um produto ao carrinho de compras (ambiente digital), quando ele acessa o carrinho, então o item deve ser exibido com o nome, quantidade e preço corretos”.
+Com as user stories definidas e as personas estabelecidas, é necessário garantir que as funcionalidades descritas estejam claras e possam ser validadas. Para isso, utilizam-se os critérios de aceitação, que são condições específicas, mensuráveis e verificáveis que determinam quando uma user story pode ser considerada concluída (Grace, 2026). Esses critérios reduzem ambiguidades, facilitam testes e garantem que o sistema desenvolvido atenda às expectativas do usuário. Por exemplo, um critério de aceitação pode ser: “Dado que o usuário adiciona um produto ao carrinho de compras (ambiente digital), quando ele acessa o carrinho, então o item deve ser exibido com o nome, quantidade e preço corretos”.
 
-Além dos critérios de aceitação, há mais uma bússola que norteia a equipe no momento de definir as user stories, garantindo qualidade e relevância ao projeto: os critérios INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable) (Ben Salem, 2023). De modo geral, cada US precisa ser independente, ou seja, não deve depender de outras para gerar valor; negociável, permitindo ajustes conforme o entendimento do projeto evolui; valiosa, entregando benefícios claros ao usuário; estimável, possibilitando que o time dimensione o esforço necessário e gerencie o cronograma de entregas; pequena, de modo que possa ser implementada em uma única iteração, facilitando a implementação e o acompanhamento; e testável, garantindo que seja possível verificar objetivamente se foi concluída com sucesso.
+Além dos critérios de aceitação, há mais uma bússola que norteia a equipe no momento de definir as user stories, garantindo qualidade e relevância ao projeto: os critérios INVEST (Independent, Negotiable, Valuable, Estimable, Small, Testable) (Credera, 2023). De modo geral, cada US precisa ser independente, ou seja, não deve depender de outras para gerar valor; negociável, permitindo ajustes conforme o entendimento do projeto evolui; valiosa, entregando benefícios claros ao usuário; estimável, possibilitando que o time dimensione o esforço necessário e gerencie o cronograma de entregas; pequena, de modo que possa ser implementada em uma única iteração, facilitando a implementação e o acompanhamento; e testável, garantindo que seja possível verificar objetivamente se foi concluída com sucesso.
 
 Sendo assim, por meio das user stories, mantém-se o foco no valor gerado ao usuário, além de orientar a priorização das tarefas e facilitar a comunicação entre stakeholders e desenvolvedores. Elas também servem como referência para a definição e compreensão dos requisitos funcionais e não funcionais do projeto, evidenciando as necessidades do usuário por meio de entregas objetivas. Além disso, contribuem para o planejamento iterativo, auxiliam na estimativa de esforço das atividades e permitem a validação contínua das funcionalidades por meio de critérios de aceitação, favorecendo a adaptação do produto conforme o feedback obtido ao longo do desenvolvimento.
 
@@ -694,6 +694,20 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 
 <div align="center">
+  <sub>Quadro 18 - User Story 16 </sub>
+</div>
+
+| Identificação            | US16 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Persona**              | Amanda Azevedo (Atleta) |
+| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso gerar templates visuais personalizados com meus dados de desempenho para compartilhar no Instagram, para divulgar minha participação e resultados nas redes sociais." |
+| **Critério de aceite 1** | CR1: O template deve exibir os dados reais de desempenho do atleta selecionado dentro da equipe acessada por UUID (maior KM, menor pace, desempenho por período). **Teste**: Dado que um atleta é selecionado na página pública da equipe e um template é escolhido, quando a página é renderizada, então os campos de destaque devem conter os dados reais da equipe e do atleta selecionado. |
+| **Critério de aceite 2** | CR2: O template deve permitir o download como imagem PNG. **Teste**: Dado que o template está renderizado na tela, quando o usuário clica em "Baixar PNG", então uma imagem PNG deve ser baixada contendo o layout visual completo. |
+| **Critério de aceite 3** | CR3: O upload da foto do atleta deve ser processado localmente sem envio ao servidor. **Teste**: Dado que o usuário seleciona uma foto no input de arquivo, quando a imagem é carregada, então ela deve ser exibida no círculo do template sem nenhuma requisição ao backend. |
+| Critérios INVEST         | Independente: Pode ser implementada sem depender de outras funcionalidades de compartilhamento. <br> Negociável: A quantidade e o layout dos templates podem ser ajustados. <br> Valorosa: Permite que atletas divulguem seus resultados nas redes sociais. <br> Estimável: O escopo de geração de templates é bem definido. <br> Pequena: Funcionalidade específica e isolada. <br> Testável: A renderização e o download podem ser verificados. |
+
+
+<div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
@@ -705,10 +719,10 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 
 ### 3.1.1. Requisitos Funcionais
 
-O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
 
 <div align="center">
-  <sub>Quadro 18 - Requisitos Funcionais </sub>
+  <sub>Quadro 19 - Requisitos Funcionais </sub>
 </div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
@@ -728,6 +742,8 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF013 | O sistema deve exportar os dados da competição em formato XLSX, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Concluído |
 | RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora.                                                  | Média      | Concluído |
+| RF016 | O sistema deve permitir a geração de templates visuais de destaques por equipe, acessados via URL pública com UUID, formatados para compartilhamento em redes sociais      | Baixa      | Concluído |
+| RF017 | O sistema deve exibir dados reais da equipe acessada por UUID e de seus atletas (maior KM, menor pace, períodos manhã/tarde/madrugada) nos templates de compartilhamento  | Baixa      | Concluído |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -736,7 +752,7 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 ### 3.1.1.1 Critérios de Aceite dos Requisitos Funcionais
 
 <div align="center">
-  <sub>Quadro 19 - Critérios de Aceite dos Requisitos Funcionais </sub>
+  <sub>Quadro 20 - Critérios de Aceite dos Requisitos Funcionais </sub>
 </div>
 
 | RF    | Critério de Aceite                                                                                                                                                                    |
@@ -756,6 +772,8 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo XLSX contendo checkpoints, timestamps e logs de validação.                 |
 | RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
 | RF015	| Dado que existam novos checkpoints consolidados, quando o intervalo máximo de atualização do painel público for atingido, então o sistema deve atualizar o ranking exibido às equipes.  |
+| RF016 | Dado que o operador ou atleta acesse a página pública de compartilhamento da equipe por UUID, quando selecionar um template e um atleta, então o sistema deve renderizar um template visual com os dados reais de desempenho da equipe e do atleta preenchidos |
+| RF017 | Dado que o template seja renderizado, quando o usuário clicar em "Baixar PNG", então o sistema deve gerar e baixar uma imagem PNG do template |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -763,10 +781,10 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio 
 
-No Quadro 20, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 21, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 20 - Regras de Negócio </sub>
+  <sub>Quadro 21 - Regras de Negócio </sub>
 </div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
@@ -789,6 +807,8 @@ No Quadro 20, são apresentadas as regras de negócio do sistema, as quais defin
 | RN16 | Os highlights pós-evento devem ser gerados automaticamente ao encerrar a competição, sem necessidade de configuração manual.                                                                                                      | RF012, RF014       |
 | RN17 | Os highlights devem incluir recordes nas categorias: individual (médias de troca de turno, km, pace e total de checkpoint), por equipe (total de km e trocas de turno; média de pace e tempo por turno) e por operador (total de checkpoints registrados de forma manual e por ocr)                       | RF014              |
 | RN18 | O cadastro da competição deve exigir obrigatoriamente nome, data e local válidos. | RF002 |
+| RN19 | Os templates de compartilhamento devem ser gerados no lado do cliente como imagem PNG, sem persistência de imagens no servidor | RF016 |
+| RN20 | O upload da foto do atleta deve ser processado localmente no navegador via FileReader, sem envio ao backend | RF016 |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -796,10 +816,10 @@ No Quadro 20, são apresentadas as regras de negócio do sistema, as quais defin
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
-Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 21), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
+Os requisitos não funcionais apresentados no Quadro 22 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 22), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
 
 <div align="center">
-  <sub>Quadro 21 - Requisitos Não Funcionais </sub>
+  <sub>Quadro 22 - Requisitos Não Funcionais </sub>
 </div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Status                      | Como atendido                                      |
@@ -843,7 +863,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 <div align="center">
 
-  <sub>Quadro 22 - Matriz RF → RN → Endpoint</sub>
+  <sub>Quadro 23 - Matriz RF → RN → Endpoint</sub>
 
 </div>
 
@@ -864,6 +884,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 | RF013 | RN15 | `/competitions/:id/export` | GET | Implementado | Permite exportar dados consolidados da competição para análise posterior. |
 | RF014 | RN16, RN17 | `/competitions/:id/reports` | GET | Implementado | Permite a geração de relatórios gerenciais e operacionais da competição. |
 | RF015 | RN09, RN13 | `/competitions/:id/ranking`; `/competitions/:id/ranking/teams`; `/competitions/:id/ranking/runners` | GET | Implementado | Retorna rankings por equipe e por atleta, ordenados conforme desempenho registrado. |
+| RF016 | RN19, RN20 | `/public/team/:uuid/share`; `/public/team/:uuid/share/template/:type` | GET | Implementado | Permite visualizar o grid de templates da equipe e renderizar templates com dados reais da equipe acessada por UUID. Rota pública acessível sem autenticação pela página da equipe. |
 
 <div align="center">
 
@@ -906,7 +927,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Responsabilidades
 
 <div align="center">
-  <sub>Quadro 25 - Responsabilidades das Camadas</sub>
+  <sub>Quadro 24 - Responsabilidades das Camadas</sub>
 </div>
 
 | Camada | Responsabilidade | O que não faz | Pasta do projeto |
@@ -927,7 +948,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Rastreabilidade
 
 <div align="center">
-  <sub>Quadro 26 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
+  <sub>Quadro 25 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
 </div>
 
 | Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
@@ -997,8 +1018,7 @@ A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os 
 O Diagrama de Casos de Uso é uma representação gráfica da Linguagem de
 Modelagem Unificada (UML) que descreve as funcionalidades de um sistema
 do ponto de vista de seus usuários, evidenciando as interações entre
-atores externos e os casos de uso disponíveis (BOOCH; RUMBAUGH;
-JACOBSON, 2006). No contexto deste projeto, o diagrama cumpre três
+atores externos e os casos de uso disponíveis (Booch; Rumbaugh; Jacobson, 2005). No contexto deste projeto, o diagrama cumpre três
 funções centrais: delimita o escopo do sistema ao explicitar quais
 funcionalidades estão dentro e fora de sua fronteira, comunica de forma
 visual as interações entre os atores e o sistema para todos os
@@ -1398,7 +1418,7 @@ As dependências entre as classes são representadas por setas tracejadas, indic
 
 Os diagramas de sequência UML apresentados modelam a comunicação entre as camadas da arquitetura da aplicação seguindo o fluxo Controller → Service → Repository → Banco de Dados, evidenciando a separação de responsabilidades no back-end. As mensagens síncronas representam operações que aguardam resposta imediata para continuidade do fluxo, enquanto mensagens assíncronas foram utilizadas em processos de maior latência, como o processamento OCR e atualização de dados em tempo quase real. Os retornos tracejados representam as respostas das operações executadas entre os componentes da aplicação e a persistência no banco de dados.
 
-O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PLANTUML, 2025).
+O PlantUML é uma ferramenta de código aberto que permite a criação de diagramas UML a partir de descrições textuais simples, eliminando a necessidade de ferramentas gráficas manuais. Por meio de uma sintaxe própria e intuitiva, o texto é interpretado e convertido automaticamente em imagens, o que favorece a legibilidade, o versionamento e a manutenção dos diagramas ao longo do ciclo de desenvolvimento do projeto. Os diagramas de sequência apresentados nesta seção foram elaborados utilizando essa abordagem, com o código-fonte escrito em formato .puml e a geração das imagens realizada pela plataforma disponível em plantuml.com (PlantUML, s.d.).
 
 O código-fonte dos diagramas em PlantUML pode ser consultado no documento [diagramas-sequencia-puml.md](./outros/diagramas-sequencia-puml.md), localizado na pasta `documentos/outros`. Esse arquivo reúne os blocos textuais utilizados para gerar as imagens apresentadas a seguir, permitindo que os diagramas sejam versionados, revisados e atualizados com maior facilidade.
 
@@ -1436,28 +1456,29 @@ O quarto diagrama ilustra o fluxo de criação de checkpoint (Fluxo 4). O operad
 
 ### 3.2.5. Diagrama de Atividades ou Estados (sprint 3)
 
-O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da imagem do visor da esteira pelo fiscal, seguida pelo envio da imagem para processamento. Após a extração dos dados, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
+O diagrama de atividades a seguir representa o fluxo de registro de checkpoint por meio do módulo de OCR da solução. O processo inicia com a captura da foto do painel pelo operador, seguida pelo envio da imagem ao servidor para processamento. Após a extração dos dados pelo servidor, o sistema realiza validações relacionadas ao atleta, à equipe e à competição antes de registrar o checkpoint e atualizar as informações exibidas aos usuários.
 
 <div align="center">
   <sub>Figura 16 - Diagrama de atividades do registro de checkpoint via OCR</sub><br>
-  <img src="../assets/programacao/diagrama-de-atividades.png" width="100%" alt="Diagrama de atividades do fluxo de registro de checkpoint via OCR, com validação, correção manual, persistência e atualização de ranking"><br>
+  <img src="../assets/programacao/diagrama-de-atividades.png" width="100%" alt="Diagrama de atividades do fluxo de registro de checkpoint via OCR, com validação, correção manual, persistência e atualização de ranking sendo atualizado"><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados extraídos pelo OCR apresentam inconsistências. Nessas situações, o sistema solicita correção manual e realiza uma nova validação antes de permitir o registro do checkpoint. Dessa forma, o processo contribui para a confiabilidade das informações utilizadas na atualização do ranking administrativo e do painel das equipes.
+O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados extraídos pelo OCR apresentam inconsistências. Nessas situações, o sistema solicita correção manual e realiza uma nova validação antes de permitir o registro do checkpoint. Desta forma, o processo contribui para a confiabilidade das informações utilizadas na atualização do ranking administrativo e do painel das equipes.
 
 ### 3.2.6. Diagrama de Implantação (sprints 4 e 5)
 
 O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
-
-O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó — o GitLab Pages — hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre inteiramente no lado do cliente (*client-side*), por meio da biblioteca Tesseract.js em conjunto com OpenCV.js, o que elimina a dependência de serviços externos de reconhecimento de imagem e mantém o dado sensível da captura sob controle da aplicação.
+ 
+O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó, o GitLab Pages, hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre no servidor de aplicação (*server-side*), por meio da biblioteca Tesseract.js em conjunto com pré-processamento de imagem pela biblioteca sharp, havendo ainda um mecanismo de extração assistida por modelo de linguagem (Groq) acionado como complemento. A imagem capturada no dispositivo cliente é enviada ao servidor, que executa a extração e devolve os dados para validação humana antes da persistência.
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
 
-```plantuml
+```
+plantuml
 @startuml diagrama-implantacao
-
+ 
 skinparam backgroundColor #FFFFFF
 skinparam node {
   BackgroundColor #F5F5F5
@@ -1476,85 +1497,91 @@ skinparam database {
   BackgroundColor #FFF2CC
   BorderColor #D6B656
 }
-
+ 
 node "Dispositivo do Operador / Capitão\n(Navegador Web)" as browser {
   artifact "Aplicação Web (HTML/CSS/JS)\nServida pelo Express (EJS)" as webapp
-  component "OCR Client-side\n(Tesseract.js + OpenCV.js)" as ocr
 }
-
-node "Servidor de Aplicação\n(Node.js 18 + TypeScript)" as server {
+ 
+node "Servidor de Aplicação\n(Node.js + TypeScript)" as server {
   artifact "Express App (app.ts)" as express
   component "Routes" as routes
   component "Controllers" as controllers
   component "Services" as services
+  component "OCR Server-side\n(Tesseract.js + sharp + Groq)" as ocr
   component "Repositories" as repositories
   component "Validators / Middlewares" as validators
 }
-
-node "Banco de Dados Gerenciado\n(Supabase — PostgreSQL)" as db {
-  database "Schema público\n(competicao, equipe, corredor,\ncheckpoint, administrador, audit_log)" as schema
+ 
+node "Banco de Dados Gerenciado\n(Supabase - PostgreSQL)" as db {
+  database "Schema público\n(competition, team, runner,\ncheckpoint, admin, ocr_extraction,\ncompetition_report)" as schema
 }
-
+ 
 node "GitLab Pages\n(Infraestrutura estática)" as pages {
   artifact "api-documentation.html\n(documentação da WebAPI)" as apidoc
 }
-
-browser --> server : "HTTP/REST\n(JSON — porta 3000)"
-repositories --> db : "Supabase JS SDK\n(HTTPS — porta 443)"
-browser ..> pages : "HTTPS (leitura apenas —\nacesso externo de revisores)"
-
+ 
+browser --> server : "HTTP/REST\n(JSON - porta 3000)"
+browser --> server : "Upload de imagem\n(multipart/form-data -\nPOST /ocr/extractions)"
+repositories --> db : "Supabase JS SDK\n(HTTPS - porta 443)"
+browser ..> pages : "HTTPS (leitura apenas -\nacesso externo de revisores)"
+ 
 express --> routes
 routes --> controllers
 controllers --> services
+services --> ocr
 services --> repositories
 services --> validators
-
+ 
 @enduml
 ```
-
+ 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
 O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. No fluxo de OCR implementado, o dispositivo captura ou seleciona a imagem do display da esteira e a envia ao servidor por `POST /ocr/extractions`; o processamento ocorre no back-end, com Tesseract.js e fallback via Groq quando configurado, retornando os dados extraídos para validação humana antes da persistência.
 
 O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `runners`, `checkpoints`, `ocr`, `ranking`, `reports`, `export`, `auth`, `admin` e `dashboard`). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON ou formulários HTML. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
-
+O nó **Dispositivo do Operador / Capitão** representa qualquer navegador moderno a partir do qual o operador acessa a interface administrativa ou o capitão de equipe consulta o painel público. A foto do painel é capturada pelo dispositivo e enviada ao servidor por meio de requisição `POST /ocr/extractions`, no formato *multipart/form-data*. O dispositivo cliente não executa o reconhecimento de imagem; sua função no fluxo OCR limita-se à captura e ao envio da foto.
+ 
+O nó **Servidor de Aplicação** executa a aplicação Node.js compilada em TypeScript, organizada na arquitetura em camadas descrita na seção 3.2.1. O ponto de entrada é `src/app.ts`, que inicializa o framework Express e registra os roteadores por domínio funcional (`competitions`, `teams`, `runners`/`athletes`, `checkpoints`, `ocr`, `ranking`, `export`, `reports`, `auth` e o roteador administrativo montado sob o prefixo `/admin`). É também neste nó que ocorre o processamento OCR, por meio do módulo de serviços `src/services/ocr*.ts` (Tesseract.js, pré-processamento com sharp e extração assistida por Groq). A comunicação entre cliente e servidor ocorre via HTTP/REST com payloads em JSON. Em ambiente de desenvolvimento local, o servidor opera na porta 3000; em produção, a porta é definida pela variável de ambiente `PORT`.
+ 
 O nó **Banco de Dados Gerenciado** corresponde à instância PostgreSQL hospedada pelo Supabase. O acesso é realizado exclusivamente pela camada Repository por meio do Supabase JS SDK, que encapsula as requisições HTTPS ao endpoint gerenciado. Nenhuma outra camada da aplicação detém acesso direto ao banco, garantindo o isolamento arquitetural descrito na seção 3.2.1. O esquema relacional é gerenciado pelos arquivos de migração DDL localizados em `documentos/outros/migrations/`, conforme detalhado na seção 3.6.3.
-
+ 
 O nó **GitLab Pages** hospeda a documentação estática da WebAPI (`documentos/outros/api-documentation.html`), publicada em `https://web-api-deploy-d81981.pages.git.inteli.edu.br/`. Este nó não integra o fluxo de dados operacional da aplicação; sua finalidade é exclusivamente facilitar a leitura e validação externa da documentação de endpoints sem necessidade de clonar o repositório.
+ 
+A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual do desenvolvimento: o mecanismo de autenticação e controle de sessão é executado pelo próprio servidor de aplicação, conforme descrito na seção 3.8, e não demanda um nó de infraestrutura separado.
 
-A ausência de um nó de autenticação dedicado nesta versão reflete o estado atual da sprint 4: o módulo de autenticação JWT está em desenvolvimento e será plenamente documentado no diagrama atualizado da sprint 5, conforme previsto na seção 3.8.
+
 
 ### 3.2.7. Padrões de Projeto Aplicados (sprints 3 a 5)
 
 Os padrões de projeto foram adotados ao longo do desenvolvimento com o objetivo de promover uma arquitetura organizada, modular e de fácil manutenção. A utilização desses padrões contribui para a separação de responsabilidades entre as camadas da aplicação, reduzindo o acoplamento entre componentes e facilitando a reutilização de código, a escalabilidade e a testabilidade das funcionalidades implementadas.
-
-Com a evolução do sistema e a integração de um front-end renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no back-end quanto no front-end, com base no código efetivamente implementado na versão atual do projeto.
-
-
+ 
+Com a evolução do sistema e a integração de um frontend renderizado no servidor, baseado no template engine EJS com suporte a layouts e parciais, a arquitetura da aplicação passou a contemplar também padrões relacionados à camada de apresentação. A documentação a seguir descreve os padrões aplicados tanto no backend quanto no frontend, com base no código efetivamente implementado na versão atual do projeto.
+ 
 ---
 ### MVC (Model-View-Controller)
-
+ 
 #### Categoria
-
+ 
 Arquitetural
-
+ 
 #### Definição
-
+ 
 O padrão Model-View-Controller (MVC) organiza a aplicação em camadas com responsabilidades distintas. Os Models representam os dados da aplicação, as Views são responsáveis pela apresentação das informações ao usuário e os Controllers coordenam o fluxo das requisições entre as diferentes camadas do sistema. No projeto, as Views são implementadas por meio de templates EJS renderizados no servidor pelo Express.
-
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, regras de negócio, acesso aos dados e elementos de interface poderiam ficar concentrados em uma única camada, aumentando o acoplamento e dificultando manutenção, testes e evolução da aplicação.
-
+ 
 #### Justificativa da adoção
-
-Com a implementação do front-end, tornou-se necessário estruturar a camada de apresentação de forma integrada ao back-end existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
-
+ 
+Com a implementação do frontend, tornou-se necessário estruturar a camada de apresentação de forma integrada ao backend existente. A utilização do MVC permitiu manter a separação de responsabilidades entre Controllers, Services, Repositories e Views, preservando a organização arquitetural da aplicação.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão pode ser observado nos seguintes arquivos e diretórios:
-
+ 
 - `src/app.ts`
 - `src/controllers/`
 - `src/services/`
@@ -1564,50 +1591,49 @@ O padrão pode ser observado nos seguintes arquivos e diretórios:
 - `src/routes/dashboardRoutes.ts`
 - `src/controllers/rankingController.ts`
 - `src/controllers/reportController.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 const competitions = await competitionService.findAll();
-
+ 
 res.render("dashboard/dashboard", {
-  title: "Dashboard — Red Bull 24H",
+  title: "Dashboard - Red Bull 24H",
   competitions,
   activeCompetition,
   currentPage: "dashboard",
   pageCSS: "/css/dashboard.css"
 });
 ```
-
+ 
 Nesse exemplo, o Controller obtém os dados por meio da camada de Service e encaminha as informações para uma View EJS responsável pela renderização da interface.
-
-
+ 
 ---
+ 
 
 ### Repository Pattern
-
+ 
 #### Categoria
-
+ 
 Estrutural / Arquitetural
-
+ 
 #### Definição
-
+ 
 O Repository Pattern é um padrão responsável por centralizar e abstrair o acesso aos dados da aplicação em uma camada específica de repositório. Esse padrão atua como intermediário entre a aplicação e o banco de dados, encapsulando operações de persistência, como consultas, inserções, atualizações e remoções de registros.
-
+ 
 Com a utilização desse padrão, as demais camadas da aplicação não precisam conhecer detalhes específicos relacionados à comunicação com o banco de dados, às consultas utilizadas ou à estrutura de persistência dos dados.
-
+ 
 #### Problema resolvido
-
+ 
 Sem a utilização desse padrão, operações relacionadas ao banco de dados ficariam distribuídas entre Controllers e Services, fazendo com que múltiplas camadas da aplicação fossem responsáveis tanto pela lógica de negócio quanto pelo acesso aos dados. Esse cenário aumentaria significativamente o acoplamento entre os componentes do sistema e dificultaria manutenção, reutilização de código e organização da arquitetura.
-
+ 
 #### Justificativa da adoção
-
-Esse padrão foi adotado porque o back-end possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do back-end, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
-
+ 
+Esse padrão foi adotado porque o backend possui diferentes operações de CRUD relacionadas às entidades da aplicação. Durante o desenvolvimento, tornou-se necessário separar a lógica responsável pelo acesso ao banco de dados das regras de negócio, permitindo que cada camada possuísse uma responsabilidade específica dentro da arquitetura do sistema. A centralização das operações de persistência em arquivos de repositório também contribui para melhorar a organização do backend, reduzir repetição de consultas, facilitar manutenção das operações de banco, reutilizar métodos de acesso aos dados e reduzir acoplamento entre as camadas da aplicação.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
+ 
 - `src/repositories/competitionRepository.ts`
 - `src/repositories/teamRepository.ts`
 - `src/repositories/runnerRepository.ts`
@@ -1616,56 +1642,55 @@ O padrão foi aplicado nos seguintes arquivos:
 - `src/repositories/reportRepository.ts`
 - `src/repositories/exportRepository.ts`
 - `src/repositories/authRepository.ts`
-- `src/repositories/treadmillRepository.ts`
 
 Esses arquivos concentram as operações responsáveis pela comunicação com o Supabase, incluindo consultas, criação de registros, atualizações e remoções de dados. Dessa forma, os Services não executam diretamente operações de banco de dados, utilizando os repositórios como intermediários para acesso às informações persistidas.
-
+ 
 #### Exemplo de código
-
+ 
 ```typescript
 async findById(id: number): Promise<Competition | null> {
   const supabase = getSupabaseClient();
-
+ 
   const { data, error } = await supabase
     .from("competition")
     .select("id, name, address, date, status, created_at")
     .eq("id", id)
     .maybeSingle();
-
+ 
   if (error) {
     throw error;
   }
-
+ 
   return data as unknown as Competition | null;
 }
 ```
-
+ 
 No exemplo apresentado, o método `findById` encapsula toda a lógica de consulta ao banco de dados dentro do repositório. Assim, outras camadas da aplicação não precisam conhecer detalhes relacionados ao Supabase ou à construção da consulta utilizada para buscar uma competição pelo identificador.
-
+ 
 ---
 
 ### Service Layer Pattern
-
+ 
 #### Categoria
-
+ 
 Arquitetural
-
+ 
 #### Definição
-
-O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do back-end, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
-
+ 
+O Service Layer é um padrão utilizado para centralizar regras de negócio em uma camada intermediária entre os Controllers e os Repositories. Essa camada é responsável por coordenar operações da aplicação, validar fluxos de execução e controlar comportamentos relacionados às funcionalidades do sistema antes da comunicação com a camada de persistência. A utilização desse padrão permite separar responsabilidades entre as diferentes partes do backend, evitando que Controllers assumam funções além do gerenciamento das requisições HTTP.
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, os Controllers seriam responsáveis simultaneamente pelo recebimento das requisições HTTP, execução das regras de negócio e manipulação de dados persistidos. Esse cenário geraria Controllers excessivamente grandes e acoplados, dificultando organização do código, reutilização de lógica e implementação de testes unitários. Além disso, diferentes regras de negócio poderiam acabar repetidas em múltiplos endpoints da aplicação.
-
+ 
 #### Justificativa da adoção
-
-Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do back-end. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
-
+ 
+Esse padrão foi adotado para garantir separação clara entre responsabilidades dentro do backend. No projeto, a camada de Service concentra regras relacionadas às entidades do sistema, incluindo validação de parâmetros, verificação de existência de registros, coordenação de operações, lançamento de exceções e controle de fluxos de execução. Dessa forma, os Controllers permanecem responsáveis apenas pelo recebimento das requisições e envio das respostas HTTP, enquanto os repositórios permanecem responsáveis exclusivamente pela persistência dos dados.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
+ 
 - `src/services/competitionService.ts`
 - `src/services/teamService.ts`
 - `src/services/runnerService.ts`
@@ -1675,58 +1700,55 @@ O padrão foi aplicado nos seguintes arquivos:
 - `src/services/rankingService.ts`
 - `src/services/exportService.ts`
 - `src/services/reportService.ts`
-- `src/services/treadmillService.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 async findById(idParam: unknown): Promise<Competition> {
   const id = validateCompetitionId(idParam);
   const competition = await repository.findById(id);
-
+ 
   if (!competition) {
     throw new NotFoundError("Competição não encontrada");
   }
-
+ 
   return competition;
 }
 ```
-
+ 
 Nesse exemplo, o Service realiza validação do identificador recebido, consulta o repositório e verifica se o registro existe antes de retornar a informação. Dessa forma, a lógica de negócio permanece isolada da camada responsável pelas requisições HTTP.
-
+ 
 ---
 
 ### Dependency Injection Pattern
-
+ 
 #### Categoria
-
+ 
 Criacional / Arquitetural
-
+ 
 #### Definição
-
-A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. No projeto, o padrão é implementado por meio de factory functions que recebem repositórios — e, em alguns casos, outros services — como parâmetros com valores padrão, retornando um objeto com os métodos do service. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade, especialmente na realização de testes automatizados.
-
+ 
+A Dependency Injection é um padrão utilizado para fornecer dependências externas para uma função, classe ou módulo, em vez de instanciá-las diretamente dentro da própria implementação. No projeto, o padrão é implementado por meio de factory functions que recebem repositórios, e, em alguns casos, outros services, como parâmetros com valores padrão, retornando um objeto com os métodos do service. Esse padrão reduz o acoplamento entre os componentes do sistema e permite maior flexibilidade, especialmente na realização de testes automatizados.
+ 
 #### Problema resolvido
-
+ 
 Sem a utilização desse padrão, os Services dependeriam diretamente das implementações concretas dos repositórios, fazendo com que a camada de negócio estivesse fortemente acoplada à camada de persistência. Além disso, esse cenário dificultaria a criação de testes automatizados, pois os testes dependeriam diretamente do banco de dados e das implementações reais da aplicação.
-
+ 
 #### Justificativa da adoção
-
+ 
 Esse padrão foi adotado devido à necessidade de testar regras de negócio de forma isolada, sem depender diretamente do banco de dados utilizado pelo sistema. A utilização da Injeção de Dependência permite substituir os repositórios reais por objetos simulados (mocks) durante os testes. Além disso, o padrão contribui para reduzir acoplamento entre camadas, facilitar manutenção, melhorar testabilidade e permitir maior flexibilidade na criação dos Services.
-
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos, todos seguindo a mesma convenção de factory function com parâmetro de dependência e valor padrão:
-
+ 
 - `src/services/competitionService.ts`
 - `src/services/checkpointService.ts`
 - `src/services/authService.ts`
 - `src/services/exportService.ts`
 - `src/services/rankingService.ts`
 - `src/services/reportService.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 // Injeção simples: repositório como dependência
 export function createCompetitionService(
@@ -1740,10 +1762,10 @@ export function createCompetitionService(
     // ...
   };
 }
-
+ 
 export const competitionService = createCompetitionService();
 ```
-
+ 
 ```typescript
 // Injeção múltipla: dois services como dependências
 export function createRankingService(
@@ -1752,41 +1774,40 @@ export function createRankingService(
 ) {
   return { ... };
 }
-
+ 
 export const rankingService = createRankingService();
 ```
-
+ 
 Em ambos os exemplos, as dependências são fornecidas como parâmetros com valores padrão. Durante a execução normal da aplicação, utiliza-se a implementação real; nos testes, podem ser fornecidos mocks para simular o comportamento esperado.
-
+ 
 ---
 
 ### Middleware Pattern
-
+ 
 #### Categoria
-
+ 
 Comportamental / Arquitetural
-
+ 
 #### Definição
-
+ 
 O Middleware Pattern consiste na utilização de funções intermediárias executadas durante o fluxo de processamento das requisições HTTP. Essas funções atuam entre o recebimento da requisição e a execução final do Controller, permitindo centralizar comportamentos compartilhados relacionados ao fluxo da aplicação, como tratamento de erros e encapsulamento de handlers assíncronos.
-
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, funcionalidades relacionadas ao tratamento de erros e controle de fluxo precisariam ser repetidas manualmente em diferentes Controllers e rotas do sistema. Isso aumentaria duplicidade de código e dificultaria manutenção da aplicação, especialmente no tratamento de exceções assíncronas.
-
+ 
 #### Justificativa da adoção
-
-Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no back-end e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
-
+ 
+Esse padrão foi adotado para centralizar o tratamento de erros assíncronos no backend e evitar repetição de blocos try/catch nos Controllers. A utilização de middlewares permite organizar melhor o fluxo das requisições HTTP e concentrar comportamentos compartilhados em funções reutilizáveis. Além disso, o padrão contribui para reduzir repetição de código, melhorar organização estrutural, centralizar tratamento de exceções e simplificar implementação das rotas.
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
-- `src/helpers/asyncHandler.ts` — encapsula handlers assíncronos, redirecionando erros para o middleware de tratamento de exceções
-- `src/middlewares/errorHandler.ts` — responsável pelo tratamento centralizado de erros, inspecionando o tipo da exceção via `instanceof AppError`
-
+ 
+- `src/helpers/asyncHandler.ts`, encapsula handlers assíncronos, redirecionando erros para o middleware de tratamento de exceções
+- `src/middlewares/errorHandler.ts`, responsável pelo tratamento centralizado de erros, inspecionando o tipo da exceção via `instanceof AppError`
 #### Exemplo de código
-
+ 
 ```typescript
 // src/helpers/asyncHandler.ts
 export function asyncHandler(
@@ -1797,7 +1818,7 @@ export function asyncHandler(
   };
 }
 ```
-
+ 
 ```typescript
 // src/middlewares/errorHandler.ts
 export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
@@ -1809,48 +1830,47 @@ export const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   res.status(500).json({ message: "Erro interno do servidor" });
 };
 ```
-
+ 
 #### Exemplo de uso nas rotas
-
+ 
 ```typescript
 // src/routes/competitionRoutes.ts
 router.post("/competitions", asyncHandler(competitionController.create));
 router.get("/competitions/:id", asyncHandler(competitionController.findById));
 ```
-
+ 
 Nesse exemplo, o `asyncHandler` encapsula o Controller responsável pela rota, garantindo que erros assíncronos sejam encaminhados corretamente para o `errorHandler`.
-
+ 
 ---
 
 ### Validation Layer Pattern
-
+ 
 #### Categoria
-
+ 
 Estrutural / Arquitetural
-
+ 
 #### Definição
-
+ 
 O Validation Layer Pattern consiste na criação de uma camada responsável pela validação dos dados recebidos pela aplicação antes de sua utilização nas regras de negócio. Essa camada garante que os dados recebidos pelos endpoints estejam estruturados corretamente antes de serem processados pelos Services e pela camada de persistência da aplicação, reduzindo inconsistências e aumentando a confiabilidade do sistema.
-
+ 
 #### Problema resolvido
-
+ 
 Sem a utilização desse padrão, validações poderiam ficar espalhadas entre Controllers e Services, aumentando duplicidade de código e dificultando manutenção das verificações realizadas pela aplicação. Além disso, dados inválidos poderiam avançar para outras camadas do sistema, aumentando risco de falhas durante a execução das operações.
-
+ 
 #### Justificativa da adoção
-
+ 
 Esse padrão foi adotado devido à necessidade de validar os dados recebidos pelos endpoints antes de sua utilização na lógica da aplicação. A centralização das validações em arquivos específicos permite reduzir repetição de código, organizar validações da aplicação, padronizar verificações realizadas e impedir envio de dados inválidos para os Services. Além disso, esse padrão contribui para manter os Services mais focados nas regras de negócio da aplicação.
-
+ 
 #### Aplicação no projeto
-
+ 
 O padrão foi aplicado nos seguintes arquivos:
-
+ 
 - `src/validators/competitionValidator.ts`
 - `src/validators/teamValidator.ts`
 - `src/validators/runnerValidator.ts`
 - `src/validators/checkpointValidator.ts`
-
 #### Exemplo de código
-
+ 
 ```typescript
 export function validateCreateCompetition(
   payload: unknown
@@ -1858,53 +1878,53 @@ export function validateCreateCompetition(
   if (!isObject(payload)) {
     throw new ValidationError("Payload inválido");
   }
-
+ 
   const name = readRequiredText(payload, "name");
   const date = readRequiredText(payload, "date");
   const address = readRequiredText(payload, "address");
-
+ 
   if (name.length > 100) {
     throw new ValidationError("name deve ter no máximo 100 caracteres");
   }
-
+ 
   if (address.length > 255) {
     throw new ValidationError("address deve ter no máximo 255 caracteres");
   }
-
+ 
   if (!isValidDate(date)) {
     throw new ValidationError("date deve ser uma data válida");
   }
-
+ 
   return { name, date, address };
 }
 ```
-
+ 
 Nesse exemplo, a função realiza validações relacionadas à estrutura, tipos, formatos e tamanhos dos campos esperados no payload antes que os dados sejam enviados para as regras de negócio da aplicação.
-
+ 
 ---
-
+ 
 ### Template View com Partial Views
-
+ 
 #### Categoria
-
+ 
 Estrutural / Apresentação
-
+ 
 #### Definição
-
-O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo back-end. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
-
+ 
+O Template View é um padrão que utiliza arquivos de template para gerar páginas HTML dinamicamente a partir dos dados fornecidos pelo backend. Em conjunto com Partial Views, permite reutilizar elementos visuais compartilhados entre diferentes páginas da aplicação, mantendo uma estrutura consistente e reduzindo duplicação de código.
+ 
 #### Problema resolvido
-
+ 
 Sem esse padrão, cada página precisaria replicar manualmente estruturas comuns da interface, como layout principal, navegação, estilos e scripts compartilhados, aumentando a duplicidade de código e dificultando manutenção.
-
+ 
 #### Justificativa da adoção
-
+ 
 Esse padrão foi adotado para permitir a renderização dinâmica das páginas utilizando EJS e reutilizar elementos compartilhados da interface por meio de layouts e parciais. Dessa forma, a estrutura visual da aplicação permanece centralizada e padronizada entre as diferentes telas do sistema.
-
+ 
 #### Aplicação no projeto
-
+ 
 O padrão pode ser observado nos seguintes arquivos:
-
+ 
 - `src/views/layouts/main.ejs`
 - `src/views/partials/menu.ejs`
 - `src/views/dashboard/`
@@ -1913,30 +1933,31 @@ O padrão pode ser observado nos seguintes arquivos:
 - `src/views/ranking/`
 - `src/views/reports/`
 - `src/views/teams/`
-
 #### Exemplo de código
-
+ 
 ```html
 <head>
   <link rel="stylesheet" href="/css/variables.css">
-
+ 
   <% if (locals.pageCSS) { %>
     <link rel="stylesheet" href="<%= locals.pageCSS %>">
   <% } %>
 </head>
-
+ 
 <body>
   <%- include('../partials/menu') %>
-
+ 
   <div class="content-wrapper">
     <%- body %>
   </div>
-
+ 
   <script src="/js/app.js"></script>
 </body>
 ```
-
+ 
 Nesse exemplo, o layout principal define a estrutura compartilhada da interface, enquanto o partial `menu.ejs` é reutilizado em diferentes páginas da aplicação, evitando duplicação de código e facilitando manutenção.
+ 
+
 
 ## 3.3. Wireframes (sprint 2)
 
@@ -2258,7 +2279,7 @@ Diferentemente das personas administrativas, Amanda interage exclusivamente com 
 | US13 | Visualizar ranking global | Acompanhamento da posição da equipe |
 | US14 | Visualizar métricas dos atletas | Desempenho individual e coletivo |
 | US15 | Utilizar calculadora de descanso | Apoio operacional ao atleta |
-| US16 | Compartilhar ranking | Compartilhamento simplificado da equipe |
+| US16 | Compartilhar resultados | Geração de templates Instagram com dados de desempenho |
 
 <div align="center"> 
   <sup>Fonte: Elaborado pelos autores (2026).</sup> 
@@ -2589,7 +2610,7 @@ Durante o processo de validação com o parceiro de projeto, foi identificado qu
 
 ### 3.6.1. Modelo Entidade-Relacionamento (ER) 
 
-O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (DEVMEDIA, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
+O Modelo Entidade-Relacionamento (MER), também conhecido como modelo ER, é uma modelagem conceitual utilizada para representar os objetos envolvidos em um domínio de negócio, suas características e os relacionamentos existentes entre eles (Joel, 2014). Essa modelagem é composta por entidades, atributos e relacionamentos, permitindo transformar informações em uma representação visual, o que facilita a compreensão e a validação da estrutura do sistema por diferentes integrantes da equipe, como desenvolvedores, Scrum Master, Product Owner e Stakeholders.
 
 De forma mais detalhada, as entidades, representadas por retângulos, correspondem aos elementos relevantes do domínio do sistema, como pessoas, objetos, locais, eventos ou conceitos. As entidades possuem atributos, representados por elipses, responsáveis por descrever suas características, como `name`, `email` e `cpf` na entidade Runner. Esses atributos são essenciais para o armazenamento de informações relevantes dentro do contexto do banco de dados. Os relacionamentos, por sua vez, são representados por losangos que contêm o verbo que descreve a interação entre as entidades, demonstrando as associações existentes entre elas.
 
@@ -2812,9 +2833,9 @@ A seguir, o Quadro 39 apresenta a rastreabilidade entre as entidades criadas com
 
 ### 3.6.2. Diagrama Entidade-Relacionamento (DER) (sprint 2)
 
-O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelagem de bancos de dados para representar, de forma visual, as entidades de um sistema, seus atributos e os relacionamentos existentes entre elas. Esse diagrama auxilia na organização e estruturação das informações que serão armazenadas no banco de dados, permitindo uma melhor compreensão da lógica do sistema antes de seu desenvolvimento (LUCID SOFTWARE INC., s.d.).
+O Diagrama Entidade-Relacionamento (DER) é uma ferramenta utilizada na modelagem de bancos de dados para representar, de forma visual, as entidades de um sistema, seus atributos e os relacionamentos existentes entre elas. Esse diagrama auxilia na organização e estruturação das informações que serão armazenadas no banco de dados, permitindo uma melhor compreensão da lógica do sistema antes de seu desenvolvimento (Lucid Software Inc., s.d.).
 
-A principal finalidade do DER é facilitar o planejamento do banco de dados, reduzindo erros de estrutura e garantindo que os dados sejam armazenados de maneira organizada e eficiente. Além disso, o diagrama contribui para a comunicação entre os membros da equipe, pois apresenta, de forma clara, como as informações se conectam dentro do sistema (DEVMEDIA, 2014).
+A principal finalidade do DER é facilitar o planejamento do banco de dados, reduzindo erros de estrutura e garantindo que os dados sejam armazenados de maneira organizada e eficiente. Além disso, o diagrama contribui para a comunicação entre os membros da equipe, pois apresenta, de forma clara, como as informações se conectam dentro do sistema (Joel, 2014).
 
 No contexto do projeto, o DER é importante para representar os elementos fundamentais da plataforma, como competições, equipes, corredores e registros de desempenho. A partir dele, é possível visualizar como essas entidades se relacionam, garantindo que o banco de dados suporte corretamente as funcionalidades do sistema, como cadastro de atletas, monitoramento em tempo real e atualização de rankings. Dessa forma, o DER contribui diretamente para a organização, integridade e funcionamento adequado do banco de dados do projeto.
 
@@ -2822,7 +2843,7 @@ No contexto do projeto, o DER é importante para representar os elementos fundam
 
 Para a construção do Diagrama Entidade-Relacionamento (ER) deste projeto, foi utilizada a notação Crow’s Foot. O nome Crow’s Foot (“pé de corvo”) vem do símbolo utilizado para representar relações do tipo “muitos”, que possui um formato semelhante às patas de um corvo. 
 
-Por meio dessa representação, é possível identificar de forma clara relações como um-para-um (1:1), um-para-muitos (1:N) e muitos-para-muitos (N:N). Além das cardinalidades, a notação também permite representar a opcionalidade e a obrigatoriedade dos relacionamentos por meio de símbolos específicos, como círculos e barras, indicando se a participação de uma entidade em um relacionamento é opcional ou obrigatória. Dessa forma, a modelagem do banco de dados se torna mais organizada e compreensível. (PERERA, 2026)
+Por meio dessa representação, é possível identificar de forma clara relações como um-para-um (1:1), um-para-muitos (1:N) e muitos-para-muitos (N:N). Além das cardinalidades, a notação também permite representar a opcionalidade e a obrigatoriedade dos relacionamentos por meio de símbolos específicos, como círculos e barras, indicando se a participação de uma entidade em um relacionamento é opcional ou obrigatória. Dessa forma, a modelagem do banco de dados se torna mais organizada e compreensível. (Perera, 2026)
 
 
 ### Glossário de cardinalidades  
@@ -2965,7 +2986,7 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 </div>
 
 #### 3.6.3.2 Modelo Físico
-Segundo a empresa de tecnologia AMAZON (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
+Segundo a Amazon Web Services (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
 
 Os scripts SQL de migração podem ser vistos aqui: [Diretório de Migrações](outros/migrations/).
 
@@ -3653,7 +3674,7 @@ Além disso, a correspondência entre os endpoints implementados e os requisitos
 
 Dessa forma, a WebAPI constitui um dos principais elementos estruturais da solução desenvolvida, estabelecendo uma interface consistente entre a camada de apresentação e a persistência dos dados, garantindo segurança no acesso às funcionalidades administrativas, padronização das operações realizadas pela aplicação e suporte aos fluxos operacionais críticos do sistema. Sua implementação permite que as informações registradas durante o evento sejam processadas de maneira confiável, auditável e alinhada aos objetivos de negócio definidos para o projeto.
 
-## 3.8. Autenticação, Autorização e Resiliência (sprint 5)
+## <a name="38"></a>3.8. Autenticação, Autorização e Resiliência (sprint 5)
 
 ### 3.8.1. Autenticação
 
@@ -3775,6 +3796,10 @@ Toda operação de escrita (criação, atualização, exclusão) e acesso ao pai
 
 ### 3.8.4. Estratégias de Resiliência
 
+*Descreva as estratégias aplicadas no tratamento de falhas de rede: timeout, retry com backoff exponencial, circuit breaker e idempotência em operações críticas (`PUT`, `DELETE`, operações de pagamento etc.).*
+
+### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+ 
 A resiliência da aplicação, no contexto operacional da competição Red Bull 24 Horas, refere-se à capacidade do sistema de manter a integridade dos registros de checkpoint e a previsibilidade do contrato HTTP exposto pelos endpoints mesmo diante de falhas transitórias de rede, de indisponibilidade momentânea de dependências externas ou de reenvio acidental de requisições. As condições reais de operação tornam essas garantias particularmente críticas: os iPads dos juízes operam em ambiente externo durante 24 horas contínuas, sujeitos a oscilações de conectividade móvel; o *backend* depende exclusivamente do PostgreSQL gerenciado pelo Supabase, acessado via HTTPS pela camada Repository conforme descrito nas seções 3.2.1 e 3.2.6; e o futuro motor de Reconhecimento Óptico de Caracteres (OCR), descrito como integração externa no fluxo OCR assíncrono da seção 3.2.1, introduzirá uma segunda dependência de rede no fluxo de captura de checkpoint.
 
 Esta seção descreve, organizadas segundo o seu *status* de entrega no MVP da Sprint 5, as quatro estratégias canônicas de resiliência consideradas no projeto: idempotência das operações `PUT` e `DELETE`, sustentada por contrato determinístico de erros via *middleware* central — **implementação consolidada**; e *timeout* explícito, *retry* com *backoff* exponencial e *circuit breaker* — **enquadradas como Trabalhos Futuros (seção 7)**, com justificativa técnica e contextual para cada exclusão. A ordenação adotada — primeiro idempotência e contrato de erros, somente depois *timeout*, *retry* e *circuit breaker* — segue a recomendação implícita da RFC 9110 (HTTP Semantics, IETF, 2022), em seu §9.2.2: a aplicação de *retry* sobre métodos não-idempotentes é, na ausência de mecanismos complementares como o cabeçalho `Idempotency-Key`, fonte ativa de inconsistência em vez de resiliência. Por essa razão, a entrega do MVP consolida primeiro a garantia de idempotência e o determinismo do contrato HTTP, condição sem a qual a introdução posterior dos mecanismos ativos de tolerância seria arquiteturalmente insegura.
@@ -3823,16 +3848,18 @@ A introdução de *circuit breaker* tornar-se-á efetivamente útil quando o mot
 
 A consolidação apresentada nesta seção mantém coerência direta com a seção 3.7, ao explicitar o `errorHandler` e a hierarquia `AppError` como os mecanismos centrais de tradução do estado interno em códigos HTTP previsíveis, e com a seção 3.2.1, ao alocar cada estratégia futura ao seu ponto natural na arquitetura em camadas — Repository para *timeout* e *retry* sobre o Supabase, Service para *circuit breaker* sobre o motor OCR. As estratégias enquadradas como Trabalho Futuro são candidatas explícitas à seção 7 deste documento, sem que a sua ausência atual comprometa as garantias contratuais já entregues no MVP: a idempotência REST das operações de atualização e remoção e o contrato determinístico de erros do *middleware* central são, em conjunto, a fundação que tornará segura a introdução posterior dos mecanismos ativos de tolerância a falhas.
 
-## 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
-
+### 3.9. Matriz de Rastreabilidade (RTM) (sprints 3 a 5)
+ 
 A Matriz de Rastreabilidade (Requirements Traceability Matrix – RTM) tem como objetivo garantir a rastreabilidade completa entre as necessidades dos usuários, os requisitos funcionais, as regras de negócio, os endpoints implementados, as telas do sistema, os testes executados e as evidências geradas durante o desenvolvimento. Dessa forma, é possível verificar que cada funcionalidade implementada possui correspondência com uma necessidade identificada, uma regra de negócio associada, um mecanismo de implementação e uma forma de validação.
-
+ 
+ 
 A rastreabilidade contribui para a manutenção da consistência entre os artefatos do projeto, reduzindo ambiguidades, facilitando processos de validação e testes, além de permitir a identificação rápida de impactos causados por alterações nos requisitos ao longo das sprints.
-
+ 
+ 
 <div align="center">
-
   <sub>Quadro 49 - Matriz de Rastreabilidade (RTM)</sub>
-
+ 
+ 
 </div>
 
 | Persona | RF | RN | Endpoint | Tela | Arquivo de Teste (real) | Evidência |
@@ -3840,16 +3867,22 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Marina Costa | RF001 | RN03 | POST /competitions | Cadastro de Competição | competitionService.spec.ts | Competição criada com sucesso e persistida no banco |
 | Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
 | Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/runners | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
+| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
 | Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
-| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto da Esteira | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
+| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
+| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
 | Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
-| Marina Costa | RF007 | RN05, RN06, RN12 | PATCH /ocr/extractions/:extractionId | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados em log |
+| Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
+| Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
 | Marina Costa | RF008 | RN04, RN05 | POST /checkpoints | Registro Manual | checkpointService.spec.ts | Checkpoint registrado com sucesso |
 | Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
 | Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
 | Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/runners | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
+| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
 | Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
 | Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
@@ -3858,11 +3891,23 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
 | Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
+ 
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
 
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
+ 
 <div align="center">
-
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
-
+ 
+ 
 </div>
 
 A matriz apresentada demonstra que todos os fluxos centrais do sistema possuem rastreabilidade entre as necessidades das personas, os requisitos definidos, as regras de negócio estabelecidas, os endpoints implementados, as interfaces projetadas e os mecanismos de validação utilizados durante o desenvolvimento. Dessa forma, garante-se maior controle sobre a evolução da solução e alinhamento entre os artefatos produzidos ao longo das sprints.
@@ -4053,7 +4098,90 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 ## 4.3. Versão final da aplicação web (sprint 5)
 
-*Descreva e ilustre aqui o desenvolvimento da versão final do sistema web, com foco em refatorações, correções finais e na camada de autenticação/autorização entregue. Utilize prints de tela para ilustrar. Indique obrigatoriamente: (a) o que foi refinado ou adicionado desde a sprint 4, (b) pendências remanescentes, (c) dificuldades técnicas enfrentadas.*
+### (a) O que foi refinado ou adicionado desde a sprint 4
+
+Nesta sprint final, o foco esteve na entrega da camada de autenticação/autorização, no fechamento dos fluxos operacionais críticos para o evento e na estabilização geral do sistema, como a captura por OCR, o desenvolvimento de templates para a divulgação do evento após a competição e, por fim, de testes com pessoas reais para validar o fluxo do sistema, consolidando a versão final da aplicação.
+
+
+**Camada de Autenticação e Autorização (RF001, RF004, RN03):** Implementação completa do controle de acesso à área administrativa, com login de administrador, persistência de senha por meio de hash (sem armazenamento em texto plano), criação e controle de sessão e verificação de autorização por rota no backend. O acesso público ao painel da equipe via UUID foi preservado sem autenticação (US12), mantendo a separação entre área privada de operação e área pública de acompanhamento. O detalhamento técnico do fluxo está descrito na [Seção 3.8 — Autenticação, Autorização e Resiliência](#38-autenticação-autorização-e-resiliência-sprint-5).
+
+<div align="center"> <sub>Figura 73 — Frontend da tela login negando acesso</sub><br> <img src="../assets/login-negado.png" width="100%" alt="Representação do frontend da tela login negando acesso ao colocar um email ou senha inválidos"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service de autenticação</sub><br> <img src="../assets/programacao/service-auth.png" width="100%" alt="Código da camada service referente à autenticação (geração/verificação do hash de senha) e o middleware de autorização por rota."><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Integração final do módulo de OCR:** conclusão do ciclo completo de captura → extração → conferência humana → persistência (RF005–RF007). O frontend de captura foi desenvolvido e integrado ao backend, e a precisão da extração dos campos foi reforçada com o apoio da API da Groq como camada de validação inteligente. Diferentemente de um OCR puramente textual, o modelo multimodal utilizado (Llama 4 Scout) recebe a própria imagem da esteira como fonte principal e o texto extraído pelo Tesseract.js apenas como apoio, retornando os campos de distância (km) e tempo de forma estruturada. Essa camada complementa o pipeline OpenCV + Tesseract.js já existente e aumenta a confiabilidade da leitura em condições adversas de imagem (variações de iluminação, ângulo e foco do display).
+
+<div align="center"> <sub>Figura 73 — Frontend OCR parte 1</sub><br> <img src="../assets/programacao/view-ocr.png" width="100%" alt="Frontend da OCR para tirar a foto"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Frontend OCR parte 2</sub><br> <img src="../assets/programacao/view-ocr2.png" width="100%" alt="Frontend da OCR após a foto ser tirada"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente à API do Groq</sub><br> <img src="../assets/programacao/service-groq.png" width="100%" alt="Código da camada srvice referente à API do groq"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente ao OCR</sub><br> <img src="../assets/programacao/service-ocr.png" width="100%" alt="Código da camada srvice referente ao funcionamento do OCR"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Painel de TV para acompanhamento ao vivo (US12):** entrega de protótipo, backend e frontend da tela dedicada à exibição em monitores durante o evento, com atualização automática e consolidação das métricas agregadas da competição (pace médio geral, tempo de prova decorrido, quilometragem total e destaques por equipe). A interface foi projetada para leitura a distância, com fonte ampliada e alto contraste, e acesso público sem autenticação.
+
+Para visualizar o protótipo da Tela TV acesse [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
+
+<div align="center"> <sub>Figura 73 — Camada routes referente ao Painel TV</sub><br> <img src="../assets/programacao/routes-painelTV.png" width="100%" alt="Código da camada routes referente ao painel TV"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Telas para Instagram:** entrega de protótipo, backend e frontend das telas voltadas à geração de conteúdo para divulgação nas redes sociais do evento, permititindo o compartilhamento de resultados e destaques da competição em formato adequado à plataforma.
+
+Para visualizar o protótipo dos templates de instagram acesse [Seção 3.5 — Protótipo de alta fidelidade](#prototipo-alta-fidelidade)
+
+
+**Tela de auditoria (RN05):** finalização da interface de log de auditoria, exibindo o histórico detalhado de cada checkpoint — administrador ou operador responsável pelo registro, método utilizado (manual ou OCR), timestamp exato e valores capturados. A rastreabilidade por método de entrada, já persistida pelo backend desde a sprint 3, passou a ser exposta em uma interface navegável e filtrável para auditoria durante e após a competição.
+
+<div align="center"> <sub>Figura 73 — Frontend da tela com log de auditoria</sub><br> <img src="../assets/programacao/view-log-auditoria.jpg" width="100%" alt="Representação da interface que apresenta o log de auditoria dos registros de checkpoint"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Exportação de resultados em XLSX (RF013, RF014):** implementação do endpoint e da interface de acionamento para geração do arquivo XLSX consolidado ao encerramento da competição, contendo o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints, método de entrada, tempos parcial e total). Essa entrega substitui definitivamente a planilha manual utilizada hoje pela equipe da Red Bull na apuração oficial.
+
+
+
+<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export1.jpg" width="100%" alt="Representação da tabela com as informações dos atletas após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — View da tabela de inforamções exportada</sub><br> <img src="../assets/programacao/view-export2.jpg" width="100%" alt="Representação da tabela com as informações dos checkpoints após a exportação"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada controller referente à exportação em XSLX</sub><br> <img src="../assets/programacao/controller-export.png" width="100%" alt="Código da camada controller referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+<div align="center"> <sub>Figura 73 — Camada service referente à exportação em XSLX</sub><br> <img src="../assets/programacao/service-export.png" width="100%" alt="Código da camada service referente à exportação em XSLX"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Aviso de inconsistência (RN06):** implementação do alerta visual acionado quando há divergência entre os dados capturados via OCR e os valores esperados/corrigidos manualmente, reforçando a confiabilidade do processo de validação humana antes da persistência.
+
+<div align="center"> <sub>Figura 73 — View aviso de inconsistência</sub><br> <img src="../assets/programacao/aviso-inconsistencia.jpg" width="100%" alt="Representação do frontend do Pop-up com o aviso de inconsistência"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+
+**Calculadora de descanso e gráfico de performance do atleta:** conclusão da lógica de cálculo do tempo estimado de descanso e da alimentação do gráfico de evolução na tela do atleta, pendências herdadas da sprint 4, agora finalizadas.
+
+<div align="center"> <sub>Figura 73 — Frontend da calculadora de descanso funcionando</sub><br> <img src="../assets/programacao/calculadora-descanso.jpg" width="100%" alt="Representação do frontend da calculadora de descanso"><br> <sup>Fonte: Elaborado pelos autores (2026).</sup> </div>
+
+**Estabilização da suíte de testes:** consolidação e estabilização da suíte automatizada (E2E, unitário e integração), eliminando as colisões de dados únicos entre execuções identificadas como dívida técnica nas sprints anteriores e garantindo execução consistente e repetível.
+
+
+**Testes de usabilidade:** realização dos testes de usabilidade com usuários, cujos relatórios e resultados estão documentados na [Seção 5.2 — Testes de usabilidade](#52-testes-de-usabilidade-sprint-5), fornecendo evidências para os ajustes finais de interface.
+
+
+
+### (b) Pendências remanescentes
+Todas as funcionalidades previstas no MVP definido pelo TAP foram entregues e todas as pendências herdadas da sprint 4, como a calculadora de descanso e refinamento do OCR, foram concluídas nesta sprint. As pendências remanescentes restringem-se a itens fora do escopo do MVP e a melhorias incrementais:
+
+**Refinamentos de UX apontados nos testes de usabilidade:** ajustes pontuais de interface identificados durante os testes com usuários, pouco intuitivas ou sem funcionalidade direta com o escopo do projeto, registrados como melhorias futuras na [Seção 7 — Conclusões e trabalhos futuros](#c7).
+
+
+**Evolução contínua do OCR:** embora o módulo esteja integrado e funcional, a precisão da extração pode ser continuamente aprimorada com a expansão do banco de imagens de referência e novos cenários de teste do ambiente real do evento.
+
+### (c) Dificuldades técnicas
+
+**Persistência segura de credenciais e controle de sessão:** a implementação da autenticação exigiu atenção à escolha e parametrização do algoritmo de hash, ao armazenamento seguro da sessão e à garantia de que a verificação de autorização ocorresse sempre no backend, nunca confiando no frontend como fonte de verdade. O equilíbrio entre segurança e a restrição do TAP — que não previa autenticação de usuários no escopo original — exigiu manter o login restrito à área administrativa, preservando o acesso público por UUID.
+
+**Integração de uma camada externa multimodal (API da Groq) ao pipeline de OCR:** combinar o processamento local existente (OpenCV + Tesseract.js) com uma chamada externa a um modelo de visão exigiu tratar latência de rede, fluxo de fallback (garantindo que a extração não dependesse exclusivamente do serviço externo), normalização das respostas, incluindo a conversão do separador decimal de vírgula para ponto, e a consolidação dos resultados das duas fontes, assegurando que a extração permanecesse confiável mesmo diante de variações de imagem.
+
+**Estabilização da suíte de testes em ambiente com banco real:** a eliminação definitiva das colisões de dados únicos entre execuções, arrastada desde a sprint 3, demandou padronizar a geração de dados descartáveis por execução e isolar o estado entre os testes, assegurando que a suíte completa rodasse de forma determinística.
 
 # <a name="c5"></a>5. Testes
 
@@ -4823,7 +4951,7 @@ Os objetivos estratégicos abrangem substituir o fluxo manual de apuração por 
 
 ## 6.2 Análise de Mercado
 
-O projeto está inserido no contexto do Red Bull 24 Horas, desafio esportivo de resistência e experiência de marca em que equipes de corredores se revezam em esteiras durante 24 horas, com o objetivo de acumular a maior quilometragem possível. Mais do que uma competição de corrida, o evento funciona como uma ativação esportiva da Red Bull voltada à comunidade running, combinando performance, estratégia coletiva, engajamento do público e produção de conteúdo em torno da marca. A edição de 2025 evidencia essa proposta ao reunir running crews em seletivas nacionais e em uma final com equipes mistas de 16 atletas, revezamento contínuo e forte componente de torcida, superação e colaboração (ITATIAIA, 2025).
+O projeto está inserido no contexto do Red Bull 24 Horas, desafio esportivo de resistência e experiência de marca em que equipes de corredores se revezam em esteiras durante 24 horas, com o objetivo de acumular a maior quilometragem possível. Mais do que uma competição de corrida, o evento funciona como uma ativação esportiva da Red Bull voltada à comunidade running, combinando performance, estratégia coletiva, engajamento do público e produção de conteúdo em torno da marca. A edição de 2025 evidencia essa proposta ao reunir running crews em seletivas nacionais e em uma final com equipes mistas de 16 atletas, revezamento contínuo e forte componente de torcida, superação e colaboração (Itatiaia, 2025).
 
 Nesse cenário, a solução desenvolvida tem como foco aumentar a eficiência operacional e a confiabilidade da apuração do evento. Atualmente, o registro de quilometragem, pace, tempo e checkpoints depende de anotações manuais realizadas por operadores durante uma operação contínua e de alta pressão, o que aumenta o risco de erros, retrabalho e inconsistências nos resultados. O sistema proposto substitui parte desse fluxo por uma plataforma web com captura de dados via OCR, validação humana, registro de checkpoints, visualização de métricas e exportação de relatórios, mantendo a supervisão operacional e ampliando a rastreabilidade dos dados.
 
@@ -4831,9 +4959,9 @@ A proposta de valor do projeto está em transformar uma etapa crítica da experi
 
 ### 6.2.1 Visão Geral do Setor
 
-O setor analisado corresponde à interseção entre eventos esportivos de corrida, experiências de marca e tecnologia para gestão operacional de eventos. No caso do Red Bull 24 Horas, a corrida não é apresentada apenas como uma prática esportiva individual, mas como uma experiência coletiva organizada em torno de running crews, estratégia de equipe, resistência física e envolvimento do público. A etapa de Belo Horizonte da temporada de 2025, por exemplo, reuniu quatro running crews locais, organizadas em duas equipes de 16 atletas, em uma disputa de 24 horas de revezamento contínuo em esteiras (ITATIAIA, 2025).
+O setor analisado corresponde à interseção entre eventos esportivos de corrida, experiências de marca e tecnologia para gestão operacional de eventos. No caso do Red Bull 24 Horas, a corrida não é apresentada apenas como uma prática esportiva individual, mas como uma experiência coletiva organizada em torno de running crews, estratégia de equipe, resistência física e envolvimento do público. A etapa de Belo Horizonte da temporada de 2025, por exemplo, reuniu quatro running crews locais, organizadas em duas equipes de 16 atletas, em uma disputa de 24 horas de revezamento contínuo em esteiras (Itatiaia, 2025).
 
-A Red Bull atua globalmente com eventos em diferentes territórios culturais e esportivos, como bike, motorsport, surf, esportes de inverno, música e gaming, utilizando essas iniciativas como parte central de sua presença de marca. Esse posicionamento reforça a lógica do Red Bull 24 Horas como uma experiência esportiva proprietária, na qual a marca não apenas patrocina a prática esportiva, mas estrutura um formato competitivo, social e midiático ao redor dela (RED BULL, 2026).
+A Red Bull atua globalmente com eventos em diferentes territórios culturais e esportivos, como bike, motorsport, surf, esportes de inverno, música e gaming, utilizando essas iniciativas como parte central de sua presença de marca. Esse posicionamento reforça a lógica do Red Bull 24 Horas como uma experiência esportiva proprietária, na qual a marca não apenas patrocina a prática esportiva, mas estrutura um formato competitivo, social e midiático ao redor dela (Red Bull, 2025).
 
 Dentro desse setor, a digitalização da operação passa a ser um fator relevante, pois eventos esportivos experienciais dependem cada vez mais de dados confiáveis para sustentar performance, comunicação, segurança, engajamento e análise pós-evento. No Red Bull 24 Horas, essa necessidade é ainda mais evidente, já que a competição ocorre sem interrupção, exige revezamentos rápidos, possui grande volume de registros e depende da precisão dos checkpoints para definir resultados.
 
@@ -4843,11 +4971,11 @@ Sob a perspectiva operacional, processos de apuração esportiva também demanda
 
 ### 6.2.2 Tamanho e Crescimento do Mercado
 
-O mercado brasileiro de corrida apresenta forte expansão, o que favorece a criação de eventos proprietários, experiências esportivas de marca e soluções de apoio à operação. Segundo levantamento da ABRACEO apresentado no 4º Summit ABRACEO/CBAt, o número de corridas de rua oficiais no Brasil saltou de 2.827 em 2024 para 5.241 em 2025, um crescimento de 85%, enquanto o estado de São Paulo registrou 1.311 corridas no período, liderando o volume nacional de provas. A própria ABRACEO caracteriza o setor de corridas de rua como responsável por quase 90% dos eventos esportivos realizados no país, em um mercado que já movimenta cerca de R$ 1,1 bilhão ao ano (ABRACEO, 2025; Ticket Sports, 2026).
+O mercado brasileiro de corrida apresenta forte expansão, o que favorece a criação de eventos proprietários, experiências esportivas de marca e soluções de apoio à operação. Segundo levantamento da ABRACEO apresentado no 4º Summit ABRACEO/CBAt, o número de corridas de rua oficiais no Brasil saltou de 2.827 em 2024 para 5.241 em 2025, um crescimento de 85%, enquanto o estado de São Paulo registrou 1.311 corridas no período, liderando o volume nacional de provas. A própria ABRACEO caracteriza o setor de corridas de rua como responsável por quase 90% dos eventos esportivos realizados no país, em um mercado que já movimenta cerca de R$ 1,1 bilhão ao ano (Abraceo; Ticket Sports, 2026).
 
 Esse ecossistema fortalece diretamente eventos experienciais como o Red Bull 24 Horas, cuja temporada 2025, em sua 4ª edição, percorreu cinco capitais brasileiras — Belo Horizonte, São Paulo, Recife, Porto Alegre e Rio de Janeiro — reunindo 20 running crews em etapas classificatórias antes da final nacional. A escala regional do evento evidencia a necessidade de soluções digitais que padronizem e garantam a confiabilidade da operação em múltiplas localidades.
 
-Esse cenário se insere em um movimento global de digitalização de eventos. O mercado global de software de gestão de eventos foi estimado em USD 8,40 bilhões em 2024, com projeção de alcançar USD 17,33 bilhões até 2030, a uma taxa de crescimento anual composta de 13,2% (Grand View Research, 2024). A convergência entre a expansão do running no Brasil e a crescente demanda por plataformas de gestão digital reforça a oportunidade para soluções como a proposta neste projeto.
+Esse cenário se insere em um movimento global de digitalização de eventos. O mercado global de software de gestão de eventos foi estimado em USD 8,40 bilhões em 2024, com projeção de alcançar USD 17,33 bilhões até 2030, a uma taxa de crescimento anual composta de 13,2% (Grand View Research, s.d.). A convergência entre a expansão do running no Brasil e a crescente demanda por plataformas de gestão digital reforça a oportunidade para soluções como a proposta neste projeto.
 
 Embora os dados apresentados demonstrem o crescimento do mercado de corridas e de tecnologias para eventos, o mercado efetivamente endereçável pela solução proposta é mais específico. A plataforma foi concebida para atender organizadores de eventos esportivos que dependem de processos contínuos de coleta, validação e consolidação de dados operacionais, especialmente em competições de longa duração ou com elevado volume de registros. Nesse contexto, o Red Bull 24 Horas representa um exemplo de aplicação em que a confiabilidade da apuração é parte crítica da experiência do evento. Assim, a oportunidade de mercado não está associada ao conjunto de eventos esportivos em geral, mas ao segmento que demanda controle operacional, rastreabilidade e auditoria de resultados em tempo real.
 
@@ -4855,11 +4983,11 @@ Embora os dados apresentados demonstrem o crescimento do mercado de corridas e d
 
 Entre as tecnologias utilizadas na solução proposta, destaca-se o Reconhecimento Óptico de Caracteres (OCR), recurso que acompanha uma tendência crescente de automação e digitalização de processos. A tecnologia permite a extração automática de informações a partir de imagens capturadas pelas esteiras, reduzindo a necessidade de inserção manual de dados e minimizando erros operacionais. Dessa forma, contribui para aumentar a confiabilidade, a rastreabilidade e a consistência das informações coletadas.
 
-Do ponto de vista tecnológico, observa-se um crescimento contínuo na adoção de soluções baseadas em OCR. O mercado brasileiro de OCR gerou receita de US$ 676,3 milhões em 2024 e possui previsão de atingir US$ 1,585 bilhão até 2030, com taxa composta de crescimento anual (CAGR) de 14,8% entre 2025 e 2030. O segmento de software foi responsável por 95,27% da receita gerada em 2024, evidenciando a predominância de soluções digitais escaláveis na composição desse mercado (GRAND VIEW RESEARCH, 2024).
+Do ponto de vista tecnológico, observa-se um crescimento contínuo na adoção de soluções baseadas em OCR. O mercado brasileiro de OCR gerou receita de US$ 676,3 milhões em 2024 e possui previsão de atingir US$ 1,585 bilhão até 2030, com taxa composta de crescimento anual (CAGR) de 14,8% entre 2025 e 2030. O segmento de software foi responsável por 95,27% da receita gerada em 2024, evidenciando a predominância de soluções digitais escaláveis na composição desse mercado (Grand View Research, s.d.).
 
-Sob a perspectiva comportamental, um movimento de digitalização vem remodelando a operação de eventos, com câmeras e sensores substituindo parte dos processos manuais, tornando o controle mais previsível para organizadores (CARTACAPITAL, 2026). Essa mudança reflete uma exigência crescente do mercado por processos baseados em captura automatizada de dados e validação em tempo real, especialmente em competições onde a precisão das informações é determinante para a integridade dos resultados.
+Sob a perspectiva comportamental, um movimento de digitalização vem remodelando a operação de eventos, com câmeras e sensores substituindo parte dos processos manuais, tornando o controle mais previsível para organizadores (CartaCapital, 2026). Essa mudança reflete uma exigência crescente do mercado por processos baseados em captura automatizada de dados e validação em tempo real, especialmente em competições onde a precisão das informações é determinante para a integridade dos resultados.
 
-No aspecto mercadológico, o Red Bull 24 Horas encontra-se em trajetória de expansão no Brasil. Em sua 4ª edição, realizada em 2025, o evento reuniu 20 running crews em cinco etapas classificatórias realizadas em Belo Horizonte, São Paulo, Recife, Porto Alegre e Rio de Janeiro, consolidando-se como o maior desafio de revezamento em esteira do país (MANIA DE CORRIDA, 2025). A final nacional registrou mais de 678 km totais percorridos pelas equipes ao longo de 24 horas, evidenciando o volume de dados gerados e a necessidade de uma solução confiável para seu registro e rastreabilidade (WEBRUN, 2025).
+No aspecto mercadológico, o Red Bull 24 Horas encontra-se em trajetória de expansão no Brasil. Em sua 4ª edição, realizada em 2025, o evento reuniu 20 running crews em cinco etapas classificatórias realizadas em Belo Horizonte, São Paulo, Recife, Porto Alegre e Rio de Janeiro, consolidando-se como o maior desafio de revezamento em esteira do país (Mania de corrida, 2025). A final nacional registrou mais de 678 km totais percorridos pelas equipes ao longo de 24 horas, evidenciando o volume de dados gerados e a necessidade de uma solução confiável para seu registro e rastreabilidade (Webrun, 2025).
 
 Diante desse cenário, a solução proposta está alinhada às principais tendências do mercado, utilizando tecnologias em expansão para aumentar a eficiência operacional, a qualidade dos dados coletados e a confiabilidade dos processos.
 
@@ -4893,7 +5021,7 @@ Embora possuam papéis distintos, esses segmentos compartilham a necessidade de 
 
 O público-alvo da aplicação é composto pelo time operacional de Field Marketing da Red Bull responsável pela condução do evento Red Bull 24 Horas. Esse grupo inclui gerentes e coordenadores experientes, além de estagiários que atuam diretamente ao lado das esteiras como responsáveis pelo registro dos dados.
 
-Demograficamente, trata-se de profissionais e jovens em formação na faixa dos 18 a 38 anos. Quase metade dos profissionais de marketing no Brasil (45,5%) tem entre 29 e 38 anos, enquanto 13,7% estão na faixa de 18 a 28 anos, com forte concentração geográfica na região Sudeste, onde São Paulo reúne 36% dos profissionais mapeados (Serasa Experian; Mundo do Marketing, 2026). As personas mapeadas no projeto, Marina Costa, 29 anos, coordenadora operacional no Rio de Janeiro, e Bruno Monteiro, 32 anos, Gerente de Field Marketing em São Paulo refletem esse espectro.
+Demograficamente, trata-se de profissionais e jovens em formação na faixa dos 18 a 38 anos. Quase metade dos profissionais de marketing no Brasil (45,5%) tem entre 29 e 38 anos, enquanto 13,7% estão na faixa de 18 a 28 anos, com forte concentração geográfica na região Sudeste, onde São Paulo reúne 36% dos profissionais mapeados (Serasa Experian; Mundo do Marketing, s.d.). As personas mapeadas no projeto, Marina Costa, 29 anos, coordenadora operacional no Rio de Janeiro, e Bruno Monteiro, 32 anos, Gerente de Field Marketing em São Paulo refletem esse espectro.
 
 Psicograficamente, são usuários orientados a resultado e execução, que valorizam objetividade e clareza nas ferramentas que utilizam. Os estagiários, em particular, podem ter pouca familiaridade prévia com sistemas operacionais de eventos, o que reforça a necessidade de uma curva de aprendizado mínima. Além disso, por ainda estarem em fase de treinamento, contam com a pressão e motivação de garantir que a prova transcorra sem falhas de registro.
 
@@ -5079,82 +5207,78 @@ Em síntese, a solução desenvolvida cumpriu os objetivos funcionais previstos 
 
 # <a name="c8"></a>8. Referências (sprints 1 a 5)
 
-ALURA. MER e DER: funções e diferenças. Alura, [s.d.]. Disponível em: https://alura.com.br/artigos/mer-e-der-funcoes. Acesso em: 7 maio 2026.
+ABRACEO; TICKET SPORTS. Perfil do Atleta Brasileiro 25/26. 2026. Disponível em: <https://hub.ticketsports.com.br/perfil-atleta-brasileiro-2025-ticket-sports/>. Acesso em: 11 jun. 2026.
 
-AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. Disponível em: https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/. Acesso em: 11 maio 2026.
-
-BROOKE, J. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). Usability evaluation in industry. London: Taylor & Francis, 1996. p. 189-194. Disponível em: <https://hell.meiert.org/core/pdf/sus.pdf>. Acesso em: 17 jun. 2026.
-
+AMAZON WEB SERVICES. A diferença entre modelo de dados lógico e físico. 2024. Disponível em: <https://aws.amazon.com/pt/compare/the-difference-between-logical-and-physical-data-model/>. Acesso em: 11 maio 2026.
 
 BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. Software Architecture in Practice. 3. ed. Boston: Addison-Wesley, 2012.
 
-BEN SALEM, Hela. INVEST in good user stories. 2023. Disponível em: https://www.bensalem.dev. Acesso em: 1 maio 2026.
+BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. The Unified Modeling Language User Guide. 2. ed. Boston: Addison-Wesley, 2005.
 
-CASAROTTO, Camila. Análise SWOT: o que é e como fazer. 2019. Disponível em: https://rockcontent.com/br/blog/analise-swot/. Acesso em: 1 maio 2026.
+BROOKE, John. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). Usability Evaluation in Industry. London: Taylor & Francis, 1996. p. 189–194. Disponível em: <https://hell.meiert.org/core/pdf/sus.pdf>. Acesso em: 17 jun. 2026.
 
-DEVMEDIA. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
+CARTACAPITAL. Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano. 2026. Disponível em: <https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026>. Acesso em: 11 jun. 2026.
 
-DEVMEDIA. Tecnologias de banco de dados e modelagem de dados. DevMedia, [s.d.]. Disponível em: https://www.devmedia.com.br/tecnologias-de-banco-de-dados-e-modelagem-de-dados/1660. Acesso em: 7 maio 2026.
+CASAROTTO, Camila. Análise SWOT: o que é e como fazer. Rock Content, 2019. Disponível em: <https://rockcontent.com/br/blog/analise-swot/>. Acesso em: 1 maio 2026.
 
-DEVMEDIA. MER e DER: modelagem de bancos de dados. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 6 maio 2026.
+CODD, Edgar F. A Relational Model of Data for Large Shared Data Banks. Communications of the ACM, New York, v. 13, n. 6, p. 377–387, 1970.
 
-FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf. Acesso em: 12 maio 2026.
+CREDERA. The BA perspective: How to INVEST in a good user story. 2023. Disponível em: <https://www.credera.com/en-gb/insights/ba-perspective-invest-good-user-story>. Acesso em: 1 maio 2026.
+
+FIGUEIREDO, R. M. Diagrama de Sequência. Belo Horizonte: UFMG, 2026. Disponível em: <https://homepages.dcc.ufmg.br/~figueiredo/disciplinas/aulas/uml-diagrama-sequencia_v01.pdf>. Acesso em: 12 maio 2026.
 
 FOWLER, Martin. Patterns of Enterprise Application Architecture. Boston: Addison-Wesley, 2002.
 
-GARRETT, Jesse James. The elements of user experience: user centered design for the web and beyond. 2. ed. Berkeley: New Riders, 2011.
+GARRETT, Jesse James. The Elements of User Experience: User-Centered Design for the Web and Beyond. 2. ed. Berkeley: New Riders, 2011.
 
-HUBSPOT. Segmentação de mercado. HubSpot Brasil, 2025. Disponível em: <https://br.hubspot.com/marketing-statistics>. Acesso em: 11 jun. 2026.
+GRACE, Finch. What is acceptance criteria? Definition, examples, & tips. Atlassian, 2026. Disponível em: <https://www.atlassian.com/work-management/project-management/acceptance-criteria>. Acesso em: 1 maio 2026.
 
-LETS EVENTS. O papel da tecnologia na organização de eventos de sucesso. Disponível em: <https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/>. Acesso em: 2 jun. 2026.
+GRAND VIEW RESEARCH. Brazil optical character recognition market size & outlook, 2030. [s.d.]. Disponível em: <https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil>. Acesso em: 11 jun. 2026.
 
-IETF (INTERNET ENGINEERING TASK FORCE). RFC 9110: HTTP Semantics. Editores: R. T. Fielding, M. Nottingham e J. F. Reschke. Internet Engineering Task Force, jun. 2022. Disponível em: https://www.rfc-editor.org/rfc/rfc9110. Acesso em: 18 jun. 2026.
+HUBSPOT. Segmentação de mercado. HubSpot, 2025. Disponível em: <https://br.hubspot.com/glossary/market-segmentation>. Acesso em: 11 jun. 2026.
 
-Interaction Design Foundation. User stories in UX. 2024. Disponível em: https://www.interaction-design.org. Acesso em: 1 maio 2026.
+INTERNET ENGINEERING TASK FORCE (IETF). HTTP Semantics. RFC 9110. 2022. Disponível em: <https://www.ietf.org/rfc/rfc9110.html>. Acesso em: 28 maio 2026.
 
-ITATIAIA. BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes. Itatiaia, 2025. Disponível em:https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/. Acesso em: 6 jun. 2026.
+INTERACTION DESIGN FOUNDATION. What are user stories? [s.d.]. Disponível em: <https://www.interaction-design.org/literature/topics/user-stories>. Acesso em: 1 maio 2026.
 
-LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento?. Disponível em: https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento. Acesso em: 6 maio 2026.  
+ITATIAIA. BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes. 2025. Disponível em: <https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/>. Acesso em: 6 jun. 2026.
 
-MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices. Acesso em: 28 maio 2026.
+JOEL. MER e DER: modelagem de bancos de dados. DevMedia, 2014. Disponível em: <https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332>. Acesso em: 7 maio 2026.
 
-MARTIN, Robert C. *Código limpo: habilidades práticas do Agile Software*. Alta Books, 2009.
+LETS EVENTS. O papel da tecnologia na organização de eventos de sucesso. 22 abr. 2024. Disponível em: <https://lets.events/blog/o-papel-da-tecnologia-na-organizacao-de-eventos-de-sucesso/>. Acesso em: 2 jun. 2026.
 
-Microsoft. Best practices for RESTful web API design. 2023. Microsoft Azure Architecture Center. Disponível em: https://learn.microsoft.com. Acesso em: 1 maio 2026.
+LUCID SOFTWARE INC. O que é um diagrama entidade relacionamento? [s.d.]. Disponível em: <https://www.lucidchart.com/pages/pt/o-que-e-diagrama-entidade-relacionamento>. Acesso em: 6 maio 2026.
 
-MUNDO DO MARKETING. Os profissionais de Marketing no Brasil: dados mostram maioria feminina e faixa etária madura. Disponível em: https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura. Acesso em: 2 jun. 2026.
+MANIA DE CORRIDA. Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro. 2025. Disponível em: <https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html>. Acesso em: 11 jun. 2026.
 
-Nielsen Norman Group. Personas and user-centered design. 2024. Disponível em: https://www.nngroup.com. Acesso em: 1 maio 2026.
+MARTIN, Robert C. Agile Software Development: Principles, Patterns, and Practices. Upper Saddle River: Prentice Hall, 2002. Disponível em: <https://openlibrary.org/books/OL9297484M/Agile_Software_Development_Principles_Patterns_and_Practices>. Acesso em: 28 maio 2026.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation: A Handbook for Visionaries, Game Changers, and Challengers. Hoboken: John Wiley & Sons, 2010. Disponível em: https://www.wiley.com/en-us/Business+Model+Generation:+A+Handbook+for+Visionaries,+Game+Changers,+and+Challengers-p-9780470876411. Acesso em: 11 jun. 2026.
+MICROSOFT. Web API design best practices. Microsoft Learn, 2023. Disponível em: <https://learn.microsoft.com/en-us/azure/architecture/best-practices/api-design>. Acesso em: 1 maio 2026.
 
-OSTERWALDER, Alexander; PIGNEUR, Yves. Value proposition design: how to create products and services customers want. Hoboken: John Wiley & Sons, 2011.
+MUNDO DO MARKETING. Os profissionais de Marketing no Brasil: dados mostram maioria feminina e faixa etária madura. [s.d.]. Disponível em: <https://mundodomarketing.com.br/os-profissionais-de-marketing-no-brasil-dados-mostram-maioria-feminina-e-faixa-etaria-madura>. Acesso em: 2 jun. 2026.
 
-PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 18 fev. 2026. Disponível em: https://creately.com/guides/crows-foot-notation/. Acesso em: 11 maio 2026.
+NIELSEN NORMAN GROUP. Personas. 2025. Disponível em: <https://www.nngroup.com/articles/persona/>. Acesso em: 1 maio 2026.
 
-PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. Disponível em: https://plantuml.com. Acesso em: 12 maio 2026.
+OSTERWALDER, Alexander; PIGNEUR, Yves. Business Model Generation. Hoboken: John Wiley & Sons, 2010.
 
-PMI (PROJECT MANAGEMENT INSTITUTE). A guide to the project management body of knowledge (PMBOK® Guide). 7. ed. Newtown Square: Project Management Institute, 2021.
+OSTERWALDER, Alexander; PIGNEUR, Yves. Value Proposition Design. Hoboken: John Wiley & Sons, 2011.
 
-PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. PM3, [s.d.]. Disponível em: https://pm3.com.br/blog/style-guide/?utm_source=chatgpt.com. Acesso em: 13 maio 2026.
+PERERA, Nuwan. Understanding Crow’s Foot Notation: Symbols & Usage Guide. Creately, 2026. Disponível em: <https://creately.com/guides/crows-foot-notation/>. Acesso em: 11 maio 2026.
 
-PORTER, Michael E. The five competitive forces that shape strategy. Harvard Business Review, Boston, v. 86, n. 1, p. 78–93, 2008.
+PLANTUML. PlantUML: open-source tool that uses simple textual descriptions to draw UML diagrams. [s.d.]. Disponível em: <https://plantuml.com>. Acesso em: 12 maio 2026.
 
-RED BULL. Red Bull 24 Hours. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
+PM3. Style guide: o que é e como criar um guia de estilo para produtos digitais. [s.d.]. Disponível em: <https://pm3.com.br/blog/style-guide/>. Acesso em: 13 maio 2026.
 
-RICHARDS, Mark. Software Architecture Patterns. Sebastopol: O'Reilly Media, 2015.
+PORTER, Michael E. The Five Competitive Forces That Shape Strategy. Harvard Business Review, Boston, v. 86, n. 1, p. 78–93, 2008.
 
-TYMOSHCHENKO, Kateryna. Acceptance criteria in agile development. 2023. Disponível em: https://www.atlassian.com. Acesso em: 1 maio 2026.
+PROJECT MANAGEMENT INSTITUTE (PMI). A guide to the project management body of knowledge (PMBOK guide). 7. ed. Newtown Square: Project Management Institute, 2021.
 
-CARTACAPITAL. Setor de eventos bate recorde e mira R$ 151,9 bilhões até o final do ano. jun. 2026. Disponível em: https://www.cartacapital.com.br/do-micro-ao-macro/setor-de-eventos-recorde-tecnologia-2026. Acesso em: 11 jun. 2026.
+RED BULL. Red Bull 24 Hours. 2025. Disponível em: <https://www.redbull.com/se-en/events/24-hours>. Acesso em: 1 maio 2026.
 
-GRAND VIEW RESEARCH. Brazil Optical Character Recognition Market Size & Outlook, 2030. Disponível em: https://www.grandviewresearch.com/horizon/outlook/optical-character-recognition-market/brazil. Acesso em: 11 jun. 2026.
+VIAL, Gregory. Understanding Digital Transformation: A Review and a Research Agenda. The Journal of Strategic Information Systems, v. 28, n. 2, p. 118–144, 2019.
 
-MANIA DE CORRIDA. Red Bull 24 Horas reúne crews de corrida em cinco seletivas pelo Brasil antes de final no Rio de Janeiro. set. 2025. Disponível em: https://www.maniadecorrida.com.br/2025/09/red-bull-24-horas-reune-crews-de.html. Acesso em: 11 jun. 2026.
+WEBRUN. Red Bull 24 Horas: equipe paulista corre 343 km e se consagra campeã nacional. 2025. Disponível em: <https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro>. Acesso em: 11 jun. 2026.
 
-UX COLLECTIVE. *UI Design em Foco*. Disponível em: https://uxdesign.cc. Acesso em: 1 maio 2026.
-
-WEBRUN. Red Bull 24 Horas: equipe paulista corre 343 km e se consagra campeã nacional. nov. 2025. Disponível em: https://webrun.com.br/red-bull-24-horas-equipe-paulista-corre-343-km-e-se-consagra-campea-nacional-da-competicao-no-rio-de-janeiro. Acesso em: 11 jun. 2026.
 
 # <a name="c9"></a>Anexos
 
