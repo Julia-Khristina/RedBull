@@ -8,6 +8,13 @@ import { AppError } from "../errors/AppError";
 
 const router = Router();
 
+function readRouteParam(value: string | string[], name: string): string {
+  if (Array.isArray(value)) {
+    throw new AppError(`Parâmetro ${name} inválido`, 400);
+  }
+  return value;
+}
+
 // Public route for the share page (used by the sidebar button)
 // NOTE: This route was removed as part of the migration to public team URLs.
 
@@ -16,7 +23,7 @@ const router = Router();
 router.get(
   "/public/team/:uuid/share",
   asyncHandler(async (req, res) => {
-    const uuid = req.params.uuid;
+    const uuid = readRouteParam(req.params.uuid, "uuid");
     const team = await teamService.findByUuid(uuid);
     if (!team) {
       throw new AppError("Equipe não encontrada", 404);
@@ -48,7 +55,8 @@ router.get(
 router.get(
   "/public/team/:uuid/share/template/:type",
   asyncHandler(async (req, res) => {
-    const { uuid, type } = req.params;
+    const uuid = readRouteParam(req.params.uuid, "uuid");
+    const type = readRouteParam(req.params.type, "type");
     // Locate team by UUID
     const team = await teamService.findByUuid(uuid);
     if (!team) {

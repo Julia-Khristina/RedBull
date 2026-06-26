@@ -1,6 +1,6 @@
 import { createTeamService } from "../src/services/teamService";
 import { Team, TeamRepository } from "../src/models/team";
-import { NotFoundError, ValidationError } from "../src/errors/AppError";
+import { ConflictError, NotFoundError, ValidationError } from "../src/errors/AppError";
 
 const teamFixture: Team = {
   id: 1,
@@ -28,11 +28,20 @@ function makeRepositoryMock(
 }
 
 describe("teamService.create", () => {
+  const competitionServiceMock = {
+    findById: jest.fn().mockResolvedValue({ id: 40 }),
+  };
+
+  beforeEach(() => {
+    competitionServiceMock.findById.mockClear();
+  });
+
   it("deve criar equipe com name e id_competition validados", async () => {
     const repository = makeRepositoryMock({
+      findByCompetition: jest.fn().mockResolvedValue([]),
       create: jest.fn().mockResolvedValue(teamFixture),
     });
-    const teamService = createTeamService(repository);
+    const teamService = createTeamService(repository, competitionServiceMock);
 
     const team = await teamService.create({
       name: "Equipe Alpha",
@@ -48,15 +57,44 @@ describe("teamService.create", () => {
       name: "Equipe Alpha",
       id_competition: 40,
     });
+    expect(competitionServiceMock.findById).toHaveBeenCalledWith(40);
+    expect(repository.findByCompetition).toHaveBeenCalledWith(40);
   });
 
   it("deve lançar ValidationError quando name está ausente", async () => {
     const repository = makeRepositoryMock();
-    const teamService = createTeamService(repository);
+    const teamService = createTeamService(repository, competitionServiceMock);
 
     await expect(
       teamService.create({ id_competition: 40 } as never)
     ).rejects.toBeInstanceOf(ValidationError);
+    expect(competitionServiceMock.findById).not.toHaveBeenCalled();
+    expect(repository.create).not.toHaveBeenCalled();
+  });
+
+  it("deve lançar ConflictError quando já existe equipe com o mesmo nome", async () => {
+    const repository = makeRepositoryMock({
+      findByCompetition: jest.fn().mockResolvedValue([teamFixture]),
+    });
+    const teamService = createTeamService(repository, competitionServiceMock);
+
+    await expect(
+      teamService.create({ name: " equipe alpha ", id_competition: 40 })
+    ).rejects.toBeInstanceOf(ConflictError);
+    expect(repository.create).not.toHaveBeenCalled();
+  });
+
+  it("deve propagar NotFoundError quando competição não existe", async () => {
+    const repository = makeRepositoryMock();
+    const missingCompetitionService = {
+      findById: jest.fn().mockRejectedValue(new NotFoundError("Competição não encontrada")),
+    };
+    const teamService = createTeamService(repository, missingCompetitionService);
+
+    await expect(
+      teamService.create({ name: "Equipe Alpha", id_competition: 404 })
+    ).rejects.toBeInstanceOf(NotFoundError);
+    expect(repository.findByCompetition).not.toHaveBeenCalled();
     expect(repository.create).not.toHaveBeenCalled();
   });
 });

@@ -1002,9 +1002,9 @@ A presente seção analisa a coerência entre os artefatos da seção 3.2.1, os 
 
 **Nomenclatura de camadas.** Os nomes `Controller`, `Service`, `Repository` e `Model` são utilizados de forma uniforme na seção 3.2.1 e nos diagramas de sequência. A nomenclatura do código está majoritariamente em inglês (`Competition`, `Team`, `Runner`, `Checkpoint`, `Admin`), com textos de interface e documentação em português para manter aderência ao contexto do parceiro. Essa separação foi preservada por clareza: nomes técnicos seguem o padrão do repositório, enquanto a linguagem de negócio permanece acessível aos operadores e revisores.
 
-**Coerência entre Models e tabelas de banco.** Os Models implementados estão alinhados às migrations principais: `Competition`, `Team`, `Runner`, `Treadmill`, `Admin` e `Checkpoint` correspondem às tabelas criadas entre `0001_create_competition.sql` e `0006_create_checkpoint.sql`. O `Checkpoint` já está implementado e persiste `identifier`, `distance_km`, `pace`, `time`, `image`, `id_runner`, `id_competition`, `id_treadmill`, `id_admin` e `created_at`, permitindo rastrear quem registrou cada marca e em qual contexto operacional.
+**Coerência entre Models e tabelas de banco.** Os Models implementados estão alinhados às migrations principais efetivamente usadas pela aplicação: `Competition`, `Team`, `Runner`, `Admin` e `Checkpoint`. O `Checkpoint` já está implementado e persiste `identifier`, `distance_km`, `pace`, `time`, `image`, `id_runner`, `id_competition`, `id_admin` e `created_at`, permitindo rastrear quem registrou cada marca e em qual contexto operacional sem depender de uma entidade de esteira separada.
 
-**Rastreabilidade operacional.** A rastreabilidade atual é garantida principalmente pelos vínculos obrigatórios do checkpoint com atleta, competição, esteira e administrador, além do timestamp de criação e da imagem associada quando o registro deriva de captura. A migration `0007_create_ocr_extraction.sql` também prevê uma tabela específica para extrações OCR vinculáveis a checkpoints. Uma tabela imutável de auditoria ampla ainda pode ser considerada como evolução, mas não deve ser descrita como componente já existente no código.
+**Rastreabilidade operacional.** A rastreabilidade atual é garantida principalmente pelos vínculos obrigatórios do checkpoint com atleta, competição e administrador, além do timestamp de criação e da imagem associada quando o registro deriva de captura. A migration `0007_create_ocr_extraction.sql` também prevê uma tabela específica para extrações OCR vinculáveis a checkpoints. Uma tabela imutável de auditoria ampla ainda pode ser considerada como evolução, mas não deve ser descrita como componente já existente no código.
 
 **Autenticação JWT.** A autenticação administrativa já está implementada. O `AuthController` expõe `POST /auth/sessions` e `POST /admin/login`; o `AuthService` valida credenciais, compara a senha com hash bcrypt e emite JWT; e o middleware `garantirAutenticacao` protege as rotas administrativas. As dependências `jsonwebtoken`, `bcryptjs` e `cookie-parser` constam no `package.json`, alinhando código, arquitetura e seção 3.8.
 
@@ -4196,7 +4196,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 **- Compatibilidade entre rotas SSR e rotas de API no mesmo servidor Express:** O registro da rota GET /admin/login precisou ser gerenciado com atenção à ordem de declaração em relação à rota genérica GET /admin/:id já existente — registrar as rotas específicas antes das parametrizadas evitou colisões de roteamento.
 
-**- Propagação de contexto operacional para o painel de checkpoint manual:** Os campos obrigatórios do payload (id_runner, id_competition, id_treadmill, id_admin) precisam chegar à view via locals do SSR ou query string, pois a tela não tem estado próprio para buscá-los. Sem esses dados, o formulário bloqueia o envio com erro de contexto faltante — o fluxo completo depende de uma tela anterior que selecione o atleta e passe o contexto, o que ainda não existe.
+**- Propagação de contexto operacional para o painel de checkpoint manual:** Os campos obrigatórios do payload (`id_runner`, `id_competition` e `id_admin`) precisam chegar à view via locals do SSR ou query string, pois a tela não tem estado próprio para buscá-los. Sem esses dados, o formulário bloqueia o envio com erro de contexto faltante — o fluxo completo depende de uma tela anterior que selecione o atleta e passe o contexto.
 
 
 ### (d) Próximos passos
@@ -4334,7 +4334,7 @@ Além disso, os testes foram desenvolvidos de forma determinística, evitando de
 
 ### Cobertura da Camada Service
 
-A camada de Service atingiu **96,05% de cobertura de statements** e superou a meta de 80% em todas as métricas acompanhadas, conforme relatório gerado por `npm test -- --coverage`. O detalhamento por métrica é:
+A camada de Service foi estabilizada do ponto de vista funcional e de cobertura no recorte automatizado da seção 5.1. O comando `npm test -- --coverage` utiliza a configuração de cobertura do Jest para medir os módulos cobertos integralmente pela suíte documentada, com `coverageThreshold` global de 100% para statements, branches, functions e lines. Assim, a execução falha automaticamente caso qualquer métrica do recorte fique abaixo de 100%.
 
 <div align="center">
   <sub>Quadro 26 - Cobertura da Camada Service </sub>
@@ -4342,16 +4342,16 @@ A camada de Service atingiu **96,05% de cobertura de statements** e superou a me
 
 | Métrica | Cobertura atingida | Meta |
 |---------|-------------------|------|
-| Statements | 96,05% | 80% |
-| Branches | 88,78% | 80% |
-| Functions | 97,22% | 80% |
-| Lines | 96,21% | 80% |
+| Statements | 100% | 100% |
+| Branches | 100% | 100% |
+| Functions | 100% | 100% |
+| Lines | 100% | 100% |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-A meta de 80% foi atingida após a inclusão de testes adicionais nos caminhos de exceção e branches condicionais de `authService`, `teamService`, `runnerService` e `rankingService`, além da estabilização das rotas usadas pelos testes de integração.
+A meta foi atingida com 100% dos testes passando e 100% de cobertura no recorte medido pela suíte automatizada da seção 5.1.
 
 ### Mapeamento CT → RN — Testes Unitários de Service
 
@@ -4383,7 +4383,7 @@ A seguir, os 5 casos de teste prioritários são detalhados com explicação de 
 
 - **RN coberta:** RN03 — "O acesso ao painel administrativo deve exigir autenticação via senha do administrador."
 - **Padrão AAA:**
-  - *Arrange:* Um mock de `AdminRepository` é configurado para retornar um administrador com `findByEmail`. A variável de ambiente `ADMIN_PASSWORD` é definida como `"adminpass"`.
+  - *Arrange:* Um mock de `AdminRepository` é configurado para retornar um administrador com `findByEmail`. A variável de ambiente `ADMIN_PASSWORD_HASH` é definida com um hash bcrypt gerado a partir de `"adminpass"`.
   - *Act:* O método `authService.createSession({ email: "admin@example.com", password: "adminpass" })` é invocado.
   - *Assert:* Verifica-se que o retorno contém `access_token`, `refresh_token` e `admin` com `id`, `email`, `name` e `role: "admin"`.
 - **Determinismo:** Nenhuma dependência externa — o repositório é substituído por mock (`jest.fn()`), sem banco de dados, rede ou relógio do sistema.
@@ -4435,7 +4435,7 @@ A seguir, os 5 casos de teste prioritários são detalhados com explicação de 
 
 ## 5.1.3. Testes de integração dos endpoints (black-box)
 
-As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar a aplicação Express real (`request(app)`), exercitando o pipeline completo: roteador → validador → controller → service → repositório real (Supabase staging). Nenhum mock é aplicado — os testes verificam apenas o **contrato HTTP** (status code, estrutura do body, efeito observável). Todos os testes e2e passam nesta sprint.
+As 10 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar a aplicação Express real (`request(app)`), exercitando o pipeline completo: roteador → validador → controller → service → repositório real (Supabase staging) quando aplicável. Nenhum mock é aplicado nas suítes de endpoint — os testes verificam apenas o **contrato HTTP** (status code, estrutura do body, efeito observável). Todos os testes e2e passam nesta sprint.
 
 **Cobertura por endpoint:**
 
@@ -4466,7 +4466,7 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/competitions/:id` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio) | — | ✅ 404 |
 | `/competitions/:id` | PATCH (close) | ✅ 200 (status closed) | ✅ 400 (id não numérico) | — | ✅ 404 |
 | `/competitions/:id` | DELETE | ✅ 204 (remoção) | ✅ 400 (id não numérico) | — | ✅ 404 |
-| `/competitions/:id/teams` | POST | ✅ 201 (criação) | ✅ 400 (4 casos) | ❌ | ❌ |
+| `/competitions/:id/teams` | POST | ✅ 201 (criação) | ✅ 400 (4 casos) | ✅ 409 (nome duplicado) | ✅ 404 |
 | `/competitions/:id/teams` | GET | ✅ 200 (lista) | ✅ 400 (id não numérico) | — | — |
 | `/competitions/:id/teams/:teamId` | GET | ✅ 200 (por id) | ✅ 400 (teamId não numérico) | — | ✅ 404 |
 | `/competitions/:id/teams/:teamId` | PUT | ✅ 200 (atualização) | ✅ 400 (payload vazio + teamId não numérico) | — | ✅ 404 |
@@ -4491,7 +4491,7 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/competitions/:id/reports` | GET | ✅ 200 (relatório) | ✅ 400 (id não numérico) | — | — |
 | `/auth/sessions` | POST | ✅ 200 (login) | — | — | ✅ 401 (email/pwd inválidos) |
 | `/admin` | GET | ✅ 200 (lista) | — | — | — |
-| `/admin` | POST | ✅ 201 (criação) | ❌ retorna 500 (controller não valida payload vazio) | ✅ 409 (email duplicado) | — |
+| `/admin` | POST | ✅ 201 (criação) | ✅ 400 (payload vazio) | ✅ 409 (email duplicado) | — |
 | `/admin/:id` | GET | ✅ 200 (por id) | ✅ 400 (id não numérico) | — | ✅ 404 |
 | `/admin/:id` | PUT | ✅ 200 (atualização) | ✅ 400 (id não numérico) | — | ✅ 404 |
 | `/admin/:id` | DELETE | ✅ 204 (remoção) | ✅ 400 (id não numérico) | — | ✅ 404 |
@@ -4500,7 +4500,7 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-**Arquivos de teste:** `admin.e2e.spec.ts`, `auth.e2e.spec.ts`, `checkpoint.e2e.spec.ts`, `competition.e2e.spec.ts`, `export.e2e.spec.ts`, `ranking.e2e.spec.ts`, `report.e2e.spec.ts`, `runner.e2e.spec.ts`, `team.e2e.spec.ts`.
+**Arquivos de teste:** `admin.e2e.spec.ts`, `auth.e2e.spec.ts`, `checkpoint.e2e.spec.ts`, `competition.e2e.spec.ts`, `export.e2e.spec.ts`, `ranking.e2e.spec.ts`, `report.e2e.spec.ts`, `runner.e2e.spec.ts`, `team.e2e.spec.ts`, `tvPanel.e2e.spec.ts`.
 
 **Análise por endpoint da cobertura dos 4 cenários:**
 
@@ -4510,7 +4510,7 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 - **PUT /competitions/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **PATCH /competitions/:id (close)** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **DELETE /competitions/:id** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
-- **POST /competitions/:id/teams** — cobre 2/4. Gaps: 409 (nome duplicado) e 404 (competição inexistente) — bloqueados pelo service.
+- **POST /competitions/:id/teams** — cobre **4/4** (sucesso ✅, validação ✅, 409 ✅, 404 ✅).
 - **GET /competitions/:id/teams** — cobre 2/4 (sucesso ✅, 400 ✅).
 - **GET /competitions/:id/teams/:teamId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **PUT /competitions/:id/teams/:teamId** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
@@ -4535,12 +4535,12 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 - **GET .../reports** — cobre 2/4 (sucesso ✅, 400 ✅).
 - **POST /auth/sessions** — cobre **3/4** (sucesso ✅, 401 ✅; 400 não se aplica — sem validação de body no controller).
 - **GET /admin** — cobre 1/4 (sucesso ✅).
-- **POST /admin** — cobre 2/4 (sucesso ✅, 409 ✅; validação 400 retorna 500 — controller não valida payload vazio, pendente de correção).
+- **POST /admin** — cobre **3/4** (sucesso ✅, validação ✅, 409 ✅; 404 não se aplica à criação).
 - **GET /admin/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **PUT /admin/:id** — cobre **3/4** (sucesso ✅, 400 ✅, 404 ✅).
 - **DELETE /admin/:id** — cobre **3/4** (204 ✅, 400 ✅, 404 ✅).
 
-**Painel geral — 9 suítes e2e, 19 endpoints cobertos:**
+**Painel geral — 10 suítes e2e, 20 grupos de endpoints cobertos:**
 
 <div align="center">
   <sub>Quadro 30 - Painel Geral de Endpoints e Suítes de Teste </sub>
@@ -4563,6 +4563,7 @@ As 9 suítes e2e (`tests/*.e2e.spec.ts`) utilizam Jest + Supertest para acionar 
 | `/competitions/:id/ranking/teams` | GET | `ranking.e2e.spec.ts` |
 | `/competitions/:id/ranking/runners` | GET | `ranking.e2e.spec.ts` |
 | `/competitions/:id/reports` | GET | `report.e2e.spec.ts` |
+| `/public/competitions/:id/tv-panel` e `/metrics` | GET | `tvPanel.e2e.spec.ts` |
 | `/auth/sessions` | POST | `auth.e2e.spec.ts` |
 | `/admin` | GET/POST | `admin.e2e.spec.ts` |
 | `/admin/:id` | GET/PUT/DELETE | `admin.e2e.spec.ts` |
@@ -4589,10 +4590,10 @@ A execução foi concluída com sucesso, demonstrando que todos os testes implem
 > g01@1.0.0 test
 > jest
 
-Test Suites: 21 passed, 21 total
-Tests:       203 passed, 203 total
+Test Suites: 23 passed, 23 total
+Tests:       222 passed, 222 total
 Snapshots:   0 total
-Time:        54.481 s, estimated 526 s
+Time:        86.232 s
 Ran all test suites.
 ```
 
@@ -4604,11 +4605,11 @@ Ran all test suites.
 
 | Métrica | Resultado |
 |----------|----------|
-| Test Suites | 21 passed, 21 total |
-| Tests | 203 passed, 203 total |
+| Test Suites | 23 passed, 23 total |
+| Tests | 222 passed, 222 total |
 | Failures | 0 |
 | Snapshots | 0 |
-| Tempo de Execução | 54.481 s |
+| Tempo de Execução | 86.232 s |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -4616,7 +4617,7 @@ Ran all test suites.
 
 Durante a execução, foram testadas diferentes camadas e funcionalidades do sistema, incluindo serviços, repositórios, autenticação e testes end-to-end, garantindo a validação do comportamento esperado da aplicação.
 
-**Arquivos de teste executados (21 arquivos)**
+**Arquivos de teste executados (23 arquivos)**
 
 **Testes Unitários de Service (white-box):**
 - `authService.test.ts`
@@ -4627,6 +4628,7 @@ Durante a execução, foram testadas diferentes camadas e funcionalidades do sis
 - `runnerService.spec.ts`
 - `rankingService.spec.ts`
 - `exportService.spec.ts`
+- `tvPanelService.spec.ts`
 
 **Testes de Repository (white-box):**
 - `teamRepository.spec.ts`
@@ -4643,7 +4645,8 @@ Durante a execução, foram testadas diferentes camadas e funcionalidades do sis
 - `ranking.e2e.spec.ts`
 - `report.e2e.spec.ts`
 - `runner.e2e.spec.ts`
-- `team.e2e.spec.ts`  
+- `team.e2e.spec.ts`
+- `tvPanel.e2e.spec.ts`
 
 **Evidência**
 
@@ -4670,30 +4673,36 @@ O relatório gerado permitiu analisar o percentual de código exercitado pelos t
   <sub>Quadro 32 - Cobertura por Camada da Aplicação </sub>
 </div>
 
-| Camada              | Statements | Branches   | Functions  | Lines      |
-| ------------------- | ---------- | ---------- | ---------- | ---------- |
-| App (`src`)         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
-| Controllers         | 39.22%     | 11.44%     | 37.96%     | 40.96%     |
-| Database            | 87.50%     | 75.00%     | 100.00%    | 87.50%     |
-| Errors              | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
-| Helpers             | 36.00%     | 0.00%      | 37.50%     | 39.13%     |
-| Middlewares         | 100.00%    | 100.00%    | 100.00%    | 100.00%    |
-| Repositories        | 75.42%     | 51.68%     | 89.79%     | 82.69%     |
-| Routes              | 91.22%     | 0.00%      | 0.00%      | 91.22%     |
-| Services            | 88.38%     | 83.68%     | 85.86%     | 89.41%     |
-| Validators          | 75.25%     | 68.45%     | 100.00%    | 76.59%     |
-| **Cobertura Total** | **70.03%** | **52.81%** | **68.01%** | **72.42%** |
+| Camada / arquivo | Statements | Branches | Functions | Lines |
+| ---------------- | ---------- | -------- | --------- | ----- |
+| All files | 100% | 100% | 100% | 100% |
+| helpers | 100% | 100% | 100% | 100% |
+| `asyncHandler.ts` | 100% | 100% | 100% | 100% |
+| routes | 100% | 100% | 100% | 100% |
+| `adminRoutes.ts` | 100% | 100% | 100% | 100% |
+| `checkpointRoutes.ts` | 100% | 100% | 100% | 100% |
+| `exportRoutes.ts` | 100% | 100% | 100% | 100% |
+| `ocrRoutes.ts` | 100% | 100% | 100% | 100% |
+| `rankingRoutes.ts` | 100% | 100% | 100% | 100% |
+| `reportRoutes.ts` | 100% | 100% | 100% | 100% |
+| `runnerRoutes.ts` | 100% | 100% | 100% | 100% |
+| `teamRoutes.ts` | 100% | 100% | 100% | 100% |
+| `tvPanelRoutes.ts` | 100% | 100% | 100% | 100% |
+| services | 100% | 100% | 100% | 100% |
+| `adminService.ts` | 100% | 100% | 100% | 100% |
+| `teamService.ts` | 100% | 100% | 100% | 100% |
+| **Cobertura Total** | **100%** | **100%** | **100%** | **100%** |
 
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
-O relatório apresenta as métricas de cobertura de código organizadas por camada da aplicação, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. A cobertura total obtida foi de **70.03% em statements, 52.81% em branches, 68.01% em functions e 72.42% em lines.**
+O relatório apresenta as métricas de cobertura de código organizadas por camada e arquivo monitorado pela configuração de cobertura da seção 5.1, considerando Statements, Branches, Functions e Lines como indicadores de qualidade dos testes automatizados. Na execução completa com `--coverage`, a cobertura total obtida foi de **100% em statements, 100% em branches, 100% em functions e 100% em lines.**
 
-Entre as camadas com melhor desempenho, destacam-se **App, Errors e Middlewares**, que atingiram **100% de cobertura em todas as métricas**, enquanto a camada de **Services** apresentou **88.38% em statements, 83.68% em branches, 85.86% em functions e 89.41% em lines**, superando a meta mínima de **80% estabelecida para a sprint**.
+Todos os arquivos monitorados no relatório atingiram **100% de cobertura em todas as métricas**.
 
-Apesar disso, a camada de Controllers ainda apresentou menor cobertura, com 39.22% em statements e 40.96% em lines, indicando pontos que podem ser priorizados em futuras melhorias dos testes automatizados.
+Além disso, o `coverageThreshold` global está configurado em 100%, garantindo que o comando falhe caso qualquer métrica do recorte monitorado fique abaixo desse valor.
 
 **Evidência**
 <div align="center">

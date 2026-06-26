@@ -10,7 +10,11 @@
     "dev": "ts-node-dev --respawn --transpile-only src/server.ts",
     "build": "tsc && copyfiles -u 1 src/views/*/ dist/views",
     "start": "node dist/server.js",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:e2e": "jest --coverage=false --testMatch \"**/tests/**/*.e2e.spec.ts\"",
+    "test:unit": "jest --coverage=false --testMatch \"**/tests/**/*Service.@(test|spec).ts\"",
+    "test:integration": "jest --coverage=false --testMatch \"**/tests/**/*Repository.spec.ts\""
   },
   "repository": {
     "type": "git",
