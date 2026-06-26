@@ -12,8 +12,8 @@ export type OcrRegion = {
 export type OcrExtractionResult = {
   file: string;
   metrics: MetricResult;
-  tesseract: OcrRegion[];
-  source: "groq+tesseract" | "tesseract";
+  tesseract?: OcrRegion[];
+  source: "groq" | "groq+tesseract" | "tesseract";
   previewUrl?: string;
   rawgroq?: string;
   rawGroq?: string;

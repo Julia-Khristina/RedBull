@@ -47,6 +47,7 @@ router.get(
       highlights,
       layout: "layouts/main",
       teamUuid: uuid,
+      hideMenuNav: true,
     });
   })
 );

@@ -15,7 +15,6 @@ import dashboardRoutes from "./routes/dashboardRoutes";
 import tvPanelRoutes from "./routes/tvPanelRoutes";
 import shareRoutes from "./routes/shareRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
-import { ensureOcrUploadDir, getOcrUploadDir } from "./services/ocrService";
 import ejsLayouts from 'express-ejs-layouts';
 import cookieParser from "cookie-parser";
 
@@ -30,8 +29,6 @@ app.set('layout', 'layouts/main');
 
 // Static files
 app.use(express.static(path.join(__dirname, '..', 'public')));
-void ensureOcrUploadDir();
-app.use("/ocr/uploads", express.static(getOcrUploadDir()));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

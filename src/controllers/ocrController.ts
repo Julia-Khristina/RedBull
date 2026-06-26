@@ -4,6 +4,7 @@ import {
   extractMetricsFromImage,
   persistUploadedImage,
 } from "../services/ocrService";
+import { uploadImageToStorage } from "../services/ocrSupabaseStorage";
 import { ValidationError } from "../errors/AppError";
 
 export const ocrController = {
@@ -16,11 +17,20 @@ export const ocrController = {
 
     try {
       const persisted = await persistUploadedImage(uploaded);
-      const result = await extractMetricsFromImage(
+
+      const storageUrl = await uploadImageToStorage(
         persisted.imagePath,
-        persisted.previewUrl,
         uploaded.originalname
       );
+
+      const result = await extractMetricsFromImage(
+        persisted.imagePath,
+        storageUrl,
+        uploaded.originalname
+      );
+
+      await fs.rm(persisted.imagePath, { force: true }).catch(() => undefined);
+
       res.status(201).json(result);
     } catch (error) {
       await fs.rm(uploaded.path, { force: true }).catch(() => undefined);

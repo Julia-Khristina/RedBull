@@ -31,15 +31,19 @@ function client(): OpenAI {
 
 export async function extractWithGroq(
   imagePath: string,
-  tesseract: OcrRegion[]
+  tesseract?: OcrRegion[]
 ): Promise<{ metrics: MetricResult; raw: string }> {
   const image = await fs.readFile(imagePath);
   const ext = path.extname(imagePath).toLowerCase();
   const mimeType = ext === ".jpg" || ext === ".jpeg" ? "image/jpeg" : "image/png";
   const dataUrl = `data:${mimeType};base64,${image.toString("base64")}`;
   const ocrText = tesseract
-    .map((region) => `[${region.name}]\n${region.text || "(vazio)"}`)
-    .join("\n\n");
+    ? tesseract.map((region) => `[${region.name}]\n${region.text || "(vazio)"}`).join("\n\n")
+    : null;
+
+  const userText = ocrText
+    ? `Texto OCR bruto do Tesseract:\n${ocrText}\n\nRetorne somente o JSON com as chaves: distanceKm, time.`
+    : "Retorne somente o JSON com as chaves: distanceKm (número em km) e time (string no formato mm:ss).";
 
   const completion = await client().chat.completions.create({
     model: process.env.GROQ_MODEL ?? "llama-3.2-11b-vision-preview",
@@ -50,10 +54,7 @@ export async function extractWithGroq(
       {
         role: "user",
         content: [
-          {
-            type: "text",
-            text: `Texto OCR bruto do Tesseract:\n${ocrText}\n\nRetorne somente o JSON com as chaves: distanceKm, time.`,
-          },
+          { type: "text", text: userText },
           { type: "image_url", image_url: { url: dataUrl } },
         ],
       },

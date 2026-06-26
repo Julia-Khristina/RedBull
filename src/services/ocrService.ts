@@ -59,9 +59,34 @@ export async function extractMetricsFromImage(
   previewUrl?: string,
   originalName?: string
 ): Promise<OcrExtractionResult> {
+  // 1. GROQ FIRST (primary)
+  if (process.env.GROQ_API_KEY && !groqUnavailableMessage) {
+    try {
+      const groq = await extractWithGroq(imagePath);
+      if (groq && groq.metrics) {
+        return {
+          file: originalName ?? path.basename(imagePath),
+          metrics: groq.metrics,
+          source: "groq",
+          rawgroq: groq.raw,
+          rawGroq: groq.raw,
+          previewUrl,
+        };
+      }
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      if (shouldDisableGroq(message)) {
+        groqUnavailableMessage = message;
+      }
+      console.error(`[OCR ERROR] Groq failed for ${path.basename(imagePath)}: ${message}`);
+    }
+  } else if (groqUnavailableMessage) {
+    console.error(`[OCR ERROR] Groq disabled due to previous error: ${groqUnavailableMessage}`);
+  }
+
+  // 2. TESSERACT FALLBACK
   const worker = await createTesseractWorker();
   try {
-    // 1. TESSERACT FIRST
     const regions = await runTesseract(worker, imagePath);
     const fallback = parseTesseractFallback(regions);
 
@@ -75,34 +100,8 @@ export async function extractMetricsFromImage(
       };
     }
 
-    // 2. GROQ FALLBACK
-    if (process.env.GROQ_API_KEY && !groqUnavailableMessage) {
-      try {
-        const groq = await extractWithGroq(imagePath, regions);
-        if (groq && groq.metrics) {
-          return {
-            file: originalName ?? path.basename(imagePath),
-            metrics: groq.metrics,
-            tesseract: regions,
-            source: "groq+tesseract",
-            rawgroq: groq.raw,
-            rawGroq: groq.raw,
-            previewUrl,
-          };
-        }
-      } catch (error) {
-        const message = error instanceof Error ? error.message : String(error);
-        if (shouldDisableGroq(message)) {
-          groqUnavailableMessage = message;
-        }
-        console.error(`[OCR ERROR] Groq failed for ${path.basename(imagePath)}: ${message}`);
-      }
-    } else if (groqUnavailableMessage) {
-      console.error(`[OCR ERROR] Groq disabled due to previous error: ${groqUnavailableMessage}`);
-    }
-
     throw new UnprocessableError(
-      "GROQ_API_KEY ausente e fallback Tesseract incompleto."
+      "Groq indisponível e fallback Tesseract incompleto."
     );
   } finally {
     await worker.terminate();
