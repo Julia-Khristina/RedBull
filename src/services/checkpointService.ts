@@ -5,11 +5,12 @@ import {
   UpdateCheckpointInput,
 } from "../models/checkpoint";
 import { checkpointRepository } from "../repositories/checkpointRepository";
+import { competitionService } from "./competitionService";
 import {
   validateCreateCheckpoint,
   validateUpdateCheckpoint,
 } from "../validators/checkpointValidator";
-import { NotFoundError, ConflictError } from "../errors/AppError";
+import { NotFoundError, ConflictError, ValidationError } from "../errors/AppError";
 
 function isPgUniqueViolation(error: unknown): boolean {
   return (
@@ -30,7 +31,8 @@ function isPgFkViolation(error: unknown): boolean {
 }
 
 export function createCheckpointService(
-  repository: CheckpointRepository = checkpointRepository
+  repository: CheckpointRepository = checkpointRepository,
+  competitionSvc: typeof competitionService = competitionService
 ) {
   return {
     async findAll(): Promise<Checkpoint[]> {
@@ -62,6 +64,13 @@ export function createCheckpointService(
     async create(payload: Partial<CreateCheckpointInput>): Promise<Checkpoint> {
       const input = validateCreateCheckpoint(payload);
 
+      const competition = await competitionSvc.findById(input.id_competition);
+      if (competition.status === "closed") {
+        throw new ValidationError(
+          `Competição ${input.id_competition} já está encerrada. Novos checkpoints não são permitidos.`
+        );
+      }
+
       try {
         return await repository.create(input);
       } catch (error) {
@@ -71,9 +80,11 @@ export function createCheckpointService(
           );
         }
         if (isPgFkViolation(error)) {
-          throw new NotFoundError(
-            "Runner, competition or admin not found"
-          );
+          const errMsg = (error as any).message || "";
+          if (errMsg.includes("id_admin")) throw new NotFoundError("Administrador não encontrado");
+          if (errMsg.includes("id_competition")) throw new NotFoundError("Competição não encontrada");
+          if (errMsg.includes("id_runner")) throw new NotFoundError("Atleta não encontrado");
+          throw new NotFoundError("Referência de Runner, competition ou admin não encontrada");
         }
         throw error;
       }

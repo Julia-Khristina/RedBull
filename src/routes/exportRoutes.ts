@@ -11,4 +11,10 @@ router.get(
   asyncHandler(exportController.exportCompetition)
 );
 
+router.post(
+  "/competitions/:id/export/excel",
+  garantirAutenticacao,
+  asyncHandler(exportController.exportCompetitionExcel)
+);
+
 export default router;

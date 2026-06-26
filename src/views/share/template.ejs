@@ -1,0 +1,119 @@
+<%
+  var bgClass = 'bg-' + highlight.background;
+%>
+<main class="template-page" data-template-page>
+  <div class="template-toolbar">
+    <a href="/public/team/<%= teamUuid %>/share" class="template-back-btn">&larr; Voltar</a>
+    <h2 class="template-toolbar-title"><%= highlight.title %></h2>
+    <button class="template-download-btn" data-template-download>Baixar PNG</button>
+  </div>
+
+  <div class="template-instagram-wrapper">
+    <div class="template-instagram <%= bgClass %>" data-template-instagram>
+      <img src="/img/logo-redbull-24horas.png" alt="Red Bull 24 Horas" class="template-logo" />
+
+      <div class="template-content">
+        <p class="template-title"><%= highlight.title %></p>
+        <p class="template-subtitle"><%= highlight.subtitle %></p>
+
+          <div class="template-photo-area">
+            <div class="template-photo-circle" data-template-photo-circle>
+              <span class="template-photo-placeholder">+</span>
+            </div>
+            <input type="file" accept="image/*" class="template-photo-input" data-template-photo-input />
+            <p class="template-photo-hint">Clique para adicionar foto</p>
+          </div>
+
+        <p class="template-runner-name"><%= highlight.runnerName %></p>
+        <% if (highlight.teamName) { %>
+          <p class="template-team-name"><%= highlight.teamName %></p>
+        <% } %>
+
+        <div class="template-stats">
+          <div class="template-stat">
+            <span class="template-stat-value"><%= Number(highlight.distanceKm).toFixed(1) %></span>
+            <span class="template-stat-label">KM</span>
+          </div>
+          <% if (highlight.pace) { %>
+          <div class="template-stat">
+            <span class="template-stat-value"><%= highlight.pace %></span>
+            <span class="template-stat-label">PACE</span>
+          </div>
+          <% } %>
+          <% if (highlight.time) { %>
+          <div class="template-stat">
+            <span class="template-stat-value"><%= highlight.time %></span>
+            <span class="template-stat-label">TEMPO</span>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <p class="template-hashtag">#REDBULL24HORAS COMPARTILHE SEU RESULTADO!</p>
+    </div>
+  </div>
+</main>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var templatePage = document.querySelector('[data-template-page]');
+  if (!templatePage) return;
+
+  var instagram = templatePage.querySelector('[data-template-instagram]');
+  var downloadBtn = templatePage.querySelector('[data-template-download]');
+  var photoInput = templatePage.querySelector('[data-template-photo-input]');
+  var photoCircle = templatePage.querySelector('[data-template-photo-circle]');
+
+  // Photo upload
+  if (photoInput && photoCircle) {
+    photoCircle.addEventListener('click', function() {
+      photoInput.click();
+    });
+
+    photoInput.addEventListener('change', function() {
+      var file = photoInput.files && photoInput.files[0];
+      if (!file) return;
+
+      var reader = new FileReader();
+      reader.onload = function(e) {
+        photoCircle.innerHTML = '';
+        var img = document.createElement('img');
+        img.src = e.target.result;
+        img.alt = 'Foto do atleta';
+        img.className = 'template-photo-img';
+        photoCircle.appendChild(img);
+        var hint = templatePage.querySelector('.template-photo-hint');
+        if (hint) hint.style.display = 'none';
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  // Download as PNG
+  if (downloadBtn && instagram && typeof html2canvas !== 'undefined') {
+    downloadBtn.addEventListener('click', function() {
+      var originalText = downloadBtn.textContent;
+      downloadBtn.textContent = 'Gerando...';
+      downloadBtn.disabled = true;
+
+      html2canvas(instagram, {
+        scale: 2,
+        useCORS: true,
+        allowTaint: false,
+        backgroundColor: null,
+      }).then(function(canvas) {
+        var link = document.createElement('a');
+        link.download = 'redbull-24h-<%= highlight.type %>.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+      }).catch(function(err) {
+        console.error('Erro ao gerar PNG:', err);
+        alert('Erro ao gerar a imagem. Tente novamente.');
+      }).finally(function() {
+        downloadBtn.textContent = originalText;
+        downloadBtn.disabled = false;
+      });
+    });
+  }
+});
+</script>

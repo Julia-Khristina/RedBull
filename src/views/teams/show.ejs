@@ -98,7 +98,6 @@
       <a
         class="team-panel__button team-panel__button--primary <%= activeRunner ? '' : 'is-disabled' %>"
         href="<%= manualHref %>"
-        data-manual-registration-link
         aria-disabled="<%= activeRunner ? 'false' : 'true' %>"
       >
         Tirar Foto da Esteira
@@ -106,6 +105,7 @@
       <a
         class="team-panel__button team-panel__button--ghost <%= activeRunner ? '' : 'is-disabled' %>"
         href="<%= activeRunner ? '/operational-panel/' + activeRunner.id + '?competitionId=' + competition.id + '&teamId=' + team.id + '&mode=manual' : '#' %>"
+        data-manual-registration-link
         <%= activeRunner ? '' : 'aria-disabled="true"' %>
       >
         Registro Manual
@@ -173,8 +173,6 @@
             <tr>
               <th>Atleta</th>
               <th>Status</th>
-              <th>Email</th>
-              <th>Telefone</th>
             </tr>
           </thead>
           <tbody>
@@ -182,8 +180,6 @@
               <tr class="<%= runner.id === activeId ? 'is-active-row' : '' %>">
                 <td><%= runner.name %></td>
                 <td><%= runner.status === 'captain' ? 'Capitão' : 'Atleta' %></td>
-                <td><%= runner.email %></td>
-                <td><%= runner.phone || '—' %></td>
               </tr>
             <% }); %>
           </tbody>

@@ -1266,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error('Distancia deve ser um numero nao negativo.');
         }
         if (!idRunner || !idCompetition || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
@@ -1357,8 +1357,8 @@ document.addEventListener('DOMContentLoaded', function () {
             setOcrFeedback(reviewFeedback, 'Checkpoint salvo com sucesso.', false);
           } catch (err) {
             setOcrFeedback(reviewFeedback, err.message || 'Erro ao salvar checkpoint.', true);
-            saveBtn.disabled = false;
           } finally {
+            saveBtn.disabled = false;
             saveBtn.textContent = originalLabel;
           }
         });
@@ -1414,7 +1414,7 @@ document.addEventListener('DOMContentLoaded', function () {
           throw new Error('Distância deve ser um número não negativo.');
         }
         if (!idRunner || !idCompetition || !idAdmin) {
-          throw new Error('Contexto do checkpoint incompleto. Volte ao painel da equipe e tente novamente.');
+          throw new Error('Contexto do checkpoint incompleto (Admin ou Competição ausentes). Volte ao painel da equipe e tente novamente.');
         }
 
         const nowIso = new Date().toISOString();
@@ -1503,6 +1503,7 @@ document.addEventListener('DOMContentLoaded', function () {
         } catch (err) {
           console.error('Erro ao salvar checkpoint manual:', err);
           showManualFeedback('ERRO: ' + err.message, true);
+        } finally {
           submitBtn.disabled = false;
           submitBtn.textContent = originalLabel;
         }
@@ -1518,6 +1519,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Painel público da equipe (/public/team/:uuid)
   if (path.startsWith('/public/team/')) {
+    // The "Criar Post" button on the runner page is no longer used; it has been removed as part of the migration to public team URLs.
     const restOptions = Array.isArray(window.RUNNER_REST_OPTIONS)
       ? window.RUNNER_REST_OPTIONS
       : [];
@@ -1570,6 +1572,49 @@ document.addEventListener('DOMContentLoaded', function () {
       updateRestCalculator(select.value);
     }
   }
+  // ── Compartilhar — Página de seleção ───────────────────────────────────────
+  if (document.querySelector('[data-share-page]')) {
+    const sharePage = document.querySelector('[data-share-page]');
+    const teamUuid = sharePage.dataset.teamUuid;
+    const select = document.querySelector('[data-share-athlete-select]');
+    const generateBtn = document.querySelector('[data-share-generate="athlete"]');
+
+    function updateAthleteButton() {
+      if (!select || !generateBtn) return;
+      const selected = select.value;
+      const canGenerate = Boolean(selected && teamUuid);
+
+      if ('disabled' in generateBtn) {
+        generateBtn.disabled = !canGenerate;
+      }
+      generateBtn.toggleAttribute('disabled', !canGenerate);
+      generateBtn.setAttribute('aria-disabled', canGenerate ? 'false' : 'true');
+
+      if (generateBtn.tagName === 'A') {
+        generateBtn.href = canGenerate
+          ? '/public/team/' + teamUuid + '/share/template/athlete?runnerId=' + selected
+          : '#';
+      }
+    }
+
+    if (generateBtn) {
+      generateBtn.addEventListener('click', function (event) {
+        const selected = select ? select.value : '';
+        if (!selected || !teamUuid) {
+          event.preventDefault();
+          if (select) select.focus();
+          return;
+        }
+
+        window.location.assign('/public/team/' + teamUuid + '/share/template/athlete?runnerId=' + encodeURIComponent(selected));
+      });
+    }
+
+    if (select) {
+      select.addEventListener('change', updateAthleteButton);
+      updateAthleteButton();
+    }
+  }
 
   // Ativar item do menu correspondente à rota atual
   document.querySelectorAll('.nav-item').forEach(function (item) {
@@ -1588,7 +1633,8 @@ document.addEventListener('DOMContentLoaded', function () {
       path.startsWith(hrefPath + '/') ||
       (hrefPath === '/ranking' && /\/competitions\/\d+\/ranking/.test(path)) ||
       (hrefPath === '/reports' && (path === '/reports' || /\/view\/competitions\/\d+\/reports(?:\/|$)/.test(path))) ||
-      (hrefPath === '/teams' && (path === '/teams' || path.startsWith('/teams/') || /\/view\/competitions\/\d+\/teams(?:\/|$)/.test(path)));
+      (hrefPath === '/teams' && (path === '/teams' || path.startsWith('/teams/') || /\/view\/competitions\/\d+\/teams(?:\/|$)/.test(path))) ||
+      (hrefPath.includes('/share') && (path === hrefPath || path.startsWith(hrefPath + '/template/')));
 
     if (isActive) {
       item.classList.add('active');
@@ -1833,6 +1879,148 @@ document.addEventListener('DOMContentLoaded', function () {
 
       render();
     })();
+  }
+
+  // ── Export Modal ──
+  if (window.EXPORT_SHEETS && Array.isArray(window.EXPORT_SHEETS)) {
+    const exportBtn = document.getElementById('export-btn');
+    const modal = document.getElementById('export-modal');
+    const backdrop = document.getElementById('export-modal-backdrop');
+    const list = document.getElementById('export-sheets-list');
+    const cancelBtn = document.getElementById('export-modal-cancel');
+    const confirmBtn = document.getElementById('export-modal-confirm');
+    const errorEl = document.getElementById('export-modal-error');
+
+    if (!exportBtn || !modal || !backdrop || !list || !cancelBtn || !confirmBtn || !errorEl) {
+      // skip if modal elements are missing
+    } else {
+      var selectedSheets = {};
+
+      function renderSheetOptions() {
+        list.innerHTML = '';
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          var option = document.createElement('label');
+          option.className = 'export-sheet-option';
+          if (selectedSheets[sheet.id]) option.classList.add('selected');
+
+          var checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.className = 'export-sheet-checkbox';
+          checkbox.checked = selectedSheets[sheet.id] || false;
+          checkbox.dataset.sheetId = sheet.id;
+
+          var info = document.createElement('div');
+          info.className = 'export-sheet-info';
+
+          var label = document.createElement('span');
+          label.className = 'export-sheet-label';
+          label.textContent = sheet.label;
+
+          var desc = document.createElement('span');
+          desc.className = 'export-sheet-desc';
+          desc.textContent = sheet.description;
+
+          info.appendChild(label);
+          info.appendChild(desc);
+          option.appendChild(checkbox);
+          option.appendChild(info);
+
+          option.addEventListener('click', function (e) {
+            if (e.target === checkbox) return;
+            checkbox.checked = !checkbox.checked;
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          checkbox.addEventListener('change', function () {
+            option.classList.toggle('selected', checkbox.checked);
+            selectedSheets[checkbox.dataset.sheetId] = checkbox.checked;
+            updateConfirmState();
+          });
+
+          list.appendChild(option);
+        });
+      }
+
+      function updateConfirmState() {
+        var count = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; }).length;
+        confirmBtn.disabled = count === 0;
+      }
+
+      function openExportModal() {
+        window.EXPORT_SHEETS.forEach(function (sheet) {
+          if (selectedSheets[sheet.id] === undefined) {
+            selectedSheets[sheet.id] = true;
+          }
+        });
+        renderSheetOptions();
+        updateConfirmState();
+        errorEl.textContent = '';
+        modal.hidden = false;
+      }
+
+      function closeExportModal() {
+        modal.hidden = true;
+      }
+
+      exportBtn.addEventListener('click', openExportModal);
+      backdrop.addEventListener('click', closeExportModal);
+      cancelBtn.addEventListener('click', closeExportModal);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) closeExportModal();
+      });
+
+      confirmBtn.addEventListener('click', async function () {
+        var sheetIds = Object.keys(selectedSheets).filter(function (k) { return selectedSheets[k]; });
+        if (sheetIds.length === 0) {
+          errorEl.textContent = 'Selecione pelo menos uma aba para exportar.';
+          return;
+        }
+
+        var competitionId = window.COMPETITION_ID;
+        if (!competitionId) {
+          errorEl.textContent = 'ID da competição não encontrado.';
+          return;
+        }
+
+        var originalLabel = confirmBtn.textContent;
+        confirmBtn.disabled = true;
+        confirmBtn.textContent = 'Exportando...';
+        errorEl.textContent = '';
+
+        try {
+          var res = await fetch('/competitions/' + encodeURIComponent(competitionId) + '/export/excel', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ sheets: sheetIds }),
+          });
+
+          if (!res.ok) {
+            var errData = await res.json().catch(function () { return {}; });
+            throw new Error(errData.message || 'Erro ao exportar planilha.');
+          }
+
+          var blob = await res.blob();
+          var url = window.URL.createObjectURL(blob);
+          var a = document.createElement('a');
+          a.href = url;
+          a.download = 'relatorio_' + competitionId + '.xlsx';
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
+          window.URL.revokeObjectURL(url);
+
+          closeExportModal();
+        } catch (err) {
+          errorEl.textContent = err.message || 'Erro ao exportar planilha.';
+        } finally {
+          confirmBtn.disabled = false;
+          confirmBtn.textContent = originalLabel;
+        }
+      });
+    }
   }
 });
 
