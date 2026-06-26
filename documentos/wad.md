@@ -1528,7 +1528,7 @@ O sistema Red Bull 24h é composto por três nós principais em produção: o di
 
 <div align="center">
   <sub>Figura 17 - Diagrama de Implantação UML</sub><br>
-  <img src="../assets/programacao/diagrama-de-implantacao.png" width="100%" alt="Representação visual do diagrama de implantação."><br>
+  <img src="../assets/programacao/diagrama-de-implantacao.jpeg" width="100%" alt="Representação visual do diagrama de implantação."><br>
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div>
 
