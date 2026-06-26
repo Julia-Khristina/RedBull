@@ -878,7 +878,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 ### 3.2.1. Arquitetura em Camadas
 
-O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Bass, Clements e Kazman (2012) descrevem esse padrão como uma das táticas arquiteturais mais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece completamente a implementação da camada inferior. Fowler (2002) formaliza essa separação no contexto de aplicações empresariais sob o princípio de *separation of concerns*, que determina que cada unidade de software deve ter uma única razão para mudar.
+O padrão de Arquitetura em Camadas organiza um sistema de software em estratos horizontais com responsabilidades exclusivas, nos quais cada camada se comunica apenas com a camada imediatamente adjacente. Esse padrão é descrito como uma das estratégias arquiteturais eficazes para controlar o acoplamento entre módulos, pois cada estrato expõe somente a interface necessária para a camada superior e desconhece a implementação interna da camada inferior (Bass; Clements; Kazman, 2012). No contexto de aplicações empresariais, essa separação também se relaciona ao princípio de separation of concerns, segundo o qual cada unidade de software deve concentrar uma responsabilidade específica, reduzindo dependências e facilitando mudanças no sistema (Fowler, 2002).
 
 A nossa equipe optou por essa abordagem no sistema de gerenciamento da competição Red Bull 24 horas em decorrência de dois requisitos estruturais identificados durante a fase de análise: a necessidade de suportar fluxos de interação radicalmente distintos, um fluxo administrativo operado por juízes e supervisores via dispositivos iPad e um fluxo público acessado por corredores mediante URL personalizada com identificador UUID, e a presença de um processo assíncrono de reconhecimento óptico de caracteres (OCR) que não deveria bloquear o fluxo transacional principal. A Arquitetura em Camadas permitiu isolar esses contextos sem duplicar a lógica de domínio e sem criar dependências cruzadas entre os fluxos.
 
@@ -1522,7 +1522,7 @@ O fluxo contempla tanto o cenário de sucesso quanto os casos em que os dados ex
 
 ### 3.2.6. Diagrama de Implantação 
 
-O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Segundo Booch, Rumbaugh e Jacobson (2005), esse diagrama representa a visão de implantação (*deployment view*) de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real. No contexto do RM-ODP (Reference Model of Open Distributed Processing), o diagrama corresponde às perspectivas *Engineering* e *Technology*, que descrevem, respectivamente, a infraestrutura de suporte à distribuição e as tecnologias concretas utilizadas.
+O Diagrama de Implantação UML modela a distribuição física dos artefatos de software sobre os nós de hardware e de infraestrutura, evidenciando como os componentes são alocados em tempo de execução e quais canais de comunicação os interligam. Esse diagrama representa a visão de implantação de uma arquitetura, complementando os diagramas de sequência e de classes ao situar os artefatos em seu ambiente operacional real (Booch; Rumbaugh; Jacobson, 2006). No contexto do RM-ODP, Reference Model of Open Distributed Processing, essa representação se aproxima das perspectivas Engineering e Technology, que descrevem, respectivamente, os mecanismos de suporte à distribuição e as tecnologias concretas utilizadas no sistema (ISO/IEC, 1996).
  
 O sistema Red Bull 24h é composto por três nós principais em produção: o dispositivo cliente (navegador web), o servidor de aplicação Node.js/Express e o banco de dados gerenciado Supabase (PostgreSQL). Um quarto nó, o GitLab Pages, hospeda a documentação estática da WebAPI, sem participar do fluxo de dados em tempo de execução. O processamento OCR ocorre no servidor de aplicação (*server-side*), por meio da biblioteca Tesseract.js em conjunto com pré-processamento de imagem pela biblioteca sharp, havendo ainda um mecanismo de extração assistida por modelo de linguagem (Groq) acionado como complemento. A imagem capturada no dispositivo cliente é enviada ao servidor, que executa a extração e devolve os dados para validação humana antes da persistência.
 
@@ -2308,7 +2308,7 @@ O wireframe apresentado permitiu validar rapidamente a disposição das informa�
 
 #### Wireframe de Alta Fidelidade — Corredores
 
-Os wireframes de alta fidelidade da persona corredor representam uma versão visual mais próxima da interface final da solução, incluindo organização espacial dos componentes, hierarquia visual, tipografia e estrutura de navegação do painel público da equipe. Conforme Garrett (2011), o nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato essencial para validações visuais e operacionais antes da implementação definitiva da interface.
+Os wireframes de alta fidelidade da persona corredor representam uma versão visual mais próxima da interface final da solução, incluindo a organização espacial dos componentes, a hierarquia visual, a tipografia e a estrutura de navegação do painel público da equipe. O nível de fidelidade de um protótipo está diretamente relacionado à sua proximidade com a experiência real do usuário, tornando esse tipo de artefato essencial para validações visuais e operacionais antes da implementação definitiva da interface (Garret, 2011)
 
 As telas abaixo representam o painel público da equipe, desenvolvido para acompanhamento da competição pelos atletas participantes durante a prova. A interface foi projetada para apresentar de forma clara e organizada as principais informações estratégicas da competição, permitindo rápida interpretação dos dados durante o evento.
 
@@ -3030,7 +3030,7 @@ As constraints do modelo relacional definem as regras de integridade que serão 
 </div>
 
 #### 3.6.3.2 Modelo Físico
-Segundo a Amazon Web Services (2024), o modelo físico é a última etapa da modelagem do banco de dados, refinando aquilo que já foi trabalhado e passando a organização para uma tecnologia específica. Ou seja, representa a implementação do banco de dados no SGBD escolhido, detalhando tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e constraints. Nesta seção, serão apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo integridade, consistência e suporte às regras de negócio do sistema.
+O modelo físico corresponde à etapa final da modelagem de bancos de dados, na qual a estrutura lógica é refinada e adaptada para a tecnologia do Sistema Gerenciador de Banco de Dados (SGBD) adotado. Nessa etapa, são definidos elementos como tabelas, atributos, tipos de dados, chaves primárias, chaves estrangeiras e restrições de integridade, representando a implementação efetiva do banco de dados (Amazon Web Services, 2024). Nesta seção, são apresentados os scripts SQL responsáveis pela criação da estrutura da aplicação do evento Red Bull 24 Horas, garantindo a integridade, a consistência e o atendimento às regras de negócio do sistema.
 
 Os scripts SQL de migração podem ser vistos aqui: Diretório de Migrações.
 
@@ -3772,7 +3772,7 @@ Outro aspecto relevante da implementação é a separação entre operações de
 
 Por meio dessas decisões arquiteturais, a WebAPI fornece uma interface consistente para todas as funcionalidades centrais da aplicação, reduzindo o acoplamento entre interface e persistência, facilitando a evolução do sistema e garantindo maior confiabilidade durante a operação do evento.
 
-Embora a WebAPI implementada contemple integralmente os fluxos previstos para o escopo desta aplicação, algumas oportunidades de evolução foram identificadas durante o desenvolvimento do projeto. Entre elas, destaca-se a possibilidade de ampliar o nível de detalhamento da documentação da API por meio da adoção de especificações abertas, como a OpenAPI Specification (OAS), permitindo a geração automática de documentação interativa e facilitando futuras integrações com aplicações de terceiros.
+Embora a WebAPI implementada contemple integralmente os fluxos previstos para o escopo desta aplicação, foram identificadas oportunidades de evolução ao longo do desenvolvimento do projeto. Entre elas, destaca-se a ampliação do nível de detalhamento da documentação da API por meio da adoção da OpenAPI Specification (OAS), um padrão aberto para descrição de interfaces de programação de aplicações. Essa abordagem possibilita a geração automática de documentação interativa, além de facilitar a integração com aplicações de terceiros e contribuir para a manutenção e a escalabilidade do sistema (OPENAPI INITIATIVE, 2024).
 
 Outra possibilidade consiste na evolução do modelo de autorização atualmente adotado. A aplicação implementa autenticação baseada em JSON Web Token (JWT) para controle de acesso às funcionalidades administrativas, considerando apenas um perfil de usuário administrativo, conforme definido no escopo do projeto. Em versões futuras, esse mecanismo poderá ser expandido para suportar diferentes níveis de permissão, permitindo a definição de papéis específicos, como operadores, organizadores e administradores, com diferentes privilégios de acesso às funcionalidades do sistema.
 
@@ -3990,47 +3990,30 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
  
 </div>
 
-| Persona | RF | RN | Endpoint | Tela | Arquivo de Teste (real) | Evidência |
-|---|---|---|---|---|---|---|
-| Marina Costa | RF001 | RN03 | POST /competitions | Cadastro de Competição | competitionService.spec.ts | Competição criada com sucesso e persistida no banco |
-| Marina Costa | RF002 | RN18 | GET/POST /competitions | Dashboard Principal | competitionService.spec.ts | Dados da competição cadastrados e recuperados corretamente |
-| Marina Costa | RF003 | RN01, RN07 | POST /competitions/:id/teams | Cadastro de Equipes | team.e2e.spec.ts | Equipe criada e vinculada à competição |
-| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
-| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/runners | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
-| Marina Costa | RF003 | RN01 | POST /competitions/:id/teams/:teamId/athletes | Cadastro de Equipes | runner.e2e.spec.ts | Atleta vinculado corretamente à equipe |
-| Marina Costa | RF004 | RN02, RN03 | POST /auth/sessions | Dashboard Principal | authService.test.ts | Sessão autenticada com sucesso |
-| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
-| Marina Costa | RF005 | RN05, RN06 | POST /ocr/extractions | Captura da Foto do Painel | checkpointService.spec.ts | Dados extraídos via OCR retornados para validação |
-| Marina Costa | RF006 | RN04, RN05 | POST /ocr/extractions | Dados Extraídos via OCR | checkpointService.spec.ts | Dados disponibilizados para conferência antes da persistência |
-| Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
-| Marina Costa | RF007 | RN05, RN06, RN12 | POST /checkpoints | Dados Extraídos via OCR | checkpointService.spec.ts | Dados corrigidos e registrados após conferência |
-| Marina Costa | RF008 | RN04, RN05 | POST /checkpoints | Registro Manual | checkpointService.spec.ts | Checkpoint registrado com sucesso |
-| Marina Costa | RF008 | RN04, RN05 | GET /checkpoints | Checkpoints Salvos | checkpointService.spec.ts | Histórico de checkpoints recuperado corretamente |
-| Marina Costa | RF009 | RN06 | GET /competitions/:id/checkpoints/inconsistencies | Dados Extraídos via OCR | checkpointService.spec.ts | Inconsistências identificadas e exibidas ao operador |
-| Bruno Monteiro | RF010 | RN09, RN11 | GET /competitions/:id/ranking/teams | Dashboard Principal | rankingService.spec.ts | Ranking administrativo atualizado automaticamente |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/runners | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
-| Bruno Monteiro | RF011 | RN07, RN10 | GET /competitions/:id/teams/:teamId/athletes | Painel Operacional das Equipes | runnerService.spec.ts | Exibição do atleta em corrida e próximo atleta previsto |
-| Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
-| Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
-| Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
-| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
- 
-| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
+| Persona        | RF    | RN               | Endpoint                                            | Tela                           | Arquivo de Teste (real)      | Evidência                                                     |
+| -------------- | ----- | ---------------- | --------------------------------------------------- | ------------------------------ | ---------------------------- | ------------------------------------------------------------- |
+| Marina Costa   | RF001 | RN03             | `POST /competitions`                                | Cadastro de Competição         | `competitionService.spec.ts` | Competição criada com sucesso e persistida no banco           |
+| Marina Costa   | RF002 | RN18             | `GET/POST /competitions`                            | Dashboard Principal            | `competitionService.spec.ts` | Dados da competição cadastrados e recuperados corretamente    |
+| Marina Costa   | RF003 | RN01, RN07       | `POST /competitions/:id/teams`                      | Cadastro de Equipes            | `team.e2e.spec.ts`           | Equipe criada e vinculada à competição                        |
+| Marina Costa   | RF003 | RN01             | `POST /competitions/:id/teams/:teamId/athletes`     | Cadastro de Equipes            | `runner.e2e.spec.ts`         | Atleta vinculado corretamente à equipe                        |
+| Marina Costa   | RF004 | RN02, RN03       | `POST /auth/sessions`                               | Dashboard Principal            | `authService.test.ts`        | Sessão autenticada com sucesso                                |
+| Marina Costa   | RF005 | RN05, RN06       | `POST /ocr/extractions`                             | Captura da Foto do Painel      | `checkpointService.spec.ts`  | Dados extraídos via OCR retornados para validação             |
+| Marina Costa   | RF006 | RN04, RN05       | `POST /ocr/extractions`                             | Dados Extraídos via OCR        | `checkpointService.spec.ts`  | Dados disponibilizados para conferência antes da persistência |
+| Marina Costa   | RF007 | RN05, RN06, RN12 | `POST /checkpoints`                                 | Dados Extraídos via OCR        | `checkpointService.spec.ts`  | Dados corrigidos e registrados após conferência               |
+| Marina Costa   | RF008 | RN04, RN05       | `POST /checkpoints`                                 | Registro Manual                | `checkpointService.spec.ts`  | Checkpoint registrado com sucesso                             |
+| Marina Costa   | RF008 | RN04, RN05       | `GET /checkpoints`                                  | Checkpoints Salvos             | `checkpointService.spec.ts`  | Histórico de checkpoints recuperado corretamente              |
+| Marina Costa   | RF009 | RN06             | `GET /competitions/:id/checkpoints/inconsistencies` | Dados Extraídos via OCR        | `checkpointService.spec.ts`  | Inconsistências identificadas e exibidas ao operador          |
+| Bruno Monteiro | RF010 | RN09, RN11       | `GET /competitions/:id/ranking/teams`               | Dashboard Principal            | `rankingService.spec.ts`     | Ranking administrativo atualizado automaticamente             |
+| Bruno Monteiro | RF011 | RN07, RN10       | `GET /competitions/:id/teams/:teamId/athletes`      | Painel Operacional das Equipes | `runnerService.spec.ts`      | Exibição do atleta em corrida e próximo atleta previsto       |
+| Bruno Monteiro | RF012 | RN14             | `PATCH /competitions/:id`                           | Dashboard Principal            | `competitionService.spec.ts` | Competição encerrada e bloqueio de novos registros validado   |
+| Bruno Monteiro | RF013 | RN15             | `GET /competitions/:id/export`                      | Dashboard Principal            | `export.e2e.spec.ts`         | Arquivo de exportação gerado com sucesso                      |
+| Bruno Monteiro | RF014 | RN16, RN17       | `GET /competitions/:id/reports`                     | Dashboard Principal            | `exportService.spec.ts`      | Relatórios e indicadores gerados corretamente                 |
+| Amanda Azevedo | RF015 | RN09, RN13       | `GET /competitions/:id/ranking/runners`             | Painel Público da Equipe       | `rankingService.spec.ts`     | Ranking público atualizado e exibido corretamente             |
+| Bruno Monteiro | RF004 | RN02, RN03       | `GET /admin`                                        | Dashboard Principal            | `adminService.test.ts`       | Administradores recuperados corretamente                      |
+| Bruno Monteiro | RF004 | RN02, RN03       | `POST /admin`                                       | Dashboard Principal            | `adminService.test.ts`       | Administrador criado com sucesso                              |
+| Bruno Monteiro | RF004 | RN02, RN03       | `PUT /admin/:id`                                    | Dashboard Principal            | `adminService.test.ts`       | Dados administrativos atualizados corretamente                |
+| Bruno Monteiro | RF004 | RN02, RN03       | `DELETE /admin/:id`                                 | Dashboard Principal            | `adminService.test.ts`       | Administrador removido corretamente                           |
 
-| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
-| Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
-| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
  
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -5057,7 +5040,7 @@ As dez afirmações apresentadas aos participantes estão descritas no Quadro 82
 
 Após a coleta das respostas, os dados foram consolidados em uma planilha eletrônica desenvolvida no Google Sheets ([link](https://docs.google.com/spreadsheets/d/1Lj2P-CIKph2wutV7gCXMYBHs6-yrS_pfKu9RcWPMiP4/edit?usp=sharing)).
 
-Conforme a metodologia proposta por Brooke (1996), para as afirmações positivas (questões ímpares) foi subtraído 1 da resposta atribuída pelo participante, enquanto para as afirmações negativas (questões pares) a resposta foi subtraída de 5. Em seguida, a soma dos valores obtidos foi multiplicada por 2,5, resultando em uma pontuação final compreendida entre 0 e 100 pontos para cada participante.
+Para o cálculo da pontuação do SUS, nas afirmações positivas (questões ímpares) foi subtraído 1 da resposta atribuída pelo participante, enquanto, nas afirmações negativas (questões pares), a resposta foi subtraída de 5. Em seguida, a soma dos valores obtidos foi multiplicada por 2,5, resultando em uma pontuação final compreendida entre 0 e 100 pontos para cada participante (Brooke, 1996).
 
 A Tabela 7 apresenta as pontuações obtidas pelos participantes.
 
@@ -5083,7 +5066,7 @@ A Tabela 7 apresenta as pontuações obtidas pelos participantes.
 
 #### 5.2.2.1. Análise dos resultados SUS
 
-A aplicação do questionário SUS resultou em uma pontuação média de **80,71 pontos**, valor superior à média de referência do método, estabelecida em aproximadamente 68 pontos. Segundo a classificação proposta por Bangor, Kortum e Miller (2009), pontuações superiores a 80 pontos enquadram-se na categoria **Excelente**, indicando elevado nível de satisfação dos usuários e forte aceitação da solução desenvolvida.
+A aplicação do questionário SUS resultou em uma pontuação média de 80,71 pontos, valor superior à média de referência do método, estabelecida em aproximadamente 68 pontos. Pontuações superiores a 80 pontos são classificadas como Excelente, indicando elevado nível de satisfação dos usuários e forte aceitação da solução desenvolvida (Bangor; Kortum; Miller, 2009).
 
 A análise das pontuações individuais também evidencia uma percepção consistente entre os participantes. Das sete avaliações realizadas, seis apresentaram pontuações entre **72,5 e 82,5 pontos**, enquanto um participante atribuiu a nota máxima de **100 pontos**, indicando uma experiência de uso extremamente positiva. Essa distribuição demonstra que a percepção favorável da usabilidade foi compartilhada pela maior parte dos avaliadores.
 
@@ -5371,7 +5354,8 @@ Além dos planos derivados dos testes, o grupo mapeou as seguintes oportunidades
 
 
 **Aumentar o número de templates de divulgação para redes sociais:** Desenvolver uma maior suite de templates pré-formatados para divulgação de resultados, rankings parciais e momentos highlights do evento em redes sociais (Instagram, Twitter/X, Facebook). Esta funcionalidade possibilitaria ao parceiro compartilhar atualizações do evento em tempo real, amplificando o engajamento da comunidade e o alcance da marca durante a competição.
-**Tratamento de dívidas técnicas: centralização do tratamento de erros de constraint do PostgreSQL e padronização do ambiente de testes ponta a ponta, com vistas à robustez e à manutenibilidade do sistema.
+
+**Tratamento de dívidas técnicas:** Centralização do tratamento de erros de constraint do PostgreSQL e padronização do ambiente de testes ponta a ponta, com vistas à robustez e à manutenibilidade do sistema.
 
 Em síntese, a solução desenvolvida cumpriu os objetivos funcionais previstos no escopo e demonstrou boa usabilidade, conforme evidenciado pela avaliação SUS de 80,71 pontos, ao mesmo tempo em que deixa mapeado um conjunto consistente de melhorias e trabalhos futuros capazes de ampliar sua precisão, sua abrangência analítica e sua aderência às necessidades operacionais do parceiro.
 
@@ -5385,6 +5369,8 @@ AMAZON WEB SERVICES. **A diferença entre modelo de dados lógico e físico**. 2
 BASS, Len; CLEMENTS, Paul; KAZMAN, Rick. **Software Architecture in Practice**. 3. ed. Boston: Addison-Wesley, 2012.
 
 BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar. **The Unified Modeling Language User Guide**. 2. ed. Boston: Addison-Wesley, 2005.
+
+BOOCH, Grady; RUMBAUGH, James; JACOBSON, Ivar.**UML: guia do usuário**. 2. ed. Rio de Janeiro: Elsevier, 2006.
 
 BROOKE, John. SUS: a "quick and dirty" usability scale. In: JORDAN, P. W.; THOMAS, B.; WEERDMEESTER, B.; MCCLELLAND, I. (org.). **Usability Evaluation in Industry**. London: Taylor & Francis, 1996. p. 189–194. Disponível em: https://hell.meiert.org/core/pdf/sus.pdf. Acesso em: 17 jun. 2026.
 
@@ -5412,6 +5398,8 @@ INTERACTION DESIGN FOUNDATION. **What are user stories?** [s.d.]. Disponível em
 
 INTERNET ENGINEERING TASK FORCE (IETF). **HTTP Semantics**. RFC 9110. 2022. Disponível em: https://www.ietf.org/rfc/rfc9110.html. Acesso em: 28 maio 2026.
 
+ISO/IEC. ISO/IEC 10746-3:1996: **Information technology — Open Distributed Processing — Reference Model: Architecture.** Geneva: International Organization for Standardization, 1996. Disponível em: https://www.iso.org/standard/20697.html. Acesso em: 26 jun. 2026.
+
 ITATIAIA. **BH receberá primeira seletiva do Red Bull 24 Horas no Parque Ecológico; saiba detalhes**. 2025. Disponível em: https://www.itatiaia.com.br/esportes/mais-esportes/bh-recebera-primeira-seletiva-do-red-bull-24-horas-no-parque-ecologico-saiba-detalhes/. Acesso em: 6 jun. 2026.
 
 JOEL. **MER e DER**: modelagem de bancos de dados. DevMedia, 2014. Disponível em: https://www.devmedia.com.br/mer-e-der-modelagem-de-bancos-de-dados/14332. Acesso em: 7 maio 2026.
@@ -5430,6 +5418,8 @@ MUNDO DO MARKETING. **Os profissionais de Marketing no Brasil**: dados mostram m
 
 NIELSEN NORMAN GROUP. **Personas**. 2025. Disponível em: https://www.nngroup.com/articles/persona/. Acesso em: 1 maio 2026.
 
+OPENAPI INITIATIVE. **OpenAPI Specification.** [S. l.], 2024. Disponível em: https://spec.openapis.org/oas/v3.1.1.html. Acesso em: 26 jun. 2026.
+
 OSTERWALDER, Alexander; PIGNEUR, Yves. **Business Model Generation**. Hoboken: John Wiley & Sons, 2010.
 
 OSTERWALDER, Alexander; PIGNEUR, Yves. **Value Proposition Design**. Hoboken: John Wiley & Sons, 2011.
@@ -5445,6 +5435,8 @@ PORTER, Michael E. The Five Competitive Forces That Shape Strategy. **Harvard Bu
 PROJECT MANAGEMENT INSTITUTE (PMI). **A guide to the project management body of knowledge (PMBOK guide)**. 7. ed. Newtown Square: Project Management Institute, 2021.
 
 RED BULL. **Red Bull 24 Hours**. 2025. Disponível em: https://www.redbull.com/se-en/events/24-hours. Acesso em: 1 maio 2026.
+
+SERASA EXPERIAN. **Mulheres representam 60% dos profissionais de marketing e publicidade, aponta Serasa Experian.** São Paulo, 25 mar. 2026. Disponível em: https://www.serasaexperian.com.br/sala-de-imprensa/rh/mulheres-representam-60-dos-profissionais-de-marketing-e-publicidade-aponta-serasa-experian/. Acesso em: 26 jun. 2026.
 
 VIAL, Gregory. Understanding Digital Transformation: A Review and a Research Agenda. **The Journal of Strategic Information Systems**, [S. l.], v. 28, n. 2, p. 118–144, 2019.
 
