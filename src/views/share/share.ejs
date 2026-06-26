@@ -1,0 +1,127 @@
+<link rel="stylesheet" href="/css/share.css">
+<main class="share-main" data-share-page data-team-uuid="<%= teamUuid %>">
+  <header class="share-header">
+    <h1 class="share-title">Compartilhar Resultados</h1>
+    <p class="share-subtitle"><%= competitionName %></p>
+    <a href="/dashboard" class="share-back-link">&larr; Voltar ao Dashboard</a>
+  </header>
+
+  <section class="share-grid">
+    <!-- Image 1: Atleta Individual -->
+    <div class="share-card" data-share-type="athlete">
+      <div class="share-card-preview bg-preview-fundo-1">
+        <img src="/img/logo-redbull-24horas.png" alt="" class="share-card-logo" />
+        <div class="share-card-photo-placeholder"></div>
+        <span class="share-card-label">DESTAQUE DO ATLETA</span>
+      </div>
+      <div class="share-card-body">
+        <h3 class="share-card-title">Atleta Individual</h3>
+        <p class="share-card-desc">Post personalizado com foto e dados do atleta</p>
+        <div class="share-card-actions">
+          <select class="share-athlete-select" data-share-athlete-select>
+            <option value="">Selecione um atleta</option>
+            <% (athletes || []).forEach(function(a) { %>
+              <option value="<%= a.id %>"><%= a.name %> <%= a.team_name ? '- ' + a.team_name : '' %></option>
+            <% }); %>
+          </select>
+          <button type="button" class="share-btn share-btn-primary" data-share-generate="athlete" disabled>Gerar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Image 5: Maior KM -->
+    <div class="share-card" data-share-type="maior-km">
+      <div class="share-card-preview bg-preview-fundo-1">
+        <img src="/img/logo-redbull-24horas.png" alt="" class="share-card-logo" />
+        <span class="share-card-label">MAIOR QUILOMETRAGEM</span>
+        <% if (highlights && highlights[0]) { %>
+          <span class="share-card-stat"><%= Number(highlights[0].distanceKm).toFixed(1) %> km</span>
+        <% } %>
+      </div>
+      <div class="share-card-body">
+        <h3 class="share-card-title">Maior Quilometragem</h3>
+        <p class="share-card-desc">Atleta com maior distância percorrida</p>
+        <% if (highlights && highlights[0]) { %>
+          <p class="share-card-highlight"><strong><%= highlights[0].runnerName %></strong> — <%= Number(highlights[0].distanceKm).toFixed(1) %> km</p>
+        <% } %>
+        <a href="/public/team/<%= teamUuid %>/share/template/maior-km" class="share-btn share-btn-primary">Gerar</a>
+      </div>
+    </div>
+
+    <!-- Image 6: Menor Pace -->
+    <div class="share-card" data-share-type="menor-pace">
+      <div class="share-card-preview bg-preview-fundo-1">
+        <img src="/img/logo-redbull-24horas.png" alt="" class="share-card-logo" />
+        <span class="share-card-label">MENOR PACE MÉDIO</span>
+        <% if (highlights && highlights[1]) { %>
+          <span class="share-card-stat"><%= highlights[1].pace || '—' %>/km</span>
+        <% } %>
+      </div>
+      <div class="share-card-body">
+        <h3 class="share-card-title">Menor Pace Médio</h3>
+        <p class="share-card-desc">Atleta com o pace mais rápido</p>
+        <% if (highlights && highlights[1]) { %>
+          <p class="share-card-highlight"><strong><%= highlights[1].runnerName %></strong> — <%= highlights[1].pace || '—' %>/km</p>
+        <% } %>
+        <a href="/public/team/<%= teamUuid %>/share/template/menor-pace" class="share-btn share-btn-primary">Gerar</a>
+      </div>
+    </div>
+
+    <!-- Image 7: Manhã -->
+    <div class="share-card" data-share-type="manha">
+      <div class="share-card-preview bg-preview-fundo-2">
+        <img src="/img/logo-redbull-24horas.png" alt="" class="share-card-logo" />
+        <span class="share-card-label">MANHÃ - DESTAQUE</span>
+        <% if (highlights && highlights[2]) { %>
+          <span class="share-card-stat"><%= Number(highlights[2].distanceKm).toFixed(1) %> km</span>
+        <% } %>
+      </div>
+      <div class="share-card-body">
+        <h3 class="share-card-title">Período da Manhã</h3>
+        <p class="share-card-desc">Atleta destaque do período matutino</p>
+        <% if (highlights && highlights[2]) { %>
+          <p class="share-card-highlight"><strong><%= highlights[2].runnerName %></strong> — <%= Number(highlights[2].distanceKm).toFixed(1) %> km</p>
+        <% } %>
+        <a href="/public/team/<%= teamUuid %>/share/template/manha" class="share-btn share-btn-primary">Gerar</a>
+      </div>
+    </div>
+
+    <!-- Image 8: Tarde -->
+    <div class="share-card" data-share-type="tarde">
+      <div class="share-card-preview bg-preview-fundo-2">
+        <img src="/img/logo-redbull-24horas.png" alt="" class="share-card-logo" />
+        <span class="share-card-label">TARDE - DESTAQUE</span>
+        <% if (highlights && highlights[3]) { %>
+          <span class="share-card-stat"><%= Number(highlights[3].distanceKm).toFixed(1) %> km</span>
+        <% } %>
+      </div>
+      <div class="share-card-body">
+        <h3 class="share-card-title">Período da Tarde</h3>
+        <p class="share-card-desc">Atleta destaque do período vespertino</p>
+        <% if (highlights && highlights[3]) { %>
+          <p class="share-card-highlight"><strong><%= highlights[3].runnerName %></strong> — <%= Number(highlights[3].distanceKm).toFixed(1) %> km</p>
+        <% } %>
+        <a href="/public/team/<%= teamUuid %>/share/template/tarde" class="share-btn share-btn-primary">Gerar</a>
+      </div>
+    </div>
+
+    <!-- Image 9: Madrugada -->
+    <div class="share-card" data-share-type="madrugada">
+      <div class="share-card-preview bg-preview-fundo-3">
+        <img src="/img/logo-redbull-24horas.png" alt="" class="share-card-logo" />
+        <span class="share-card-label">MADRUGADA - DESTAQUE</span>
+        <% if (highlights && highlights[4]) { %>
+          <span class="share-card-stat"><%= Number(highlights[4].distanceKm).toFixed(1) %> km</span>
+        <% } %>
+      </div>
+      <div class="share-card-body">
+        <h3 class="share-card-title">Período da Madrugada</h3>
+        <p class="share-card-desc">Atleta destaque do período noturno</p>
+        <% if (highlights && highlights[4]) { %>
+          <p class="share-card-highlight"><strong><%= highlights[4].runnerName %></strong> — <%= Number(highlights[4].distanceKm).toFixed(1) %> km</p>
+        <% } %>
+        <a href="/public/team/<%= teamUuid %>/share/template/madrugada" class="share-btn share-btn-primary">Gerar</a>
+      </div>
+    </div>
+  </section>
+</main>

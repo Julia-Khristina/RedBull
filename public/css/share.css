@@ -1,0 +1,555 @@
+/* ==============================================================
+   COMPARTILHAR — Página de seleção + Templates Instagram
+   ============================================================== */
+
+/* ── Page Layout ── */
+.share-main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  font-family: var(--font-family);
+}
+
+.share-header {
+  margin-bottom: 2rem;
+  font-family: var(--font-family);
+}
+
+.share-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--azul-principal);
+  margin: 0 0 0.25rem;
+}
+
+.share-subtitle {
+  font-size: 1rem;
+  color: var(--azul-secundario);
+  margin: 0 0 0.5rem;
+}
+
+.share-back-link {
+  color: var(--azul-principal);
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.share-back-link:hover {
+  text-decoration: underline;
+}
+
+/* ── Grid ── */
+.share-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Card ── */
+.share-card {
+  background: var(--fundo-cards);
+  border-radius: var(--border-radius);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.16);
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+
+.share-card:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+.share-card-preview {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.share-card-preview::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.bg-preview-fundo-1 {
+  background-image: url('/img/fundo-1.png');
+}
+
+.bg-preview-fundo-2 {
+  background-image: url('/img/fundo-2.png');
+}
+
+.bg-preview-fundo-3 {
+  background-image: url('/img/fundo-3.png');
+}
+
+.share-card-logo {
+  position: relative;
+  width: 60px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.share-card-photo-placeholder {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  margin-bottom: 0.5rem;
+  z-index: 1;
+}
+
+.share-card-label {
+  position: relative;
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  z-index: 1;
+  padding: 0 0.5rem;
+  line-height: 1.2;
+}
+
+.share-card-stat {
+  position: relative;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  z-index: 1;
+}
+
+.share-card-body {
+  padding: 1rem;
+}
+
+.share-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--azul-principal);
+  margin: 0 0 0.25rem;
+}
+
+.share-card-desc {
+  font-size: 0.8rem;
+  color: var(--texto-muted);
+  margin: 0 0 0.75rem;
+}
+
+.share-card-highlight {
+  font-size: 0.8rem;
+  color: var(--azul-secundario);
+  margin: 0 0 0.75rem;
+}
+
+.share-card-actions {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.share-athlete-select {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1.5px solid var(--bordas-separadores);
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  background: var(--fundo-cards);
+}
+
+.share-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px;
+  font-family: var(--font-family);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.share-btn-primary {
+  background: var(--azul-principal);
+  color: #fff;
+}
+
+.share-btn-primary:hover {
+  opacity: 0.9;
+}
+
+.share-btn-primary:disabled,
+.share-btn-primary[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Template Pages ── */
+
+.share-template-body {
+  margin: 0;
+  padding: 0;
+  background: var(--fundo);
+  font-family: var(--font-family);
+}
+
+.template-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.template-toolbar {
+  width: 100%;
+  max-width: 1080px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.template-back-btn {
+  color: var(--azul-principal);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.template-back-btn:hover {
+  text-decoration: underline;
+}
+
+.template-toolbar-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--azul-principal);
+  margin: 0;
+  text-align: center;
+}
+
+.template-download-btn {
+  padding: 0.5rem 1.25rem;
+  background: var(--azul-principal);
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  font-family: var(--font-family);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.template-download-btn:hover {
+  opacity: 0.85;
+}
+
+.template-download-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Instagram Post Container ── */
+.template-instagram-wrapper {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.template-instagram {
+  position: relative;
+  width: 450px;
+  height: 800px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 32px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* Background images */
+.bg-fundo-1 {
+  background-image: url('/img/fundo-1.png');
+}
+
+.bg-fundo-2 {
+  background-image: url('/img/fundo-2.png');
+}
+
+.bg-fundo-3 {
+  background-image: url('/img/fundo-3.png');
+}
+
+/* Overlay for readability */
+.template-instagram::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 0;
+}
+
+.template-logo {
+  position: relative;
+  width: 70px;
+  height: auto;
+  margin-bottom: 0.75rem;
+  z-index: 1;
+}
+
+.template-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  color: #fff;
+  padding: 0 2rem;
+}
+
+.template-title {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-extrabold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  margin: 0 0 0.2rem;
+  line-height: 1;
+}
+
+.template-subtitle {
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.9;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  margin: 0 0 1rem;
+}
+
+/* Photo area */
+.template-photo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.template-photo-circle {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  background: rgba(255, 255, 255, 0.12);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.template-photo-circle:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: scale(1.05);
+}
+
+.template-photo-placeholder {
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 300;
+}
+
+.template-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.template-photo-input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.template-photo-hint {
+  font-size: var(--font-size-texto-cabecalho);
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0.35rem 0 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.template-runner-name {
+  font-size: var(--font-size-subtitulo);
+  font-weight: var(--font-weight-extrabold);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  margin: 0 0 0.15rem;
+  line-height: 1.2;
+}
+
+.template-team-name {
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-bold);
+  opacity: 0.85;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  margin: 0 0 0.75rem;
+}
+
+.template-stats {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+}
+
+.template-stat {
+  text-align: center;
+}
+
+.template-stat-value {
+  display: block;
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-extrabold);
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.5);
+  line-height: 1;
+}
+
+.template-stat-label {
+  display: block;
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.8;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+  margin-top: 0.2rem;
+}
+
+.template-hashtag {
+  position: absolute;
+  bottom: 1.25rem;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  color: #fff;
+  font-size: var(--font-size-texto-cabecalho);
+  font-weight: var(--font-weight-bold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  opacity: 0.9;
+  text-align: center;
+}
+
+/* ── Responsive ── */
+@media (max-width: 480px) {
+  .template-instagram {
+    width: 300px;
+    height: 533px;
+  }
+
+  .template-logo {
+    width: 55px;
+  }
+
+  .template-title {
+    font-size: calc(var(--font-size-h2) * 0.7);
+  }
+
+  .template-runner-name {
+    font-size: calc(var(--font-size-subtitulo) * 0.7);
+  }
+
+  .template-stat-value {
+    font-size: calc(var(--font-size-h1) * 0.7);
+  }
+
+  .template-photo-circle {
+    width: 70px;
+    height: 70px;
+  }
+
+  .template-instagram-wrapper {
+    padding: 0.5rem;
+  }
+}
+
+/* Print styles for saving — 9:16 high-res */
+@media print {
+  .template-toolbar {
+    display: none;
+  }
+
+  .template-instagram-wrapper {
+    padding: 0;
+  }
+
+  .template-instagram {
+    width: 1080px;
+    height: 1920px;
+    border-radius: 0;
+    box-shadow: none;
+    page-break-after: always;
+  }
+
+  .template-instagram::before {
+    display: none;
+  }
+
+  .template-logo {
+    width: 160px;
+  }
+
+  .template-title {
+    font-size: calc(var(--font-size-h2) * 1.8);
+  }
+
+  .template-runner-name {
+    font-size: calc(var(--font-size-subtitulo) * 2);
+  }
+
+  .template-stat-value {
+    font-size: calc(var(--font-size-h1) * 2);
+  }
+
+  .template-photo-circle {
+    width: 220px;
+    height: 220px;
+  }
+
+  .template-hashtag {
+    font-size: calc(var(--font-size-body) * 1.4);
+    bottom: 3rem;
+  }
+
+  body {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
