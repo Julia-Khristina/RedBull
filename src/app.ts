@@ -13,6 +13,7 @@ import authRoutes from "./routes/authRoutes";
 import reportRoutes from "./routes/reportRoutes";
 import dashboardRoutes from "./routes/dashboardRoutes";
 import tvPanelRoutes from "./routes/tvPanelRoutes";
+import shareRoutes from "./routes/shareRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { ensureOcrUploadDir, getOcrUploadDir } from "./services/ocrService";
 import ejsLayouts from 'express-ejs-layouts';
@@ -48,6 +49,7 @@ app.use(rankingRoutes);
 app.use(exportRoutes);
 app.use(reportRoutes);
 app.use(tvPanelRoutes);
+app.use(shareRoutes);
 
 // Catch-all 404 — unmatched routes
 app.use((_req, res) => {

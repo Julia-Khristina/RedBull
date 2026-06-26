@@ -1707,6 +1707,124 @@ Content-Type: application/json</code></pre>
         headers, body, responses e exemplos no estilo de documentação OAS.
       </p>
     </section>
+
+    <section id="share-routes">
+      <h2>3.6.12 Compartilhamento / Share Routes</h2>
+      <p>
+        As rotas de compartilhamento permitem a geração de templates visuais no estilo
+        Instagram com destaques da competição (maior KM, menor pace, desempenho por período)
+        para divulgação em redes sociais. Os templates são renderizados no servidor (SSR) e
+        podem ser baixados como imagem PNG no lado do cliente via html2canvas. Atende ao RF016
+        (#514, #515).
+      </p>
+
+      <h3>Visão geral dos endpoints</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Endpoint</th>
+            <th>Método</th>
+            <th>Autenticação</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /competitions/:id/share</code></td>
+            <td>GET</td>
+            <td>Sim (admin)</td>
+            <td>Exibe grid de seleção com 6 tipos de template (Atleta, Maior KM, Menor Pace, Manhã, Tarde, Madrugada)</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:id/share/template/:type</code></td>
+            <td>GET</td>
+            <td>Sim (admin)</td>
+            <td>Renderiza template individual com dados reais da competição, upload de foto e botão de download PNG</td>
+          </tr>
+          <tr>
+            <td><code>GET /public/competitions/:id/share/template/:type</code></td>
+            <td>GET</td>
+            <td>Não (público)</td>
+            <td>Versão pública do template, acessível pela página do corredor sem autenticação</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Parâmetros de rota</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Parâmetro</th>
+            <th>Tipo</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>:id</code></td>
+            <td>number</td>
+            <td>ID da competição</td>
+          </tr>
+          <tr>
+            <td><code>:type</code></td>
+            <td>string</td>
+            <td>Tipo do template: <code>athlete</code>, <code>maior-km</code>, <code>menor-pace</code>, <code>manha</code>, <code>tarde</code>, <code>madrugada</code></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Parâmetros de query</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Parâmetro</th>
+            <th>Tipo</th>
+            <th>Obrigatório</th>
+            <th>Descrição</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>runnerId</code></td>
+            <td>number</td>
+            <td>Sim (para type=<code>athlete</code>)</td>
+            <td>ID do atleta para exibir seus dados individuais no template</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3>Saídas da requisição</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Operação</th>
+            <th>Sucesso</th>
+            <th>Erros esperados</th>
+            <th>Observação</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><code>GET /competitions/:id/share</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code></td>
+            <td><code>400</code> para <code>id</code> inválido; <code>404</code> quando a competição não existe.</td>
+          </tr>
+          <tr>
+            <td><code>GET /competitions/:id/share/template/:type</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code></td>
+            <td><code>400</code> para tipo de template inválido; <code>404</code> quando destaque não encontrado.</td>
+          </tr>
+          <tr>
+            <td><code>GET /public/competitions/:id/share/template/:type</code></td>
+            <td><code>200 OK</code></td>
+            <td><code>400</code>, <code>404</code></td>
+            <td>Mesmo comportamento da rota admin, porém sem exigir autenticação.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </main>
 </body>
 </html>

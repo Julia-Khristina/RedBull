@@ -694,6 +694,20 @@ A seguir, são apresentadas as histórias de usuário definidas até o momento p
 
 
 <div align="center">
+  <sub>Quadro 18 - User Story 16 </sub>
+</div>
+
+| Identificação            | US16 |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Persona**              | Amanda Azevedo (Atleta) |
+| **User Story**           | "Como Amanda Azevedo, atleta da competição, posso gerar templates visuais personalizados com meus dados de desempenho para compartilhar no Instagram, para divulgar minha participação e resultados nas redes sociais." |
+| **Critério de aceite 1** | CR1: O template deve exibir os dados reais de desempenho do atleta selecionado dentro da equipe acessada por UUID (maior KM, menor pace, desempenho por período). **Teste**: Dado que um atleta é selecionado na página pública da equipe e um template é escolhido, quando a página é renderizada, então os campos de destaque devem conter os dados reais da equipe e do atleta selecionado. |
+| **Critério de aceite 2** | CR2: O template deve permitir o download como imagem PNG. **Teste**: Dado que o template está renderizado na tela, quando o usuário clica em "Baixar PNG", então uma imagem PNG deve ser baixada contendo o layout visual completo. |
+| **Critério de aceite 3** | CR3: O upload da foto do atleta deve ser processado localmente sem envio ao servidor. **Teste**: Dado que o usuário seleciona uma foto no input de arquivo, quando a imagem é carregada, então ela deve ser exibida no círculo do template sem nenhuma requisição ao backend. |
+| Critérios INVEST         | Independente: Pode ser implementada sem depender de outras funcionalidades de compartilhamento. <br> Negociável: A quantidade e o layout dos templates podem ser ajustados. <br> Valorosa: Permite que atletas divulguem seus resultados nas redes sociais. <br> Estimável: O escopo de geração de templates é bem definido. <br> Pequena: Funcionalidade específica e isolada. <br> Testável: A renderização e o download podem ser verificados. |
+
+
+<div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
 </div> 
 
@@ -705,10 +719,10 @@ Esta seção apresenta os requisitos funcionais, regras de negócio e requisitos
 
 ### 3.1.1. Requisitos Funcionais
 
-O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
+O Quadro 19 contempla os requisitos funcionais do sistema, evidenciando as ações e comportamentos que o sistema deve apresentar para cumprir seus objetivos.
 
 <div align="center">
-  <sub>Quadro 18 - Requisitos Funcionais </sub>
+  <sub>Quadro 19 - Requisitos Funcionais </sub>
 </div>
 
 | ID    | Descrição                                                                                                                                                             | Prioridade | Status    |
@@ -728,6 +742,8 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF013 | O sistema deve exportar os dados da competição em formato XLSX, incluindo checkpoints, timestamps e logs de validação                                                  | Alta       | Concluído |
 | RF014 | O sistema deve gerar automaticamente ao final da competição relatórios e highlights de desempenho por atleta, equipe e geral                                          | Baixa      | Concluído |
 | RF015 | O sistema deve atualizar periodicamente o ranking exibido no painel público das equipes em intervalos máximos de 1 hora.                                                  | Média      | Concluído |
+| RF016 | O sistema deve permitir a geração de templates visuais de destaques por equipe, acessados via URL pública com UUID, formatados para compartilhamento em redes sociais      | Baixa      | Concluído |
+| RF017 | O sistema deve exibir dados reais da equipe acessada por UUID e de seus atletas (maior KM, menor pace, períodos manhã/tarde/madrugada) nos templates de compartilhamento  | Baixa      | Concluído |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -736,7 +752,7 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 ### 3.1.1.1 Critérios de Aceite dos Requisitos Funcionais
 
 <div align="center">
-  <sub>Quadro 19 - Critérios de Aceite dos Requisitos Funcionais </sub>
+  <sub>Quadro 20 - Critérios de Aceite dos Requisitos Funcionais </sub>
 </div>
 
 | RF    | Critério de Aceite                                                                                                                                                                    |
@@ -756,6 +772,8 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 | RF013 | Dado que o usuário solicite exportação, quando a operação for executada, então o sistema deve gerar um arquivo XLSX contendo checkpoints, timestamps e logs de validação.                 |
 | RF014 |	Dado que a competição seja encerrada, quando o processamento final for executado, então o sistema deve gerar relatórios e highlights de desempenho por atleta, equipe e geral.  |
 | RF015	| Dado que existam novos checkpoints consolidados, quando o intervalo máximo de atualização do painel público for atingido, então o sistema deve atualizar o ranking exibido às equipes.  |
+| RF016 | Dado que o operador ou atleta acesse a página pública de compartilhamento da equipe por UUID, quando selecionar um template e um atleta, então o sistema deve renderizar um template visual com os dados reais de desempenho da equipe e do atleta preenchidos |
+| RF017 | Dado que o template seja renderizado, quando o usuário clicar em "Baixar PNG", então o sistema deve gerar e baixar uma imagem PNG do template |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -763,10 +781,10 @@ O Quadro 18 contempla os requisitos funcionais do sistema, evidenciando as açõ
 
 ### 3.1.2. Regras de Negócio 
 
-No Quadro 20, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
+No Quadro 21, são apresentadas as regras de negócio do sistema, as quais definem as  restrições e condições que orientam o funcionamento e o comportamento das funcionalidades ao longo do desenvolvimento.
 
 <div align="center">
-  <sub>Quadro 20 - Regras de Negócio </sub>
+  <sub>Quadro 21 - Regras de Negócio </sub>
 </div>
 
 | ID   | Descrição                                                                                                                                                                                                                         | RF associado       |
@@ -789,6 +807,8 @@ No Quadro 20, são apresentadas as regras de negócio do sistema, as quais defin
 | RN16 | Os highlights pós-evento devem ser gerados automaticamente ao encerrar a competição, sem necessidade de configuração manual.                                                                                                      | RF012, RF014       |
 | RN17 | Os highlights devem incluir recordes nas categorias: individual (médias de troca de turno, km, pace e total de checkpoint), por equipe (total de km e trocas de turno; média de pace e tempo por turno) e por operador (total de checkpoints registrados de forma manual e por ocr)                       | RF014              |
 | RN18 | O cadastro da competição deve exigir obrigatoriamente nome, data e local válidos. | RF002 |
+| RN19 | Os templates de compartilhamento devem ser gerados no lado do cliente como imagem PNG, sem persistência de imagens no servidor | RF016 |
+| RN20 | O upload da foto do atleta deve ser processado localmente no navegador via FileReader, sem envio ao backend | RF016 |
 
 <div align="center">
   <sup>Fonte: Elaborado pelos autores (2026).</sup>
@@ -796,10 +816,10 @@ No Quadro 20, são apresentadas as regras de negócio do sistema, as quais defin
 
 ### 3.1.3. Requisitos Não Funcionais — 8 Eixos ISO/IEC 25010 
 
-Os requisitos não funcionais apresentados no Quadro 21 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 21), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
+Os requisitos não funcionais apresentados no Quadro 22 definem os atributos de qualidade, restrições e critérios técnicos considerados ao longo do desenvolvimento da solução proposta para o evento Red Bull 24 Horas. Esses requisitos foram derivados tanto das restrições operacionais identificadas junto ao parceiro quanto dos requisitos funcionais priorizados pela equipe, sendo estruturados com base nos eixos de qualidade da ISO/IEC 25010. Dessa forma, os RNFs estabelecem critérios relacionados à usabilidade, confiabilidade, desempenho, suportabilidade, segurança, capacidade, restrições de design e organização do sistema (oito eixos no total, detalhados no Quadro 22), garantindo alinhamento entre as necessidades operacionais da competição e as decisões técnicas adotadas pela equipe.
 
 <div align="center">
-  <sub>Quadro 21 - Requisitos Não Funcionais </sub>
+  <sub>Quadro 22 - Requisitos Não Funcionais </sub>
 </div>
 
 | Eixo                        | Requisito                                                                                                | Métrica / Critério                                   | Status                      | Como atendido                                      |
@@ -843,7 +863,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 
 <div align="center">
 
-  <sub>Quadro 22 - Matriz RF → RN → Endpoint</sub>
+  <sub>Quadro 23 - Matriz RF → RN → Endpoint</sub>
 
 </div>
 
@@ -864,6 +884,7 @@ A matriz abaixo foi revisada a partir dos RFs e RNs descritos nas seções 3.1.1
 | RF013 | RN15 | `/competitions/:id/export` | GET | Implementado | Permite exportar dados consolidados da competição para análise posterior. |
 | RF014 | RN16, RN17 | `/competitions/:id/reports` | GET | Implementado | Permite a geração de relatórios gerenciais e operacionais da competição. |
 | RF015 | RN09, RN13 | `/competitions/:id/ranking`; `/competitions/:id/ranking/teams`; `/competitions/:id/ranking/runners` | GET | Implementado | Retorna rankings por equipe e por atleta, ordenados conforme desempenho registrado. |
+| RF016 | RN19, RN20 | `/public/team/:uuid/share`; `/public/team/:uuid/share/template/:type` | GET | Implementado | Permite visualizar o grid de templates da equipe e renderizar templates com dados reais da equipe acessada por UUID. Rota pública acessível sem autenticação pela página da equipe. |
 
 <div align="center">
 
@@ -906,7 +927,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Responsabilidades
 
 <div align="center">
-  <sub>Quadro 25 - Responsabilidades das Camadas</sub>
+  <sub>Quadro 24 - Responsabilidades das Camadas</sub>
 </div>
 
 | Camada | Responsabilidade | O que não faz | Pasta do projeto |
@@ -927,7 +948,7 @@ Esse desenho mantém a validação humana como etapa obrigatória antes do regis
 #### Tabela de Rastreabilidade
 
 <div align="center">
-  <sub>Quadro 26 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
+  <sub>Quadro 25 - Tabela de Rastreabilidade da Arquitetura em Camadas</sub>
 </div>
 
 | Camada         | Classe                  | Responsabilidade no projeto                                                                                                                                                                                             | RFs / RNs                    |
@@ -2258,7 +2279,7 @@ Diferentemente das personas administrativas, Amanda interage exclusivamente com 
 | US13 | Visualizar ranking global | Acompanhamento da posição da equipe |
 | US14 | Visualizar métricas dos atletas | Desempenho individual e coletivo |
 | US15 | Utilizar calculadora de descanso | Apoio operacional ao atleta |
-| US16 | Compartilhar ranking | Compartilhamento simplificado da equipe |
+| US16 | Compartilhar resultados | Geração de templates Instagram com dados de desempenho |
 
 <div align="center"> 
   <sup>Fonte: Elaborado pelos autores (2026).</sup> 
@@ -3865,6 +3886,16 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Bruno Monteiro | RF012 | RN14 | PATCH /competitions/:id | Dashboard Principal | competitionService.spec.ts | Competição encerrada e bloqueio de novos registros validado |
 | Bruno Monteiro | RF013 | RN15 | GET /competitions/:id/export | Dashboard Principal | export.e2e.spec.ts | Arquivo de exportação gerado com sucesso |
 | Bruno Monteiro | RF014 | RN16, RN17 | GET /competitions/:id/reports | Dashboard Principal | exportService.spec.ts | Relatórios e indicadores gerados corretamente |
+<<<<<<< HEAD
+| Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/athletes | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | GET /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administradores recuperados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | POST /administradores | Dashboard Principal | adminService.test.ts ⚠️ | Administrador criado com sucesso |
+| Bruno Monteiro | RF004 | RN02, RN03 | PUT /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Dados administrativos atualizados corretamente |
+| Bruno Monteiro | RF004 | RN02, RN03 | DELETE /administradores/:id | Dashboard Principal | adminService.test.ts ⚠️ | Administrador removido corretamente |
+| Bruno Monteiro | RF016 | RN19, RN20 | GET /public/team/:uuid/share | Grid de Compartilhamento | — | Grid com 6 templates exibido com dados da equipe acessada por UUID |
+| Bruno Monteiro | RF016 | RN19, RN20 | GET /public/team/:uuid/share/template/:type | Template de Compartilhamento | — | Template Instagram renderizado com dados reais da equipe e download PNG funcional |
+| Amanda Azevedo | RF016 | RN19, RN20 | GET /public/team/:uuid/share/template/:type | Template de Compartilhamento | shareService.spec.ts (planejado) | Template Instagram gerado com dados reais a partir da página pública da equipe |
+=======
 | Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
@@ -3876,6 +3907,7 @@ A rastreabilidade contribui para a manutenção da consistência entre os artefa
 | Bruno Monteiro | RF004 | RN02, RN03 | POST /admin | Dashboard Principal | adminService.test.ts | Administrador criado com sucesso |
 | Bruno Monteiro | RF004 | RN02, RN03 | PUT /admin/:id | Dashboard Principal | adminService.test.ts | Dados administrativos atualizados corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | DELETE /admin/:id | Dashboard Principal | adminService.test.ts | Administrador removido corretamente |
+>>>>>>> 0857021bf22322d115b217c760db7832ceadadb9
 
 | Amanda Azevedo | RF015 | RN09, RN13 | GET /competitions/:id/ranking/runners | Painel Público da Equipe | rankingService.spec.ts | Ranking público atualizado e exibido corretamente |
 | Bruno Monteiro | RF004 | RN02, RN03 | GET /admin | Dashboard Principal | adminService.test.ts | Administradores recuperados corretamente |

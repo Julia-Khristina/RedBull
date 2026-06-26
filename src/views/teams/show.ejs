@@ -98,7 +98,6 @@
       <a
         class="team-panel__button team-panel__button--primary <%= activeRunner ? '' : 'is-disabled' %>"
         href="<%= manualHref %>"
-        data-manual-registration-link
         aria-disabled="<%= activeRunner ? 'false' : 'true' %>"
       >
         Tirar Foto da Esteira
@@ -106,6 +105,7 @@
       <a
         class="team-panel__button team-panel__button--ghost <%= activeRunner ? '' : 'is-disabled' %>"
         href="<%= activeRunner ? '/operational-panel/' + activeRunner.id + '?competitionId=' + competition.id + '&teamId=' + team.id + '&mode=manual' : '#' %>"
+        data-manual-registration-link
         <%= activeRunner ? '' : 'aria-disabled="true"' %>
       >
         Registro Manual
