@@ -1033,7 +1033,7 @@ atuando desde o acesso ao painel administrativo, a gestão dos demais
 administradores autorizados, a criação e o encerramento de
 competições, o cadastro de equipes e atletas, a operação do registro
 de checkpoints (manual ou assistido por OCR), o acompanhamento do
-ranking, o acesso ao relatório consolidado, a exportação em CSV e a
+ranking, o acesso ao relatório consolidado, a exportação em XLSX e a
 exibição do painel da competição em TV durante o evento. O
 **Corredor** representa atletas e capitães de equipe, que acessam o
 sistema por meio de uma URL única vinculada ao UUID público da
@@ -1071,7 +1071,7 @@ ambos os fluxos de registro, em conformidade com a RN06 (validação
 humana obrigatória) descrita na seção 3.1.2. O registro manual
 estende o registro via OCR como caminho alternativo acionado quando a
 extração automática falha ou não produz resultado utilizável. A
-exportação em CSV é «include» do acesso ao relatório, uma vez que a
+exportação em XLSX é «include» do acesso ao relatório, uma vez que a
 exportação é parte integrante da tela de relatórios consolidados.
 
 #### 3.2.2.1 Descrição estruturada dos casos de uso
@@ -1311,8 +1311,8 @@ quatro pacotes funcionais introduzidos anteriormente. Cada caso de uso é aprese
 | **Ator primário** | Administrador (acionando a exportação a partir de UC13) |
 | **Atores secundários** | — |
 | **Pré-requisitos** | UC13 em execução. |
-| **Pós-requisitos** | Arquivo CSV gerado pelo `ExportService` e disponibilizado para download. |
-| **Fluxo principal** | 1. Administrador aciona a exportação na tela de relatórios. 2. `ExportController` delega ao `ExportService`. 3. `ExportService` consulta o `ExportRepository` e formata o arquivo CSV. 4. Sistema retorna o arquivo para download. |
+| **Pós-requisitos** | Arquivo XLSX gerado pelo `ExportService` e disponibilizado para download. |
+| **Fluxo principal** | 1. Administrador aciona a exportação na tela de relatórios. 2. `ExportController` delega ao `ExportService`. 3. `ExportService` consulta o `ExportRepository` e formata o arquivo XLSX. 4. Sistema retorna o arquivo para download. |
 | **Fluxos alternativos** | — |
 | **RFs/RNs relacionados** | RF13 |
 
@@ -4094,7 +4094,7 @@ Nesta sprint foi consolidada a base do back-end da aplicação, estruturada em *
 
 **- Módulo de Rankings (RF010, RF011, RF015):** endpoints de leitura agregada para o painel administrativo e para o painel público, calculando distância total por equipe, pace médio, atleta em corrida e próximo atleta da escalação, com atualização periódica via polling.
 
-**- Módulo de Reports (RF013, RF014):** endpoints de relatório consolidado da competição, relatório por equipe e exportação CSV contendo checkpoints, timestamps e logs de validação, incluindo o relatório de inconsistências derivado do log de auditoria.
+**- Módulo de Reports (RF013, RF014):** endpoints de relatório consolidado da competição, relatório por equipe e exportação XLSX contendo checkpoints, timestamps e logs de validação, incluindo o relatório de inconsistências derivado do log de auditoria.
 
 **- Módulo de Autenticação (RF001, RF004, RN03):** controle de acesso por sala administrativa via senha definida na criação da sala, com escopo limitado à área administrativa e mantendo o acesso público sem autenticação para o painel da equipe via UUID (US12).
 
@@ -4222,7 +4222,7 @@ Nesta sprint foi iniciada a camada de front-end da aplicação, migrando do prot
 
 **3. Painel de TV para acompanhamento ao vivo da competição:** Desenvolvimento de uma tela dedicada para exibição em monitores e TVs durante o evento, com atualização automática em tempo real. O painel consolidará as métricas agregadas da competição em andamento: pace médio geral, tempo total de prova decorrido, quilometragem total percorrida por todas as equipes e indicadores de destaque por equipe. A interface deve ser projetada para leitura a distância — fonte grande, alto contraste e layout limpo — dispensando qualquer interação do operador após o carregamento. O acesso deve ser público, sem autenticação, seguindo o mesmo padrão do painel da equipe via UUID (US12).
 
-**4. Exportação de resultados em CSV:** Implementação do endpoint de exportação e da interface de acionamento para geração do arquivo CSV consolidado ao encerramento da competição. O arquivo deverá conter o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints registrados, método de entrada de cada registro, tempo parcial e total). Essa entrega finaliza o fluxo de RF013 e RF014 e é crítica para a apuração oficial do evento, pois substitui definitivamente a planilha manual que a equipe da Red Bull utiliza hoje.
+**4. Exportação de resultados em XLSX:** Implementação do endpoint de exportação e da interface de acionamento para geração do arquivo XLSX consolidado ao encerramento da competição. O arquivo deverá conter o desempenho de cada equipe (distância total, pace médio, tempo de prova) e os dados individuais de cada atleta (checkpoints registrados, método de entrada de cada registro, tempo parcial e total). Essa entrega finaliza o fluxo de RF013 e RF014 e é crítica para a apuração oficial do evento, pois substitui definitivamente a planilha manual que a equipe da Red Bull utiliza hoje.
 
 **5. Log de auditoria completo:** Finalização da tela de log de auditoria (audit/auditLog.ejs), exibindo o histórico detalhado de cada checkpoint registrado: qual administrador ou operador de prova realizou o registro, o método utilizado (manual ou OCR), o timestamp exato e os valores capturados. A rastreabilidade por método de entrada já é persistida pelo back-end desde a sprint 3 (RN05), restando apenas expor esses dados em uma interface navegável e filtrável, permitindo que o gerente de Field Marketing audite qualquer registro durante ou após a competição.
 
@@ -5246,7 +5246,7 @@ A solução cria valor sobretudo para a Red Bull e seu time de Field Marketing, 
 
 ### Proposta de Valor
 
-A proposta de valor reúne os benefícios concretos entregues ao cliente. A solução substitui o registro manual em prancheta por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira e o sistema realiza a extração automática dos dados por OCR, reduzindo a sobrecarga e os erros humanos típicos de um processo manual de 24 horas. A validação híbrida, que combina leitura automática e conferência manual com alertas de inconsistência, aumenta a confiabilidade e torna os dados auditáveis e rastreáveis, atendendo diretamente à necessidade de maior integridade na apuração. A centralização das informações em uma única plataforma, com atualização periódica ao longo da competição — em acompanhamento próximo ao tempo real, conforme a dinâmica de checkpoints —, oferece visão consolidada e organizada do andamento do evento. Ao término da competição, o resultado já está consolidado, e a exportação em CSV, somada ao relatório pós-evento, viabiliza auditoria e análises estratégicas das edições futuras.
+A proposta de valor reúne os benefícios concretos entregues ao cliente. A solução substitui o registro manual em prancheta por uma abordagem de automação assistida, na qual o operador captura imagens do visor da esteira e o sistema realiza a extração automática dos dados por OCR, reduzindo a sobrecarga e os erros humanos típicos de um processo manual de 24 horas. A validação híbrida, que combina leitura automática e conferência manual com alertas de inconsistência, aumenta a confiabilidade e torna os dados auditáveis e rastreáveis, atendendo diretamente à necessidade de maior integridade na apuração. A centralização das informações em uma única plataforma, com atualização periódica ao longo da competição — em acompanhamento próximo ao tempo real, conforme a dinâmica de checkpoints —, oferece visão consolidada e organizada do andamento do evento. Ao término da competição, o resultado já está consolidado, e a exportação em XLSX, somada ao relatório pós-evento, viabiliza auditoria e análises estratégicas das edições futuras.
 
 ### Canais
 
@@ -5262,7 +5262,7 @@ Os recursos principais são os ativos necessários para construir e operar a sol
 
 ### Atividades Chave
 
-As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo front-end e back-end, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em CSV e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
+As atividades-chave correspondem às ações essenciais para entregar a proposta de valor. A central é o desenvolvimento da aplicação web, abrangendo front-end e back-end, sobre a qual se constroem o painel administrativo — utilizado por operadores e fiscais para registrar checkpoints, corrigir dados e acompanhar cada equipe — e a área pública por equipe, acessada sem autenticação por meio de uma URL com UUID único. Soma-se a isso a implementação e a calibração do OCR para leitura automática dos dados dos visores das esteiras, acompanhada da validação híbrida, que combina extração automática com conferência manual e emissão de alertas em caso de inconsistências. Completam o conjunto a disponibilização e atualização periódica das informações ao longo da competição, a exportação dos dados em XLSX e a geração do relatório pós-evento para auditoria, além dos testes e da validação prática realizados antes do evento, comparando os registros gerados ao método manual atual.
 
 ### Parcerias Principais
 
