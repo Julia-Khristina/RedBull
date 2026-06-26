@@ -10,14 +10,26 @@ import {
   validateSetActiveRunner,
   validateUpdateTeam,
 } from "../validators/teamValidator";
-import { NotFoundError } from "../errors/AppError";
+import { ConflictError, NotFoundError } from "../errors/AppError";
+import { competitionService } from "./competitionService";
 
 export function createTeamService(
-  repository: TeamRepository = teamRepository
+  repository: TeamRepository = teamRepository,
+  competitionSvc: Pick<typeof competitionService, "findById"> = competitionService
 ) {
   return {
     async create(payload: Partial<CreateTeamInput>): Promise<Team> {
       const input = validateCreateTeam(payload);
+      await competitionSvc.findById(input.id_competition);
+
+      const teams = await repository.findByCompetition(input.id_competition);
+      const duplicatedName = teams.some(
+        (team) => team.name.trim().toLowerCase() === input.name.toLowerCase()
+      );
+      if (duplicatedName) {
+        throw new ConflictError("Equipe já cadastrada nesta competição");
+      }
+
       return repository.create(input);
     },
 

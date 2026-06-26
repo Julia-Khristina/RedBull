@@ -1,6 +1,7 @@
 import request from "supertest";
 import app from "../../src/app";
 import { adminRepository } from "../../src/repositories/adminRepository";
+import bcrypt from "bcryptjs";
 
 let cachedToken: string | null = null;
 let cachedAdminId: number | null = null;
@@ -10,6 +11,7 @@ export async function getAuthToken(): Promise<string> {
 
   const RUN = Date.now().toString().slice(-7);
   const adminPassword = process.env.ADMIN_PASSWORD || "senha-comum-mvp";
+  process.env.ADMIN_PASSWORD_HASH = bcrypt.hashSync(adminPassword, 10);
 
   const admin = await adminRepository.create({
     name: `Auth Helper ${RUN}`,

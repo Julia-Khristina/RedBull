@@ -69,6 +69,41 @@ describe("Endpoints REST de equipes", () => {
         .send({ name: "X" });
       expect(res.status).toBe(400);
     });
+
+    it("deve rejeitar nome duplicado na mesma competição", async () => {
+      const name = `Equipe Duplicada ${Date.now()}`;
+      const created = await request(app)
+        .post(`/competitions/${competitionId}/teams`)
+        .set(bearer(token))
+        .send({ name });
+
+      const res = await request(app)
+        .post(`/competitions/${competitionId}/teams`)
+        .set(bearer(token))
+        .send({ name });
+
+      expect(res.status).toBe(409);
+
+      await request(app)
+        .delete(`/competitions/${competitionId}/teams/${created.body.id}`)
+        .set(bearer(token));
+    });
+
+    it("deve retornar 404 quando a competição não existe", async () => {
+      const missingCompetition = await competitionRepository.create({
+        name: `Competição removida ${Date.now()}`,
+        date: "2026-06-15",
+        address: "São Paulo - SP",
+      });
+      await competitionRepository.delete(missingCompetition.id);
+
+      const res = await request(app)
+        .post(`/competitions/${missingCompetition.id}/teams`)
+        .set(bearer(token))
+        .send({ name: `Equipe sem competição ${Date.now()}` });
+
+      expect(res.status).toBe(404);
+    });
   });
 
   describe("GET /competitions/:id/teams", () => {

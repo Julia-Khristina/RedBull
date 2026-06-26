@@ -101,6 +101,12 @@ describe("AdminService", () => {
       expect(mockAdminRepository.findByEmail).toHaveBeenCalledWith(createInput.email);
       expect(mockAdminRepository.create).not.toHaveBeenCalled();
     });
+
+    it("should throw AppError when required fields are missing", async () => {
+      await expect(adminService.create({})).rejects.toThrow(AppError);
+      expect(mockAdminRepository.findByEmail).not.toHaveBeenCalled();
+      expect(mockAdminRepository.create).not.toHaveBeenCalled();
+    });
   });
 
   describe("update", () => {

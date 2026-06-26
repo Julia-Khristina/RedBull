@@ -1,6 +1,7 @@
 import { createAuthService } from "../src/services/authService";
 import { AuthResponse, LoginInput } from "../src/models/auth";
 import { AppError, UnauthorizedError } from "../src/errors/AppError";
+import bcrypt from "bcryptjs";
 
 describe("authService", () => {
   let mockAdminRepository: any;
@@ -8,7 +9,7 @@ describe("authService", () => {
 
   beforeAll(() => {
     process.env.JWT_SECRET = "test-secret";
-    process.env.ADMIN_PASSWORD = "adminpass";
+    process.env.ADMIN_PASSWORD_HASH = bcrypt.hashSync("adminpass", 10);
   });
 
   beforeEach(() => {
@@ -63,9 +64,9 @@ describe("authService", () => {
       await expect(authService.createSession(loginInput)).rejects.toThrow(UnauthorizedError);
     });
 
-    it("should throw AppError when ADMIN_PASSWORD is missing", async () => {
-      const originalPassword = process.env.ADMIN_PASSWORD;
-      delete process.env.ADMIN_PASSWORD;
+    it("should throw AppError when ADMIN_PASSWORD_HASH is missing", async () => {
+      const originalPasswordHash = process.env.ADMIN_PASSWORD_HASH;
+      delete process.env.ADMIN_PASSWORD_HASH;
 
       mockAdminRepository.findByEmail.mockResolvedValue({
         id: 1,
@@ -84,7 +85,7 @@ describe("authService", () => {
           })
         ).rejects.toBeInstanceOf(AppError);
       } finally {
-        process.env.ADMIN_PASSWORD = originalPassword;
+        process.env.ADMIN_PASSWORD_HASH = originalPasswordHash;
       }
     });
   });

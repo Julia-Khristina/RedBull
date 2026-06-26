@@ -1,9 +1,11 @@
 import request from "supertest";
 import app from "../src/app";
 import { adminRepository } from "../src/repositories/adminRepository";
+import bcrypt from "bcryptjs";
 
 const RUN = Date.now().toString().slice(-7);
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "senha-comum-mvp";
+process.env.ADMIN_PASSWORD_HASH = bcrypt.hashSync(ADMIN_PASSWORD, 10);
 
 describe("Auth Login", () => {
   let adminEmail: string;

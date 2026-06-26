@@ -2,7 +2,6 @@ import request from "supertest";
 import app from "../src/app";
 import { competitionRepository } from "../src/repositories/competitionRepository";
 import { teamRepository } from "../src/repositories/teamRepository";
-import { treadmillRepository } from "../src/repositories/treadmillRepository";
 import { adminRepository } from "../src/repositories/adminRepository";
 import { runnerRepository } from "../src/repositories/runnerRepository";
 import { getAuthToken, bearer } from "./helpers/auth";
@@ -22,7 +21,6 @@ describe("Endpoints REST de checkpoints", () => {
   let competitionId: number;
   let teamId: number;
   let runnerId: number;
-  let treadmillId: number;
   let adminId: number;
   let checkpointId: number;
   let token: string;
@@ -51,11 +49,6 @@ describe("Endpoints REST de checkpoints", () => {
     });
     runnerId = runner.id;
 
-    const treadmill = await treadmillRepository.create({
-      name: `Esteira E2E Checkpoint ${RUN}`,
-    });
-    treadmillId = treadmill.id;
-
     const admin = await adminRepository.create({
       name: `Admin E2E Checkpoint ${RUN}`,
       email: email("admin"),
@@ -70,7 +63,6 @@ describe("Endpoints REST de checkpoints", () => {
     distance_km: 5,
     id_runner: runnerId,
     id_competition: competitionId,
-    id_treadmill: treadmillId,
     id_admin: adminId,
   });
 
@@ -87,7 +79,6 @@ describe("Endpoints REST de checkpoints", () => {
         distance_km: 5,
         id_runner: runnerId,
         id_competition: competitionId,
-        id_treadmill: treadmillId,
         id_admin: adminId,
       });
       expect(res.body.id).toBeDefined();
@@ -112,7 +103,6 @@ describe("Endpoints REST de checkpoints", () => {
           distance_km: 5,
           id_runner: runnerId,
           id_competition: competitionId,
-          id_treadmill: treadmillId,
           id_admin: adminId,
         },
       ],
@@ -123,7 +113,6 @@ describe("Endpoints REST de checkpoints", () => {
           distance_km: -1,
           id_runner: runnerId,
           id_competition: competitionId,
-          id_treadmill: treadmillId,
           id_admin: adminId,
         },
       ],
@@ -231,7 +220,6 @@ describe("Endpoints REST de checkpoints", () => {
           identifier: `CP-RUNNER-${RUN}`,
           distance_km: 3,
           id_competition: competitionId,
-          id_treadmill: treadmillId,
           id_admin: adminId,
         });
 
@@ -247,7 +235,6 @@ describe("Endpoints REST de checkpoints", () => {
           identifier: "CP-INV-RUNNER",
           distance_km: 3,
           id_competition: competitionId,
-          id_treadmill: treadmillId,
           id_admin: adminId,
         });
 
