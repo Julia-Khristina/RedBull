@@ -6,11 +6,11 @@
 
 <br>
 
-# Red Bull 24h 
+# Pace Cam - Red Bull 24 horas
 
 ## Propositivos
 
-## Integrantes:
+### Integrantes:
 
 | | | | |
 |---|---|---|---|
@@ -45,7 +45,7 @@ A aplicação tem dois ambientes:
 
 ## Link de demonstração
 
-_Em breve._
+https://drive.google.com/drive/folders/1xnHPbD3JcEmOzRDek9VcEBLIQBR5_CX8?usp=sharing
 
 ## Estrutura de pastas
 
